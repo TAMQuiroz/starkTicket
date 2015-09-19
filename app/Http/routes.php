@@ -15,5 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login_client', 'LoginController@client');
-Route::get('/login_worker', 'LoginController@worker');
+Route::get('login_client', 'LoginController@client');
+Route::get('login_worker', 'LoginController@worker');
+
+Route::get('home', 'PagesController@home');
+Route::get('about', 'PagesController@about');
+Route::get('modules', 'PagesController@modules');
+Route::get('calendar', 'PagesController@calendar');
+
+Route::get('event', 'EventController@index');
+Route::get('event/{id}', 'EventController@show');
+
+Route::get('category', 'CategoryController@index');
+Route::get('category/{id}', 'CategoryController@show');

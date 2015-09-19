@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-	holi trabajador
+	donde estoy? :o
 @stop
 
 @section('javascript')

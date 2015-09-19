@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-	holi trabajador
+	una categoria
 @stop
 
 @section('javascript')

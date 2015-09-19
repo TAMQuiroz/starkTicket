@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-	holi trabajador
+	un solo evento
 @stop
 
 @section('javascript')

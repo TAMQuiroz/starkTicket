@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-	holi trabajador
+	home
 @stop
 
 @section('javascript')

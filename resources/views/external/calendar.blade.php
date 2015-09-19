@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-	holi trabajador
+	calendario lokis
 @stop
 
 @section('javascript')
