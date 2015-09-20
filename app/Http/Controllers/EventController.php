@@ -23,8 +23,18 @@ class EventController extends Controller
         return view('internal.promoter.createEvent');
     }
 
-    public function record()
+    public function promoterRecord()
     {
         return view('internal.promoter.record');
+    }
+
+    public function clientRecord()
+    {
+        return view('internal.salesman.record');
+    }
+
+    public function addFunction()
+    {
+        return view('internal.promoter.addFunction');
     }
 }

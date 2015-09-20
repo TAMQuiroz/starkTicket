@@ -1,11 +1,11 @@
-@extends('layoutExternal')
+@extends('layoutInternal')
 
 @section('style')
 	
 @stop
 
 @section('content')
-	quien soy? :(
+	historial de eventos q asistio el cliente
 @stop
 
 @section('javascript')

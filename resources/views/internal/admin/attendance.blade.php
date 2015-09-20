@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layoutInternal')
 
 @section('style')
 	

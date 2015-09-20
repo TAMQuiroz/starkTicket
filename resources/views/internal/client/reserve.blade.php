@@ -1,11 +1,11 @@
-@extends('layoutExternal')
+@extends('layoutInternal')
 
 @section('style')
 	
 @stop
 
 @section('content')
-	quien soy? :(
+	reservar entrada
 @stop
 
 @section('javascript')

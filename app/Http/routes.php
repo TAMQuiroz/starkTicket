@@ -28,13 +28,18 @@ Route::get('exchange', 'PagesController@exchange');
 
 Route::get('event', 'EventController@index');
 Route::get('event/create', 'EventController@create');
-Route::get('event/record', 'EventController@record');
+Route::get('event/promoter_record', 'EventController@promoterRecord');
+Route::get('event/client_record', 'EventController@clientRecord');
+Route::get('event/add_function', 'EventController@addFunction');
 Route::get('event/{id}', 'EventController@show');
 
 Route::get('cash_count', 'BusinessController@cashCount');
 Route::get('ticket_return', 'BusinessController@ticketReturn');
 Route::get('exchange_rate', 'BusinessController@exchangeRate');
 Route::get('transfer_payments', 'BusinessController@transferPayments');
+Route::get('reserve', 'BusinessController@reserve');
+Route::get('promotion', 'BusinessController@promotion');
+Route::get('config', 'BusinessController@config');
 
 Route::get('attendance', 'AttendanceController@attendance');
 
