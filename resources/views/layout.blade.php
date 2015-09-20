@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<title>StarkTicket</title>
-
+	{!!Html::style('css/style.css')!!}
 	@yield('style')
 
 	<!-- Latest compiled and minified CSS -->
@@ -15,6 +15,29 @@
 	
 </head>
 <body>
+	<div id="header">
+		<div class="container">
+				
+			<!-- Logo -->
+				<div id="logo">
+					<h1><a href="#">Teleticke</a></h1>
+					<span>Frase de la empresa</span>
+				</div>
+			
+			<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li class="active"><a href="index.html">Inicio</a></li>
+						<li><a href="threecolumn.html">Categorias</a></li>
+						<li><a href="twocolumn1.html">Nosotros</a></li>
+						<li><a href="twocolumn2.html">Puntos de venta</a></li>
+						<li><a href="onecolumn.html">Calendario</a></li>
+					</ul>
+				</nav>
+
+		</div>
+	</div>
+
 	<div class="container">
 		@yield('content')
 	</div>
