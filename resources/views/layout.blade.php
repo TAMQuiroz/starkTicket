@@ -20,8 +20,7 @@
 				
 			<!-- Logo -->
 				<div id="logo">
-					<h1><a href="#">Teleticke</a></h1>
-					<span>Frase de la empresa</span>
+					<h1 id="portada"><a href="#">Teleticke</a></h1>
 				</div>
 			
 			<!-- Nav -->
