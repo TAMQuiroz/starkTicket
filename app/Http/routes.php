@@ -37,7 +37,8 @@ Route::get('cash_count', 'BusinessController@cashCount');
 Route::get('ticket_return', 'BusinessController@ticketReturn');
 Route::get('exchange_rate', 'BusinessController@exchangeRate');
 Route::get('transfer_payments', 'BusinessController@transferPayments');
-Route::get('reserve', 'BusinessController@reserve');
+Route::get('reservanueva', ['as' => 'booking.create' , 'uses' => 'BookingController@create']);
+Route::get('reservaexitosa', 'BookingController@store');
 Route::get('promotion', 'BusinessController@promotion');
 Route::get('config', 'BusinessController@config');
 
