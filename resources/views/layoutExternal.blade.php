@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<title>StarkTicket</title>
-
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	{!!Html::style('css/style.css')!!}
 	{!!Html::style('css/style-desktop.css')!!}
 	@yield('style')
@@ -17,7 +18,12 @@
 <body>
 	<div id="header">
 		<div class="container">
-				
+			@if(Session::has('flash_message'))
+				<div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					{{Session::get('flash_message')}}
+				</div>
+			@endif
 			<!-- Logo -->
 
 			<div id="logo">

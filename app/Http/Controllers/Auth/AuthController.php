@@ -60,6 +60,25 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'role_id' => 1,
         ]);
+    }
+
+    protected $redirectPath = 'home';
+    protected $redirectAfterLogout = 'auth/login';
+
+    public function client()
+    {
+        return view('external.clientLogin');
+    }
+
+    public function worker()
+    {
+        return view('external.workerLogin');
+    }
+
+    public function signin()
+    {
+        return view('external.signin');
     }
 }
