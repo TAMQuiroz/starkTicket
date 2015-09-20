@@ -27,4 +27,9 @@ class PagesController extends Controller
     {
         return view('external.calendar');
     }
+
+    public function exchange()
+    {
+        return view('external.exchange');
+    }
 }

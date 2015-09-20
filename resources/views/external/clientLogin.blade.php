@@ -1,7 +1,8 @@
 @extends('layout')
 
 @section('style')
-	<link href="css/designLogin.css" rel="stylesheet">
+	
+	{!!Html::style('css/designLogin.css')!!}
 @stop
 
 @section('content')

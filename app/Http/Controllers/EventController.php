@@ -17,4 +17,9 @@ class EventController extends Controller
     {
         return view('external.event');
     }
+
+    public function create()
+    {
+        return view('internal.promoter.create_event');
+    }
 }

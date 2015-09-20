@@ -6,21 +6,6 @@
   box-sizing: border-box;
 }
 
-html {
-  background: black;
-}
-
-body {
-  font-family: "Open Sans";
-  font-size: 16px;
-  color: White;
-  font-smoothing: antialiased;
-  font-weight: 600;
-}
-
-a {
-  color: #BBB;
-}
 
 .content:before {
   content: "";
@@ -44,14 +29,13 @@ a {
 }
 
 .content {
-  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   width: 540px;
   height: 540px;
-  background-color: rgba(10, 10, 10, 0.5);
+  background-color: white;
   margin: auto auto;
   padding: 40px;
   -moz-border-radius: 4px;
