@@ -8,11 +8,10 @@
 	<title>StarkTicket</title>
 
 	{!!Html::style('css/style.css')!!}
+	{!!Html::style('css/style-desktop.css')!!}
 	@yield('style')
 
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	
 	
 </head>
 <body>
@@ -34,6 +33,7 @@
 					<li><a href="#">Nosotros</a></li>
 					<li><a href="#">Puntos de venta</a></li>
 					<li><a href="#">Calendario</a></li>
+					<li><a href="#">Canjealo</a></li>
 				</ul>
 			</nav>
 
@@ -51,10 +51,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-	{!!Html::script('js/skel.min.js')!!}
-	{!!Html::script('js/skel-panels.min.js')!!}
-	{!!Html::script('js/init.js')!!}
 
 </body>
 

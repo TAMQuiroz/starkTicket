@@ -122,60 +122,45 @@
 
 	}
 
-		#footer .copyright {
-			font-size: 0.8em;
-			line-height: 1em;
-			display: inline-block;
-		}
+	#footer .copyright {
+		font-size: 0.8em;
+		line-height: 1em;
+		display: inline-block;
+	}
 
-			#footer .copyright a {
-				color: inherit;
-			}
+	#footer .copyright a {
+		color: inherit;
+	}
 
-			#footer .copyright li {
-				display: inline-block;
-				margin-left: 1em;
-				padding-left: 1em;
-				border-left: dotted 1px;
-			}
+	#footer .copyright li {
+		display: inline-block;
+		margin-left: 1em;
+		padding-left: 1em;
+		border-left: dotted 1px;
+	}
 
-				#footer .copyright li:first-child {
-					margin: 0;
-					padding: 0;
-					border: 0;
-				}
+	#footer .copyright li:first-child {
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
 
+	#botones{
+		background:#83d3c9;
+		color:white; 
+	}
 
+	#cabecera{
+		color: #83d3c9;
+		font-style:bold ;
+	}
+	#portada{
+		color: white;
+		font-size: 50pt;
+		font-family: sans-serif;
+	    text-shadow:2px 2px black;
+	}
 
-#botones{
-	background:#83d3c9;
-	color:white; 
-}
-
-
-
-
-
-
-
-
-#cabecera{
-	color: #83d3c9;
-	font-style:bold ;
-}
-#portada{
-	color: white;
-	font-size: 50pt;
-	font-family: sans-serif;
-    text-shadow:2px 2px black;
-}
-h3.dates
-{
-	color: #83d3c9
-}
-h2.detail{
-	color: #83d3c9
-}
 
 	body,input,textarea,select
 	{
@@ -189,236 +174,22 @@ h2.detail{
 		font-weight: bold;
 	}
 	
-		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
-		{
-			color: inherit;
-			text-decoration: none;
-		}
-	
-	/* Change this to whatever font weight/color pairing is most suitable */
-	strong, b
+	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
 	{
-		font-weight: bold;
-		color: #000000;
-	}
-	
-	em, i
-	{
-		font-style: italic;
-	}
-
-	/* Don't forget to set this to something that matches the design */
-	a
-	{
-		color: #ff0000;
-	}
-	
-	a:hover
-	{
+		color: inherit;
 		text-decoration: none;
 	}
 
-	sub
+	.button:hover
 	{
-		position: relative;
-		top: 0.5em;
-		font-size: 0.8em;
+		background: #5BC0DE;
+		color: #FFF !important;
 	}
 	
-	sup
-	{
-		position: relative;
-		top: -0.5em;
-		font-size: 0.8em;
-	}
-	
-	hr
-	{
-		border: 0;
-		border-top: solid 1px #ddd;
-	}
-	
-	blockquote
-	{
-		border-left: solid 0.5em #ddd;
-		padding: 1em 0 1em 2em;
-		font-style: italic;
-	}
-	
-	p, ul, ol, dl, table
-	{
-		margin-bottom: 1em;
+	ul li{
+		display: inline-block;
 	}
 
-	header
-	{
-	}
-	
-		header h2
-		{
-			letter-spacing: -1px;
-			font-weight: 700;
-		}
-	
-		header .byline
-		{
-			display: block;
-			text-transform: uppercase;
-		}
-		
-	footer
-	{
-		margin-top: 1em;
-	}
-
-	br.clear
-	{
-		clear: both;
-	}
-	
-	/* Buttons */
-		
-		.button
-		{
-			position: relative;
-			display: inline-block;
-			margin-top: 2em;
-			padding: 0.8em 1.5em;
-			background: #8CCAC2;
-			border-radius: 6px;
-			text-decoration: none;
-			text-transform: uppercase;
-			font-size: 1em;
-			color: #FFF;
-			-moz-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
-			-webkit-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
-			-o-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
-			-ms-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
-			transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
-			cursor: pointer;
-		}
-
-			.button:hover
-			{
-				background: #5BC0DE;
-				color: #FFF !important;
-			}
-	
-
-	/* Sections/Articles */
-	
-		section,
-		article
-		{
-			margin-bottom: 3em;
-		}
-		
-		section > :last-child,
-		article > :last-child
-		{
-			margin-bottom: 0;
-		}
-
-		section:last-child,
-		article:last-child
-		{
-			margin-bottom: 0;
-		}
-
-		.row > section,
-		.row > article
-		{
-			margin-bottom: 0;
-		}
-
-	/* Images */
-
-		.image
-		{
-			display: inline-block;
-		}
-		
-			.image img
-			{
-				display: block;
-				width: 100%;
-				border-radius: 6px;
-			}
-
-			.image.featured
-			{
-				display: block;
-				width: 100%;
-				margin: 0 0 2em 0;
-			}
-			
-			.image.full
-			{
-				display: block;
-				width: 500px;
-				margin: 0 0 2em 0;
-
-			}
-			
-			.image.left
-			{
-				float: left;
-				margin: 0 2em 2em 0;
-			}
-			
-			.image.centered
-			{
-				display: block;
-				margin: 0 0 2em 0;
-			}
-
-				.image.centered img
-				{
-					margin: 0 auto;
-					width: auto;
-				}
-
-ul li{
-	display: inline-block;
-}
-	/* Lists 
-
-		ul.default
-		{
-			list-style: none;
-			margin: 0;
-			padding: 0;
-		}
-		
-			ul.default li
-			{
-				padding: 0.50em 0em;
-			}	
-		
-		ul.style1
-		{
-			font-size: 0.90em;
-		}	
-
-			ul.style1 li
-			{
-				padding: 0.80em 0em;
-				line-height: 1.8em;
-			}	
-
-			ul.style1 li img
-			{
-				float: left;
-				margin-right: 1.50em;
-				border-radius: 6px;
-			}
-			
-			ul.style1 .posted
-			{
-				display: block;
-				margin-top: 1em;
-				padding: 0.50em 0em;
-			}*/
 
 /*********************************************************************************/
 /* Header                                                                        */
@@ -431,46 +202,11 @@ ul li{
 		background-size: cover;
 	}
 
-	#logo
-	{
+	.navbar{
+		border-radius: 0;
 	}
 	
-	#nav
-	{
-	}
 
-		#nav ul
-		{
-			margin: 0;
-			background: #8CCAC2;
-		}
-	
-/*********************************************************************************/
-/* Banner                                                                        */
-/*********************************************************************************/
-
-	#banner
-	{
-		position: relative;
-		background: #333;
-		color: #fff;
-	}
-
-/*********************************************************************************/
-/* Main                                                                          */
-/*********************************************************************************/
-
-	#main
-	{
-		position: relative;
-		background: #fff url(images/overlay.png) repeat;
-	}
-	
-	.divider
-	{
-		overflow: hidden;
-		border-top: 1px solid #dbdbdb;
-	}
 
 /*********************************************************************************/
 /* Footer                                                                        */
@@ -488,24 +224,4 @@ ul li{
 		color: #FFF;
 	}
 	
-/*********************************************************************************/
-/* Copyright                                                                     */
-/*********************************************************************************/
-	
-	#copyright
-	{
-		position: relative;
-		padding: 3em 0em;
-		text-align: center;
-		color: rgba(255,255,255,.2);
-	}
-	
-	#copyright .container
-	{
-	}
-	
-	#copyright a
-	{
-		text-decoration: none;
-		color: rgba(255,255,255,.3);
-	}		
+		
