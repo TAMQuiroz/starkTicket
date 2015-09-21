@@ -45,12 +45,13 @@ Route::get('event/promoter_record', 'EventController@promoterRecord');
 Route::get('event/client_record', 'EventController@clientRecord');
 Route::get('event/add_function', 'EventController@addFunction');
 Route::get('event/{id}', 'EventController@show');
+Route::get('event/{id}/buy', 'EventController@buy');
+Route::get('event/{id}/reserve', 'EventController@reserve');
 
 Route::get('cash_count', 'BusinessController@cashCount');
 Route::get('ticket_return', 'BusinessController@ticketReturn');
 Route::get('exchange_rate', 'BusinessController@exchangeRate');
 Route::get('transfer_payments', 'BusinessController@transferPayments');
-Route::get('reserve', 'BusinessController@reserve');
 Route::get('promotion', 'BusinessController@promotion');
 Route::get('config', 'BusinessController@config');
 

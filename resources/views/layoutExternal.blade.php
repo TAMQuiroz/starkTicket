@@ -7,12 +7,11 @@
 	
 	<title>StarkTicket</title>
 	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	{!!Html::style('css/bootstrap.min.css')!!}
+    {!!Html::style('css/font-awesome.min.css')!!}
 	{!!Html::style('css/style.css')!!}
 	{!!Html::style('css/style-desktop.css')!!}
 	@yield('style')
-
-	<!-- Latest compiled and minified CSS -->
 	
 </head>
 <body>
@@ -54,10 +53,8 @@
 	
 	@yield('javascript')
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+	{!!Html::script('js/jQuery-2.1.4.min.js')!!}
+	{!!Html::script('js/bootstrap.min.js')!!}
 </body>
 
 <footer id="footer">
