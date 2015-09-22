@@ -15,8 +15,6 @@
                 padding: 0;
                 width: 100%;
                 display: table;
-                font-weight: 100;
-                font-family: 'Lato';
             }
 
             .container {
@@ -26,6 +24,8 @@
             }
 
             .content {
+                font-weight: 100;
+                font-family: 'Lato';
                 text-align: center;
                 display: inline-block;
             }
@@ -38,8 +38,9 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title">TeletickÉ</div>
             </div>
+            <p><a href="/auth/login">Login</a> | <a href="/auth/register">Register</a></p>
         </div>
     </body>
 </html>

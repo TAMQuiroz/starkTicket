@@ -1,7 +1,11 @@
 @extends('layout.worker')
 
 @section('style')
-	
+
+@stop
+
+@section('title')
+
 @stop
 
 @section('content')
@@ -17,7 +21,7 @@
 	                <div class="text-center">
 	                Logo <br>
 	                    <img src="#" id="image-input" class="img-circle" width="200" height="200">
-	                        
+
 	                        {!! Form::file('image',['id' => 'file-input']) !!}
 	                </div>
 	            </div>

@@ -1,7 +1,11 @@
-@extends('layout.worker')
+@extends('layout_admin')
 
 @section('style')
-	
+
+@stop
+
+@section('title')
+
 @stop
 
 @section('content')
