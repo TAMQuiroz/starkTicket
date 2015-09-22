@@ -1,5 +1,5 @@
 
-@extends($user && $user->role_id == 1 ? 'layout.client' : 'layout.salesman')
+@extends($user && $user->role_id == 1 ? 'layout.client' : 'layout.worker')
 
 @section('style')
     

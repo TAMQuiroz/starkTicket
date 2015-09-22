@@ -21,10 +21,9 @@
 		@yield('content')
 	</div>
     
-	@yield('javascript2')
-
 	{!!Html::script('js/jQuery-2.1.4.min.js')!!}
 	{!!Html::script('js/bootstrap.min.js')!!}
+	@yield('javascript2')
 
 </body>
 
