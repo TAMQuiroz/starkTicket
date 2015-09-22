@@ -7,36 +7,24 @@
 	
 	<title>StarkTicket</title>
 
-	{!!Html::style('css/style.css')!!}
-	@yield('style')
-
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	
+    {!!Html::style('css/bootstrap.min.css')!!}
+    {!!Html::style('css/font-awesome.min.css')!!}
+	@yield('style2')
 	
 </head>
 <body>
-	<div id="header">
-		<div class="container">
-			<h1>Nombre del trabajador</h1>
-		</div>
-	</div>
+    @yield('header')
 
+    @yield('sidebar')
+    
 	<div class="container">
 		@yield('content')
 	</div>
+    
+	@yield('javascript2')
 
-	@yield('footer')
-	
-	@yield('javascript')
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-	{!!Html::script('js/skel.min.js')!!}
-	{!!Html::script('js/skel-panels.min.js')!!}
-	{!!Html::script('js/init.js')!!}
+	{!!Html::script('js/jQuery-2.1.4.min.js')!!}
+	{!!Html::script('js/bootstrap.min.js')!!}
 
 </body>
 

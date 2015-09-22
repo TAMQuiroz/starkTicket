@@ -28,11 +28,6 @@ class BusinessController extends Controller
         return view('internal.promoter.transferPayments');
     }
 
-    public function reserve()
-    {
-        return view('internal.client.reserve');
-    }
-
     public function promotion()
     {
         return view('internal.promoter.promotions');

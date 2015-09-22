@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
 
 class EventController extends Controller
 {
@@ -36,5 +37,17 @@ class EventController extends Controller
     public function addFunction()
     {
         return view('internal.promoter.addFunction');
+    }
+
+    public function buy($id)
+    {
+        $user = Auth::user();
+        
+        return view('internal.client.buy')->with('user',$user);
+    }
+
+    public function reserve($id)
+    {
+        return view('internal.client.reserve');
     }
 }

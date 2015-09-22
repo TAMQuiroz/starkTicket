@@ -15,10 +15,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('login_client', 'LoginController@client');
-Route::get('login_worker', 'LoginController@worker');
 
-Route::get('signin', 'SignInController@signin');
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+
+Route::get('login_client', 'Auth\AuthController@client');
+Route::get('login_worker', 'Auth\AuthController@worker');
+
+Route::get('signin', 'Auth\AuthController@signin');
+
+
 
 Route::get('home', 'PagesController@home');
 Route::get('about', 'PagesController@about');
@@ -32,11 +45,14 @@ Route::get('event/promoter_record', 'EventController@promoterRecord');
 Route::get('event/client_record', 'EventController@clientRecord');
 Route::get('event/add_function', 'EventController@addFunction');
 Route::get('event/{id}', 'EventController@show');
+Route::get('event/{id}/buy', 'EventController@buy');
+Route::get('event/{id}/reserve', 'EventController@reserve');
 
 Route::get('cash_count', 'BusinessController@cashCount');
 Route::get('ticket_return', 'BusinessController@ticketReturn');
 Route::get('exchange_rate', 'BusinessController@exchangeRate');
 Route::get('transfer_payments', 'BusinessController@transferPayments');
+
 Route::get('reservanueva', ['as' => 'booking.create' , 'uses' => 'BookingController@create']);
 Route::get('reservaexitosa', 'BookingController@store');
 Route::get('promotion', 'BusinessController@promotion');

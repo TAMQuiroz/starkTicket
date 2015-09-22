@@ -6,19 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<title>StarkTicket</title>
-
-	{!!Html::style('css/style.css')!!}
-	@yield('style')
-
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	
+	{!!Html::style('css/bootstrap.min.css')!!}
+    {!!Html::style('css/font-awesome.min.css')!!}
+	{!!Html::style('css/style.css')!!}
+	{!!Html::style('css/style-desktop.css')!!}
+	{!!Html::style('css/skel-noscript.css')!!}
+	@yield('style')
 	
 </head>
 <body>
 	<div id="header">
 		<div class="container">
-				
+			@if(Session::has('flash_message'))
+				<div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					{{Session::get('flash_message')}}
+				</div>
+			@endif
 			<!-- Logo -->
 
 			<div id="logo">
@@ -34,6 +39,7 @@
 					<li><a href="#">Nosotros</a></li>
 					<li><a href="#">Puntos de venta</a></li>
 					<li><a href="#">Calendario</a></li>
+					<li><a href="#">Canjealo</a></li>
 				</ul>
 			</nav>
 
@@ -48,14 +54,8 @@
 	
 	@yield('javascript')
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-	{!!Html::script('js/skel.min.js')!!}
-	{!!Html::script('js/skel-panels.min.js')!!}
-	{!!Html::script('js/init.js')!!}
-
+	{!!Html::script('js/jQuery-2.1.4.min.js')!!}
+	{!!Html::script('js/bootstrap.min.js')!!}
 </body>
 
 <footer id="footer">
