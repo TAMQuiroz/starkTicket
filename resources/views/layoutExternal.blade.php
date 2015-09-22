@@ -12,6 +12,7 @@
 	{!!Html::style('css/style.css')!!}
 	{!!Html::style('css/style-desktop.css')!!}
 	{!!Html::style('css/skel-noscript.css')!!}
+	
 	@yield('style')
 	
 </head>
@@ -49,17 +50,11 @@
 	<div class="container">
 		@yield('content')
 	</div>
-
-	@yield('footer')
 	
-	@yield('javascript')
-
-	{!!Html::script('js/jQuery-2.1.4.min.js')!!}
-	{!!Html::script('js/bootstrap.min.js')!!}
+	
 </body>
 
 <footer id="footer">
-
 	<ul class="icons">
 		<li><a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span>S</a></li>
 		<li><a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span>t</a></li>
@@ -67,7 +62,11 @@
 		<li><a href="#" class="icon circle fa-github"><span class="label">Github</span>r</a></li>
 		<li><a href="#" class="icon circle fa-dribbble"><span class="label">Dribbble</span>k</a></li>
 	</ul>
-
 </footer>
 
+	{!!Html::script('js/jQuery-2.1.4.min.js')!!}
+	{!!Html::script('js/jquery-1.11.3.min.js')!!}
+	{!!Html::script('js/bootstrap.min.js')!!}
+	@yield('javascript')
+	
 </html>

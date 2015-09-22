@@ -1,4 +1,4 @@
-@extends('layoutInternal')
+@extends('layout.worker')
 
 @section('style')
 	

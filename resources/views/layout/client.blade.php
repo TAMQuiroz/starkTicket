@@ -21,9 +21,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-            <li>
-                      <a href="#">Nuevo Evento</a>
-                  </li>
+                    <li>
+                        <a href="#">Nuevo Evento</a>
+                    </li>
         
                     <li>
                         <a href="#">Venta de tickets</a>
@@ -74,7 +74,7 @@
 @stop
 
 @section('sidebar')
-
+ aqui iria el sidebar
 @stop
 
 @section('javascript2')
