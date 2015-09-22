@@ -13,16 +13,6 @@ class BusinessController extends Controller
         return view('internal.salesman.cashCount');
     }
 
-    public function ticketReturn()
-    {
-        return view('internal.admin.ticketReturn');
-    }
-
-    public function exchangeRate()
-    {
-        return view('internal.admin.exchangeRate');
-    }
-
     public function transferPayments()
     {
         return view('internal.promoter.transferPayments');
@@ -31,10 +21,5 @@ class BusinessController extends Controller
     public function promotion()
     {
         return view('internal.promoter.promotions');
-    }
-
-    public function config()
-    {
-        return view('internal.admin.config');
     }
 }

@@ -17,4 +17,5 @@ class CategoryController extends Controller
     {
         return view('external.category');
     }
+
 }
