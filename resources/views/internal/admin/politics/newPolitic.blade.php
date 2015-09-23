@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Nuevo Regalo
+	Nueva Politica
 @stop
 
 @section('content')
@@ -26,27 +26,9 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Stock</label>
+                <label for="inputEmail3" class="col-sm-2 control-label">Descripcion</label>
                 <div class="col-sm-10">
-                  <input type="number" class="form-control" id="stock" placeholder="">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Numero de puntos</label>
-                <div class="col-sm-10">
-                  <input type="number" class="form-control" id="stock" placeholder="">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Imagen</label>
-                <div class="col-sm-10">
-                  <input type="file" class="form-control" id="inputEmail3" placeholder="">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Descripción</label>
-                <div class="col-sm-10">
-                  <textarea class="form-control" rows="5"></textarea>
+                  <input type="textarea" class="form-control" id="inputEmail3" placeholder="">
                 </div>
               </div>
               <div class="form-group">
@@ -59,7 +41,7 @@
           </div>
         </div>
         <!-- Final Contenido -->
-    </div>
+     </div>
 @stop
 
 @section('javascript')

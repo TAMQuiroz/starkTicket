@@ -62,9 +62,12 @@ Route::get('promoter/event/record', 'EventController@promoterRecord');
 Route::get('promoter/event/create', 'EventController@newEvent');
 Route::get('promoter/promotion', 'BusinessController@promotion');
 
+Route::get('admin/politics', 'AdminController@politics');
+Route::get('admin/politics/new', 'AdminController@newPolitic');
+Route::get('admin/politics/{id}/edit', 'AdminController@editPolitic');
 Route::get('admin/gifts', 'AdminController@gifts');
 Route::get('admin/gifts/new', 'AdminController@newGift');
-Route::get('admin/gifts/{id}', 'AdminController@editGift');
+Route::get('admin/gifts/{id}/edit', 'AdminController@editGift');
 Route::get('admin/category', 'AdminController@categoryList');
 Route::get('admin/category/new', 'AdminController@newCategory');
 Route::get('admin/ticket_return', 'AdminController@ticketReturn');

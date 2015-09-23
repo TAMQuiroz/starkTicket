@@ -103,5 +103,19 @@ class AdminController extends Controller
         return view('internal.admin.newUser');
     }
 
+    public function politics()
+    {
+        return view('internal.admin.politics.politics');
+    }
+
+    public function newPolitic()
+    {
+        return view('internal.admin.politics.newPolitic');
+    }
+
+    public function editPolitic($id)
+    {
+        return view('internal.admin.politics.editPolitic');
+    }
 
 }
