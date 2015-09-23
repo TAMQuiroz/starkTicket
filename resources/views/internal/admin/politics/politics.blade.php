@@ -9,13 +9,6 @@
 @stop
 
 @section('content')
-	<div class="container">
-        <h1 class="page-header">
-        <!-- Titulo-->
-        
-        <!-- Final Titulo -->
-        </h1>
-        <!-- Contenido-->
         <table class="table table-bordered table-striped">
             <tr>
                 <th>Nombre</th>
@@ -26,8 +19,8 @@
                 <td>Politica 1</td>
                 <td>Lorem ipsum dolor sit amet.</td>
                 <td>
-                    <a href="politics/1/edit">Editar</a> 
-                    <a href="">Eliminar</a> 
+                    <a href="politics/1/edit">Editar</a>
+                    <a href="">Eliminar</a>
                 </td>
             </tr>
         </table>
@@ -50,8 +43,6 @@
               </li>
             </ul>
           </nav>
-        <!-- Final Contenido -->
-     </div>
 @stop
 
 @section('javascript')

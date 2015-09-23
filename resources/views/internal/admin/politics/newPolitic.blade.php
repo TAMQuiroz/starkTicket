@@ -9,13 +9,6 @@
 @stop
 
 @section('content')
-	<div class="container">
-        <h1 class="page-header">
-        <!-- Titulo-->
-        
-        <!-- Final Titulo -->
-        </h1>
-        <!-- Contenido-->
         <div class="row">
           <div class="col-sm-8">
             <form class="form-horizontal" method="post">
@@ -40,8 +33,6 @@
             </form>
           </div>
         </div>
-        <!-- Final Contenido -->
-     </div>
 @stop
 
 @section('javascript')
