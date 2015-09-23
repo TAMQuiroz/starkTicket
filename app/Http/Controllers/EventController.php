@@ -31,7 +31,7 @@ class EventController extends Controller
 
     public function clientRecord()
     {
-        return view('internal.salesman.record');
+        return view('internal.client.record');
     }
 
     public function addFunction()
