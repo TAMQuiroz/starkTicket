@@ -30,30 +30,28 @@
 								<p><a href="#" class="image full">{!! Html::image('images/piaf.jpg') !!}</a></p>
 								<p>Maecenas pede nisl, elementum eu, ornare ac, malesuada at, erat. Proin gravida orci porttitor enim accumsan lacinia. Donec condimentum, urna non molestie semper, ligula enim ornare nibh, quis laoreet eros quam eget ante. Aliquam libero. Vivamus nisl nibh, iaculis vitae, viverra sit amet, ullamcorper vitae, turpis. Aliquam erat volutpat. Vestibulum dui sem, pulvinar sed, imperdiet nec, iaculis nec, leo. Fusce odio. Etiam arcu dui, faucibus eget, placerat vel, sodales eget, orci. Donec ornare neque ac sem. Mauris aliquet. Aliquam sem leo, vulputate sed, convallis at, ultricies quis, justo. Donec nonummy magna quis risus. Quisque eleifend. Phasellus tempor vehicula justo.</p>
 								<br>
-								<button type="button" class="btn btn-info">Comprar Entrada</button>
-								<button type="button" class="btn btn-info">Reservar</button>
-								<div class="seats">
-									<div class="demo">
-							   			<div id="seat-map">
-											<div class="front">SCREEN</div>					
-										</div>
-										<div class="booking-details">
-											<p>Movie: <span> Gingerclown</span></p>
-											<p>Time: <span>November 3, 21:00</span></p>
-											<p>Seat: </p>
-											<ul id="selected-seats"></ul>
-											<p>Tickets: <span id="counter">0</span></p>
-											<p>Total: <b>$<span id="total">0</span></b></p>
-													
-											<button class="checkout-button">BUY</button>
-													
-											<div id="legend"></div>
-										</div>
-										<div style="clear:both"></div>
-								   </div>
-
-								   
+								<div class="table-responsive">
+								  <table class="table" style="widht:1px">
+								    <thead>
+								        <tr>
+								            <th>Zona</th>
+								            <th>Precio</th>
+								        </tr>
+								    </thead>
+								    <tbody>
+								        <tr>
+								            <td>VIP</td>  
+								            <td>S/150.00</td>
+								        </tr>
+								        <tr>
+								            <td>Platea</td>  
+								            <td>S/.70</td>
+								        </tr>
+								    </tbody>
+								  </table>
 								</div>
+								<button type="button" class="btn btn-info"><a href="{{url('client/event/1/buy')}}">Comprar Entrada</a></button> <!---->
+								<button type="button" class="btn btn-info"><a href="{{url('client/1/reservanueva')}}">Reservar Entrada</a></button>
 							</section>
 						</div>
 					<!-- /Content -->
@@ -67,7 +65,6 @@
 								</header>
 								<h3 class="dates">Fechas del evento</h3>
 								<p>Del 17 de Septiembre al 26 de Octubre 2015</p>
-								<br>
 								<h3 class="dates">Ubicación</h3>
 
 								<p>Av. Gregorio Escobedo 803, Jesús María 15076</p>
