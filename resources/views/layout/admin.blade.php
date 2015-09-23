@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>@yield('title') | StarkTicket</title>
-    
+
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/admin.css')!!}
@@ -115,6 +115,7 @@
     </nav>
     <div class="container">
         <h1>@yield('title')</h1>
+        <hr>
         @yield('content')
     </div>
     <div class="container">
@@ -126,6 +127,6 @@
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}
     {!!Html::script('js/bootstrap.min.js')!!}
     @yield('javascript')
-    
+
 </body>
 </html>

@@ -9,12 +9,6 @@
 @stop
 
 @section('content')
-	<div class="container">
-        <h1 class="page-header">
-        <!-- Titulo-->
-        
-        <!-- Final Titulo -->
-        </h1>
         <!-- Contenido-->
         <table class="table table-bordered table-striped">
             <tr>
@@ -98,8 +92,6 @@
               </li>
             </ul>
           </nav>
-        <!-- Final Contenido -->
-     </div>
 @stop
 
 @section('javascript')

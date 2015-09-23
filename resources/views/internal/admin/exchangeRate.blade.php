@@ -5,18 +5,10 @@
 @stop
 
 @section('title')
-	Tipo de cambio 
+	Tipo de cambio
 @stop
 
 @section('content')
-	     <div class="container">
-         <h1 class="page-header">
-         <!-- Titulo-->
-         
-         <!-- Final Titulo -->
-         </h1>
-         <!-- Contenido-->
-
             <div class="row">
                 <form>
               <div class="col-sm-2">
@@ -96,8 +88,6 @@
 
                   </div>
                 </div>
-         <!-- Final Contenido -->
-     </div>
 @stop
 
 @section('javascript')

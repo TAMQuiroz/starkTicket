@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-    Nuevo Evento
+    Nuevo Organizador
 @stop
 
 @section('content')

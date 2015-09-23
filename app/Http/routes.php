@@ -50,21 +50,35 @@ Route::get('client/{id}/reservanueva', ['as' => 'booking.create' , 'uses' => 'Bo
 //Fin
 Route::get('client/reservaexitosa', 'BookingController@store');
 
+Route::get('salesman/', function () {
+    return view('internal.salesman.index');
+});
 Route::get('salesman/cash_count', 'BusinessController@cashCount');
 Route::get('salesman/exchange_gift', 'BusinessController@exchangeGift');
 //Este inicia en el detalle del evento
 Route::get('salesman/event/{id}/buy', 'EventController@salesmanBuy');
 //Fin
-
+Route::get('promoter/', function () {
+    return view('internal.promoter.index');
+});
 Route::get('promoter/transfer_payments', 'BusinessController@transferPayments');
 Route::get('promoter/new_transfer_payment', 'BusinessController@newTransferPayment');
 Route::get('promoter/event/record', 'EventController@promoterRecord');
 Route::get('promoter/event/create', 'EventController@newEvent');
 Route::get('promoter/promotion', 'BusinessController@promotion');
 
+
 Route::get('admin/politics', 'AdminController@politics');
 Route::get('admin/politics/new', 'AdminController@newPolitic');
 Route::get('admin/politics/{id}/edit', 'AdminController@editPolitic');
+
+Route::get('promoter/organizers', 'BusinessController@organizers');
+Route::get('promoter/organizer/create', 'BusinessController@newOrganizer');
+
+Route::get('admin/', function () {
+    return view('internal.admin.index');
+});
+
 Route::get('admin/gifts', 'AdminController@gifts');
 Route::get('admin/gifts/new', 'AdminController@newGift');
 Route::get('admin/gifts/{id}/edit', 'AdminController@editGift');

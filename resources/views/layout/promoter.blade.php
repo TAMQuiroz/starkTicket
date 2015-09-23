@@ -4,16 +4,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>@yield('title') | StarkTicket</title>
-    
+
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/admin.css')!!}
     @yield('style')
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -44,6 +44,13 @@
                             <li><a href="{{url('promoter/transfer_payments')}}">Transferencias de pago</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organizador <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{url('promoter/organizers')}}">Listar</a></li>
+                            <li><a href="{{url('promoter/organizer/create')}}">Nuevo</a></li>
+                        </ul>
+                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -57,6 +64,7 @@
     </nav>
     <div class="container">
         <h1>@yield('title')</h1>
+        <hr>
         @yield('content')
     </div>
     <div class="container">

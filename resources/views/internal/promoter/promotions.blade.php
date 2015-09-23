@@ -1,7 +1,7 @@
 @extends('layout.promoter')
 
 @section('style')
-	
+
 @stop
 
 @section('title')
@@ -9,12 +9,10 @@
 @stop
 
 @section('content')
-	<!-- Page Content -->
-    <div class="container">
         <!-- Content Row -->
         <div class="row">
             <!-- Content Column -->
-            <div class="col-md-9">	
+            <div class="col-md-9">
 				<div class="container">  <!-- Comienza primer despliegue-->
 					<input type="text"></input>
 					<button type="button" class="btn btn-info">Buscar</button>
@@ -33,24 +31,135 @@
 					    </thead>
 					    <tbody>
 					        <tr>
-					            <td>Promoción Visa Platinium</td>  
+					            <td>Promoción Visa Platinium</td>
 					            <td>13</td>
 					            <td>13/10/2015</td>
-					            <td><button type="button" class="btn btn-info" style="font-size:12px;color:#0000;font-family:verdana;" name="B1" onClick="edit('show.html','pagename','640','480','center','front');"><i class="glyphicon glyphicon-plus"></i></button></td>
-					            <td><button type="button" class="btn btn-info" style="font-size:12px;color:#0000;font-family:verdana;" name="B1" onClick="edit('edit.html','pagename','640','480','center','front');"><span class="glyphicon glyphicon-pencil"></span></button></td>
-					            <td><button type="button" class="btn btn-info" style="font-size:12px;color:#0000;font-family:verdana;" name="B1" onClick="edit('','pagename','640','480','center','front');"><span class="glyphicon glyphicon-remove"></span></button></td>
+					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
+					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit" data-whatever="@mdo"><i class="glyphicon glyphicon-pencil"></i></button></td>
+					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
 					        </tr>
 					        <tr>
-					            <td>Promoción Mastercard</td>  
+					            <td>Promoción Mastercard</td>
 					            <td>10</td>
 					            <td>20/12/2015</td>
-					            <td><button type="button" class="btn btn-info" style="font-size:12px;color:#0000;font-family:verdana;" name="B1" onClick="edit('','pagename','640','480','center','front');"><span class="glyphicon glyphicon-plus"></span></button></td>
-					            <td><button type="button" class="btn btn-info" style="font-size:12px;color:#0000;font-family:verdana;" name="B1" onClick="edit('','pagename','640','480','center','front');"><span class="glyphicon glyphicon-pencil"></span></button></td>
-					            <td><button type="button" class="btn btn-info" style="font-size:12px;color:#0000;font-family:verdana;" name="B1" onClick="edit('','pagename','640','480','center','front');"><span class="glyphicon glyphicon-remove"></span></button></td>
+					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
+					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="glyphicon glyphicon-pencil"></i></button></td>
+					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
 					        </tr>
 					    </tbody>
 					  </table>
 					</div>
+					<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="exampleModalLabel">Modificar Promoción</h4>
+					      </div>
+					      <div class="modal-body">
+					        <form>
+					          <div class="form-group">
+					            <label for="recipient-name" class="control-label">Nombre:</label>
+					            <input type="text" class="form-control" id="recipient-name">
+					          </div>
+					          <div class="form-group">
+					            <label for="recipient-name" class="control-label">Fecha Fin:</label>
+					            <input type="text" class="form-control" id="recipient-name">
+					          </div>
+					          <div class="form-group">
+					            <label for="recipient-name" class="control-label">Descripción:</label>
+					            <input type="text" class="form-control" id="recipient-name">
+					          </div>
+					          <div class="form-group">
+					            <label for="recipient-name" class="control-label">Descuento (%):</label>
+					            <input type="text" class="form-control" id="recipient-name">
+					          </div>
+					          <h4 class="modal-title" id="exampleModalLabel">Agregar eventos:</h4>
+					          <input type="text"></input>
+								<button type="button" class="btn btn-info">Buscar</button>
+								<br><br>
+					          <div class="table-responsive">
+								  <table class="table">
+								    <thead>
+								        <tr>
+								            <th>Nombre</th>
+								            <th>Eliminar</th>
+								        </tr>
+								    </thead>
+								    <tbody>
+								        <tr>
+								            <td>Viva por el Rock 6</td>
+								            <td><button type="button" class="btn btn-info">x</button></td>
+								        </tr>
+								        <tr>
+								            <td>Arctic Monkeys Lima 2020</td>
+								            <td><button type="button" class="btn btn-info">x</button></td>
+								        </tr>
+								    </tbody>
+								  </table>
+								</div>
+								<h4>Agregar categorías:</h4>
+								<input type="text"></input>
+								<button type="button" class="btn btn-info">Buscar</button>
+								<br><br>
+								<div class="table-responsive">
+								  <table class="table">
+								    <thead>
+								        <tr>
+								            <th>Tipo</th>
+								            <th>Eliminar</th>
+								        </tr>
+								    </thead>
+								    <tbody>
+								        <tr>
+								            <td>Conciertos</td>
+								            <td><button type="button" class="btn btn-info">x</button></td>
+								        </tr>
+								    </tbody>
+								  </table>
+								</div>
+					        </form>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-info">Guardar</button>
+					        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+
+					<div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="exampleModalLabel">Detalle de Promoción</h4>
+					      </div>
+					      <div class="modal-body">
+					        <form>
+					          <div class="form-group">
+				            	<h4>Promoción Visa Platinium</h4>
+								<p>Código CA21231J.
+								Válida del 01/08/2015 al 13/10/2015.</p>
+								<h5>Aplica para los siguientes eventos:</h5>
+								<ul>
+									<li>Viva por el Rock 6</li>
+									<li>Arctic Monkeys Lima 2020</li>
+								</ul>
+								<br><br>
+								<h4>Información de Ventas</h4>
+								<p>Cantidad de Clientes que accedieron: 249</p>
+								<p>Evento más accedido: Arctic Monkeys Lima 2020</p>
+					          </div>
+					        </form>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+
 					<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo1">Agregar Promoción</button>
 					<div id="demo1" class="collapse">
 						<br>
@@ -78,11 +187,11 @@
 						    </thead>
 						    <tbody>
 						        <tr>
-						            <td>Viva por el Rock 6</td>  
+						            <td>Viva por el Rock 6</td>
 						            <td><button type="button" class="btn btn-info">x</button></td>
 						        </tr>
 						        <tr>
-						            <td>Arctic Monkeys Lima 2020</td>  
+						            <td>Arctic Monkeys Lima 2020</td>
 						            <td><button type="button" class="btn btn-info">x</button></td>
 						        </tr>
 						    </tbody>
@@ -103,7 +212,7 @@
 						    </thead>
 						    <tbody>
 						        <tr>
-						            <td>Conciertos</td>  
+						            <td>Conciertos</td>
 						            <td><button type="button" class="btn btn-info">x</button></td>
 						        </tr>
 						    </tbody>
@@ -112,12 +221,11 @@
 						<br><br>
 						<button type="button" class="btn btn-info">Guardar</button>
 						<button type="button" class="btn btn-info">Cancelar</button>
-						
+
 					</div>
 				</div>
 			</div>
-		</div>		
-	</div>	
+		</div>
 @stop
 
 @section('javascript')
