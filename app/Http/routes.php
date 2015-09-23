@@ -62,6 +62,9 @@ Route::get('promoter/event/record', 'EventController@promoterRecord');
 Route::get('promoter/event/create', 'EventController@newEvent');
 Route::get('promoter/promotion', 'BusinessController@promotion');
 
+Route::get('promoter/organizers', 'BusinessController@organizers');
+Route::get('promoter/organizer/create', 'BusinessController@newOrganizer');
+
 Route::get('admin/gifts', 'AdminController@gifts');
 Route::get('admin/gifts/new', 'AdminController@newGift');
 Route::get('admin/gifts/{id}', 'AdminController@editGift');
