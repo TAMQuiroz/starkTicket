@@ -1,7 +1,7 @@
 @extends('layout.promoter')
 
 @section('style')
-	
+
 @stop
 
 @section('title')
@@ -9,12 +9,10 @@
 @stop
 
 @section('content')
-	<!-- Page Content -->
-    <div class="container">
         <!-- Content Row -->
         <div class="row">
             <!-- Content Column -->
-            <div class="col-md-9">	
+            <div class="col-md-9">
 				<div class="container">  <!-- Comienza primer despliegue-->
 					<input type="text"></input>
 					<button type="button" class="btn btn-info">Buscar</button>
@@ -33,7 +31,7 @@
 					    </thead>
 					    <tbody>
 					        <tr>
-					            <td>Promoción Visa Platinium</td>  
+					            <td>Promoción Visa Platinium</td>
 					            <td>13</td>
 					            <td>13/10/2015</td>
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
@@ -41,7 +39,7 @@
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
 					        </tr>
 					        <tr>
-					            <td>Promoción Mastercard</td>  
+					            <td>Promoción Mastercard</td>
 					            <td>10</td>
 					            <td>20/12/2015</td>
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
@@ -90,11 +88,11 @@
 								    </thead>
 								    <tbody>
 								        <tr>
-								            <td>Viva por el Rock 6</td>  
+								            <td>Viva por el Rock 6</td>
 								            <td><button type="button" class="btn btn-info">x</button></td>
 								        </tr>
 								        <tr>
-								            <td>Arctic Monkeys Lima 2020</td>  
+								            <td>Arctic Monkeys Lima 2020</td>
 								            <td><button type="button" class="btn btn-info">x</button></td>
 								        </tr>
 								    </tbody>
@@ -114,7 +112,7 @@
 								    </thead>
 								    <tbody>
 								        <tr>
-								            <td>Conciertos</td>  
+								            <td>Conciertos</td>
 								            <td><button type="button" class="btn btn-info">x</button></td>
 								        </tr>
 								    </tbody>
@@ -189,11 +187,11 @@
 						    </thead>
 						    <tbody>
 						        <tr>
-						            <td>Viva por el Rock 6</td>  
+						            <td>Viva por el Rock 6</td>
 						            <td><button type="button" class="btn btn-info">x</button></td>
 						        </tr>
 						        <tr>
-						            <td>Arctic Monkeys Lima 2020</td>  
+						            <td>Arctic Monkeys Lima 2020</td>
 						            <td><button type="button" class="btn btn-info">x</button></td>
 						        </tr>
 						    </tbody>
@@ -214,7 +212,7 @@
 						    </thead>
 						    <tbody>
 						        <tr>
-						            <td>Conciertos</td>  
+						            <td>Conciertos</td>
 						            <td><button type="button" class="btn btn-info">x</button></td>
 						        </tr>
 						    </tbody>
@@ -227,8 +225,7 @@
 					</div>
 				</div>
 			</div>
-		</div>		
-	</div>	
+		</div>
 @stop
 
 @section('javascript')
