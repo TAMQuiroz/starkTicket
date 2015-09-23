@@ -4,6 +4,10 @@
 	
 @stop
 
+@section('title')
+	
+@stop
+
 @section('content')
 	reservar entrada
 @stop

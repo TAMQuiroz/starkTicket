@@ -1,15 +1,15 @@
-@extends('layoutExternal')
+@extends('layout.salesman')
 
 @section('style')
-	
+
 @stop
 
 @section('title')
-	Eventos
+	Canjear regalo
 @stop
 
 @section('content')
-	todos los eventos
+
 @stop
 
 @section('javascript')

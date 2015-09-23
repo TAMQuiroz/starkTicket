@@ -1,7 +1,11 @@
-@extends('layout.worker')
+@extends('layout.promoter')
 
 @section('style')
 	
+@stop
+
+@section('title')
+	Pagos de transferencias
 @stop
 
 @section('content')

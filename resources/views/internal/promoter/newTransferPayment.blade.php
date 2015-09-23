@@ -1,15 +1,15 @@
-@extends('layoutExternal')
+@extends('layout.promoter')
 
 @section('style')
-	
+
 @stop
 
 @section('title')
-	Eventos
+	Nueva transferencia de pago
 @stop
 
 @section('content')
-	todos los eventos
+
 @stop
 
 @section('javascript')

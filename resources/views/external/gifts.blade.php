@@ -5,11 +5,11 @@
 @stop
 
 @section('title')
-	Eventos
+	Canjeo de Regalos
 @stop
 
 @section('content')
-	todos los eventos
+	regalos
 @stop
 
 @section('javascript')

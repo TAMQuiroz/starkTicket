@@ -35,31 +35,37 @@ Route::get('home', 'PagesController@home');
 Route::get('about', 'PagesController@about');
 Route::get('modules', 'PagesController@modules');
 Route::get('calendar', 'PagesController@calendar');
-Route::get('exchange', 'PagesController@exchange');
+Route::get('gifts', 'PagesController@gifts');
 Route::get('category', 'CategoryController@index');
 Route::get('category/{id}', 'CategoryController@show');
-
-
 Route::get('event', 'EventController@index');
-Route::get('event/create', 'EventController@create');
-Route::get('event/promoter_record', 'EventController@promoterRecord');
-Route::get('event/client_record', 'EventController@clientRecord');
 Route::get('event/{id}', 'EventController@show');
-Route::get('event/{id}/buy', 'EventController@buy');
-Route::get('event/{id}/reserve', 'EventController@reserve');
+
+Route::get('client/profile', 'EventController@clientProfile');
+Route::get('client/event_record', 'EventController@clientRecord');
+//Estos 2 inician en el detalle del evento
+Route::get('client/event/{id}/buy', 'EventController@clientBuy');
+Route::get('client/{id}/reservanueva', ['as' => 'booking.create' , 'uses' => 'BookingController@create']);
+//Fin
+Route::get('client/reservaexitosa', 'BookingController@store');
 
 Route::get('salesman/cash_count', 'BusinessController@cashCount');
-Route::get('salesman/transfer_payments', 'BusinessController@transferPayments');
+Route::get('salesman/exchange_gift', 'BusinessController@exchangeGift');
+//Este inicia en el detalle del evento
+Route::get('salesman/event/{id}/buy', 'EventController@salesmanBuy');
+//Fin
 
-Route::get('reservanueva', ['as' => 'booking.create' , 'uses' => 'BookingController@create']);
-Route::get('reservaexitosa', 'BookingController@store');
-
+Route::get('promoter/transfer_payments', 'BusinessController@transferPayments');
+Route::get('promoter/new_transfer_payment', 'BusinessController@newTransferPayment');
+Route::get('promoter/event/record', 'EventController@promoterRecord');
+Route::get('promoter/event/create', 'EventController@newEvent');
 Route::get('promoter/promotion', 'BusinessController@promotion');
 
-
-
+Route::get('admin/gifts', 'AdminController@gifts');
+Route::get('admin/gifts/new', 'AdminController@newGift');
+Route::get('admin/gifts/{id}', 'AdminController@editGift');
 Route::get('admin/category', 'AdminController@categoryList');
-Route::get('admin/category/new', 'AdminController@new');
+Route::get('admin/category/new', 'AdminController@newCategory');
 Route::get('admin/ticket_return', 'AdminController@ticketReturn');
 Route::get('admin/ticket_return/new', 'AdminController@newTicketReturn');
 Route::get('admin/attendance', 'AdminController@attendance');
@@ -70,3 +76,7 @@ Route::get('admin/report', 'AdminController@reportList');
 Route::get('admin/report/{id}', 'AdminController@report');
 Route::get('admin/modules', 'AdminController@modules');
 Route::get('admin/modules/new', 'AdminController@newModule');
+Route::get('admin/salesman', 'AdminController@salesman');
+Route::get('admin/promoter', 'AdminController@promoter');
+Route::get('admin/admin', 'AdminController@admin');
+Route::get('admin/user/new', 'AdminController@newUser');

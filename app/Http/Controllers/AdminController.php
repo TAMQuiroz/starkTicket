@@ -43,7 +43,7 @@ class AdminController extends Controller
         return view('internal.admin.report');
     }
 
-    public function createCategory()
+    public function newCategory()
     {
         return view('internal.admin.newCategory');
     }
@@ -67,4 +67,41 @@ class AdminController extends Controller
     {
         return view('internal.admin.newModule');
     }
+
+    public function gifts()
+    {
+        return view('internal.admin.gifts');
+    }
+
+    public function newGift()
+    {
+        return view('internal.admin.newGift');
+    }
+
+    public function editGift($id)
+    {
+        return view('internal.admin.editGift');
+    }
+
+    public function salesman()
+    {
+        return view('internal.admin.salesman');
+    }
+
+    public function promoter()
+    {
+        return view('internal.admin.promoter');
+    }
+
+    public function admin()
+    {
+        return view('internal.admin.admin');
+    }
+
+    public function newUser()
+    {
+        return view('internal.admin.newUser');
+    }
+
+
 }

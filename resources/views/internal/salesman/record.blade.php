@@ -1,7 +1,11 @@
-@extends('layout.worker')
+@extends('layout.client')
 
 @section('style')
 	
+@stop
+
+@section('title')
+	Historial de eventos q asistio el cliente
 @stop
 
 @section('content')

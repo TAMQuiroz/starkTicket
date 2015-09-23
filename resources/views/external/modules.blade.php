@@ -4,6 +4,10 @@
 	
 @stop
 
+@section('title')
+	Puntos de venta
+@stop
+
 @section('content')
 	donde estoy? :o
 @stop

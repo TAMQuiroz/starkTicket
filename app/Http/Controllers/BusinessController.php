@@ -18,8 +18,18 @@ class BusinessController extends Controller
         return view('internal.promoter.transferPayments');
     }
 
+    public function newTransferPayment()
+    {
+        return view('internal.promoter.newTransferPayment');
+    }
+
     public function promotion()
     {
         return view('internal.promoter.promotions');
+    }
+
+    public function exchangeGift()
+    {
+        return view('internal.promoter.exchangeGift');
     }
 }

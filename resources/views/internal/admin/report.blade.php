@@ -1,15 +1,15 @@
-@extends('layout.worker')
+@extends('layout.admin')
 
 @section('style')
 
 @stop
 
 @section('title')
-
+	Reporte de algo
 @stop
 
 @section('content')
-	un reporte
+
 @stop
 
 @section('javascript')

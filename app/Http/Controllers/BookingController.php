@@ -8,11 +8,13 @@ use App\Http\Controllers\Controller;
 
 class BookingController extends Controller
 {
-	public function create(){
+	public function create($id)
+	{
 		return view('external.booking.create');
 	}
 
-	public function store(Request $request){
+	public function store(Request $request)
+	{
 		
 		//return view('external.home');
 		return view('external.booking.results');

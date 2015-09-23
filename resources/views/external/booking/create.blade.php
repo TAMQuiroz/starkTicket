@@ -1,7 +1,11 @@
-@extends('layoutExternal')
+@extends('layout.client')
 
 @section('style')
 	<link href="{{ URL::asset('css/jquery.seat-charts.css')}}" rel="stylesheet">
+@stop
+
+@section('title')
+	Nueva Reserva
 @stop
 
 @section('content')

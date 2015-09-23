@@ -4,6 +4,10 @@
 	
 @stop
 
+@section('title')
+	Acerca de Nosotros
+@stop
+
 @section('content')
 	quien soy? :(
 @stop

@@ -1,11 +1,15 @@
-@extends('layout.worker')
+@extends('layout.admin')
 
 @section('style')
-	
+
+@stop
+
+@section('title')
+	Nueva devolucion de ticket
 @stop
 
 @section('content')
-	agregar funciones de evento
+
 @stop
 
 @section('javascript')

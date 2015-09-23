@@ -4,6 +4,10 @@
 	
 @stop
 
+@section('title')
+	Home
+@stop
+
 @section('content')
 	home
 @stop

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<title>StarkTicket</title>
+	<title>@yield('title') | StarkTicket</title>
 	
 	{!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
@@ -28,19 +28,20 @@
 			<!-- Logo -->
 
 			<div id="logo">
-				<h1 id="portada"><a href="#">Teleticke</a></h1>
+				<h1 id="portada"><a href="{{url('home')}}">Teleticke</a></h1>
 			</div>
 
 			
 			<!-- Nav -->
 			<nav id="nav">
 				<ul>
-					<li><a href="#">Inicio</a></li>
-					<li><a href="#">Categorias</a></li>
-					<li><a href="#">Nosotros</a></li>
-					<li><a href="#">Puntos de venta</a></li>
-					<li><a href="#">Calendario</a></li>
-					<li><a href="#">Canjealo</a></li>
+					<li><a href="{{url('home')}}">Inicio</a></li>
+					<li><a href="{{url('category')}}">Categorias</a></li>
+					<li><a href="{{url('event')}}">Eventos</a></li>
+					<li><a href="{{url('about')}}">Nosotros</a></li>
+					<li><a href="{{url('modules')}}">Puntos de venta</a></li>
+					<li><a href="{{url('calendar')}}">Calendario</a></li>
+					<li><a href="{{url('gifts')}}">Canjealo</a></li>
 				</ul>
 			</nav>
 

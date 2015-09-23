@@ -19,9 +19,9 @@ class EventController extends Controller
         return view('external.event');
     }
 
-    public function create()
+    public function newEvent()
     {
-        return view('internal.promoter.createEvent');
+        return view('internal.promoter.newEvent');
     }
 
     public function promoterRecord()
@@ -39,15 +39,27 @@ class EventController extends Controller
         return view('internal.promoter.addFunction');
     }
 
-    public function buy($id)
+    public function clientBuy($id)
     {
         $user = Auth::user();
         
         return view('internal.client.buy')->with('user',$user);
     }
 
+    public function salesmanBuy($id)
+    {
+        $user = Auth::user();
+        
+        return view('internal.salesman.buy')->with('user',$user);
+    }
+
     public function reserve($id)
     {
         return view('internal.client.reserve');
+    }
+
+    public function clientProfile()
+    {
+        return view('internal.client.profile');
     }
 }

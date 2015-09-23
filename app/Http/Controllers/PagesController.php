@@ -28,8 +28,8 @@ class PagesController extends Controller
         return view('external.calendar');
     }
 
-    public function exchange()
+    public function gifts()
     {
-        return view('external.exchange');
+        return view('external.gifts');
     }
 }

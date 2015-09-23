@@ -9,6 +9,10 @@
     </style>
 @stop
 
+@section('title')
+	Evento
+@stop
+
 @section('content')
 	<!-- Main -->
 		<div id="main">

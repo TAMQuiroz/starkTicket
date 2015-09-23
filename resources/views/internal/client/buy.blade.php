@@ -1,8 +1,11 @@
-
-@extends($user && $user->role_id == 1 ? 'layout.client' : 'layout.worker')
+@extends('layout.client')
 
 @section('style')
     
+@stop
+
+@section('title')
+	Comprar
 @stop
 
 @section('content')

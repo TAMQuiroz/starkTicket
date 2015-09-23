@@ -1,15 +1,15 @@
-@extends('layoutExternal')
+@extends('layout.admin')
 
 @section('style')
-	
+
 @stop
 
 @section('title')
-	Eventos
+	Regalos
 @stop
 
 @section('content')
-	todos los eventos
+	Regalos
 @stop
 
 @section('javascript')

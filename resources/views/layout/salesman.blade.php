@@ -10,9 +10,6 @@
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/admin.css')!!}
-    {!!Html::style('css/skel-noscript.css')!!}
-    {!!Html::style('css/style.css')!!}
-    {!!Html::style('css/style-desktop.css')!!}
     @yield('style')
 </head>
 <body>
@@ -26,22 +23,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{url('home')}}">Telecticke </a>
+                <a class="navbar-brand" href="">Telecticke </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
                     <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Eventos <b class="caret"></b></a>
+                        <a href="{{url('home')}}" class="dropdown-toggle" data-toggle="dropdown">Ventas <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{url('client/profile')}}">Perfil</a></li>
-                            <li><a href="{{url('client/event_record')}}">Historial</a></li>
+                            <li><a href="{{url('salesman/cash_count')}}">Apertura y Arqueo de caja</a></li>
+                            <li><a href="{{url('salesman/exchange_gift')}}">Canjeo de regalos</a></li>
                         </ul>
-                    </li>
+                    </li>                   
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="">Cliente</a></li>
+                    <li><a href="">Vendedor</a></li>
                     <li><a href="{{url('auth/logout')}}">(Salir)</a></li>
               </ul>
             </div>
@@ -61,5 +58,6 @@
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}
     {!!Html::script('js/bootstrap.min.js')!!}
     @yield('javascript')
+    
 </body>
 </html>

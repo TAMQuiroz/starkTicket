@@ -1,15 +1,15 @@
-@extends('layout_admin')
+@extends('layout.admin')
 
 @section('style')
 
 @stop
 
 @section('title')
-
+	Lista de reportes
 @stop
 
 @section('content')
-	lista de reportes
+	
 @stop
 
 @section('javascript')
