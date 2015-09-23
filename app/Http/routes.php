@@ -61,6 +61,7 @@ Route::get('salesman/event/{id}/buy', 'EventController@salesmanBuy');
 Route::get('promoter/', function () {
     return view('internal.promoter.index');
 });
+Route::get('promoter/politics', 'EventController@politics');
 Route::get('promoter/transfer_payments', 'BusinessController@transferPayments');
 Route::get('promoter/new_transfer_payment', 'BusinessController@newTransferPayment');
 Route::get('promoter/event/record', 'EventController@promoterRecord');

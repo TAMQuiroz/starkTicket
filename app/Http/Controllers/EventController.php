@@ -42,7 +42,7 @@ class EventController extends Controller
     public function clientBuy($id)
     {
         $user = Auth::user();
-        
+
         return view('internal.client.buy')->with('user',$user);
     }
 
@@ -54,7 +54,7 @@ class EventController extends Controller
     public function salesmanBuy($id)
     {
         $user = Auth::user();
-        
+
         return view('internal.salesman.buy')->with('user',$user);
     }
 
@@ -66,5 +66,9 @@ class EventController extends Controller
     public function clientProfile()
     {
         return view('internal.client.profile');
+    }
+    public function politics()
+    {
+        return view('internal.promoter.politics');
     }
 }

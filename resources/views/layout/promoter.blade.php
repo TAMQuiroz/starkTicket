@@ -51,6 +51,7 @@
                             <li><a href="{{url('promoter/organizer/create')}}">Nuevo</a></li>
                         </ul>
                     </li>
+                    <li><a href="{{url('promoter/politics')}}">Politicas</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
