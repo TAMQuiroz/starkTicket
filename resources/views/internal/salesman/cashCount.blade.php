@@ -10,6 +10,8 @@
 
 @section('content')
   <!-- Contenido-->
+  <input value="hola">
+  <h2></h2>
   <h2>Ventas</h2>
     <table class="table table-bordered table-striped">
       <tr>
