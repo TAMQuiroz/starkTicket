@@ -80,6 +80,7 @@ Route::get('admin/', function () {
     return view('internal.admin.index');
 });
 
+Route::get('admin/exchange_gift', 'AdminController@exchangeGift');
 Route::get('admin/gifts', 'AdminController@gifts');
 Route::get('admin/gifts/new', 'AdminController@newGift');
 Route::get('admin/gifts/{id}/edit', 'AdminController@editGift');

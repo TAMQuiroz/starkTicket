@@ -40,6 +40,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{url('admin/gifts')}}">Listar</a></li>
                             <li><a href="{{url('admin/gifts/new')}}">Nuevo</a></li>
+                            <li><a href="{{url('admin/exchange_gift')}}">Canjear</a></li>
                         </ul>
                     </li>
                     <li>

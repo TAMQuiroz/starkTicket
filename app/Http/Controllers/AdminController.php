@@ -68,6 +68,11 @@ class AdminController extends Controller
         return view('internal.admin.newModule');
     }
 
+    public function exchangeGift()
+    {
+        return view('internal.admin.exchangeGift');
+    }
+
     public function gifts()
     {
         return view('internal.admin.gifts');

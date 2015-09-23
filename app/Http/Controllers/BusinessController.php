@@ -32,6 +32,7 @@ class BusinessController extends Controller
     {
         return view('internal.promoter.exchangeGift');
     }
+    
     public function organizers()
     {
         return view('internal.promoter.organizers');
