@@ -39,6 +39,7 @@ Route::get('gifts', 'PagesController@gifts');
 Route::get('category', 'CategoryController@index');
 Route::get('category/{id}', 'CategoryController@show');
 Route::get('event', 'EventController@index');
+Route::get('event/successBuy', 'EventController@successBuy');
 Route::get('event/{id}', 'EventController@show');
 
 Route::get('client/profile', 'EventController@clientProfile');

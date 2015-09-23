@@ -23,13 +23,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="">Telecticke </a>
+                <a class="navbar-brand" href="{{url('home')}}">Telecticke </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
                     <li>
-                        <a href="{{url('home')}}" class="dropdown-toggle" data-toggle="dropdown">Categorias <b class="caret"></b></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Categorias <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{url('admin/category')}}">Listar</a></li>
                             <li><a href="{{url('admin/category/new')}}">Nuevo</a></li>

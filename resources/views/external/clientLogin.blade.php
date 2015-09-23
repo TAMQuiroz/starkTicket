@@ -5,6 +5,10 @@
 	{!!Html::style('css/designLogin.css')!!}
 @stop
 
+@section('title')
+	Login de cliente
+@stop
+
 @section('content')
 	<div class="content">
 		<div class="title">Inicio de sesión</div>

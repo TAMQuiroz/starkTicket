@@ -46,6 +46,11 @@ class EventController extends Controller
         return view('internal.client.buy')->with('user',$user);
     }
 
+    public function successBuy()
+    {
+        return view('internal.client.successBuy');
+    }
+
     public function salesmanBuy($id)
     {
         $user = Auth::user();

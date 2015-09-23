@@ -1,15 +1,15 @@
-@extends('layoutExternal')
+@extends('layout.client')
 
 @section('style')
-	
+    
 @stop
 
 @section('title')
-	Login de empresa
+	Venta exitosa
 @stop
 
 @section('content')
-	holi trabajador
+	venta exitosa!
 @stop
 
 @section('javascript')
