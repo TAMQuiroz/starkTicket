@@ -1,15 +1,13 @@
-@extends('layoutExternal')
-
-@section('style')
-	
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Login de Cliente</title>
+	{!!Html::style('css/bootstrap.min.css')!!}
+	{!!Html::style('css/font-awesome.min.css')!!}
 	{!!Html::style('css/designLogin.css')!!}
-@stop
-
-@section('title')
-	Login de cliente
-@stop
-
-@section('content')
+</head>
+<body>
 	<div class="content">
 		<div class="title">Inicio de sesión</div>
 		<input type="text" placeholder="E-mail"/>
@@ -23,8 +21,9 @@
 		   <button class="google"><i class="fa fa-google-plus"></i>Google</button>
 		</div>
 	</div>
-@stop
-
-@section('javascript')
-
-@stop
+	
+	{!!Html::script('js/jQuery-2.1.4.min.js')!!}
+    {!!Html::script('js/bootstrap.min.js')!!}
+	
+</body>
+</html>
