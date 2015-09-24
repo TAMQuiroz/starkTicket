@@ -8,6 +8,11 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
+    public function home()
+    {
+        return view('internal.admin.home');
+    }
+
     public function exchangeRate()
     {
         return view('internal.admin.exchangeRate');

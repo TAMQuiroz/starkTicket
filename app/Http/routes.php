@@ -20,15 +20,11 @@ Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
+Route::get('login_worker', 'Auth\AuthController@worker');
+
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
-
-
-Route::get('login_client', 'Auth\AuthController@client');
-Route::get('login_worker', 'Auth\AuthController@worker');
-
-Route::get('signin', 'Auth\AuthController@signin');
 
 
 Route::get('home', 'PagesController@home');
@@ -42,7 +38,7 @@ Route::get('event', 'EventController@index');
 Route::get('event/successBuy', 'EventController@successBuy');
 Route::get('event/{id}', 'EventController@show');
 
-Route::get('client/profile', 'EventController@clientProfile');
+Route::get('client/home', 'EventController@clientProfile');
 Route::get('client/event_record', 'EventController@clientRecord');
 //Estos 2 inician en el detalle del evento
 Route::get('client/event/{id}/buy', 'EventController@clientBuy');
@@ -50,36 +46,29 @@ Route::get('client/{id}/reservanueva', ['as' => 'booking.create' , 'uses' => 'Bo
 //Fin
 Route::get('client/reservaexitosa', 'BookingController@store');
 
-Route::get('salesman/', function () {
-    return view('internal.salesman.index');
-});
+
+Route::get('salesman/home', 'BusinessController@salesmanHome');
 Route::get('salesman/cash_count', 'BusinessController@cashCount');
 Route::get('salesman/exchange_gift', 'BusinessController@exchangeGift');
 //Este inicia en el detalle del evento
 Route::get('salesman/event/{id}/buy', 'EventController@salesmanBuy');
 //Fin
-Route::get('promoter/', function () {
-    return view('internal.promoter.index');
-});
+
+Route::get('promoter/home', 'BusinessController@promoterHome');
 Route::get('promoter/politics', 'EventController@politics');
 Route::get('promoter/transfer_payments', 'BusinessController@transferPayments');
 Route::get('promoter/new_transfer_payment', 'BusinessController@newTransferPayment');
 Route::get('promoter/event/record', 'EventController@promoterRecord');
 Route::get('promoter/event/create', 'EventController@newEvent');
 Route::get('promoter/promotion', 'BusinessController@promotion');
-
-
-Route::get('admin/politics', 'AdminController@politics');
-Route::get('admin/politics/new', 'AdminController@newPolitic');
-Route::get('admin/politics/{id}/edit', 'AdminController@editPolitic');
-
 Route::get('promoter/organizers', 'BusinessController@organizers');
 Route::get('promoter/organizer/create', 'BusinessController@newOrganizer');
 
-Route::get('admin/', function () {
-    return view('internal.admin.index');
-});
 
+Route::get('admin/home', 'AdminController@home');
+Route::get('admin/politics', 'AdminController@politics');
+Route::get('admin/politics/new', 'AdminController@newPolitic');
+Route::get('admin/politics/{id}/edit', 'AdminController@editPolitic');
 Route::get('admin/exchange_gift', 'AdminController@exchangeGift');
 Route::get('admin/gifts', 'AdminController@gifts');
 Route::get('admin/gifts/new', 'AdminController@newGift');

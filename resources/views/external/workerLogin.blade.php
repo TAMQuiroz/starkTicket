@@ -14,7 +14,8 @@
 </head>
 <body>
 
-	{!!Form::open(['class' => 'form-2'])!!}
+	{{--{!!Form::open(['class' => 'form-2','disabled'])!!}--}}
+	<div class="form-2">
 		<h1><span class="log-in">Sign in</span> o <span class="sign-up">Ingresa</span></h1>
 		<p class="float">
 			<label for="login"><i class="icon-user"></i>Usuario</label>
@@ -26,9 +27,10 @@
 		</p>
 		<p class="clearfix"> 
 			<a href="#" class="log-twitter">Log in con Facebook</a>    
-			<input type="submit" name="submit" value="Ingresa">
+			<a href="{{url('salesman/home')}}"><input type="submit" name="submit" value="Ingresa"></a>
 		</p>       
-	{!!Form::close()!!}    
+	</div>
+	{{--{!!Form::close()!!}--}}
 
 	@if (Session::has('message'))
 		<div class="alert alert-warning">

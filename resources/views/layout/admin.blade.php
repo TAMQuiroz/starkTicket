@@ -23,7 +23,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{url('admin')}}">Telecticke </a>
+                <a class="navbar-brand" href="{{url('home')}}">Telecticke </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -107,7 +107,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="">Administrador</a></li>
-                    <li><a href="{{url('auth/logout')}}">(Salir)</a></li>
+                    <li><a href="{{url('auth/logout')}}">Salir</a></li>
               </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -121,7 +121,7 @@
     </div>
     <div class="container">
         <hr>
-        <p><b>Todos los derechos reservados.</b></p>
+        <p><b>Desarrollado por Stark</b></p>
     </div>
 
 

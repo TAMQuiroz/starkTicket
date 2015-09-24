@@ -56,7 +56,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="">Promotor</a></li>
-                    <li><a href="{{url('auth/logout')}}">(Salir)</a></li>
+                    <li><a href="{{url('auth/logout')}}">Salir</a></li>
               </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -70,7 +70,7 @@
     </div>
     <div class="container">
         <hr>
-        <p><b>Todos los derechos reservados.</b></p>
+        <p><b>Desarrollado por Stark</b></p>
     </div>
 
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}
