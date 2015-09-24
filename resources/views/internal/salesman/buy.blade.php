@@ -26,7 +26,7 @@
                 
                 <label>
                     <h4> Codigo del Evento </h4>
-                    <select>
+                    <select class="form-control">
                         <option value="">09213241</option>
                         <option value="saab">2342424</option>
                         <option value="mercedes">3131424</option>
@@ -37,25 +37,47 @@
                 <br>
                 <label>
                     <h4> Nombre del Evento </h4>
-                    <input type="text" name="firstname" value="Piaf de Pam Gems">
+                    <input class="form-control" type="text" name="firstname" value="Piaf de Pam Gems">
                 </label>
                 <br>
                 <label>
                     <h4> Fecha del Evento </h4>
-                    <select>
+                    <select class="form-control">
                         <option value="">18 Octubre</option>
                         <option value="saab">19 Octubre</option>
                         <option value="mercedes">20 Octubre</option>
                     </select>
                 </label>
+                <br>
+                <label>
+                    <h4> Zona del Evento </h4>
+                    <select class="form-control">
+                        <option value="">VIP</option>
+                        <option value="saab">Platea</option>
+                    </select>
+                </label>
             </div>
             <br>
-            <h4> Precios y ubicaciones </h4>
-            <p>
-                VIP: 150
-                <BR>
-                PLATEA: 70
-            </p>
+            <div class="table-responsive">
+              <table class="table table-bordered" style="widht:1px">
+                <thead>
+                    <tr>
+                        <th>Zona</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>VIP</td>  
+                        <td>S/150.00</td>
+                    </tr>
+                    <tr>
+                        <td>Platea</td>  
+                        <td>S/.70</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
     <div class="seats">
         <div class="demo">
             <div id="seat-map">
@@ -80,18 +102,85 @@
         <!-- /.row -->
         <hr>
         <div class= "button-final">
-            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo1">Comprar Tarjeta</button>
-            <button type="button" class="btn btn-info">Comprar Efectivo</button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo">Pago Tarjeta</button>    
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#cash" data-whatever="@mdo">Pago Efectivo</button>
             <button type="button" class="btn btn-info">Cancelar Venta</button>
-            <div id="demo1" class="collapse">
-            	<h5>Número de Tarjeta de Crédito</h5>
-			    <input type="text"></input>
-			    <h5>Código de Seguridad</h5>
-			    <input type="text"></input>
-			    <br>
-			    <br>
-			    <button type="button" class="btn btn-info">Pagar Entradas</button>
-            </div>
+            <div class="modal fade" id="pay" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                          <div class="form-group">
+                              <div class="form-group">
+                                <label for="exampleInputEmail2">Número de Tarjeta</label>
+                                <input type="text" class="form-control" placeholder="1234 5678 9012 3456">
+                                <label for="exampleInputEmail2">Fecha de expiración</label>
+                                <input type="text" class="form-control" placeholder="mm/aa">
+                                <label for="exampleInputEmail2">Código de Seguridad</label>
+                                <input type="text" class="form-control" placeholder="123">
+                              </div>
+                              <button type="button" class="btn btn-info"><a href="{{url('')}}">Pagar Entrada</a></button>
+                              <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                          </div>
+                        </form>
+                    </div>
+                    </div>
+                  </div>
+                </div>  
+            </div>  
+            
+            <div class="modal fade" id="cash" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                          <div class="form-group">
+                              <div class="form-group">
+                                <label for="exampleInputEmail2">Tipo de Cambio: S/.2.90</label>
+                                <br>
+                                <label for="exampleInputEmail2">Monto Ingresado</label>
+                                <input type="text" class="form-control" placeholder="S/.100.00">
+                                <br>
+                                <label for="exampleInputEmail2">Monto a Pagar</label>
+                                <input type="text" class="form-control" placeholder="S/.90.00">
+                                <label for="exampleInputEmail2">Vuelto</label>
+                                <input type="text" class="form-control" placeholder="S/.10.00" readonly>
+                              </div>
+                              <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Aceptar</button>
+                              <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                          </div>
+                        </form>
+                    </div>
+                    </div>
+                  </div>
+                </div>  
+
+            <div class="modal fade" id="end" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Fin de venta</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                          <div class="form-group">
+                              <div class="form-group">
+                                <label for="exampleInputEmail2">Venta exitosa!</label>
+                          </div>
+                        </form>
+                    </div>
+                    </div>
+                  </div>
+                </div>      
         </div>
 @stop
 
