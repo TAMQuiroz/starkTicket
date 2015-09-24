@@ -15,12 +15,7 @@
 		background: #ffffff;
 	}
 
-	body,input,textarea,select
-	{
-		font-family: 'Oxygen', sans-serif;
-		font-size: 13pt;
-		line-height: 2em;
-	}
+
 
 	h1,h2,h3,h4,h5,h6
 	{
@@ -258,12 +253,7 @@
 /* Header                                                                        */
 /*********************************************************************************/
 
-	#header
-	{
-		position: relative;
-		background: #ddd url(../images/header.jpg) no-repeat center;
-		background-size: cover;
-	}
+	
 
 	#logo
 	{
