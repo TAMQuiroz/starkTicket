@@ -14,7 +14,7 @@
       <input type="date" id="from" name="from">
       <label for="to">Fin</label>
       <input type="date" id="to" name="to">
-      <td><a href="#" class="btn btn-primary">Buscar</a></td>
+      <td><button type="button" class="btn btn-info">Buscar</button></td>
   </div>
   <!-- Contenido-->
   <hr>
@@ -40,7 +40,7 @@
           <td>Vigente</td>
           <td>1500</td>
           <td>17500.00</td>
-          <td><a href="#" class="btn btn-primary">Detalle</a></td>
+          <td><button type="button" class="btn btn-info">Detalle</button></td>
         </tr>
 
         <tr>
@@ -51,7 +51,7 @@
           <td>Vigente</td>
           <td>1000</td>
           <td>8300.00</td>
-          <td><a href="#" class="btn btn-primary">Detalle</a></td>
+          <td><button type="button" class="btn btn-info">Detalle</button></td>
         </tr>
 
         <tr>
@@ -62,7 +62,7 @@
           <td>Finalizado</td>
           <td>750</td>
           <td>4300.00</td>
-          <td><a href="#" class="btn btn-primary">Detalle</a></td>
+          <td><button type="button" class="btn btn-info">Detalle</button></td>
         </tr>
         <tr>
           <td>00006</td>
@@ -72,7 +72,7 @@
           <td>Vigente</td>
           <td>100</td>
           <td>50000.00</td>
-          <td><a href="#" class="btn btn-primary">Detalle</a></td>
+          <td><button type="button" class="btn btn-info">Detalle</button></td>
         </tr>
         <tr>
           <td>00007</td>
@@ -82,7 +82,7 @@
           <td>Cancelado</td>
           <td>30</td>
           <td>1000.00</td>
-          <td><a href="#" class="btn btn-primary">Detalle</a></td>
+          <td><button type="button" class="btn btn-info">Detalle</button></td>
         </tr>
 
       </table>
