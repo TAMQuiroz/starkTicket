@@ -38,7 +38,7 @@ Route::get('event', 'EventController@index');
 Route::get('event/successBuy', 'EventController@successBuy');
 Route::get('event/{id}', 'EventController@show');
 
-Route::get('client/home', 'EventController@clientProfile');
+Route::get('client/home', 'EventController@clientHome');
 Route::get('client/event_record', 'EventController@clientRecord');
 //Estos 2 inician en el detalle del evento
 Route::get('client/event/{id}/buy', 'EventController@clientBuy');

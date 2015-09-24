@@ -34,7 +34,7 @@
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Eventos <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{url('client/profile')}}">Perfil</a></li>
+                            <li><a href="{{url('client/home')}}">Perfil</a></li>
                             <li><a href="{{url('client/event_record')}}">Historial</a></li>
                         </ul>
                     </li>
