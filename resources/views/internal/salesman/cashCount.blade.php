@@ -10,7 +10,16 @@
 
 @section('content')
   <!-- Contenido-->
-  <input value="hola">
+  <div class="row">
+      <div class="col-md-8"></div>
+      <div class="col-md-4">
+           <h2 class="totalType">Monto Inicial: <strong>590.00</strong></h2>
+           
+
+
+      </div>
+
+  </div>
   <h2></h2>
   <h2>Ventas</h2>
     <table class="table table-bordered table-striped">
@@ -145,12 +154,15 @@
         <td>750.00</td>
       </tr>
     </table>
-    <div class="Total">
-    <h2 class="totalType">Total del Día: <strong>410.00</strong></h2>
-  </div>
-  <div class="newArqueo">
+    
+  <div class="row">
+      <div class="col-md-8"></div>
+      <div class="col-md-4">
+           <h2 class="totalType">Total del Día: <strong>1000.00</strong></h2>
+           <button type="button" class="btn btn-info">Arqueo de Caja</button>
 
-      <a href="#" class="btn btn-primary">Arqueo de Caja</a>
+
+      </div>
 
   </div>
 @stop
