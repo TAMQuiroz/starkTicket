@@ -22,11 +22,12 @@
                      <b>VENTA</b>
               </div>
               <div class="col-sm-2"><br>
-                    <a href="#" class="btn btn-primary"  data-toggle="modal" data-target="#myModal">Modificar Tipo Cambio</a>
+                    <button type="button" class="btn btn-info"  data-toggle="modal" data-target="#myModal">Modificar Tipo Cambio</button>
               </div>
                 </form>
             </div>
             <hr>
+            <h3>Ultimos tipos de cambio</h3>
          <table class="table table-bordered table-striped">
                           <tr>
                             <th>Precio Compra</th>
@@ -79,7 +80,8 @@
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-body">
-                        <h3>Cambios guardados.</h3>
+                        <h2>Mensaje del Sistema</h2>
+                        <h3>Su Tipo de Cambio ha sido Guardado con Éxito</h3>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
