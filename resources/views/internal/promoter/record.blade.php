@@ -18,7 +18,7 @@
   </div>
   <!-- Contenido-->
   <hr>
-  <h2>Historial de Eventos</h2>
+  <h2>Eventos</h2>
       <table class="table table-bordered table-striped">
         <tr>
           <th>Código de Evento</th>
@@ -40,7 +40,7 @@
           <td>Vigente</td>
           <td>1500</td>
           <td>17500.00</td>
-          <td><button type="button" class="btn btn-info">Detalle</button></td>
+          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalle</button></td>
         </tr>
 
         <tr>
@@ -51,7 +51,7 @@
           <td>Vigente</td>
           <td>1000</td>
           <td>8300.00</td>
-          <td><button type="button" class="btn btn-info">Detalle</button></td>
+          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalle</button></td>
         </tr>
 
         <tr>
@@ -62,7 +62,7 @@
           <td>Finalizado</td>
           <td>750</td>
           <td>4300.00</td>
-          <td><button type="button" class="btn btn-info">Detalle</button></td>
+          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalle</button></td>
         </tr>
         <tr>
           <td>00006</td>
@@ -72,7 +72,7 @@
           <td>Vigente</td>
           <td>100</td>
           <td>50000.00</td>
-          <td><button type="button" class="btn btn-info">Detalle</button></td>
+          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalle</button></td>
         </tr>
         <tr>
           <td>00007</td>
@@ -82,10 +82,47 @@
           <td>Cancelado</td>
           <td>30</td>
           <td>1000.00</td>
-          <td><button type="button" class="btn btn-info">Detalle</button></td>
+          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalle</button></td>
         </tr>
 
       </table>
+      <div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="exampleModalLabel">Detalle de Evento</h4>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <h4>Nubeluz El Encuentro</h4>
+                <p>Código 000001. </p>
+                <p>Creado Por: Juan Perez</p>
+                <p>Promotor: Juanita Perez</p>
+                <p>Fecha Creación del 01/09/2015</p>
+                <p>Fecha Duración del 19/09/2015 al 25/10/2015</p>
+                <h4>Entradas:</h4>
+                <ul>
+                  <li>Normal : 100.00</li>
+                  <li>Vip    : 350.00</li>
+                  <li>Haters : 90.00</li>
+                </ul>
+                <br>
+                <h4>Información de Ventas</h4>
+                <p>Status           : Vigente</p>
+                <p>Entradas Vendidas: 1500</p>
+                <p>Total Acumulado  : 17500.00</p>
+                <p>Deposito Creador : 3000.00</p>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
       <nav>
       <ul class="pagination">
         <li>
