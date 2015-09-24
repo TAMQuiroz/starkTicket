@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
 @section('style')
-    {!!Html::style('css/adminGifts.css')!!}
+    {!!Html::style('css/images.css')!!}
 @stop
 
 @section('title')

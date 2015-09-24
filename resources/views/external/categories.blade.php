@@ -1,7 +1,7 @@
 @extends('layoutExternal')
 
 @section('style')
-
+    {!!Html::style('css/images.css')!!}
 @stop
 
 @section('title')
@@ -17,44 +17,44 @@
     proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     <div class="row">
         <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image')) !!}
+            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
             <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
         </div>
         <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image')) !!}
+            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
             <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
         </div>
         <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image')) !!}
+            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
             <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
         </div>
         <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image')) !!}
+            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
             <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image')) !!}
+            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
             <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
         </div>
         <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image')) !!}
+            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
             <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
         </div>
         <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image')) !!}
+            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
             <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
         </div>
         <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image')) !!}
+            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
             <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
         </div>

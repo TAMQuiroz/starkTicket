@@ -32,8 +32,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{url('login_client')}}">Login</a></li>
-                    <li><a href="">Sign Up</a></li>
+                    <li><a href="{{url('auth/login')}}">Login</a></li>
+                    <li><a href="{{url('auth/register')}}">Sign Up</a></li>
               </ul>
             </div>
             <!-- /.navbar-collapse -->
