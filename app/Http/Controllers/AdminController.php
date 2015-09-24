@@ -53,6 +53,11 @@ class AdminController extends Controller
         return view('internal.admin.newCategory');
     }
 
+    public function editCategory()
+    {
+        return view('internal.admin.editCategory');
+    }
+
     public function categoryList()
     {
         return view('internal.admin.categories');
@@ -71,6 +76,11 @@ class AdminController extends Controller
     public function newModule()
     {
         return view('internal.admin.newModule');
+    }
+
+    public function editModule($id)
+    {
+        return view('internal.admin.editModule');
     }
 
     public function exchangeGift()
