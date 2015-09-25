@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -27,7 +23,7 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 
-Route::get('home', 'PagesController@home');
+Route::get('/', 'PagesController@home');
 Route::get('about', 'PagesController@about');
 Route::get('modules', 'PagesController@modules');
 Route::get('calendar', 'PagesController@calendar');

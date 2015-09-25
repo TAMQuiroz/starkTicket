@@ -1,15 +1,16 @@
 @extends('layoutExternal')
 
 @section('style')
-	
+
 @stop
 
 @section('title')
-	Home
+	Welcome...
 @stop
 
 @section('content')
-	HOLIS BOLIS
+	<h3>Categorias</h3>
+    <h3>Eventos Top</h3>
 @stop
 
 @section('javascript')
