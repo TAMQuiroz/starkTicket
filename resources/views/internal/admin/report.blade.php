@@ -40,55 +40,6 @@
         <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo2">Mostrar Reporte</button>
     </div>
 </div>
-<<<<<<< HEAD
-
-
-<div class="container">  <!-- Comienza SEGUNDO despliegue-->
-
-
-    <div id="demo2" class="collapse">
-
-        <br><br>
-
-            <table class="table table-bordered table-striped">
-            <tr>
-                <th>Apellidos y Nombres</th>
-                <th>Distrito</th>
-                <th>Telefonos(s)</th>
-            </tr>
-            <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-            </tr>
-            <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-            </tr>
-            <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-            </tr>
-            <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-               
-            </tr>
-        </table>
-
-        <ul class="pager">
-         <li class="next"><a href="#">Subir</a></li>
-        </ul>
-    </div>
-
-
-
- </div>
-
-=======
 <hr>
 
 
@@ -125,7 +76,6 @@
             <td>Contenido 4</td>
         </tr>
     </table>
->>>>>>> 9372260639a7099618d16d186a2e62525fc862d5
 </div>
 
 @stop
