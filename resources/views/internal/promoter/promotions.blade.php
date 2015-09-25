@@ -118,12 +118,12 @@
 								        <tr>
 								            <td>Viva por el Rock 6</td>
 								            <td>VIP</td>
-								            <td><button type="button" class="btn btn-info">x</button></td>
+								            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
 								        </tr>
 								        <tr>
 								            <td>Arctic Monkeys Lima 2020</td>
 								            <td>VIP</td>
-								            <td><button type="button" class="btn btn-info">x</button></td>
+								            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
 								        </tr>
 								    </tbody>
 								  </table>
@@ -238,12 +238,12 @@
 						        <tr>
 						            <td>Viva por el Rock 6</td>
 						            <td>VIP</td>
-						            <td><button type="button" class="btn btn-info">x</button></td>
+						            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
 						        </tr>
 						        <tr>
 						            <td>Arctic Monkeys Lima 2020</td>
 						            <td>VIP</td>
-						            <td><button type="button" class="btn btn-info">x</button></td>
+						            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
 						        </tr>
 						    </tbody>
 						  </table>
