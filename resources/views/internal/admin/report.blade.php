@@ -40,75 +40,43 @@
         <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo2">Mostrar Reporte</button>
     </div>
 </div>
+<hr>
 
 
-<div class="container">  <!-- Comienza SEGUNDO despliegue-->
-
-
-    <div id="demo2" class="collapse">
-
-        <br><br>
-
-            <table class="table table-bordered table-striped">
-            <tr>
-                <th>Apellidos y Nombres</th>
-                <th>DNI</th>
-                <th>Telefonos(s)</th>
-                <th>Sexo</th>
-            </tr>
-            <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
-            </tr>
-            <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
-            </tr>
-            <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
-            </tr>
-            <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
-            </tr>
-        </table>
-
-        <ul class="pager">
-         <li class="next"><a href="#">Subir</a></li>
-        </ul>
-    </div>
-
-
-
- </div>
-
+<div id="demo2" class="collapse">
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Apellidos y Nombres</th>
+            <th>DNI</th>
+            <th>Telefonos(s)</th>
+            <th>Sexo</th>
+        </tr>
+        <tr>
+            <td>Contenido 1</td>
+            <td>Contenido 2</td>
+            <td>Contenido 3</td>
+            <td>Contenido 4</td>
+        </tr>
+        <tr>
+            <td>Contenido 1</td>
+            <td>Contenido 2</td>
+            <td>Contenido 3</td>
+            <td>Contenido 4</td>
+        </tr>
+        <tr>
+            <td>Contenido 1</td>
+            <td>Contenido 2</td>
+            <td>Contenido 3</td>
+            <td>Contenido 4</td>
+        </tr>
+        <tr>
+            <td>Contenido 1</td>
+            <td>Contenido 2</td>
+            <td>Contenido 3</td>
+            <td>Contenido 4</td>
+        </tr>
+    </table>
 </div>
-
-
-
-
- </div><!-- Termina primer despliegue-->
-        </div>
-        <!-- /.row -->
-
-        <hr>
-
-        <!-- Footer -->
-            </div>
-        </footer>
-
-    <script src="js/moment.js"></script>
-    <script src="js/rangepicker.js"></script>
-
 
 @stop
 
