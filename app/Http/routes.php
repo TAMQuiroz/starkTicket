@@ -50,6 +50,7 @@ Route::get('client/reservaexitosa', 'BookingController@store');
 Route::get('salesman/home', 'BusinessController@salesmanHome');
 Route::get('salesman/cash_count', 'BusinessController@cashCount');
 Route::get('salesman/exchange_gift', 'BusinessController@exchangeGift');
+Route::get('salesman/pay_booking', 'BookingController@pay');
 //Este inicia en el detalle del evento
 Route::get('salesman/event/{id}/buy', 'EventController@salesmanBuy');
 //Fin
@@ -88,6 +89,9 @@ Route::get('admin/modules', 'AdminController@modules');
 Route::get('admin/modules/new', 'AdminController@newModule');
 Route::get('admin/modules/{id}/edit', 'AdminController@editModule');
 Route::get('admin/salesman', 'AdminController@salesman');
+Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
 Route::get('admin/promoter', 'AdminController@promoter');
+Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
 Route::get('admin/admin', 'AdminController@admin');
+Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
 Route::get('admin/user/new', 'AdminController@newUser');

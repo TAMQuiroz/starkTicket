@@ -33,6 +33,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{url('salesman/cash_count')}}">Apertura y Arqueo de caja</a></li>
                             <li><a href="{{url('salesman/exchange_gift')}}">Canjeo de regalos</a></li>
+                            <li><a href="{{url('salesman/pay_booking')}}">Pagar Reserva</a></li>
                         </ul>
                     </li>                   
                 </ul>

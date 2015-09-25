@@ -50,8 +50,8 @@
 								    </tbody>
 								  </table>
 								</div>
-								<button type="button" class="btn btn-info"><a href="{{url('client/event/1/buy')}}">Comprar Entrada</a></button> <!---->
-								<button type="button" class="btn btn-info"><a href="{{url('client/1/reservanueva')}}">Reservar Entrada</a></button>
+								<a href="{{url('client/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a> <!---->
+								<a href="{{url('client/1/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
 								<br><br>
 								<div class="form-group">
 								  <label for="comment">Ingrese comentario:</label>

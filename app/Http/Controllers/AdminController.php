@@ -108,14 +108,29 @@ class AdminController extends Controller
         return view('internal.admin.salesman');
     }
 
+    public function editSalesman($id)
+    {
+        return view('internal.admin.editSalesman');
+    }
+
     public function promoter()
     {
         return view('internal.admin.promoter');
     }
 
+    public function editPromoter($id)
+    {
+        return view('internal.admin.editPromoter');
+    }
+
     public function admin()
     {
         return view('internal.admin.admin');
+    }
+
+    public function editAdmin($id)
+    {
+        return view('internal.admin.editAdmin');
     }
 
     public function newUser()

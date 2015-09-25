@@ -19,4 +19,10 @@ class BookingController extends Controller
 		//return view('external.home');
 		return view('external.booking.results');
 	}
+
+	public function pay()
+	{
+		
+		return view('internal.salesman.payBooking');
+	}
 }
