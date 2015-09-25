@@ -36,7 +36,12 @@
 						
 					<!-- Sidebar -->
 						<div id="sidebar" class="4u">
-							<section height="200">
+							<section class="scrol">
+              <style>.scrol{
+    width: 100%;
+    height: 750px;
+    overflow: scroll;
+}</style>
 								<header>
 									<h2 class = "title">Puntos de Venta</h2>
                                     <!--<span class="byline">Entradas para tu evento</span> -->								
