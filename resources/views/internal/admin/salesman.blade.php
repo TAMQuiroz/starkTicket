@@ -67,9 +67,9 @@
                 <td>Contenido 3</td>
                 <td>Contenido 4</td>
                 <td>
-                    <a href="{{url('admin/salesman/1/edit')}}" >Editar</a>
+                    <a class="btn btn-info" href="{{url('admin/salesman/1/edit')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
 
-                    <a href="" data-toggle="modal" data-target="#edit">Detalles</a>
+                    <a class="btn btn-info" href="#" title="Detalle" data-toggle="modal" data-target="#edit"><i class="glyphicon glyphicon-plus"></i></a>
 
                     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                       <div class="modal-dialog" role="document">
@@ -92,8 +92,8 @@
                       </div>
                     </div>
 
-                    <a href="">Eliminar</a>
-                    <a href="{{url('admin/attendance')}}">Asistencia</a>
+                     <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
+                 <a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a>
                 </td>
             </tr>
             <tr>
@@ -101,15 +101,13 @@
                 <td>Contenido 2</td>
                 <td>Contenido 3</td>
                 <td>Contenido 4</td>
-                <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a>  <a href="/admin/attendance">Asistencia</a></td>
+                <td>
+                    <a class="btn btn-info" href="#" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a class="btn btn-info" href="#" title="Detalles" ><i class="glyphicon glyphicon-plus"></i></a>
+                
+                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
+                 <a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
                     </td>
-            </tr>
-            <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
-                <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a> <a href="/admin/attendance">Asistencia</a></td>
 
             </tr>
             <tr>
@@ -117,7 +115,25 @@
                 <td>Contenido 2</td>
                 <td>Contenido 3</td>
                 <td>Contenido 4</td>
-                <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a>  <a href="/admin/attendance">Asistencia</a></td>
+                <td><a class="btn btn-info" href="#" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a class="btn btn-info" href="#" title="Detalles" ><i class="glyphicon glyphicon-plus"></i></a>
+                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
+                 <a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+                    </td>
+
+            </tr>
+            <tr>
+                <td>Contenido 1</td>
+                <td>Contenido 2</td>
+                <td>Contenido 3</td>
+                <td>Contenido 4</td>
+                <td>
+                    <a class="btn btn-info" href="#" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a class="btn btn-info" href="#" title="Detalles" ><i class="glyphicon glyphicon-plus"></i></a>
+                
+                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
+                 <a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+                    </td>
                     </td>
             </tr>
         </table>
