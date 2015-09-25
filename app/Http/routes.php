@@ -57,6 +57,7 @@ Route::get('promoter/transfer_payments', 'BusinessController@transferPayments');
 Route::get('promoter/new_transfer_payment', 'BusinessController@newTransferPayment');
 Route::get('promoter/event/record', 'EventController@promoterRecord');
 Route::get('promoter/event/create', 'EventController@newEvent');
+Route::get('promoter/event/addFunction', 'EventController@addFunction');
 Route::get('promoter/promotion', 'BusinessController@promotion');
 Route::get('promoter/organizers', 'BusinessController@organizers');
 Route::get('promoter/organizer/create', 'BusinessController@newOrganizer');
