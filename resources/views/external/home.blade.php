@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-	home
+	HOLIS BOLIS
 @stop
 
 @section('javascript')
