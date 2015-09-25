@@ -17,7 +17,7 @@
             <p><b>Price: </b> $ 20.00 <br>
                 <b>Fecha: </b> 20/12/2015<br>
                 Av. venezuela Nro 255 </p>
-            <p><a href="#" class="btn btn-primary" role="button" >Book Now</a> | <a href="#"  class="btn btn-primary" role="button" >Details</a></p>
+            <p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
         </section>
     </div>
     <div class="3u">
@@ -27,7 +27,7 @@
             <p><b>Price: </b> $ 20.00 <br>
                 <b>Fecha: </b> 20/12/2015<br>
                 Av. venezuela Nro 255 </p>
-            <p><a href="#" class="btn btn-primary" role="button" >Book Now</a> | <a href="#"  class="btn btn-primary" role="button" >Details</a></p>
+            <p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
         </section>
     </div>
     <div class="3u">
@@ -37,17 +37,17 @@
             <p><b>Price: </b> $ 20.00 <br>
                 <b>Date: </b> 20/12/2015<br>
                 Av. venezuela Nro 255 </p>
-            <p><a href="#" class="btn btn-primary" role="button" >Book Now</a> | <a href="#"  class="btn btn-primary" role="button" >Details</a></p>
+            <p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
         </section>
     </div>
     <div class="3u">
         <section>
             <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 3</h3>
+            <h3>Titulo del Evento 4</h3>
             <p><b>Price: </b> $ 20.00 <br>
                 <b>Date: </b> 20/12/2015<br>
                 Av. venezuela Nro 255 </p>
-            <p><a href="#"  class="btn btn-primary" role="button" >Book Now</a> | <a href="#"  class="btn btn-primary" role="button" >Details</a></p>
+            <p> <a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
         </section>
     </div>
 </div>
@@ -55,41 +55,41 @@
     <div class="3u">
         <section>
             <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 1</h3>
+            <h3>Titulo del Evento 5</h3>
             <p><b>Price: </b> $ 20.00 <br>
                 <b>Fecha: </b> 20/12/2015<br>
                 Av. venezuela Nro 255 </p>
-            <p><a href="#" class="btn btn-primary" role="button" >Book Now</a> | <a href="#"  class="btn btn-primary" role="button" >Details</a></p>
+            <p> <a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
         </section>
     </div>
     <div class="3u">
         <section>
             <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 2</h3>
+            <h3>Titulo del Evento 6</h3>
             <p><b>Price: </b> $ 20.00 <br>
                 <b>Fecha: </b> 20/12/2015<br>
                 Av. venezuela Nro 255 </p>
-            <p><a href="#"  class="btn btn-primary" role="button" > Book Now</a> | <a href="#"  class="btn btn-primary" role="button" >Details</a></p>
+            <p> <a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
         </section>
     </div>
     <div class="3u">
         <section>
             <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 3</h3>
+            <h3>Titulo del Evento 7</h3>
             <p><b>Price: </b> $ 20.00 <br>
                 <b>Date: </b> 20/12/2015<br>
                 Av. venezuela Nro 255 </p>
-            <p><a href="#"  class="btn btn-primary" role="button" >Book Now</a> | <a href="#" class="btn btn-primary" role="button" >Details</a></p>
+            <p><a href="event/1" class="btn btn-primary" role="button" >Detalle</a></p>
         </section>
     </div>
     <div class="3u">
         <section>
             <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 3</h3>
+            <h3>Titulo del Evento 8</h3>
             <p><b>Price: </b> $ 20.00 <br>
                 <b>Date: </b> 20/12/2015<br>
                 Av. venezuela Nro 255 </p>
-            <p><a href="#" class="btn btn-primary" role="button" >Book Now</a> | <a href="#" class="btn btn-primary" role="button" >Details</a></p>
+            <p> <a href="event/1" class="btn btn-primary" role="button" >Detalle</a></p>
         </section>
     </div>
 </div>
