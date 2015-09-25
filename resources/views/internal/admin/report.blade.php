@@ -52,33 +52,29 @@
             <table class="table table-bordered table-striped">
             <tr>
                 <th>Apellidos y Nombres</th>
-                <th>DNI</th>
+                <th>Distrito</th>
                 <th>Telefonos(s)</th>
-                <th>Sexo</th>
             </tr>
             <tr>
                 <td>Contenido 1</td>
                 <td>Contenido 2</td>
                 <td>Contenido 3</td>
-                <td>Contenido 4</td>
             </tr>
             <tr>
                 <td>Contenido 1</td>
                 <td>Contenido 2</td>
                 <td>Contenido 3</td>
-                <td>Contenido 4</td>
             </tr>
             <tr>
                 <td>Contenido 1</td>
                 <td>Contenido 2</td>
                 <td>Contenido 3</td>
-                <td>Contenido 4</td>
             </tr>
             <tr>
                 <td>Contenido 1</td>
                 <td>Contenido 2</td>
                 <td>Contenido 3</td>
-                <td>Contenido 4</td>
+               
             </tr>
         </table>
 
