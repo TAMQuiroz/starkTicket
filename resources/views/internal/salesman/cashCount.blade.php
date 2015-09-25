@@ -10,14 +10,23 @@
 
 @section('content')
   <!-- Contenido-->
+  <br>
   <div class="row">
-      <div class="col-md-8"></div>
-      <div class="col-md-4">
-           <h2 class="totalType">Monto Inicial: <strong>590.00</strong></h2>
-           
-
-
+      
+      <div class="col-md-2">
+           <h4>Monto Inicial:</h4>
+          
       </div>
+      <div class="col-md-4">
+          
+           <input type="text" name="username" class="form-control">  
+      </div>
+      
+      <div class="col-md-2"> <button type="button" class="btn btn-info">Agregar Monto</button> </div>
+      <div class="col-md-2">  </div>
+      <div class="col-md-2"> </div>
+        
+      
 
   </div>
   <h2></h2>
@@ -155,16 +164,33 @@
       </tr>
     </table>
     
-  <div class="row">
+    <div class="row">
       <div class="col-md-8"></div>
       <div class="col-md-4">
            <h2 class="totalType">Total del Día: <strong>1000.00</strong></h2>
-           <button type="button" class="btn btn-info">Arqueo de Caja</button>
+           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo">Arqueo de Caja</button>
 
 
+    </div>
+
+     <div id="info" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-body">
+                            <h2>Mensaje del Sistema</h2>
+                            <h3>El Arqueo ha sido todo un exito. Ya puede Cerrar la caja</h3>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
       </div>
 
-  </div>
 @stop
 
 @section('javascript')

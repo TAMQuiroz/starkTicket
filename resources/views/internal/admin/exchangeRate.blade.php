@@ -28,7 +28,7 @@
             </div>
             <hr>
             <h3>Ultimos tipos de cambio</h3>
-         <table class="table table-bordered table-striped">
+                        <table class="table table-bordered table-striped">
                           <tr>
                             <th>Precio Compra</th>
                             <th>Precio Venta</th>
