@@ -10,6 +10,49 @@
 
 @section('content')
         <!-- Contenido-->
+        <br>
+        <h5>Selecciona un departamento</h5></font> 
+        <div class="dropdown">
+            <button style="background-color:#83D3C9; border-color:#83D3C9; color:white;" class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"> Lima
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Arequipa</a></li>
+                <li><a href="#">Ica</a></li>
+                <li><a href="#">Moquegua</a></li>
+                <li><a href="#">Tacna</a></li>
+            </ul>
+        </div>
+        
+        <h5>Selecciona un distrito</h5></font> 
+        
+        <div  class="dropdown">
+            <button  style="background-color:#83D3C9; border-color:#83D3C9; color:white;" class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"> 
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Pueblo Libre</a></li>
+                <li><a href="#">Santa Rosa</a></li>
+                <li><a href="#">Ventanilla</a></li>
+                <li><a href="#">Breña</a></li>
+                <li><a href="#">San Miguel</a></li>
+                <li><a href="#">Jesús María</a></li>
+                <li><a href="#">Magdalena del Mar</a></li>
+                <li><a href="#">Lince</a></li>
+                <li><a href="#">San Isidro</a></li>
+            </ul>
+        </div>
+        <br>
+        <br>
+
+         <fieldset>
+            <legend>Vendedores: </legend>
+                Código:  <input type="text" name="firstname" value="">  Nombre/Apellidos: <input type="text" name="lastname" value="">
+                <a href="#" class="btn btn-primary" style="background-color:#83D3C9; border-color:#83D3C9; color:white;">Buscar</a>
+                <br>                
+                <br>
+                <br>
+        </fieldset>
+
+
         <table class="table table-bordered table-striped">
             <tr>
                 <th>Apellidos y Nombres</th>

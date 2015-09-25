@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>@yield('title') | StarkTicket</title>
-    
+
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/admin.css')!!}
@@ -23,7 +23,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{url('home')}}">Telecticke </a>
+                <a class="navbar-brand" href="{{url('/')}}">Telecticke </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -35,7 +35,7 @@
                             <li><a href="{{url('salesman/exchange_gift')}}">Canjeo de regalos</a></li>
                             <li><a href="{{url('salesman/pay_booking')}}">Pagar Reserva</a></li>
                         </ul>
-                    </li>                   
+                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -59,6 +59,6 @@
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}
     {!!Html::script('js/bootstrap.min.js')!!}
     @yield('javascript')
-    
+
 </body>
 </html>
