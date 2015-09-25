@@ -26,8 +26,8 @@
 			<input type="password" name="password" placeholder="Contraseña" class="showpassword"> 
 		</p>
 		<p class="clearfix"> 
-			<a href="#" class="log-twitter">Log in con Facebook</a>    
-			<a href="{{url('salesman/home')}}"><input type="submit" name="submit" value="Ingresa"></a>
+			
+			<a href="{{url('salesman/home')}}"><input class="loginButton" type="submit" name="submit" value="Ingresa"></a>
 		</p>       
 	</div>
 	{{--{!!Form::close()!!}--}}

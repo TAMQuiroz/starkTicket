@@ -17,7 +17,28 @@
             <div class="title">Inicio de sesión</div>
             <input type="email" name="email" value="{{old('email')}}" placeholder="E-mail"/>
             <input type="password" name="password" placeholder="Contraseña"/>
-            <input type="checkbox" name="remember" id="rememberMe"/>
+            <a href="" data-toggle="modal" data-target="#myModal">Olvidaste tu contraseña?</a>
+            <!-- Button trigger modal -->
+        
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Recuperar contraseña</h4>
+                  </div>
+                  <div class="modal-body">
+                    <h3>Ingresa tu correo</h3>
+                    <input type="email">
+                  </div> 
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Enviar correo de recuperacion</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <button>Iniciar sesión</button>
         </div>
 
