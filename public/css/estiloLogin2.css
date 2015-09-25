@@ -134,7 +134,7 @@
 .form-2 input[type=submit],
 .form-2 .log-twitter {
     /* Size and position */
-    width: 49%;
+    width: 100%;
     height: 38px;
     float: left;
     position: relative;

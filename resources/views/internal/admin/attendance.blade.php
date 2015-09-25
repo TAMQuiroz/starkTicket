@@ -44,7 +44,7 @@ Asistencia de Pedro Alva
     <td>8:00 am</td>
     <td>8:00 am</td>
     <td>8:00 am</td>
-    <td>8:00 am</td>
+    <td>-</td>
     <td>8:00 am</td>
   </tr>
   <tr>
@@ -53,7 +53,7 @@ Asistencia de Pedro Alva
     <td>4:00 pm</td>
     <td>5:00 pm</td>
     <td>5:30 pm</td>
-    <td>5:30 pm</td>
+    <td>-</td>
     <td>6:00 pm</td>
   </tr>
   <tr>
@@ -62,7 +62,7 @@ Asistencia de Pedro Alva
     <td>8</td>
     <td>9</td>
     <td>9.5</td>
-    <td>9.5</td>
+    <td>0</td>
     <td>10</td>
   </tr>
 </table>

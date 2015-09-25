@@ -50,7 +50,7 @@
                     </div>
 
                     <a href="">Eliminar</a>
-                    <a href="/admin/attendance">Asistencia</a>
+                    <a href="{{url('admin/attendance')}}">Asistencia</a>
                 </td>
             </tr>
             <tr>
