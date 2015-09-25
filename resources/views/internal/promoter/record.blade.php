@@ -29,6 +29,7 @@
           <th>Entradas Vendidas</th>
           <th>Monto Acumulado</th>
           <th></td>
+          <th></td>
 
         </tr>
 
@@ -41,6 +42,7 @@
           <td>1500</td>
           <td>17500.00</td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalle</button></td>
+          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel" data-whatever="@mdo">Cancelar</button></td>
         </tr>
 
         <tr>
@@ -52,6 +54,7 @@
           <td>1000</td>
           <td>8300.00</td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalle</button></td>
+          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel" data-whatever="@mdo">Cancelar</button></td>
         </tr>
 
         <tr>
@@ -63,6 +66,7 @@
           <td>750</td>
           <td>4300.00</td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalle</button></td>
+          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel" data-whatever="@mdo">Cancelar</button></td>
         </tr>
         <tr>
           <td>00006</td>
@@ -73,6 +77,7 @@
           <td>100</td>
           <td>50000.00</td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalle</button></td>
+          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel" data-whatever="@mdo">Cancelar</button></td>
         </tr>
         <tr>
           <td>00007</td>
@@ -83,6 +88,7 @@
           <td>30</td>
           <td>1000.00</td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalle</button></td>
+          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel" data-whatever="@mdo">Cancelar</button></td>
         </tr>
 
       </table>
@@ -123,6 +129,35 @@
               </div>
             </div>
           </div>
+
+          <div class="modal fade" id="cancel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="exampleModalLabel">Cancelación de Evento</h4>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <h4>Nubeluz El Encuentro</h4>
+                <p>Motivo de cancelación </p>
+                <input></input>
+                <p>Fecha de reembolso</p>
+                <input type="date"></input>  
+                
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-info" data-dismiss="modal">Guardar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
       <nav>
       <ul class="pagination">
         <li>
