@@ -5,8 +5,11 @@
 @stop
 
 @section('title')
-<<<<<<< HEAD
-	<div class="row">
+	Reporte de Asistencias
+@stop
+
+@section('content')
+<div class="row">
     <div class="col-sm-3">
         <label>Seleccione al vendedor</label>
         <select class="form-control">
@@ -74,12 +77,6 @@
         </tr>
     </table>
 </div>
-=======
-	Lista de reportes
->>>>>>> 8d83106d0b2b7240742c85592125392c81b12dd8
-@stop
-
-@section('content')
 
 @stop
 
