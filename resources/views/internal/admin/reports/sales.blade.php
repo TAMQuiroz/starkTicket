@@ -11,12 +11,13 @@
 @section('content')
 <div class="row">
     <div class="col-sm-3">
-        <label>Seleccione al vendedor</label>
+        <label>Seleccione el eventos</label>
         <select class="form-control">
-          <option value="volvo">Todos los vendedores</option>
-          <option value="saab">Juan Perez</option>
-          <option value="opel">Ana García</option>
-          <option value="audi">Miguel Guanira</option>
+          <option value="volvo">Todos los evento</option>
+          <option value="saab">Peppa King</option>
+          <option value="opel">Arctic Monkey Concert</option>
+          <option value="audi">Fuerza Bruta</option>
+           <option value="audi">Peppa y sus amigos</option>
         </select>
     </div>
     <div class="col-sm-2">
@@ -46,34 +47,44 @@
 <div id="demo2" class="collapse">
     <table class="table table-bordered table-striped">
         <tr>
-            <th>Apellidos y Nombres</th>
-            <th>DNI</th>
-            <th>Telefonos(s)</th>
-            <th>Sexo</th>
+            <th>Nombre del evento</th>
+            <th>Número de entradas vendidas online</th>
+            <th>Subtotal</th>
+            <th>Número de entradas vendidas en módulo</th>
+            <th>Subtotal</th>
+            <th>Total</th>
         </tr>
         <tr>
-            <td>Contenido 1</td>
-            <td>Contenido 2</td>
-            <td>Contenido 3</td>
-            <td>Contenido 4</td>
+            <td>Peppa King</td>
+            <td>500</td>
+            <td>3750.00</td>
+            <td>200</td>
+            <td>1500</td>
+            <td>5200.50</td>
         </tr>
         <tr>
-            <td>Contenido 1</td>
-            <td>Contenido 2</td>
-            <td>Contenido 3</td>
-            <td>Contenido 4</td>
+            <td>Arctic Monkeys Concert</td>
+            <td>500</td>
+            <td>3750.00</td>
+            <td>200</td>
+            <td>1500</td>
+            <td>5200.50</td>
         </tr>
         <tr>
-            <td>Contenido 1</td>
-            <td>Contenido 2</td>
-            <td>Contenido 3</td>
-            <td>Contenido 4</td>
+            <td>Fuerza Bruta</td>
+            <td>500</td>
+            <td>3750.00</td>
+            <td>200</td>
+            <td>1500</td>
+            <td>5200.50</td>
         </tr>
         <tr>
-            <td>Contenido 1</td>
-            <td>Contenido 2</td>
-            <td>Contenido 3</td>
-            <td>Contenido 4</td>
+            <td>Peppa y sus amigos</td>
+            <td>500</td>
+            <td>3750.00</td>
+            <td>200</td>
+            <td>1500</td>
+            <td>5200.50</td>
         </tr>
     </table>
 </div>
