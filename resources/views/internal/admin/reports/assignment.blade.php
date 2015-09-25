@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Reporte de Asistencias
+	Reporte de asignación
 @stop
 
 @section('content')
