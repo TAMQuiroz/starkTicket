@@ -51,11 +51,11 @@ class AdminController extends Controller
     {
         return view('internal.admin.reports.sales');
     }
-    public function reportAssistance($id)
+    public function reportAssistance()
     {
         return view('internal.admin.reports.assistance');
     }
-    public function reportAssignment($id)
+    public function reportAssignment()
     {
         return view('internal.admin.reports.assignment');
     }
