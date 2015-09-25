@@ -19,21 +19,15 @@
             <input type="password" name="password" placeholder="Contraseña"/>
             <input type="checkbox" name="remember" id="rememberMe"/>
             <button>Iniciar sesión</button>
-            <div class="social"> <span>Iniciar sesión con redes sociales</span></div>
-            <div class="buttons">
-               <button class="facebook"><i class="fa fa-facebook"></i>Facebook</button>
-               <button class="twitter"><i class="fa fa-twitter"></i>Twitter</button>
-               <button class="google"><i class="fa fa-google-plus"></i>Google</button>
-            </div>
         </div>
 
         @include('errors.list')
 
     {!!Form::close()!!}
-    
+
 
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}
     {!!Html::script('js/bootstrap.min.js')!!}
 
 </body>
-</html>   
+</html>

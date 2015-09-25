@@ -25,9 +25,9 @@
                 <td>Contenido 4</td>
                 <td>
                     <a href="{{url('admin/salesman/1/edit')}}" >Editar</a>
-                    
+
                     <a href="" data-toggle="modal" data-target="#edit">Detalles</a>
-                    
+
                     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -47,9 +47,10 @@
                           </div>
                         </div>
                       </div>
-                    </div> 
-                    
-                    <a href="">Eliminar</a> 
+                    </div>
+
+                    <a href="">Eliminar</a>
+                    <a href="/admin/attendance">Asistencia</a>
                 </td>
             </tr>
             <tr>
@@ -57,21 +58,24 @@
                 <td>Contenido 2</td>
                 <td>Contenido 3</td>
                 <td>Contenido 4</td>
-                <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a> </td>
+                <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a>  <a href="/admin/attendance">Asistencia</a></td>
+                    </td>
             </tr>
             <tr>
                 <td>Contenido 1</td>
                 <td>Contenido 2</td>
                 <td>Contenido 3</td>
                 <td>Contenido 4</td>
-                <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a> </td>
+                <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a> <a href="/admin/attendance">Asistencia</a></td>
+
             </tr>
             <tr>
                 <td>Contenido 1</td>
                 <td>Contenido 2</td>
                 <td>Contenido 3</td>
                 <td>Contenido 4</td>
-                <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a> </td>
+                <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a>  <a href="/admin/attendance">Asistencia</a></td>
+                    </td>
             </tr>
         </table>
         <nav>

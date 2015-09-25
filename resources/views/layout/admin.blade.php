@@ -44,12 +44,6 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Asistencias <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{url('admin/attendance')}}">Listar</a></li>
-                        </ul>
-                    </li>
-                    <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Trabajadores <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{url('admin/user/new')}}">Nuevo</a></li>

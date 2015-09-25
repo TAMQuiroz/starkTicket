@@ -29,14 +29,13 @@
 }
 
 .content {
-  top: 0;
+  top: 10px;
   bottom: 0;
   left: 0;
   right: 0;
   width: 540px;
-  height: 540px;
   background-color: white;
-  margin: auto auto;
+  margin: 10px auto;
   padding: 40px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -147,23 +146,6 @@
   float: left;
   width: 30%;
   margin: 0px 1.5%;
-}
-.content .buttons button i {
-  padding-right: 7px;
-}
-.content .buttons button.facebook {
-  background-color: #4464B2;
-}
-.content .buttons button.twitter {
-  background-color: #28A9E0;
-}
-.content .buttons button.google {
-  background-color: #DA4735;
-}
-.content .buttons:after {
-  content: "";
-  display: block;
-  clear: both;
 }
 .content .already {
   text-align: center;
