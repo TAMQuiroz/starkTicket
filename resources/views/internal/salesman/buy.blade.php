@@ -17,17 +17,46 @@
         <div class="input-group" style="width:290px">
             <input type="text" class="form-control" placeholder="Código de reserva...">
             <span class="input-group-btn">
-                <button class="btn btn-info" type="button">Buscar</button>
+                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#detail">Buscar</button>
             </span>
         </div><!-- /input-group -->
-        <br>
-        <h5>Detalle de Reserva:</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <div id="detail" class="collapse">
+            <br>
+            <h5>Detalle de Reserva:</h5>
+            <div class="table-responsive">
+              <table class="table table-bordered" style="widht:1px">
+                <thead>
+                    <tr>
+                        <th>Evento</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Zona</th>
+                        <th>Ubicación</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Piaf</td>
+                        <td>13 Octubre 2015</td>
+                        <td>9:00pm</td>
+                        <td>VIP</td>  
+                        <td>A14</td>
+                        <td>S/150.00</td>
+                    </tr>
+                    <tr>
+                        <td>Piaf</td>
+                        <td>13 Octubre 2015</td>
+                        <td>9:00pm</td>
+                        <td>VIP</td>  
+                        <td>A15</td>
+                        <td>S/150.00</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+        
         <br>
         <div class= "button-final">
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo">Pago Tarjeta</button>    
@@ -137,6 +166,12 @@
                     <option value="">VIP</option>
                     <option value="saab">Platea</option>
                 </select>
+                <h4> Promoción </h4>
+                <select class="form-control">
+                    <option value="">Ninguna</option>
+                    <option value="saab">Pre-venta</option>
+                    <option value="saab">Visa Platinium</option>
+                </select>
                 <h4>Entradas Disponibles</h4>
                 <input class="form-control" type="text" name="firstname" value="520" disabled>
             </label>
@@ -153,17 +188,25 @@
             <tbody>
                 <tr>
                     <td>VIP</td>  
-                    <td>S/150.00</td>
+                    <td>S/.150.00</td>
+                </tr>
+                <tr>
+                    <td>VIP Pre-venta</td>  
+                    <td>S/.135.00</td>
                 </tr>
                 <tr>
                     <td>Platea</td>  
                     <td>S/.70</td>
                 </tr>
+                <tr>
+                    <td>Platea - %30 descuento con Visa Platinium</td>  
+                    <td>S/.49</td>
+                </tr>
             </tbody>
           </table>
         </div>
         <fieldset>
-        <legend>Información del cliente:</legend>
+        <legend>Información del cliente</legend>
             <h5>Ingrese Usuario</h5>
             <div class="input-group" style="width:290px">
                 <input type="text" class="form-control" placeholder="Código de usuario...">
@@ -178,21 +221,24 @@
             <br>
             <br>
         </fieldset>
+        <legend>Selección de Ubicación</legend>
+        <h5>Zona:</h5>
+        <input class="form-control" style="width:290px" type="text" name="firstname" value="VIP" disabled>
+        <br>
         <div class="seats">
             <div class="demo">
                 <div id="seat-map">
                     <div class="front">Escenario</div>                  
                 </div>
+                <br>
                 <div class="booking-details">
+                    <h4 style="text-decoration:underline;text-align: center;">Resumen</h4>
                     <p>Evento: <span> Piaf de Pam Gems</span></p>
                     <p>Día: <span>Octubre 13, 21:00</span></p>
                     <p>Asiento(s): </p>
                     <ul id="selected-seats"></ul>
                     <p>Tickets: <span id="counter">0</span></p>
                     <p>Total: <b>S/.<span id="total">0</span></b></p>
-                            
-                    <!--<button class="checkout-button">Comprar</button>-->
-                            
                     <div id="legend"></div>
                 </div>
                 <div style="clear:both"></div>

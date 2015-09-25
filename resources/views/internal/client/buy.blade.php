@@ -10,8 +10,8 @@
 
 @section('content')
 	<div class="buy">
+		<legend>Selección fecha y horario</legend>
 		<div class="chooser">
-		<h4>Selecciona fecha y horario</h4>
         <select class="form-control" style="width:260px;display:inline-block">
             <option value="">13 de Octubre</option>
             <option value="saab">14 de Octubre</option>
@@ -22,11 +22,21 @@
             <option value="saab">18:00</option>
         </select>
         <h5>Selecciona Zona</h5>
-        <select class="form-control" style="width:260px">
+        <select class="form-control" style="width:260px;display:inline-block">
             <option value="">VIP</option>
             <option value="saab">Platea</option>
         </select>
+        <h5> Promoción </h5>
+        <select class="form-control" style="width:260px;display:inline-block">
+            <option value="">Ninguna</option>
+            <option value="saab">Pre-venta</option>
+            <option value="saab">Visa Platinium</option>
+        </select>
 	</div>
+	<legend>Selección de Ubicación</legend>
+    <h5>Zona:</h5>
+    <input class="form-control" style="width:290px" type="text" name="firstname" value="VIP" disabled>
+    <br>
 	<div class="seats">
 		<div class="demo">
    			<div id="seat-map">

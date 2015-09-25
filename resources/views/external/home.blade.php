@@ -33,12 +33,15 @@
                     <div class="carousel-inner">
                         <div class="item active">
                             <img class="img-responsive" src="images/peppa.jpg" alt="">
+
                         </div>
                         <div class="item">
                             <img class="img-responsive" src="images/jaja.jpg" alt="">
+
                         </div>
                         <div class="item">
                             <img class="img-responsive" src="images/arctic.jpg" alt="">
+
                         </div>
                         <div class="item">
                             <img class="img-responsive" src="images/bruta.jpg" alt="">
@@ -75,6 +78,8 @@
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
                     <img class="img-responsive img-hover img-related" src="images/bruta.jpg"  alt="">
+                    <br><br>
+                    Fuerza Bruta
                 </a>
             </div>
 
@@ -83,12 +88,14 @@
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
                     <img class="img-responsive img-hover img-related" src="images/peppa.jpg" alt="">
+                    El circo de Doña Peppa
                 </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive img-hover img-related" src="images/jaja.jpg" alt="">
+                    <img class="img-responsive img-hover img-related" src="images/arctic.jpg" alt="">
+                     El concierto de los Arctic Monkeys
                 </a>
             </div>
 
