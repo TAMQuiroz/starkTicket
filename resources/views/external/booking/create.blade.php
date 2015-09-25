@@ -38,6 +38,7 @@
                         <div id="legend"></div>
                     </div>
                     <div style="clear:both"></div>
+                    <input type="button" value="Finalizar Reserva" style="float:right">
                 </div>
             </div>
 
