@@ -65,7 +65,7 @@ Route::get('promoter/organizers', 'BusinessController@organizers');
 Route::get('promoter/organizer/create', 'BusinessController@newOrganizer');
 
 
-Route::get('admin/home', 'AdminController@home');
+Route::get('admin/', 'AdminController@home');
 Route::get('admin/politics', 'AdminController@politics');
 Route::get('admin/politics/new', 'AdminController@newPolitic');
 Route::get('admin/politics/{id}/edit', 'AdminController@editPolitic');
