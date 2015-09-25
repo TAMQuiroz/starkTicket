@@ -67,7 +67,7 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Descripción</label>
                 <div class="col-sm-10">
-                  <textarea class="form-control" rows="5"></textarea>
+                  <textarea class="form-control" id="description"></textarea>
                 </div>
               </div>
               <div class="form-group">
@@ -83,4 +83,11 @@
 
 @section('javascript')
 
+<script src="//cdn.ckeditor.com/4.5.3/standard/ckeditor.js"></script>
+  <script type="text/javascript">
+    CKEDITOR.replace( 'description',
+    {
+        toolbar : 'Basic',
+    });
+  </script>
 @stop

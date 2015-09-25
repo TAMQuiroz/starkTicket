@@ -21,7 +21,7 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Descripcion</label>
                 <div class="col-sm-10">
-                  <textarea class="form-control" rows="10">
+                  <textarea class="form-control" rows="10" id="description">
                   </textarea>
                 </div>
               </div>
@@ -38,4 +38,11 @@
 
 @section('javascript')
 
+<script src="//cdn.ckeditor.com/4.5.3/standard/ckeditor.js"></script>
+  <script type="text/javascript">
+    CKEDITOR.replace( 'description',
+    {
+        toolbar : 'Basic',
+    });
+  </script>
 @stop
