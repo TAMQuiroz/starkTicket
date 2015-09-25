@@ -19,44 +19,44 @@
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
-            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
+            <p><a href="{{url('event')}}" class="btn btn-primary" role="button" data-target="#info" data-whatever="@mdo">Ver más</a></p>
         </div>
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Categoria 1</h3>
-            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
+            <h3>Categoria 2</h3>
+            <p><a href="{{url('event')}}" class="btn btn-primary" role="button"  data-target="#info" data-whatever="@mdo">Ver más</a></p>
         </div>
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Categoria 1</h3>
-            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
+            <h3>Categoria 3</h3>
+            <p><a href="{{url('event')}}" class="btn btn-primary" role="button"  data-target="#info" data-whatever="@mdo">Ver más</a> </p>
         </div>
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Categoria 1</h3>
-            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
+            <h3>Categoria 4</h3>
+            <p><a href="{{url('event')}}" class="btn btn-primary" role="button"  data-target="#info" data-whatever="@mdo">Ver más</a></p>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Categoria 1</h3>
-            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
+            <h3>Categoria 5</h3>
+            <p><a href="{{url('event')}}" class="btn btn-primary" role="button"  data-target="#info" data-whatever="@mdo">Ver más</a></p>
         </div>
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Categoria 1</h3>
-            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
+            <h3>Categoria 6</h3>
+            <p><a href="{{url('event')}}" class="btn btn-primary" role="button"  data-target="#info" data-whatever="@mdo">Ver más</a></p>
         </div>
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Categoria 1</h3>
-            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
+            <h3>Categoria 8</h3>
+            <p><a href="{{url('event')}}" class="btn btn-primary" role="button" data-target="#info" data-whatever="@mdo">Ver más</a></p>
         </div>
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Categoria 1</h3>
-            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
+            <h3>Categoria 7</h3>
+            <p><a href="{{url('event')}}" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Ver más</a></p>
         </div>
     </div>
     <div id="info" class="modal fade" role="dialog">
