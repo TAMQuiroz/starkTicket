@@ -50,7 +50,6 @@ Route::get('client/reservaexitosa', 'BookingController@store');
 Route::get('salesman/home', 'BusinessController@salesmanHome');
 Route::get('salesman/cash_count', 'BusinessController@cashCount');
 Route::get('salesman/exchange_gift', 'BusinessController@exchangeGift');
-Route::get('salesman/pay_booking', 'BookingController@pay');
 //Este inicia en el detalle del evento
 Route::get('salesman/event/{id}/buy', 'EventController@salesmanBuy');
 //Fin
