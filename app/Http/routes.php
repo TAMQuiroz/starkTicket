@@ -50,7 +50,7 @@ Route::get('salesman/exchange_gift', 'BusinessController@exchangeGift');
 Route::get('salesman/event/{id}/buy', 'EventController@salesmanBuy');
 //Fin
 
-Route::get('promoter/home', 'BusinessController@promoterHome');
+Route::get('promoter/', 'BusinessController@promoterHome');
 Route::get('promoter/politics', 'EventController@politics');
 Route::get('promoter/transfer_payments', 'BusinessController@transferPayments');
 Route::get('promoter/new_transfer_payment', 'BusinessController@newTransferPayment');
