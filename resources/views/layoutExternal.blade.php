@@ -4,17 +4,17 @@
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	
+
 	<title>@yield('title') | StarkTicket</title>
-	
+
 	{!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
 	{!!Html::style('css/style.css')!!}
 	{!!Html::style('css/style-desktop.css')!!}
 	{!!Html::style('css/skel-noscript.css')!!}
-	
+
 	@yield('style')
-	
+
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -27,7 +27,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{url('home')}}">Telecticke </a>
+                <a class="navbar-brand" href="{{url('/')}}">Telecticke </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -55,11 +55,11 @@
 				<h1 id="portada"><a href="{{url('home')}}">Teleticke</a></h1>
 			</div>
 
-			
+
 			<!-- Nav -->
 			<nav id="nav">
 				<ul>
-					<li><a href="{{url('home')}}">Inicio</a></li>
+					<li><a href="{{url('/')}}">Inicio</a></li>
 					<li><a href="{{url('category')}}">Categorias</a></li>
 					<li><a href="{{url('event')}}">Eventos</a></li>
 					<li><a href="{{url('about')}}">Nosotros</a></li>
@@ -75,8 +75,8 @@
 	<div class="container">
 		@yield('content')
 	</div>
-	
-	
+
+
 </body>
 
 <footer id="footer">
@@ -93,5 +93,5 @@
 	{!!Html::script('js/jquery-1.11.3.min.js')!!}
 	{!!Html::script('js/bootstrap.min.js')!!}
 	@yield('javascript')
-	
+
 </html>
