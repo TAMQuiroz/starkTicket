@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Agregar punto de venta
+	Editar Promotor
 @stop
 
 @section('content')
@@ -20,15 +20,43 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Direción</label>
+                <label for="inputEmail3" class="col-sm-2 control-label">Apellidos</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="inputEmail3" placeholder="">
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Provincia</label>
+                <label for="inputEmail3" class="col-sm-2 control-label">DNI</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Dirección</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Teléfono(s)</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">E-mail(s)</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Cargo</label>
+                <div class="col-sm-10">
+                  <select class="form-control">
+                    <option>Vendedor</option>
+                    <option>Promotor de Ventas</option>
+                    <option>Administrador</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group">

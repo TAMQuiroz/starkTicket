@@ -63,9 +63,9 @@ class EventController extends Controller
         return view('internal.client.reserve');
     }
 
-    public function clientProfile()
+    public function clientHome()
     {
-        return view('internal.client.profile');
+        return view('internal.client.home');
     }
     public function politics()
     {

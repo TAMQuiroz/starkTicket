@@ -64,21 +64,12 @@ class AuthController extends Controller
         ]);
     }
 
-    protected $redirectPath = 'home';
+    protected $redirectPath = 'client/home';
     protected $redirectAfterLogout = 'auth/login';
-
-    public function client()
-    {
-        return view('external.clientLogin');
-    }
 
     public function worker()
     {
         return view('external.workerLogin');
     }
 
-    public function signin()
-    {
-        return view('external.signin');
-    }
 }

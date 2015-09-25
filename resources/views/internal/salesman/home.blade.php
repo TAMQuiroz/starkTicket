@@ -1,15 +1,15 @@
-@extends('layout.admin')
+@extends('layout.salesman')
 
 @section('style')
 
 @stop
 
 @section('title')
-  Bienvenido admin
+  Bienvenido vendedor
 @stop
 
 @section('content')
-<p>lsldldl</p>
+<p>Ten un buen dia</p>
 @stop
 
 @section('javascript')

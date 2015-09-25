@@ -8,6 +8,16 @@ use App\Http\Controllers\Controller;
 
 class BusinessController extends Controller
 {
+    public function salesmanHome()
+    {
+        return view('internal.salesman.home');
+    }
+
+    public function promoterHome()
+    {
+        return view('internal.promoter.home');
+    }
+
     public function cashCount()
     {
         return view('internal.salesman.cashCount');

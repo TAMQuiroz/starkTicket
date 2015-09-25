@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Agregar punto de venta
+	Editar punto de venta
 @stop
 
 @section('content')
@@ -16,19 +16,19 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="" value="Nombre punto de venta">
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Direción</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="" value="Direccion punto de venta">
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Provincia</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="" value="Provincia punto de venta">
                 </div>
               </div>
               <div class="form-group">

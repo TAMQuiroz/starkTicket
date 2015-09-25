@@ -34,21 +34,53 @@
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Eventos <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{url('client/profile')}}">Perfil</a></li>
+                            <li><a href="{{url('client/home')}}">Perfil</a></li>
                             <li><a href="{{url('client/event_record')}}">Historial</a></li>
                         </ul>
                     </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a>Puntos Acumulados: 200</a></li>
                     <li><a href="">Cliente</a></li>
-                    <li><a href="{{url('auth/logout')}}">(Salir)</a></li>
+                    <li><a href="{{url('auth/logout')}}">Salir</a></li>
               </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
+    <div id="header">
+        <div class="container">
+            @if(Session::has('flash_message'))
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{Session::get('flash_message')}}
+                </div>
+            @endif
+            <!-- Logo -->
+
+            <div id="logo">
+                <h1 id="portada"><a href="{{url('home')}}">Teleticke</a></h1>
+            </div>
+
+            
+            <!-- Nav -->
+            <nav id="nav">
+                <ul>
+                    <li><a href="{{url('home')}}">Inicio</a></li>
+                    <li><a href="{{url('category')}}">Categorias</a></li>
+                    <li><a href="{{url('event')}}">Eventos</a></li>
+                    <li><a href="{{url('about')}}">Nosotros</a></li>
+                    <li><a href="{{url('modules')}}">Puntos de venta</a></li>
+                    <li><a href="{{url('calendar')}}">Calendario</a></li>
+                    <li><a href="{{url('gifts')}}">Canjealo</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+
     <div class="container">
         <h1>@yield('title')</h1>
         <hr>
@@ -56,7 +88,7 @@
     </div>
     <div class="container">
         <hr>
-        <p><b>Todos los derechos reservados.</b></p>
+        <p><b>Desarrollado por Stark</b></p>
     </div>
 
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}

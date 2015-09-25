@@ -33,13 +33,14 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{url('salesman/cash_count')}}">Apertura y Arqueo de caja</a></li>
                             <li><a href="{{url('salesman/exchange_gift')}}">Canjeo de regalos</a></li>
+                            <li><a href="{{url('salesman/pay_booking')}}">Pagar Reserva</a></li>
                         </ul>
                     </li>                   
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="">Vendedor</a></li>
-                    <li><a href="{{url('auth/logout')}}">(Salir)</a></li>
+                    <li><a href="{{url('auth/logout')}}">Salir</a></li>
               </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -52,7 +53,7 @@
     </div>
     <div class="container">
         <hr>
-        <p><b>Todos los derechos reservados.</b></p>
+        <p><b>Desarrollado por Stark</b></p>
     </div>
 
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}

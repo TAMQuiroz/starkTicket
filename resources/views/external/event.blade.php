@@ -31,7 +31,7 @@
 								<p>Maecenas pede nisl, elementum eu, ornare ac, malesuada at, erat. Proin gravida orci porttitor enim accumsan lacinia. Donec condimentum, urna non molestie semper, ligula enim ornare nibh, quis laoreet eros quam eget ante. Aliquam libero. Vivamus nisl nibh, iaculis vitae, viverra sit amet, ullamcorper vitae, turpis. Aliquam erat volutpat. Vestibulum dui sem, pulvinar sed, imperdiet nec, iaculis nec, leo. Fusce odio. Etiam arcu dui, faucibus eget, placerat vel, sodales eget, orci. Donec ornare neque ac sem. Mauris aliquet. Aliquam sem leo, vulputate sed, convallis at, ultricies quis, justo. Donec nonummy magna quis risus. Quisque eleifend. Phasellus tempor vehicula justo.</p>
 								<br>
 								<div class="table-responsive">
-								  <table class="table" style="widht:1px">
+								  <table class="table table-bordered" style="widht:1px">
 								    <thead>
 								        <tr>
 								            <th>Zona</th>
@@ -50,8 +50,22 @@
 								    </tbody>
 								  </table>
 								</div>
-								<button type="button" class="btn btn-info"><a href="{{url('client/event/1/buy')}}">Comprar Entrada</a></button> <!---->
-								<button type="button" class="btn btn-info"><a href="{{url('client/1/reservanueva')}}">Reservar Entrada</a></button>
+								<a href="{{url('client/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a> <!---->
+								<a href="{{url('client/1/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
+								<br><br>
+								<div class="form-group">
+								  <label for="comment">Ingrese comentario:</label>
+								  <textarea class="form-control" rows="5" id="comment"></textarea>
+								  <button type="submit" class="btn btn-info">Aceptar</button>
+								  <br><br>
+								  <label for="comment">Comentarios:</label>
+								  <h6>Peppa:</h6>	
+								  <input class="form-control" type="text" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. " readonly>
+								  <h6>Suzy:</h6>	
+								  <input class="form-control" type="text" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. " readonly>
+								  <h6>George:</h6>	
+								  <input class="form-control" type="text" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. " readonly>
+								</div>
 							</section>
 						</div>
 					<!-- /Content -->
@@ -65,6 +79,8 @@
 								</header>
 								<h3 class="dates">Fechas del evento</h3>
 								<p>Del 17 de Septiembre al 26 de Octubre 2015</p>
+								<h3 class="dates">Horario</h3>
+								<p>Función a las 20:00</p>
 								<h3 class="dates">Ubicación</h3>
 
 								<p>Av. Gregorio Escobedo 803, Jesús María 15076</p>
