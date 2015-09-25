@@ -43,7 +43,7 @@ Route::get('client/{id}/reservanueva', ['as' => 'booking.create' , 'uses' => 'Bo
 Route::get('client/reservaexitosa', 'BookingController@store');
 
 
-Route::get('salesman/home', 'BusinessController@salesmanHome');
+Route::get('salesman', 'BusinessController@salesmanHome');
 Route::get('salesman/cash_count', 'BusinessController@cashCount');
 Route::get('salesman/exchange_gift', 'BusinessController@exchangeGift');
 

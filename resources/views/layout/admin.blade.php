@@ -117,6 +117,26 @@
 
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}
     {!!Html::script('js/bootstrap.min.js')!!}
+    {!!Html::script('js/jquery.validate.min.js')!!}
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('#form').validate({
+        errorElement: "span",
+        rules: {
+        },
+        highlight: function(element) {
+            $(element).closest('.form-group')
+            .removeClass('has-success').addClass('has-error');
+        },
+        success: function(element) {
+            $(element)
+            .addClass('help-inline')
+            .closest('.form-group')
+            .removeClass('has-error').addClass('has-success');
+            }
+        });
+    });
+    </script>
     @yield('javascript')
 
 </body>
