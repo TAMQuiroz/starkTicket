@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-	<p>Ten un buen dia</p>
+	
 @stop
 
 @section('javascript')
