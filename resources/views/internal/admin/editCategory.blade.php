@@ -46,7 +46,7 @@
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <a class="btn btn-primary"  data-toggle="modal" data-target="#agregado">Guardar</a>
-                  <button type="reset" class="btn btn-danger">Cancelar</button>
+                  <a href="{{url('admin/category')}}"><button type="reset" class="btn btn-danger">Cancelar</button></a>
                 </div>
               </div>
             </form>
@@ -170,8 +170,8 @@
                   </div>
                 </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                 <button type="button" class="btn btn-primary">Guardar</button>
               </div>
             </div>
           </div>

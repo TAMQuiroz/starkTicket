@@ -26,7 +26,7 @@
                 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
                 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
                 <td>3</td>
-                <td><a href="{{url('admin/category/1/edit')}}">Editar</a> <a href="">Eliminar</a> </td>
+                <td><a href="{{url('admin/category/1/edit')}}"><button type="button" class="btn btn-primary">Editar</button></a> <a href=""><button type="button" class="btn btn-danger" data-dismiss="modal">Eliminar</button></a> </td>
             </tr>
             <tr>
                 <td>Categoria 2</td>
@@ -37,7 +37,7 @@
                 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
                 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
                 <td>30</td>
-                <td><a href="#">Editar</a> <a href="">Eliminar</a> </td>
+                <td><a href="{{url('admin/category/1/edit')}}"> <button type="button" class="btn btn-primary">Editar</button></a> <a href=""><button type="button" class="btn btn-danger" data-dismiss="modal">Eliminar</button></a> </td>
             </tr>
 
         </table>
