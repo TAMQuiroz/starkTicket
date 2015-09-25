@@ -1,5 +1,5 @@
 
-		var price = 10; //price
+		var price = 150; //price
 		$(document).ready(function() {
 			var $cart = $('#selected-seats'), //Sitting Area
 			$counter = $('#counter'), //Votes

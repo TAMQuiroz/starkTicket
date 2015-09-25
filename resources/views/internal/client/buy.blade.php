@@ -12,31 +12,20 @@
 	<div class="buy">
 		<div class="chooser">
 		<h4>Selecciona fecha y horario</h4>
-		<div class="dropdown">
-            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"> 13 de Octubre
-            <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                <li><a href="#">14 de Octubre</a></li>
-                <li><a href="#">15 de Octubre</a></li>
-                <li><a href="#">16 de Octubre</a></li>
-            </ul>
-        </div>
-        <div class="dropdown">
-            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"> 21:00
-            <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                <li><a href="#">18:00</a></li>
-            </ul>
-        </div>
-        <br>
-        <h4>Selecciona Zona</h4>
-        <div class="dropdown">
-		  <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">VIP
-		  <span class="caret"></span></button>
-		  <ul class="dropdown-menu">
-		    <li><a href="#">Platea</a></li>
-		  </ul>
-		</div>
+        <select class="form-control" style="width:260px;display:inline-block">
+            <option value="">13 de Octubre</option>
+            <option value="saab">14 de Octubre</option>
+            <option value="mercedes">15 de Octubre</option>
+        </select>
+        <select class="form-control" style="width:260px;display:inline-block">
+            <option value="">21:00</option>
+            <option value="saab">18:00</option>
+        </select>
+        <h5>Selecciona Zona</h5>
+        <select class="form-control" style="width:260px">
+            <option value="">VIP</option>
+            <option value="saab">Platea</option>
+        </select>
 	</div>
 	<div class="seats">
 		<div class="demo">
@@ -61,6 +50,8 @@
 					        <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
 					    </div>
 					    <div class="modal-body">
+					    	<h5>Total a Pagar: s/.300.00</h5>
+					    	<hr>	
 					        <form>
 					          <div class="form-group">
 								  <div class="form-group">
@@ -71,7 +62,7 @@
 								  	<label for="exampleInputEmail2">Código de Seguridad</label>
 								  	<input type="text" class="form-control" placeholder="123">
 								  </div>
-								  <button type="button" class="btn btn-info"><a href="{{url('event/successBuy')}}">Pagar Entrada</a></button>
+								  <a href="{{url('event/successBuy')}}"><button type="button" class="btn btn-info">Pagar Entrada</button></a>
 								  <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
 						      </div>
 					        </form>
@@ -82,7 +73,7 @@
 				</div>	
 			</div>
 			<div style="clear:both"></div>
-	   </div>
+	</div>
 
 @stop
 

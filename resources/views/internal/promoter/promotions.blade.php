@@ -14,11 +14,17 @@
             <!-- Content Column -->
             <div class="col-md-9">
 				<div class="container">  <!-- Comienza primer despliegue-->
-					<input type="text"></input>
-					<button type="button" class="btn btn-info">Buscar</button>
-					<br><br>
+					
+			    	<div class="input-group" style="width:300px">
+			      		<input type="text" class="form-control" placeholder="Buscar promoción..." >
+			      		<span class="input-group-btn">
+					    	<button class="btn btn-info" type="button">Buscar</button>
+					    </span>
+			    	</div><!-- /input-group -->
+				    
+				    <br><br>
 					<div class="table-responsive">
-					  <table class="table table-hover">
+					  <table class="table table-bordered table-striped">
 					    <thead>
 					        <tr>
 					            <th>Nombre</th>
@@ -60,11 +66,15 @@
 					        <form>
 					          <div class="form-group">
 					            <label for="recipient-name" class="control-label">Nombre:</label>
-					            <input type="text" class="form-control" id="recipient-name">
+					            <input type="text" class="form-control" id="recipient-name" value="Promoción Visa Platinium">
 					          </div>
 					          <div class="form-group">
 					            <label for="recipient-name" class="control-label">Fecha Fin:</label>
-					            <input type="text" class="form-control" id="recipient-name">
+					            <input type="date" class="form-control" id="recipient-name" value="13/10/2015">
+					          </div>
+					          <div class="form-group">
+					            <label for="recipient-name" class="control-label">Hora Fin:</label>
+					            <input type="datetime" class="form-control" id="recipient-name" value="24:00">
 					          </div>
 					          <div class="form-group">
 					            <label for="recipient-name" class="control-label">Descripción:</label>
@@ -75,11 +85,15 @@
 					            <input type="text" class="form-control" id="recipient-name">
 					          </div>
 					          <h4 class="modal-title" id="exampleModalLabel">Agregar eventos:</h4>
-					          <input type="text"></input>
-								<button type="button" class="btn btn-info">Buscar</button>
-								<br><br>
+							  <div class="input-group" style="width:300px">
+					      		<input type="text" class="form-control" placeholder="Buscar eventos..." >
+					      		<span class="input-group-btn">
+							    	<button class="btn btn-info" type="button">Buscar</button>
+							    </span>
+					    	 </div><!-- /input-group -->
+					    	 <br>
 					          <div class="table-responsive">
-								  <table class="table">
+								  <table class="table table-bordered">
 								    <thead>
 								        <tr>
 								            <th>Nombre</th>
@@ -93,26 +107,6 @@
 								        </tr>
 								        <tr>
 								            <td>Arctic Monkeys Lima 2020</td>
-								            <td><button type="button" class="btn btn-info">x</button></td>
-								        </tr>
-								    </tbody>
-								  </table>
-								</div>
-								<h4>Agregar categorías:</h4>
-								<input type="text"></input>
-								<button type="button" class="btn btn-info">Buscar</button>
-								<br><br>
-								<div class="table-responsive">
-								  <table class="table">
-								    <thead>
-								        <tr>
-								            <th>Tipo</th>
-								            <th>Eliminar</th>
-								        </tr>
-								    </thead>
-								    <tbody>
-								        <tr>
-								            <td>Conciertos</td>
 								            <td><button type="button" class="btn btn-info">x</button></td>
 								        </tr>
 								    </tbody>
@@ -140,11 +134,12 @@
 					          <div class="form-group">
 				            	<h4>Promoción Visa Platinium</h4>
 								<p>Código CA21231J.
-								Válida del 01/08/2015 al 13/10/2015.</p>
+								Válida del 01/08/2015 a las 00:00 hasta el 13/10/2015 a las 24:00.</p>
+								<p>Promoción exclusiva con tarjetas Visa Platinium</p>
 								<h5>Aplica para los siguientes eventos:</h5>
 								<ul>
-									<li>Viva por el Rock 6</li>
-									<li>Arctic Monkeys Lima 2020</li>
+									<li>Viva por el Rock 6 - Zona VIP</li>
+									<li>Arctic Monkeys Lima 2020 - Zona VIP</li>
 								</ul>
 								<br><br>
 								<h4>Información de Ventas</h4>
@@ -164,64 +159,78 @@
 					<div id="demo1" class="collapse">
 						<br>
 						<h4>Ingrese datos de nueva promoción</h4>
-						Código: <input type="text"></input>
-						Nombre: <input type="text"></input>
-						<br><br>
-						Fecha Inicio: <input type="text"></input>
-						Fecha Fin: <input type="text"></input>
-						<br><br>
-						Descripcion: <input type="text"></input>
-						Descuento (%): <input type="text"></input>
+						<label>
+							Código: <input type="text" class="form-control" placeholder="9898083" readonly></input>
+							Nombre: <input type="text" class="form-control" placeholder="Nombre de evento"></input>
+							Fecha Inicio: <input type="date" class="form-control"></input>
+							Fecha Fin: <input type="date" class="form-control"></input>
+							Hora Inicio: <input type="datetime" class="form-control" placeholder="hh:mm"></input>
+							Hora Fin: <input type="datetime" class="form-control" placeholder="hh:mm"></input>
+							Descripcion: <input type="text" class="form-control" placeholder="Descripción de evento..."></input>
+							Descuento (%): <input type="text" class="form-control" placeholder="%..."></input>
+						</label>
+						
 						<br><br>
 						<h4>Agregar eventos:</h4>
-						<input type="text"></input>
-						<button type="button" class="btn btn-info">Buscar</button>
+						<div class="input-group" style="width:300px">
+				      		<input type="text" class="form-control" placeholder="Buscar eventos..." >
+				      		<span class="input-group-btn">
+						    	<button class="btn btn-info" type="button">Buscar</button>
+						    </span>
+				    	</div><!-- /input-group -->
+				    	<br>
+				    	<h5>Seleccionar Zona:</h5>
+				        <select class="form-control" style="width:260px">
+		                    <option value="">VIP</option>
+		                    <option value="saab">Campo</option>
+		                    <option value="mercedes">Occidente</option>
+		                </select>
+						<br>
+						<button class="btn btn-info" type="button">Agregar Zona y Promoción</button>
 						<br><br>
 						<div class="table-responsive">
-						  <table class="table">
+						  <table class="table table-bordered table-striped">
 						    <thead>
 						        <tr>
 						            <th>Nombre</th>
+						            <th>Zona</th>
 						            <th>Eliminar</th>
 						        </tr>
 						    </thead>
 						    <tbody>
 						        <tr>
 						            <td>Viva por el Rock 6</td>
+						            <td>VIP</td>
 						            <td><button type="button" class="btn btn-info">x</button></td>
 						        </tr>
 						        <tr>
 						            <td>Arctic Monkeys Lima 2020</td>
+						            <td>VIP</td>
 						            <td><button type="button" class="btn btn-info">x</button></td>
 						        </tr>
 						    </tbody>
 						  </table>
 						</div>
-						<br><br>
-						<h4>Agregar categorías:</h4>
-						<input type="text"></input>
-						<button type="button" class="btn btn-info">Buscar</button>
-						<br><br>
-						<div class="table-responsive">
-						  <table class="table">
-						    <thead>
-						        <tr>
-						            <th>Tipo</th>
-						            <th>Eliminar</th>
-						        </tr>
-						    </thead>
-						    <tbody>
-						        <tr>
-						            <td>Conciertos</td>
-						            <td><button type="button" class="btn btn-info">x</button></td>
-						        </tr>
-						    </tbody>
-						  </table>
-						</div>
-						<br><br>
-						<button type="button" class="btn btn-info">Guardar</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#end" data-whatever="@mdo">Guardar</button>
 						<button type="button" class="btn btn-info">Cancelar</button>
-
+						<div class="modal fade" id="end" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                		<div class="modal-dialog" role="document">
+		                    <div class="modal-content">
+		                      <div class="modal-header">
+		                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                        <h4 class="modal-title" id="exampleModalLabel">Promociones</h4>
+		                    </div>
+		                    <div class="modal-body">
+		                        <form>
+		                          <div class="form-group">
+		                              <div class="form-group">
+		                                <label for="exampleInputEmail2">Promoción agregada!</label>
+		                          </div>
+		                        </form>
+		                    </div>
+		                    </div>
+		                  </div>
+		                </div> 
 					</div>
 				</div>
 			</div>
