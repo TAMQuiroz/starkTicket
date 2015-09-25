@@ -19,46 +19,68 @@
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
-            <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
+            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
         </div>
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
-            <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
+            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
         </div>
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
-            <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
+            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
         </div>
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
-            <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
+            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
-            <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
+            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
         </div>
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
-            <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
+            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
         </div>
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
-            <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
+            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
         </div>
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Categoria 1</h3>
-            <p><a href="#">Detalles</a> | <a href="#">Reservar</a> </p>
+            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#info" data-whatever="@mdo">Detalles</a> | <a href="#" class="btn btn-primary" role="button">Reservar</a> </p>
         </div>
     </div>
+    <div id="info" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-body">
+                            <h2>Descripcion</h2>
+                            <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h4>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+      </div>
 @stop
 
 @section('javascript')
