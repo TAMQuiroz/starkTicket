@@ -19,7 +19,7 @@
 <br><br>
          <div class="row">
 
-            <div class="col-md-7">
+            <div class="col-md-7" style="left:300px">
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="0">
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
