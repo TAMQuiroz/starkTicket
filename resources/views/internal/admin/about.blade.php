@@ -27,19 +27,19 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Misión</label>
                 <div class="col-sm-10">
-                  <textarea rows="6" class="form-control"></textarea>
+                  <textarea rows="6" class="form-control" id="mision"></textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Visión</label>
                 <div class="col-sm-10">
-                  <textarea rows="6" class="form-control"></textarea>
+                  <textarea rows="6" class="form-control" id="vision"></textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Historia</label>
                 <div class="col-sm-10">
-                  <textarea rows="6" class="form-control"></textarea>
+                  <textarea rows="6" class="form-control"  id="historia"></textarea>
                 </div>
               </div>
               <div class="form-group">
@@ -60,5 +60,19 @@
 @stop
 
 @section('javascript')
-
+<script src="//cdn.ckeditor.com/4.5.3/standard/ckeditor.js"></script>
+  <script type="text/javascript">
+    CKEDITOR.replace( 'vision',
+    {
+        toolbar : 'Basic',
+    });
+    CKEDITOR.replace( 'historia',
+    {
+        toolbar : 'Basic',
+    });
+    CKEDITOR.replace( 'mision',
+    {
+        toolbar : 'Basic',
+    });
+  </script>
 @stop
