@@ -1,11 +1,11 @@
 @extends('layoutExternal')
 
 @section('style')
-	
+
 @stop
 
 @section('title')
-	Home
+	Welcome...
 @stop
 
 @section('content')
@@ -96,6 +96,7 @@
         <!-- /.row -->
 
         <hr>
+
 @stop
 
 @section('javascript')

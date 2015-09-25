@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -27,7 +23,7 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 
-Route::get('home', 'PagesController@home');
+Route::get('/', 'PagesController@home');
 Route::get('about', 'PagesController@about');
 Route::get('modules', 'PagesController@modules');
 Route::get('calendar', 'PagesController@calendar');
@@ -54,7 +50,7 @@ Route::get('salesman/exchange_gift', 'BusinessController@exchangeGift');
 Route::get('salesman/event/{id}/buy', 'EventController@salesmanBuy');
 //Fin
 
-Route::get('promoter/home', 'BusinessController@promoterHome');
+Route::get('promoter/', 'BusinessController@promoterHome');
 Route::get('promoter/politics', 'EventController@politics');
 Route::get('promoter/transfer_payments', 'BusinessController@transferPayments');
 Route::get('promoter/new_transfer_payment', 'BusinessController@newTransferPayment');
@@ -65,7 +61,7 @@ Route::get('promoter/organizers', 'BusinessController@organizers');
 Route::get('promoter/organizer/create', 'BusinessController@newOrganizer');
 
 
-Route::get('admin/home', 'AdminController@home');
+Route::get('admin/', 'AdminController@home');
 Route::get('admin/politics', 'AdminController@politics');
 Route::get('admin/politics/new', 'AdminController@newPolitic');
 Route::get('admin/politics/{id}/edit', 'AdminController@editPolitic');

@@ -26,7 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{url('home')}}">Telecticke </a>
+                <a class="navbar-brand" href="{{url('/')}}">Telecticke </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -64,7 +64,7 @@
                 <h1 id="portada"><a href="{{url('home')}}">Teleticke</a></h1>
             </div>
 
-            
+
             <!-- Nav -->
             <nav id="nav">
                 <ul>
