@@ -20,13 +20,13 @@
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active">
-                            <img class="img-responsive" src="/images/voidInterno.png" alt="">
+                        {!! Html::image('images/voidInterno.png', null, array()) !!}
                         </div>
                         <div class="item">
-                            <img class="img-responsive" src="/images/pudgeInterno.png" alt="">
+                        {!! Html::image('images/pudgeInterno.png', null, array()) !!}
                         </div>
                         <div class="item">
-                            <img class="img-responsive" src="/images/rilayInterno.png" alt="">
+                        {!! Html::image('images/rilayInterno.png', null, array()) !!}   
                         </div>
                     </div>
 
@@ -82,25 +82,25 @@
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive img-hover img-related" src="/images/void 500 300.png"  alt="">
+                {!! Html::image('images/void 500 300.png', null, array()) !!}
                 </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive img-hover img-related" src="/images/pudge 500 300.png" alt="">
+                {!! Html::image('images/pudge 500 300.png', null, array()) !!}
                 </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive img-hover img-related" src="/images/rilay 500 300.png" alt="">
+                {!! Html::image('images/rilay 500 300.png', null, array()) !!}
                 </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive img-hover img-related" src="/images/gondar 500 300.jpg" alt="">
+                {!! Html::image('images/gondar 500 300.jpg', null, array()) !!}
                 </a>
             </div>
 

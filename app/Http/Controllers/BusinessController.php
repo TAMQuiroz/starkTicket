@@ -40,7 +40,7 @@ class BusinessController extends Controller
 
     public function exchangeGift()
     {
-        return view('internal.promoter.exchangeGift');
+        return view('internal.salesman.exchangeGift');
     }
     
     public function organizers()
