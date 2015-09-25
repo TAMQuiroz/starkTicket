@@ -47,6 +47,18 @@ class AdminController extends Controller
     {
         return view('internal.admin.report');
     }
+    public function reportSales()
+    {
+        return view('internal.admin.reports.sales');
+    }
+    public function reportAssistance($id)
+    {
+        return view('internal.admin.reports.assistance');
+    }
+    public function reportAssignment($id)
+    {
+        return view('internal.admin.reports.assignment');
+    }
 
     public function newCategory()
     {

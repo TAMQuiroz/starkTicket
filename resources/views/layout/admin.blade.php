@@ -74,13 +74,13 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li class="active">
-                                <a href="{{url('admin/report/{id}')}}">Reporte Ventas</a>
+                                <a href="{{url('admin/report/sales')}}">Reporte Ventas</a>
                             </li>
                              <li>
-                                <a href="{{url('admin/report/1')}}">Reporte de Asistencias</a>
+                                <a href="{{url('admin/report/assistance')}}">Reporte de Asistencias</a>
                             </li>
                             <li>
-                                <a href="{{url('admin/report/2')}}">Reporte de Asignación</a>
+                                <a href="{{url('admin/report/assignment')}}">Reporte de Asignación</a>
                             </li>
                         </ul>
                     </li>
