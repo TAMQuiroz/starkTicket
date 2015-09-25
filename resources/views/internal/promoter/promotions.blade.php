@@ -28,6 +28,7 @@
 					    <thead>
 					        <tr>
 					            <th>Nombre</th>
+					            <th>Usuario creador</th>
 					            <th>Cantidad Eventos</th>
 					            <th>Fecha Fin</th>
 					            <th>Ver</th>
@@ -38,6 +39,7 @@
 					    <tbody>
 					        <tr>
 					            <td>Promoción Visa Platinium</td>
+					            <td>Samoel Sarmiento</td>
 					            <td>13</td>
 					            <td>13/10/2015</td>
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
@@ -46,6 +48,7 @@
 					        </tr>
 					        <tr>
 					            <td>Promoción Mastercard</td>
+					            <td>Samoel Sarmiento</td>
 					            <td>10</td>
 					            <td>20/12/2015</td>
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
@@ -92,21 +95,34 @@
 							    </span>
 					    	 </div><!-- /input-group -->
 					    	 <br>
+					    	<h5>Seleccionar Zona:</h5>
+					        <select class="form-control" style="width:260px">
+			                    <option value="">VIP</option>
+			                    <option value="saab">Campo</option>
+			                    <option value="mercedes">Occidente</option>
+			                </select>
+							<br>
+							<button class="btn btn-info" type="button">Agregar Zona y Promoción</button>
+							<br><br>
+					    	 <br>
 					          <div class="table-responsive">
 								  <table class="table table-bordered">
 								    <thead>
 								        <tr>
 								            <th>Nombre</th>
+								            <th>Zona</th>
 								            <th>Eliminar</th>
 								        </tr>
 								    </thead>
 								    <tbody>
 								        <tr>
 								            <td>Viva por el Rock 6</td>
+								            <td>VIP</td>
 								            <td><button type="button" class="btn btn-info">x</button></td>
 								        </tr>
 								        <tr>
 								            <td>Arctic Monkeys Lima 2020</td>
+								            <td>VIP</td>
 								            <td><button type="button" class="btn btn-info">x</button></td>
 								        </tr>
 								    </tbody>
@@ -115,7 +131,7 @@
 					        </form>
 					      </div>
 					      <div class="modal-footer">
-					        <button type="button" class="btn btn-info">Guardar</button>
+					        <button type="button" class="btn btn-info" data-dismiss="modal">Guardar</button>
 					        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
 					      </div>
 					    </div>
@@ -133,9 +149,9 @@
 					        <form>
 					          <div class="form-group">
 				            	<h4>Promoción Visa Platinium</h4>
-								<p>Código CA21231J.
-								Válida del 01/08/2015 a las 00:00 hasta el 13/10/2015 a las 24:00.</p>
-								<p>Promoción exclusiva con tarjetas Visa Platinium</p>
+								<p>Código CA21231J. Creada por Samoel Sarmiento</p>
+								<p>Válida del 01/08/2015 a las 00:00 hasta el 13/10/2015 a las 24:00.</p>
+								<p>%30 de descuento: Promoción exclusiva con tarjetas Visa Platinium.</p>
 								<h5>Aplica para los siguientes eventos:</h5>
 								<ul>
 									<li>Viva por el Rock 6 - Zona VIP</li>
@@ -155,13 +171,34 @@
 					  </div>
 					</div>
 
+					<div class="modal fade" id="remove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="exampleModalLabel">Eliminar</h4>
+					      </div>
+					      <div class="modal-body">
+					        <form>
+					        	<div class="form-group">
+						            <label for="recipient-name" class="control-label">¿Está seguro que desea continuar?</label>
+						            <br><br>
+						            <button type="button" class="btn btn-info" data-dismiss="modal">Continuar</button>
+						            <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+						        </div>
+					        </form>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+
 					<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo1">Agregar Promoción</button>
 					<div id="demo1" class="collapse">
 						<br>
 						<h4>Ingrese datos de nueva promoción</h4>
 						<label>
 							Código: <input type="text" class="form-control" placeholder="9898083" readonly></input>
-							Nombre: <input type="text" class="form-control" placeholder="Nombre de evento"></input>
+							Nombre: <input type="text" class="form-control" placeholder="Nombre de promoción"></input>
 							Fecha Inicio: <input type="date" class="form-control"></input>
 							Fecha Fin: <input type="date" class="form-control"></input>
 							Hora Inicio: <input type="datetime" class="form-control" placeholder="hh:mm"></input>
