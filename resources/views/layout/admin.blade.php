@@ -77,15 +77,11 @@
                                 <a href="{{url('admin/report/{id}')}}">Reporte Ventas</a>
                             </li>
                              <li>
-                                <a href="{{url('admin/report/1')}}">Reporte 1</a>
+                                <a href="{{url('admin/report/1')}}">Reporte de Asistencias</a>
                             </li>
                             <li>
-                                <a href="{{url('admin/report/2')}}">Reporte 2</a>
+                                <a href="{{url('admin/report/2')}}">Reporte de Asignación</a>
                             </li>
-                            <li>
-                                <a href="{{url('admin/report/3')}}">Reporte 3</a>
-                            </li>
-
                         </ul>
                     </li>
                     <li class="dropdown">

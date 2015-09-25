@@ -6,6 +6,7 @@
 
 @section('title')
 	Lista de reportes
+	Holiiiiiiiiiiiii
 @stop
 
 @section('content')
