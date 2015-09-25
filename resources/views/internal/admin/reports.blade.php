@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-<<<<<<< HEAD
+
 	<div class="row">
     <div class="col-sm-3">
         <label>Seleccione al vendedor</label>
@@ -44,39 +44,32 @@
     <table class="table table-bordered table-striped">
         <tr>
             <th>Apellidos y Nombres</th>
-            <th>DNI</th>
+            <th>Zona</th>
             <th>Telefonos(s)</th>
-            <th>Sexo</th>
         </tr>
         <tr>
             <td>Contenido 1</td>
             <td>Contenido 2</td>
             <td>Contenido 3</td>
-            <td>Contenido 4</td>
         </tr>
         <tr>
             <td>Contenido 1</td>
             <td>Contenido 2</td>
             <td>Contenido 3</td>
-            <td>Contenido 4</td>
         </tr>
         <tr>
             <td>Contenido 1</td>
             <td>Contenido 2</td>
             <td>Contenido 3</td>
-            <td>Contenido 4</td>
         </tr>
         <tr>
             <td>Contenido 1</td>
             <td>Contenido 2</td>
             <td>Contenido 3</td>
-            <td>Contenido 4</td>
         </tr>
     </table>
 </div>
-=======
-	Lista de reportes
->>>>>>> 8d83106d0b2b7240742c85592125392c81b12dd8
+
 @stop
 
 @section('content')
