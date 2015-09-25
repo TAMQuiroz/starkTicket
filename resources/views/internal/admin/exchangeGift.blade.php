@@ -1,30 +1,10 @@
 @extends('layout.admin')
 
-@section('style')
-  {!!Html::style('css/adminGifts.css')!!}
-@stop
-
 @section('title')
-	Regalos
+	Canjeo de premios <small>Muñeco void</small>
 @stop
 
 @section('content')
-
-        <!-- Page Heading/Breadcrumbs -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Canjeo de premios
-                    <small>Muñeco void</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="index.html">Home</a>
-                    </li>
-                    <li class="active">Premios Item</li>
-                </ol>
-            </div>
-        </div>
-        <!-- /.row -->
-
         <!-- Portfolio Item Row -->
         <div class="row">
 
@@ -61,7 +41,7 @@
             </div>
 
             <div class="col-md-4">
-                 <h2>Void 500 pts</h2><h4>Stock 50 unidades </h4>  
+                 <h2>Void 500 pts</h2><h4>Stock 50 unidades </h4>
         <br>  <br>
         <button type="button" class="btn btn-info">Buscar Cliente </button>
         <br>
@@ -75,19 +55,19 @@
     margin-bottom: 15px;
    "><br>
    Puntos:
-   
+
    <input type="text" name="lname" style="
     margin-bottom: 10‒;
     margin-bottom: 0px;
     border-left-width: 2px;
     margin-left: 8px;">
-   
-   
-   
+
+
+
     <br>  <br>
-  
+
 <button type="button" class="btn btn-info">  Canjear puntos  </button>
-             
+
             </div>
 
         </div>

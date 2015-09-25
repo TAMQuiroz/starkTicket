@@ -21,7 +21,8 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Descripcion</label>
                 <div class="col-sm-10">
-                  <input type="textarea" class="form-control" id="inputEmail3" placeholder="">
+                  <textarea class="form-control" rows="10">
+                  </textarea>
                 </div>
               </div>
               <div class="form-group">

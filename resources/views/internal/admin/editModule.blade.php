@@ -26,9 +26,25 @@
                 </div>
               </div>
               <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Departamento</label>
+                <div class="col-sm-10">
+                  <select class="form-control">
+                    <option>Departamento 1</option>
+                    <option>Departamento 2</option>
+                    <option>Departamento 3</option>
+                    <option>Departamento 4</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Provincia</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="" value="Provincia punto de venta">
+                  <select class="form-control">
+                    <option>Provincia 1</option>
+                    <option>Provincia 2</option>
+                    <option>Provincia 3</option>
+                    <option>Provincia 4</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group">
