@@ -40,7 +40,6 @@
         <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo2">Mostrar Reporte</button>
     </div>
 </div>
-<<<<<<< HEAD
 
 
 <div class="container">  <!-- Comienza SEGUNDO despliegue-->
@@ -88,7 +87,6 @@
 
  </div>
 
-=======
 <hr>
 
 
