@@ -6,6 +6,21 @@
   box-sizing: border-box;
 }
 
+html {
+  background: black;
+}
+
+body {
+  font-family: "Open Sans";
+  font-size: 16px;
+  color: White;
+  font-smoothing: antialiased;
+  font-weight: 600;
+}
+
+a {
+  color: #BBB;
+}
 
 .content:before {
   content: "";
@@ -17,7 +32,7 @@
   z-index: -1;
   display: block;
   background-color: black;
-  background-image: url('../images/portada.jpg');
+  background-image: url("http://www.wallpaperhi.com/thumbnails/detail/20120421/tisto%20music%20live%20everything%20concert%20club%201920x1200%20wallpaper_www.wallpaperhi.com_7.jpg");
   width: 100%;
   height: 100%;
   background-size: cover;
@@ -29,13 +44,15 @@
 }
 
 .content {
-  top: 10px;
+  position: absolute;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   width: 540px;
-  background-color: white;
-  margin: 10px auto;
+  height: 400px;
+  background-color: rgba(10, 10, 10, 0.5);
+  margin: auto auto;
   padding: 40px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -55,6 +72,7 @@
   font-size: 1.2rem;
   font-family: "Open Sans";
   margin: 10px 0px;
+  border: none;
   padding: 10px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -145,6 +163,23 @@
   float: left;
   width: 30%;
   margin: 0px 1.5%;
+}
+.content .buttons button i {
+  padding-right: 7px;
+}
+.content .buttons button.facebook {
+  background-color: #4464B2;
+}
+.content .buttons button.twitter {
+  background-color: #28A9E0;
+}
+.content .buttons button.google {
+  background-color: #DA4735;
+}
+.content .buttons:after {
+  content: "";
+  display: block;
+  clear: both;
 }
 .content .already {
   text-align: center;
