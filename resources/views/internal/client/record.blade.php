@@ -12,21 +12,14 @@
 
 @section('content')
 
-	<div id="wrapper">
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                       <table id="example" class="display">
+	
+                       <table id="example" class="display" cellspacing="0" width = "100%" >
                             <thead>
                                 <tr>
                                     <th>Fecha del evento</th>
                                     <th>Nombre del evento</th>
-                                    <th>Detalle del evento</th>
-                                    <th>Precio del evento(Soles)</th>
-                                    <th>Direccion del evento</th>
+                                    <th>Numero total de tickets</th>
+                                    <th>Costo total</th>
                                     <th>Lugar del evento</th>
                                 </tr>
                             </thead>
@@ -34,19 +27,17 @@
                                     <tr>
                                         <th>Fecha del evento</th>
                                         <th>Nombre del evento</th>
-                                        <th>Detalle del evento</th>
-                                        <th>Precio del evento(Soles)</th>
-                                        <th>Direccion del evento</th>
-                                        <th>Lugar del evento</th>
+                                        <th>Numero total de tickets</th>
+                                 	    <th>Costo total/th>
+                                  	    <th>Lugar del evento</th>
                                     </tr>
                                 </tfoot>
                            <tbody>
                                <tr>
                                    <td>12/02/2015</td>
                                    <td>Iron Maiden Tour 667</td>
-                                   <td>Concierto Metal ofrecido por primera vez en Peru</td>
-                                   <td>145</td>
-                                   <td>Av universitaria 4212</td>
+                                   <td>3</td>
+                                   <td>420</td>
                                    <td>Estadio Nacional</td>
 
 
@@ -54,43 +45,35 @@
                                <tr>
                                     <td>03/04/2015</td>
                                     <td>Bob Esponja el musical</td>
-                                    <td>Bob Esponja debera luchar contra tus peores enemigos</td>
-                                    <td>450</td>
-                                    <td>Jr PepeLucho 6645 Urb Las Pinas</td>
+                                    <td>5</td>
+                                    <td>140</td>
                                     <td>Teatro Fondo de bikini</td>
                                </tr>
                                  <tr>
                                     <td>23/04/2015</td>
                                     <td>Floricienta 3D</td>
-                                    <td>Vive una aventura magica con Floricienta</td>
-                                    <td>450</td>
-                                    <td>Jr PepeLucho 1245 Urb Las Flores</td>
+                                    <td>1</td>
+                                    <td>200</td>
                                     <td>Polideportivo PUCP</td>
                                </tr>
                                  <tr>
                                     <td>23/04/2015</td>
-                                    <td>Floricienta 3D</td>
-                                    <td>Vive una aventura magica con Floricienta</td>
+                                    <td>Floricienta 4D</td>
+                                    <td>1</td>
                                     <td>450</td>
-                                    <td>Jr PepeLucho 1245 Urb Las Flores</td>
                                     <td>Polideportivo PUCP</td>
                                </tr>
                                 <tr>
                                     <td>27/06/2015</td>
                                     <td>Alianza vs Universitario</td>
-                                    <td>Campeonato Clausura 2015</td>
-                                    <td>40</td>
-                                    <td>Av. Isabel La Catolica</td>
+                                    <td>4</td>
+                                    <td>240</td>
                                     <td>Estadio Alejandro Villanueva</td>
                                     
                                </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                 
 @stop
 
 @section('javascript')
