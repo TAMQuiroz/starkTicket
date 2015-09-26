@@ -39,7 +39,7 @@
 							<section class="scrol">
               <style>.scrol{
     width: 100%;
-    height: 750px;
+    height: 650px;
     overflow: scroll;
 }</style>
 								<header>
@@ -71,8 +71,19 @@
                                        <abbr title="Email">E</abbr>: <a class = "prueba3">eleticket@oficial.pe</a>
                                    </p>
                                    <p><i class="fa fa-clock-o"></i> 
-                                       <abbr title="Hours">H</abbr>: Lunes - Viernes: 9:00AM-5:00 PM</p
+                                       <abbr title="Hours">H</abbr>: Lunes - Viernes: 9:00AM-5:00 PM</p>
 
+                                  <h3 class = "prueba1">Cine Tacna Prime 5 stars</h3>
+                                   <p>
+                                        Av. Tacna<br>667, Distrito de Lima<br>
+                                   </p>
+                                   <p><i class="fa fa-phone"></i>   
+                                       <abbr title="Phone">P</abbr>: (511) 541-1021</p>
+                                   <p><i class="fa fa-envelope-o"></i> 
+                                       <abbr title="Email">E</abbr>: <a class = "prueba3">eleticket@oficial.pe</a>
+                                   </p>
+                                   <p><i class="fa fa-clock-o"></i> 
+                                       <abbr title="Hours">H</abbr>: Lunes - Viernes: 9:00AM-5:00 PM</p
                                       
 								
 							</section>
