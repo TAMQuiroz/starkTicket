@@ -80,27 +80,43 @@
                 <h3 class="page-header">Premios Destacados</h3>
             </div>
 
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                {!! Html::image('images/void 500 300.png', null, array()) !!}
+
+
+    <div class="col-sm-3 col-xs-6">
+                <a href="#"> 
+                <img class="img-responsive img-hover img-related"
+                             {!! Html::image('images/void 500 300.png', null, array()) !!}
+                
                 </a>
             </div>
 
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                {!! Html::image('images/pudge 500 300.png', null, array()) !!}
+
+   
+
+    <div class="col-sm-3 col-xs-6">
+                <a href="#"> 
+                <img class="img-responsive img-hover img-related"
+              {!! Html::image('images/pudge 500 300.png', null, array()) !!}
+                
                 </a>
             </div>
 
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                {!! Html::image('images/rilay 500 300.png', null, array()) !!}
+
+     
+    <div class="col-sm-3 col-xs-6">
+                <a href="#"> 
+                <img class="img-responsive img-hover img-related"
+             {!! Html::image('images/rilay 500 300.png', null, array()) !!}
+    
                 </a>
             </div>
 
+
             <div class="col-sm-3 col-xs-6">
-                <a href="#">
+                <a href="#"> 
+                <img class="img-responsive img-hover img-related"
                 {!! Html::image('images/gondar 500 300.jpg', null, array()) !!}
+       
                 </a>
             </div>
 
@@ -112,7 +128,6 @@
 @stop
 
 @section('javascript')
-
 
 
 @stop
