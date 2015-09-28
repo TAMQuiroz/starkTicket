@@ -1,7 +1,22 @@
 @extends('layoutExternal')
 
 @section('style')
-
+    <style type="text/css">
+        #nav .first{
+            color: white;
+        }
+        .input-group{
+            width:600px;
+        }
+        .btn-info{
+            background-color: #83D3C9;
+            border-color: #83D3C9;
+        }
+        .btn-info:hover{
+            background-color: #329DB7;
+            border-color: #329DB7;
+        }
+    </style>
 @stop
 
 @section('title')
@@ -9,14 +24,14 @@
 @stop
 
 @section('content')
-	<h5>Busqueda</h5>
-        <div class="input-group" style="width:290px">
-            <input type="text" class="form-control" placeholder=" ">
-            <span class="input-group-btn">
-                <button class="btn btn-info" type="button">Buscar</button>
-            </span>
-        </div>
-<br><br>
+	<h5>Búsqueda</h5>
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder=" ">
+        <span class="input-group-btn">
+            <button class="btn btn-info" type="button">Buscar</button>
+        </span>
+    </div>
+    <br><br>
          <div class="row">
 
             <div class="col-md-7" style="left:300px">

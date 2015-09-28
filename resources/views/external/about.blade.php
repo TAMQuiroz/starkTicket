@@ -1,7 +1,11 @@
 @extends('layoutExternal')
 
 @section('style')
-
+    <style type="text/css">
+    #nav .fourth{
+            color: white;
+        }
+    </style>
 @stop
 
 @section('title')

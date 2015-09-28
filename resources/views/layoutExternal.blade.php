@@ -59,13 +59,13 @@
 			<!-- Nav -->
 			<nav id="nav">
 				<ul>
-					<li><a href="{{url('/')}}">Inicio</a></li>
-					<li><a href="{{url('category')}}">Categorias</a></li>
-					<li><a href="{{url('event')}}">Eventos</a></li>
-					<li><a href="{{url('about')}}">Nosotros</a></li>
-					<li><a href="{{url('modules')}}">Puntos de venta</a></li>
-					<li><a href="{{url('calendar')}}">Calendario</a></li>
-					<li><a href="{{url('gifts')}}">Canjealo</a></li>
+					<li><a href="{{url('/')}}" class="first">Inicio</a></li>
+					<li><a href="{{url('about')}}" class="fourth">Nosotros</a></li>
+					<li><a href="{{url('category')}} " class="second">Categorias</a></li>
+					<li><a href="{{url('event')}}" class="third">Eventos</a></li>
+					<li><a href="{{url('modules')}}" class="fifth">Puntos de venta</a></li>
+					<li><a href="{{url('calendar')}}" class="sixth">Calendario</a></li>
+					<li><a href="{{url('gifts')}}" class="seventh">Canjealo</a></li>
 				</ul>
 			</nav>
 
