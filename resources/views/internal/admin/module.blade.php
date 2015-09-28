@@ -26,9 +26,9 @@
             <td>Contenido 4</td>
             <td>Contenido 5</td>
             <td>
-                <a href="{{url('admin/modules/1/edit')}}">Editar</a> 
-                <a href="detalles" data-toggle="modal" data-target="#myModal">Detalles</a> 
-                <a href="">Eliminar</a> 
+               <a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i></a> 
+                <a class="btn btn-info" href="{{url('admin/modules/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a> 
+                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
             </td>
         </tr>
         <tr>
@@ -37,7 +37,9 @@
             <td>Contenido 3</td>
             <td>Contenido 4</td>
             <td>Contenido 5</td>
-            <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a> </td>
+            <td><a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i></a> 
+                <a class="btn btn-info" href="{{url('admin/modules/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a> 
+                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a></td>
         </tr>
         <tr>
             <td>Contenido 1</td>
@@ -45,7 +47,9 @@
             <td>Contenido 3</td>
             <td>Contenido 4</td>
             <td>Contenido 5</td>
-            <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a> </td>
+            <td><a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i></a> 
+                <a class="btn btn-info" href="{{url('admin/modules/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a> 
+                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a> </td>
         </tr>
         <tr>
             <td>Contenido 1</td>
@@ -53,7 +57,9 @@
             <td>Contenido 3</td>
             <td>Contenido 4</td>
             <td>Contenido 5</td>
-            <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a> </td>
+            <td><a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i></a> 
+                <a class="btn btn-info" href="{{url('admin/modules/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a> 
+                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a> </td>
         </tr>
     </table>
     <nav>

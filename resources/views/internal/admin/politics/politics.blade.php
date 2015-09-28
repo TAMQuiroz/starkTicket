@@ -19,8 +19,8 @@
                 <td>Politica 1</td>
                 <td>Lorem ipsum dolor sit amet.</td>
                 <td>
-                    <a href="politics/1/edit">Editar</a>
-                    <a href="">Eliminar</a>
+                    <a class="btn btn-info" href="{{url('admin/politics/1/edit')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
                 </td>
             </tr>
         </table>

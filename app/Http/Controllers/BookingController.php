@@ -19,5 +19,7 @@ class BookingController extends Controller
 		//return view('external.home');
 		return view('external.booking.results');
 	}
+	
+
 
 }

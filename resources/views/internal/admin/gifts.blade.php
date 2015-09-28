@@ -25,8 +25,8 @@
         <td>10</td>
         <td>200</td>
         <td>
-            <a href="{{url('admin/gifts/1/edit')}}">Editar</a>
-            <a href="">Eliminar</a>
+            <a class="btn btn-info"  href="{{url('admin/gifts/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
+            <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
         </td>
     </tr>
 </table>

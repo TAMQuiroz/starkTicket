@@ -24,11 +24,11 @@
           <td>Contenido 3</td>
           <td>Contenido 4</td>
           <td>
-            <a href="{{url('admin/admin/1/edit')}}" >Editar</a>
+            
 
                     
-            <a href="" data-toggle="modal" data-target="#edit">Detalles</a>
-            
+            <a class="btn btn-info" href="" data-toggle="modal" data-target="#edit" title="Detalles"><i class="glyphicon glyphicon-plus"></i></a>
+            <a class="btn btn-info" href="{{url('admin/admin/1/edit')}}" title="Editatr"><i class="glyphicon glyphicon-pencil"></i></a>
             <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -50,7 +50,7 @@
               </div>
             </div> 
             
-            <a href="">Eliminar</a> 
+            <a class="btn btn-info"  href="" title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a> 
 
           </td>
       </tr>
@@ -59,21 +59,27 @@
           <td>Contenido 2</td>
           <td>Contenido 3</td>
           <td>Contenido 4</td>
-          <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a> </td>
+          <td> <a class="btn btn-info" href="" data-toggle="modal" data-target="#edit" title="Detalles"><i class="glyphicon glyphicon-plus"></i></a>
+             <a class="btn btn-info" href="{{url('admin/admin/1/edit')}}" title="Editatr"><i class="glyphicon glyphicon-pencil"></i></a>
+             <a class="btn btn-info"  href="" title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a> 
       </tr>
       <tr>
           <td>Contenido 1</td>
           <td>Contenido 2</td>
           <td>Contenido 3</td>
           <td>Contenido 4</td>
-          <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a> </td>
+          <td> <a class="btn btn-info" href="" data-toggle="modal" data-target="#edit" title="Detalles"><i class="glyphicon glyphicon-plus"></i></a>
+             <a class="btn btn-info" href="{{url('admin/admin/1/edit')}}" title="Editatr"><i class="glyphicon glyphicon-pencil"></i></a>
+             <a class="btn btn-info"  href="" title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>  </td>
       </tr>
       <tr>
           <td>Contenido 1</td>
           <td>Contenido 2</td>
           <td>Contenido 3</td>
           <td>Contenido 4</td>
-          <td><a href="#">Editar</a> <a href="detalles">Detalles</a> <a href="">Eliminar</a> </td>
+          <td> <a class="btn btn-info" href="" data-toggle="modal" data-target="#edit" title="Detalles"><i class="glyphicon glyphicon-plus"></i></a>
+             <a class="btn btn-info" href="{{url('admin/admin/1/edit')}}" title="Editatr"><i class="glyphicon glyphicon-pencil"></i></a>
+             <a class="btn btn-info"  href="" title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>  </td>
       </tr>
   </table>
   <nav>
