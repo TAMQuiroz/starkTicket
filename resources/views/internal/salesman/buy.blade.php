@@ -61,30 +61,30 @@
         <div class= "button-final">
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo">Pago Tarjeta</button>    
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#cash" data-whatever="@mdo">Pago Efectivo</button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#mix" data-whatever="@mdo">Pago Mixto</button>
             <div class="modal fade" id="pay" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                          <div class="form-group">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
                               <div class="form-group">
-                                <label for="exampleInputEmail2">Número de Tarjeta</label>
-                                <input type="text" class="form-control" placeholder="1234 5678 9012 3456">
-                                <label for="exampleInputEmail2">Fecha de expiración</label>
-                                <input type="text" class="form-control" placeholder="mm/aa">
-                                <label for="exampleInputEmail2">Código de Seguridad</label>
-                                <input type="text" class="form-control" placeholder="123">
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail2">Número de Tarjeta</label>
+                                    <input type="text" class="form-control" placeholder="1234 5678 9012 3456">
+                                    <label for="exampleInputEmail2">Fecha de expiración</label>
+                                    <input type="text" class="form-control" placeholder="mm/aa">
+                                    <label for="exampleInputEmail2">Código de Seguridad</label>
+                                    <input type="text" class="form-control" placeholder="123">
+                                  </div>
+                                  <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Pagar Entrada</button>
+                                  <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                               </div>
-                              <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Pagar Entrada</button>
-                              <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                          </div>
-                        </form>
-                    </div>
-                    </div>
+                            </form>
+                        </div>
                   </div>
                 </div>  
             </div>  
@@ -92,52 +92,97 @@
             <div class="modal fade" id="cash" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                          <div class="form-group">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
                               <div class="form-group">
-                                <label for="exampleInputEmail2">Tipo de Cambio: S/.2.90</label>
-                                <br>
-                                <label for="exampleInputEmail2">Monto Ingresado</label>
-                                <input type="text" class="form-control" placeholder="S/.100.00">
-                                <br>
-                                <label for="exampleInputEmail2">Monto a Pagar</label>
-                                <input type="text" class="form-control" placeholder="S/.90.00">
-                                <label for="exampleInputEmail2">Vuelto</label>
-                                <input type="text" class="form-control" placeholder="S/.10.00" readonly>
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail2">Tipo de Cambio: S/.2.90</label>
+                                    <br>
+                                    <label for="exampleInputEmail2">Monto Ingresado</label>
+                                    <input type="text" class="form-control" placeholder="S/.100.00">
+                                    <br>
+                                    <label for="exampleInputEmail2">Monto a Pagar</label>
+                                    <input type="text" class="form-control" placeholder="S/.90.00">
+                                    <label for="exampleInputEmail2">Vuelto</label>
+                                    <input type="text" class="form-control" placeholder="S/.10.00" readonly>
+                                  </div>
+                                  <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Aceptar</button>
+                                  <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                               </div>
-                              <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Aceptar</button>
-                              <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                          </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
+                </div>
+            </div>  
+
+            <div class="modal fade" id="mix" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                              <div class="form-group">
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail2">Monto a Pagar</label>
+                                    <input type="text" class="form-control" placeholder="S/.90.00" readonly="">
+                                    <h4>Pago con tarjeta</h4>
+                                    <label for="exampleInputEmail2">Número de Tarjeta</label>
+                                    <input type="number" class="form-control" placeholder="1234 5678 9012 3456">
+                                    <label for="exampleInputEmail2">Fecha de expiración</label>
+                                    <input type="date" class="form-control" placeholder="mm/aa">
+                                    <label for="exampleInputEmail2">Código de Seguridad</label>
+                                    <input type="number" class="form-control" placeholder="123">
+                                    <label for="exampleInputEmail2">Monto a pagar con tarjeta</label>
+                                    <input type="number" class="form-control" placeholder="60">
+                                  </div>
+                                  
+                              </div>
+                              <div class="form-group">
+                                  <div class="form-group">
+                                    <h4>Pago con efectivo</h4>
+                                    <h4>Tipo de Cambio: S/.2.90</h4>
+                                    <label for="exampleInputEmail2">Monto Ingresado</label>
+                                    <input type="text" class="form-control" placeholder="S/.100.00">
+                                    <label for="exampleInputEmail2">Vuelto</label>
+                                    <input type="text" class="form-control" placeholder="S/.10.00" readonly>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Pagar Entrada</button>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                                  </div>
+                              </div>
+                            </form>
+                        </div>
                     </div>
-                  </div>
-                </div>  
+                </div>
+            </div> 
+            
 
             <div class="modal fade" id="end" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Fin de venta</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                          <div class="form-group">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">Fin de venta</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
                               <div class="form-group">
-                                <label for="exampleInputEmail2">Venta exitosa!</label>
-                          </div>
-                        </form>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail2">Venta exitosa!</label>
+                                    </div>
+                              </div>
+                            </form>
+                        </div>
                     </div>
-                    </div>
-                  </div>
-                </div>      
-            </div>
+                </div>
+            </div>      
+        </div>
     </fieldset>
     <br><br>
     <h3>Nueva Venta</h3>
@@ -250,83 +295,126 @@
         <div class= "button-final">
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo">Pago Tarjeta</button>    
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#cash" data-whatever="@mdo">Pago Efectivo</button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#mix2" data-whatever="@mdo">Pago Mixto</button>
             <button type="button" class="btn btn-info">Cancelar Venta</button>
             <div class="modal fade" id="pay" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                          <div class="form-group">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
                               <div class="form-group">
-                                <label for="exampleInputEmail2">Número de Tarjeta</label>
-                                <input type="text" class="form-control" placeholder="1234 5678 9012 3456">
-                                <label for="exampleInputEmail2">Fecha de expiración</label>
-                                <input type="text" class="form-control" placeholder="mm/aa">
-                                <label for="exampleInputEmail2">Código de Seguridad</label>
-                                <input type="text" class="form-control" placeholder="123">
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail2">Número de Tarjeta</label>
+                                    <input type="text" class="form-control" placeholder="1234 5678 9012 3456">
+                                    <label for="exampleInputEmail2">Fecha de expiración</label>
+                                    <input type="text" class="form-control" placeholder="mm/aa">
+                                    <label for="exampleInputEmail2">Código de Seguridad</label>
+                                    <input type="text" class="form-control" placeholder="123">
+                                  </div>
+                                  <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Pagar Entrada</button>
+                                  <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                               </div>
-                              <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Pagar Entrada</button>
-                              <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                          </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                    </div>
-                  </div>
-                </div>  
+                </div>
             </div>  
             
             <div class="modal fade" id="cash" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                          <div class="form-group">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
                               <div class="form-group">
-                                <label for="exampleInputEmail2">Tipo de Cambio: S/.2.90</label>
-                                <br>
-                                <label for="exampleInputEmail2">Monto Ingresado</label>
-                                <input type="text" class="form-control" placeholder="S/.100.00">
-                                <br>
-                                <label for="exampleInputEmail2">Monto a Pagar</label>
-                                <input type="text" class="form-control" placeholder="S/.90.00">
-                                <label for="exampleInputEmail2">Vuelto</label>
-                                <input type="text" class="form-control" placeholder="S/.10.00" readonly>
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail2">Tipo de Cambio: S/.2.90</label>
+                                    <br>
+                                    <label for="exampleInputEmail2">Monto Ingresado</label>
+                                    <input type="text" class="form-control" placeholder="S/.100.00">
+                                    <br>
+                                    <label for="exampleInputEmail2">Monto a Pagar</label>
+                                    <input type="text" class="form-control" placeholder="S/.90.00">
+                                    <label for="exampleInputEmail2">Vuelto</label>
+                                    <input type="text" class="form-control" placeholder="S/.10.00" readonly>
+                                  </div>
+                                  <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Aceptar</button>
+                                  <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                               </div>
-                              <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Aceptar</button>
-                              <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                          </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
+                </div>
+            </div>  
+
+            <div class="modal fade" id="mix2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                              <div class="form-group">
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail2">Monto a Pagar</label>
+                                    <input type="text" class="form-control" placeholder="S/.90.00" readonly="">
+                                    <h4>Pago con tarjeta</h4>
+                                    <label for="exampleInputEmail2">Número de Tarjeta</label>
+                                    <input type="number" class="form-control" placeholder="1234 5678 9012 3456">
+                                    <label for="exampleInputEmail2">Fecha de expiración</label>
+                                    <input type="date" class="form-control" placeholder="mm/aa">
+                                    <label for="exampleInputEmail2">Código de Seguridad</label>
+                                    <input type="number" class="form-control" placeholder="123">
+                                    <label for="exampleInputEmail2">Monto a pagar con tarjeta</label>
+                                    <input type="number" class="form-control" placeholder="60">
+                                  </div>
+                                  
+                              </div>
+                              <div class="form-group">
+                                  <div class="form-group">
+                                    <h4>Pago con efectivo</h4>
+                                    <h4>Tipo de Cambio: S/.2.90</h4>
+                                    <label for="exampleInputEmail2">Monto Ingresado</label>
+                                    <input type="text" class="form-control" placeholder="S/.100.00">
+                                    <label for="exampleInputEmail2">Vuelto</label>
+                                    <input type="text" class="form-control" placeholder="S/.10.00" readonly>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Pagar Entrada</button>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                                  </div>
+                              </div>
+                            </form>
+                        </div>
                     </div>
-                  </div>
-                </div>  
+                </div>
+            </div> 
 
             <div class="modal fade" id="end" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Fin de venta</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                          <div class="form-group">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">Fin de venta</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
                               <div class="form-group">
-                                <label for="exampleInputEmail2">Venta exitosa!</label>
-                          </div>
-                        </form>
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail2">Venta exitosa!</label>
+                              </div>
+                            </form>
+                        </div>
                     </div>
-                    </div>
-                  </div>
-                </div>      
+                </div>
+            </div>      
         </div>
     </fieldset>    
 @stop
