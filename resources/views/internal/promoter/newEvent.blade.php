@@ -33,7 +33,7 @@
             <div class="container">
                 <div>
                     <label for="name">Nombre del evento:</label>
-                    <input type="text" id="name" />
+                    <input  type="text" id="name" />
                 </div>
                 <div>
                     <label for="place">Lugar del evento:</label>

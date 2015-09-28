@@ -11,9 +11,9 @@
 @section('content')
   <div class="rangoFechas">
       <label for="from">Inicio</label>
-      <input type="date" id="from" name="from">
+      <input class="form-control" type="date" id="from" name="from">
       <label for="to">Fin</label>
-      <input type="date" id="to" name="to">
+      <input  type="date" id="to" name="to"  class="form-control">
       <td><button type="button" class="btn btn-info">Buscar</button></td>
   </div>
   <!-- Contenido-->
