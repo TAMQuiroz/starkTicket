@@ -139,8 +139,10 @@
                         <div class="modal-body">
                             <form>
                               <div class="form-group">
-                                  <div class="form-group">
+                                 
                                     <label for="exampleInputEmail2">Venta exitosa!</label>
+                                    <br>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal" data-target="#visualizarVenta"><i class="glyphicon glyphicon-print"></i></button>
                               </div>
                             </form>
                         </div>
