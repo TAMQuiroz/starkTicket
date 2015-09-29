@@ -58,6 +58,13 @@ class EventController extends Controller
         return view('internal.salesman.buy')->with('user',$user);
     }
 
+    public function salesmanBooking($id)
+    {
+        $user = Auth::user();
+
+        return view('internal.salesman.payBooking')->with('user',$user);
+    }
+
     public function reserve($id)
     {
         return view('internal.client.reserve');
