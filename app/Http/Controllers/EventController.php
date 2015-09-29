@@ -76,4 +76,8 @@ class EventController extends Controller
     {
         return view('internal.promoter.politics');
     }
+    public function recordPayment()
+    {
+        return view('internal.promoter.recordPayment');
+    }
 }

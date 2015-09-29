@@ -62,32 +62,75 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputEmail3" placeholder="">
                     </div>
-                </div>
+                </div>  
+
+                <table class="table table-bordered table-striped ">
+                    <tr>
+                        <th></th>
+                        <th>Precio al 05/10/2015</th>
+                        <th>Precio al 10/10/2015</th>
+                        <th>Precio estándar</th>
+                        <th>Agregar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                    <tr>
+                        <th>Adulto</th>
+                        <td>150.0</td>
+                        <td>250.0</td>
+                        <td>350.0</td>
+                        <td>
+                            <a class="btn btn-info" title="Agregar"><i class="glyphicon glyphicon-plus"></i></a>
+                        </td>
+                        <td>
+                            <a class="btn btn-info"  title="Eliminar"><i class="glyphicon glyphicon-remove"></i></a>
+                        </td>                         
+                    </tr>
+                    <tr>
+                        <th>Niños</th>
+                        <td>150.0</td>
+                        <td>250.0</td>
+                        <td>300.0</td>
+                        <td>
+                            <a class="btn btn-info" title="Agregar"><i class="glyphicon glyphicon-plus"></i></a>
+                        </td>
+                        <td>
+                            <a class="btn btn-info"  title="Eliminar"><i class="glyphicon glyphicon-remove"></i></a>
+                        </td>                         
+                    </tr>       
+                    <tr>
+                        <th>Adulto mayor</th>
+                        <td>150.0</td>
+                        <td>250.0</td>
+                        <td>310.0</td>
+                        <td>
+                            <a class="btn btn-info" title="Agregar"><i class="glyphicon glyphicon-plus"></i></a>
+                        </td>
+                        <td>
+                            <a class="btn btn-info"  title="Eliminar"><i class="glyphicon glyphicon-remove"></i></a>
+                        </td>                         
+                    </tr>                                    
+
+                </table>    
+
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Precio</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputEmail3" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <a class="btn btn-info" >Agregar</a>
+                    <div class="col-sm-offset-8 col-sm-10">
+                        <a class="btn btn-info" >Agregar zona</a>
                         <button  type="reset" class="btn btn-info">Cancelar</button>
                     </div>
                 </div>                                
 
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped ">
                     <tr>
                         <th>Nombre</th>
                         <th>Capacidad</th>
-                        <th>Precio</th>
+                        <th>Precio estándar</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                     </tr>
                     <tr>
                         <td>Zona vip</td>
                         <td>200</td>
-                        <td>300.0</td>
+                        <td>350.0</td>
                         <td>
                             <a class="btn btn-info"  title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
                         </td>   

@@ -91,11 +91,23 @@
                     </div>
                 </div> 
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Monto de pago</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Monto de deuda</label>
                     <div class="col-sm-10">
                       <input type="text" class="form-control" id="inputEmail3" placeholder="">
                     </div>
-                </div>    
+                </div>   
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Monto a pagar</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    </div>
+                </div>       
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Saldo</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    </div>
+                </div>                           
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Evento</label>
                     <div class="col-sm-10">
