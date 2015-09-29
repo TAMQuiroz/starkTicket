@@ -10,7 +10,7 @@
 
 @section('content')
 <input type="text"></input>
-<button type="button" class="btn btn-primary">Buscar</button>
+<button type="button" class="btn btn-info">Buscar</button>
 <br><br>
 <div class="table-responsive">
   <table class="table table-hover">
