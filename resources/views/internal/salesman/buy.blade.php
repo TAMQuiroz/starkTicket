@@ -27,7 +27,7 @@
               <table class="table table-bordered" style="widht:1px">
                 <thead>
                     <tr>
-                        <th>Evento</th>
+                        <th>Eventito</th>
                         <th>Fecha</th>
                         <th>Hora</th>
                         <th>Zona</th>
