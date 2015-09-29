@@ -128,7 +128,8 @@
                     </div>
                 </div>
             </div>
-
+       </div>
+   </div>
             <div class="modal fade" id="end" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -139,17 +140,76 @@
                         <div class="modal-body">
                             <form>
                               <div class="form-group">
-                                 
+                                 <div class="form-group">
+
                                     <label for="exampleInputEmail2">Venta exitosa!</label>
-                                    <br>
-                                    <button type="button" class="btn btn-info" data-dismiss="modal" data-target="#visualizarVenta"><i class="glyphicon glyphicon-print"></i></button>
+                                    <br><br>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal"  data-toggle="modal" data-target="#visualizar" data-whatever="@mdo"><i class="glyphicon glyphicon-print"></i></button>
+                                  </div>  
                               </div>
                             </form>
                         </div>
                     </div>
-                </div>
-            </div>     
+                </div>         
         </div>
+
+
+            <div class="modal fade" id="visualizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">Previsualización de impresión</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                              <div class="form-group">
+                                 <div class="form-group">
+
+                                    <table class="table table-bordered" style="widht:1px">
+                                        <thead>
+                                            <tr>
+                                                <th>Evento</th>
+                                                <th>Fecha</th>
+                                                <th>Hora</th>
+                                                <th>Zona</th>
+                                                <th>Ubicación</th>
+                                                <th>Precio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Piaf</td>
+                                                <td>13 Octubre 2015</td>
+                                                <td>9:00pm</td>
+                                                <td>VIP</td>  
+                                                <td>A14</td>
+                                                <td>S/150.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Piaf</td>
+                                                <td>13 Octubre 2015</td>
+                                                <td>9:00pm</td>
+                                                <td>VIP</td>  
+                                                <td>A15</td>
+                                                <td>S/150.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                    <label for="exampleInputEmail2">Monto a Pagar</label>
+                                    <input type="text" class="form-control" placeholder="S/.300.00" readonly="">
+                                    <br>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">Aceptar</button>
+                                  </div>  
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>         
+        </div>
+
+
     </fieldset>
     <br><br>
 
