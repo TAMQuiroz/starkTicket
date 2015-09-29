@@ -24,6 +24,11 @@ class EventController extends Controller
         return view('internal.promoter.newEvent');
     }
 
+    public function editEvent()
+    {
+        return view('internal.promoter.editEvent');
+    }
+
     public function promoterRecord()
     {
         return view('internal.promoter.record');
@@ -58,6 +63,13 @@ class EventController extends Controller
         return view('internal.salesman.buy')->with('user',$user);
     }
 
+    public function salesmanBooking($id)
+    {
+        $user = Auth::user();
+
+        return view('internal.salesman.payBooking')->with('user',$user);
+    }
+
     public function reserve($id)
     {
         return view('internal.client.reserve');
@@ -70,5 +82,9 @@ class EventController extends Controller
     public function politics()
     {
         return view('internal.promoter.politics');
+    }
+    public function recordPayment()
+    {
+        return view('internal.promoter.recordPayment');
     }
 }

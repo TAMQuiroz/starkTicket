@@ -1,7 +1,7 @@
 @extends('layout.promoter')
 
 @section('style')
-	{!!Html::style('css/modern-business.css')!!}
+
 @stop
 
 @section('title')
@@ -9,85 +9,123 @@
 @stop
 
 @section('content')
-    <div class="container">
-        <!-- Page Heading/Breadcrumbs -->
+
+
         <div class="row">
-            <div class="col-lg-12">
-                <ol class="breadcrumb">
-                    <li><a >Inicio</a></li>
-                    <li><a >Pagos</a></li>
-                  
-                </ol>
-            </div>
-        </div>
+          <div class="col-sm-8">
+            <form class="form-horizontal" method="post">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Nombre evento</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Categoría</label>
+                    <div class="col-sm-10">
+                    <select class="form-control" id="sel1">
+                        <option>Concierto</option>
+                        <option>Teatro</option>
+                        <option>Ferias y Circo</option>
+                        <option>Otros</option>
+                    </select>
+                    </div>      
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-11">
+                      <button type="button" class="btn btn-info">Buscar</button>
+                    </div>
+                </div>                
+                
+
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Categoría</th>
+                        <th>Organizador</th>
+                        <th>Pagar</th>
+                    </tr>
+                    <tr>
+                        <td>Vivo por el rock 6</td>  
+                        <td>Contara con artistas nacionales e internacionales, Arctic monkeys, red hot, cold play y tourista</td>  
+                        <td>Concierto</td>  
+                        <td>Limapalooza producciones</td> 
+                        <td>
+                            <a class="btn btn-info" title="Pagar"><i class="fa fa-usd"></i></i></a>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td>Vivo por el rock 7</td>  
+                        <td>Contara con artistas nacionales e internacionales,<br> Arctic monkeys, red hot, cold play y tourista</td>  
+                        <td>Concierto</td>  
+                        <td>Limapalooza producciones</td>
+                        <td>
+                            <a class="btn btn-info" title="Pagar"><i class="fa fa-usd"></i></i></a>
+                        </td> 
+                    </tr>
+                </table>                
+                <legend>Datos organizador:</legend>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Ruc</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Número de cuenta</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    </div>
+                </div>      
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Fecha entrega</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control">
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Monto de deuda</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    </div>
+                </div>   
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Monto a pagar</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    </div>
+                </div>       
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Saldo</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    </div>
+                </div>                           
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Evento</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    </div>
+                </div>  
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <a  class="btn btn-info" href="#" >Registrar pago</a>
+                  <button  type="reset" class="btn btn-info">Cancelar</button>
+                </div>
+              </div>                                                                                             
+            </form>
+          </div>
+        </div>    
         <!-- /.row -->  
-        <legend>Eventos registrados:</legend>  
-        <label>Nombre del Evento:</label>
-        <input type="text" />
-        <button type="button" class="btn btn-info">Buscar</button> 
-        <div>
-            <label>Categoria Evento:</label>
-            <select>
-                <option value="">Concierto</option>
-                <option value="saab">Teatro</option>
-                <option value="mercedes">Ferias y Circo</option>
-                <option value="audi">Danzas</option>
-                <option value="audi">Otros</option>
-            </select>
-        </div>  
-        <br>
-        <br>
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Categoría</th>
-                    <th>Organizador</th>
-                    <th>Seleccionar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Vivo por el rock 6</td>  
-                    <td>Contara con artistas nacionales e internacionales,<br> Arctic monkeys, red hot, cold play y tourista</td>  
-                    <td>Concierto</td>  
-                    <td>Limapalooza producciones</td> 
-                    <td><input type="checkbox" class="checkbox" /></td>
-                </tr>
-                <tr>
-                    <td>Vivo por el rock 7</td>  
-                    <td>Contara con artistas nacionales e internacionales,<br> Arctic monkeys, red hot, cold play y tourista</td>  
-                    <td>Concierto</td>  
-                    <td>Limapalooza producciones</td>
-                    <td><input  type="checkbox" class="checkbox" /></td>
-                </tr>
-            </tbody>
-          </table>
-        </div>
-        <legend>Datos organizador:</legend>  
-        <label>Nombre organizador:</label>
-        <input type="text" disabled="disabled" value="Limapalooza producciones"/>  
-        <br>  
-        <label>RUC organizador:</label>
-        <input type="text" disabled="disabled" value="2010155082"/>  
-        <br>   
-        <label>Número de cuenta:</label>
-        <input type="text" disabled="disabled" value="4010155086"/>  
-        <br>                 
-        <label>Fecha de entrega:</label>
-        <input type="text" disabled="disabled" value="30/10/2015"/>
-         <br> 
-        <label>Monto de pago:</label>
-        <input type="text" disabled="disabled" value="$15000.00"/>       <br>
-        <label>Evento:</label>
-        <input type="text" disabled="disabled" value="Vivo por el rock 6"/>  
-        <br>   
-        <br>
-        <br>  
-        <button type="button" class="btn btn-info">Registrar pago</button>                 
-    </div>
+
+
 @stop
 
 @section('javascript')

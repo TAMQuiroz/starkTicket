@@ -7,12 +7,12 @@
 @stop
 
 @section('title')
-	Historial de eventos q asistio el cliente
+	Historial de eventos que asistio el cliente
 @stop
 
 @section('content')
 
-	
+            	
                        <table id="example" class="display" cellspacing="0" width = "100%" >
                             <thead>
                                 <tr>

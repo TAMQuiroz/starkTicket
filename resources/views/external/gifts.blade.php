@@ -3,7 +3,11 @@
 @section('style')
 	{!!Html::style('css/skeletoGift.css')!!}
 	{!!Html::style('css/estiloGift.css')!!}
-	
+	<style type="text/css">
+		#nav .seventh{
+            color: white;
+        }
+    </style>    
 @stop
 
 @section('title')

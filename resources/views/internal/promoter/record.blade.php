@@ -11,9 +11,9 @@
 @section('content')
   <div class="rangoFechas">
       <label for="from">Inicio</label>
-      <input type="date" id="from" name="from">
+      <input class="form-control" type="date" id="from" name="from">
       <label for="to">Fin</label>
-      <input type="date" id="to" name="to">
+      <input  type="date" id="to" name="to"  class="form-control">
       <td><button type="button" class="btn btn-info">Buscar</button></td>
   </div>
   <!-- Contenido-->
@@ -29,6 +29,7 @@
           <th>Entradas Vendidas</th>
           <th>Monto Acumulado</th>
           <th>Ver</td>
+          <th>Editar</td>
           <th>Cancelar</td>
 
         </tr>
@@ -42,6 +43,7 @@
           <td>1500</td>
           <td>17500.00</td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
+          <td><a type="button" class="btn btn-info" href="{{url('promoter/event/editEvent')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
         </tr>
 
@@ -54,6 +56,7 @@
           <td>1000</td>
           <td>8300.00</td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
+          <td><a type="button" class="btn btn-info" href="{{url('promoter/event/editEvent')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
         </tr>
 
@@ -66,6 +69,7 @@
           <td>750</td>
           <td>4300.00</td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
+          <td><a type="button" class="btn btn-info" href="{{url('promoter/event/editEvent')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
         </tr>
         <tr>
@@ -77,6 +81,7 @@
           <td>100</td>
           <td>50000.00</td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
+          <td><a type="button" class="btn btn-info" href="{{url('promoter/event/editEvent')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
         </tr>
         <tr>
@@ -88,6 +93,7 @@
           <td>30</td>
           <td>1000.00</td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
+          <td><a type="button" class="btn btn-info" href="{{url('promoter/event/editEvent')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
         </tr>
 

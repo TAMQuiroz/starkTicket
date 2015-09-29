@@ -23,7 +23,8 @@
                 <label for="inputEmail3" class="col-sm-2 control-label">Subcategoria</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="inputEmail3" placeholder="" required>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearSub">Agregar</button>
+                  <br>
+                  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#crearSub">Agregar</button>
                 </div>
               </div>
               <div class="form-group">
@@ -40,8 +41,8 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-primary">Guardar</button>
-                  <button type="reset" class="btn btn-danger">Cancelar</button>
+                  <button type="submit" class="btn btn-info">Guardar</button>
+                  <button type="reset" class="btn btn-info">Cancelar</button>
                 </div>
               </div>
             </form>

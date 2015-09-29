@@ -2,6 +2,19 @@
 
 @section('style')
 	{!!Html::style('css/images.css')!!}
+	<style type="text/css">
+		.btn-primary{
+            background-color: #83D3C9;
+            border-color: #83D3C9;
+        }
+        .btn-primary:hover{
+            background-color: #329DB7;
+            border-color: #329DB7;
+        }
+        .row h3, .row p{
+        	text-align: center;
+        }
+	</style>
 @stop
 
 @section('title')
@@ -29,7 +42,7 @@
 	      <div class="caption">
 	        <h3>Evento 1</h3>
 	        <p>Descripcion de evento 1</p>
-	        <p><a href="#" class="btn btn-primary" role="button">Detalle</a></p>
+	        <p><a href="event/1" class="btn btn-primary" role="button">Detalle</a></p>
 	      </div>
 	    </div>
   	</div>
@@ -39,7 +52,7 @@
 	      <div class="caption">
 	        <h3>Evento 1</h3>
 	        <p>Descripcion de evento 1</p>
-	        <p><a href="#" class="btn btn-primary" role="button">Detalle</a></p>
+	        <p><a href="event/1" class="btn btn-primary" role="button">Detalle</a></p>
 	      </div>
 	    </div>
   	</div>

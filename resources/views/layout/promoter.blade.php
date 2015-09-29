@@ -10,6 +10,7 @@
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/admin.css')!!}
+  
     @yield('style')
 </head>
 <body>
@@ -40,8 +41,8 @@
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Negocio<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{url('promoter/new_transfer_payment')}}">Nueva transferencia de pago</a></li>
                             <li><a href="{{url('promoter/transfer_payments')}}">Transferencias de pago</a></li>
+                            <li><a href="{{url('promoter/event/recordPayment')}}">Historial de pagos</a></li>
                         </ul>
                     </li>
                     <li>

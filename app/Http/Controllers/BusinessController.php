@@ -22,7 +22,6 @@ class BusinessController extends Controller
     {
         return view('internal.salesman.cashCount');
     }
-
     public function transferPayments()
     {
         return view('internal.promoter.transferPayments');

@@ -11,15 +11,15 @@
 @section('content')
 <div class="row">
     <div class="col-sm-3">
-        <label>Seleccione el eventos</label>
-        <select class="form-control">
-          <option value="volvo">Todos los evento</option>
-          <option value="saab">Peppa King</option>
-          <option value="opel">Arctic Monkey Concert</option>
-          <option value="audi">Fuerza Bruta</option>
-           <option value="audi">Peppa y sus amigos</option>
-        </select>
+       <label>Ingrese nombre del evento</label>
+        <div class="input-group" style="width:290px">
+            <input type="text" class="form-control" placeholder="Nombre del evento...">
+            <span class="input-group-btn">
+                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#detail">Buscar</button>
+            </span>
+        </div> 
     </div>
+    <br><br><br><br>
     <div class="col-sm-2">
         <label>Desde</label>
         <input type="date" class="form-control">

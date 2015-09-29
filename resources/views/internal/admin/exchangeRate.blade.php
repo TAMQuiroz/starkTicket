@@ -84,7 +84,7 @@
                         <h3>Su Tipo de Cambio ha sido Guardado con Éxito</h3>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
                       </div>
                     </div>
 
