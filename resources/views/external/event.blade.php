@@ -86,7 +86,7 @@
 								<p>Av. Gregorio Escobedo 803, Jesús María 15076</p>
 								<div id="map"></div>
 
-								<h3 class="dates">Distribución de asientos</h3>
+								<h3 class="dates">Distribución de Zonas</h3>
 								<p>{!! Html::image('images/asientos.jpg') !!}</p>
 							</section>
 						</div>

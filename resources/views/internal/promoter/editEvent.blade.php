@@ -6,7 +6,7 @@
 @stop
 
 @section('title')
-    Nuevo Evento
+    Editar Evento
 @stop
 
 @section('content')
@@ -76,13 +76,26 @@
                 <div class="col-sm-10">
                   <input type="file" class="form-control" id="inputEmail3" placeholder="">
                 </div>
-              </div>              
+              </div>     
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Estado</label>
+                <div class="col-sm-10">
+                  <label class="radio-inline"><input type="radio" name="optradio">Vigente</label>
+                  <label class="radio-inline"><input type="radio" name="optradio">Finalizado</label>
+                  <label class="radio-inline"><input type="radio" name="optradio">Cancelado</label>  
+                </div>
+              </div>                                    
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <a  class="btn btn-info" href="{{url('promoter/event/addFunction')}}"  >Siguiente</a>
-                  <button  type="reset" class="btn btn-info">Cancelar</button>
+                  <a class="btn btn-info"  href="{{url('promoter/event/record')}}" >Cancelar</a>
                 </div>
               </div>
+              <div class="form-group">
+                <div class="col-sm-offset-9 col-sm-10">
+                  <a class="btn btn-info"  href="{{url('promoter/event/record')}}" >Guardar cambios</a>
+                </div>
+              </div>              
             </form>
           </div>
 

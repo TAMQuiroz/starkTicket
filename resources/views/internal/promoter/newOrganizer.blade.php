@@ -26,6 +26,30 @@
                 </div>
               </div>
               <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Razón social</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                </div>
+              </div>                
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Ruc</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                </div>
+              </div>      
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Número de cuenta</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Teléfono</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                </div>
+              </div>                                                          
+              <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">DNI</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="inputEmail3" placeholder="">
@@ -51,8 +75,8 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <a class="btn btn-primary"  data-toggle="modal" data-target="#agregado">Guardar</a>
-                  <button type="reset" class="btn btn-danger">Cancelar</button>
+                  <a class="btn btn-info">Guardar</a>
+                  <button type="reset" class="btn btn-info">Cancelar</button>
                 </div>
               </div>
             </form>

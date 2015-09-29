@@ -3,6 +3,11 @@
 @section('style')
 	{!!Html::style('css/skeletoGift.css')!!}
 	{!!Html::style('css/estiloGift.css')!!}
+  <style type="text/css">
+        #nav .fifth{
+            color: white;
+        }
+  </style>
 @stop
 
 @section('title')
@@ -27,7 +32,7 @@
 
                             
                                <div class="col-md-6"> <!-- Sirve para darle anchura a tu columna-->
-                     >
+                     
                                 </div>
 						</div>
 					<!-- /Content -->
@@ -38,10 +43,10 @@
 						<div id="sidebar" class="4u">
 							<section class="scrol">
               <style>.scrol{
-    width: 100%;
-    height: 650px;
-    overflow: scroll;
-}</style>
+                  width: 100%;
+                  height: 650px;
+                  overflow: scroll;
+              }</style>
 								<header>
 									<h2 class = "title">Puntos de Venta</h2>
                                     <!--<span class="byline">Entradas para tu evento</span> -->								

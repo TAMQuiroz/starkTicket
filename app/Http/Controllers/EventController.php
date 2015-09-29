@@ -24,6 +24,11 @@ class EventController extends Controller
         return view('internal.promoter.newEvent');
     }
 
+    public function editEvent()
+    {
+        return view('internal.promoter.editEvent');
+    }
+
     public function promoterRecord()
     {
         return view('internal.promoter.record');
@@ -77,5 +82,9 @@ class EventController extends Controller
     public function politics()
     {
         return view('internal.promoter.politics');
+    }
+    public function recordPayment()
+    {
+        return view('internal.promoter.recordPayment');
     }
 }

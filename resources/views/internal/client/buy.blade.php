@@ -2,6 +2,16 @@
 
 @section('style')
     {!!Html::style('css/seats.css')!!}
+    <style type="text/css">
+    	.btn-info{
+            background-color: #83D3C9;
+            border-color: #83D3C9;
+        }
+        .btn-info:hover{
+            background-color: #329DB7;
+            border-color: #329DB7;
+        }
+    </style>
 @stop
 
 @section('title')
@@ -29,7 +39,6 @@
         <h5> Promoción </h5>
         <select class="form-control" style="width:260px;display:inline-block">
             <option value="">Ninguna</option>
-            <option value="saab">Pre-venta</option>
             <option value="saab">Visa Platinium</option>
         </select>
 	</div>

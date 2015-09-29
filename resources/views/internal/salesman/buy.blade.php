@@ -27,7 +27,7 @@
               <table class="table table-bordered" style="widht:1px">
                 <thead>
                     <tr>
-                        <th>Evento</th>
+                        <th>Eventito</th>
                         <th>Fecha</th>
                         <th>Hora</th>
                         <th>Zona</th>
@@ -72,6 +72,8 @@
                         <div class="modal-body">
                             <form>
                               <div class="form-group">
+                                <label for="exampleInputEmail2">Monto a Pagar</label>
+                                    <input type="text" class="form-control" placeholder="S/.90.00" readonly>
                                   <div class="form-group">
                                     <label for="exampleInputEmail2">Número de Tarjeta</label>
                                     <input type="text" class="form-control" placeholder="1234 5678 9012 3456">
@@ -106,7 +108,7 @@
                                     <input type="text" class="form-control" placeholder="S/.100.00">
                                     <br>
                                     <label for="exampleInputEmail2">Monto a Pagar</label>
-                                    <input type="text" class="form-control" placeholder="S/.90.00">
+                                    <input type="text" class="form-control" placeholder="S/.90.00" readonly>
                                     <label for="exampleInputEmail2">Vuelto</label>
                                     <input type="text" class="form-control" placeholder="S/.10.00" readonly>
                                   </div>
@@ -131,7 +133,7 @@
                               <div class="form-group">
                                   <div class="form-group">
                                     <label for="exampleInputEmail2">Monto a Pagar</label>
-                                    <input type="text" class="form-control" placeholder="S/.90.00" readonly="">
+                                    <input type="text" class="form-control" placeholder="S/.90.00" readonly>
                                     <h4>Pago con tarjeta</h4>
                                     <label for="exampleInputEmail2">Número de Tarjeta</label>
                                     <input type="number" class="form-control" placeholder="1234 5678 9012 3456">
@@ -191,34 +193,38 @@
         <div class="select Type"> 
             
             <label>
-                <h4> Codigo del Evento </h4>
-                <input class="form-control" style="width:290px" id="disabledInput" type="text" value="09213241" disabled>
-                <h4> Nombre del Evento </h4>
-                <input class="form-control" type="text" name="firstname" value="Piaf de Pam Gems" disabled>
-                <h4> Fecha del Evento </h4>
-                <select class="form-control">
-                    <option value="">18 Octubre</option>
-                    <option value="saab">19 Octubre</option>
-                    <option value="mercedes">20 Octubre</option>
-                </select>
-                <h4> Hora </h4>
-                <select class="form-control">
-                    <option value="">21:00</option>
-                    <option value="saab">18:00</option>
-                </select>
-                <h4> Zona del Evento </h4>
-                <select class="form-control">
-                    <option value="">VIP</option>
-                    <option value="saab">Platea</option>
-                </select>
+                <div style="-webkit-columns: 100px 3;">
+                    <h4> Codigo del Evento </h4>
+                    <input class="form-control" style="width:290px" id="disabledInput" type="text" value="09213241" disabled>
+                    <h4> Nombre del Evento </h4>
+                    <input class="form-control" type="text" name="firstname" value="Piaf de Pam Gems" disabled>  
+                    <h4>Entradas Disponibles</h4>
+                    <input class="form-control" type="text" name="firstname" value="520" disabled>   
+                </div>
+                <div style="-webkit-columns: 100px 3;">
+                    <h4> Fecha del Evento </h4>
+                    <select class="form-control">
+                        <option value="">18 Octubre</option>
+                        <option value="saab">19 Octubre</option>
+                        <option value="mercedes">20 Octubre</option>
+                    </select>
+                    <h4> Hora </h4>
+                    <select class="form-control">
+                        <option value="">21:00</option>
+                        <option value="saab">18:00</option>
+                    </select>
+                    <h4> Zona del Evento </h4>
+                    <select class="form-control">
+                        <option value="">VIP</option>
+                        <option value="saab">Platea</option>
+                    </select>
+                </div>
                 <h4> Promoción </h4>
                 <select class="form-control">
                     <option value="">Ninguna</option>
                     <option value="saab">Pre-venta</option>
                     <option value="saab">Visa Platinium</option>
                 </select>
-                <h4>Entradas Disponibles</h4>
-                <input class="form-control" type="text" name="firstname" value="520" disabled>
             </label>
         </div>
         <br>
@@ -252,6 +258,7 @@
         </div>
         <fieldset>
         <legend>Información del cliente</legend>
+        <div style="-webkit-columns: 80px 2;">
             <h5>Ingrese Usuario</h5>
             <div class="input-group" style="width:290px">
                 <input type="text" class="form-control" placeholder="Código de usuario...">
@@ -259,9 +266,10 @@
                     <button class="btn btn-info" type="button">Buscar</button>
                 </span>
             </div><!-- /input-group -->
-            <br><br>
             <h5>Nombre de Cliente:</h5>
             <input class="form-control" style="width:290px" id="disabledInput" type="text" value="Peppa" disabled>
+        </div>
+            
             <!--<input type="submit" value="Submit">-->
             <br>
             <br>

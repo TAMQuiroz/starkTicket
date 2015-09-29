@@ -62,6 +62,8 @@ Route::get('promoter/event/addFunction', 'EventController@addFunction');
 Route::get('promoter/promotion', 'BusinessController@promotion');
 Route::get('promoter/organizers', 'BusinessController@organizers');
 Route::get('promoter/organizer/create', 'BusinessController@newOrganizer');
+Route::get('promoter/event/editEvent', 'EventController@editEvent');
+Route::get('promoter/event/recordPayment', 'EventController@recordPayment');
 
 
 Route::get('admin/', 'AdminController@home');
