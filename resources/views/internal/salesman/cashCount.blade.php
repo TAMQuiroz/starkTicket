@@ -2,7 +2,32 @@
 
 @section('style')
 
+<style type="text/css">
+
+  #demo3{
+   visibility:'hidden';
+   
+  }
+
+
+
+
+</style>
+
+
+
+
+
+<script>
+function myFunction () {
+  // body...
+    document.getElementById("demo3").style.visibility = 'visible';
+}
+</script>
 @stop
+
+
+
 
 @section('title')
 	Arqueo de Caja
@@ -22,9 +47,33 @@
            <input type="text" name="username" class="form-control">  
       </div>
       
-      <div class="col-md-2"> <button type="button" class="btn btn-info">Agregar Monto</button> </div>
-      <div class="col-md-2">  </div>
-      <div class="col-md-2"> </div>
+      <div class="col-md-2"> <button type="button" class="btn btn-info" onclick="myFunction()" data-toggle="collapse" data-target="#demo2" >Agregar Monto</button> </div>
+      <div class="col-md-4">  
+
+          <div  >
+            <h4 id="demo3" style="visibility:hidden"> Monto Inicial: 1000.00</h4>
+          
+
+
+
+            
+          </div>
+
+
+      </div>
+      <!--
+      <div class="col-md-2">
+        <div  >
+            
+
+
+
+            
+          </div>
+
+
+
+       </div>-->
         
       
 
