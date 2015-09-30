@@ -19,6 +19,7 @@ class CreateGiftsTable extends Migration
             $table->string('points');
             $table->integer('status_id')->unsigned();
             $table->integer('stock');
+            $table->string('image');
             $table->timestamps();
 
             $table->foreign('status_id')->references('id')->on('constants');

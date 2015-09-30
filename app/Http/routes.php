@@ -79,6 +79,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/exchange_gift', 'AdminController@exchangeGift');
     Route::get('admin/gifts', 'AdminController@gifts');
     Route::get('admin/gifts/new', 'AdminController@newGift');
+    Route::post('admin/gifts/new', 'AdminController@newGiftPost');
     Route::get('admin/gifts/{id}/edit', 'AdminController@editGift');
     Route::get('admin/category', 'AdminController@categoryList');
     Route::get('admin/category/new', 'AdminController@newCategory');

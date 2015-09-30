@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Gift;
 
 class AdminController extends Controller
 {
@@ -108,6 +109,24 @@ class AdminController extends Controller
     public function newGift()
     {
         return view('internal.admin.newGift');
+    }
+
+    public function newGiftPost(Request $request)
+    {
+        $input = $request->all();
+
+        $gift = new Gift;
+        $gift->name=$input['name'];
+        $gift->description=$input['description'];
+        $gift->points=$input['points'];
+        $gift->stock=$input['stock'];      
+        $gift->image='randomUrl';
+
+
+        $gift->save();
+        
+        
+        return redirect('admin/gifts');
     }
 
     public function editGift($id)

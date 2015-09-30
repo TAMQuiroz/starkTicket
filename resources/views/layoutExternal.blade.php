@@ -52,7 +52,7 @@
 			<!-- Logo -->
 
 			<div id="logo">
-				<h1 id="portada"><a href="{{url('home')}}">Teleticke</a></h1>
+				<h1 id="portada"><a href="{{url('/')}}">Teleticke</a></h1>
 			</div>
 
 
