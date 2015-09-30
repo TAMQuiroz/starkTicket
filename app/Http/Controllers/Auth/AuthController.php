@@ -23,7 +23,6 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    protected $redirectPath = 'admin';
     protected $redirectAfterLogout = 'auth/login';
     protected $loginPath = '/auth/login';
     /**
@@ -72,5 +71,31 @@ class AuthController extends Controller
     {
         return view('external.workerLogin');
     }
+    /**
+     * Get the post register / login redirect path.
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+        switch (\Auth::user()->role_id) {
+            case '4':
+                return '/admin';
+                break;
+            case '3':
+                return '/promoter';
+                break;
+            case '2':
+                return '/salesman';
+                break;
+            case '1':
+                return '/client';
+                break;
+            default:
+                return '/';
+                break;
+        }
+        // Logic that determines where to send the user
 
+    }
 }
