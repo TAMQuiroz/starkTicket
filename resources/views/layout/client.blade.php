@@ -26,7 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{url('/')}}">Telecticke </a>
+                <a class="navbar-brand" href="{{url('client/home')}}">Telecticke </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -61,14 +61,14 @@
             <!-- Logo -->
 
             <div id="logo">
-                <h1 id="portada"><a href="{{url('home')}}">Teleticke</a></h1>
+                <h1 id="portada"><a href="{{url('client/home')}}">Teleticke</a></h1>
             </div>
 
 
             <!-- Nav -->
             <nav id="nav">
                 <ul>
-                    <li><a href="{{url('home')}}">Inicio</a></li>
+                    <li><a href="{{url('client/home')}}">Inicio</a></li>
                     <li><a href="{{url('category')}}">Categorias</a></li>
                     <li><a href="{{url('event')}}">Eventos</a></li>
                     <li><a href="{{url('about')}}">Nosotros</a></li>

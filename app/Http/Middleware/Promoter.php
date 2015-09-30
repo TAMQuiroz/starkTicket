@@ -26,7 +26,7 @@ class Promoter
                     return redirect('/salesman');
                     break;
                 case '1':
-                    return redirect('/client');
+                    return redirect('/client/home');
                     break;
                 default:
                     return redirect('/');

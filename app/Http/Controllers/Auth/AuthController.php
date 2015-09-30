@@ -89,7 +89,7 @@ class AuthController extends Controller
                 return '/salesman';
                 break;
             case '1':
-                return '/client';
+                return '/client/home';
                 break;
             default:
                 return '/';
