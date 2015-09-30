@@ -19,6 +19,7 @@
 @stop
 
 @section('content')
+	<h3>Piaf de Pam Gems</h3>
 	<div class="buy">
 		<legend>Selección fecha y horario</legend>
 		<div class="chooser">
@@ -52,7 +53,7 @@
 				<div class="front">Escenario</div>					
 			</div>
 			<div class="booking-details">
-				<p>Evento: <span> Piaf de Pam Gems</span></p>
+				
 				<p>Día: <span>Octubre 13, 21:00</span></p>
 				<p>Asiento(s): </p>
 				<ul id="selected-seats"></ul>

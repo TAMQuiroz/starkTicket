@@ -8,6 +8,26 @@
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/designLogin.css')!!}
+    <style type="text/css">
+        .content button, .btn{
+            background-color: #83D3C9;
+            border-color: #83D3C9;
+            margin: 10px 0;
+            color: white;
+            font-size: 1.1rem;
+        }
+        .btn:hover{
+            background-color: #329DB7;
+            border-color: #329DB7;
+        }
+        .content input{
+          color: black;
+          border: black;
+        }
+        .content h4, .content h3{
+          color: black;
+        }
+    </style>
 </head>
 <body>
     {!! Form::open(['url'=>'auth/login','method'=>'POST']) !!}
@@ -25,21 +45,21 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Recuperar contraseña</h4>
                   </div>
                   <div class="modal-body">
                     <h3>Ingresa tu correo</h3>
-                    <input type="email">
+                    <input type="password" name="password" style="border-color: black;" placeholder="Correo"/>
+                    <button type="button" class="btn btn-primary">Enviar correo de recuperacion</button>
                   </div> 
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Enviar correo de recuperacion</button>
                   </div>
                 </div>
               </div>
             </div>
-            <button>Iniciar sesión</button>
+            <button class="btn">Iniciar sesión</button>
+            <p><a href="{{url('/')}}" class="btn" role="button" data-target="#info" data-whatever="@mdo" style="width:100%">Regresar</a></p>
         </div>
 
         @include('errors.list')

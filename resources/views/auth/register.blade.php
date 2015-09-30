@@ -4,7 +4,16 @@
 
 @section('style')
     {!!Html::style('css/estiloRegister.css')!!}
-    
+    <style type="text/css">
+        .btn-info{
+            background-color: #83D3C9;
+            border-color: #83D3C9;
+        }
+        .btn-info:hover{
+            background-color: #329DB7;
+            border-color: #329DB7;
+        }
+    </style>
 @stop
 
 @section('title')
@@ -32,9 +41,19 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">DNI</label>
+                <label for="inputEmail3" class="col-sm-2 control-label">Documento Identidad</label>
                 <div class="col-sm-10">
-                  <input type="number" name="dni" class="form-control" id="inputEmail3">
+                  <select class="form-control">
+                    <option>DNI</option>
+                    <option>Carnet de Extranjería</option>
+                    <option>Pasaporte</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Número Documento</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
                 </div>
               </div>
               <div class="form-group">
@@ -75,10 +94,11 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-primary">Register</button>
-                  <button type="reset" class="btn btn-danger">Cancelar</button>
+                  <button type="submit" class="btn btn-info">Aceptar</button>
+                  <button type="reset" class="btn btn-info">Cancelar</button>
                 </div>
               </div>
+              <br>
             </form>
         </div>
     </div>
