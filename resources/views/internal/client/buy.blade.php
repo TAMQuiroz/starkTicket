@@ -19,6 +19,7 @@
 @stop
 
 @section('content')
+	<h3>Piaf de Pam Gems</h3>
 	<div class="buy">
 		<legend>Selección fecha y horario</legend>
 		<div class="chooser">
@@ -52,12 +53,13 @@
 				<div class="front">Escenario</div>					
 			</div>
 			<div class="booking-details">
-				<p>Evento: <span> Piaf de Pam Gems</span></p>
+				
 				<p>Día: <span>Octubre 13, 21:00</span></p>
 				<p>Asiento(s): </p>
 				<ul id="selected-seats"></ul>
 				<p>Tickets: <span id="counter">0</span></p>
 				<p>Total: <b>S/.<span id="total">0</span></b></p>
+				<div id="legend"></div>
 						
 				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo">Comprar Entrada</button>
 				<!--<button type="button" class="btn btn-info"><a href="{{url('event/successBuy')}}">Comprar Entrada</a></button>-->

@@ -84,7 +84,7 @@
         <div style="-webkit-columns: 80px 2;">
             <h5>Ingrese Usuario</h5>
             <div class="input-group" style="width:290px">
-                <input type="text" class="form-control" placeholder="Código de usuario...">
+                <input type="text" class="form-control" placeholder="Documento de Identidad...">
                 <span class="input-group-btn">
                     <button class="btn btn-info" type="button">Buscar</button>
                 </span>

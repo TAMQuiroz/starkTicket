@@ -84,6 +84,10 @@
     <div class="container">
         <h1>@yield('title')</h1>
         <hr>
+
+        @if(Session::has('message'))
+        <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+        @endif
         @yield('content')
     </div>
     <div class="container">

@@ -11,6 +11,27 @@
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/admin.css')!!}
     @yield('style')
+    <!--
+    <style type="text/css">
+         @media(max-width:765px) {
+            body{
+                padding-top: 50px;
+
+            }
+        }
+       @media(max-width:864px) {
+            body{
+                padding-top: 150px;
+
+            }
+        }
+        @media(max-width:963px) {
+            body{
+                padding-top: 75px;
+
+            }
+        }
+    </style>-->
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -96,7 +117,7 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="">Administrador</a></li>
+                    <li><a href="">{{ Auth::user()->name }}</a></li>
                     <li><a href="{{url('auth/logout')}}">Salir</a></li>
               </ul>
             </div>
@@ -107,6 +128,9 @@
     <div class="container">
         <h1>@yield('title')</h1>
         <hr>
+        @if(Session::has('message'))
+        <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+        @endif
         @yield('content')
     </div>
     <div class="container">

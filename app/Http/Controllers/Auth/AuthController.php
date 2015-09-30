@@ -23,6 +23,8 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    protected $redirectAfterLogout = 'auth/login';
+    protected $loginPath = '/auth/login';
     /**
      * Create a new authentication controller instance.
      *
@@ -42,8 +44,8 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'name' => 'required|max:32',
+            'email' => 'required|email|max:64|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
     }
@@ -64,12 +66,34 @@ class AuthController extends Controller
         ]);
     }
 
-    protected $redirectPath = 'client/home';
-    protected $redirectAfterLogout = 'auth/login';
 
     public function worker()
     {
         return view('external.workerLogin');
     }
-
+    /**
+     * Get the post register / login redirect path.
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+        switch (\Auth::user()->role_id) {
+            case '4':
+                return '/admin';
+                break;
+            case '3':
+                return '/promoter';
+                break;
+            case '2':
+                return '/salesman';
+                break;
+            case '1':
+                return '/client';
+                break;
+            default:
+                return '/';
+                break;
+        }
+    }
 }
