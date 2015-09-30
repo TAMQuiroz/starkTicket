@@ -16,7 +16,7 @@ class Admin
     public function handle($request, Closure $next)
     {
         if (\Auth::user()->role_id != '4') {
-            $request->session()->flash('message', 'You are not authorized!');
+            $request->session()->flash('message', 'You are not authorized!.');
             $request->session()->flash('alert-class', 'alert-danger');
             switch (\Auth::user()->role_id) {
                 case '3':
