@@ -44,7 +44,7 @@ Route::get('client/{id}/reservanueva', ['as' => 'booking.create' , 'uses' => 'Bo
 //Fin
 Route::get('client/reservaexitosa', 'BookingController@store');
 
-	
+
 Route::get('salesman', 'BusinessController@salesmanHome');
 Route::get('salesman/cash_count', 'BusinessController@cashCount');
 Route::get('salesman/exchange_gift', 'BusinessController@exchangeGift');
@@ -67,8 +67,9 @@ Route::get('promoter/organizer/create', 'BusinessController@newOrganizer');
 Route::get('promoter/event/editEvent', 'EventController@editEvent');
 Route::get('promoter/event/recordPayment', 'EventController@recordPayment');
 
-
-Route::get('admin/', 'AdminController@home');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('admin/', 'AdminController@home');
+});
 Route::get('admin/politics', 'AdminController@politics');
 Route::get('admin/politics/new', 'AdminController@newPolitic');
 Route::get('admin/politics/{id}/edit', 'AdminController@editPolitic');

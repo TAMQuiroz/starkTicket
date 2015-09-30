@@ -15,19 +15,19 @@
     <style type="text/css">
          @media(max-width:765px) {
             body{
-                padding-top: 50px; 
+                padding-top: 50px;
 
             }
         }
        @media(max-width:864px) {
             body{
-                padding-top: 150px; 
+                padding-top: 150px;
 
             }
         }
         @media(max-width:963px) {
             body{
-                padding-top: 75px; 
+                padding-top: 75px;
 
             }
         }
@@ -117,7 +117,7 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="">Administrador</a></li>
+                    <li><a href="">{{ Auth::user()->name }}</a></li>
                     <li><a href="{{url('auth/logout')}}">Salir</a></li>
               </ul>
             </div>

@@ -23,6 +23,9 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    protected $redirectPath = 'admin';
+    protected $redirectAfterLogout = 'auth/login';
+    protected $loginPath = '/auth/login';
     /**
      * Create a new authentication controller instance.
      *
@@ -42,8 +45,8 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'name' => 'required|max:32',
+            'email' => 'required|email|max:64|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
     }
@@ -64,8 +67,6 @@ class AuthController extends Controller
         ]);
     }
 
-    protected $redirectPath = 'client/home';
-    protected $redirectAfterLogout = 'auth/login';
 
     public function worker()
     {
