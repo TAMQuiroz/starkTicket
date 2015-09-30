@@ -13,9 +13,9 @@
   <table class="table table-bordered table-striped">
       <tr>
           <th>Apellidos y Nombres</th>
-          <th>DNI</th>
-          <th>Telefonos(s)</th>
-          <th>Sexo</th>
+          <th>Documento Identidad</th>
+          <th>Número de Documento</th>
+          <th>Telefono</th>
           <th>Detalle</th>
           <th>Editar</th>
           <th>Eliminar</th>
@@ -39,10 +39,11 @@
                   </div>
                   <div class="modal-body">
                     <h4>Nombre</h4>
+                    <h4>Sexo</h4>  
+                    <h4>Documento Identidad</h4>
+                    <h4>Número de Documento</h4>
+                    <h4>Teléfono</h4>
                     <h4>Direccion</h4>
-                    <h4>DNI</h4>
-                    <h4>Telefono</h4>
-                    <h4>Email</h4>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -56,7 +57,7 @@
           </td>
       </tr>
       <tr>
-              <td>Contenido 1</td>
+          <td>Contenido 1</td>
           <td>Contenido 2</td>
           <td>Contenido 3</td>
           <td>Contenido 4</td>

@@ -1,7 +1,10 @@
 @extends('layout.admin')
 
 @section('style')
-
+  <style type="text/css">
+    .form-control{  
+    }
+  </style>
 @stop
 
 @section('title')
@@ -11,7 +14,7 @@
 @section('content')
         <!-- Contenido-->
         <br>
-        <h5>Selecciona un departamento</h5></font> 
+        <h5>Selecciona un departamento</h5>
         <div class="dropdown">
             <button style="background-color:#83D3C9; border-color:#83D3C9; color:white;" class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"> Lima
             <span class="caret"></span></button>
@@ -23,10 +26,10 @@
             </ul>
         </div>
         
-        <h5>Selecciona un distrito</h5></font> 
+        <h5>Selecciona un distrito</h5>
         
         <div  class="dropdown">
-            <button  style="background-color:#83D3C9; border-color:#83D3C9; color:white;" class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"> 
+            <button  style="background-color:#83D3C9; border-color:#83D3C9; color:white;" class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"> Chorrillos
             <span class="caret"></span></button>
             <ul class="dropdown-menu">
                 <li><a href="#">Pueblo Libre</a></li>
@@ -45,20 +48,22 @@
 
          <fieldset>
             <legend>Vendedores: </legend>
-                Código:  <input type="text" name="firstname" value="">  Nombre/Apellidos: <input type="text" name="lastname" value="">
-                <a href="#" class="btn btn-primary" style="background-color:#83D3C9; border-color:#83D3C9; color:white;">Buscar</a>
-                <br>                
-                <br>
-                <br>
+            <div style="-webkit-columns: 80px 2; display:inline-block;float:left">
+              Código:  <input type="text" class="form-control" name="firstname" value="">  
+              Nombre/Apellidos: <input type="text" class="form-control" name="lastname" value="">  
+            </div>
+                
+            <a href="#" class="btn btn-primary" style="background-color:#83D3C9; border-color:#83D3C9; color:white;position:relative;left:40px;top:15px">Buscar</a>
+            <br><br><br> 
         </fieldset>
 
 
         <table class="table table-bordered table-striped">
             <tr>
                 <th>Apellidos y Nombres</th>
-                <th>DNI</th>
-                <th>Telefonos(s)</th>
-                <th>Sexo</th>
+                <th>Documento Identidad</th>
+                <th>Número de Documento</th>
+                <th>Telefonos</th>
                 <th>Editar</th>
                 <th>Detalle</th>
                 <th>Eliminar</th>

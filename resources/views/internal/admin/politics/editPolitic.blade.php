@@ -32,6 +32,13 @@
                 </div>
               </div>
               <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Estado</label>
+                <div class="col-sm-10">
+                  <label class="radio-inline"><input type="radio" name="optradio">Activo</label>
+                  <label class="radio-inline"><input type="radio" name="optradio">Inactivo</label> 
+                </div>
+              </div> 
+              <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <a class="btn btn-primary"  data-toggle="modal" data-target="#agregado">Guardar</a>
                   <button type="reset" class="btn btn-danger">Cancelar</button>
