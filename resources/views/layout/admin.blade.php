@@ -11,6 +11,27 @@
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/admin.css')!!}
     @yield('style')
+    <!--
+    <style type="text/css">
+         @media(max-width:765px) {
+            body{
+                padding-top: 50px; 
+
+            }
+        }
+       @media(max-width:864px) {
+            body{
+                padding-top: 150px; 
+
+            }
+        }
+        @media(max-width:963px) {
+            body{
+                padding-top: 75px; 
+
+            }
+        }
+    </style>-->
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">

@@ -59,6 +59,7 @@
 				<ul id="selected-seats"></ul>
 				<p>Tickets: <span id="counter">0</span></p>
 				<p>Total: <b>S/.<span id="total">0</span></b></p>
+				<div id="legend"></div>
 						
 				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo">Comprar Entrada</button>
 				<!--<button type="button" class="btn btn-info"><a href="{{url('event/successBuy')}}">Comprar Entrada</a></button>-->
