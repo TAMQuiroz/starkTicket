@@ -95,7 +95,5 @@ class AuthController extends Controller
                 return '/';
                 break;
         }
-        // Logic that determines where to send the user
-
     }
 }

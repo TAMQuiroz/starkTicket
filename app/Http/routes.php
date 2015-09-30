@@ -36,7 +36,9 @@ Route::get('event', 'EventController@index');
 Route::get('event/successBuy', 'EventController@successBuy');
 Route::get('event/{id}', 'EventController@show');
 
-Route::get('client/home', 'EventController@clientHome');
+Route::group(['middleware' => ['auth', 'client']], function () {
+    Route::get('client/home', 'EventController@clientHome');
+});
 Route::get('client/event_record', 'EventController@clientRecord');
 //Estos 2 inician en el detalle del evento
 Route::get('client/event/{id}/buy', 'EventController@clientBuy');
@@ -45,7 +47,9 @@ Route::get('client/{id}/reservanueva', ['as' => 'booking.create' , 'uses' => 'Bo
 Route::get('client/reservaexitosa', 'BookingController@store');
 
 
-Route::get('salesman', 'BusinessController@salesmanHome');
+Route::group(['middleware' => ['auth', 'salesman']], function () {
+    Route::get('salesman', 'BusinessController@salesmanHome');
+});
 Route::get('salesman/cash_count', 'BusinessController@cashCount');
 Route::get('salesman/exchange_gift', 'BusinessController@exchangeGift');
 Route::get('salesman/event/{id}/pay_booking', 'EventController@salesmanBooking');
@@ -53,8 +57,9 @@ Route::get('salesman/event/{id}/pay_booking', 'EventController@salesmanBooking')
 //Este inicia en el detalle del evento
 Route::get('salesman/event/{id}/buy', 'EventController@salesmanBuy');
 //Fin
-
-Route::get('promoter/', 'BusinessController@promoterHome');
+Route::group(['middleware' => ['auth', 'promoter']], function () {
+    Route::get('promoter/', 'BusinessController@promoterHome');
+});
 Route::get('promoter/politics', 'EventController@politics');
 Route::get('promoter/transfer_payments', 'BusinessController@transferPayments');
 Route::get('promoter/new_transfer_payment', 'BusinessController@newTransferPayment');
@@ -67,7 +72,7 @@ Route::get('promoter/organizer/create', 'BusinessController@newOrganizer');
 Route::get('promoter/event/editEvent', 'EventController@editEvent');
 Route::get('promoter/event/recordPayment', 'EventController@recordPayment');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/', 'AdminController@home');
 });
 Route::get('admin/politics', 'AdminController@politics');
