@@ -18,4 +18,15 @@ class CategoryController extends Controller
         return view('external.category');
     }
 
+    public function indexSub()
+    {
+        return view('external.subcategories');
+    }
+
+    public function showSub($id, $id2)
+    {
+    	
+        return view('external.subcategory');
+    }
+
 }

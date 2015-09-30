@@ -30,6 +30,8 @@ Route::get('calendar', 'PagesController@calendar');
 Route::get('gifts', 'PagesController@gifts');
 Route::get('category', 'CategoryController@index');
 Route::get('category/{id}', 'CategoryController@show');
+Route::get('category/{id}/subcategory', 'CategoryController@indexSub');
+Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@index');
 Route::get('event/successBuy', 'EventController@successBuy');
 Route::get('event/{id}', 'EventController@show');
