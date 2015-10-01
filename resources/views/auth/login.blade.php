@@ -39,7 +39,18 @@
             <input type="password" name="password" placeholder="Contraseña"/>
             <a href="" data-toggle="modal" data-target="#myModal">Olvidaste tu contraseña?</a>
             <!-- Button trigger modal -->
-
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <h4>Ingresa e-mail</h4>
+                            <input type="correo" style="border:gray 1px solid" name="correo" placeholder="E-mail"/>
+                        </div>
+                        <button type="button" class="btn btn-info" style="margin-left:10px; width:580px" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Enviar</button>
+                        <button type="button" class="btn btn-info" style="margin-left:10px; width:580px" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Cancelar</button>
+                    </div>
+                </div>
+            </div>
             <button class="btn">Iniciar sesión</button>
             <p><a href="{{url('/')}}" class="btn" role="button" data-target="#info" data-whatever="@mdo" style="width:100%">Regresar</a></p>
         </div>
