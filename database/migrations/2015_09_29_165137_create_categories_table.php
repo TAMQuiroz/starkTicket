@@ -19,6 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->string('image');
             $table->integer('type');
             $table->integer('father_id')->unsigned()->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('father_id')

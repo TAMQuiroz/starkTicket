@@ -36,7 +36,8 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-
+    protected $dates = ['deleted_at'];
+    
     public function role()
     {
         return $this->belongsTo('App\Role');
