@@ -77,10 +77,14 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/politics/new', 'AdminController@newPolitic');
     Route::get('admin/politics/{id}/edit', 'AdminController@editPolitic');
     Route::get('admin/exchange_gift', 'AdminController@exchangeGift');
+
     Route::get('admin/gifts', 'AdminController@gifts');
     Route::get('admin/gifts/new', 'AdminController@newGift');
     Route::post('admin/gifts/new', 'AdminController@newGiftPost');
     Route::get('admin/gifts/{id}/edit', 'AdminController@editGift');
+    Route::post('admin/gifts/{id}/edit', 'AdminController@editGiftPost');
+    Route::get('admin/gifts/{id}/delete', 'AdminController@deleteGift');
+    
     Route::get('admin/category', 'AdminController@categoryList');
     Route::get('admin/category/new', 'AdminController@newCategory');
     Route::get('admin/category/{id}/edit', 'AdminController@editCategory');

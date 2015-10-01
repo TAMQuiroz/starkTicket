@@ -103,7 +103,10 @@ class AdminController extends Controller
 
     public function gifts()
     {
-        return view('internal.admin.gifts');
+
+        $gifts = Gift::all();
+
+        return view('internal.admin.gifts', compact('gifts'));
     }
 
     public function newGift()
@@ -115,23 +118,52 @@ class AdminController extends Controller
     {
         $input = $request->all();
 
-        $gift = new Gift;
-        $gift->name=$input['name'];
-        $gift->description=$input['description'];
-        $gift->points=$input['points'];
-        $gift->stock=$input['stock'];      
-        $gift->image='randomUrl';
-
+        $gift               =   new Gift;
+        $gift->name         =   $input['name'];
+        $gift->description  =   $input['description'];
+        $gift->points       =   $input['points'];
+        $gift->stock        =   $input['stock'];      
+        $gift->status       =   config('constants.available');
+        //Control de subida de imagen
+        $gift->image        =   'randomUrl';
 
         $gift->save();
-        
         
         return redirect('admin/gifts');
     }
 
     public function editGift($id)
     {
-        return view('internal.admin.editGift');
+        $gift = Gift::find($id);
+
+        return view('internal.admin.editGift', compact('gift'));
+    }
+
+    public function editGiftPost(Request $request, $id)
+    {
+        $input = $request->all();
+
+        $gift = Gift::find($id);
+
+        $gift->name         =   $input['name'];
+        $gift->description  =   $input['description'];
+        $gift->points       =   $input['points'];
+        $gift->stock        =   $input['stock'];      
+        $gift->status       =   config('constants.available');
+        //Control de subida de imagen
+        $gift->image        =   'randomUrl';
+
+        $gift->save();        
+
+        return redirect('admin/gifts');
+    }
+
+    public function deleteGift($id)
+    {
+        $gift = Gift::find($id);
+        
+        $gift->delete();
+        return redirect('admin/gifts');
     }
 
     public function salesman()

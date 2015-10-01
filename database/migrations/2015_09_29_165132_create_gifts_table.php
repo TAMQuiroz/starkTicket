@@ -17,12 +17,11 @@ class CreateGiftsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('points');
-            $table->integer('status_id')->unsigned();
+            $table->integer('status');
             $table->integer('stock');
             $table->string('image');
             $table->timestamps();
-
-            $table->foreign('status_id')->references('id')->on('constants');
+            $table->softDeletes();
         });
     }
 
