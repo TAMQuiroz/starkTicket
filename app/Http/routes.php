@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman/cash_count', 'BusinessController@cashCount');
     Route::get('salesman/exchange_gift', 'GiftController@createExchange');
     Route::get('salesman/event/{id}/pay_booking', 'BookingController@pay');
-
+    Route::get('salesman/giveaway', 'TicketController@giveaway');
     //Este inicia en el detalle del evento
     Route::get('salesman/event/{id}/buy', 'TicketController@createSalesman');
 });
@@ -78,6 +78,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/politics', 'PoliticController@indexAdmin');
     Route::get('admin/politics/new', 'PoliticController@create');
     Route::get('admin/politics/{id}/edit', 'PoliticController@edit');
+
+    Route::get('admin/local', 'LocalController@index');
+    Route::get('admin/local/new', 'LocalController@create');
+    Route::get('admin/local/{id}/edit', 'LocalController@edit');
     
     Route::get('admin/exchange_gift', 'GiftController@createExchangeAdmin');
 

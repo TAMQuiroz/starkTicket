@@ -59,11 +59,11 @@
 								  <button type="submit" class="btn btn-info">Aceptar</button>
 								  <br><br>
 								  <label for="comment">Comentarios:</label>
-								  <h6>Peppa:</h6>	
+								  <h6><button class="btn btn-info">x</button> Peppa: </h6>
 								  <input class="form-control" type="text" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. " readonly>
-								  <h6>Suzy:</h6>	
+								  <h6><button class="btn btn-info">x</button> Suzy: </h6>	
 								  <input class="form-control" type="text" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. " readonly>
-								  <h6>George:</h6>	
+								  <h6><button class="btn btn-info">x</button> George: </h6>	
 								  <input class="form-control" type="text" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. " readonly>
 								</div>
 							</section>

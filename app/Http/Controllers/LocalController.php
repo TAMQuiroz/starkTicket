@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class TicketController extends Controller
+class LocalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,17 +15,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexReturn()
-    {
-        return view('internal.admin.ticketReturn');
+        return view('internal.admin.locals.locals');
     }
 
     /**
@@ -35,39 +25,7 @@ class TicketController extends Controller
      */
     public function create()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function createReturn()
-    {
-        return view('internal.admin.newTicketReturn');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function createClient($id)
-    {
-        return view('internal.client.buy');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function createSalesman($id)
-    {
-        return view('internal.salesman.buy');
+        return view('internal.admin.locals.newLocal');
     }
 
     /**
@@ -93,16 +51,6 @@ class TicketController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showSuccess()
-    {
-        return view('internal.client.successBuy');
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -110,7 +58,7 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('internal.admin.locals.editLocal');
     }
 
     /**
@@ -134,10 +82,5 @@ class TicketController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function giveaway()
-    {
-        return view('internal.salesman.giveaway');
     }
 }
