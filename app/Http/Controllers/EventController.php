@@ -5,86 +5,133 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Auth;
 
 class EventController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
+    {
+        //
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexExternal()
     {
         return view('external.events');
     }
 
-    public function show($id)
-    {
-        return view('external.event');
-    }
-
-    public function newEvent()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
         return view('internal.promoter.newEvent');
     }
 
-    public function editEvent()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        return view('internal.promoter.editEvent');
+        //
     }
 
-    public function promoterRecord()
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        return view('internal.promoter.record');
+        //
     }
 
-    public function clientRecord()
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showExternal($id)
+    {
+        return view('external.event');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showClientRecord()
     {
         return view('internal.client.record');
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showPromoterRecord()
+    {
+        return view('internal.promoter.record');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function addFunction()
     {
         return view('internal.promoter.addFunction');
     }
 
-    public function clientBuy($id)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit()
     {
-        $user = Auth::user();
-
-        return view('internal.client.buy')->with('user',$user);
+        return view('internal.promoter.editEvent');
     }
 
-    public function successBuy()
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-        return view('internal.client.successBuy');
+        //
     }
 
-    public function salesmanBuy($id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-        $user = Auth::user();
-
-        return view('internal.salesman.buy')->with('user',$user);
-    }
-
-    public function salesmanBooking($id)
-    {
-        $user = Auth::user();
-
-        return view('internal.salesman.payBooking')->with('user',$user);
-    }
-
-    public function reserve($id)
-    {
-        return view('internal.client.reserve');
-    }
-
-    public function clientHome()
-    {
-        return view('internal.client.home');
-    }
-    public function politics()
-    {
-        return view('internal.promoter.politics');
-    }
-    public function recordPayment()
-    {
-        return view('internal.promoter.recordPayment');
+        //
     }
 }

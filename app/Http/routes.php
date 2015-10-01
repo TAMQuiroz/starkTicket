@@ -25,88 +25,98 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::get('/', 'PagesController@home');
 Route::get('about', 'PagesController@about');
-Route::get('modules', 'PagesController@modules');
+Route::get('modules', 'ModuleController@indexExternal');
 Route::get('calendar', 'PagesController@calendar');
-Route::get('gifts', 'PagesController@gifts');
-Route::get('category', 'CategoryController@index');
-Route::get('category/{id}', 'CategoryController@show');
+Route::get('gifts', 'GiftController@indexExternal');
+Route::get('category', 'CategoryController@indexExternal');
+Route::get('category/{id}', 'CategoryController@showExternal');
 Route::get('category/{id}/subcategory', 'CategoryController@indexSub');
 Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
-Route::get('event', 'EventController@index');
-Route::get('event/successBuy', 'EventController@successBuy');
-Route::get('event/{id}', 'EventController@show');
+Route::get('event', 'EventController@indexExternal');
+Route::get('event/successBuy', 'TicketController@showSuccess');
+Route::get('event/{id}', 'EventController@showExternal');
 
 Route::group(['middleware' => ['auth', 'client']], function () {
-    Route::get('client/home', 'EventController@clientHome');
-    Route::get('client/event_record', 'EventController@clientRecord');
+    Route::get('client/home', 'PagesController@clientHome');
+    Route::get('client/event_record', 'EventController@showClientRecord');
     //Estos 2 inician en el detalle del evento
-    Route::get('client/event/{id}/buy', 'EventController@clientBuy');
+    Route::get('client/event/{id}/buy', 'TicketController@createClient');
     Route::get('client/{id}/reservanueva', ['as' => 'booking.create' , 'uses' => 'BookingController@create']);
     //Fin
     Route::get('client/reservaexitosa', 'BookingController@store');
 });
 
 Route::group(['middleware' => ['auth', 'salesman']], function () {
-    Route::get('salesman', 'BusinessController@salesmanHome');
+    Route::get('salesman', 'PagesController@salesmanHome');
     Route::get('salesman/cash_count', 'BusinessController@cashCount');
-    Route::get('salesman/exchange_gift', 'BusinessController@exchangeGift');
-    Route::get('salesman/event/{id}/pay_booking', 'EventController@salesmanBooking');
+    Route::get('salesman/exchange_gift', 'GiftController@createExchange');
+    Route::get('salesman/event/{id}/pay_booking', 'BookingController@pay');
 
     //Este inicia en el detalle del evento
-    Route::get('salesman/event/{id}/buy', 'EventController@salesmanBuy');
+    Route::get('salesman/event/{id}/buy', 'TicketController@createSalesman');
 });
 //Fin
 Route::group(['middleware' => ['auth', 'promoter']], function () {
-    Route::get('promoter/', 'BusinessController@promoterHome');
-    Route::get('promoter/politics', 'EventController@politics');
-    Route::get('promoter/transfer_payments', 'BusinessController@transferPayments');
-    Route::get('promoter/new_transfer_payment', 'BusinessController@newTransferPayment');
-    Route::get('promoter/event/record', 'EventController@promoterRecord');
-    Route::get('promoter/event/create', 'EventController@newEvent');
+    Route::get('promoter/', 'PagesController@promoterHome');
+    Route::get('promoter/politics', 'PoliticController@index');
+    Route::get('promoter/event/recordPayment', 'PaymentController@index');
+    Route::get('promoter/transfer_payments', 'PaymentController@create');    
+    Route::get('promoter/event/record', 'EventController@showPromoterRecord');
+    Route::get('promoter/event/create', 'EventController@create');
+    Route::get('promoter/event/editEvent', 'EventController@edit');
     Route::get('promoter/event/addFunction', 'EventController@addFunction');
-    Route::get('promoter/promotion', 'BusinessController@promotion');
-    Route::get('promoter/organizers', 'BusinessController@organizers');
-    Route::get('promoter/organizer/create', 'BusinessController@newOrganizer');
-    Route::get('promoter/event/editEvent', 'EventController@editEvent');
-    Route::get('promoter/event/recordPayment', 'EventController@recordPayment');
+    Route::get('promoter/promotion', 'PromoController@index');
+    Route::get('promoter/organizers', 'OrganizerController@index');
+    Route::get('promoter/organizer/create', 'OrganizerController@create');
+    
+    
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
-    Route::get('admin/', 'AdminController@home');
-    Route::get('admin/politics', 'AdminController@politics');
-    Route::get('admin/politics/new', 'AdminController@newPolitic');
-    Route::get('admin/politics/{id}/edit', 'AdminController@editPolitic');
-    Route::get('admin/exchange_gift', 'AdminController@exchangeGift');
-
-    Route::get('admin/gifts', 'AdminController@gifts');
-    Route::get('admin/gifts/new', 'AdminController@newGift');
-    Route::post('admin/gifts/new', 'AdminController@newGiftPost');
-    Route::get('admin/gifts/{id}/edit', 'AdminController@editGift');
-    Route::post('admin/gifts/{id}/edit', 'AdminController@editGiftPost');
-    Route::get('admin/gifts/{id}/delete', 'AdminController@deleteGift');
+    Route::get('admin/', 'PagesController@adminHome');
     
-    Route::get('admin/category', 'AdminController@categoryList');
-    Route::get('admin/category/new', 'AdminController@newCategory');
-    Route::get('admin/category/{id}/edit', 'AdminController@editCategory');
-    Route::get('admin/ticket_return', 'AdminController@ticketReturn');
-    Route::get('admin/ticket_return/new', 'AdminController@newTicketReturn');
-    Route::get('admin/attendance', 'AdminController@attendance');
-    Route::get('admin/config/exchange_rate', 'AdminController@exchangeRate');
-    Route::get('admin/config/about', 'AdminController@about');
-    Route::get('admin/config/system', 'AdminController@system');
-    Route::get('admin/report', 'AdminController@reportList');
-    //Route::get('admin/report/{id}', 'AdminController@report');
-    Route::get('admin/report/assistance', 'AdminController@reportAssistance');
-    Route::get('admin/report/sales', 'AdminController@reportSales');
-    Route::get('admin/report/assignment', 'AdminController@reportAssignment');
-    Route::get('admin/modules', 'AdminController@modules');
-    Route::get('admin/modules/new', 'AdminController@newModule');
-    Route::get('admin/modules/{id}/edit', 'AdminController@editModule');
+    Route::get('admin/politics', 'PoliticController@indexAdmin');
+    Route::get('admin/politics/new', 'PoliticController@create');
+    Route::get('admin/politics/{id}/edit', 'PoliticController@edit');
+    
+    Route::get('admin/exchange_gift', 'GiftController@createExchangeAdmin');
+
+    Route::get('admin/gifts', 'GiftController@index');
+    Route::get('admin/gifts/new', 'GiftController@create');
+    Route::post('admin/gifts/new', 'GiftController@store');
+    Route::get('admin/gifts/{id}/edit', 'GiftController@edit');
+    Route::post('admin/gifts/{id}/edit', 'GiftController@update');
+    Route::get('admin/gifts/{id}/delete', 'GiftController@destroy');
+    
+    Route::get('admin/category', 'CategoryController@index');
+    Route::get('admin/category/new', 'CategoryController@create');
+    Route::get('admin/category/{id}/edit', 'CategoryController@edit');
+    
+    Route::get('admin/ticket_return', 'TicketController@indexReturn');
+    Route::get('admin/ticket_return/new', 'TicketController@createReturn');
+    
+    Route::get('admin/attendance', 'BusinessController@attendance');
+
+    Route::get('admin/config/exchange_rate', 'BusinessController@exchangeRate');
+    Route::get('admin/config/about', 'BusinessController@about');
+    Route::get('admin/config/system', 'BusinessController@system');
+
+    Route::get('admin/report/assistance', 'ReportController@showAssistance');
+    Route::get('admin/report/sales', 'ReportController@showSales');
+    Route::get('admin/report/assignment', 'ReportController@showAssigment');
+    
+    Route::get('admin/modules', 'ModuleController@index');
+    Route::get('admin/modules/new', 'ModuleController@create');
+    Route::get('admin/modules/{id}/edit', 'ModuleController@edit');
+    
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
+    
     Route::get('admin/promoter', 'AdminController@promoter');
     Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
+    
     Route::get('admin/admin', 'AdminController@admin');
     Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
+    
     Route::get('admin/user/new', 'AdminController@newUser');
 });

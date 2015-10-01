@@ -8,46 +8,28 @@ use App\Http\Controllers\Controller;
 
 class BusinessController extends Controller
 {
-    public function salesmanHome()
-    {
-        return view('internal.salesman.home');
-    }
-
-    public function promoterHome()
-    {
-        return view('internal.promoter.home');
-    }
-
     public function cashCount()
     {
         return view('internal.salesman.cashCount');
     }
-    public function transferPayments()
+
+    public function exchangeRate()
     {
-        return view('internal.promoter.transferPayments');
+        return view('internal.admin.exchangeRate');
     }
 
-    public function newTransferPayment()
+    public function about()
     {
-        return view('internal.promoter.newTransferPayment');
+        return view('internal.admin.about');
     }
 
-    public function promotion()
+    public function system()
     {
-        return view('internal.promoter.promotions');
+        return view('internal.admin.system');
     }
 
-    public function exchangeGift()
+    public function attendance()
     {
-        return view('internal.salesman.exchangeGift');
-    }
-    
-    public function organizers()
-    {
-        return view('internal.promoter.organizers');
-    }
-    public function newOrganizer()
-    {
-        return view('internal.promoter.newOrganizer');
+        return view('internal.admin.attendance');
     }
 }

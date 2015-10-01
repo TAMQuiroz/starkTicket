@@ -6,36 +6,26 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class CategoryController extends Controller
+class TicketController extends Controller
 {
     /**
-     * Display a listing of the resource. (Internal)
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('internal.admin.categories');
+        //
     }
 
     /**
-     * Display a listing of the resource. (External)
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexExternal()
+    public function indexReturn()
     {
-        return view('external.categories');
-    }
-
-    /**
-     * Display a listing of the resource. (External)
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexSub()
-    {
-        return view('external.subcategories');
+        return view('internal.admin.ticketReturn');
     }
 
     /**
@@ -45,7 +35,39 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('internal.admin.newCategory');
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createReturn()
+    {
+        return view('internal.admin.newTicketReturn');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function createClient($id)
+    {
+        return view('internal.client.buy');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function createSalesman($id)
+    {
+        return view('internal.salesman.buy');
     }
 
     /**
@@ -73,23 +95,11 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showExternal($id)
+    public function showSuccess()
     {
-        return view('external.category');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id, int $id2
-     * @return \Illuminate\Http\Response
-     */
-    public function showSub($id, $id2)
-    {
-        return view('external.subcategory');
+        return view('internal.client.successBuy');
     }
 
     /**
@@ -100,7 +110,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        return view('internal.admin.editCategory');
+        //
     }
 
     /**

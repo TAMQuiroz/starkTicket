@@ -55,8 +55,8 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <a class="btn btn-primary"  data-toggle="modal" data-target="#agregado">Guardar</a>
-                  <button type="reset" class="btn btn-danger">Cancelar</button>
+                  <a class="btn btn-info"  data-toggle="modal" data-target="#agregado">Guardar</a>
+                  <button type="reset" class="btn btn-info">Cancelar</button>
                 </div>
               </div>
             </form>

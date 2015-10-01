@@ -20,6 +20,9 @@ class BookingController extends Controller
 		return view('external.booking.results');
 	}
 	
-
+	public function pay($id)
+	{
+		return view('internal.salesman.payBooking');
+	}
 
 }

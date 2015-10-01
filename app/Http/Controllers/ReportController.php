@@ -6,36 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class CategoryController extends Controller
+class ReportController extends Controller
 {
     /**
-     * Display a listing of the resource. (Internal)
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('internal.admin.categories');
-    }
-
-    /**
-     * Display a listing of the resource. (External)
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexExternal()
-    {
-        return view('external.categories');
-    }
-
-    /**
-     * Display a listing of the resource. (External)
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexSub()
-    {
-        return view('external.subcategories');
+        //
     }
 
     /**
@@ -45,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('internal.admin.newCategory');
+        //
     }
 
     /**
@@ -62,34 +42,42 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
+     * @return \Illuminate\Http\Response
+     */
+    public function showSales()
+    {
+        return view('internal.admin.reports.sales');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showAssistance()
+    {
+        return view('internal.admin.reports.assistance');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showAssigment()
+    {
+        return view('internal.admin.reports.assignment');
+    }
+
+    /**
+     * Display the specified resource.
+     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showExternal($id)
-    {
-        return view('external.category');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id, int $id2
-     * @return \Illuminate\Http\Response
-     */
-    public function showSub($id, $id2)
-    {
-        return view('external.subcategory');
     }
 
     /**
@@ -100,7 +88,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        return view('internal.admin.editCategory');
+        //
     }
 
     /**

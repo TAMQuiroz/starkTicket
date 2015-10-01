@@ -28,8 +28,24 @@ class PagesController extends Controller
         return view('external.calendar');
     }
 
-    public function gifts()
+    public function clientHome()
     {
-        return view('external.gifts');
+        return view('internal.client.home');
     }
+
+    public function salesmanHome()
+    {
+        return view('internal.salesman.home');
+    }
+
+    public function promoterHome()
+    {
+        return view('internal.promoter.home');
+    }
+
+    public function adminHome()
+    {
+        return view('internal.admin.home');
+    }
+
 }
