@@ -16,7 +16,7 @@ Asistencia de Pedro Alva
     <div class="col-sm-3"><label>Hasta</label>
         <input type="date" class="form-control">
     </div>
-    <div class="col-sm-3"><br><input type="submit" value="Listar" class="btn btn-primary"></div>
+    <div class="col-sm-3"><br><input type="submit" value="Filtrar" class="btn btn-info"></div>
 </div>
 <hr>
 <table class="table table-bordered table-striped">

@@ -74,16 +74,17 @@
                       </div>
                       <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Descripción</label>
+
                         <div class="col-sm-10">
-                          <textarea class="form-control" rows="5"></textarea>
-                        </div>
+                          <textarea type="text" class="form-control" rows="5" id="comment" >
+                                               </div>
                       </div>
                     </form>
                   </div>
                 </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-info">Guardar</button>
               </div>
             </div>
           </div>
