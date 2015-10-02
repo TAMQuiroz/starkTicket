@@ -23,6 +23,7 @@
                 <label for="inputEmail3" class="col-sm-2 control-label">Subcategoria</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  <br>
                   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editarSubs">Editar</button>
 
 
@@ -67,7 +68,9 @@
                         <th>Nombre</th>
                         <th>Descripción</th>
                         <th>Eventos</th>
-                        <th></th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                        
                     </tr>
                     <tr>
                         <td>SubCategoria 1</td>
@@ -75,8 +78,10 @@
                         tempor incididunt ut labore et dolore magna aliqua. </td>
                         <td>3</td>
                         <td>
-                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Editar</a> 
-                          <button type="button" class="btn btn-info">Eliminar</button> 
+                          <a class="btn btn-info" data-toggle="modal" data-target="#myModal"title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a> 
+                        </td>
+                        <td>
+                          <a class="btn btn-info"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a> 
                         </td>
                     </tr>
                     <tr>
@@ -85,8 +90,10 @@
                         tempor incididunt ut labore et dolore magna aliqua.</td>
                         <td>30</td>
                         <td>
-                          <button type="button" class="btn btn-info">Editar</button> 
-                          <button type="button" class="btn btn-info">Eliminar</button> 
+                          <a class="btn btn-info" data-toggle="modal" data-target="#myModal"title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a> 
+                        </td>
+                        <td>
+                          <a class="btn btn-info"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a> 
                         </td>
                     </tr>
 
