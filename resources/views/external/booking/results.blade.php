@@ -1,10 +1,23 @@
 @extends('layout.client')
 @section('style')
-	Reserva exitosa
+	<style type="text/css">
+        .btn-info{
+            background-color: #83D3C9;
+            border-color: #83D3C9;
+        }
+        .btn-info:hover{
+            background-color: #329DB7;
+            border-color: #329DB7;
+        }
+    </style>
 	
+@stop
+@section('title')
+	Reserva exitosa
 @stop
 
 @section('content')
+
 
 Su reserva se realizó con éxito. 
 	<div class="table-responsive">
@@ -39,7 +52,7 @@ Su reserva se realizó con éxito.
 	    </tbody>
 	  </table>
 	</div>
-	<h5> Su código de Reserva es 2134415674 y ha sido emviado a su correo electrónico </h5>	
+	<h5> Su código de Reserva es 2134415674 y ha sido enviado a su correo electrónico </h5>	
 	<br>
 	 
 

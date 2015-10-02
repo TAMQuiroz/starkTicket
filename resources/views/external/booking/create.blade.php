@@ -2,6 +2,16 @@
 
 @section('style')
 	{!!Html::style('css/seats.css')!!}
+    <style type="text/css">
+        .btn-info{
+            background-color: #83D3C9;
+            border-color: #83D3C9;
+        }
+        .btn-info:hover{
+            background-color: #329DB7;
+            border-color: #329DB7;
+        }
+    </style>
 @stop
 
 @section('title')
