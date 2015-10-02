@@ -39,6 +39,16 @@ class CategoryController extends Controller
     }
 
     /**
+     * Display a listing of the resource. (External)
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexSubAdmin()
+    {
+        return view('internal.admin.subcategories');
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

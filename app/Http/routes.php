@@ -95,6 +95,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/category', 'CategoryController@index');
     Route::get('admin/category/new', 'CategoryController@create');
     Route::get('admin/category/{id}/edit', 'CategoryController@edit');
+    Route::get('admin/category/{id}/subcategory', 'CategoryController@indexSubAdmin');
     
     Route::get('admin/ticket_return', 'TicketController@indexReturn');
     Route::get('admin/ticket_return/new', 'TicketController@createReturn');
