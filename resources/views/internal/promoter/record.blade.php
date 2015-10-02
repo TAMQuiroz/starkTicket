@@ -28,10 +28,9 @@
           <th>Estado</th>
           <th>Entradas Vendidas</th>
           <th>Monto Acumulado</th>
-          <th>Ver</td>
-          <th>Editar</td>
-          <th>Cancelar</td>
-
+          <th>Ver</th>
+          <th>Editar</th>
+          <th>Cancelar</th>
         </tr>
 
         <tr>

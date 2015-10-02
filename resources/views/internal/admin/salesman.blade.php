@@ -52,8 +52,8 @@
               Código:  <input type="text" class="form-control" name="firstname" value="">  
               Nombre/Apellidos: <input type="text" class="form-control" name="lastname" value="">  
             </div>
-                
-            <a href="#" class="btn btn-primary" style="background-color:#83D3C9; border-color:#83D3C9; color:white;position:relative;left:40px;top:15px">Buscar</a>
+             <br>   
+            <a href="#" class="btn btn-info" >Buscar</a>
             <br><br><br> 
         </fieldset>
 
@@ -95,7 +95,7 @@
                             <h4>Email</h4>
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
                           </div>
                         </div>
                       </div>
@@ -133,7 +133,7 @@
                             <h4>Email</h4>
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
                           </div>
                         </div>
                       </div>
@@ -171,7 +171,7 @@
                             <h4>Email</h4>
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
                           </div>
                         </div>
                       </div>
@@ -211,7 +211,7 @@
                             <h4>Email</h4>
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
                           </div>
                         </div>
                       </div>
