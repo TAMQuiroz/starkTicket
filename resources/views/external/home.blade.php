@@ -20,7 +20,7 @@
 @stop
 
 @section('title')
-	Welcome...fsociery
+	Welcome...
 @stop
 
 @section('content')
