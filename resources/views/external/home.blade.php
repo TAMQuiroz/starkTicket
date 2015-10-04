@@ -20,7 +20,7 @@
 @stop
 
 @section('title')
-	Welcome...holiwi
+	Welcome...
 @stop
 
 @section('content')
