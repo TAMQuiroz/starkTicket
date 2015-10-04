@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -15,7 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('internal.admin.categories');
+        $categories = Category::all();
+        return view('internal.admin.categories', ['categories' => $categories]);
     }
 
     /**
@@ -64,9 +68,31 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
+        $data = [
+            'name'          =>$request->input('name'),
+            'description'   =>$request->input('description'),
+            'image'         =>$request->input('image_file'),
+        ];
+        $category = new Category();
+        foreach ($data as $key => $value) {
+            $category->$key = $value;
+        }
+        $father_id = $request->input('father_id', '');
+        if($father_id == ''){
+            $category->type = 1;
+            $category->father_id = null;
+            $category->save();
+        } else {
+            $category->type = 2;
+            $parent = Category::find($father_id);
+            $category->parentCategory()->associate($parent);
+            $category->save();
+            $parent->subcategories()->associate($category);
+            $parent->save();
+        }
+        return redirect()->route('internal.admin.categories');
     }
 
     /**
@@ -120,9 +146,20 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
-        //
+        $data = [
+            'name'          =>$request->input('name',''),
+            'description'   =>$request->input('description',''),
+            'image'         =>$request->input('image_file','')
+        ];
+        $category = Category::find($id);
+        foreach ($data as $key => $value) {
+            if($value!='')
+                $category->$key = $value;
+        }
+        $category->save();
+        return redirect()->route('internal.admin.categories');
     }
 
     /**
@@ -133,6 +170,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+        $category->delete();
+        return redirect()->route('internal.admin.categories');
     }
 }

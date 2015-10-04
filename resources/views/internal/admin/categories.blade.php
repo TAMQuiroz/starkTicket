@@ -19,6 +19,17 @@
                 <th>Editar</th>
                 <th>Eliminar</th>
             </tr>
+            @foreach($categories as $category)
+            <tr>
+                <td>{{$category->name}}</td>
+                <td>{{$category->description}}</td>
+                <td>3</td>
+                <td class="button-center"><a class="btn btn-info" href="{{url('admin/category/1/subcategory')}}" title="Editar" ><i class="glyphicon glyphicon-copy"></a></td>
+                <td class="button-center"><a class="btn btn-info" href="{{url('admin/category/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
+                </td> 
+                <td class="button-center"><a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a> </td>
+            </tr>
+            @endforeach
             <tr>
                 <td>Categoria 1</td>
                 <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
