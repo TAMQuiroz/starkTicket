@@ -61,25 +61,11 @@ function myFunction () {
 
 
       </div>
-      <!--
-      <div class="col-md-2">
-        <div  >
-            
-
-
-
-            
-          </div>
-
-
-
-       </div>-->
-        
+     
       
 
   </div>
-  <h2></h2>
-  <h2>Ventas</h2>
+    <h2>Ventas</h2>
     <table class="table table-bordered table-striped">
       <tr>
         <th>Nombre Cliente</th>

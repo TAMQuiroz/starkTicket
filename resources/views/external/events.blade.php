@@ -28,7 +28,7 @@
 @section('content')
 <h5>Búsqueda</h5>
 <div class="input-group">
-    <input type="text" class="form-control" placeholder=" ">
+    {!! Form::text('search', '', array('class' => 'form-control')) !!}
     <span class="input-group-btn">
         <button class="btn btn-primary" type="button">Buscar</button>
     </span>

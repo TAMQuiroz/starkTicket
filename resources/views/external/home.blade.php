@@ -26,14 +26,14 @@
 @section('content')
 	<h5>Búsqueda</h5>
     <div class="input-group">
-        <input type="text" class="form-control" placeholder=" ">
+        {!! Form::text('search', '', array('class' => 'form-control')) !!}
         <span class="input-group-btn">
             <button class="btn btn-info" type="button">Buscar</button>
         </span>
     </div>
+    
     <br><br>
          <div class="row">
-
             <div class="col-md-7" style="left:300px">
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="0">
                     <!-- Indicators -->
@@ -43,7 +43,6 @@
                         <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                         <li data-target="#carousel-example-generic" data-slide-to="3"></li>
                     </ol>
-
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active">
@@ -73,13 +72,6 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
-                 
-        <br>  <br>
-       
-
-            </div>
-
         </div>
         <!-- /.row -->
 
@@ -98,8 +90,6 @@
                 </a>
             </div>
 
-       
-
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
                     <img class="img-responsive img-hover img-related" src="images/peppa.jpg" alt="">
@@ -115,9 +105,7 @@
             </div>
 
         </div>
-        <!-- /.row -->
-
-        <hr>
+        <br>
 
 @stop
 
