@@ -20,7 +20,7 @@
 @stop
 
 @section('title')
-	Welcome...lelelelelele
+	Welcome...
 @stop
 
 @section('content')
