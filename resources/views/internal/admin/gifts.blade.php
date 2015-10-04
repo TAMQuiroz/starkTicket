@@ -19,8 +19,9 @@
         <th>Editar</th>
         <th>Eliminar</th>
     </tr>
-    <tr>
+    
     @foreach($gifts as $gift)
+    <tr>
       <td>{{$gift->name}}</td>
       <td>{{$gift->description}}</td>
       <td>{!! Html::image('images/gift1.png', null, array('class'=>'gift_img')) !!}</td>
@@ -32,8 +33,9 @@
       <td>
         <a class="btn btn-info" href="{{url('admin/gifts/'.$gift->id.'/delete')}}"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
       </td>
-    @endforeach
     </tr>
+    @endforeach
+    
 </table>
 <nav>
     <ul class="pagination">
