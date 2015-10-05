@@ -16,8 +16,8 @@ class GiftController extends Controller
      */
     public function index()
     {
-        $gifts = Gift::all();
-
+        $gifts = Gift::paginate(2);
+        $gifts->setPath('gifts');
         return view('internal.admin.gifts', compact('gifts'));
     }
 
