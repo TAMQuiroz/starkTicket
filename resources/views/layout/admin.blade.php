@@ -62,6 +62,12 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Clientes <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{url('admin/client')}}">Listar</a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Puntos de Venta <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{url('admin/modules')}}">Listar</a></li>

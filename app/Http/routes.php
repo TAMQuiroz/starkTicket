@@ -114,6 +114,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/modules/new', 'ModuleController@create');
     Route::get('admin/modules/{id}/edit', 'ModuleController@edit');
     
+    Route::get('admin/client', 'AdminController@client');
+
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
     
