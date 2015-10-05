@@ -9,6 +9,11 @@ use App\Gift;
 
 class AdminController extends Controller
 {
+    public function client()
+    {
+        return view('internal.admin.client');
+    }
+
     public function salesman()
     {
         return view('internal.admin.salesman');
