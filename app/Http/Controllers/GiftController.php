@@ -77,7 +77,7 @@ class GiftController extends Controller
         $gift->points       =   $input['points'];
         $gift->stock        =   $input['stock'];      
         $gift->status       =   config('constants.available');
-        //Control de subida de imagen
+        //Control de subida de imagen por hacer
         $gift->image        =   'randomUrl';
 
         $gift->save();
