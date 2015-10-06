@@ -13,7 +13,6 @@
         <div class="row">
           <div class="col-sm-8">
              {!!Form::open(array('url' => 'admin/user/new','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
-
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
@@ -24,13 +23,27 @@
                 <label for="inputEmail3" class="col-sm-2 control-label">Apellidos</label>
                 <div class="col-sm-10">
                   {!!Form::input('text','lastname', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
-
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">DNI</label>
+                <label for="inputEmail3" class="col-sm-2 control-label">Contraseña</label>
                 <div class="col-sm-10">
-                  {!!Form::input('text','dni', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!} 
+                    {!!Form::input('password','password', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Tipo de documento</label>
+                <div class="col-sm-10">
+                  {!! Form::select('di_type', [
+                     '1' => 'DNI',
+                     '2' => 'Carnet de Extranjeria'], null, ['class'=>'form-control']
+                  ) !!}
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Documento de Identidad</label>
+                <div class="col-sm-10">
+                  {!!Form::input('text','di', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!} 
                 </div>
               </div>
               <div class="form-group">

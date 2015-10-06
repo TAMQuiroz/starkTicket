@@ -26,29 +26,39 @@
       <tr>
           <td>{{$user->lastname}}</td>
           <td>{{$user->name}}</td>
-          <td>{{$user->dni}}</td>
+          <td>{{$user->di}}</td>
           <td>{{$user->email}}</td>
           <td>{{$user->phone}}</td>
 
           <td>        
-            <a class="btn btn-info" href="" data-toggle="modal" data-target="#edit" title="Detalles"><i class="glyphicon glyphicon-plus"></i></a>
+            <a class="btn btn-info" href="" data-toggle="modal" data-target="#edit{{$user->id}}" title="Detalles"><i class="glyphicon glyphicon-plus"></i></a>
            </t d> 
            <td>
             <a class="btn btn-info" href="{{url('admin/admin/'.$user->id.'/edit')}}" title="Editatr"><i class="glyphicon glyphicon-pencil"></i></a>
-            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal fade" id="edit{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Detalle del promotor</h4>
+                    <h4 class="modal-title" id="myModalLabel">Detalle del Administrador</h4>
                   </div>
                   <div class="modal-body">
                     <h4>Nombre</h4>
-                    <h4>Sexo</h4>  
-                    <h4>Documento Identidad</h4>
-                    <h4>Número de Documento</h4>
-                    <h4>Teléfono</h4>
+                    {{$user->name.' '.$user->lastname}}
                     <h4>Direccion</h4>
+                    {{$user->address}}
+                    <h4>Documento Identidad</h4>
+                    @if($user->di_type == 1)
+                    DNI
+                    @else
+                    Carnet de Extranjeria
+                    @endif
+                    <h4>Número de Documento</h4>
+                    {{$user->di}}
+                    <h4>Teléfono</h4>
+                    {{$user->phone}}
+                    <h4>Cumpleaños</h4>
+                    {{$user->birthday}}
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
@@ -63,27 +73,8 @@
       </tr>
       @endforeach    
   </table>
-  <nav>
-      <ul class="pagination">
-        <li>
-          <a href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li>
-          <a href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
 
-    {!!$users->render()!!}
+  {!!$users->render()!!}
 
 @stop
 
