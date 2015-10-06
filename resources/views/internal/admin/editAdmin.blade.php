@@ -65,7 +65,7 @@
                   <select class="form-control">
                     <option>Vendedor</option>
                     <option>Promotor de Ventas</option>
-                    <option>Administrador</option>
+                    <option selected>Administrador</option>
                   </select>
                 </div>
               </div>
