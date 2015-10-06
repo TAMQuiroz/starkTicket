@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Gift;
 
 class GiftController extends Controller
-{
+{   
     /**
      * Display a listing of the resource (internal).
      *
@@ -77,7 +77,7 @@ class GiftController extends Controller
         $gift->points       =   $input['points'];
         $gift->stock        =   $input['stock'];      
         $gift->status       =   config('constants.available');
-        //Control de subida de imagen
+        //Control de subida de imagen por hacer
         $gift->image        =   'randomUrl';
 
         $gift->save();
@@ -144,7 +144,6 @@ class GiftController extends Controller
     public function destroy($id)
     {
         $gift = Gift::find($id);
-        
         $gift->delete();
         return redirect('admin/gifts');
     }

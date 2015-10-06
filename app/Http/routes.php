@@ -117,6 +117,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/modules/new', 'ModuleController@create');
     Route::get('admin/modules/{id}/edit', 'ModuleController@edit');
     
+    Route::get('admin/client', 'AdminController@client');
+
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
     
@@ -124,7 +126,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
     
     Route::get('admin/admin', 'AdminController@admin');
-    Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
-    
     Route::get('admin/user/new', 'AdminController@newUser');
+    Route::post('admin/user/new', 'AdminController@store');
+    Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
+    Route::post('admin/admin/{id}/edit', 'AdminController@updateAdmin');
+    Route::get('admin/admin/{id}/delete', 'AdminController@destroy');
+
 });
