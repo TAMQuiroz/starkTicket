@@ -25,7 +25,7 @@
     <tr>
       <td>{{$gift->name}}</td>
       <td>{{$gift->description}}</td>
-      <td>{!! Html::image('images/gift1.png', null, array('class'=>'gift_img')) !!}</td>
+      <td>{!! Html::image($gift->image, null, array('class'=>'gift_img')) !!}</td>
       <td>{{$gift->stock}}</td>
       <td>{{$gift->points}}</td>
       <td>

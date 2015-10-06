@@ -28,7 +28,7 @@ class UpdateGiftRequest extends Request
             'description'   =>  'required',
             'points'        =>  'required',
             'stock'         =>  'required',
-            'image'         =>  'required|image'
+            'image'         =>  'image'
         ];
     }
 
