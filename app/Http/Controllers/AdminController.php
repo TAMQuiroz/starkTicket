@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Gift;
+use App\Http\Requests\User\StoreAdminRequest;
+use App\Http\Requests\User\UpdateAdminRequest;
 use App\user;
 use Carbon\Carbon;
 
@@ -50,7 +52,7 @@ class AdminController extends Controller
         return view('internal.admin.editAdmin', compact('user'));
     }
 
-    public function updateAdmin(Request $request, $id)
+    public function updateAdmin(UpdateAdminRequest $request, $id) // falta agregarle al actualizar
     {
         $input = $request->all();
 
@@ -77,7 +79,7 @@ class AdminController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreAdminRequest $request)
     {
         $input = $request->all();
 

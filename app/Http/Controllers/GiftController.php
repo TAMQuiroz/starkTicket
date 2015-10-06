@@ -83,7 +83,7 @@ class GiftController extends Controller
         $gift->save();
         
         return redirect('admin/gifts');
-    }
+}
 
     /**
      * Display the specified resource.
