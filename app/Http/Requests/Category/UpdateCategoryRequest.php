@@ -25,6 +25,6 @@ class UpdateCategoryRequest extends FormRequest
             'errors' => $errors
         ];
 
-        return response()->json($data, 400);
+        return redirect()->back()->withInput()->withErrors($errors);
     }
 }
