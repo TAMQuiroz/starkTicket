@@ -123,10 +123,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
     
     Route::get('admin/admin', 'AdminController@admin');
-    Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
-//  Route::get('admin/admin/{id}/edit', 'AdminController@updateAdmin'); NotYet
     Route::get('admin/user/new', 'AdminController@newUser');
     Route::post('admin/user/new', 'AdminController@store');
+    Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
+    Route::post('admin/admin/{id}/edit', 'AdminController@updateAdmin');
     Route::get('admin/admin/{id}/delete', 'AdminController@destroy');
 
 });

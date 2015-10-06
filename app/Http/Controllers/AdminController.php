@@ -38,17 +38,37 @@ class AdminController extends Controller
 
     public function admin()
     {
-        $users = User::paginate(50);
-        $users->setPath('users');
+        $users = User::where('role_id',4)->paginate(2);
+        $users->setPath('admin');
         return view('internal.admin.admin', compact('users'));
     }
 
     public function editAdmin($id)
     {
-
-         $user = User::find($id);
+        $user = User::find($id);
 
         return view('internal.admin.editAdmin', compact('user'));
+    }
+
+    public function updateAdmin(Request $request, $id)
+    {
+        $input = $request->all();
+
+        $user = User::find($id);
+        $user->name         =   $input['name'];
+        $user->lastName     =   $input['lastname'];
+        $user->password     =   bcrypt($input['password']);
+        $user->di_type      =   $input['di_type'];
+        $user->di           =   $input['di'];
+        $user->address      =   $input['address'];      
+        $user->phone        =   $input['phone'];      
+        $user->email        =   $input['email'];      
+        $user->birthday     =   new Carbon($input['birthday']);      
+        $user->role_id      =   $input['role_id'];      
+        //$user->image      =   $input['image']; falta no hay
+        $user->save();
+
+        return redirect('admin/admin');
     }
 
     public function newUser()
@@ -63,17 +83,19 @@ class AdminController extends Controller
 
         $user               =   new User ;
         $user->name         =   $input['name'];
-        $user->lastName  =   $input['lastname'];
-        $user->dni      =   $input['dni'];
-        $user->address        =   $input['address'];      
+        $user->lastName     =   $input['lastname'];
+        $user->password     =   bcrypt($input['password']);
+        $user->di_type      =   $input['di_type'];
+        $user->di           =   $input['di'];
+        $user->address      =   $input['address'];      
         $user->phone        =   $input['phone'];      
         $user->email        =   $input['email'];      
-        $user->birthday    = new Carbon(  $input['birthday'] );      
-        $user->role_id        =   $input['role_id'];      
-        //$user->image        =   $input['image']; falta no hay
+        $user->birthday     =   new Carbon($input['birthday']);      
+        $user->role_id      =   $input['role_id'];      
+        //$user->image      =   $input['image']; falta no hay
         $user->save();
         
-        return redirect('admin/promoter');
+        return redirect('admin');
     }
 
         public function destroy($id)
