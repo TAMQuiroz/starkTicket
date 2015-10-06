@@ -126,4 +126,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
     
     Route::get('admin/user/new', 'AdminController@newUser');
+    Route::post('admin/user/new', 'AdminController@store');
+
 });

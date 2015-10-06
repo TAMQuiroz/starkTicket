@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Gift;
+use App\user;
 
 class AdminController extends Controller
 {
@@ -47,6 +48,25 @@ class AdminController extends Controller
     public function newUser()
     {
         return view('internal.admin.newUser');
+    }
+
+
+    public function store(Request $request)
+    {
+        $input = $request->all();
+
+        $user               =   new User ;
+        $user->name         =   $input['name'];
+        $user->lastName  =   $input['lastname'];
+        $user->dni      =   $input['dni'];
+        $user->address        =   $input['address'];      
+        $user->phone        =   $input['phone'];      
+        $user->email        =   $input['email'];      
+        $user->role_id        =   $input['role_id'];      
+        //$user->image        =   $input['image']; falta no hay
+        $user->save();
+        
+        return redirect('admin/promoter');
     }
 
 }
