@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Gift\StoreGiftRequest;
+use App\Http\Requests\Gift\UpdateGiftRequest;
 use App\Gift;
+use App\Services\FileService;
 
 class GiftController extends Controller
 {   
+
+    public function __construct(){
+        $this->file_service = new FileService();
+    }
     /**
      * Display a listing of the resource (internal).
      *
@@ -67,7 +74,7 @@ class GiftController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGiftRequest $request)
     {
         $input = $request->all();
 
@@ -75,10 +82,13 @@ class GiftController extends Controller
         $gift->name         =   $input['name'];
         $gift->description  =   $input['description'];
         $gift->points       =   $input['points'];
-        $gift->stock        =   $input['stock'];      
-        $gift->status       =   config('constants.available');
+        $gift->stock        =   $input['stock'];
+        if($gift->stock > 0)    
+            $gift->status   =   config('constants.available');
+        elseif($gift->stock == 0)
+            $gift->status   =   config('constants.soldOut');   
         //Control de subida de imagen por hacer
-        $gift->image        =   'randomUrl';
+        $gift->image        =   $this->file_service->upload($request->file('image'),'gift');
 
         $gift->save();
         
@@ -116,7 +126,7 @@ class GiftController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateGiftRequest $request, $id)
     {
         $input = $request->all();
 
@@ -125,10 +135,14 @@ class GiftController extends Controller
         $gift->name         =   $input['name'];
         $gift->description  =   $input['description'];
         $gift->points       =   $input['points'];
-        $gift->stock        =   $input['stock'];      
-        $gift->status       =   config('constants.available');
+        $gift->stock        =   $input['stock'];
+        if($gift->stock > 0)    
+            $gift->status   =   config('constants.available');
+        elseif($gift->stock == 0)
+            $gift->status   =   config('constants.soldOut');
         //Control de subida de imagen
-        $gift->image        =   'randomUrl';
+        if($request->file('image')!=null)
+            $gift->image        =   $this->file_service->upload($request->file('image'),'gift');
 
         $gift->save();        
 
