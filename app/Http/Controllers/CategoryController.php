@@ -23,7 +23,7 @@ class CategoryController extends Controller
     }
     public function index()
     {
-        $categories = Category::where('type',1)->get();
+        $categories = Category::where('type',1)->paginate(5);
         $subcat_list = [];
         foreach ($categories as $category) {
             $subcat_list[$category->name] = $this->getSubcategories($category->id);
@@ -59,7 +59,7 @@ class CategoryController extends Controller
      */
     public function indexSubAdmin($parent_category)
     {
-        $categories = Category::where('father_id',$parent_category)->get();
+        $categories = Category::where('father_id',$parent_category)->paginate(5);
         return view('internal.admin.subcategories', ['categories' => $categories]);
     }
 
