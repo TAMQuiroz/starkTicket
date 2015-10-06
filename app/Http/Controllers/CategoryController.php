@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Services\FileService;
 
 class CategoryController extends Controller
 {
@@ -16,11 +17,20 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $this->file_service = new FileService();
+    }
     public function index()
     {
-        $categories = Category::all();
-        return view('internal.admin.categories', ['categories' => $categories]);
+        $categories = Category::where('type',1)->get();
+        $subcat_list = [];
+        foreach ($categories as $category) {
+            $subcat_list[$category->name] = $this->getSubcategories($category->id);
+        }
+        return view('internal.admin.categories', ['categories' => $categories, 'subcategories' => $subcat_list]);
     }
+
 
     /**
      * Display a listing of the resource. (External)
@@ -47,9 +57,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexSubAdmin()
+    public function indexSubAdmin($parent_category)
     {
-        return view('internal.admin.subcategories');
+        $categories = Category::where('father_id',$parent_category)->get();
+        return view('internal.admin.subcategories', ['categories' => $categories]);
     }
 
     /**
@@ -59,7 +70,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('internal.admin.newCategory');
+        $categories_list = Category::where('type', '1')->lists('name','id');
+        return view('internal.admin.newCategory',['categories_list' => $categories_list]);
     }
 
     /**
@@ -73,8 +85,8 @@ class CategoryController extends Controller
         $data = [
             'name'          =>$request->input('name'),
             'description'   =>$request->input('description'),
-            'image'         =>$request->input('image_file'),
-        ];
+            'image'         =>$this->file_service->upload($request->file('image'),'category')
+            ];
         $category = new Category();
         foreach ($data as $key => $value) {
             $category->$key = $value;
@@ -83,16 +95,13 @@ class CategoryController extends Controller
         if($father_id == ''){
             $category->type = 1;
             $category->father_id = null;
-            $category->save();
         } else {
             $category->type = 2;
             $parent = Category::find($father_id);
             $category->parentCategory()->associate($parent);
-            $category->save();
-            $parent->subcategories()->associate($category);
-            $parent->save();
         }
-        return redirect()->route('internal.admin.categories');
+        $category->save();
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -136,7 +145,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        return view('internal.admin.editCategory');
+        $category =  Category::find($id);
+        $categories_list = Category::where('type', '1')->lists('name','id');
+        return view('internal.admin.editCategory', ['category' => $category, 'categories_list' => $categories_list]);
     }
 
     /**
@@ -148,18 +159,29 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, $id)
     {
+
         $data = [
             'name'          =>$request->input('name',''),
             'description'   =>$request->input('description',''),
-            'image'         =>$request->input('image_file','')
         ];
         $category = Category::find($id);
         foreach ($data as $key => $value) {
             if($value!='')
                 $category->$key = $value;
         }
+        if($request->file('image')!=null)
+            $category->image = $this->file_service->upload($request->file('image'),'category');
+        $father_id = $request->input('father_id', '');
+        if($father_id == ''){
+            $category->type = 1;
+            $category->father_id = null;
+        } else {
+            $category->type = 2;
+            $parent = Category::find($father_id);
+            $category->parentCategory()->associate($parent);
+        }
         $category->save();
-        return redirect()->route('internal.admin.categories');
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -171,7 +193,17 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
+        $subcategories = $this->getSubcategories($id)->toArray(); 
+        if(!empty($subcategories)){
+            $errors = [
+                'The category has subcategories'
+            ];
+            return redirect()->back()->withErrors($errors);
+        }
         $category->delete();
-        return redirect()->route('internal.admin.categories');
+        return redirect()->route('admin.categories.index');
+    }
+    public function getSubcategories($category_id){
+        return Category::where('father_id', $category_id)->get();
     }
 }

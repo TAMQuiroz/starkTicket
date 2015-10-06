@@ -18,19 +18,40 @@
                 <th>Editar</th>
                 <th>Eliminar</th>
             </tr>
+             @foreach($categories as $category)
             <tr>
-                <td>Subcategoria 1</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                <td>{{$category->name}}</td>
+                <td>{{$category->description}}</td>
                 <td>3</td>
-                <td><a class="btn btn-info" href="{{url('admin/category/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
+                <td class="button-center"><a class="btn btn-info" href={{route('categories.edit', $category->id)}} title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
                 </td> 
-                <td><a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a> </td>
+                <td class="button-center"><a id="delete {{$category->id}}"class="btn btn-info" data-toggle="modal" data-target="#deleteModal{{$category->id}}" href=""><i class="glyphicon glyphicon-remove"></i></a></td>
             </tr>
+
+            <!-- MODAL -->
+              <div class="modal fade"  id="deleteModal{{$category->id}}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">¿Estas seguro que desea Eliminar la categoría?</h4>
+                    </div>
+                    <div class="modal-body">
+                      <h5 class="modal-title">Los cambios serán permanentes</h5>
+                      
+                    </div>
+                    <div class="modal-footer">
+                      <form method="post" action={{route('categories.delete', $category->id)}}>
+                        {!! csrf_field() !!}
+                        <button type="button" class="cancel-button-delete-modal" data-dismiss="modal">No</button>
+                        <button type="submit" class="confirm-button-delete-modal">Sí</button>
+                      </form>
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
+            </div>
+            @endforeach
         </table>
         <nav>
             <ul class="pagination">
