@@ -49,7 +49,12 @@
                 <label for="inputEmail3" class="col-sm-2 control-label">E-mail(s)</label>
                 <div class="col-sm-10">
                     {!!Form::input('text','email', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
-
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Nacimiento</label>
+                <div class="col-sm-10">
+                    {!!Form::input('date','birthday', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
                 </div>
               </div>
               <div class="form-group">
@@ -61,9 +66,7 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Imagen</label>
                 <div class="col-sm-10">
-                
                     {!!Form::input('file','image', null ,['class'=>'form-control','id'=>'inputEmai3'])!!}
-
                 </div>
               </div>
               <div class="form-group">
