@@ -27,14 +27,16 @@ class UpdateAdminRequest extends Request
         //
               'name' => 'required',
               'lastname' => 'required',
-              'password' => 'required',
+              //'password' => 'required',
               'di_type' =>'required',
               'di' => 'required  ',
-              'address' => 'required', // there is no exception to control duplicate email lol
+              'address' => 'required', 
               'phone' => 'required',
-              'email' => 'required', 
+              'email' => 'required|unique:users,email,'.$this->input('id'), 
               'birthday' => 'required',
-              'role_id' => 'required'
+              'role_id' => 'required',
+              'image' => 'image'
+
             
         ];
     }

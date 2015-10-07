@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use App\Http\Requests\Request;
+use App\Services\FileService;
 
 class StoreAdminRequest extends Request
 {
@@ -34,7 +35,8 @@ class StoreAdminRequest extends Request
               'phone' => 'required',
               'email' => 'required|unique:users',
               'birthday' => 'required',
-              'role_id' => 'required'
+              'role_id' => 'required',
+              'image' => 'image'
             
         ];
     }
