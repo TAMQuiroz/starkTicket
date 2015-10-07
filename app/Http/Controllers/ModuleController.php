@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Module;
 
 class ModuleController extends Controller
 {
@@ -14,8 +15,11 @@ class ModuleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
-        return view('internal.admin.module');
+        
+        $modules = Module::all();
+        return view('internal.admin.module', ['modules' => $modules]);
     }
 
     /**
@@ -48,6 +52,21 @@ class ModuleController extends Controller
     public function store(Request $request)
     {
         //
+        $input = $request->all();
+
+        $module               =   new Module;
+        $module->name         =   $input['name'];
+        $module->address      =   $input['address'];
+        $module->district     =   $input['district'];
+        $module->province     =   $input['province']; 
+        $module->state        =   $input['state'];       
+        $module->status       =   config('constants.available');
+        //Control de subida de imagen
+        $module->image        =   'randomUrl';
+
+        $module->save();
+        
+        return redirect('admin/modules');
     }
 
     /**
@@ -69,7 +88,8 @@ class ModuleController extends Controller
      */
     public function edit($id)
     {
-        return view('internal.admin.editModule');
+        $module = Module::find($id);
+        return view('internal.admin.editModule',compact('module'));
     }
 
     /**
@@ -82,6 +102,22 @@ class ModuleController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $input = $request->all();
+
+        $module = Module::find($id);
+
+        $module->name         =   $input['name'];
+        $module->address      =   $input['address'];
+        $module->district     =   $input['district'];
+        $module->province     =   $input['province'];      
+        $module->state        =   $input['state'];      
+        $module->status       =   config('constants.available');
+        //Control de subida de imagen
+        $module->image        =   'randomUrl';
+
+        $module->save();        
+
+        return redirect('admin/modules');
     }
 
     /**
@@ -93,5 +129,9 @@ class ModuleController extends Controller
     public function destroy($id)
     {
         //
+        $module = Module::find($id);
+        
+        $module->delete();
+        return redirect('admin/modules');
     }
 }
