@@ -16,6 +16,7 @@
         <th>Imagen</th>
         <th>Stock</th>
         <th>Puntos</th>
+        <th>Estado</th>
         <th>Editar</th>
         <th>Eliminar</th>
     </tr>
@@ -24,9 +25,16 @@
     <tr>
       <td>{{$gift->name}}</td>
       <td>{{$gift->description}}</td>
-      <td>{!! Html::image('images/gift1.png', null, array('class'=>'gift_img')) !!}</td>
+      <td>{!! Html::image($gift->image, null, array('class'=>'gift_img')) !!}</td>
       <td>{{$gift->stock}}</td>
       <td>{{$gift->points}}</td>
+      <td>
+        @if($gift->status == config('constants.available'))
+          Disponible
+        @else
+          Agotado
+        @endif
+      </td>
       <td>
         <a class="btn btn-info" href="{{url('admin/gifts/'.$gift->id.'/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
       </td> 
