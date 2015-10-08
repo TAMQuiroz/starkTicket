@@ -172,10 +172,7 @@ class CategoryController extends Controller
         if($request->file('image')!=null)
             $category->image = $this->file_service->upload($request->file('image'),'category');
         $father_id = $request->input('father_id', '');
-        if($father_id == ''){
-            $category->type = 1;
-            $category->father_id = null;
-        } else {
+        if($father_id != ''){
             $category->type = 2;
             $parent = Category::find($father_id);
             $category->parentCategory()->associate($parent);
