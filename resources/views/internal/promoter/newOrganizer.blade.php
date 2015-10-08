@@ -14,63 +14,63 @@
           <div class="col-sm-8">
             <form class="form-horizontal" method="post">
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
+                <label class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::text('organizerName','', array('class' => 'form-control')) !!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Apellidos</label>
+                <label class="col-sm-2 control-label">Apellidos</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::text('organizerLastName','', array('class' => 'form-control')) !!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Razón social</label>
+                <label class="col-sm-2 control-label">Razón social</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::text('businessName','', array('class' => 'form-control')) !!}
                 </div>
               </div>                
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Ruc</label>
+                <label class="col-sm-2 control-label">Ruc</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::text('ruc','', array('class' => 'form-control')) !!}
                 </div>
               </div>      
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Número de cuenta</label>
+                <label class="col-sm-2 control-label">Número de cuenta</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::text('countNumber','', array('class' => 'form-control')) !!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Teléfono</label>
+                <label class="col-sm-2 control-label">Teléfono</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::text('telephone','', array('class' => 'form-control')) !!}
                 </div>
               </div>                                                          
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">DNI</label>
+                <label class="col-sm-2 control-label">DNI</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::text('dni','', array('class' => 'form-control')) !!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">E-mail</label>
+                <label class="col-sm-2 control-label">E-mail</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::text('email','', array('class' => 'form-control')) !!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Dirección</label>
+                <label class="col-sm-2 control-label">Dirección</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::text('address','', array('class' => 'form-control')) !!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Imagen</label>
+                <label class="col-sm-2 control-label">Imagen</label>
                 <div class="col-sm-10">
-                  <input type="file" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::file('image', ['class' => 'form-control']) !!}
                 </div>
               </div>
               <div class="form-group">

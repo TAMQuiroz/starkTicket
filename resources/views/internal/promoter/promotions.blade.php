@@ -16,7 +16,7 @@
 				<div class="container">  <!-- Comienza primer despliegue-->
 					
 			    	<div class="input-group" style="width:300px">
-			      		<input type="text" class="form-control" placeholder="Buscar promoción..." >
+			      		{!! Form::text('search','', array('class' => 'form-control')) !!}
 			      		<span class="input-group-btn">
 					    	<button class="btn btn-info" type="button">Buscar</button>
 					    </span>

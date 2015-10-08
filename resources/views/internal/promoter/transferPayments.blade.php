@@ -15,22 +15,23 @@
           <div class="col-sm-8">
             <form class="form-horizontal" method="post">
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Nombre evento</label>
+                    <label  class="col-sm-2 control-label">Nombre evento</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                      {!! Form::text('eventName','', array('class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Categoría</label>
+                    <label class="col-sm-2 control-label">Categoría</label>
                     <div class="col-sm-10">
-                    <select class="form-control" id="sel1">
-                        <option>Concierto</option>
-                        <option>Teatro</option>
-                        <option>Ferias y Circo</option>
-                        <option>Otros</option>
-                    </select>
+                        {!! Form::select('category', ['Concierto','Teatro','Ferias y Circo','Otros'],null,['class' => 'form-control']) !!}
                     </div>      
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Organizador</label>
+                    <div class="col-sm-10">
+                        {!! Form::select('organizer', ['Pepitos Producciones','Rayo en la botella','Hermanos yaipen'],null,['class' => 'form-control']) !!}
+                    </div>      
+                </div>                
                 <div class="form-group">
                     <div class="col-sm-offset-11">
                       <button type="button" class="btn btn-info">Buscar</button>
@@ -67,51 +68,51 @@
                 </table>                
                 <legend>Datos organizador:</legend>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
+                    <label  class="col-sm-2 control-label">Nombre</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                      {!! Form::text('organizerName','Limapalooza producciones', array('class' => 'form-control','disabled')) !!}
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Ruc</label>
+                    <label  class="col-sm-2 control-label">Ruc</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                      {!! Form::text('ruc','2566444998', array('class' => 'form-control','disabled')) !!}
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Número de cuenta</label>
+                    <label  class="col-sm-2 control-label">Número de cuenta</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                      {!! Form::text('countNumber','223333398', array('class' => 'form-control','disabled')) !!}
                     </div>
                 </div>      
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Fecha entrega</label>
+                    <label  class="col-sm-2 control-label">Fecha entrega</label>
                     <div class="col-sm-10">
-                        <input type="date" class="form-control">
+                        {!! Form::date('dateSend','', array('class' => 'form-control')) !!}
                     </div>
                 </div> 
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Monto de deuda</label>
+                    <label  class="col-sm-2 control-label">Monto de deuda</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    {!! Form::text('totalMont','100000', array('class' => 'form-control','disabled')) !!}
                     </div>
                 </div>   
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Monto a pagar</label>
+                    <label class="col-sm-2 control-label">Monto a pagar</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                      {!! Form::text('payMont','100000', array('class' => 'form-control')) !!}
                     </div>
                 </div>       
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Saldo</label>
+                    <label  class="col-sm-2 control-label">Saldo</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                      {!! Form::text('saldo','50000', array('class' => 'form-control','disabled')) !!}
                     </div>
                 </div>                           
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Evento</label>
+                    <label  class="col-sm-2 control-label">Evento</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                      {!! Form::text('eventNameSearch','Vivo por el rock 7', array('class' => 'form-control','disabled')) !!}
                     </div>
                 </div>  
               <div class="form-group">
