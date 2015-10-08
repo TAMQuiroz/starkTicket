@@ -39,14 +39,5 @@ class UpdateAdminRequest extends Request
 
             
         ];
-    }
-
-    public function response(array $errors){
-        
-        $data = [
-            'errors' => $errors
-        ];
-
-        return response()->json($data, 400);
-    }   
+    } 
 }

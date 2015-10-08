@@ -37,7 +37,8 @@ class GiftController extends Controller
      */
     public function indexExternal()
     {
-        return view('external.gifts');
+        $gifts = Gift::all();
+        return view('external.gifts', compact('gifts'));
     }
 
     /**
@@ -57,7 +58,8 @@ class GiftController extends Controller
      */
     public function createExchangeAdmin()
     {
-        return view('internal.admin.exchangeGift');
+        $gifts = Gift::all();
+        return view('internal.admin.exchangeGift', compact('gifts'));
     }
 
     /**

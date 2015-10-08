@@ -27,13 +27,13 @@
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Numero de puntos</label>
         <div class="col-sm-10">
-          {!!Form::input('number','points', null ,['class'=>'form-control','id'=>'stock','required'])!!}
+          {!!Form::input('number','points', null ,['class'=>'form-control','id'=>'points','required'])!!}
         </div>
       </div>
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Imagen</label>
         <div class="col-sm-10">
-          {!!Form::input('file','image', null ,['class'=>'form-control','id'=>'inputEmail3'])!!}
+          {!!Form::input('file','image', null ,['class'=>'form-control','id'=>'inputEmail3','required'])!!}
         </div>
       </div>
       <div class="form-group">
@@ -45,7 +45,7 @@
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
           <button type="submit" class="btn btn-info">Guardar</button>
-          <button type="reset" class="btn btn-info">Cancelar</button>
+          <a href="{{action('GiftController@index')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
         </div>
       </div>
     {!!Form::close()!!}

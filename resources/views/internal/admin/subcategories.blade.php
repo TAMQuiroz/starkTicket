@@ -43,8 +43,8 @@
                     <div class="modal-footer">
                       <form method="post" action={{route('categories.delete', $category->id)}}>
                         {!! csrf_field() !!}
-                        <button type="button" class="cancel-button-delete-modal" data-dismiss="modal">No</button>
-                        <button type="submit" class="confirm-button-delete-modal">Sí</button>
+                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-info">Sí</button>
                       </form>
                     </div>
                   </div><!-- /.modal-content -->

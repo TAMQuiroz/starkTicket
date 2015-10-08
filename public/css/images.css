@@ -10,3 +10,17 @@
 .button-center{
 	text-align: center;
 }
+
+.carousel_img{
+	height: auto;
+	width: 100%;
+}
+
+.gift-highlight{
+	height: 200px;
+	width: 100%;
+}
+
+.gift-external{
+	height: 241px;
+}

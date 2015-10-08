@@ -33,7 +33,7 @@
             <tr>
                 <td>{{$category->name}}</td>
                 <td>{{$category->description}}</td>
-                <td>3</td>
+                <td>0</td>
                 <td class="button-center"><a class="btn btn-info" href={{route('subcategories.index', $category->id)}} title="Editar" >{{$subcategories[$category->name]->count()}}</a></td>
                 <td class="button-center"><a class="btn btn-info" href={{route('categories.edit', $category->id)}} title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
                 </td> 
@@ -55,8 +55,8 @@
                     <div class="modal-footer">
                       <form method="post" action={{route('categories.delete', $category->id)}}>
                         {!! csrf_field() !!}
-                        <button type="button" class="cancel-button-delete-modal" data-dismiss="modal">No</button>
-                        <button type="submit" class="confirm-button-delete-modal">Sí</button>
+                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-info">Sí</button>
                       </form>
                     </div>
                   </div><!-- /.modal-content -->

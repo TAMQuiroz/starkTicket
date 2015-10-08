@@ -16,7 +16,7 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                  <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="" value="{{$category->name}}">
+                  <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="" value="{{$category->name}}" required>
                 </div>
               </div>
               <div class="form-group">
@@ -28,7 +28,7 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Descripción</label>
                 <div class="col-sm-10">
-                  <textarea class="form-control" name="description" text="{!!old('description')!!}" rows="5">{{$category->description}}</textarea>
+                  <textarea class="form-control" name="description" text="{!!old('description')!!}" rows="5" required>{{$category->description}}</textarea>
                 </div>
               </div>
               <div class="form-group @if ($category->type == 1) hidden @endif">
@@ -46,7 +46,7 @@
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <button type="submit" class="btn btn-info">Guardar</button>
-                  <button type="button" class="btn btn-info"><a href="{{action('CategoryController@index')}}">Cancelar</a></button>
+                  <a href="{{action('CategoryController@index')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
                 </div>
               </div>
             </form>
