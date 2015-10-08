@@ -10,6 +10,8 @@ use App\Http\Requests\Gift\UpdateGiftRequest;
 use App\Gift;
 use App\Services\FileService;
 
+
+
 class GiftController extends Controller
 {   
 
@@ -93,7 +95,7 @@ class GiftController extends Controller
         $gift->save();
         
         return redirect('admin/gifts');
-    }
+}
 
     /**
      * Display the specified resource.

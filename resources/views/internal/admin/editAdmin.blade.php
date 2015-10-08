@@ -13,6 +13,7 @@
         <div class="row">
           <div class="col-sm-8">
              {!!Form::open(array('url' => 'admin/admin/'.$user->id.'/edit','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
+             {!!Form::hidden('id', $user->id)!!}
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
@@ -28,7 +29,7 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Contraseña</label>
                 <div class="col-sm-10">
-                    {!!Form::input('password','password', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
+                    {!!Form::input('password','password', null ,['class'=>'form-control','id'=>'inputEmai3'])!!}
                 </div>
               </div>
               <div class="form-group">
@@ -76,12 +77,14 @@
                 {!!Form::select('role_id', ['2' => 'Vendedor', '3' => 'Promotor de Ventas',  '4'=>'Administrador'], $user->role_id, ['class'=>'form-control','required'])!!}
                 </div>
               </div>
+              <!--
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Imagen</label>
                 <div class="col-sm-10">
                     {!!Form::input('file','image', null ,['class'=>'form-control','id'=>'inputEmai3'])!!}
                 </div>
               </div>
+              -->
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <!-- <a class="btn btn-info"  data-toggle="modal" data-target="#agregado">Guardar</a> -->
