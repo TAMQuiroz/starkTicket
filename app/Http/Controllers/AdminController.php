@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Gift;
+use App\Http\Requests\User\StoreAdminRequest;
+use App\Http\Requests\User\UpdateAdminRequest;
 use App\user;
 use Carbon\Carbon;
+use App\Services\FileService;
+
 
 class AdminController extends Controller
 {
@@ -50,14 +53,17 @@ class AdminController extends Controller
         return view('internal.admin.editAdmin', compact('user'));
     }
 
-    public function updateAdmin(Request $request, $id)
+    public function updateAdmin(UpdateAdminRequest $request, $id) 
     {
         $input = $request->all();
 
         $user = User::find($id);
         $user->name         =   $input['name'];
         $user->lastName     =   $input['lastname'];
-        $user->password     =   bcrypt($input['password']);
+
+        if ($input['password'] != null ) 
+            $user->password     =   bcrypt($input['password']);
+        
         $user->di_type      =   $input['di_type'];
         $user->di           =   $input['di'];
         $user->address      =   $input['address'];      
@@ -65,7 +71,9 @@ class AdminController extends Controller
         $user->email        =   $input['email'];      
         $user->birthday     =   new Carbon($input['birthday']);      
         $user->role_id      =   $input['role_id'];      
-        //$user->image      =   $input['image']; falta no hay
+       /* if($request->file('image')!=null)
+           $user->image        =   $this->file_service->upload($request->file('image'),'user'); */
+
         $user->save();
 
         return redirect('admin/admin');
@@ -77,7 +85,7 @@ class AdminController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreAdminRequest $request)
     {
         $input = $request->all();
 
@@ -92,7 +100,11 @@ class AdminController extends Controller
         $user->email        =   $input['email'];      
         $user->birthday     =   new Carbon($input['birthday']);      
         $user->role_id      =   $input['role_id'];      
-        //$user->image      =   $input['image']; falta no hay
+       /*
+        if($request->file('image')!=null)
+           $gift->image        =   $this->file_service->upload($request->file('image'),'gift'); */
+
+
         $user->save();
         
         return redirect('admin');
