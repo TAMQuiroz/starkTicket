@@ -12,12 +12,22 @@
 <div class="row">
     <div class="col-sm-3">
         <label>Seleccione al vendedor</label>
+        <!--
         <select class="form-control">
           <option value="volvo">Todos los vendedores</option>
           <option value="saab">Juan Perez</option>
           <option value="opel">Ana García</option>
           <option value="audi">Miguel Guanira</option>
         </select>
+        -->
+        {!!Form::select('select1', [
+           'op0' => 'Todos los vendedores',
+           'op1' => 'Juan Perez',
+           'op2' => 'Ana García',
+           'op3' => 'Miguel Guanira'],
+           null,
+           ['class' => 'form-control']
+        )!!}
     </div>
     <div class="col-sm-2">
         <label>Desde</label>
@@ -29,11 +39,20 @@
     </div>
     <div class="col-sm-2">
         <label>Tipo</label>
+        <!--
         <select class="form-control">
           <option value="opel">Tabla</option>
           <option value="volvo">Excel</option>
           <option value="saab">PDF</option>
         </select>
+        -->
+        {!!Form::select('select2', [
+           'op0' => 'Tabla',
+           'op1' => 'Excel',
+           'op2' => 'PDF'],
+           null,
+           ['class' => 'form-control']
+        )!!}
     </div>
     <div class="col-sm-3">
         <br>

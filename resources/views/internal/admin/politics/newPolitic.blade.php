@@ -15,13 +15,19 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
+                  <!--
                   <input type="text" class="form-control" id="inputEmail3" placeholder="" required>
+                  -->
+                  {!!Form::text('name', '' ,['class'=>'form-control','id'=>'inputEmail3','required'])!!}
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Descripcion</label>
                 <div class="col-sm-10">
+                  <!--
                   <textarea class="form-control" rows="10" id="description">
+                  -->
+                  {!!Form::textarea('description', '' ,['class'=>'form-control','required'])!!}
                   </textarea>
                 </div>
               </div>
