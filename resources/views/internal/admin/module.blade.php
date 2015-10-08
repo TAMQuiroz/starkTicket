@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
 @section('style')
-
+   {!!Html::style('css/images.css')!!}
 @stop
 
 @section('title')
@@ -16,7 +16,7 @@
             <th>Dirección</th>
             <th>Distrito</th>
             <th>Provincia</th>
-            <th>Ciudad</th>
+            <th>Departamento</th>
             <th>Imagen</th>
             <th>Detalle</th>
             <th>Editar</th>
@@ -95,10 +95,39 @@
           <td>{{$module->district}}</td>
           <td>{{$module->province}}</td>
           <td>{{$module->state}}</td>
-          <td>{!! Html::image('images/map.png', null, array('class'=>'module_img')) !!}</td>
+          <td>{!! Html::image($module->image, null, array('class'=>'gift_img')) !!}</td>
           <td>
-              <a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i></a> 
-            </td>
+            <a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#edit{{$module->id}}"><i class="glyphicon glyphicon-plus"></i></a> 
+            <div class="modal fade" id="edit{{$module->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Detalle punto de venta</h4>
+                  </div>
+                  <div class="modal-body">
+                    <h4>Nombre: </h4>
+                    {{$module->name}}
+                    <h4>Direccion: </h4>
+                    {{$module->address}}
+                    <h4>Ciudad: </h4>
+                    {{$module->district}}
+                    <h4>Provincia: </h4>
+                    {{$module->province}}
+                    <h4>Departamento: </h4>
+                    {{$module->state}}
+                    <br>
+                    <br>
+                    {!! Html::image($module->image, null, array('class'=>'module_img')) !!}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+
           <td>
             <a class="btn btn-info" href="{{url('admin/modules/'.$module->id.'/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
           </td> 
@@ -111,6 +140,8 @@
 
 
     </table>
+   {!!$modules->render()!!} 
+    <!--
     <nav>
         <ul class="pagination">
           <li>
@@ -130,29 +161,12 @@
           </li>
         </ul>
     </nav>
+    -->
 
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Detalle punto de venta</h4>
-          </div>
-          <div class="modal-body">
-            <h5>Nombre de punto de venta</h5>
-            <h5>Direccion de punto de venta</h5>
-            <h5>Ciudad de punto de venta</h5>
-            <h5>Estado de punto de venta</h5>
-            {!! Html::image('images/puntodeventa.jpg', null, array('class'=>'image center-block img-thumbnail')) !!}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
-          </div>
-        </div>
-      </div>
-    </div>
+
+
 @stop
 
 @section('javascript')

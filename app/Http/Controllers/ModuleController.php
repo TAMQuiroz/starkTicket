@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Module\StoreModuleRequest;
+use App\Http\Requests\Module\UpdateModuleRequest;
 use App\Module;
+use App\Services\FileService;
 
 class ModuleController extends Controller
 {
@@ -14,12 +17,16 @@ class ModuleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->file_service = new FileService();
+    }
     public function index()
 
     {
         
-        $modules = Module::all();
-        return view('internal.admin.module', ['modules' => $modules]);
+        $modules = Module::paginate(2);
+        $modules->setPath('modules');
+        return view('internal.admin.module', compact('modules'));
     }
 
     /**
@@ -49,7 +56,7 @@ class ModuleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreModuleRequest $request)
     {
         //
         $input = $request->all();
@@ -60,9 +67,10 @@ class ModuleController extends Controller
         $module->district     =   $input['district'];
         $module->province     =   $input['province']; 
         $module->state        =   $input['state'];       
-        $module->status       =   config('constants.available');
+        
         //Control de subida de imagen
-        $module->image        =   'randomUrl';
+        $module->image        =   $this->file_service->upload($request->file('image'),'module');
+
 
         $module->save();
         
@@ -99,7 +107,7 @@ class ModuleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateModuleRequest $request, $id)
     {
         //
         $input = $request->all();
@@ -111,9 +119,10 @@ class ModuleController extends Controller
         $module->district     =   $input['district'];
         $module->province     =   $input['province'];      
         $module->state        =   $input['state'];      
-        $module->status       =   config('constants.available');
+        
         //Control de subida de imagen
-        $module->image        =   'randomUrl';
+        if($request->file('image')!=null)
+            $module->image        =   $this->file_service->upload($request->file('image'),'module');
 
         $module->save();        
 

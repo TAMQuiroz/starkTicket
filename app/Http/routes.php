@@ -118,7 +118,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     
     Route::get('admin/modules', 'ModuleController@index');
     Route::get('admin/modules/new', 'ModuleController@create');
+    Route::post('admin/modules/new', 'ModuleController@store');
     Route::get('admin/modules/{id}/edit', 'ModuleController@edit');
+    Route::post('admin/modules/{id}/edit', 'ModuleController@update');
+    Route::get('admin/modules/{id}/delete', 'ModuleController@destroy');
     
     Route::get('admin/client', 'AdminController@client');
 
