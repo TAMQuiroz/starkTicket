@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-<input type="text"></input>
+{!! Form::text('eventPlace','', array('class' => 'form-control')) !!}
 <button type="button" class="btn btn-info">Buscar</button>
 <br><br>
 <div class="table-responsive">
