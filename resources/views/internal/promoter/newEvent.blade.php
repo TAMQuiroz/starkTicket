@@ -17,13 +17,13 @@
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                  {!! Form::text('eventName','', array('class' => 'form-control')) !!}
+                  {!! Form::text('eventName','', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Lugar</label>
                 <div class="col-sm-10">
-                  {!! Form::text('eventPlace','', array('class' => 'form-control')) !!}
+                  {!! Form::text('eventPlace','', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -35,31 +35,31 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Categoría</label>
                 <div class="col-sm-10">
-                    {!! Form::select('category', ['Concierto','Teatro','Ferias y Circo','Otros'],null,['class' => 'form-control']) !!}
+                    {!! Form::select('category', ['Concierto','Teatro','Ferias y Circo','Otros'],null,['class' => 'form-control','required']) !!}
                 </div>            
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Sub categoría</label>
                 <div class="col-sm-10">
-                    {!! Form::select('subcategory', ['Rock','Cumbia','Tropical','Otros'],null,['class' => 'form-control']) !!}
+                    {!! Form::select('subcategory', ['Rock','Cumbia','Tropical','Otros'],null,['class' => 'form-control','required']) !!}
                 </div>            
               </div>  
               <div class="form-group">
                 <label class="col-sm-2 control-label">Organizador</label>
                 <div class="col-sm-10">
-                    {!! Form::select('organizer', ['Pepitos Producciones','Rayo en la botella','Hermanos yaipen'],null,['class' => 'form-control']) !!}
+                    {!! Form::select('organizer', ['Pepitos Producciones','Rayo en la botella','Hermanos yaipen'],null,['class' => 'form-control','required']) !!}
                 </div>            
               </div>  
               <div class="form-group">
                 <label class="col-sm-2 control-label">Fecha inicio</label>
                 <div class="col-sm-10">
-                    {!! Form::date('dateIni','', array('class' => 'form-control')) !!}
+                    {!! Form::date('dateIni','', array('class' => 'form-control','required')) !!}
                 </div>
               </div> 
               <div class="form-group">
                 <label class="col-sm-2 control-label">Fecha fin</label>
                 <div class="col-sm-10">
-                    {!! Form::date('dateEnd','', array('class' => 'form-control')) !!}
+                    {!! Form::date('dateEnd','', array('class' => 'form-control','required')) !!}
                 </div>   
               </div>                                                  
               <div class="form-group">

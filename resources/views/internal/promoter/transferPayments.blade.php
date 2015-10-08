@@ -70,25 +70,25 @@
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">Nombre</label>
                     <div class="col-sm-10">
-                      {!! Form::text('organizerName','Limapalooza producciones', array('class' => 'form-control','disabled')) !!}
+                      {!! Form::text('organizerName','Limapalooza producciones', array('class' => 'form-control','disabled','required')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">Ruc</label>
                     <div class="col-sm-10">
-                      {!! Form::text('ruc','2566444998', array('class' => 'form-control','disabled')) !!}
+                      {!! Form::text('ruc','2566444998', array('class' => 'form-control','disabled','required')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">Número de cuenta</label>
                     <div class="col-sm-10">
-                      {!! Form::text('countNumber','223333398', array('class' => 'form-control','disabled')) !!}
+                      {!! Form::text('countNumber','223333398', array('class' => 'form-control','disabled','required')) !!}
                     </div>
                 </div>      
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">Fecha entrega</label>
                     <div class="col-sm-10">
-                        {!! Form::date('dateSend','', array('class' => 'form-control')) !!}
+                        {!! Form::date('dateSend','', array('class' => 'form-control','required')) !!}
                     </div>
                 </div> 
                 <div class="form-group">
@@ -100,19 +100,19 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Monto a pagar</label>
                     <div class="col-sm-10">
-                      {!! Form::text('payMont','100000', array('class' => 'form-control')) !!}
+                      {!! Form::text('payMont','100000', array('class' => 'form-control','required')) !!}
                     </div>
                 </div>       
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">Saldo</label>
                     <div class="col-sm-10">
-                      {!! Form::text('saldo','50000', array('class' => 'form-control','disabled')) !!}
+                      {!! Form::text('saldo','50000', array('class' => 'form-control','disabled','required')) !!}
                     </div>
                 </div>                           
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">Evento</label>
                     <div class="col-sm-10">
-                      {!! Form::text('eventNameSearch','Vivo por el rock 7', array('class' => 'form-control','disabled')) !!}
+                      {!! Form::text('eventNameSearch','Vivo por el rock 7', array('class' => 'form-control','disabled','required')) !!}
                     </div>
                 </div>  
               <div class="form-group">

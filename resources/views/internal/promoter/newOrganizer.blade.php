@@ -16,31 +16,31 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                  {!! Form::text('organizerName','', array('class' => 'form-control')) !!}
+                  {!! Form::text('organizerName','', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Apellidos</label>
                 <div class="col-sm-10">
-                  {!! Form::text('organizerLastName','', array('class' => 'form-control')) !!}
+                  {!! Form::text('organizerLastName','', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Razón social</label>
                 <div class="col-sm-10">
-                  {!! Form::text('businessName','', array('class' => 'form-control')) !!}
+                  {!! Form::text('businessName','', array('class' => 'form-control','required')) !!}
                 </div>
               </div>                
               <div class="form-group">
                 <label class="col-sm-2 control-label">Ruc</label>
                 <div class="col-sm-10">
-                  {!! Form::text('ruc','', array('class' => 'form-control')) !!}
+                  {!! Form::text('ruc','', array('class' => 'form-control','required')) !!}
                 </div>
               </div>      
               <div class="form-group">
                 <label class="col-sm-2 control-label">Número de cuenta</label>
                 <div class="col-sm-10">
-                  {!! Form::text('countNumber','', array('class' => 'form-control')) !!}
+                  {!! Form::text('countNumber','', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -52,7 +52,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">DNI</label>
                 <div class="col-sm-10">
-                  {!! Form::text('dni','', array('class' => 'form-control')) !!}
+                  {!! Form::text('dni','', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -64,7 +64,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Dirección</label>
                 <div class="col-sm-10">
-                  {!! Form::text('address','', array('class' => 'form-control')) !!}
+                  {!! Form::text('address','', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
               <div class="form-group">

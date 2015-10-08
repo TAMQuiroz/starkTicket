@@ -21,19 +21,19 @@
                     
                     <div class="col-sm-3">
                         <label>Desde</label>
-                        {!! Form::date('dateIni','', array('class' => 'form-control')) !!}
+                        {!! Form::date('dateIni','', array('class' => 'form-control','required')) !!}
                     </div>
                     <div class="col-sm-3">
                         <label>Hasta</label>
-                        {!! Form::date('dateEnd','', array('class' => 'form-control')) !!}
+                        {!! Form::date('dateEnd','', array('class' => 'form-control','required')) !!}
                     </div>
                     <div class="col-sm-3">
                         <label>Zona</label>
-                        {!! Form::select('zone', ['Vip','Platea'],null,['class' => 'form-control','id' => 'zona']) !!}
+                        {!! Form::select('zone', ['Vip','Platea'],null,['class' => 'form-control','id' => 'zona','required']) !!}
                     </div>
                     <div class="col-sm-2">
                         <label>Cliente</label>
-                        {!! Form::select('typeClient', ['Niño','Adulto','Adulto mayor'],null,['class' => 'form-control','id' => 'cliente']) !!}
+                        {!! Form::select('typeClient', ['Niño','Adulto','Adulto mayor'],null,['class' => 'form-control','id' => 'cliente','required']) !!}
                     </div>         
                         
                     <!--
@@ -47,7 +47,7 @@
                 <div class="row">
                     <label for="inputEmail3" class="col-sm-1 control-label">Precio</label>
                     <div class="col-sm-3">
-                      {!! Form::text('price','', array('class' => 'form-control','id' =>'precio')) !!}
+                      {!! Form::text('price','', array('class' => 'form-control','id' =>'precio','required')) !!}
                     </div>
                 </div>
                 <br>
@@ -199,13 +199,13 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Zona</label>
                     <div class="col-sm-10">
-                        {!! Form::select('zonePromotion', ['Zona vip','Zona platea'],null,['class' => 'form-control','id' => 'zonaPromocion']) !!}
+                        {!! Form::select('zonePromotion', ['Zona vip','Zona platea'],null,['class' => 'form-control','id' => 'zonaPromocion','required']) !!}
                     </div>            
                 </div>  
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Promoción</label>
                     <div class="col-sm-10">
-                        {!! Form::select('promotion', ['Cmr puntos','Lunes de infarto','Pagaron ya'],null,['class' => 'form-control','id' => 'promocion']) !!}
+                        {!! Form::select('promotion', ['Cmr puntos','Lunes de infarto','Pagaron ya'],null,['class' => 'form-control','id' => 'promocion','required']) !!}
                     </div>            
                 </div>  
                 <div class="form-group">
@@ -329,7 +329,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Pol&iacute;tica</label>
                     <div class="col-sm-10">
-                    {!! Form::select('politic', ['Politica1','Politica 2','Politica 3'],null,['class' => 'form-control']) !!}
+                    {!! Form::select('politic', ['Politica1','Politica 2','Politica 3'],null,['class' => 'form-control','required']) !!}
                     </div>            
                 </div> 
 
