@@ -13,7 +13,7 @@ class StoreCategoryRequest extends FormRequest
     public function rules() {
         return [
             'name'          => 'required',
-            'image_file'    => 'required|image',
+            'image'         => 'required',
             'description'   => 'required',
             'father_id'     => 'exists:categories,id'
         ];
@@ -25,6 +25,6 @@ class StoreCategoryRequest extends FormRequest
             'errors' => $errors
         ];
 
-        return response()->json($data, 400);
+        return redirect()->back()->withInput()->withErrors($errors);
     }
 }

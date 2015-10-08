@@ -62,6 +62,12 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Clientes <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{url('admin/client')}}">Listar</a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Puntos de Venta <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{url('admin/modules')}}">Listar</a></li>
@@ -115,6 +121,13 @@
     <div class="container">
         <h1>@yield('title')</h1>
         <hr>
+        @if($errors->any())
+        <ul class="alert alert-danger">
+            @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+        @endif
         @if(Session::has('message'))
         <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
         @endif

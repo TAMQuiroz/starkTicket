@@ -95,10 +95,13 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/gifts/{id}/edit', 'GiftController@update');
     Route::get('admin/gifts/{id}/delete', 'GiftController@destroy');
     
-    Route::get('admin/category', 'CategoryController@index');
+    Route::get('admin/category', ['as' => 'admin.categories.index', 'uses' =>'CategoryController@index']);
     Route::get('admin/category/new', 'CategoryController@create');
-    Route::get('admin/category/{id}/edit', 'CategoryController@edit');
-    Route::get('admin/category/{id}/subcategory', 'CategoryController@indexSubAdmin');
+    Route::post('admin/category/new', ['as' => 'categories.store', 'uses' =>'CategoryController@store']);
+    Route::get('admin/category/{id}/edit', ['as' => 'categories.edit', 'uses' =>'CategoryController@edit']);
+    Route::post('admin/category/{id}/edit', ['as' => 'categories.update', 'uses' =>'CategoryController@update']);
+    Route::post('admin/category/{id}/delete', ['as' => 'categories.delete', 'uses' =>'CategoryController@destroy']);
+    Route::get('admin/category/{id}/subcategories', ['as' => 'subcategories.index', 'uses' =>'CategoryController@indexSubAdmin']);
     
     Route::get('admin/ticket_return', 'TicketController@indexReturn');
     Route::get('admin/ticket_return/new', 'TicketController@createReturn');
@@ -117,6 +120,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/modules/new', 'ModuleController@create');
     Route::get('admin/modules/{id}/edit', 'ModuleController@edit');
     
+    Route::get('admin/client', 'AdminController@client');
+
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
     
@@ -124,7 +129,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
     
     Route::get('admin/admin', 'AdminController@admin');
-    Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
-    
     Route::get('admin/user/new', 'AdminController@newUser');
+    Route::post('admin/user/new', 'AdminController@store');
+    Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
+    Route::post('admin/admin/{id}/edit', 'AdminController@updateAdmin');
+    Route::get('admin/admin/{id}/delete', 'AdminController@destroy');
+
 });
