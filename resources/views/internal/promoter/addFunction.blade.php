@@ -21,26 +21,19 @@
                     
                     <div class="col-sm-3">
                         <label>Desde</label>
-                        <input type="date" class="form-control">
+                        {!! Form::date('dateIni','', array('class' => 'form-control','required')) !!}
                     </div>
                     <div class="col-sm-3">
                         <label>Hasta</label>
-                        <input type="date" class="form-control">
+                        {!! Form::date('dateEnd','', array('class' => 'form-control','required')) !!}
                     </div>
                     <div class="col-sm-3">
                         <label>Zona</label>
-                        <select class="form-control">
-                          <option value="saab">Vip</option>
-                          <option value="opel">Platea</option>
-                        </select>
+                        {!! Form::select('zone', ['Vip','Platea'],null,['class' => 'form-control','id' => 'zona','required']) !!}
                     </div>
                     <div class="col-sm-2">
                         <label>Cliente</label>
-                        <select class="form-control">
-                          <option value="opel">Nino</option>
-                          <option value="volvo">Adulto</option>
-                          <option value="saab">Adulto mayor</option>
-                        </select>
+                        {!! Form::select('typeClient', ['Niño','Adulto','Adulto mayor'],null,['class' => 'form-control','id' => 'cliente','required']) !!}
                     </div>         
                         
                     <!--
@@ -54,14 +47,14 @@
                 <div class="row">
                     <label for="inputEmail3" class="col-sm-1 control-label">Precio</label>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                      {!! Form::text('price','', array('class' => 'form-control','id' =>'precio','required')) !!}
                     </div>
                 </div>
                 <br>
 
                 <div class="form-group">
                     <div class="col-sm-offset-10 col-sm-10">
-                        <a class="btn btn-info" onclick="addZone()">Agregar</a>
+                        <a class="btn btn-info" onclick="addPrice()">Agregar</a>
                         <!-- 
                         <button  type="reset" class="btn btn-info">Cancelar</button>
                         -->
@@ -70,11 +63,15 @@
 
                 <script>
 
-                    function addClient(){
+                    function addPrice(){
 
-                        var cl = document.getElementById('input-client').value;
+                        var zonaSel = document.getElementById('zona');
+                        var zona =zonaSel.options[zonaSel.selectedIndex].text;
+                        var clienteSel = document.getElementById('cliente');
+                        var cliente = clienteSel.options[clienteSel.selectedIndex].text;
+                        var precio = document.getElementById('precio').value;
 
-                        var tableRef = document.getElementById('table-client').getElementsByTagName('tbody')[0];
+                        var tableRef = document.getElementById('table-price').getElementsByTagName('tbody')[0];
 
                         // Insert a row in the table at the last row
                         var newRow   = tableRef.insertRow(tableRef.rows.length);
@@ -83,10 +80,13 @@
                         var newCell  = newRow.insertCell(0);
                         var newCell2 = newRow.insertCell(1);
                         var newCell3 = newRow.insertCell(2);
+                        var newCell4 = newRow.insertCell(3);
+                        var newCell5 = newRow.insertCell(4);
 
                         // Append values to cells
-                        var newText  = document.createTextNode(cl);
-                        
+                        var newText  = document.createTextNode(zona);
+                        var newText2  = document.createTextNode(cliente);
+                        var newText3  = document.createTextNode(precio);
                         // buttons
                         var newEdit = document.createElement('button');
                         var newDelete = document.createElement('button');
@@ -96,14 +96,16 @@
                         newDelete.className += " btn-info glyphicon glyphicon-remove";
 
                         newCell.appendChild(newText);                        
-                        newCell2.appendChild(newEdit);
-                        newCell3.appendChild(newDelete);
+                        newCell2.appendChild(newText2);
+                        newCell3.appendChild(newText3);
+                        newCell4.appendChild(newEdit);
+                        newCell5.appendChild(newDelete);
                 
                     }
 
                 </script>
 
-                <table id="table-client" class="table table-bordered table-striped ">
+                <table id="table-price" class="table table-bordered table-striped ">
                     <tr>
                         <th>Zona</th>
                         <th>Tipo de cliente</th>
@@ -195,32 +197,58 @@
                 
                 <legend>Agregar Promoción:</legend>                              
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Zona</label>
+                    <label class="col-sm-2 control-label">Zona</label>
                     <div class="col-sm-10">
-                        <select class="form-control" id="sel1">
-                            <option>Zona vip</option>
-                            <option>Zona platea</option>
-                        </select>
+                        {!! Form::select('zonePromotion', ['Zona vip','Zona platea'],null,['class' => 'form-control','id' => 'zonaPromocion','required']) !!}
                     </div>            
                 </div>  
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Promoción</label>
+                    <label class="col-sm-2 control-label">Promoción</label>
                     <div class="col-sm-10">
-                        <select class="form-control" id="sel1">
-                            <option>Cmr puntos</option>
-                            <option>Lunes de infarto</option>
-                            <option>Pagaron ya</option>
-                        </select>
+                        {!! Form::select('promotion', ['Cmr puntos','Lunes de infarto','Pagaron ya'],null,['class' => 'form-control','id' => 'promocion','required']) !!}
                     </div>            
                 </div>  
                 <div class="form-group">
                     <div class="col-sm-offset-10 col-sm-10">
-                        <a class="btn btn-info">Agregar</a>
+                        <a class="btn btn-info" onclick="addPromotion()" >Agregar</a>
                     </div>
-                </div>                       
+                </div>      
 
+                <script>
 
-                <table class="table table-bordered table-striped">
+                    function addPromotion(){
+      
+                        var zonaSel = document.getElementById('zonaPromocion');
+                        var zona =zonaSel.options[zonaSel.selectedIndex].text;
+                        var promocionSel = document.getElementById('promocion');
+                        var promocion = promocionSel.options[promocionSel.selectedIndex].text;
+                        var tableRef = document.getElementById('table-promotion').getElementsByTagName('tbody')[0];
+
+                        // Insert a row in the table at the last row
+                        var newRow   = tableRef.insertRow(tableRef.rows.length);
+
+                        // Insert a cell in the row at index 0
+                        var newCell  = newRow.insertCell(0);
+                        var newCell2 = newRow.insertCell(1);
+                        var newCell3 = newRow.insertCell(2);
+
+                        // Append values to cells
+                        var newText  = document.createTextNode(zona);
+                        var newText2  = document.createTextNode(promocion);
+                        // buttons
+                        var newDelete = document.createElement('button');
+                        newDelete.className = "btn";
+                        newDelete.className += " btn-info glyphicon glyphicon-remove";
+
+                        newCell.appendChild(newText);                        
+                        newCell2.appendChild(newText2);
+                        newCell3.appendChild(newDelete);
+                
+                    }
+
+                </script>
+
+                <table id="table-promotion" class="table table-bordered table-striped">
                     <tr>
                         <th>Nombre zona</th>
                         <th>Promoción</th>
@@ -299,13 +327,9 @@
                 <legend>Pol&iacute;ticas</legend>
 
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Pol&iacute;tica</label>
+                    <label class="col-sm-2 control-label">Pol&iacute;tica</label>
                     <div class="col-sm-10">
-                        <select class="form-control" id="sel1">
-                            <option></option>
-                            <option>1</option>
-                            <OPTION>2</OPTION>
-                        </select>
+                    {!! Form::select('politic', ['Politica1','Politica 2','Politica 3'],null,['class' => 'form-control','required']) !!}
                     </div>            
                 </div> 
 

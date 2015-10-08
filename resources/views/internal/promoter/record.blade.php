@@ -10,10 +10,10 @@
 
 @section('content')
   <div class="rangoFechas">
-      <label for="from">Inicio</label>
-      <input class="form-control" type="date" id="from" name="from">
-      <label for="to">Fin</label>
-      <input  type="date" id="to" name="to"  class="form-control">
+      <label >Inicio</label>
+      {!! Form::date('dateIni','', array('class' => 'form-control')) !!}
+      <label >Fin</label>
+      {!! Form::date('dateEnd','', array('class' => 'form-control')) !!}
       <td><button type="button" class="btn btn-info">Buscar</button></td>
   </div>
   <!-- Contenido-->

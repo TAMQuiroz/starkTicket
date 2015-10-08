@@ -15,66 +15,63 @@
           <div class="col-sm-8">
             <form class="form-horizontal" method="post">
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
+                <label  class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::text('eventName','', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Lugar</label>
+                <label class="col-sm-2 control-label">Lugar</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::text('eventPlace','', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Descripción</label>
+                <label  class="col-sm-2 control-label">Descripción</label>
                 <div class="col-sm-10">
-                  <textarea type="text" class="form-control" rows="5" id="comment" >
-                  </textarea>
+                  {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => '5']) !!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Categoría</label>
+                <label class="col-sm-2 control-label">Categoría</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="sel1">
-                        <option>Concierto</option>
-                        <option>Teatro</option>
-                        <option>Ferias y Circo</option>
-                        <option>Otros</option>
-                    </select>
+                    {!! Form::select('category', ['Concierto','Teatro','Ferias y Circo','Otros'],null,['class' => 'form-control','required']) !!}
                 </div>            
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Sub categoría</label>
+                <label class="col-sm-2 control-label">Sub categoría</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="sel1">
-                        <option>Rock</option>
-                        <option>Cumbia</option>
-                        <option>Tropical</option>
-                        <option>Otros</option>
-                    </select>
+                    {!! Form::select('subcategory', ['Rock','Cumbia','Tropical','Otros'],null,['class' => 'form-control','required']) !!}
                 </div>            
               </div>  
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Organizador</label>
+                <label class="col-sm-2 control-label">Organizador</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="sel1">
-                        <option>Pepitos Produccione</option>
-                        <option>Rayo en la botella</option>
-                        <option>Hermanos yaipen</option>
-                    </select>
+                    {!! Form::select('organizer', ['Pepitos Producciones','Rayo en la botella','Hermanos yaipen'],null,['class' => 'form-control','required']) !!}
                 </div>            
-              </div>                                       
+              </div>  
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Imagen ubicación</label>
+                <label class="col-sm-2 control-label">Fecha inicio</label>
                 <div class="col-sm-10">
-                  <input type="file" class="form-control" id="inputEmail3" placeholder="">
+                    {!! Form::date('dateIni','', array('class' => 'form-control','required')) !!}
+                </div>
+              </div> 
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Fecha fin</label>
+                <div class="col-sm-10">
+                    {!! Form::date('dateEnd','', array('class' => 'form-control','required')) !!}
+                </div>   
+              </div>                                                  
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Imagen local</label>
+                <div class="col-sm-10">
+                  {!! Form::file('imagePlace', array('class' => 'form-control')) !!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Imagen evento</label>
+                <label  class="col-sm-2 control-label">Imagen evento</label>
                 <div class="col-sm-10">
-                  <input type="file" class="form-control" id="inputEmail3" placeholder="">
+                  {!! Form::file('imageEvent', array('class' => 'form-control')) !!}
                 </div>
               </div>         
               <br>
@@ -82,15 +79,15 @@
               <!-- ZONA -->
               <legend>Agregar zona:</legend>
               <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
+                  <label  class="col-sm-2 control-label">Nombre</label>
                   <div class="col-sm-10">
-                      <input type="text" class="form-control" id="input-zone" placeholder="">
+                      {!! Form::text('zoneName','', array('class' => 'form-control','id' => 'input-zone')) !!}
                   </div>
               </div>
               <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Capacidad</label>
+                  <label  class="col-sm-2 control-label">Capacidad</label>
                   <div class="col-sm-10">
-                      <input type="text" class="form-control" id="input-capacity" placeholder="">
+                      {!! Form::text('zoneCapacity','', array('class' => 'form-control','id' => 'input-capacity')) !!}
                   </div>
               </div> 
 
@@ -150,7 +147,7 @@
                     </tr>
                     <tr>
                         <td>Zona vip</td>
-                        <td>350.0</td>
+                        <td>350</td>
                         <td>
                             <a class="btn btn-info"  title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
                         </td>   
@@ -160,7 +157,7 @@
                     </tr>
                     <tr>
                         <td>Zona platea</td>
-                        <td>300.0</td>
+                        <td>300</td>
                         <td>
                             <a class="btn btn-info" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
                         </td>   
@@ -176,9 +173,9 @@
 
                 <legend>Agregar tipo de cliente:</legend>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
+                    <label class="col-sm-2 control-label">Nombre</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="input-client" placeholder="">
+                        {!! Form::text('typeClient','', array('class' => 'form-control','id' => 'input-client')) !!}
                     </div>
                 </div>
 

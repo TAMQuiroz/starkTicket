@@ -16,27 +16,21 @@
           <div class="col-sm-8">
             <form class="form-horizontal" method="post">
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Fecha inicio</label>
+                    <label class="col-sm-2 control-label">Fecha inicio</label>
                     <div class="col-sm-10">
-                        <input type="date" class="form-control">
+                        {!! Form::date('dateIni','', array('class' => 'form-control')) !!}
                     </div>
                 </div>    
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Fecha fin</label>
+                    <label  class="col-sm-2 control-label">Fecha fin</label>
                     <div class="col-sm-10">
-                        <input type="date" class="form-control">
+                        {!! Form::date('dateEnd','', array('class' => 'form-control')) !!}
                     </div>
                 </div>             
               <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Organizador</label>
+                  <label class="col-sm-2 control-label">Organizador</label>
                   <div class="col-sm-10">
-                    <select class="form-control" id="sel1">
-                      <option>Yola polastri producciones</option>
-                      <option>Rayo en la botella</option>
-                      <option>Canal 2</option>
-                      <option>Canal 4</option>
-                      <option>Onur y sherezade</option>
-                    </select>
+                    {!! Form::select('organizer', ['Pepitos Producciones','Rayo en la botella','Hermanos yaipen'],null,['class' => 'form-control']) !!}
                   </div>            
               </div>  
                 <div class="form-group">

@@ -16,7 +16,7 @@
 				<div class="container">  <!-- Comienza primer despliegue-->
 					
 			    	<div class="input-group" style="width:300px">
-			      		<input type="text" class="form-control" placeholder="Buscar promoción..." >
+			      		{!! Form::text('search','', array('class' => 'form-control')) !!}
 			      		<span class="input-group-btn">
 					    	<button class="btn btn-info" type="button">Buscar</button>
 					    </span>
@@ -197,31 +197,27 @@
 						<br>
 						<h4>Ingrese datos de nueva promoción</h4>
 						<label>
-							Código: <input type="text" class="form-control" placeholder="9898083" readonly></input>
-							Nombre: <input type="text" class="form-control" placeholder="Nombre de promoción"></input>
-							Fecha Inicio: <input type="date" class="form-control"></input>
-							Fecha Fin: <input type="date" class="form-control"></input>
-							Hora Inicio: <input type="datetime" class="form-control" placeholder="hh:mm"></input>
-							Hora Fin: <input type="datetime" class="form-control" placeholder="hh:mm"></input>
-							Descripcion: <input type="text" class="form-control" placeholder="Descripción de evento..."></input>
-							Descuento (%): <input type="text" class="form-control" placeholder="%..."></input>
+							Código: {!! Form::text('codePromotion','9898083', array('class' => 'form-control','required','disabled')) !!}
+							Nombre: {!! Form::text('promotionName','', array('class' => 'form-control','required')) !!}
+							Fecha Inicio: {!! Form::date('dateIni','', array('class' => 'form-control','required')) !!}
+							Fecha Fin: {!! Form::date('dateEnd','', array('class' => 'form-control','required')) !!}
+							Hora Inicio: {!! Form::time('timeIni','', array('class' => 'form-control','required')) !!}
+							Hora Fin: {!! Form::time('timeEnd','', array('class' => 'form-control','required')) !!}
+							Descripcion: {!! Form::text('description','9898083', array('class' => 'form-control','required')) !!}
+							Descuento (%): {!! Form::text('discount','9898083', array('class' => 'form-control','required')) !!}
 						</label>
 						
 						<br><br>
 						<h4>Agregar eventos:</h4>
 						<div class="input-group" style="width:300px">
-				      		<input type="text" class="form-control" placeholder="Buscar eventos..." >
+				      		{!! Form::text('eventName','', array('class' => 'form-control','required')) !!}
 				      		<span class="input-group-btn">
 						    	<button class="btn btn-info" type="button">Buscar</button>
 						    </span>
 				    	</div><!-- /input-group -->
 				    	<br>
 				    	<h5>Seleccionar Zona:</h5>
-				        <select class="form-control" style="width:260px">
-		                    <option value="">VIP</option>
-		                    <option value="saab">Campo</option>
-		                    <option value="mercedes">Occidente</option>
-		                </select>
+						{!! Form::select('zone', ['Vip','Platea'],null,['class' => 'form-control','id' => 'zona','required']) !!}
 						<br>
 						<button class="btn btn-info" type="button">Agregar Zona y Promoción</button>
 						<br><br>
