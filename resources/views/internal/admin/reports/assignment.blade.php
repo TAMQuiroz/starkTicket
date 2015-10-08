@@ -12,22 +12,43 @@
 <div class="row">
     <div class="col-sm-3">
         <label>Seleccione el punto de venta</label>
+        <!--
         <select class="form-control">
-          <option value="volvo">Todos los puntos de venta</option>
-          <option value="saab">La Molina</option>
-          <option value="opel">San Borja</option>
-          <option value="audi">La Perla</option>
+          <option value="0">Todos los puntos de venta</option>
+          <option value="1">La Molina</option>
+          <option value="2">San Borja</option>
+          <option value="3">La Perla</option>
         </select>
+        -->
+        {!!Form::select('select1', [
+           'op0' => 'Todos los puntos de venta',
+           'op1' => 'La Molina',
+           'op2' => 'San Borja',
+           'op3' => 'La Perla'],
+           null,
+           ['class' => 'form-control']
+        )!!}
         
     </div>
      <div class="col-sm-3">
     <label>Seleccione el tipo de empleado</label>
+
+        <!--
         <select class="form-control">
-          <option value="volvo">Todos los empleados</option>
-          <option value="saab">Vendedores</option>
-          <option value="opel">Promotores de Venta</option>
-          <option value="audi">Administradores</option>
+          <option value="0">Todos los empleados</option>
+          <option value="1">Vendedores</option>
+          <option value="2">Promotores de Venta</option>
+          <option value="3">Administradores</option>
         </select>
+        -->
+        {!!Form::select('select2', [
+           'op0' => 'Todos los empleados',
+           'op1' => 'Vendedores',
+           'op2' => 'Promotores de venta',
+           'op3' => 'Administradores'],
+           null,
+           ['class' => 'form-control']
+        )!!}
          </div>
     <div class="col-sm-2">
         <label>Desde</label>

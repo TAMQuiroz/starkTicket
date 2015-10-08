@@ -13,7 +13,10 @@
     <div class="col-sm-3">
        <label>Ingrese nombre del evento</label>
         <div class="input-group" style="width:290px">
+            <!-- 
             <input type="text" class="form-control" placeholder="Nombre del evento...">
+            -->
+            {!!Form::text('name', 'Nombre del evento' ,['class'=>'form-control','required'])!!}
             <span class="input-group-btn">
                 <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#detail">Buscar</button>
             </span>
@@ -30,11 +33,20 @@
     </div>
     <div class="col-sm-2">
         <label>Tipo</label>
+        <!--
         <select class="form-control">
           <option value="opel">Tabla</option>
           <option value="volvo">Excel</option>
           <option value="saab">PDF</option>
         </select>
+        -->
+        {!!Form::select('select1', [
+           'op0' => 'Tabla',
+           'op1' => 'Excel',
+           'op2' => 'PDF'],
+           null,
+           ['class' => 'form-control']
+        )!!}
     </div>
     <div class="col-sm-3">
         <br>
