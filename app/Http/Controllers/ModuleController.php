@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Module\StoreModuleRequest;
+use App\Http\Requests\Module\UpdateModuleRequest;
+use App\Module;
+use App\Services\FileService;
 
 class ModuleController extends Controller
 {
@@ -13,9 +17,16 @@ class ModuleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->file_service = new FileService();
+    }
     public function index()
+
     {
-        return view('internal.admin.module');
+        
+        $modules = Module::paginate(2);
+        $modules->setPath('modules');
+        return view('internal.admin.module', compact('modules'));
     }
 
     /**
@@ -45,9 +56,25 @@ class ModuleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreModuleRequest $request)
     {
         //
+        $input = $request->all();
+
+        $module               =   new Module;
+        $module->name         =   $input['name'];
+        $module->address      =   $input['address'];
+        $module->district     =   $input['district'];
+        $module->province     =   $input['province']; 
+        $module->state        =   $input['state'];       
+        
+        //Control de subida de imagen
+        $module->image        =   $this->file_service->upload($request->file('image'),'module');
+
+
+        $module->save();
+        
+        return redirect('admin/modules');
     }
 
     /**
@@ -69,7 +96,8 @@ class ModuleController extends Controller
      */
     public function edit($id)
     {
-        return view('internal.admin.editModule');
+        $module = Module::find($id);
+        return view('internal.admin.editModule',compact('module'));
     }
 
     /**
@@ -79,9 +107,26 @@ class ModuleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateModuleRequest $request, $id)
     {
         //
+        $input = $request->all();
+
+        $module = Module::find($id);
+
+        $module->name         =   $input['name'];
+        $module->address      =   $input['address'];
+        $module->district     =   $input['district'];
+        $module->province     =   $input['province'];      
+        $module->state        =   $input['state'];      
+        
+        //Control de subida de imagen
+        if($request->file('image')!=null)
+            $module->image        =   $this->file_service->upload($request->file('image'),'module');
+
+        $module->save();        
+
+        return redirect('admin/modules');
     }
 
     /**
@@ -93,5 +138,9 @@ class ModuleController extends Controller
     public function destroy($id)
     {
         //
+        $module = Module::find($id);
+        
+        $module->delete();
+        return redirect('admin/modules');
     }
 }

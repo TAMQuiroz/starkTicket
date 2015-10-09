@@ -81,7 +81,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('admin/local', 'LocalController@index');
     Route::get('admin/local/new', 'LocalController@create');
+    Route::post('admin/local/new', 'LocalController@store');
     Route::get('admin/local/{id}/edit', 'LocalController@edit');
+    Route::post('admin/local/{id}/edit', 'LocalController@update');
+    Route::get('admin/local/{id}/delete', 'LocalController@destroy');
     
     Route::get('admin/exchange_gift', 'GiftController@createExchangeAdmin');
 
@@ -115,7 +118,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     
     Route::get('admin/modules', 'ModuleController@index');
     Route::get('admin/modules/new', 'ModuleController@create');
+    Route::post('admin/modules/new', 'ModuleController@store');
     Route::get('admin/modules/{id}/edit', 'ModuleController@edit');
+    Route::post('admin/modules/{id}/edit', 'ModuleController@update');
+    Route::get('admin/modules/{id}/delete', 'ModuleController@destroy');
     
     Route::get('admin/client', 'AdminController@client');
 
