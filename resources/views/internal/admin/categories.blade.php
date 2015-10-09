@@ -10,16 +10,6 @@
 
 @section('content')
         <!-- Contenido-->
-        @if (count($errors) > 0)
-            @foreach($errors->all() as $error)
-                <div class="alert alert-danger alert-dismissible alert-header" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ strtoupper($error) }}
-                </div>
-            @endforeach
-        @endif
         <table class="table table-bordered table-striped">
             <tr>
                 <th>Nombre</th>
