@@ -5,12 +5,11 @@
 @stop
 
 @section('title')
-	Entradas
+	Nueva Venta - Entradas
 @stop
 
 @section('content')
    
-    <h3>Nueva Venta</h3>
     <fieldset>
         <legend>Información del evento</legend>
         <div class="select Type"> 
@@ -18,36 +17,22 @@
             <label>
                 <div style="-webkit-columns: 100px 3;">
                     <h4> Codigo del Evento </h4>
-                    <input class="form-control" style="width:290px" id="disabledInput" type="text" value="09213241" disabled>
+                    {!! Form::text('code', '09213241', ['class' => 'form-control', 'disabled']) !!}
                     <h4> Nombre del Evento </h4>
-                    <input class="form-control" type="text" name="firstname" value="Piaf de Pam Gems" disabled>  
+                    {!! Form::text('name', 'Piaf de Pam Gems', ['class' => 'form-control', 'disabled']) !!}
                     <h4>Entradas Disponibles</h4>
-                    <input class="form-control" type="text" name="firstname" value="520" disabled>   
+                    {!! Form::text('available', '520', ['class' => 'form-control', 'disabled']) !!}  
                 </div>
                 <div style="-webkit-columns: 100px 3;">
                     <h4> Fecha del Evento </h4>
-                    <select class="form-control">
-                        <option value="">18 Octubre</option>
-                        <option value="saab">19 Octubre</option>
-                        <option value="mercedes">20 Octubre</option>
-                    </select>
+                    {!! Form::select('date', ['18 Octubre', '19 Octubre', '20 Octubre'], null, ['class' => 'form-control']) !!}
                     <h4> Hora </h4>
-                    <select class="form-control">
-                        <option value="">21:00</option>
-                        <option value="saab">18:00</option>
-                    </select>
+                    {!! Form::select('hour', ['19:00', '21:00'], null, ['class' => 'form-control']) !!}
                     <h4> Zona del Evento </h4>
-                    <select class="form-control">
-                        <option value="">VIP</option>
-                        <option value="saab">Platea</option>
-                    </select>
+                    {!! Form::select('zone', ['VIP', 'Platea'], null, ['class' => 'form-control']) !!}
                 </div>
                 <h4> Promoción </h4>
-                <select class="form-control">
-                    <option value="">Ninguna</option>
-                    <option value="saab">Pre-venta</option>
-                    <option value="saab">Visa Platinium</option>
-                </select>
+                {!! Form::select('date', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
             </label>
         </div>
         <br>
@@ -81,16 +66,16 @@
         </div>
         <fieldset>
         <legend>Información del cliente</legend>
-        <div style="-webkit-columns: 80px 2;">
+        <div style="-webkit-columns: 100px 2;">
             <h5>Ingrese Usuario</h5>
             <div class="input-group" style="width:290px">
-                <input type="text" class="form-control" placeholder="Documento de Identidad...">
+                {!! Form::text('number', null, ['class' => 'form-control', 'placeholder' => 'Documento de Identidad...']) !!}
                 <span class="input-group-btn">
                     <button class="btn btn-info" type="button">Buscar</button>
                 </span>
             </div><!-- /input-group -->
-            <h5>Nombre de Cliente:</h5>
-            <input class="form-control" style="width:290px" id="disabledInput" type="text" value="Peppa" disabled>
+            <h5>Nombre de Cliente</h5>
+            {!! Form::text('name', 'Peppa', ['class' => 'form-control', 'disabled']) !!}
         </div>
             
             <!--<input type="submit" value="Submit">-->
@@ -99,7 +84,7 @@
         </fieldset>
         <legend>Selección de Ubicación</legend>
         <h5>Zona:</h5>
-        <input class="form-control" style="width:290px" type="text" name="firstname" value="VIP" disabled>
+        {!! Form::text('zoneSelected', 'VIP', ['class' => 'form-control', 'disabled']) !!}
         <br>
         <div class="seats">
             <div class="demo">
@@ -140,12 +125,12 @@
                             <form>
                               <div class="form-group">
                                   <div class="form-group">
-                                    <label for="exampleInputEmail2">Número de Tarjeta</label>
-                                    <input type="text" class="form-control" placeholder="1234 5678 9012 3456">
-                                    <label for="exampleInputEmail2">Fecha de expiración</label>
-                                    <input type="text" class="form-control" placeholder="mm/aa">
+                                    <label>Número de Tarjeta</label>
+                                    {!! Form::text('number', '', ['class' => 'form-control', 'placeholder' => '1234 5678 9012 3456']) !!}
+                                    <label>Fecha de expiración</label>
+                                    {!! Form::text('expiration', '', ['class' => 'form-control', 'placeholder' => 'mm/aa']) !!}
                                     <label for="exampleInputEmail2">Código de Seguridad</label>
-                                    <input type="text" class="form-control" placeholder="123">
+                                    {!! Form::text('code', '', ['class' => 'form-control', 'placeholder' => '123']) !!}
                                   </div>
                                   <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Pagar Entrada</button>
                                   <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
@@ -170,12 +155,12 @@
                                     <label for="exampleInputEmail2">Tipo de Cambio: S/.2.90</label>
                                     <br>
                                     <label for="exampleInputEmail2">Monto Ingresado</label>
-                                    <input type="text" class="form-control" placeholder="S/.100.00">
+                                    {!! Form::text('amount', '', ['class' => 'form-control', 'placeholder' => '100.00']) !!}
                                     <br>
                                     <label for="exampleInputEmail2">Monto a Pagar</label>
-                                    <input type="text" class="form-control" placeholder="S/.90.00">
+                                    {!! Form::text('pay', '', ['class' => 'form-control', 'placeholder' => '90/00']) !!}
                                     <label for="exampleInputEmail2">Vuelto</label>
-                                    <input type="text" class="form-control" placeholder="S/.10.00" readonly>
+                                    {!! Form::text('return', '', ['class' => 'form-control', 'placeholder' => '10.00', 'disabled']) !!}
                                   </div>
                                   <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Aceptar</button>
                                   <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>

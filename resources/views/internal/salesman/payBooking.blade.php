@@ -15,7 +15,7 @@
         <legend>Información del cliente</legend>
         <h5>Ingrese Código de Reserva</h5>
         <div class="input-group" style="width:290px">
-            <input type="text" class="form-control" placeholder="Código de reserva...">
+            {!! Form::text('code', null, array('class' => 'form-control', 'placeholder'=>'Código de reserva..')) !!} 
             <span class="input-group-btn">
                 <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#detail">Buscar</button>
             </span>

@@ -3,26 +3,17 @@
 @section('style')
 
 <style type="text/css">
-
   #demo3{
-   visibility:'hidden';
-   
+    visibility:'hidden';
+
   }
-
-
-
-
 </style>
 
-
-
-
-
 <script>
-function myFunction () {
-  // body...
-    document.getElementById("demo3").style.visibility = 'visible';
-}
+  function myFunction () {
+    // body...
+      document.getElementById("demo3").style.visibility = 'visible';
+  }
 </script>
 @stop
 
@@ -38,34 +29,20 @@ function myFunction () {
   <br>
   <div class="row">
       
-      <div class="col-md-2">
-           <h4>Monto Inicial:</h4>
-          
+    <div class="col-md-2">
+      <h4>Monto Inicial:</h4>
+    </div>
+    <div class="col-md-4">
+      {!! Form::text('initial', '', array('class' => 'form-control')) !!} 
+    </div>
+    <div class="col-md-2"> <button type="button" class="btn btn-info" onclick="myFunction()" data-toggle="collapse" data-target="#demo2" >Agregar Monto</button> </div>
+    <div class="col-md-4">  
+      <div>
+        <h4 id="demo3" style="visibility:hidden"> Monto Inicial: 1000.00</h4>
       </div>
-      <div class="col-md-4">
-          
-           <input type="text" name="username" class="form-control">  
-      </div>
-      
-      <div class="col-md-2"> <button type="button" class="btn btn-info" onclick="myFunction()" data-toggle="collapse" data-target="#demo2" >Agregar Monto</button> </div>
-      <div class="col-md-4">  
-
-          <div  >
-            <h4 id="demo3" style="visibility:hidden"> Monto Inicial: 1000.00</h4>
-          
-
-
-
-            
-          </div>
-
-
-      </div>
-     
-      
-
+    </div>
   </div>
-    <h2>Ventas</h2>
+  <h2>Ventas</h2>   
     <table class="table table-bordered table-striped">
       <tr>
         <th>Nombre Cliente</th>
