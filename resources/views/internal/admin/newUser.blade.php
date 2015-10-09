@@ -14,25 +14,25 @@
           <div class="col-sm-8">
              {!!Form::open(array('url' => 'admin/user/new','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
+                <label for="inputName" class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                   {!!Form::input('text','name', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
+                   {!!Form::input('text','name', null ,['class'=>'form-control','id'=>'inputName','required'])!!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Apellidos</label>
+                <label for="inputLast" class="col-sm-2 control-label">Apellidos</label>
                 <div class="col-sm-10">
-                  {!!Form::input('text','lastname', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
+                  {!!Form::input('text','lastname', null ,['class'=>'form-control','id'=>'inputLast','required'])!!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Contraseña</label>
+                <label for="inputPass" class="col-sm-2 control-label">Contraseña</label>
                 <div class="col-sm-10">
-                    {!!Form::input('password','password', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
+                    {!!Form::input('password','password', null ,['class'=>'form-control','id'=>'inputPass','required'])!!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Tipo de documento</label>
+                <label for="inputType" class="col-sm-2 control-label">Tipo de documento</label>
                 <div class="col-sm-10">
                   {!! Form::select('di_type', [
                      '1' => 'DNI',
@@ -41,21 +41,21 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Documento de Identidad</label>
+                <label for="inputDi" class="col-sm-2 control-label">Documento de Identidad</label>
                 <div class="col-sm-10">
-                  {!!Form::input('text','di', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!} 
+                  {!!Form::input('number','di', null ,['class'=>'form-control','id'=>'inputDi','required','min'=>0])!!} 
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Dirección</label>
+                <label for="inputAddress" class="col-sm-2 control-label">Dirección</label>
                 <div class="col-sm-10">
-                  {!!Form::input('text','address', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
+                  {!!Form::input('text','address', null ,['class'=>'form-control','id'=>'inputAddress','required'])!!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Teléfono(s)</label>
+                <label for="inputPhone" class="col-sm-2 control-label">Teléfono(s)</label>
                 <div class="col-sm-10">
-                  {!!Form::input('text','phone', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
+                  {!!Form::input('number','phone', null ,['class'=>'form-control','id'=>'inputPhone','required','min'=>0])!!}
                 </div>
               </div>
               <div class="form-group">
@@ -65,13 +65,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Nacimiento</label>
+                <label for="inputBirth" class="col-sm-2 control-label">Nacimiento</label>
                 <div class="col-sm-10">
-                    {!!Form::input('date','birthday', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
+                    {!!Form::input('date','birthday', null ,['class'=>'form-control','id'=>'inputBirth','required'])!!}
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Cargo</label>
+                <label for="inputRole" class="col-sm-2 control-label">Cargo</label>
                 <div class="col-sm-10">
                 {!!Form::select('role_id', ['2' => 'Vendedor', '3' => 'Promotor de Ventas',  '4'=>'Administrador'], null, ['class'=>'form-control','required'])!!}
                 </div>
