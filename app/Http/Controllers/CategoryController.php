@@ -70,7 +70,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories_list = Category::where('type', '3')->lists('name','id');
+        $categories_list = Category::where('type', '1')->lists('name','id');
         return view('internal.admin.newCategory',['categories_list' => $categories_list]);
     }
 
