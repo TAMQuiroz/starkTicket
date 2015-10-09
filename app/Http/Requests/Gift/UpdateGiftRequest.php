@@ -24,8 +24,8 @@ class UpdateGiftRequest extends Request
     public function rules()
     {
         return [
-            'name'          =>  'required',
-            'description'   =>  'required',
+            'name'          =>  'required|max:20',
+            'description'   =>  'required|mas:100',
             'points'        =>  'required',
             'stock'         =>  'required',
             'image'         =>  'image'
