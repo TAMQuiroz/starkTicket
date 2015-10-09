@@ -11,7 +11,7 @@
 @section('content')
 	<h5>Ingrese Código de Comprobante</h5>
     <div class="input-group" style="width:290px">
-        <input type="text" class="form-control" placeholder="Código de comprobante">
+        {!! Form::text('code', null, array('class' => 'form-control', 'placeholder'=>'Código de comprobante')) !!} 
         <span class="input-group-btn">
             <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#detail">Buscar</button>
         </span>
