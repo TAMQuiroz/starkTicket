@@ -12,8 +12,8 @@ class UpdateCategoryRequest extends FormRequest
 
     public function rules() {
         return [
-            'name'          => '',
-            'image_file'    => 'image',
+            'name'          => 'max:20|unique:categories,name,'.$this->input('id'),
+            'image'         => 'image',
             'description'   => '',
             'father_id'     => 'exists:categories,id'
         ];
