@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\organizer;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Http\Requests\Organizer\StoreOrganizerRequest;
+use App\Http\Requests\Organizer\UpdateOrganizerRequest;
 use App\Http\Controllers\Controller;
+use App\Services\FileService;
 
 class OrganizerController extends Controller
 {
@@ -13,9 +17,17 @@ class OrganizerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $this->file_service = new FileService();
+    }
+     
     public function index()
     {
-        return view('internal.promoter.organizers');
+        $organizador = organizer::paginate(6);
+        $organizador->setPath('organizers');
+        return view('internal.promoter.organizers', compact('organizador'));
+
     }
 
     /**
@@ -34,9 +46,29 @@ class OrganizerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreOrganizerRequest $request)
     {
-        //
+    
+        $input = $request->all();
+
+        $organizer               =   new organizer ;
+        $organizer->organizerName         =   $input['organizerName'];
+        $organizer->organizerLastName     =   $input['organizerLastName'];
+        $organizer->businessName     =   $input['businessName'];
+        $organizer->ruc      =   $input['ruc'];
+        $organizer->countNumber           =   $input['countNumber'];
+        $organizer->telephone      =   $input['telephone'];      
+        $organizer->dni        =   $input['dni'];      
+        $organizer->email        =   $input['email'];      
+        $organizer->address        =   $input['address'];      
+       
+        if($request->file('image')!=null)
+           $organizer->image        =   $this->file_service->upload($request->file('image'),'organizer'); 
+
+
+        $organizer->save();
+        
+        return redirect('promoter/organizers');
     }
 
     /**
@@ -58,7 +90,10 @@ class OrganizerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $organizador = organizer::find($id);
+        return view('internal.promoter.editOrganizer', compact('organizador'));
+
+
     }
 
     /**
@@ -68,9 +103,31 @@ class OrganizerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateOrganizerRequest $request, $id)
     {
-        //
+        
+        $input = $request->all();
+
+        $organizer               =   organizer::find($id) ;
+        $organizer->organizerName         =   $input['organizerName'];
+        $organizer->organizerLastName     =   $input['organizerLastName'];
+        $organizer->businessName     =   $input['businessName'];
+        $organizer->ruc      =   $input['ruc'];
+        $organizer->countNumber           =   $input['countNumber'];
+        $organizer->telephone      =   $input['telephone'];      
+        $organizer->dni        =   $input['dni'];      
+        $organizer->email        =   $input['email'];      
+        $organizer->address        =   $input['address'];      
+
+   
+        if($request->file('image')!=null)
+           $organizer->image        =   $this->file_service->upload($request->file('image'),'organizer'); 
+
+
+
+        $organizer->save();
+        
+        return redirect('promoter/organizers');
     }
 
     /**
@@ -81,6 +138,8 @@ class OrganizerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $organizer = organizer::find($id);
+        $organizer->delete();
+        return redirect('promoter/organizers');
     }
 }
