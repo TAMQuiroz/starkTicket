@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
+use App\Http\Requests\Ticket\StoreTicketRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class TicketController extends Controller
 {
@@ -67,7 +71,11 @@ class TicketController extends Controller
      */
     public function createSalesman($id)
     {
-        return view('internal.salesman.buy');
+        //Buscar y enviar info de evento con $id
+        $event = array(
+            'id' => $id
+        );
+        return view('internal.salesman.buy',compact('event'));
     }
 
     /**
@@ -76,9 +84,54 @@ class TicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTicketRequest $request)
     {
-        //
+        //dd($request->all());
+        //$event = Event::find($request['event_id']);
+        //Deberia jalar los ids de los asientos del evento pero estoy usando un json por mientras
+        $seats = json_decode($request['seats']);
+        return back()->withInput($request->except('seats'))->withErrors(['El asiento 1 no esta libre']);
+        /*
+        foreach($seats as $seat_id){
+            if($seat->status != config('constants.free')){
+                return back()->withInput()->withErrors(['El asiento '. $seat_id.' no esta libre']);
+            }
+        }
+        */
+       
+        //DB::beginTransaction();
+
+        try{
+            foreach($seats as $seat_id){
+
+                //$seat = Seat::find($seat_id);
+                //
+                //Cambiar estado de asiento
+                //DB::table('seats')->where('id', $seat_id)->update(['status' => config('constants.occupied')]);
+                //  
+                //Crear ticket
+                //DB::table('tickets')->insertGetId(
+                //['paymentDate'  => new Carbon(),
+                // 'reserve'      => 0,
+                // 'cancelled'    => 0,
+                // 'owner_id'     => $request['user_id'],
+                // 'event_id'     => $request['event_id'],
+                // 'seat_id'      => $seat_id
+                // ]
+                //);
+                //
+                //Aumentar puntos de cliente
+            }
+            //Disminuir disponibles
+            //DB::table('events')->where('id', $request['event_id'])->update(['available' => $event->available - sizeof($seats)]);
+            //
+            //DB::commit();
+        }catch (\Exception $e){
+            DB::rollback();
+        }
+        die();
+        
+        return redirect()->route('ticket.success.salesman');
     }
 
     /**
@@ -100,6 +153,16 @@ class TicketController extends Controller
     public function showSuccess()
     {
         return view('internal.client.successBuy');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showSuccessSalesman()
+    {
+        return view('internal.salesman.successBuy');
     }
 
     /**
@@ -139,5 +202,11 @@ class TicketController extends Controller
     public function giveaway()
     {
         return view('internal.salesman.giveaway');
+    }
+
+    public function getClient(request $request)
+    {
+        $user = User::where('di', $request['id'])->first();
+        return $user;
     }
 }

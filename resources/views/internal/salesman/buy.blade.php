@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-   
+    {!!Form::open(array('route' => 'ticket.store'))!!}
     <fieldset>
         <legend>Información del evento</legend>
         <div class="select Type"> 
@@ -18,8 +18,9 @@
                 <div style="-webkit-columns: 100px 3;">
                     <h4> Codigo del Evento </h4>
                     {!! Form::text('code', '09213241', ['class' => 'form-control', 'disabled']) !!}
+                    {!!Form::hidden('event_id',$event['id'])!!}
                     <h4> Nombre del Evento </h4>
-                    {!! Form::text('name', 'Piaf de Pam Gems', ['class' => 'form-control', 'disabled']) !!}
+                    {!! Form::text('event_name', 'Piaf de Pam Gems', ['class' => 'form-control', 'disabled']) !!}
                     <h4>Entradas Disponibles</h4>
                     {!! Form::text('available', '520', ['class' => 'form-control', 'disabled']) !!}  
                 </div>
@@ -32,7 +33,7 @@
                     {!! Form::select('zone', ['VIP', 'Platea'], null, ['class' => 'form-control']) !!}
                 </div>
                 <h4> Promoción </h4>
-                {!! Form::select('date', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
+                {!! Form::select('promotion', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
             </label>
         </div>
         <br>
@@ -65,20 +66,17 @@
           </table>
         </div>
         <fieldset>
-        <legend>Información del cliente</legend>
-        <div style="-webkit-columns: 100px 2;">
-            <h5>Ingrese Usuario</h5>
-            <div class="input-group" style="width:290px">
-                {!! Form::text('number', null, ['class' => 'form-control', 'placeholder' => 'Documento de Identidad...']) !!}
-                <span class="input-group-btn">
-                    <button class="btn btn-info" type="button">Buscar</button>
-                </span>
-            </div><!-- /input-group -->
-            <h5>Nombre de Cliente</h5>
-            {!! Form::text('name', 'Peppa', ['class' => 'form-control', 'disabled']) !!}
-        </div>
+            <legend>Información del cliente</legend>
+            <div style="-webkit-columns: 100px 2;">
+                <h5>Ingrese Usuario</h5>
+                <div class="input-group" style="width:290px">
+                    {!! Form::number('number', null, ['class' => 'form-control', 'placeholder' => 'Documento de Identidad...','id'=>'user_di','min'=>0]) !!}
+                </div><!-- /input-group -->
+                <h5>Nombre de Cliente</h5>
+                {!! Form::text('name', null, ['class' => 'form-control', 'disabled', 'id'=>'user_name']) !!}
+                {!! Form::hidden('user_id', null, ['id'=>'user_id'])!!}
+            </div>
             
-            <!--<input type="submit" value="Submit">-->
             <br>
             <br>
         </fieldset>
@@ -105,6 +103,7 @@
                 <div style="clear:both"></div>
            </div>
         </div>
+        {!!Form::hidden('seats',null, array('id'=>'seats'))!!}
         <!-- Content Row -->
         <!-- /.row -->
         <hr>
@@ -126,14 +125,16 @@
                               <div class="form-group">
                                   <div class="form-group">
                                     <label>Número de Tarjeta</label>
-                                    {!! Form::text('number', '', ['class' => 'form-control', 'placeholder' => '1234 5678 9012 3456']) !!}
+                                    {!! Form::text('credit_number', '', ['class' => 'form-control', 'placeholder' => '1234 5678 9012 3456']) !!}
                                     <label>Fecha de expiración</label>
                                     {!! Form::text('expiration', '', ['class' => 'form-control', 'placeholder' => 'mm/aa']) !!}
                                     <label for="exampleInputEmail2">Código de Seguridad</label>
-                                    {!! Form::text('code', '', ['class' => 'form-control', 'placeholder' => '123']) !!}
+                                    {!! Form::text('security_code', '', ['class' => 'form-control', 'placeholder' => '123']) !!}
                                   </div>
-                                  <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Pagar Entrada</button>
+                                  
+                                  {!!Form::submit('Pagar Entrada',array('class'=>'btn btn-info','id'=>'submit'))!!}
                                   <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                                  
                               </div>
                             </form>
                         </div>
@@ -149,9 +150,8 @@
                             <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
                         </div>
                         <div class="modal-body">
-                            <form>
-                              <div class="form-group">
-                                  <div class="form-group">
+                            <div class="form-group">
+                                <div class="form-group">
                                     <label for="exampleInputEmail2">Tipo de Cambio: S/.2.90</label>
                                     <br>
                                     <label for="exampleInputEmail2">Monto Ingresado</label>
@@ -161,11 +161,11 @@
                                     {!! Form::text('pay', '', ['class' => 'form-control', 'placeholder' => '90/00']) !!}
                                     <label for="exampleInputEmail2">Vuelto</label>
                                     {!! Form::text('return', '', ['class' => 'form-control', 'placeholder' => '10.00', 'disabled']) !!}
-                                  </div>
-                                  <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Aceptar</button>
-                                  <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                              </div>
-                            </form>
+                                </div>
+                                {!!Form::submit('Aceptar',array('class'=>'btn btn-info'))!!}
+                                  
+                                <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -179,9 +179,8 @@
                             <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
                         </div>
                         <div class="modal-body">
-                            <form>
-                              <div class="form-group">
-                                  <div class="form-group">
+                            <div class="form-group">
+                                <div class="form-group">
                                     <label for="exampleInputEmail2">Monto a Pagar</label>
                                     <input type="text" class="form-control" placeholder="S/.90.00" readonly="">
                                     <h4>Pago con tarjeta</h4>
@@ -193,50 +192,63 @@
                                     <input type="number" class="form-control" placeholder="123">
                                     <label for="exampleInputEmail2">Monto a pagar con tarjeta</label>
                                     <input type="number" class="form-control" placeholder="60">
-                                  </div>
+                                </div>
                                   
-                              </div>
-                              <div class="form-group">
-                                  <div class="form-group">
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group">
                                     <h4>Pago con efectivo</h4>
                                     <h4>Tipo de Cambio: S/.2.90</h4>
                                     <label for="exampleInputEmail2">Monto Ingresado</label>
                                     <input type="text" class="form-control" placeholder="S/.100.00">
                                     <label for="exampleInputEmail2">Vuelto</label>
                                     <input type="text" class="form-control" placeholder="S/.10.00" readonly>
-                                    <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#end" data-whatever="@mdo">Pagar Entrada</button>
+                                    {!!Form::submit('Pagar Entrada',array('class'=>'btn btn-info'))!!}
                                     <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                                  </div>
-                              </div>
-                            </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div> 
-
-            <div class="modal fade" id="end" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="exampleModalLabel">Fin de venta</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                              <div class="form-group">
-                                  <div class="form-group">
-                                    <label for="exampleInputEmail2">Venta exitosa!</label>
-                              </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>      
         </div>
-    </fieldset>    
+    </fieldset>  
+    {!!Form::close()!!}
+
+
 @stop
 
 @section('javascript')
 	{!!Html::script('js/jquery.seat-charts.min.js')!!}
 	{!!Html::script('js/seats.js')!!}
+    
+    <script type="text/javascript">
+        $('#user_di').focusout( function() {
+            $.ajax({
+                url: "{{ URL::route('ajax.getClient') }}",
+                type: 'get',
+                data: 
+                { 
+                    id: $('#user_di').val()
+                },
+                success: function( response ){
+                    //console.log(response);
+                    if(response != "")
+                    {
+                        $('#user_name').val(response.name+" "+response.lastname);
+                        $('#user_id').val(response.id);
+                    }
+                    else
+                    {
+                        $('#user_name').val('No existe ese cliente');
+                        $('#user_di').val("");
+                        $('#user_id').val(0);
+                    }
+                },
+                error: function( response ){
+                    
+                }
+            });
+        });
+    </script>
 @stop

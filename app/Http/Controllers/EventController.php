@@ -68,7 +68,8 @@ class EventController extends Controller
      */
     public function showExternal($id)
     {
-        return view('external.event');
+        $user = \Auth::user();
+        return view('external.event',compact('user'));
     }
 
     /**
