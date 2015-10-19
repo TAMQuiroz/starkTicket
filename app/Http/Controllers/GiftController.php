@@ -88,7 +88,7 @@ class GiftController extends Controller
         $gift->points       =   $input['points'];
         $gift->stock        =   $input['stock'];
         if($gift->stock > 0)    
-            $gift->status   =   config('constants.available');
+            $gift->status   =   config('constants.gift_available');
         elseif($gift->stock == 0)
             $gift->status   =   config('constants.soldOut');   
         //Control de subida de imagen por hacer
@@ -141,7 +141,7 @@ class GiftController extends Controller
         $gift->points       =   $input['points'];
         $gift->stock        =   $input['stock'];
         if($gift->stock > 0)    
-            $gift->status   =   config('constants.available');
+            $gift->status   =   config('constants.gift_available');
         elseif($gift->stock == 0)
             $gift->status   =   config('constants.soldOut');
         //Control de subida de imagen
