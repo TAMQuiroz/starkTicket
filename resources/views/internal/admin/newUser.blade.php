@@ -90,7 +90,7 @@
                   <button type="submit" class="btn btn-info">Guardar</button>
                   <button type="reset" class="btn btn-info">Cancelar</button
                 </div>
-              </div>
+              </div>x
            {!!Form::close()!!}
           </div>
         </div>

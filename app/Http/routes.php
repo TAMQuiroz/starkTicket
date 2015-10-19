@@ -67,9 +67,15 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/event/editEvent', 'EventController@edit');
     Route::get('promoter/event/{event_id}', ['as' => 'events.store', 'uses' =>'EventController@show']);
     Route::get('promoter/promotion', 'PromoController@index');
+
+    //Aca se inicia el CRUD de promotor
     Route::get('promoter/organizers', 'OrganizerController@index');
     Route::get('promoter/organizer/create', 'OrganizerController@create');
-    
+    Route::post('promoter/organizer/create', 'OrganizerController@store');
+    Route::get('promoter/organizer/{id}/edit', 'OrganizerController@edit'); 
+    Route::post('promoter/organizer/{id}/edit', 'OrganizerController@update'); // faltan
+    Route::get('promoter/organizer/{id}/delete', 'OrganizerController@destroy');
+  
     
 });
 
