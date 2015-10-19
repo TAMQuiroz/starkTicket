@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\User;
 
 class EventController extends Controller
 {
@@ -68,7 +69,20 @@ class EventController extends Controller
      */
     public function showExternal($id)
     {
-        return view('external.event');
+        // $object = Event::findOrFail($id);
+        $object = array(
+                "id" => $id,
+                "name" => "Evento ".$id,
+                "important" => False,
+                "description" => "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, ",
+                "status" => True,
+                "date" => "2015-12-12",
+                "time" => "foo",
+                "image" => "images/piaf.jpg",
+                "available" => true,
+                "local" => "object"
+            );
+        return view('external.event', ['event' => (object)$object]);
     }
 
     /**
