@@ -93,7 +93,7 @@ class TicketController extends Controller
         return back()->withInput($request->except('seats'))->withErrors(['El asiento 1 no esta libre']);
         /*
         foreach($seats as $seat_id){
-            if($seat->status != config('constants.free')){
+            if($seat->status != config('constants.seat_free')){
                 return back()->withInput()->withErrors(['El asiento '. $seat_id.' no esta libre']);
             }
         }
@@ -107,7 +107,7 @@ class TicketController extends Controller
                 //$seat = Seat::find($seat_id);
                 //
                 //Cambiar estado de asiento
-                //DB::table('seats')->where('id', $seat_id)->update(['status' => config('constants.occupied')]);
+                //DB::table('seats')->where('id', $seat_id)->update(['status' => config('constants.seat_occupied')]);
                 //  
                 //Crear ticket
                 //DB::table('tickets')->insertGetId(
