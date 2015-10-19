@@ -37,6 +37,11 @@ Route::get('event/successBuy', 'TicketController@showSuccess');
 Route::get('event/{id}', 'EventController@showExternal');
 
 Route::group(['middleware' => ['auth', 'client']], function () {
+    Route::get('client/', 'ClientController@profile');
+    Route::get('client/edit', 'ClientController@edit');
+    Route::post('client/update', 'ClientController@update');
+    Route::get('client/password', 'ClientController@password');
+    Route::post('client/password', 'ClientController@passwordUpdate');
     Route::get('client/home', 'PagesController@clientHome');
     Route::get('client/event_record', 'EventController@showClientRecord');
     //Estos 2 inician en el detalle del evento
