@@ -14,11 +14,6 @@ use App\Services\FileService;
 
 class AdminController extends Controller
 {
-    public function client()
-    {
-        return view('internal.admin.client');
-    }
-
     public function salesman()
     {
         return view('internal.admin.salesman');
@@ -53,7 +48,7 @@ class AdminController extends Controller
         return view('internal.admin.editAdmin', compact('user'));
     }
 
-    public function updateAdmin(UpdateAdminRequest $request, $id) 
+    public function updateAdmin(UpdateAdminRequest $request, $id)
     {
         $input = $request->all();
 
@@ -61,16 +56,16 @@ class AdminController extends Controller
         $user->name         =   $input['name'];
         $user->lastName     =   $input['lastname'];
 
-        if ($input['password'] != null ) 
+        if ($input['password'] != null )
             $user->password     =   bcrypt($input['password']);
-        
+
         $user->di_type      =   $input['di_type'];
         $user->di           =   $input['di'];
-        $user->address      =   $input['address'];      
-        $user->phone        =   $input['phone'];      
-        $user->email        =   $input['email'];      
-        $user->birthday     =   new Carbon($input['birthday']);      
-        $user->role_id      =   $input['role_id'];      
+        $user->address      =   $input['address'];
+        $user->phone        =   $input['phone'];
+        $user->email        =   $input['email'];
+        $user->birthday     =   new Carbon($input['birthday']);
+        $user->role_id      =   $input['role_id'];
        /* if($request->file('image')!=null)
            $user->image        =   $this->file_service->upload($request->file('image'),'user'); */
 
@@ -95,18 +90,18 @@ class AdminController extends Controller
         $user->password     =   bcrypt($input['password']);
         $user->di_type      =   $input['di_type'];
         $user->di           =   $input['di'];
-        $user->address      =   $input['address'];      
-        $user->phone        =   $input['phone'];      
-        $user->email        =   $input['email'];      
-        $user->birthday     =   new Carbon($input['birthday']);      
-        $user->role_id      =   $input['role_id'];      
+        $user->address      =   $input['address'];
+        $user->phone        =   $input['phone'];
+        $user->email        =   $input['email'];
+        $user->birthday     =   new Carbon($input['birthday']);
+        $user->role_id      =   $input['role_id'];
        /*
         if($request->file('image')!=null)
            $gift->image        =   $this->file_service->upload($request->file('image'),'gift'); */
 
 
         $user->save();
-        
+
         return redirect('admin');
     }
 
