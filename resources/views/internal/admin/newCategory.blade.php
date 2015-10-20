@@ -34,7 +34,7 @@
         <div class="form-group">
           <label class="col-sm-2" for="isSub">Subcategoria?</label>
           <div class="col-sm-10">
-            <input id="isSub" type="checkbox" @if (old('father_id') != '') checked @endif data-toggle="collapse" data-target="#subcategoryForm">  
+            <input id="isSub" type="checkbox" @if (old('father_id') != '') checked @endif data-toggle="collapse" data-target="#subcategoryForm" @if (count($categories_list)===0) disabled @endif>  
           </div>
         </div>
         <div id="subcategoryForm" class="collapse form-group @if (old('father_id') != '') in @endif">
