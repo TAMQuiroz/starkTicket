@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Event;
+use App\Models\Zone;
+use App\Models\Function;
+use App\Models\Seat;
 
 class EventController extends Controller
 {
@@ -44,9 +49,58 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEventRequest $request)
     {
-        //
+        $event = new Event();
+        $event->name = $request->input('name');
+        $event->description = $request->input('description');
+        $event->category_id = $request->input('category_id');
+        $event->organizer_id = $request->input('organizer_id');
+        $event->place_id = $request->input('local_id');
+        $event->image = $this->file_service->upload($request->file('image').'event');
+        $event->save();
+
+        $functions_ids = new array();
+        foreach($request->input('function_starts_at') as $key=>$value){
+            $function = new Function();
+            $function->starts_at = strtotime($value);
+            $function->ends_at = strtotime($request->input('function_ends_at'.$key));
+            $function->sold_out = false;
+            $function->cancelled = false;
+            $function->event()->associate($event);
+            $function->save();
+            $functions_ids[$key] = [$function->id => ['status' => config('constants.seat_available')]];
+        }
+
+        foreach($request->input('zone_names') as $key=>$value){
+            $zone = new Zone();
+            $zone->name = $value;
+            $zone->capacity = $request->input('zone_capacity'.$key);
+            $zone->event()->associate($event);
+            if($request->input('zone_columns'.$key, '') != ''){ 
+                $zone->columns = $request->input('zone_columns'.$key);
+                $zone->rows = $request->input('zone_rows'.$key);
+                $zone->start_column = $request->input('start_column'.$key);
+                $zone->start_row = $request->input('start_row'.$key);
+                $zone->save();
+                foreach($zone->rows as $row){
+                    foreach($zone->columns as $column){
+                        $seat = new Seat();
+                        $seat->row = $row;
+                        $seat->column = $column;
+                        $seat->zone()->associate($zone);
+                        $seat->save();
+                        $seat->function()->attach($functions_ids);
+                    }
+                }
+            }
+            else $zone->save();
+            foreach($request->input('price'.$key) as $public_key=>$price){
+                $zone->public()->attach($public_key, ['price' => $price]);
+            }
+        }
+        //return redirect()->route('admin.categories.show', $event->id);
+        return response()->json(['message' => 'Interest added']);
     }
 
     /**
