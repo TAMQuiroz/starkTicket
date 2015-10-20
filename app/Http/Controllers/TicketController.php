@@ -117,6 +117,7 @@ class TicketController extends Controller
                 // 'cancelled'    => 0,
                 // 'owner_id'     => $request['user_id'],
                 // 'event_id'     => $request['event_id'],
+                // 'amount'       => TARIFA DE ACUERDO A ZONA DEL ASIENTO ELEGIDO,
                 // 'seat_id'      => $seat_id
                 // ]
                 //);
