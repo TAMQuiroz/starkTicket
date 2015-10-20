@@ -2,6 +2,12 @@
 
 @section('style')
     {!!Html::style('css/seats.css')!!}
+    <style type="text/css">
+        .boxy{
+            position: relative;
+            bottom: 10px
+        }
+    </style>
 @stop
 
 @section('title')
@@ -18,18 +24,18 @@
                     <h4 class="boxy"> Codigo del Evento </h4>
                     {!! Form::text('code', '09213241', ['class' => 'form-control boxy', 'disabled']) !!}
                     {!!Form::hidden('event_id',$event['id'])!!}
-                    <h4 class="boxy"> Nombre del Evento </h4>
-                    {!! Form::text('event_name', 'Piaf de Pam Gems', ['class' => 'form-control boxy', 'disabled']) !!}
-                    <h4 class="boxy">Entradas Disponibles</h4>
-                    {!! Form::text('available', '520', ['class' => 'form-control boxy', 'disabled']) !!}  
+                    <h4 > Nombre del Evento </h4>
+                    {!! Form::text('event_name', 'Piaf de Pam Gems', ['class' => 'form-control', 'disabled']) !!}
+                    <h4 >Entradas Disponibles</h4>
+                    {!! Form::text('available', '520', ['class' => 'form-control', 'disabled']) !!}  
                 </div>
                 <div style="-webkit-columns: 100px 3;">
                     <h4 class="boxy"> Fecha del Evento </h4>
                     {!! Form::select('date', ['18 Octubre', '19 Octubre', '20 Octubre'], null, ['class' => 'form-control boxy']) !!}
-                    <h4 class="boxy"> Hora </h4>
-                    {!! Form::select('hour', ['19:00', '21:00'], null, ['class' => 'form-control boxy']) !!}
-                    <h4 class="boxy"> Zona del Evento </h4>
-                    {!! Form::select('zone', ['VIP', 'Platea'], null, ['class' => 'form-control boxy']) !!}
+                    <h4 > Hora </h4>
+                    {!! Form::select('hour', ['19:00', '21:00'], null, ['class' => 'form-control']) !!}
+                    <h4 > Zona del Evento </h4>
+                    {!! Form::select('zone', ['VIP', 'Platea'], null, ['class' => 'form-control']) !!}
                 </div>
                 <h4> Promoción </h4>
                 {!! Form::select('promotion', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
