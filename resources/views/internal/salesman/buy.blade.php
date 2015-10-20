@@ -166,32 +166,11 @@
     {!!Html::script('js/main.js')!!}
 
     <script type="text/javascript">
-        $('#user_di').focusout( function() {
-            $.ajax({
-                url: "{{ URL::route('ajax.getClient') }}",
-                type: 'get',
-                data: 
-                { 
-                    id: $('#user_di').val()
-                },
-                success: function( response ){
-                    //console.log(response);
-                    if(response != "")
-                    {
-                        $('#user_name').val(response.name+" "+response.lastname);
-                        $('#user_id').val(response.id);
-                    }
-                    else
-                    {
-                        $('#user_name').val('No existe ese cliente');
-                        $('#user_di').val("");
-                        $('#user_id').val(0);
-                    }
-                },
-                error: function( response ){
-                    
-                }
-            });
-        });
+        var config = {
+        routes: [
+            { zone: "{{ URL::route('ajax.getClient') }}" }
+        ]
+    };
     </script>
+        
 @stop
