@@ -67,7 +67,7 @@
             	<h4>Ingrese correo:</h4>
 				  <div class="form-group">
 				    <label for="exampleInputEmail2">Email</label>
-				    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+				    {!! Form::email('email', null, array('class' => 'form-control', 'placeholder' => 'E-mail', 'required')) !!}
 				  </div>
 				  <button type="submit" class="btn btn-info">Enviar</button>
 				  <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>

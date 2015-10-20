@@ -1,5 +1,18 @@
 @extends('layout.salesman')
 
+@section('style')
+    <style type="text/css">
+    .form-control{
+        width: 80%;
+        display: inline-block;
+    }
+    h5{
+        display: inline-block;
+        width: 18%;
+    }
+    </style>
+@stop
+
 @section('title')
 	Canjeo de premios <small>Muñeco void</small>
 @stop
@@ -43,27 +56,13 @@
                  <h2>Void 500 pts</h2><h4>Stock 50 unidades </h4>
         <br>  <br>
         <button type="button" class="btn btn-info">Buscar Cliente </button>
-        <br>
-  Nombre:  <input type="text" name="fname" style="
-    width: 174px;
-    padding-top: 3px;
-    margin-top: 40px;
-     margin-left: 3px;
-    border-left-width: 2px;
-    border-right-width: 2px;
-    margin-bottom: 15px;
-   "><br>
-   Puntos:
-
-   <input type="text" name="lname" style="
-    margin-bottom: 10‒;
-    margin-bottom: 0px;
-    border-left-width: 2px;
-    margin-left: 8px;">
-
-
-
-    <br>  <br>
+        <br><br>
+        <h5>Nombre</h5>
+        {!! Form::text('name', null, array('class' => 'form-control', 'disabled')) !!}
+        <br><br>
+        <h5>Puntos </h5>
+        {!! Form::text('points', null, array('class' => 'form-control', 'disabled')) !!}
+        <br><br>
 
 <button type="button" class="btn btn-info">  Canjear puntos  </button>
 

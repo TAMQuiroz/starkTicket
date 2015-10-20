@@ -33,15 +33,15 @@
             <form class="form-horizontal" method="post">
               <div style="-webkit-columns: 100px 2;">
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
+                  <label for="input1" class="col-sm-2 control-label">Nombre</label>
                   <div class="col-sm-10">
-                    <input type="text" name="name" class="form-control" id="inputEmail3" value="{{ old('name') }}">
+                    {!! Form::text('name', null, array('class' => 'form-control', 'id' => 'input1', 'required')) !!}
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Apellido</label>
+                  <label for="input2" class="col-sm-2 control-label">Apellido</label>
                   <div class="col-sm-10">
-                    <input type="text" name="lastname" class="form-control" id="inputEmail3">
+                    {!! Form::text('lastname', null, array('class' => 'form-control', 'id' => 'input2', 'required')) !!}
                   </div>
                 </div>
               </div> 
@@ -50,62 +50,58 @@
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">Doc. Id.</label>
                   <div class="col-sm-10">
-                    <select class="form-control">
-                      <option>DNI</option>
-                      <option>Carnet de Extranjería</option>
-                      <option>Pasaporte</option>
-                    </select>
+                    {!! Form::select('typeDocument', ['DNI', 'Carnet de Extranjería', 'Pasaporte'], null, ['class' => 'form-control', 'required']) !!}
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Nro. Doc.</label>
+                  <label for="input3" class="col-sm-2 control-label">Nro. Doc.</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    {!! Form::text('typeDocument', null, array('class' => 'form-control', 'id' => 'input3', 'required')) !!}
                   </div>
                 </div>
               </div>
               <br>
               <div style="-webkit-columns: 100px 2;">  
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Direccion</label>
+                  <label for="input4" class="col-sm-2 control-label">Dirección</label>
                   <div class="col-sm-10">
-                    <input type="text" name="address" class="form-control" id="inputEmail3">
+                    {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'input4', 'required')) !!}
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Cumpleaños</label>
+                  <label for="input5" class="col-sm-2 control-label">Cumpleaños</label>
                   <div class="col-sm-10">
-                    <input type="date" name="birthday" class="form-control" id="inputEmail3">
+                    {!!Form::input('date','birthday', null ,['class'=>'form-control','id'=>'input5','required'])!!}
                   </div>
                 </div>
               </div> 
               <br>
               <div style="-webkit-columns: 100px 2;">
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Telefono</label>
+                  <label for="input6" class="col-sm-2 control-label">Teléfono</label>
                   <div class="col-sm-10">
-                    <input type="number" name="phone" class="form-control" id="inputEmail3">
+                    {!! Form::text('telephone', null, array('class' => 'form-control', 'id' => 'input6', 'required')) !!}
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                  <label for="input7" class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-10">
-                    <input type="email" name="email" class="form-control" id="inputEmail3" value="{{ old('email') }}">
+                    {!! Form::email('email', null, array('class' => 'form-control', 'id' => 'input7', 'required')) !!}
                   </div>
                 </div>
               </div>
               <br>
               <div style="-webkit-columns: 100px 2;">  
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Password</label>
+                  <label for="input8" class="col-sm-2 control-label">Password</label>
                   <div class="col-sm-10">
-                    <input type="password" name="password" class="form-control" id="inputEmail3">
+                    {!! Form::password('password', array('class' => 'form-control', 'id'=> 'input8', 'required')) !!}
                   </div>
                 </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Confirmar</label>
+                  <label for="input9" class="col-sm-2 control-label">Confirmar</label>
                   <div class="col-sm-10">
-                    <input type="password" name="passowrd_confirmation" class="form-control" id="inputEmail3">
+                    {!! Form::password('confirmPassword', array('class' => 'form-control', 'id'=> 'input9', 'required')) !!}
                   </div>
                 </div>
               </div>  
@@ -113,18 +109,10 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Agrege las categorías de su preferencia</label>
                   <div class="col-sm-10" style="width:300px;">
-                    <select class="form-control">
-                      <option>Categoria 1</option>
-                      <option>Categoria 2</option>
-                      <option>Categoria 3</option>
-                      <option>Categoria 4</option>
-                      <option>Categoria 5</option>
-                      <option>Categoria 6</option>
-                      <option>Categoria 7</option>
-                      <option>Categoria 8</option>
-                    </select>
+                    {!! Form::select('category1', ['Categoria 1', 'Categoria 2', 'Categoria 3', 'Categoria 4'], null, ['class' => 'form-control', 'required']) !!}
+                    
                   </div>
-                  <button type="submit" class="btn btn-info">Agregar</button>
+                <button type="submit" class="btn btn-info">Agregar</button>  
               </div>
               <br>
               <div class="form-group">
