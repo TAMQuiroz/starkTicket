@@ -2,12 +2,6 @@
 
 @section('style')
     {!!Html::style('css/seats.css')!!}
-    <style type="text/css">
-        .boxy{
-            position: relative; 
-            bottom: 10px;
-        }
-    </style>
 @stop
 
 @section('title')
@@ -126,7 +120,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail2">Monto a Pagar</label>
+                                <label>Monto a Pagar</label>
                                 <input type="text" class="form-control" placeholder="S/.90.00" readonly="">
                                 <br>
                                 <div class="form-group checkbox pay">
@@ -135,11 +129,11 @@
                                     <label for="exampleInputEmail2">Número de Tarjeta</label>
                                     <input type="number" id="creditCardNumber" class="form-control" placeholder="1234 5678 9012 3456" disabled="true">
                                     <label for="exampleInputEmail2">Fecha de expiración</label>
-                                    <input type="date" class="form-control" placeholder="mm/aa">
+                                    <input type="date" id="expirationDate" class="form-control" placeholder="mm/aa" disabled="true">
                                     <label for="exampleInputEmail2">Código de Seguridad</label>
-                                    <input type="number" class="form-control" placeholder="123">
+                                    <input type="number" id="securityCode" class="form-control" placeholder="123" disabled="true">
                                     <label for="exampleInputEmail2">Monto a pagar con tarjeta</label>
-                                    <input type="number" class="form-control" placeholder="60">
+                                    <input type="number" id="payment" class="form-control" placeholder="60" disabled="true">
                                 </div>
                                 <br>  
                                 <div class="form-group checkbox pay">
@@ -147,7 +141,7 @@
                                     <h5>Tipo de Cambio: S/.2.90</h5>
                                     <hr>
                                     <label for="exampleInputEmail2">Monto Ingresado</label>
-                                    <input type="text" class="form-control" placeholder="S/.50.00">
+                                    <input type="text" id="amount" class="form-control" placeholder="S/.50.00" disabled="true">
                                     <label for="exampleInputEmail2">Vuelto</label>
                                     <input type="text" class="form-control" placeholder="S/.10.00" readonly>
                                     <br>
