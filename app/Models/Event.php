@@ -27,7 +27,7 @@ class Event extends Model
         return $this->hasMany('App\Models\Zone');
     }
 
-    public function functions(){
-        return $this->hasMany('App\Models\Function');
+    public function presentations(){
+        return $this->hasMany('App\Models\Presentation');
     }
 }

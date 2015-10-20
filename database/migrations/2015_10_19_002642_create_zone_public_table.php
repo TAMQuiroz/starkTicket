@@ -13,8 +13,8 @@ class CreateZonePublicTable extends Migration
     public function up()
     {
         Schema::create('public_zone', function (Blueprint $table) {
-            $table->integer('public_id')->index('public_zone_public_id_foreign');;
-            $table->integer('zone_id')->index('public_zone_zone_id_foreign');;
+            $table->integer('public_id')->unsigned()->index('public_zone_public_id_foreign');
+            $table->integer('zone_id')->unsigned()->index('public_zone_zone_id_foreign');
             $table->float('price');
         });
     }

@@ -12,14 +12,14 @@ class AddFkToZonePublicTable extends Migration
      */
     public function up()
     {
-        Schema::create('public_zone', function (Blueprint $table) {
+        Schema::table('public_zone', function (Blueprint $table) {
 
             $table->foreign('zone_id')
                   ->references('id')
-                  ->on('zones')->onDelete('cascade');
-            $table->foreign('public_id')
+                  ->on('zones')->onDelete('CASCADE');
+            /*$table->foreign('public_id')
                   ->references('id')
-                  ->on('public')->onDelete('cascade');
+                  ->on('public');*/
         });
     }
 
@@ -32,7 +32,7 @@ class AddFkToZonePublicTable extends Migration
     {
         Schema::table('public_zone', function (Blueprint $table) {
             $table->dropForeign('public_zone_zone_id_foreign');
-            $table->dropForeign('public_zone_public_id_foreign');
+            //$table->dropForeign('public_zone_public_id_foreign');
         });
     }
 }

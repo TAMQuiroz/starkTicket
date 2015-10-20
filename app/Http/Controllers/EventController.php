@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Zone;
-use App\Models\Function;
-use App\Models\Seat;
+use App\Models\Presentation;
+use App\Models\Slot;
 
 class EventController extends Controller
 {
@@ -56,15 +55,15 @@ class EventController extends Controller
         $event->description = $request->input('description');
         $event->category_id = $request->input('category_id');
         $event->organizer_id = $request->input('organizer_id');
-        $event->place_id = $request->input('local_id');
-        $event->image = $this->file_service->upload($request->file('image').'event');
+        $event->place_id = 4; //$request->input('local_id');
+        $event->image = 'null'; //$this->file_service->upload($request->file('image').'event');
         $event->save();
 
-        $functions_ids = new array();
+        $functions_ids = array();
         foreach($request->input('function_starts_at') as $key=>$value){
-            $function = new Function();
+            $function = new Presentation();
             $function->starts_at = strtotime($value);
-            $function->ends_at = strtotime($request->input('function_ends_at'.$key));
+            $function->ends_at = strtotime($request->input('function_ends_at.'.$key));
             $function->sold_out = false;
             $function->cancelled = false;
             $function->event()->associate($event);
@@ -75,32 +74,40 @@ class EventController extends Controller
         foreach($request->input('zone_names') as $key=>$value){
             $zone = new Zone();
             $zone->name = $value;
-            $zone->capacity = $request->input('zone_capacity'.$key);
+            $zone->capacity = $request->input('zone_capacity.'.$key);
             $zone->event()->associate($event);
-            if($request->input('zone_columns'.$key, '') != ''){ 
-                $zone->columns = $request->input('zone_columns'.$key);
-                $zone->rows = $request->input('zone_rows'.$key);
-                $zone->start_column = $request->input('start_column'.$key);
-                $zone->start_row = $request->input('start_row'.$key);
+            if($request->input('zone_columns.'.$key, '') != ''){ 
+                $zone->columns = $request->input('zone_columns.'.$key);
+                $zone->rows = $request->input('zone_rows.'.$key);
+                $zone->start_column = $request->input('start_column.'.$key);
+                $zone->start_row = $request->input('start_row.'.$key);
                 $zone->save();
                 foreach($zone->rows as $row){
                     foreach($zone->columns as $column){
-                        $seat = new Seat();
+                        $seat = new Slot();
                         $seat->row = $row;
                         $seat->column = $column;
                         $seat->zone()->associate($zone);
                         $seat->save();
-                        $seat->function()->attach($functions_ids);
+                        $seat->presentation()->attach($functions_ids);
                     }
                 }
             }
-            else $zone->save();
-            foreach($request->input('price'.$key) as $public_key=>$price){
-                $zone->public()->attach($public_key, ['price' => $price]);
+            else{ 
+                $zone->save();
+                for( $i=1; $i<= ($zone->capacity); $i++) {
+                    $seat = new Slot();
+                    $seat->zone()->associate($zone);
+                    $seat->save();
+                    //$seat->presentation()->attach($functions_ids);
+                }
+            }
+            foreach($request->input('price.'.$key) as $public_key=>$price){
+                //$zone->public()->attach($public_key, ['price' => $price]);
             }
         }
         //return redirect()->route('admin.categories.show', $event->id);
-        return response()->json(['message' => 'Interest added']);
+        return response()->json(['message' => 'Event added']);
     }
 
     /**

@@ -12,7 +12,7 @@ class CreateFunctionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('functions', function (Blueprint $table) {
+        Schema::create('presentations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('event_id')->unsigned();
             $table->timestamps(); 
@@ -30,6 +30,6 @@ class CreateFunctionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('functions');
+        Schema::drop('presentations');
     }
 }

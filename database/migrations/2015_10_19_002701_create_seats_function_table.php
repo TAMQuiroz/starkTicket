@@ -12,9 +12,9 @@ class CreateSeatsFunctionTable extends Migration
      */
     public function up()
     {
-        Schema::create('seats_function', function (Blueprint $table) {
-            $table->integer('seat_id')->index('seats_function_seat_id_foreign');
-            $table->integer('function_id')->index('seats_function_function_id_foreign');
+        Schema::create('slot_presentation', function (Blueprint $table) {
+            $table->integer('slot_id')->unsigned()->index('slot_presentation_slot_id_foreign');
+            $table->integer('presentation_id')->unsigned()->index('slot_presentation_presentation_id_foreign');
             $table->integer('status');
         });
     }
@@ -26,6 +26,6 @@ class CreateSeatsFunctionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('seats_function');
+        Schema::drop('slot_presentation');
     }
 }

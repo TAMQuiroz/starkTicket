@@ -12,11 +12,12 @@ class CreateSeatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('seats', function (Blueprint $table) {
+        Schema::create('slots', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('row');
-            $table->integer('column');
-            $table->integer('zone_id');
+            $table->integer('row')->nullable();
+            $table->integer('column')->nullable();
+            $table->integer('zone_id')->unsigned();
+            $table->timestamps();
         });
     }
 
@@ -27,6 +28,6 @@ class CreateSeatsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('seats');
+        Schema::drop('slots');
     }
 }

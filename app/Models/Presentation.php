@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Function extends Model
+class Presentation extends Model
 {
-    protected $table = 'functions';
+    protected $table = 'presentations';
 
     public function event(){
         return $this->belongsTo('App\Models\Event');
     }
 
-    public function seats(){
-        return $this->belongsToMany('App\Models\Seat')->withPivot('status');
+    public function slots(){
+        return $this->belongsToMany('App\Models\Slot')->withPivot('status');
     }
 
 }
