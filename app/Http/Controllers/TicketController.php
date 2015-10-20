@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\User;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -86,11 +87,11 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
-        //dd($request->all());
-        //$event = Event::find($request['event_id']);
         //Deberia jalar los ids de los asientos del evento pero estoy usando un json por mientras
         $seats = json_decode($request['seats']);
+        //dd($request->all());
         return back()->withInput($request->except('seats'))->withErrors(['El asiento 1 no esta libre']);
+        
         /*
         foreach($seats as $seat_id){
             if($seat->status != config('constants.seat_free')){
@@ -99,16 +100,16 @@ class TicketController extends Controller
         }
         */
        
-        //DB::beginTransaction();
+        DB::beginTransaction();
 
         try{
             foreach($seats as $seat_id){
 
                 //$seat = Seat::find($seat_id);
-                //
+                
                 //Cambiar estado de asiento
                 //DB::table('seats')->where('id', $seat_id)->update(['status' => config('constants.seat_occupied')]);
-                //  
+                
                 //Crear ticket
                 //DB::table('tickets')->insertGetId(
                 //['paymentDate'  => new Carbon(),
@@ -119,17 +120,23 @@ class TicketController extends Controller
                 // 'seat_id'      => $seat_id
                 // ]
                 //);
-                //
+                
+                //Disminuir disponibles
+                //$event = Event::find($request['event_id']);
+                //DB::table('events')->where('id', $request['event_id'])->update(['available' => $event->available - 1]);
+                
                 //Aumentar puntos de cliente
+                $user = User::find($request['user_id']);
+                DB::table('users')->where('id', $request['user_id'])->update(['points' => $user->points + 1]);
+                
             }
-            //Disminuir disponibles
-            //DB::table('events')->where('id', $request['event_id'])->update(['available' => $event->available - sizeof($seats)]);
-            //
-            //DB::commit();
+            
+            
+            DB::commit();
         }catch (\Exception $e){
             DB::rollback();
         }
-        die();
+        dd('Finish');
         
         return redirect()->route('ticket.success.salesman');
     }
@@ -204,6 +211,11 @@ class TicketController extends Controller
         return view('internal.salesman.giveaway');
     }
 
+    /**
+     * Returns a client if it exists
+     * @param  request $request DI of the user
+     * @return Object           User::
+     */
     public function getClient(request $request)
     {
         $user = User::where('di', $request['id'])->first();
