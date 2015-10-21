@@ -135,14 +135,18 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
     
-    Route::get('admin/promoter', 'AdminController@promoter');
-    Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
+
     
     Route::get('admin/admin', 'AdminController@admin');
     Route::get('admin/user/new', 'AdminController@newUser');
+    //StoreEditDeleteAdmin
     Route::post('admin/user/new', 'AdminController@store');
     Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
     Route::post('admin/admin/{id}/edit', 'AdminController@updateAdmin');
     Route::get('admin/admin/{id}/delete', 'AdminController@destroy');
-
-});
+    //StoreEditDeleteSellPromoter
+    Route::get('admin/promoter', 'AdminController@promoter');
+    Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
+    Route::post('admin/promoter/{id}/edit', 'AdminController@updatePromoter');
+    Route::get('admin/promoter/{id}/delete', 'AdminController@destroyPromoter');
+})  ;
