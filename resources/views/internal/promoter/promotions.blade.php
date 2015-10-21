@@ -14,14 +14,7 @@
             <!-- Content Column -->
             <div class="col-md-9">
 				<div class="container">  <!-- Comienza primer despliegue-->
-					
-			    	<div class="input-group" style="width:300px">
-			      		{!! Form::text('search','', array('class' => 'form-control')) !!}
-			      		<span class="input-group-btn">
-					    	<button class="btn btn-info" type="button">Buscar</button>
-					    </span>
-			    	</div><!-- /input-group -->
-				    
+									    
 				    <br><br>
 					<div class="table-responsive">
 					  <table class="table table-bordered table-striped">
@@ -195,17 +188,30 @@
 					<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo1">Agregar Promoción</button>
 					<div id="demo1" class="collapse">
 						<br>
-						<h4>Ingrese datos de nueva promoción</h4>
-						<label>
-							Código: {!! Form::text('codePromotion','9898083', array('class' => 'form-control','required','disabled')) !!}
-							Nombre: {!! Form::text('promotionName','', array('class' => 'form-control','required')) !!}
-							Fecha Inicio: {!! Form::date('dateIni','', array('class' => 'form-control','required')) !!}
-							Fecha Fin: {!! Form::date('dateEnd','', array('class' => 'form-control','required')) !!}
-							Hora Inicio: {!! Form::time('timeIni','', array('class' => 'form-control','required')) !!}
-							Hora Fin: {!! Form::time('timeEnd','', array('class' => 'form-control','required')) !!}
-							Descripcion: {!! Form::text('description','9898083', array('class' => 'form-control','required')) !!}
-							Descuento (%): {!! Form::text('discount','9898083', array('class' => 'form-control','required')) !!}
-						</label>
+						<legend>Ingrese datos de nueva promoción</legend>
+						
+							<div style="-webkit-columns: 100px 3;">
+								<h4>Código</h4>
+								{!! Form::text('codePromotion','9898083', array('class' => 'form-control','required','disabled')) !!}
+								<h4>Nombre</h4>
+								{!! Form::text('promotionName','', array('class' => 'form-control','required')) !!}	
+								<h4>Descuento (%)</h4>
+								{!! Form::text('discount','%', array('class' => 'form-control','required')) !!}
+							</div>
+							<div style="-webkit-columns: 100px 4;">
+								<h4>Fecha Inicio</h4>
+								{!! Form::date('dateIni','', array('class' => 'form-control','required')) !!}
+								<h4>Fecha Fin</h4>
+								{!! Form::date('dateEnd','', array('class' => 'form-control','required')) !!}
+								<h4>Hora Inicio</h4>
+								{!! Form::time('timeIni','', array('class' => 'form-control','required')) !!}
+								<h4>Hora Fin</h4>
+								{!! Form::time('timeEnd','', array('class' => 'form-control','required')) !!}
+							</div>
+							<h4>Descripción</h4>
+							{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'required']) !!}
+							
+						
 						
 						<br><br>
 						<h4>Agregar eventos:</h4>
@@ -216,34 +222,8 @@
 						    </span>
 				    	</div><!-- /input-group -->
 				    	<br>
-				    	<h5>Seleccionar Zona:</h5>
-						{!! Form::select('zone', ['Vip','Platea'],null,['class' => 'form-control','id' => 'zona','required']) !!}
-						<br>
-						<button class="btn btn-info" type="button">Agregar Zona y Promoción</button>
-						<br><br>
-						<div class="table-responsive">
-						  <table class="table table-bordered table-striped">
-						    <thead>
-						        <tr>
-						            <th>Nombre</th>
-						            <th>Zona</th>
-						            <th>Eliminar</th>
-						        </tr>
-						    </thead>
-						    <tbody>
-						        <tr>
-						            <td>Viva por el Rock 6</td>
-						            <td>VIP</td>
-						            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
-						        </tr>
-						        <tr>
-						            <td>Arctic Monkeys Lima 2020</td>
-						            <td>VIP</td>
-						            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
-						        </tr>
-						    </tbody>
-						  </table>
-						</div>
+
+				    	
 						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#end" data-whatever="@mdo">Guardar</button>
 						<button type="button" class="btn btn-info">Cancelar</button>
 						<div class="modal fade" id="end" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
