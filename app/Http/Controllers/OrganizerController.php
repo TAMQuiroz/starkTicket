@@ -24,7 +24,7 @@ class OrganizerController extends Controller
      
     public function index()
     {
-        $organizador = organizer::paginate(6);
+        $organizador = organizer::paginate(2);
         $organizador->setPath('organizers');
         return view('internal.promoter.organizers', compact('organizador'));
 
