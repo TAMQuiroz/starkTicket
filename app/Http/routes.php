@@ -63,8 +63,9 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/event/record', 'EventController@showPromoterRecord');
     Route::get('promoter/event/create', 'EventController@create');
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
-    Route::get('promoter/event/editEvent', 'EventController@edit');
-    Route::get('promoter/event/{event_id}', ['as' => 'events.store', 'uses' =>'EventController@show']);
+    Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit');
+    Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update');
+    Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
     Route::get('promoter/promotion', 'PromoController@index');
 
     //Aca se inicia el CRUD de promotor

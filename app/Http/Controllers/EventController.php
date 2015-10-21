@@ -43,7 +43,7 @@ class EventController extends Controller
     public function create()
     {
         $categories_list = Category::all()->lists('name','id');
-        //$organizers_list = Organizer::all()->lists('name','id');
+        $organizers_list = Organizer::all()->lists('name','id');
         $locals_list = Local::all()->lists('name','id');
         return view('internal.promoter.newEvent');
     }
@@ -109,8 +109,8 @@ class EventController extends Controller
                 }
             }
         }
-        //return redirect()->route('admin.categories.show', $event->id);
-        return response()->json(['message' => 'Event added']);
+        return redirect()->route('events.edit', $event->id);
+        //return response()->json(['message' => 'Event added']);
     }
 
     /**
@@ -171,7 +171,7 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
         return view('internal.promoter.editEvent');
     }
