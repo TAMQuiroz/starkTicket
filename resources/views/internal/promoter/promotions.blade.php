@@ -60,25 +60,26 @@
 					      </div>
 					      <div class="modal-body">
 					        <form>
+								
 					          <div class="form-group">
 					            <label for="recipient-name" class="control-label">Nombre:</label>
-					            <input type="text" class="form-control" id="recipient-name" value="Promoción Visa Platinium">
+					            {!! Form::text('editName','Promoción Visa Platinium', array('class' => 'form-control','required')) !!}
 					          </div>
 					          <div class="form-group">
 					            <label for="recipient-name" class="control-label">Fecha Fin:</label>
-					            <input type="date" class="form-control" id="recipient-name" value="13/10/2015">
+					            {!! Form::date('editDate','13/10/2015', array('class' => 'form-control','required')) !!}
 					          </div>
 					          <div class="form-group">
 					            <label for="recipient-name" class="control-label">Hora Fin:</label>
-					            <input type="datetime" class="form-control" id="recipient-name" value="24:00">
+					            {!! Form::time('editTime','24:00', array('class' => 'form-control','required')) !!}
 					          </div>
 					          <div class="form-group">
 					            <label for="recipient-name" class="control-label">Descripción:</label>
-					            <input type="text" class="form-control" id="recipient-name">
+					            {!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'required']) !!}
 					          </div>
 					          <div class="form-group">
 					            <label for="recipient-name" class="control-label">Descuento (%):</label>
-					            <input type="text" class="form-control" id="recipient-name">
+					            {!! Form::text('editDiscount','%', array('class' => 'form-control','required')) !!}
 					          </div>
 					          <h4 class="modal-title" id="exampleModalLabel">Agregar eventos:</h4>
 							  <div class="input-group" style="width:300px">
@@ -88,39 +89,6 @@
 							    </span>
 					    	 </div><!-- /input-group -->
 					    	 <br>
-					    	<h5>Seleccionar Zona:</h5>
-					        <select class="form-control" style="width:260px">
-			                    <option value="">VIP</option>
-			                    <option value="saab">Campo</option>
-			                    <option value="mercedes">Occidente</option>
-			                </select>
-							<br>
-							<button class="btn btn-info" type="button">Agregar Zona y Promoción</button>
-							<br><br>
-					    	 <br>
-					          <div class="table-responsive">
-								  <table class="table table-bordered">
-								    <thead>
-								        <tr>
-								            <th>Nombre</th>
-								            <th>Zona</th>
-								            <th>Eliminar</th>
-								        </tr>
-								    </thead>
-								    <tbody>
-								        <tr>
-								            <td>Viva por el Rock 6</td>
-								            <td>VIP</td>
-								            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
-								        </tr>
-								        <tr>
-								            <td>Arctic Monkeys Lima 2020</td>
-								            <td>VIP</td>
-								            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
-								        </tr>
-								    </tbody>
-								  </table>
-								</div>
 					        </form>
 					      </div>
 					      <div class="modal-footer">
