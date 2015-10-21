@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\organizer;
+use App\Models\Organizer;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\Organizer\StoreOrganizerRequest;

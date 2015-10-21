@@ -46,13 +46,13 @@
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">Teléfono</label>
               <div class="col-sm-10">
-                {!!Form::input('text','phone', $module->phone ,['class'=>'form-control','id'=>'inputPhone','required'])!!}
+                {!!Form::input('number','phone', $module->phone ,['class'=>'form-control','id'=>'inputPhone','required'])!!}
               </div>
             </div>
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">Correo</label>
               <div class="col-sm-10">
-                {!!Form::input('text','email', $module->email ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
+                {!!Form::input('email','email', $module->email ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
               </div>
             </div>
             <div class="form-group">
