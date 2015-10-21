@@ -16,8 +16,4 @@ class Zone extends Model
     public function slots(){
         return $this->hasMany('App\Models\Slot');
     }
-/*
-    public function public(){
-        return $this->belongToMany('App\Models\Public')->withPivot('price');
-    }*/
 }

@@ -16,10 +16,10 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('category_id')->unsigned();
-            $table->integer('place_id')->unsigned();
+            $table->integer('local_id')->unsigned();
             $table->integer('organizer_id')->unsigned();
-            $table->string('description', 65535);
-            $table->string('image', 65535);
+            $table->string('description');
+            $table->string('image');
             $table->timestamps();       
             $table->softDeletes();
         });

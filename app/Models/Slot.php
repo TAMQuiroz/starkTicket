@@ -14,6 +14,6 @@ class Slot extends Model
     }
 
     public function presentation(){
-        return $this->belongsToMany('App\Models\Presentation')->withPivot('status');
+        return $this->belongsToMany('App\Models\Presentation','slot_presentation')->withPivot('status');
     }
 }

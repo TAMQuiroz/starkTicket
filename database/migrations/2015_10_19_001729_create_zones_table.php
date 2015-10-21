@@ -22,6 +22,7 @@ class CreateZonesTable extends Migration
             $table->integer('rows')->nullable();
             $table->integer('start_column')->nullable();
             $table->integer('start_row')->nullable();
+            $table->float('price');
         });
     }
 
