@@ -52,7 +52,10 @@ class EventController extends Controller
         $categories_list = Category::all()->lists('name','id');
         $organizers_list = Organizer::all()->lists('name','id');
         $locals_list = Local::all()->lists('name','id');
-        return view('internal.promoter.newEvent');
+        $array = ['categories_list' =>$categories_list,
+                'organizers_list'   =>$organizers_list,
+                'locals_list'       =>$locals_list];
+        return view('internal.promoter.newEvent', $array);
     }
 
     /**
