@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Module\StoreModuleRequest;
 use App\Http\Requests\Module\UpdateModuleRequest;
 use App\Module;
+use Carbon\Carbon;
 use App\Services\FileService;
 
 class ModuleController extends Controller
@@ -66,7 +67,11 @@ class ModuleController extends Controller
         $module->address      =   $input['address'];
         $module->district     =   $input['district'];
         $module->province     =   $input['province']; 
-        $module->state        =   $input['state'];       
+        $module->state        =   $input['state'];    
+        $module->phone        =   $input['phone'];
+        $module->email        =   $input['email'];     
+        $module->starTime     =   new Carbon($input['starTime']); 
+        $module->endTime      =   new Carbon($input['endTime']);       
         
         //Control de subida de imagen
         $module->image        =   $this->file_service->upload($request->file('image'),'module');
@@ -118,7 +123,11 @@ class ModuleController extends Controller
         $module->address      =   $input['address'];
         $module->district     =   $input['district'];
         $module->province     =   $input['province'];      
-        $module->state        =   $input['state'];      
+        $module->state        =   $input['state'];  
+        $module->phone        =   $input['phone'];   
+        $module->email        =   $input['email']; 
+        $module->starTime     =   new Carbon($input['starTime']); 
+        $module->endTime      =   new Carbon($input['endTime']);      
         
         //Control de subida de imagen
         if($request->file('image')!=null)
