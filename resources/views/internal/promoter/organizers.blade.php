@@ -1,3 +1,4 @@
+
 @extends('layout.promoter')
 
 @section('style')
@@ -25,99 +26,29 @@
             <th>Eliminar</th>
         </tr>
     </thead>
-    <tbody>
-        <tr>
-            <td>Organizador 1</td>
-            <td>22334455</td>
-            <td>email@gmail.com</td>
-            <td>2551231236</td>
-            <td>23</td>
-            <td>
-                <a class="btn btn-info" href="#" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-            </td>    
-            <td>
-                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a></td>
-        </tr>
-        <tr>
-            <td>Organizador 1</td>
-            <td>22334455</td>
-            <td>email@gmail.com</td>
-            <td>2551231236</td>
-            <td>23</td>
-            <td>
-                <a class="btn btn-info" href="#" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-            </td>    
-            <td>
-                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a></td>
+     <tbody>
 
-        </tr>
+     @foreach($organizador as $organizer)
         <tr>
-            <td>Organizador 1</td>
-            <td>22334455</td>
-            <td>email@gmail.com</td>
-            <td>2551231236</td>
-            <td>23</td>
+            <td>{{$organizer->organizerName}}</td>
+            <td>{{$organizer->telephone}}</td>
+            <td>{{$organizer->email}}</td>
+            <td>{{$organizer->ruc}}</td>
+            <td>4</td>
             <td>
-                <a class="btn btn-info" href="#" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
+                <a class="btn btn-info" href="{{url('promoter/organizer/'.$organizer->id.'/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
             </td>    
             <td>
-                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a></td>
-
+                <a class="btn btn-info" href="{{url('promoter/organizer/'.$organizer->id.'/delete')}}"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a></td>
         </tr>
-        <tr>
-            <td>Organizador 1</td>
-            <td>22334455</td>
-            <td>email@gmail.com</td>
-            <td>2551231236</td>
-            <td>23</td>
-            <td>
-                <a class="btn btn-info" href="#" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-            </td>    
-            <td>
-                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a></td>
+    @endforeach
 
-        </tr>
-        <tr>
-            <td>Organizador 1</td>
-            <td>22334455</td>
-            <td>email@gmail.com</td>
-            <td>2551231236</td>
-            <td>23</td>
-            <td>
-                <a class="btn btn-info" href="#" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-            </td>    
-            <td>
-                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a></td>
-
-        </tr>
-        <tr>
-            <td>Organizador 1</td>
-            <td>22334455</td>
-            <td>email@gmail.com</td>
-            <td>2551231236</td>
-            <td>23</td>
-           <td>
-                <a class="btn btn-info" href="#" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-            </td>    
-            <td>
-                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a></td>
-
-        <tr>
-            <td>Organizador 1</td>
-            <td>22334455</td>
-            <td>email@gmail.com</td>
-            <td>2551231236</td>
-            <td>23</td>
-            <td>
-                <a class="btn btn-info" href="#" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-            </td>    
-            <td>
-                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a></td>
-
-        </tr>
+    
     </tbody>
   </table>
 </div>
+
+{!!$organizador->render()!!}
 @stop
 
 @section('javascript')

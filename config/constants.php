@@ -12,5 +12,9 @@ return [
    
    	'national'		=>1,
    	'international'	=>2,
-    
+
+   	//Status de los asientos 
+   	'seat_available' => 1,
+   	'seat_reserved'  => 2, 
+   	'seat_taken'	 => 3,    
 ];

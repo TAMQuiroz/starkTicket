@@ -20,11 +20,21 @@
                 <th>Editar</th>
                 <th>Eliminar</th>
             </tr>
+            @foreach($promoters as $promoter)
             <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
+                <td>{{$promoter->lastname}} {{$promoter->name}}</td>
+                <td>
+                   
+                @if($promoter->di_type == '1')
+                    DNI
+                @else
+                   Carne de Extranjeria
+                @endif
+          
+
+                </td>
+                <td>{{$promoter->di}}</td>
+                <td>{{$promoter->phone}}</td>
                 <td><a class="btn btn-info" href="#" title="Detalles"  data-toggle="modal" data-target="#edit"><i class="glyphicon glyphicon-plus"></i></a>
 
                     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -50,77 +60,17 @@
                     </div>
                 </td>
                 <td>
-                  <a class="btn btn-info" href="{{url('admin/promoter/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
+                  <a class="btn btn-info" href="{{url('admin/promoter/'.$promoter->id.'/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
                 </td>
                 <td>
-                  <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
+                  <a class="btn btn-info" href="{{url('admin/promoter/'.$promoter->id.'/delete')}}"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
                 </td>
             </tr>
-            <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
-                <td>
-                  <a class="btn btn-info" href="#" title="Detalles"  data-toggle="modal" data-target="#edit"><i class="glyphicon glyphicon-plus"></i></a>
-                </td>
-                <td>
-                  <a class="btn btn-info" href="{{url('admin/promoter/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-                </td>
-                <td>
-                  <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
-                <td>
-                  <a class="btn btn-info" href="#" title="Detalles"  data-toggle="modal" data-target="#edit"><i class="glyphicon glyphicon-plus"></i></a>
-                </td>
-                <td>
-                  <a class="btn btn-info" href="{{url('admin/promoter/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-                </td>
-                <td>
-                  <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
-                <td>
-                  <a class="btn btn-info" href="#" title="Detalles"  data-toggle="modal" data-target="#edit"><i class="glyphicon glyphicon-plus"></i></a>
-                </td>
-                <td>
-                  <a class="btn btn-info" href="{{url('admin/promoter/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-                </td>
-                <td>
-                  <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
-                </td>
-            </tr>
+            @endforeach
+
         </table>
-        <nav>
-            <ul class="pagination">
-              <li>
-                <a href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li>
-                <a href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+             {!!$promoters->render()!!}
+ 
 @stop
 
 @section('javascript')
