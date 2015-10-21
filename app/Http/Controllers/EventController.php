@@ -55,8 +55,13 @@ class EventController extends Controller
         $event->description = $request->input('description');
         $event->category_id = $request->input('category_id');
         $event->organizer_id = $request->input('organizer_id');
+<<<<<<< Updated upstream
         $event->place_id = 4; //$request->input('local_id');
         $event->image = 'null'; //$this->file_service->upload($request->file('image').'event');
+=======
+        $event->local_id = $request->input('local_id');
+        $event->image = $this->file_service->upload($request->file('image'),'event');
+>>>>>>> Stashed changes
         $event->save();
 
         $functions_ids = array();
