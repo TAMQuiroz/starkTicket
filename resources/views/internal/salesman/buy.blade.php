@@ -2,12 +2,6 @@
 
 @section('style')
     {!!Html::style('css/seats.css')!!}
-    <style type="text/css">
-        .boxy{
-            position: relative;
-            bottom: 10px
-        }
-    </style>
 @stop
 
 @section('title')
