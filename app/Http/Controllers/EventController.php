@@ -9,6 +9,9 @@ use App\Models\Event;
 use App\Models\Zone;
 use App\Models\Presentation;
 use App\Models\Slot;
+use App\Models\Category;
+//use App\Models\Organizer;
+use App\Models\Local;
 
 class EventController extends Controller
 {
@@ -39,6 +42,9 @@ class EventController extends Controller
      */
     public function create()
     {
+        $categories_list = Category::all()->lists('name','id');
+        //$organizers_list = Organizer::all()->lists('name','id');
+        $locals_list = Local::all()->lists('name','id');
         return view('internal.promoter.newEvent');
     }
 
@@ -55,13 +61,8 @@ class EventController extends Controller
         $event->description = $request->input('description');
         $event->category_id = $request->input('category_id');
         $event->organizer_id = $request->input('organizer_id');
-<<<<<<< Updated upstream
-        $event->place_id = 4; //$request->input('local_id');
-        $event->image = 'null'; //$this->file_service->upload($request->file('image').'event');
-=======
         $event->local_id = $request->input('local_id');
         $event->image = $this->file_service->upload($request->file('image'),'event');
->>>>>>> Stashed changes
         $event->save();
 
         $functions_ids = array();
@@ -73,13 +74,13 @@ class EventController extends Controller
             $function->cancelled = false;
             $function->event()->associate($event);
             $function->save();
-            $functions_ids[$key] = [$function->id => ['status' => config('constants.seat_available')]];
+            $functions_ids[$function->id] = ['status' => config('constants.seat_available')];
         }
-
         foreach($request->input('zone_names') as $key=>$value){
             $zone = new Zone();
             $zone->name = $value;
             $zone->capacity = $request->input('zone_capacity.'.$key);
+            $zone->price = $request->input('price.'.$key);
             $zone->event()->associate($event);
             if($request->input('zone_columns.'.$key, '') != ''){ 
                 $zone->columns = $request->input('zone_columns.'.$key);
@@ -104,11 +105,8 @@ class EventController extends Controller
                     $seat = new Slot();
                     $seat->zone()->associate($zone);
                     $seat->save();
-                    //$seat->presentation()->attach($functions_ids);
+                    $seat->presentation()->attach($functions_ids);
                 }
-            }
-            foreach($request->input('price.'.$key) as $public_key=>$price){
-                //$zone->public()->attach($public_key, ['price' => $price]);
             }
         }
         //return redirect()->route('admin.categories.show', $event->id);

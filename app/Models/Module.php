@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Gift extends Model
+class Module extends Model
 {
 	use SoftDeletes;
     
@@ -16,5 +16,5 @@ class Gift extends Model
      */
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['name', 'stock', 'points', 'description', 'image'];
+    protected $fillable = ['name', 'address', 'district', 'province', 'state', 'phone','email','starTime','endTime','image'];
 }

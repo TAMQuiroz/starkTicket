@@ -19,6 +19,10 @@ class CreateModulesTable extends Migration
             $table->string('district');
             $table->string('province');
             $table->string('state');
+            $table->string('phone');
+            $table->string('email');
+            $table->timestamp('starTime');
+            $table->timestamp('endTime');
             $table->string('image');
             $table->timestamps();
             $table->softDeletes();

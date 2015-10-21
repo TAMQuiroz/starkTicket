@@ -16,9 +16,9 @@ class AddFkToEventsTable extends Migration
                     $table->foreign('category_id')
                   ->references('id')
                   ->on('categories');
-            /*$table->foreign('local_id')
+            $table->foreign('local_id')
                   ->references('id')
-                  ->on('locals');*/
+                  ->on('locals');
             $table->foreign('organizer_id')
                   ->references('id')
                   ->on('organizers');
@@ -34,7 +34,7 @@ class AddFkToEventsTable extends Migration
     {
         Schema::table('events', function (Blueprint $table) {
             $table->dropForeign('events_category_id_foreign');
-            //$table->dropForeign('events_local_id_foreign');
+            $table->dropForeign('events_local_id_foreign');
             $table->dropForeign('events_organizer_id_foreign');
         });
     }
