@@ -76,21 +76,21 @@
                 {!!Form::select('role_id', ['2' => 'Vendedor', '3' => 'Promotor de Ventas',  '4'=>'Administrador'], null, ['class'=>'form-control','required'])!!}
                 </div>
               </div>
-              <!-- 
+              
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Imagen</label>
                 <div class="col-sm-10">
                     {!!Form::input('file','image', null ,['class'=>'form-control','id'=>'inputEmai3'])!!}
                 </div>
               </div> 
-               -->
+               
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <!-- <a class="btn btn-info"  data-toggle="modal" data-target="#agregado">Guardar</a> -->
                   <button type="submit" class="btn btn-info">Guardar</button>
                   <button type="reset" class="btn btn-info">Cancelar</button
                 </div>
-              </div>
+              </div>x
            {!!Form::close()!!}
           </div>
         </div>

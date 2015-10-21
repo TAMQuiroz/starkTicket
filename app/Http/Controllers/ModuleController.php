@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Module\StoreModuleRequest;
 use App\Http\Requests\Module\UpdateModuleRequest;
-use App\Module;
+use App\Models\Module;
 use Carbon\Carbon;
 use App\Services\FileService;
 
