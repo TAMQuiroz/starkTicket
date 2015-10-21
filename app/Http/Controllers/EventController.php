@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Requests\Event\StoreEventRequest;
+use App\Http\Requests\Event\UpdateEventRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Zone;
@@ -12,6 +13,7 @@ use App\Models\Slot;
 use App\Models\Category;
 use App\Models\Organizer;
 use App\Models\Local;
+use App\Services\FileService;
 
 class EventController extends Controller
 {
@@ -20,6 +22,11 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $this->file_service = new FileService();
+    }
+
     public function index()
     {
         //
@@ -45,7 +52,10 @@ class EventController extends Controller
         $categories_list = Category::all()->lists('name','id');
         $organizers_list = Organizer::all()->lists('name','id');
         $locals_list = Local::all()->lists('name','id');
-        return view('internal.promoter.newEvent');
+        $array = ['categories_list' =>$categories_list,
+                'organizers_list'   =>$organizers_list,
+                'locals_list'       =>$locals_list];
+        return view('internal.promoter.newEvent', $array);
     }
 
     /**
@@ -57,20 +67,20 @@ class EventController extends Controller
     public function store(StoreEventRequest $request)
     {
         $event = new Event();
-        $event->name = $request->input('name');
-        $event->description = $request->input('description');
-        $event->category_id = $request->input('category_id');
+        $event->name         = $request->input('name');
+        $event->description  = $request->input('description');
+        $event->category_id  = $request->input('category_id');
         $event->organizer_id = $request->input('organizer_id');
-        $event->local_id = $request->input('local_id');
-        $event->image = $this->file_service->upload($request->file('image'),'event');
+        $event->local_id     = $request->input('local_id');
+        $event->image        = $this->file_service->upload($request->file('image'),'event');
         $event->save();
 
         $functions_ids = array();
         foreach($request->input('function_starts_at') as $key=>$value){
             $function = new Presentation();
             $function->starts_at = strtotime($value);
-            $function->ends_at = strtotime($request->input('function_ends_at.'.$key));
-            $function->sold_out = false;
+            $function->ends_at   = strtotime($request->input('function_ends_at.'.$key));
+            $function->sold_out  = false;
             $function->cancelled = false;
             $function->event()->associate($event);
             $function->save();
@@ -78,15 +88,16 @@ class EventController extends Controller
         }
         foreach($request->input('zone_names') as $key=>$value){
             $zone = new Zone();
-            $zone->name = $value;
+            $zone->name     = $value;
             $zone->capacity = $request->input('zone_capacity.'.$key);
-            $zone->price = $request->input('price.'.$key);
+            $zone->price    = $request->input('price.'.$key);
             $zone->event()->associate($event);
-            if($request->input('zone_columns.'.$key, '') != ''){
-                $zone->columns = $request->input('zone_columns.'.$key);
-                $zone->rows = $request->input('zone_rows.'.$key);
+
+            if($request->input('zone_columns.'.$key, '') != ''){ 
+                $zone->columns      = $request->input('zone_columns.'.$key);
+                $zone->rows         = $request->input('zone_rows.'.$key);
                 $zone->start_column = $request->input('start_column.'.$key);
-                $zone->start_row = $request->input('start_row.'.$key);
+                $zone->start_row    = $request->input('start_row.'.$key);
                 $zone->save();
                 foreach($zone->rows as $row){
                     foreach($zone->columns as $column){
@@ -132,6 +143,8 @@ class EventController extends Controller
      */
     public function showExternal($id)
     {
+        $user = \Auth::user();
+
         // $object = Event::findOrFail($id);
         $object = array(
                 "id" => $id,
@@ -145,7 +158,7 @@ class EventController extends Controller
                 "available" => true,
                 "local" => "object"
             );
-        return view('external.event', ['event' => (object)$object]);
+        return view('external.event', ['event' => (object)$object, 'user'=>$user]);
     }
 
     /**
@@ -196,9 +209,26 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(UpdateEventRequest $request, $id)
+    {}
+        $event = Event::find($id);
+        if($request->input('name', '')!= '')
+            $event->name         = $request->input('name');
+        if($request->input('description', '')!= '')
+            $event->description  = $request->input('description');
+        if($request->file('image') != null)
+            $event->image        = $this->file_service->upload($request->file('image'),'event');
+        $event->save();
+        $presentations = $request->input('function_starts_at');
+        foreach ($presentations as $key => $value) {
+            $presentation = Presentation::find($key);
+            if($value != '')
+                $presentation->starts_at = $value;
+            if($request->input('function_ends_at.'.$key,'')!='')
+                $presentation->ends_at = $request->input('function_ends_at.'.$key);
+            $presentation->save();
+        }
+        //cambiar nombre de zona y precio
     }
 
     /**

@@ -58,8 +58,11 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman/giveaway', 'TicketController@giveaway');
     //Este inicia en el detalle del evento
     Route::get('salesman/event/{id}/buy', 'TicketController@createSalesman');
+    Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
+    Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
+    Route::get('getClient', ['uses'=>'TicketController@getClient','as'=>'ajax.getClient']);
 });
-//Fin
+
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/', 'PagesController@promoterHome');
     Route::get('promoter/politics', 'PoliticController@index');
