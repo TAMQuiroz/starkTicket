@@ -64,7 +64,7 @@
                     </div>
                 </td>
                 <td>
-                 <a class="btn btn-info" href="" title="Eliminar" data-toggle="modal" data-target="#deleteModal{{$client->id}}"><i class="glyphicon glyphicon-remove"></i></a>
+                 <a class="btn btn-info" href="" title="Dar de baja" data-toggle="modal" data-target="#deleteModal{{$client->id}}"><i class="glyphicon glyphicon-remove"></i></a>
                 </td>
                 <div class="modal fade"  id="deleteModal{{$client->id}}">
               <div class="modal-dialog">
@@ -78,7 +78,7 @@
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                      <a class="btn btn-info" href="{{url('admin/admin/'.$client->id.'/delete')}}" title="Delete" >Sí</a>
+                      <a class="btn btn-info" href="{{url('admin/client/'.$client->id.'/delete')}}" title="Delete" >Sí</a>
                   </div>
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
