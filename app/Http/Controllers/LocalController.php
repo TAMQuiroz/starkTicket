@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\StoreLocalRequest;
 use App\Http\Requests\Local\UpdateLocalRequest;
-use App\Local;
+use App\Models\Local;
 use App\Services\FileService;
 
 class LocalController extends Controller
