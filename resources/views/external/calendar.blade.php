@@ -1,7 +1,7 @@
 @extends('layoutExternal')
 
 @section('style')
-	{!!Html::style('css/datetimepicker.css')
+	{!!Html::style('css/datepicker.css')
 	<style type="text/css">
 		.full img{
             width: 100%;
@@ -34,7 +34,7 @@
 											<p><b>Precio: </b> S/. 20.00 <br>
 												<b>Fecha: </b> 20/12/2015<br>
 												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
 										</section>
 									</div>
 									<div class="4u">
@@ -44,7 +44,7 @@
 											<p><b>Precio: </b> S/. 20.00 <br>
 												<b>Fecha: </b> 20/12/2015<br>
 												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
 										</section >
 									</div>
 									<div class="4u">
@@ -54,7 +54,7 @@
 											<p><b>Precio: </b> S/. 20.00 <br>
 												<b>Date: </b> 20/12/2015<br>
 												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
 										</section>
 									</div>
 								</div>
@@ -66,7 +66,7 @@
 											<p><b>Precio: </b> S/. 20.00 <br>
 												<b>Date: </b> 20/12/2015<br>
 												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
 										</section>
 									</div>
 									<div class="4u">
@@ -76,7 +76,7 @@
 											<p><b>Precio: </b> S/. 20.00 <br>
 												<b>Date: </b> 20/12/2015<br>
 												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
 										</section style="text-align:center;">
 									</div>
 									<div class="4u">
@@ -86,7 +86,7 @@
 											<p><b>Precio: </b> S/. 20.00 <br>
 												<b>Date: </b> 20/12/2015<br>
 												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
 										</section>
 									</div>
 								</div>
@@ -97,17 +97,21 @@
 
 					<!-- Sidebar -->
 						<div id="sidebar" class="4u">
-							<section>
+							<section class="ui-state-default">
 								<header>
 									<h3>Calendario de eventos</h3>
 								</header>
 
 								<script>
+
 								$(function(){
+
 								    $("#datepicker").datepicker();
 								});
 								  </script>
+								  <div class="ll-skin-latoja">
 								<div id="datepicker"></div>
+								  </div>		
 
 
 								<header>
