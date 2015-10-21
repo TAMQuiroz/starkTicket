@@ -36,7 +36,6 @@ class StoreAdminRequest extends Request
               'email' => 'required|unique:users',
               'birthday' => 'required',
               'role_id' => 'required',
-              'image' => 'image'
             
         ];
     }
