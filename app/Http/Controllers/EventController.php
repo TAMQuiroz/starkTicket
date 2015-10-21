@@ -89,6 +89,7 @@ class EventController extends Controller
             $zone->capacity = $request->input('zone_capacity.'.$key);
             $zone->price    = $request->input('price.'.$key);
             $zone->event()->associate($event);
+
             if($request->input('zone_columns.'.$key, '') != ''){ 
                 $zone->columns      = $request->input('zone_columns.'.$key);
                 $zone->rows         = $request->input('zone_rows.'.$key);
@@ -106,7 +107,7 @@ class EventController extends Controller
                     }
                 }
             }
-            else{ 
+            else{
                 $zone->save();
                 for( $i=1; $i<= ($zone->capacity); $i++) {
                     $seat = new Slot();
@@ -139,7 +140,22 @@ class EventController extends Controller
      */
     public function showExternal($id)
     {
-        return view('external.event');
+        $user = \Auth::user();
+
+        // $object = Event::findOrFail($id);
+        $object = array(
+                "id" => $id,
+                "name" => "Evento ".$id,
+                "important" => False,
+                "description" => "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, ",
+                "status" => True,
+                "date" => "2015-12-12",
+                "time" => "foo",
+                "image" => "images/piaf.jpg",
+                "available" => true,
+                "local" => "object"
+            );
+        return view('external.event', ['event' => (object)$object, 'user'=>$user]);
     }
 
     /**
