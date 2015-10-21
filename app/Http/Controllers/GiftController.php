@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Gift\StoreGiftRequest;
 use App\Http\Requests\Gift\UpdateGiftRequest;
-use App\Gift;
+use App\Models\Gift;
 use App\Services\FileService;
 
 

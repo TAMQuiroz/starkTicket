@@ -10,7 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -63,8 +62,9 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/transfer_payments', 'PaymentController@create');    
     Route::get('promoter/event/record', 'EventController@showPromoterRecord');
     Route::get('promoter/event/create', 'EventController@create');
+    Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
     Route::get('promoter/event/editEvent', 'EventController@edit');
-    Route::get('promoter/event/addFunction', 'EventController@addFunction');
+    Route::get('promoter/event/{event_id}', ['as' => 'events.store', 'uses' =>'EventController@show']);
     Route::get('promoter/promotion', 'PromoController@index');
 
     //Aca se inicia el CRUD de promotor
