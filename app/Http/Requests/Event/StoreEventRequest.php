@@ -13,11 +13,11 @@ class StoreEventRequest extends Request
     public function rules() {
         $rules =  [
             'name'          => 'required|unique:categories|max:30',
-            //'image'         => 'required|image',
+            'image'         => 'required|image',
             'description'   => 'required',
             'category_id'   => 'required|exists:categories,id',
             'organizer_id'  => 'required|exists:organizers,id',
-            //'place_id'      => 'required|exists:places,id',
+            'local_id'      => 'required|exists:local,id',
             'zone_names'    => 'required',
             'function_starts_at' => 'required',
             'function_ends_at'   => 'required'
@@ -55,8 +55,8 @@ class StoreEventRequest extends Request
             'errors' => $errors
         ];
 
-        return response()->json($data, 400);
+        //return response()->json($data, 400);
 
-        //return redirect()->back()->withInput()->withErrors($errors);
+        return redirect()->back()->withInput()->withErrors($errors);
     }
 }

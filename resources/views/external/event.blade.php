@@ -22,12 +22,10 @@
 					<div id="content" class="8u skel-cell-important">
 						<section>
 							<header>
-								<h2>PIAF DE PAM GEMS</h2>
-								<!--<span class="byline">Donec vivamus fermentum nibh in augue praesent</span>-->
-								<p>Teatro Peruano Japonés</p>
+								<h2>{{ $event->name }}</h2>
 							</header>
-							<p><a href="#" class="image full">{!! Html::image('images/piaf.jpg') !!}</a></p>
-							<p>Maecenas pede nisl, elementum eu, ornare ac, malesuada at, erat. Proin gravida orci porttitor enim accumsan lacinia. Donec condimentum, urna non molestie semper, ligula enim ornare nibh, quis laoreet eros quam eget ante. Aliquam libero. Vivamus nisl nibh, iaculis vitae, viverra sit amet, ullamcorper vitae, turpis. Aliquam erat volutpat. Vestibulum dui sem, pulvinar sed, imperdiet nec, iaculis nec, leo. Fusce odio. Etiam arcu dui, faucibus eget, placerat vel, sodales eget, orci. Donec ornare neque ac sem. Mauris aliquet. Aliquam sem leo, vulputate sed, convallis at, ultricies quis, justo. Donec nonummy magna quis risus. Quisque eleifend. Phasellus tempor vehicula justo.</p>
+							<p><a href="#" class="image full">{!! Html::image($event->image) !!}</a></p>
+							<p>{{ $event->description }}</p>
 							<br>
 							<div class="table-responsive">
 							  <table class="table table-bordered" style="widht:1px">
@@ -39,11 +37,11 @@
 							    </thead>
 							    <tbody>
 							        <tr>
-							            <td>VIP</td>  
+							            <td>VIP</td>
 							            <td>S/150.00</td>
 							        </tr>
 							        <tr>
-							            <td>Platea</td>  
+							            <td>Platea</td>
 							            <td>S/.70</td>
 							        </tr>
 							    </tbody>
@@ -64,13 +62,13 @@
 							  <label for="comment">Comentarios:</label>
 							  <h6><button class="btn btn-info">x</button> Peppa: </h6>
 							  {!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.', 'readonly']) !!}
-							  <h6><button class="btn btn-info">x</button> Suzy: </h6>	
+							  <h6><button class="btn btn-info">x</button> Suzy: </h6>
 							  {!! Form::textarea('pastComment2', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.', 'readonly']) !!}
 							</div>
 						</section>
 					</div>
 					<!-- /Content -->
-						
+
 					<!-- Sidebar -->
 					<div id="sidebar" class="4u">
 						<section>
@@ -92,13 +90,13 @@
 						</section>
 					</div>
 					<!-- Sidebar -->
-						
+
 				</div>
-			
+
 			</div>
 		</div>
 	<!-- Main -->
-	
+
 @stop
 
 @section('javascript')
@@ -121,7 +119,7 @@
 			var $cart = $('#selected-seats'), //Sitting Area
 			$counter = $('#counter'), //Votes
 			$total = $('#total'); //Total money
-			
+
 			var sc = $('#seat-map').seatCharts({
 				map: [  //Seating chart
 					'aaaaaaaaaa',
@@ -147,7 +145,7 @@
 						[ 'a', 'available',   'Libre' ],
 						[ 'a', 'unavailable', 'Ocupado'],
 						[ 'a', 'reserved', 'Reservado']
-					]					
+					]
 				},
 				click: function () { //Click event
 					if (this.status() == 'available') { //optional seat
@@ -158,14 +156,14 @@
 
 						$counter.text(sc.find('selected').length+1);
 						$total.text(recalculateTotal(sc)+price);
-									
+
 						return 'selected';
 					} else if (this.status() == 'selected') { //Checked
 							//Update Number
 							$counter.text(sc.find('selected').length-1);
 							//update totalnum
 							$total.text(recalculateTotal(sc)-price);
-								
+
 							//Delete reservation
 							$('#cart-item-'+this.settings.id).remove();
 							//optional
@@ -182,7 +180,7 @@
 			//sold seat
 			sc.get(['4_4','4_5','6_6','6_7','8_5','8_6','8_7','8_8', '10_1', '10_2']).status('unavailable');
 			sc.get(['1_1','5_5']).status('reserved');
-				
+
 		});
 		//sum total money
 		function recalculateTotal(sc) {
@@ -190,7 +188,7 @@
 			sc.find('selected').each(function () {
 				total += price;
 			});
-					
+
 			return total;
 		}
 		</script>
