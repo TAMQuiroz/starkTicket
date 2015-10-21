@@ -44,6 +44,30 @@
               </div>
             </div>
             <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Teléfono</label>
+              <div class="col-sm-10">
+                {!!Form::input('text','phone', $module->phone ,['class'=>'form-control','id'=>'inputPhone','required'])!!}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Correo</label>
+              <div class="col-sm-10">
+                {!!Form::input('text','email', $module->email ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputStartTime" class="col-sm-2 control-label">Hora de Apertura</label>
+              <div class="col-sm-10">
+                {!!Form::input('time','starTime', $module->starTime,['class'=>'form-control','id'=>'inputStartTime','required'])!!}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputEndTime" class="col-sm-2 control-label">Hora de Cierre</label>
+              <div class="col-sm-10">
+                {!!Form::input('time','endTime', $module->endTime ,['class'=>'form-control','id'=>'inputEndTime','required'])!!}
+              </div>
+            </div>
+            <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">Imagen</label>
               <div class="col-sm-10">
                 {!!Form::input('file','image', null ,['class'=>'form-control','id'=>'inputEmail3'])!!}
@@ -53,7 +77,7 @@
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-info">Guardar</button>
-                <button type="reset" class="btn btn-info">Cancelar</button>
+                <a href="{{action('ModuleController@index')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
               </div>
             </div>
           {!!Form::close()!!}

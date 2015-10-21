@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModulesTable extends Migration
+class CreateOrganizerTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,17 +12,18 @@ class CreateModulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('modules', function (Blueprint $table) {
+        
+        Schema::create('organizers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('address');
-            $table->string('district');
-            $table->string('province');
-            $table->string('state');
-            $table->string('phone');
+            $table->string('organizerName');
+            $table->string('organizerLastName');
+            $table->string('businessName');
+            $table->string('ruc');
+            $table->integer('countNumber');
+            $table->integer('telephone');
+            $table->string('dni');
             $table->string('email');
-            $table->timestamp('starTime');
-            $table->timestamp('endTime');
+            $table->string('address');
             $table->string('image');
             $table->timestamps();
             $table->softDeletes();
@@ -36,6 +37,8 @@ class CreateModulesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('modules');
+            
+         Schema::drop('organizers');
+
     }
 }
