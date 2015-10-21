@@ -35,8 +35,6 @@ class UpdateAdminRequest extends Request
               'email' => 'required|unique:users,email,'.$this->input('id'), 
               'birthday' => 'required',
               'role_id' => 'required',
-              'image' => 'image'
-
             
         ];
     } 
