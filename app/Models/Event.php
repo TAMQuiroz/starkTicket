@@ -12,7 +12,7 @@ class Event extends Model
     protected $dates = ['deleted_at'];
 
     public function organization(){
-        return $this->belongsTo('App\organizer');
+        return $this->belongsTo('App\Models\Organizer');
     }
 
     public function category(){

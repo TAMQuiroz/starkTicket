@@ -10,7 +10,7 @@ use App\Models\Zone;
 use App\Models\Presentation;
 use App\Models\Slot;
 use App\Models\Category;
-//use App\Models\Organizer;
+use App\Models\Organizer;
 use App\Models\Local;
 
 class EventController extends Controller
