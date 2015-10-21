@@ -29,7 +29,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Descripcion</label>
+                <label for="inputEmail3" class="col-sm-2 control-label">Descripción</label>
                 <div class="col-sm-10">
                   <!--
                   <textarea class="form-control" rows="5">Lorem ipsum dolor sit amet.</textarea>
@@ -52,8 +52,8 @@
               </div> 
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <a class="btn btn-primary"  data-toggle="modal" data-target="#agregado">Guardar</a>
-                  <button type="reset" class="btn btn-danger">Cancelar</button>
+                  <a class="btn btn-info"  data-toggle="modal" data-target="#save" data-whatever="@mdo">Guardar</a>
+                  <a class="btn btn-info" href="{{url('admin/politics')}}">Cancelar</a>
                 </div>
               </div>
             </form>
@@ -61,6 +61,25 @@
         </div>
         <!-- Final Contenido -->
      </div>
+
+    <div class="modal fade" id="save" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">Politica</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                              <div class="form-group">
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail2">La política fue editada!</label>
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    </div>
 @stop
 
 @section('javascript')

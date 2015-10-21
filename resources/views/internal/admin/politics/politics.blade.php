@@ -15,14 +15,12 @@
                 <th>Descripción</th>
                 <th>Estado</th>
                 <th>Editar</th>
-                <th>Eliminar</th>
             </tr>
             <tr>
                 <td>Politica 1</td>
                 <td>Lorem ipsum dolor sit amet.</td>
                 <td>Activo</td>
                 <td><a class="btn btn-info" href="{{url('admin/politics/1/edit')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></td>
-                <td><a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a></td>
             </tr>
         </table>
         <nav>
