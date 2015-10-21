@@ -20,9 +20,8 @@ return [
 	'promoter'        		=> 3,
 	'admin'	          		=> 4,
 
-	//Estado del asiento
-	'seat_free'            => 1,
-	'seat_occupied'        => 2,
-	'seat_reserved'        => 3,
-    
+   	//Status de los asientos 
+   	'seat_available' => 1,
+   	'seat_reserved'  => 2, 
+   	'seat_taken'	 => 3,    
 ];
