@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Module extends Model
+class Local extends Model
 {
 	use SoftDeletes;
     
@@ -16,5 +16,5 @@ class Module extends Model
      */
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['name', 'address', 'district', 'province', 'state', 'phone','email','starTime','endTime','image'];
+    protected $fillable = ['name', 'capacity', 'address', 'district', 'province', 'state', 'row', 'column', 'image'];
 }
