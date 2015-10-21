@@ -12,7 +12,7 @@ class AddFkToEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::table('events', function (Blueprint $table) {
                     $table->foreign('category_id')
                   ->references('id')
                   ->on('categories');

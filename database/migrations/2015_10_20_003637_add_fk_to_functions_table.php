@@ -12,7 +12,7 @@ class AddFkToFunctionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('functions', function (Blueprint $table) {
+        Schema::table('presentations', function (Blueprint $table) {
         $table->foreign('event_id')
                   ->references('id')
                   ->on('events')->onDelete('cascade');
@@ -26,8 +26,8 @@ class AddFkToFunctionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('functions', function (Blueprint $table) {
-            $table->dropForeign('functions_event_id_foreign');
+        Schema::table('presentations', function (Blueprint $table) {
+            $table->dropForeign('presentations_event_id_foreign');
         });
     }
 }

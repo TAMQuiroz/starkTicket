@@ -10,7 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -64,8 +63,9 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/event/record', 'EventController@showPromoterRecord');
     Route::get('promoter/event/create', 'EventController@create');
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
-    Route::get('promoter/event/editEvent', 'EventController@edit');
-    Route::get('promoter/event/{event_id}', ['as' => 'events.store', 'uses' =>'EventController@show']);
+    Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit');
+    Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update');
+    Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
     Route::get('promoter/promotion', 'PromoController@index');
 
     //Aca se inicia el CRUD de promotor
@@ -135,14 +135,18 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
     
-    Route::get('admin/promoter', 'AdminController@promoter');
-    Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
+
     
     Route::get('admin/admin', 'AdminController@admin');
     Route::get('admin/user/new', 'AdminController@newUser');
+    //StoreEditDeleteAdmin
     Route::post('admin/user/new', 'AdminController@store');
     Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
     Route::post('admin/admin/{id}/edit', 'AdminController@updateAdmin');
     Route::get('admin/admin/{id}/delete', 'AdminController@destroy');
-
-});
+    //StoreEditDeleteSellPromoter
+    Route::get('admin/promoter', 'AdminController@promoter');
+    Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
+    Route::post('admin/promoter/{id}/edit', 'AdminController@updatePromoter');
+    Route::get('admin/promoter/{id}/delete', 'AdminController@destroyPromoter');
+})  ;

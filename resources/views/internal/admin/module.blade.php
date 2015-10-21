@@ -17,7 +17,7 @@
             <th>Distrito</th>
             <th>Provincia</th>
             <th>Departamento</th>
-            <th>Imagen</th>
+            <th>Teléfono</th>
             <th>Detalle</th>
             <th>Editar</th>
             <th>Eliminar</th>
@@ -95,6 +95,8 @@
           <td>{{$module->district}}</td>
           <td>{{$module->province}}</td>
           <td>{{$module->state}}</td>
+          <!--<td>{{$module->phone}}</td>
+          <td>{{$module->email}}</td> -->
           <td>{!! Html::image($module->image, null, array('class'=>'gift_img')) !!}</td>
           <td>
             <a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#edit{{$module->id}}"><i class="glyphicon glyphicon-plus"></i></a> 
@@ -116,6 +118,14 @@
                     {{$module->province}}
                     <h4>Departamento: </h4>
                     {{$module->state}}
+                    <h4>Teléfono: </h4>
+                    {{$module->phone}}
+                    <h4>Correo: </h4>
+                    {{$module->email}}
+                    <h4>Apertura: </h4>
+                    {{$module->starTime}}
+                    <h4>Cierre: </h4>
+                    {{$module->endTime}}
                     <br>
                     <br>
                     {!! Html::image($module->image, null, array('class'=>'module_img')) !!}
@@ -132,9 +142,26 @@
             <a class="btn btn-info" href="{{url('admin/modules/'.$module->id.'/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
           </td> 
           <td>
-            <a class="btn btn-info" href="{{url('admin/modules/'.$module->id.'/delete')}}"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
+            <a class="btn btn-info" href=""  title="Eliminar" data-toggle="modal" data-target="#deleteModal{{$module->id}}" ><i class="glyphicon glyphicon-remove"></i></a>
           </td>
         </tr>
+        <div class="modal fade"  id="deleteModal{{$module->id}}">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">¿Estas seguro que desea eliminar este punto de Venta?</h4>
+              </div>
+              <div class="modal-body">
+                <h5 class="modal-title">Los cambios serán permanentes</h5>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                  <a class="btn btn-info" href="{{url('admin/modules/'.$module->id.'/delete')}}" title="Delete" >Sí</a>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
         @endforeach
 
 

@@ -13,11 +13,7 @@ class Zone extends Model
         return $this->belongsTo('App\Models\Event');
     }
 
-    public function seats(){
-        return $this->hasMany('App\Models\Seat');
-    }
-
-    public function public(){
-        return $this->belongToMany('App\Models\Pulic')->withPivot('price');
+    public function slots(){
+        return $this->hasMany('App\Models\Slot');
     }
 }

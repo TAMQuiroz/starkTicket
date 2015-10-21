@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\Event\StoreEventRequest;
+use App\Http\Requests\Event\UpdateEventRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Zone;
-use App\Models\Function;
-use App\Models\Seat;
+use App\Models\Presentation;
+use App\Models\Slot;
+use App\Models\Category;
+use App\Models\Organizer;
+use App\Models\Local;
+use App\Services\FileService;
 
 class EventController extends Controller
 {
@@ -18,6 +22,11 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $this->file_service = new FileService();
+    }
+
     public function index()
     {
         //
@@ -40,6 +49,9 @@ class EventController extends Controller
      */
     public function create()
     {
+        $categories_list = Category::all()->lists('name','id');
+        $organizers_list = Organizer::all()->lists('name','id');
+        $locals_list = Local::all()->lists('name','id');
         return view('internal.promoter.newEvent');
     }
 
@@ -52,55 +64,60 @@ class EventController extends Controller
     public function store(StoreEventRequest $request)
     {
         $event = new Event();
-        $event->name = $request->input('name');
-        $event->description = $request->input('description');
-        $event->category_id = $request->input('category_id');
+        $event->name         = $request->input('name');
+        $event->description  = $request->input('description');
+        $event->category_id  = $request->input('category_id');
         $event->organizer_id = $request->input('organizer_id');
-        $event->place_id = $request->input('local_id');
-        $event->image = $this->file_service->upload($request->file('image').'event');
+        $event->local_id     = $request->input('local_id');
+        $event->image        = $this->file_service->upload($request->file('image'),'event');
         $event->save();
 
-        $functions_ids = new array();
+        $functions_ids = array();
         foreach($request->input('function_starts_at') as $key=>$value){
-            $function = new Function();
+            $function = new Presentation();
             $function->starts_at = strtotime($value);
-            $function->ends_at = strtotime($request->input('function_ends_at'.$key));
-            $function->sold_out = false;
+            $function->ends_at   = strtotime($request->input('function_ends_at.'.$key));
+            $function->sold_out  = false;
             $function->cancelled = false;
             $function->event()->associate($event);
             $function->save();
-            $functions_ids[$key] = [$function->id => ['status' => config('constants.seat_available')]];
+            $functions_ids[$function->id] = ['status' => config('constants.seat_available')];
         }
-
         foreach($request->input('zone_names') as $key=>$value){
             $zone = new Zone();
-            $zone->name = $value;
-            $zone->capacity = $request->input('zone_capacity'.$key);
+            $zone->name     = $value;
+            $zone->capacity = $request->input('zone_capacity.'.$key);
+            $zone->price    = $request->input('price.'.$key);
             $zone->event()->associate($event);
-            if($request->input('zone_columns'.$key, '') != ''){ 
-                $zone->columns = $request->input('zone_columns'.$key);
-                $zone->rows = $request->input('zone_rows'.$key);
-                $zone->start_column = $request->input('start_column'.$key);
-                $zone->start_row = $request->input('start_row'.$key);
+            if($request->input('zone_columns.'.$key, '') != ''){ 
+                $zone->columns      = $request->input('zone_columns.'.$key);
+                $zone->rows         = $request->input('zone_rows.'.$key);
+                $zone->start_column = $request->input('start_column.'.$key);
+                $zone->start_row    = $request->input('start_row.'.$key);
                 $zone->save();
                 foreach($zone->rows as $row){
                     foreach($zone->columns as $column){
-                        $seat = new Seat();
+                        $seat = new Slot();
                         $seat->row = $row;
                         $seat->column = $column;
                         $seat->zone()->associate($zone);
                         $seat->save();
-                        $seat->function()->attach($functions_ids);
+                        $seat->presentation()->attach($functions_ids);
                     }
                 }
             }
-            else $zone->save();
-            foreach($request->input('price'.$key) as $public_key=>$price){
-                $zone->public()->attach($public_key, ['price' => $price]);
+            else{ 
+                $zone->save();
+                for( $i=1; $i<= ($zone->capacity); $i++) {
+                    $seat = new Slot();
+                    $seat->zone()->associate($zone);
+                    $seat->save();
+                    $seat->presentation()->attach($functions_ids);
+                }
             }
         }
-        //return redirect()->route('admin.categories.show', $event->id);
-        return response()->json(['message' => 'Interest added']);
+        return redirect()->route('events.edit', $event->id);
+        //return response()->json(['message' => 'Event added']);
     }
 
     /**
@@ -161,7 +178,7 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
         return view('internal.promoter.editEvent');
     }
@@ -173,9 +190,26 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(UpdateEventRequest $request, $id)
+    {}
+        $event = Event::find($id);
+        if($request->input('name', '')!= '')
+            $event->name         = $request->input('name');
+        if($request->input('description', '')!= '')
+            $event->description  = $request->input('description');
+        if($request->file('image') != null)
+            $event->image        = $this->file_service->upload($request->file('image'),'event');
+        $event->save();
+        $presentations = $request->input('function_starts_at');
+        foreach ($presentations as $key => $value) {
+            $presentation = Presentation::find($key);
+            if($value != '')
+                $presentation->starts_at = $value;
+            if($request->input('function_ends_at.'.$key,'')!='')
+                $presentation->ends_at = $request->input('function_ends_at.'.$key);
+            $presentation->save();
+        }
+        //cambiar nombre de zona y precio
     }
 
     /**

@@ -12,10 +12,10 @@ class AddFkToSeatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('seats', function (Blueprint $table) {
+        Schema::table('slots', function (Blueprint $table) {
             $table->foreign('zone_id')
                   ->references('id')
-                  ->on('zones')->onDelete('cascade');
+                  ->on('zones');
         });
     }
 
@@ -26,8 +26,8 @@ class AddFkToSeatsTable extends Migration
      */
     public function down()
     {
-        Schema::table('seats', function (Blueprint $table) {
-            $table->dropForeign('seats_zone_id_foreign');
+        Schema::table('slots', function (Blueprint $table) {
+            $table->dropForeign('slots_zone_id_foreign');
         });
     }
 }

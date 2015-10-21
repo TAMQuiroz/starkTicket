@@ -12,7 +12,7 @@ class AddFkToZonesTable extends Migration
      */
     public function up()
     {
-        Schema::create('zones', function (Blueprint $table) {
+        Schema::table('zones', function (Blueprint $table) {
             $table->foreign('event_id')
                   ->references('id')
                   ->on('events')->onDelete('cascade');
