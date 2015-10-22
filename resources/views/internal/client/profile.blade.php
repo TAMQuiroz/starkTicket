@@ -12,7 +12,7 @@ Perfil
 <pre>
     {{$obj}}
 </pre>
-<p><a href="{{url('client/edit')}}">Edit information</a> | <a href="{{url('client/password')}}">Change password</a></p>
+<p><a href="{{url('client/edit')}}">Edit information</a> | <a href="{{url('client/password')}}">Change password</a> | <a href="{{url('client/photo')}}">Change Photo</a></p>
 @stop
 
 @section('javascript')
