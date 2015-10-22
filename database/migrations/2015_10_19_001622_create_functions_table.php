@@ -17,9 +17,9 @@ class CreateFunctionsTable extends Migration
             $table->integer('event_id')->unsigned();
             $table->timestamps(); 
             $table->string('starts_at');
-            $table->string('ends_at');
-            $table->boolean('sold_out');      
+            $table->string('ends_at');      
             $table->boolean('cancelled');      
+            $table->integer('slots_availables');      
         });
     }
 

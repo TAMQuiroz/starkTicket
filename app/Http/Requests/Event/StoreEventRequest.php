@@ -51,8 +51,8 @@ class StoreEventRequest extends Request
             'errors' => $errors
         ];
 
-        //return response()->json($data, 400);
+        return response()->json($data, 400);
 
-        return redirect()->back()->withInput()->withErrors($errors);
+        //return redirect()->back()->withInput()->withErrors($errors);
     }
 }

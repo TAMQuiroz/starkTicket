@@ -72,6 +72,8 @@ class EventController extends Controller
         $event->category_id  = $request->input('category_id');
         $event->organizer_id = $request->input('organizer_id');
         $event->local_id     = $request->input('local_id');
+        $event->publication_date = strtotime($request->input('publication_date'));
+        $event->selling_date = strtotime($request->input('selling_date'));
         $event->image        = $this->file_service->upload($request->file('image'),'event');
         $event->save();
 
@@ -80,17 +82,17 @@ class EventController extends Controller
             $function = new Presentation();
             $function->starts_at = strtotime($value);
             $function->ends_at   = strtotime($request->input('function_ends_at.'.$key));
-            $function->sold_out  = false;
             $function->cancelled = false;
+            $function->slots_availables = $request->input('zone_capacity.'.$key);
             $function->event()->associate($event);
             $function->save();
             $functions_ids[$function->id] = ['status' => config('constants.seat_available')];
         }
         foreach($request->input('zone_names') as $key=>$value){
             $zone = new Zone();
-            $zone->name     = $value;
-            $zone->capacity = $request->input('zone_capacity.'.$key);
-            $zone->price    = $request->input('price.'.$key);
+            $zone->name         = $value;
+            $zone->capacity     = $request->input('zone_capacity.'.$key);
+            $zone->price        = $request->input('price.'.$key);
             $zone->event()->associate($event);
 
             if($request->input('zone_columns.'.$key, '') != ''){ 
@@ -120,8 +122,8 @@ class EventController extends Controller
                 }
             }
         }
-        return redirect()->route('events.edit', $event->id);
-        //return response()->json(['message' => 'Event added']);
+        //return redirect()->route('events.edit', $event->id);
+        return response()->json(['message' => 'Event added']);
     }
 
     /**
@@ -199,7 +201,8 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-        return view('internal.promoter.editEvent');
+        Event::find($id);
+        return view('internal.promoter.editEvent', $event);
     }
 
     /**
@@ -210,23 +213,71 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateEventRequest $request, $id)
-    {}
+    {
         $event = Event::find($id);
-        if($request->input('name', '')!= '')
-            $event->name         = $request->input('name');
-        if($request->input('description', '')!= '')
-            $event->description  = $request->input('description');
+        $event->name         = $request->input('name');
+        $event->description  = $request->input('description');
+        $event->category_id  = $request->input('category_id');
+        $event->organizer_id = $request->input('organizer_id');
+        $event->publication_date = strtotime($request->input('publication_date'));
+        $event->selling_date = strtotime($request->input('selling_date'));
+        $local = Local::find($event->local_id);
+        if($local->rows == null && now()<$event->publication_date)
+            $event->local_id     = $request->input('local_id');
         if($request->file('image') != null)
             $event->image        = $this->file_service->upload($request->file('image'),'event');
         $event->save();
         $presentations = $request->input('function_starts_at');
         foreach ($presentations as $key => $value) {
-            $presentation = Presentation::find($key);
-            if($value != '')
-                $presentation->starts_at = $value;
-            if($request->input('function_ends_at.'.$key,'')!='')
-                $presentation->ends_at = $request->input('function_ends_at.'.$key);
-            $presentation->save();
+            $function = Presentation::find($key);
+            $function->starts_at = strtotime($value);
+            $function->ends_at   = strtotime($request->input('function_ends_at.'.$key));
+            $function->cancelled = $request->input('cancelled');
+            $function->save();
+        }
+//se puede cambiar el local en cualquier momento si es que no es numerado/con asiento
+        //no se deberia cambiar el local si es con asientos hasta el selling date
+        foreach($request->input('zone_names') as $key=>$value){
+            $zone = Zone::find($key);
+            $zone->name         = $value;
+            if(now()<$event->publication_date)
+                $zone->price        = $request->input('price.'.$key);
+
+            if($local->rows >=1 && now()<$event->selling_date){
+                if($request->input('zone_columns.'.$key, '') != ''){ 
+                    $zone->columns      = $request->input('zone_columns.'.$key);
+                    $zone->rows         = $request->input('zone_rows.'.$key);
+                    $zone->start_column = $request->input('start_column.'.$key);
+                    $zone->start_row    = $request->input('start_row.'.$key);
+                    $zone->save();
+                    //aca debo borrar todos los asientos y dettach de function_slot
+                    Slot::where('zone_id', $zone->id)->delete();
+                    foreach($zone->rows as $row){
+                        foreach($zone->columns as $column){
+                            $seat = new Slot();
+                            $seat->row = $row;
+                            $seat->column = $column;
+                            $seat->zone()->associate($zone);
+                            $seat->save();
+                            $seat->presentation()->attach($functions_ids);
+                        }
+                    }
+                }
+            }
+            else if($local->rows == null){
+                //puedo cambiar en cualquier momento TT__TT
+                //no puedo borrar todos, solo agregar más
+                //debo verificar que la capacidad sea mayor a la actual :c
+                $zone->save();
+                for( $i=$zone->capacity +1; $i<= ($request->input('zone_capacity.'.$key)); $i++) {
+                    $seat = new Slot();
+                    $seat->zone()->associate($zone);
+                    $seat->save();
+                    $seat->presentation()->attach($functions_ids);
+                }
+            }
+            $zone->capacity     = $request->input('zone_capacity.'.$key);
+            $zone->save();
         }
         //cambiar nombre de zona y precio
     }
