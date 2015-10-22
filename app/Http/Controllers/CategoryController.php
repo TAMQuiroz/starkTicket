@@ -9,6 +9,7 @@ use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Services\FileService;
+use App\Models\Event;
 
 class CategoryController extends Controller
 {
@@ -134,7 +135,8 @@ class CategoryController extends Controller
      */
     public function showSub($id, $id2)
     {
-        return view('external.subcategory');
+        $objs = Event::where('category_id',$id2)->paginate(10);
+        return view('external.subcategory',["events"=>$objs]);
     }
 
     /**
@@ -190,7 +192,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
-        $subcategories = $this->getSubcategories($id)->toArray(); 
+        $subcategories = $this->getSubcategories($id)->toArray();
         if(!empty($subcategories)){
             $errors = [
                 'The category has subcategories'
