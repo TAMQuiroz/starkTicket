@@ -48,9 +48,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexSub()
+    public function indexSub($id)
     {
-        return view('external.subcategories');
+        $category = Category::findOrFail($id);
+        $subcategories = Category::where('father_id',$id)->paginate(10);
+        return view('external.subcategories',['category'=>$category,"subcategories"=>$subcategories]);
     }
 
     /**
