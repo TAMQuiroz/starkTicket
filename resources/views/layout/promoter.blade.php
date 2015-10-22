@@ -36,6 +36,7 @@
                             <li class="divider"></li>
                             <li><a href="{{url('promoter/event/record')}}">Historial</a></li>
                             <li><a href="{{url('promoter/promotion')}}">Promociones</a></li>
+                            <li><a href="{{url('promoter/promotion/new')}}">Nueva Promoción</a></li>
                         </ul>
                     </li>
                     <li>
