@@ -8,6 +8,7 @@
 
 @section('title')
     Registro de cliente
+@include('errors.list')
 @stop
 
 @section('content')
@@ -106,7 +107,7 @@
 
 {!!Form::close()!!}
 
-@include('errors.list')
+
 
 @stop
 
