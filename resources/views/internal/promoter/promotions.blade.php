@@ -81,9 +81,9 @@
 					            <label for="recipient-name" class="control-label">Descuento (%):</label>
 					            {!! Form::text('editDiscount','%', array('class' => 'form-control','required')) !!}
 					          </div>
-					          <h4 class="modal-title" id="exampleModalLabel">Agregar eventos:</h4>
+					          <h4 class="modal-title" id="exampleModalLabel">Agregar evento:</h4>
 							  <div class="input-group" style="width:300px">
-					      		<input type="text" class="form-control" placeholder="Buscar eventos..." >
+					      		{!! Form::text('editSearch','', array('class' => 'form-control','required')) !!}
 					      		<span class="input-group-btn">
 							    	<button class="btn btn-info" type="button">Buscar</button>
 							    </span>
@@ -136,10 +136,9 @@
 								<p>Código CA21231J. Creada por Samoel Sarmiento</p>
 								<p>Válida del 01/08/2015 a las 00:00 hasta el 13/10/2015 a las 24:00.</p>
 								<p>%30 de descuento: Promoción exclusiva con tarjetas Visa Platinium.</p>
-								<h5>Aplica para los siguientes eventos:</h5>
+								<h5>Aplica para el evento evento:</h5>
 								<ul>
 									<li>Viva por el Rock 6 - Zona VIP</li>
-									<li>Arctic Monkeys Lima 2020 - Zona VIP</li>
 								</ul>
 								<br><br>
 								<h4>Información de Ventas</h4>
@@ -202,7 +201,7 @@
 							<h4>Descripción</h4>
 							{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'required']) !!}
 							
-							<h4>Agregar eventos:</h4>
+							<h4>Agregar evento:</h4>
 							<div class="input-group" style="width:300px">
 					      		{!! Form::text('eventName','', array('class' => 'form-control','required')) !!}
 					      		<span class="input-group-btn">
