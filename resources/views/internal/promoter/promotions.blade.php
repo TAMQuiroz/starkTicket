@@ -22,8 +22,8 @@
 					        <tr>
 					            <th>Nombre</th>
 					            <th>Usuario creador</th>
-					            <th>Cantidad Eventos</th>
 					            <th>Fecha Fin</th>
+					            <th>Hora Fin</th>
 					            <th>Ver</th>
 					            <th>Editar</th>
 					            <th>Eliminar</th>
@@ -33,8 +33,8 @@
 					        <tr>
 					            <td>Promoción Visa Platinium</td>
 					            <td>Samoel Sarmiento</td>
-					            <td>13</td>
 					            <td>13/10/2015</td>
+					            <td>24:00</td>
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit" data-whatever="@mdo"><i class="glyphicon glyphicon-pencil"></i></button></td>
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
@@ -42,8 +42,8 @@
 					        <tr>
 					            <td>Promoción Mastercard</td>
 					            <td>Samoel Sarmiento</td>
-					            <td>10</td>
 					            <td>20/12/2015</td>
+					            <td>20:00</td>
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="glyphicon glyphicon-pencil"></i></button></td>
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
@@ -155,9 +155,9 @@
 
 					<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo1">Agregar Promoción</button>
 					<div id="demo1" class="collapse">
+
 						<br>
 						<legend>Ingrese datos de nueva promoción</legend>
-						
 							<div style="-webkit-columns: 100px 3;">
 								<h4>Código</h4>
 								{!! Form::text('codePromotion','9898083', array('class' => 'form-control','required','disabled')) !!}
@@ -179,17 +179,17 @@
 							<h4>Descripción</h4>
 							{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'required']) !!}
 							
-						
+							<h4>Agregar eventos:</h4>
+							<div class="input-group" style="width:300px">
+					      		{!! Form::text('eventName','', array('class' => 'form-control','required')) !!}
+					      		<span class="input-group-btn">
+							    	<button class="btn btn-info" type="button">Buscar</button>
+							    </span>
+					    	</div><!-- /input-group -->
+					    	<br>
 						
 						<br><br>
-						<h4>Agregar eventos:</h4>
-						<div class="input-group" style="width:300px">
-				      		{!! Form::text('eventName','', array('class' => 'form-control','required')) !!}
-				      		<span class="input-group-btn">
-						    	<button class="btn btn-info" type="button">Buscar</button>
-						    </span>
-				    	</div><!-- /input-group -->
-				    	<br>
+						
 
 				    	
 						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#end" data-whatever="@mdo">Guardar</button>
@@ -219,5 +219,40 @@
 @stop
 
 @section('javascript')
+<script>
+    function addZone(){
 
+        var zone = document.getElementById('input-zone').value;
+        var capacity = document.getElementById('input-capacity').value;
+
+        var tableRef = document.getElementById('table-zone').getElementsByTagName('tbody')[0];
+
+        // Insert a row in the table at the last row
+        var newRow   = tableRef.insertRow(tableRef.rows.length);
+
+        // Insert a cell in the row at index 0
+        var newCell  = newRow.insertCell(0);
+        var newCell2 = newRow.insertCell(1);
+        var newCell3 = newRow.insertCell(2);
+        var newCell4 = newRow.insertCell(3);
+
+        // Append values to cells
+        var newText  = document.createTextNode(zone);
+        var newText2 = document.createTextNode(""+capacity);
+        // buttons
+        var newEdit = document.createElement('button');
+        var newDelete = document.createElement('button');
+        newEdit.className = "btn"; 
+        newEdit.className += " btn-info glyphicon glyphicon-pencil"; 
+        newDelete.className = "btn";
+        newDelete.className += " btn-info glyphicon glyphicon-remove";
+
+        newCell.appendChild(newText);
+        newCell2.appendChild(newText2);                        
+        newCell3.appendChild(newEdit);
+        newCell4.appendChild(newDelete);
+
+    }
+
+</script>
 @stop
