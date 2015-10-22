@@ -71,13 +71,13 @@ class ClientController extends Controller
     {
 
         $this->validate($request, [
-            'name' => 'required',
-            'lastname' => 'required',
-            'password' => 'required',
-            'di_type' => 'required',
-            'di' => 'required',
-            'email' => 'required',
-            'birthday' => 'required'
+            'name' => 'required|min:3|max:16',
+            'lastname' => 'required|min:3|max:16',
+            'password' => 'required|min:8|max:16',
+            'di_type' => 'required|min:1|max:1',
+            'di' => 'required|min:8|max:16',
+            'email' => 'required|min:12|max:32',
+            'birthday' => 'required|date'
         ]);
 
         $input = $request->all();
@@ -138,8 +138,12 @@ class ClientController extends Controller
         $obj = User::findOrFail($id);
 
         $this->validate($request, [
-            'name' => 'required',
-            'lastname' => 'required'
+            'name' => 'required|min:3|max:16',
+            'lastname' => 'required|min:3|max:16',
+            'di_type' => 'required|min:1|max:1',
+            'di' => 'required|min:8|max:16',
+            'email' => 'required|min:12|max:32',
+            'birthday' => 'required|date'
         ]);
 
         $input = $request->all();
@@ -198,8 +202,8 @@ class ClientController extends Controller
         $obj = User::findOrFail($id);
 
         $this->validate($request, [
-            'password' => 'required',
-            'new_password' => 'required|confirmed'
+            'password' => 'required|min:8|max:16',
+            'new_password' => 'required|confirmed|min:8|max:16'
         ]);
 
         $auth = Auth::attempt( array(
