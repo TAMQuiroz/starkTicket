@@ -15,11 +15,10 @@ class CreateFunctionsTable extends Migration
         Schema::create('presentations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('event_id')->unsigned();
-            $table->timestamps(); 
             $table->string('starts_at');
-            $table->string('ends_at');      
-            $table->boolean('cancelled');      
-            $table->integer('slots_availables');      
+            $table->boolean('cancelled');
+            $table->boolean('sold_out');
+            $table->timestamps();
         });
     }
 

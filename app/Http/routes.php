@@ -10,6 +10,9 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('csrf', function() {
+    return \Session::token();
+});
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -63,6 +66,8 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('getClient', ['uses'=>'TicketController@getClient','as'=>'ajax.getClient']);
 });
 
+    Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
+    Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/', 'PagesController@promoterHome');
     Route::get('promoter/politics', 'PoliticController@index');
@@ -70,9 +75,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/transfer_payments', 'PaymentController@create');
     Route::get('promoter/event/record', 'EventController@showPromoterRecord');
     Route::get('promoter/event/create', 'EventController@create');
-    Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
-    Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
     Route::get('promoter/promotion', 'PromoController@index');
 
