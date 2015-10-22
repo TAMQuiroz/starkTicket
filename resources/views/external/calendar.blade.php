@@ -1,22 +1,10 @@
 @extends('layoutExternal')
 
 @section('style')
-	{!!Html::style('css/skeletoGift.css')!!}
-	{!!Html::style('css/estiloGift.css')!!}
+	{!!Html::style('css/datetimepicker.css')
 	<style type="text/css">
-		#nav .sixth{
-            color: white;
-        }
-        .btn-primary{
-            background-color: #83D3C9;
-            border-color: #83D3C9;
-        }
-        .btn-primary:hover{
-            background-color: #329DB7;
-            border-color: #329DB7;
-        }
-        .category{
-        	color: #83D3C9;
+		.full img{
+            width: 100%;
         }
 	</style>
 @stop
@@ -113,24 +101,18 @@
 								<header>
 									<h3>Calendario de eventos</h3>
 								</header>
-								<img src="images/calendar.png" width="90%">
+
+								<script>
+								$(function(){
+								    $("#datepicker").datepicker();
+								});
+								  </script>
+								<div id="datepicker"></div>
+
 
 								<header>
 									<h3>Categorias</h3>
 								</header>
-								<!--
-								<ul class="list-unstyled">
-									<li><a href="#">Categoria 1.</a></li>
-									<li><a href="#">Categoria 2.</a></li>
-									<li><a href="#">Categoria 3.</a></li>
-									<li><a href="#">Categoria 4.</a></li>
-									<li><a href="#">Categoria 5.</a></li>
-									<li><a href="#">Categoria 6.</a></li>
-									<li><a href="#">Categoria 7.</a></li>
-									<li><a href="#">Categoria 8.</a></li>
-									<li><a href="#">Categoria 9.</a></li>
-									<li><a href="#">Categoria 10.</a></li>
-								</ul> -->
 								<p><a href="event" class="category">Categoria 1</a> </p>
 								<p><a href="event" class="category">Categoria 2</a> </p>
 								<p><a href="event" class="category">Categoria 3</a> </p>
@@ -152,5 +134,5 @@
 @stop
 
 @section('javascript')
-
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 @stop
