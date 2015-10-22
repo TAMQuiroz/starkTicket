@@ -132,6 +132,8 @@ class EventController extends Controller
      */
     public function showExternal($id)
     {
+        $user = \Auth::user();
+
         // $object = Event::findOrFail($id);
         $object = array(
                 "id" => $id,
@@ -145,7 +147,7 @@ class EventController extends Controller
                 "available" => true,
                 "local" => "object"
             );
-        return view('external.event', ['event' => (object)$object]);
+        return view('external.event', ['event' => (object)$object, 'user'=>$user]);
     }
 
     /**

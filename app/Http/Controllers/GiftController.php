@@ -88,9 +88,9 @@ class GiftController extends Controller
         $gift->points       =   $input['points'];
         $gift->stock        =   $input['stock'];
         if($gift->stock > 0)    
-            $gift->status   =   config('constants.available');
+            $gift->status   =   config('constants.gift_available');
         elseif($gift->stock == 0)
-            $gift->status   =   config('constants.soldOut');   
+            $gift->status   =   config('constants.gift_soldOut');   
         //Control de subida de imagen por hacer
         $gift->image        =   $this->file_service->upload($request->file('image'),'gift');
 
@@ -141,9 +141,9 @@ class GiftController extends Controller
         $gift->points       =   $input['points'];
         $gift->stock        =   $input['stock'];
         if($gift->stock > 0)    
-            $gift->status   =   config('constants.available');
+            $gift->status   =   config('constants.gift_available');
         elseif($gift->stock == 0)
-            $gift->status   =   config('constants.soldOut');
+            $gift->status   =   config('constants.gift_soldOut');
         //Control de subida de imagen
         if($request->file('image')!=null)
             $gift->image        =   $this->file_service->upload($request->file('image'),'gift');

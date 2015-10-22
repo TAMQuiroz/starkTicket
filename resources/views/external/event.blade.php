@@ -47,7 +47,11 @@
 							    </tbody>
 							  </table>
 							</div>
-							<a href="{{url('client/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a> <!---->
+							@if(isset($user) && $user->role_id == config('constants.salesman'))
+							<a href="{{url('salesman/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a> 
+							@else
+							<a href="{{url('client/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
+							@endif
 							<a href="{{url('client/1/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
 							<br><br>
 							<div class="form-group">
