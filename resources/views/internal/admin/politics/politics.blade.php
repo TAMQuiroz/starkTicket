@@ -16,13 +16,19 @@
                 <th>Estado</th>
                 <th>Editar</th>
             </tr>
+                  @foreach($politics as $politic)
+
+
+
             <tr>
-                <td>Politica 1</td>
-                <td>Lorem ipsum dolor sit amet.</td>
-                <td>Activo</td>
-                <td><a class="btn btn-info" href="{{url('admin/politics/1/edit')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></td>
-            </tr>
+                <td>{{$politic->name}}</td>
+                <td>{{$politic->description}}</td>
+                <td>{{$politic->state}}</td>
+            <td><a class="btn btn-info" href="{{url('admin/politics/'.$politic->id.'/edit')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                    
+               @endforeach
         </table>
+          <!--
         <nav>
             <ul class="pagination">
               <li>
@@ -41,7 +47,7 @@
                 </a>
               </li>
             </ul>
-          </nav>
+          </nav> -->
 @stop
 
 @section('javascript')

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\politics;
+
 
 class PoliticController extends Controller
 {
@@ -35,7 +37,18 @@ class PoliticController extends Controller
      */
     public function create()
     {
+
+
+   
+   //     return redirect('politics');
         return view('internal.admin.politics.newPolitic');
+    }
+
+      public function politics()
+    {
+        $politics = politics::all();
+  
+        return view('internal.admin.politics.politics', compact('politics'));
     }
 
     /**
@@ -45,8 +58,32 @@ class PoliticController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {     
+
+         $input = $request->all();
+
+        $politics               =   new politics ;
+        $politics->name         =   $input['name'];
+        $politics->description  =   $input['description'];
+         $politics->state = 'Activo'; 
+            /*
+        $user->password     =   bcrypt($input['password']);
+        $user->di_type      =   $input['di_type'];
+        $user->di           =   $input['di'];
+        $user->address      =   $input['address'];      
+        $user->phone        =   $input['phone'];      
+        $user->email        =   $input['email'];      
+        $user->birthday     =   new Carbon($input['birthday']);      
+        $user->role_id      =   $input['role_id'];      
+       /*
+        if($request->file('image')!=null)
+           $gift->image        =   $this->file_service->upload($request->file('image'),'gift'); */
+
+
+        $politics->save();
+
+return redirect('admin/politics');
+      
     }
 
     /**
@@ -68,7 +105,11 @@ class PoliticController extends Controller
      */
     public function edit($id)
     {
-        return view('internal.admin.politics.editPolitic');
+        $politics = politics::find($id);
+
+        return view('internal.admin.politics.editPolitic', compact('politics'));
+
+      
     }
 
     /**
@@ -80,7 +121,20 @@ class PoliticController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $input = $request->all();
+
+        $politics = politics::find($id);
+        $politics->name         =   $input['name'];
+        $politics->description     =   $input['description'];
+        $politics->state     =   $input['state'];
+
+
+
+
+        $politics->save();
+
+        return redirect('admin/politics');
     }
 
     /**
@@ -93,4 +147,23 @@ class PoliticController extends Controller
     {
         //
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
