@@ -75,7 +75,7 @@
 					          </div>
 					          <div class="form-group">
 					            <label for="recipient-name" class="control-label">Descripción:</label>
-					            {!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'required']) !!}
+					            {!! Form::textarea('editDescription', null, ['size' => '30x3', 'class' => 'form-control', 'required']) !!}
 					          </div>
 					          <div class="form-group">
 					            <label for="recipient-name" class="control-label">Descuento (%):</label>
@@ -87,8 +87,31 @@
 					      		<span class="input-group-btn">
 							    	<button class="btn btn-info" type="button">Buscar</button>
 							    </span>
-					    	 </div><!-- /input-group -->
+					    	  </div><!-- /input-group -->
 					    	 <br>
+					    		<table class="table table-bordered table-striped">
+								    <tr>
+								        <th>Nombre</th>
+								        <th>Categoría</th>
+								        <th>Seleccionar</th>
+								    </tr>
+								    <tr>
+								    	<td>Viva por el rock 6</td>
+								    	<td>Concierto</td>
+								    	<td><input type="radio" name="group2"></td>	
+								    </tr>
+								    <tr>
+								    	<td>Viva la Fête</td>
+								    	<td>Concierto</td>
+								    	<td><input type="radio" name="group2"></td>
+								    </tr>
+								</table>
+								<div style="-webkit-columns: 100px 2;">
+									<label for="recipient-name" class="control-label">Zona:</label>
+									{!! Form::select('zone', ['VIP','Platea'],null,['class' => 'form-control','required']) !!}
+									<label for="recipient-name" class="control-label">Tipo de Cliente:</label>
+									{!! Form::select('zone', ['Niño','Adulto', 'Adulto Mayor'],null,['class' => 'form-control','required']) !!}
+								</div>	    
 					        </form>
 					      </div>
 					      <div class="modal-footer">
@@ -187,7 +210,29 @@
 							    </span>
 					    	</div><!-- /input-group -->
 					    	<br>
-						
+					    	<table class="table table-bordered table-striped">
+							    <tr>
+							        <th>Nombre</th>
+							        <th>Categoría</th>
+							        <th>Seleccionar</th>
+							    </tr>
+							    <tr>
+							    	<td>Viva por el rock 6</td>
+							    	<td>Concierto</td>
+							    	<td><input type="radio" name="group1"></td>	
+							    </tr>
+							    <tr>
+							    	<td>Viva la Fête</td>
+							    	<td>Concierto</td>
+							    	<td><input type="radio" name="group1"></td>
+							    </tr>
+							</table>    
+							<div style="-webkit-columns: 100px 2;">
+								<h4>Zona</h4>
+								{!! Form::select('zone', ['VIP','Platea'],null,['class' => 'form-control','required']) !!}
+								<h4>Tipo de Cliente</h4>
+								{!! Form::select('zone', ['Niño','Adulto', 'Adulto Mayor'],null,['class' => 'form-control','required']) !!}
+							</div>
 						<br><br>
 						
 
@@ -219,40 +264,5 @@
 @stop
 
 @section('javascript')
-<script>
-    function addZone(){
 
-        var zone = document.getElementById('input-zone').value;
-        var capacity = document.getElementById('input-capacity').value;
-
-        var tableRef = document.getElementById('table-zone').getElementsByTagName('tbody')[0];
-
-        // Insert a row in the table at the last row
-        var newRow   = tableRef.insertRow(tableRef.rows.length);
-
-        // Insert a cell in the row at index 0
-        var newCell  = newRow.insertCell(0);
-        var newCell2 = newRow.insertCell(1);
-        var newCell3 = newRow.insertCell(2);
-        var newCell4 = newRow.insertCell(3);
-
-        // Append values to cells
-        var newText  = document.createTextNode(zone);
-        var newText2 = document.createTextNode(""+capacity);
-        // buttons
-        var newEdit = document.createElement('button');
-        var newDelete = document.createElement('button');
-        newEdit.className = "btn"; 
-        newEdit.className += " btn-info glyphicon glyphicon-pencil"; 
-        newDelete.className = "btn";
-        newDelete.className += " btn-info glyphicon glyphicon-remove";
-
-        newCell.appendChild(newText);
-        newCell2.appendChild(newText2);                        
-        newCell3.appendChild(newEdit);
-        newCell4.appendChild(newDelete);
-
-    }
-
-</script>
 @stop
