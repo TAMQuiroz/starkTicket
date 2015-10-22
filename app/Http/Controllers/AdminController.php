@@ -153,7 +153,8 @@ class AdminController extends Controller
         $user = User::find($id);
         $user->delete();
         return redirect('admin/admin');
-    }
+
+   }
 
     public function destroyPromoter($id)
     {

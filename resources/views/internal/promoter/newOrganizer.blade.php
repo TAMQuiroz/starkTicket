@@ -39,26 +39,26 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Ruc</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','ruc', null ,['class'=>'form-control','maxlength' => 11,'required'])!!}
+                  {!!Form::input('number','ruc', null ,['class'=>'form-control','maxlength' => 11,'required', "onKeyDown" => "justNumbers()" ])!!}
                 </div>
               </div>      
               <div class="form-group">
                 <label class="col-sm-2 control-label">Número de cuenta</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','countNumber', null ,['class'=>'form-control','maxlength' => 20,'required'])!!}
+                  {!!Form::input('number','countNumber', null ,['class'=>'form-control','maxlength' => 20,'required',"onKeyDown" => "justNumbers()"])!!}
                  </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Teléfono</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','telephone', null ,['class'=>'form-control','maxlength' => 10,'required'])!!}
+                  {!!Form::input('number','telephone', null ,['class'=>'form-control','maxlength' => 10,'required',"onKeyDown" => "justNumbers()"])!!}
  
                  </div>
               </div>                                                          
               <div class="form-group">
                 <label class="col-sm-2 control-label">DNI</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','dni', null ,['class'=>'form-control','maxlength' => 8,'required'])!!}
+                  {!!Form::input('number','dni', null ,['class'=>'form-control','maxlength' => 8,'required',"onKeyDown" => "justNumbers()"])!!}
                 </div>
               </div>
               <div class="form-group">
@@ -117,5 +117,21 @@
 @stop
 
 @section('javascript')
+
+  <script>
+    function justNumbers(){
+      var e = event || window.event;  
+      var key = e.keyCode || e.which; 
+
+      if (key < 48 || key > 57) { 
+        if(key == 8 || key == 9 || key == 46){} //allow backspace and delete                                   
+        else{
+           if (e.preventDefault) e.preventDefault(); 
+           e.returnValue = false; 
+        }
+      }
+    }
+  </script>
+
 
 @stop
