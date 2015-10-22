@@ -5,11 +5,11 @@
 @stop
 
 @section('title')
-  Bienvenido promotor de ventas
+  Nueva promocion
 @stop
 
 @section('content')
-<p>Ten un buen dia</p>
+
 @stop
 
 @section('javascript')

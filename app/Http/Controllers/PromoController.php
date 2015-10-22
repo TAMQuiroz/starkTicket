@@ -25,7 +25,7 @@ class PromoController extends Controller
      */
     public function create()
     {
-        //
+        return view('internal.promoter.newPromotion');
     }
 
     /**
