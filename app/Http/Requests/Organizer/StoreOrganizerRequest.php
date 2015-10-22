@@ -28,10 +28,10 @@ class StoreOrganizerRequest extends Request
             'organizerName'          =>  'required',
             'organizerLastName'   =>  'required',
             'businessName'        =>  'required',
-            'ruc'         =>  'required',
+            'ruc'         =>  'required|numeric',
             'countNumber'          =>  'required',
-            'telephone'   =>  'required',
-            'dni'        =>  'required',
+            'telephone'   =>  'required|numeric',
+            'dni'        =>  'required|numeric',
             'email'         =>  'required',
             'address'         =>  'required',
         ];
