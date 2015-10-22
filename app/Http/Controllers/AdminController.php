@@ -14,11 +14,14 @@ use App\Services\FileService;
 
 class AdminController extends Controller
 {
+    public function __construct(){
+        $this->file_service = new FileService();
+    }
+
     public function client()
     {
         return view('internal.admin.client');
     }
-
     public function salesman()
     {
         return view('internal.admin.salesman');
@@ -31,12 +34,44 @@ class AdminController extends Controller
 
     public function promoter()
     {
-        return view('internal.admin.promoter');
+        $promoters = User::where('role_id',3)->paginate(5);
+        $promoters->setPath('promoter');
+        return view('internal.admin.promoter', compact('promoters'));
     }
 
     public function editPromoter($id)
     {
-        return view('internal.admin.editPromoter');
+
+        $user = User::find($id);
+        return view('internal.admin.editPromoter',compact('user'));
+    }
+
+    public function updatePromoter(UpdateAdminRequest $request, $id)
+    {
+
+        $input = $request->all();
+
+        $user = User::find($id);
+        $user->name         =   $input['name'];
+        $user->lastName     =   $input['lastname'];
+
+        if ($input['password'] != null )
+            $user->password     =   bcrypt($input['password']);
+
+        $user->di_type      =   $input['di_type'];
+        $user->di           =   $input['di'];
+        $user->address      =   $input['address'];
+        $user->phone        =   $input['phone'];
+        $user->email        =   $input['email'];
+        $user->birthday     =   new Carbon($input['birthday']);
+        $user->role_id      =   $input['role_id'];
+        /*
+        if($request->file('image')!=null)
+           $user->image        =   $this->file_service->upload($request->file('image'),'user');
+        */
+        $user->save();
+
+        return redirect('admin/promoter');
     }
 
     public function admin()
@@ -53,7 +88,7 @@ class AdminController extends Controller
         return view('internal.admin.editAdmin', compact('user'));
     }
 
-    public function updateAdmin(UpdateAdminRequest $request, $id) 
+    public function updateAdmin(UpdateAdminRequest $request, $id)
     {
         $input = $request->all();
 
@@ -61,19 +96,20 @@ class AdminController extends Controller
         $user->name         =   $input['name'];
         $user->lastName     =   $input['lastname'];
 
-        if ($input['password'] != null ) 
+        if ($input['password'] != null )
             $user->password     =   bcrypt($input['password']);
-        
+
         $user->di_type      =   $input['di_type'];
         $user->di           =   $input['di'];
-        $user->address      =   $input['address'];      
-        $user->phone        =   $input['phone'];      
-        $user->email        =   $input['email'];      
-        $user->birthday     =   new Carbon($input['birthday']);      
-        $user->role_id      =   $input['role_id'];      
-       /* if($request->file('image')!=null)
-           $user->image        =   $this->file_service->upload($request->file('image'),'user'); */
-
+        $user->address      =   $input['address'];
+        $user->phone        =   $input['phone'];
+        $user->email        =   $input['email'];
+        $user->birthday     =   new Carbon($input['birthday']);
+        $user->role_id      =   $input['role_id'];
+        /*
+        if($request->file('image')!=null)
+           $user->image        =   $this->file_service->upload($request->file('image'),'user');
+        */
         $user->save();
 
         return redirect('admin/admin');
@@ -82,6 +118,7 @@ class AdminController extends Controller
     public function newUser()
     {
         return view('internal.admin.newUser');
+
     }
 
 
@@ -95,19 +132,20 @@ class AdminController extends Controller
         $user->password     =   bcrypt($input['password']);
         $user->di_type      =   $input['di_type'];
         $user->di           =   $input['di'];
-        $user->address      =   $input['address'];      
-        $user->phone        =   $input['phone'];      
-        $user->email        =   $input['email'];      
-        $user->birthday     =   new Carbon($input['birthday']);      
-        $user->role_id      =   $input['role_id'];      
-       /*
+        $user->address      =   $input['address'];
+        $user->phone        =   $input['phone'];
+        $user->email        =   $input['email'];
+        $user->birthday     =   new Carbon($input['birthday']);
+        $user->role_id      =   $input['role_id'];
         if($request->file('image')!=null)
-           $gift->image        =   $this->file_service->upload($request->file('image'),'gift'); */
-
+           $user->image        =   $this->file_service->upload($request->file('image'),'user');
 
         $user->save();
-        
-        return redirect('admin');
+
+        if($user->role_id == '4')
+             return redirect('admin/admin');
+        else
+            return redirect('admin/promoter');
     }
 
         public function destroy($id)
@@ -117,15 +155,11 @@ class AdminController extends Controller
         return redirect('admin/admin');
     }
 
-
-
-
-
-
-
-
-
-
-
+    public function destroyPromoter($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+        return redirect('admin/promoter');
+    }
 
 }
