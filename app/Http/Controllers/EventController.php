@@ -433,10 +433,17 @@ class EventController extends Controller
     }
 
     public function updateSellingEvent($data, $event_id){
+        //no se considera el cancelar
+        //si ya se esta vendiendo, puede modificar la hora de la funcion? ahorita esta que si pero falta verificar eso
         $event = Event::find($event_id);
         $updatedEvent = $this->updateEvent($data, $event);
-        $zones = Zone::where('event_id', $event_id)->get();
         $presentations = Presentation::where('event_id', $event_id)->get();
+        $functions_ids = array();
+        foreach ($presentations as $presentation) {
+            $presentation->starts_at = $data['starts_at'];
+            $functions_ids[$presentation->id] = ['status' => config('constants.seat_available')];
+        }
+        $zones = Zone::where('event_id', $event_id)->get();
         $count = 0;
         foreach ($zones as $zone) {
             $new_capacity = $data['zone_capacity'][$count];
@@ -448,17 +455,19 @@ class EventController extends Controller
             $old_capacity = $zone->capacity;
             $zone->capacity = $data['zone_capacity'][$count];
             $zone->save();
-            $seats = Slot::where('zone_id', $zone->id)->get();
-            foreach ($seats as $seat) {
-                foreach ($seat->presentation as $presentation) {
-                    if($presentation->pivot->status == config('constants.seat_available'))
-                        $seat->presentation()->detach($presentation->id);
+            if($old_capacity < $new_capacity){
+                $difference = $new_capacity - $old_capacity;
+                for($i = 1; $i <= $difference; $i++){
+                    $seat = new Slot();
+                    $seat->zone()->associate($zone);
+                    $seat->save();
+                    $seat->presentation()->attach($functions_ids);
                 }
             }
+            if($old_capacity > $new_capacity){
+                //aqui solo hare dettach
+            }
             $count++;
-        }
-        foreach ($presentations as $presentation) {
-            $presentation->
         }
         return ['error' => ''];
     }
