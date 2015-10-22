@@ -74,7 +74,7 @@ class ClientController extends Controller
             'name' => 'required|min:3|max:16',
             'lastname' => 'required|min:3|max:16',
             'password' => 'required|min:8|max:16',
-            'di_type' => 'required|min:1|max:1',
+            'di_type' => 'required|digits_between:0,2',
             'di' => 'required|min:8|max:16',
             'email' => 'required|min:12|max:32',
             'birthday' => 'required|date'
@@ -140,7 +140,7 @@ class ClientController extends Controller
         $this->validate($request, [
             'name' => 'required|min:3|max:16',
             'lastname' => 'required|min:3|max:16',
-            'di_type' => 'required|min:1|max:1',
+            'di_type' => 'required|digits_between:0,2',
             'di' => 'required|min:8|max:16',
             'email' => 'required|min:12|max:32',
             'birthday' => 'required|date'
