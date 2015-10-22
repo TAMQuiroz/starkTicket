@@ -77,6 +77,8 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/promotion', 'PromoController@index');
     Route::get('promoter/promotion/new', ['as'=>'promo.create','uses'=>'PromoController@create']);
     Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);
+    Route::get('promoter/promotion/{id}/edit', ['as'=>'promo.edit','uses'=>'PromoController@edit']);
+    Route::post('promoter/promotion/{id}/edit', ['as'=>'promo.update','uses'=>'PromoController@update']);
 
     //Aca se inicia el CRUD de promotor
     Route::get('promoter/organizers', 'OrganizerController@index');

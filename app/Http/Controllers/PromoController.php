@@ -58,7 +58,7 @@ class PromoController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('internal.promoter.editPromotion');
     }
 
     /**
