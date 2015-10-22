@@ -29,7 +29,7 @@
       <td>{{$gift->stock}}</td>
       <td>{{$gift->points}}</td>
       <td>
-        @if($gift->status == config('constants.available'))
+        @if($gift->status == config('constants.gift_available'))
           Disponible
         @else
           Agotado

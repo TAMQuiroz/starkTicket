@@ -34,7 +34,7 @@
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Eventos <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{url('client/home')}}">Perfil</a></li>
+                            <li><a href="{{url('client')}}">Perfil</a></li>
                             <li><a href="{{url('client/event_record')}}">Historial</a></li>
                         </ul>
                     </li>
@@ -42,7 +42,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li><a>Puntos Acumulados: 200</a></li>
-                    <li><a href="">Cliente</a></li>
+                    <li><a href="{{url('client')}}">Cliente</a></li>
                     <li><a href="{{url('auth/logout')}}">Salir</a></li>
               </ul>
             </div>

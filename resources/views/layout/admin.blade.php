@@ -87,7 +87,7 @@
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li class="active">
+                            <li>
                                 <a href="{{url('admin/report/sales')}}">Reporte Ventas</a>
                             </li>
                              <li>
@@ -142,6 +142,7 @@
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}
     {!!Html::script('js/bootstrap.min.js')!!}
     {!!Html::script('js/jquery.validate.min.js')!!}
+    {!!Html::script('js/messages_es_PE.js')!!}
     <script type="text/javascript">
     $(document).ready(function(){
         $('#form').validate({
