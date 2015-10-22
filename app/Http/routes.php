@@ -19,7 +19,7 @@ Route::get('login_worker', 'Auth\AuthController@worker');
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::post('auth/register', 'ClientController@store');
 
 
 Route::get('/', 'PagesController@home');

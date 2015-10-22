@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Auth;
 use Session;
+use Carbon\Carbon;
+use App\Services\FileService;
 
 class ClientController extends Controller
 {
@@ -40,7 +42,26 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $input = $request->all();
+
+        $user = new User ;
+        $user->name = $input['name'];
+        $user->lastName = $input['lastname'];
+        $user->password = bcrypt($input['password']);
+        $user->di_type = $input['di_type'];
+        $user->di = $input['di'];
+        $user->address = $input['address'];
+        $user->phone = $input['phone'];
+        $user->email = $input['email'];
+        $user->birthday = new Carbon($input['birthday']);
+        $user->role_id = 1;
+        $user->save();
+
+        Session::flash('message', 'Client created!');
+        Session::flash('alert-class','alert-success');
+
+        return redirect('/');
     }
 
     /**
