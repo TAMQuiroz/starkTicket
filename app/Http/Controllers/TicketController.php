@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use DB;
 use App\User;
 use App\Models\Ticket;
+use App\Models\Slot;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Http\Requests\Ticket\StoreTicketRequest;
 use App\Http\Requests;
@@ -89,42 +91,49 @@ class TicketController extends Controller
     {
         //Deberia jalar los ids de los asientos del evento pero estoy usando un json por mientras
         $seats = json_decode($request['seats']);
-        //dd($request->all());
+        dd($request->all());
         return back()->withInput($request->except('seats'))->withErrors(['El asiento 1 no esta libre']);
         
-        /*
+        
         foreach($seats as $seat_id){
-            if($seat->status != config('constants.seat_free')){
+            $slot = DB::table('slot_presentation')
+                ->where('slot_id',$seat_id)
+                ->where('presentation_id', $request('presentation_id'))
+                ->first();
+            if($slot->status != config('constants.seat_free')){
                 return back()->withInput()->withErrors(['El asiento '. $seat_id.' no esta libre']);
             }
         }
-        */
-       
+               
         DB::beginTransaction();
 
         try{
             foreach($seats as $seat_id){
 
-                //$seat = Seat::find($seat_id);
-                
                 //Cambiar estado de asiento
-                //DB::table('seats')->where('id', $seat_id)->update(['status' => config('constants.seat_occupied')]);
+                DB::table('slot_presentation')
+                    ->where('slot_id', $seat_id)
+                    ->where('presentation_id', $request['presentation_id'])
+                    ->update(['status' => config('constants.seat_occupied')]);
                 
+                $slot = Slot::find($seat_id);
+
                 //Crear ticket
-                //DB::table('tickets')->insertGetId(
-                //['paymentDate'  => new Carbon(),
-                // 'reserve'      => 0,
-                // 'cancelled'    => 0,
-                // 'owner_id'     => $request['user_id'],
-                // 'event_id'     => $request['event_id'],
-                // 'amount'       => TARIFA DE ACUERDO A ZONA DEL ASIENTO ELEGIDO,
-                // 'seat_id'      => $seat_id
-                // ]
-                //);
+                DB::table('tickets')->insertGetId(
+                ['paymentDate'          => new Carbon(),
+                 'reserve'              => 0,
+                 'cancelled'            => 0,
+                 'owner_id'             => $request['user_id'],
+                 'event_id'             => $request['event_id'],
+                 'price'                => $slot->price, //Falta reducir el porcentaje de promocion
+                 'presentation_id'      => $request['presentation_id'],
+                 'seat_id'              => $seat_id
+                 ]
+                );
                 
                 //Disminuir disponibles
-                //$event = Event::find($request['event_id']);
-                //DB::table('events')->where('id', $request['event_id'])->update(['available' => $event->available - 1]);
+                $event = Event::find($request['event_id']);
+                DB::table('events')->where('id', $request['event_id'])->update(['available' => $event->available - 1]);
                 
                 //Aumentar puntos de cliente
                 $user = User::find($request['user_id']);
@@ -137,7 +146,6 @@ class TicketController extends Controller
         }catch (\Exception $e){
             DB::rollback();
         }
-        dd('Finish');
         
         return redirect()->route('ticket.success.salesman');
     }

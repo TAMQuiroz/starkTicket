@@ -23,16 +23,19 @@
                     <h4 >Entradas Disponibles</h4>
                     {!! Form::text('available', '520', ['class' => 'form-control', 'disabled']) !!}  
                 </div>
-                <div style="-webkit-columns: 100px 3;">
-                    <h4 class="boxy"> Fecha del Evento </h4>
+                
+                <div style="-webkit-columns: 100px 2;">
+                    <!--<h4 class="boxy"> Fecha del Evento </h4>
                     {!! Form::select('date', ['18 Octubre', '19 Octubre', '20 Octubre'], null, ['class' => 'form-control boxy']) !!}
                     <h4 > Hora </h4>
-                    {!! Form::select('hour', ['19:00', '21:00'], null, ['class' => 'form-control']) !!}
+                    {!! Form::select('hour', ['19:00', '21:00'], null, ['class' => 'form-control']) !!}-->
+                    <h4 class="boxy"> Funciones del evento </h4>
+                    {!! Form::select('presentation_id', ['18 Octubre 9:00 pm', '19 Octubre 9:00 pm', '20   Octubre 9:00 pm'], null, ['class' => 'form-control boxy']) !!}
                     <h4 > Zona del Evento </h4>
-                    {!! Form::select('zone', ['VIP', 'Platea'], null, ['class' => 'form-control']) !!}
+                    {!! Form::select('zone_id', ['VIP', 'Platea'], null, ['class' => 'form-control']) !!}
                 </div>
                 <h4> Promoción </h4>
-                {!! Form::select('promotion', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
+                {!! Form::select('promotion_id', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
             </label>
         </div>
         <br>

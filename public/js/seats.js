@@ -48,7 +48,7 @@ $.ajaxSetup({
 						$total.text(recalculateTotal(sc)+price);
 						
 						selected.push(this.settings.id);
-						//console.log(JSON.stringify(selected));
+						console.log(JSON.stringify(selected));
 						$('#seats').val(JSON.stringify(selected));
 						
 						return 'selected';
@@ -67,7 +67,7 @@ $.ajaxSetup({
 							$('#seats').val(JSON.stringify(selected));
 							if(selected.length == 0)
 								$('#seats').val("");
-							//console.log(JSON.stringify(selected));
+							console.log(JSON.stringify(selected));
 
 						}
 
