@@ -48,11 +48,11 @@
 							  </table>
 							</div>
 							@if(isset($user) && $user->role_id == config('constants.salesman'))
-							<a href="{{url('salesman/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a> 
+							<a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a> 
 							@else
-							<a href="{{url('client/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
+							<a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
 							@endif
-							<a href="{{url('client/1/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
+							<a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
 							<br><br>
 							<div class="form-group">
 							  <label for="comment">Ingrese comentario:</label>
@@ -82,7 +82,7 @@
 							<p>Función a las 20:00</p>
 							<h3 class="dates">Ubicación</h3>
 
-							<p>Av. Gregorio Escobedo 803, Jesús María 15076</p>
+							<p>{{$event->place->address}}</p>
 							<div id="map"></div>
 
 							<h3 class="dates">Distribución de Zonas</h3>

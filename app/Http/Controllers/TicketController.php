@@ -7,6 +7,8 @@ use App\User;
 use App\Models\Ticket;
 use App\Models\Slot;
 use App\Models\Event;
+use App\Models\Presentation;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 use App\Http\Requests\Ticket\StoreTicketRequest;
 use App\Http\Requests;
@@ -75,10 +77,14 @@ class TicketController extends Controller
     public function createSalesman($id)
     {
         //Buscar y enviar info de evento con $id
-        $event = array(
-            'id' => $id
-        );
-        return view('internal.salesman.buy',compact('event'));
+        $event = Event::find($id);
+        $presentations = Presentation::where('event_id', $id)->lists('starts_at','id');
+        foreach($presentations as $key => $pres){
+            $presentations[$key] = date("Y-m-d", $pres);
+        }
+
+        $zones = Zone::where('event_id', $id)->lists('name','id');
+        return view('internal.salesman.buy',compact('event','presentations','zones'));
     }
 
     /**

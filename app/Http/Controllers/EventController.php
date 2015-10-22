@@ -32,7 +32,8 @@ class EventController extends Controller
      */
     public function indexExternal()
     {
-        return view('external.events');
+        $events = Event::all();
+        return view('external.events',compact('events'));
     }
 
     /**
@@ -62,7 +63,7 @@ class EventController extends Controller
         $event->category_id = $request->input('category_id');
         $event->organizer_id = $request->input('organizer_id');
         $event->local_id = $request->input('local_id');
-        $event->image = $this->file_service->upload($request->file('image'),'event');
+        //$event->image = $this->file_service->upload($request->file('image'),'event');
         $event->save();
 
         $functions_ids = array();
@@ -109,8 +110,8 @@ class EventController extends Controller
                 }
             }
         }
-        return redirect()->route('events.edit', $event->id);
-        //return response()->json(['message' => 'Event added']);
+        //return redirect()->route('events.edit', $event->id);
+        return response()->json(['message' => 'Event added']);
     }
 
     /**
@@ -134,20 +135,9 @@ class EventController extends Controller
     {
         $user = \Auth::user();
 
-        // $object = Event::findOrFail($id);
-        $object = array(
-                "id" => $id,
-                "name" => "Evento ".$id,
-                "important" => False,
-                "description" => "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, ",
-                "status" => True,
-                "date" => "2015-12-12",
-                "time" => "foo",
-                "image" => "images/piaf.jpg",
-                "available" => true,
-                "local" => "object"
-            );
-        return view('external.event', ['event' => (object)$object, 'user'=>$user]);
+        $event = Event::findOrFail($id);
+        
+        return view('external.event', ['event' => $event, 'user'=>$user]);
     }
 
     /**

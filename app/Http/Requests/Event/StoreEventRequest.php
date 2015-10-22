@@ -17,7 +17,7 @@ class StoreEventRequest extends Request
             'description'   => 'required',
             'category_id'   => 'required|exists:categories,id',
             'organizer_id'  => 'required|exists:organizers,id',
-            'local_id'      => 'required|exists:local,id',
+            'local_id'      => 'required|exists:locals,id',
             'zone_names'    => 'required',
             'function_starts_at' => 'required',
             'function_ends_at'   => 'required'
