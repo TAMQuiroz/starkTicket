@@ -51,7 +51,27 @@
                     </div>
                 </td>
                 <td>
-                  <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
+                  <a class="btn btn-info" href="" title="Eliminar" data-toggle="modal" data-target="#deleteModal{{$client->id}}"><i class="glyphicon glyphicon-remove"></i></a>
+                  <div class="modal fade"  id="deleteModal{{$client->id}}">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title">¿Estas seguro que desea desactivar cliente?</h4>
+                        </div>
+                        <div class="modal-body">
+                          <h5 class="modal-title">Los cambios serán permanentes</h5>
+                        </div>
+                        <div class="modal-footer">
+                          {!!Form::open(array('url' => 'admin/client/desactive','id'=>'form','class'=>'form-horizontal'))!!}
+                            <input type="hidden" value="{{$client->id}}" name="client_id">
+                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                            <input type="submit" class="btn btn-info" value="Si">
+                          {!! Form::close() !!}
+                        </div>
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
                 </td>
             </tr>
             @endforeach

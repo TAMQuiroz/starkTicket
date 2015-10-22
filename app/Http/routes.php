@@ -140,6 +140,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/modules/{id}/delete', 'ModuleController@destroy');
 
     Route::get('admin/client', 'ClientController@index');
+    Route::post('admin/client/desactive', 'ClientController@desactive');
 
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');

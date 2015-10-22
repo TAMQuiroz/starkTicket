@@ -33,6 +33,29 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function desactive(Request $request)
+    {
+        $input = $request->all();
+        if(isset($input['client_id']))
+        {
+            $user = User::findOrFail($input['client_id']);
+            $user->delete();
+
+            Session::flash('message', 'Client deleted');
+            Session::flash('alert-class','alert-success');
+        } else {
+            Session::flash('message', 'Client not found!');
+            Session::flash('alert-class','alert-danger');
+        }
+
+        return redirect('/admin/client');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         //
@@ -46,6 +69,16 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request, [
+            'name' => 'required',
+            'lastname' => 'required',
+            'password' => 'required',
+            'di_type' => 'required',
+            'di' => 'required',
+            'email' => 'required',
+            'birthday' => 'required'
+        ]);
 
         $input = $request->all();
 
