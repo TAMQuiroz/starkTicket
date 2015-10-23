@@ -63,7 +63,7 @@ class EventController extends Controller
         $event->category_id = $request->input('category_id');
         $event->organizer_id = $request->input('organizer_id');
         $event->local_id = $request->input('local_id');
-        //$event->image = $this->file_service->upload($request->file('image'),'event');
+        $event->image = $this->file_service->upload($request->file('image'),'event');
         $event->save();
 
         $functions_ids = array();
