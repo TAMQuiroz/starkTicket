@@ -37,7 +37,8 @@ class ModuleController extends Controller
      */
     public function indexExternal()
     {
-        return view('external.modules');
+        $modules = Module::all();
+        return view('external.modules',compact('modules'));
     }
 
     
