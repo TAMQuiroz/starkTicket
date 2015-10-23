@@ -1,15 +1,6 @@
 @extends('layout.admin')
 
 @section('style')
-<style type="text/css">
-  .descripL{
-    maxlength:10;
-  } 
-  .inputL{
-    maxlength:30;
-  } 
-
-</style>
 
 @stop
 
@@ -34,7 +25,7 @@
                   <!--
                   <input type="text" class="form-control" id="inputEmail3" placeholder="" value="Politica 1">
                   -->
-                  {!!Form::text('name', $politics->name ,['class'=>'form-control','id'=>'inputEmail3','maxlenght'=>'10' ,'required'])!!}
+                  {!!Form::text('name', $politics->name ,['class'=>'form-control','id'=>'inputEmail3','maxlength'=>'15' ,'required'])!!}
                 </div>
               </div>
               <div class="form-group">
@@ -44,7 +35,7 @@
                   <textarea class="form-control" rows="5">Lorem ipsum dolor sit amet.</textarea>
                   -->
 
-                  {!!Form::textarea('description', $politics->description ,['class'=>'form-control descripL','required'])!!}
+                  {!!Form::textarea('description', $politics->description ,['class'=>'form-control', 'maxlength'=>'40','required'])!!}
                 </div>
               </div>
               <div class="form-group">

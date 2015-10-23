@@ -82,10 +82,6 @@
 								<ul>
 									<li>Viva por el Rock 6 - Zona VIP</li>
 								</ul>
-								<br><br>
-								<h4>Información de Ventas</h4>
-								<p>Cantidad de Clientes que accedieron: 249</p>
-								<p>Evento más accedido: Arctic Monkeys Lima 2020</p>
 					          </div>
 					        </form>
 					      </div>

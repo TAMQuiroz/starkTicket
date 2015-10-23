@@ -3,7 +3,11 @@
 @section('style')
 
     {!!Html::style('css/bootstrap.min.css')!!}
-
+    <style type="text/css">
+    h1{
+    	margin-top: 80px;
+    }
+    </style>
 @stop
 
 @section('title')
@@ -18,9 +22,9 @@
 	<div style="-webkit-columns: 100px 2;">
 	
 		<h4>Nombre</h4>
-		{!! Form::text('promotionName','', array('class' => 'form-control', 'required')) !!}	
+		{!! Form::text('promotionName','', array('class' => 'form-control', 'maxlength'=>'15', 'required')) !!}	
 		<h4>Descuento (%)</h4>
-		{!! Form::text('discount','', array('class' => 'form-control' , 'required')) !!}
+		{!! Form::number('discount','', array('class' => 'form-control', 'max'=>'100', 'required')) !!}
 	</div>
 	<div style="-webkit-columns: 100px 4;">
 		<h4>Fecha Inicio</h4>
@@ -39,7 +43,7 @@
 
 	</div>
 	<h4>Descripción</h4>
-	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'required']) !!}
+	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'maxlength'=>'40', 'required']) !!}
 	
 <!-- 
 
@@ -125,7 +129,7 @@
 	</div>
 	<br><br>
 	<button type="submit" class="btn btn-info" data-toggle="modal" data-target="#end" data-whatever="@mdo">Guardar</button>
-	<button type="button" class="btn btn-info">Cancelar</button>
+	<a href="{{url('promoter/promotion')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
 
 
 

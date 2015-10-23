@@ -1,20 +1,6 @@
 @extends('layout.promoter')
 
 @section('style')
-	<style type="text/css">
-		.nameL{
-			maxlength:15;
-		}
-		.discL{
-			maxlength:2;
-		}
-		.dateL{
-			maxlength:5;
-		}
-		.descripL{
-			maxlength:30;
-		}
-	</style>
 @stop
 
 @section('title')
@@ -22,30 +8,28 @@
 @stop
 
 @section('content')
-	<div style="-webkit-columns: 100px 3;">
-		<h4>Código</h4>
-		{!! Form::text('codePromotion','9898083', array('class' => 'form-control','required','disabled')) !!}
+	<div style="-webkit-columns: 100px 2;">
 		<h4>Nombre</h4>
-		{!! Form::text('promotionName','', array('class' => 'form-control nameL','required')) !!}	
+		{!! Form::text('promotionName','', array('class' => 'form-control', 'maxlength'=>'15','required')) !!}	
 		<h4>Descuento (%)</h4>
-		{!! Form::text('discount','%', array('class' => 'form-control discL','required')) !!}
+		{!! Form::number('discount','%', array('class' => 'form-control', 'max'=>'100','required')) !!}
 	</div>
 	<div style="-webkit-columns: 100px 4;">
 		<h4>Fecha Inicio</h4>
-		{!! Form::date('dateIni','', array('class' => 'form-control dateL','required')) !!}
+		{!! Form::date('dateIni','', array('class' => 'form-control','required')) !!}
 		<h4>Fecha Fin</h4>
-		{!! Form::date('dateEnd','', array('class' => 'form-control dateL','required')) !!}
+		{!! Form::date('dateEnd','', array('class' => 'form-control','required')) !!}
 		<h4>Hora Inicio</h4>
-		{!! Form::time('timeIni','', array('class' => 'form-control dateL','required')) !!}
+		{!! Form::time('timeIni','', array('class' => 'form-control','required')) !!}
 		<h4>Hora Fin</h4>
-		{!! Form::time('timeEnd','', array('class' => 'form-control dateL','required')) !!}
+		{!! Form::time('timeEnd','', array('class' => 'form-control','required')) !!}
 	</div>
 	<h4>Descripción</h4>
-	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control descripL', 'required']) !!}
+	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'maxlength'=>'40', 'required']) !!}
 	
 	<h4>Agregar evento:</h4>
 	<div class="input-group" style="width:300px">
-  		{!! Form::text('eventName','', array('class' => 'form-control nameL','required')) !!}
+  		{!! Form::text('eventName','', array('class' => 'form-control','required')) !!}
   		<span class="input-group-btn">
 	    	<button class="btn btn-info" type="button">Buscar</button>
 	    </span>
@@ -76,7 +60,7 @@
 	</div>
 	<br><br>
 	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#end" data-whatever="@mdo">Guardar</button>
-	<button type="button" class="btn btn-info">Cancelar</button>
+	<a href="{{url('promoter/promotion')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
 	<div class="modal fade" id="end" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 		<div class="modal-dialog" role="document">
 		    <div class="modal-content">
