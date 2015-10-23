@@ -19,7 +19,7 @@ Route::get('login_worker', 'Auth\AuthController@worker');
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::post('auth/register', 'ClientController@store');
 
 
 Route::get('/', 'PagesController@home');
@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth', 'client']], function () {
     Route::post('client/update', 'ClientController@update');
     Route::get('client/password', 'ClientController@password');
     Route::post('client/password', 'ClientController@passwordUpdate');
+    Route::get('client/photo', 'ClientController@photoEdit');
+    Route::post('client/photo', 'ClientController@photoUpdate');
     Route::get('client/home', 'PagesController@clientHome');
     Route::get('client/event_record', 'EventController@showClientRecord');
     //Estos 2 inician en el detalle del evento
@@ -63,6 +65,8 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('getClient', ['uses'=>'TicketController@getClient','as'=>'ajax.getClient']);
 });
 
+    Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
+    Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/', 'PagesController@promoterHome');
     Route::get('promoter/politics', 'PoliticController@index');
@@ -72,9 +76,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/transfer_payments', 'PaymentController@create');
     Route::get('promoter/event/record', 'EventController@showPromoterRecord');
     Route::get('promoter/event/create', 'EventController@create');
-    Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
-    Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
 
 
@@ -173,6 +175,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/modules/{id}/delete', 'ModuleController@destroy');
 
     Route::get('admin/client', 'ClientController@index');
+    Route::post('admin/client/desactive', 'ClientController@desactive');
 
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');

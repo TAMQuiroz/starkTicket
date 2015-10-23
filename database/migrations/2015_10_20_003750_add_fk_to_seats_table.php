@@ -15,7 +15,7 @@ class AddFkToSeatsTable extends Migration
         Schema::table('slots', function (Blueprint $table) {
             $table->foreign('zone_id')
                   ->references('id')
-                  ->on('zones');
+                  ->on('zones')->onDelete('CASCADE');
         });
     }
 

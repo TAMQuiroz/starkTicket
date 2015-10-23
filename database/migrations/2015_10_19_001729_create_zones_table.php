@@ -25,7 +25,7 @@ class CreateZonesTable extends Migration
             $table->float('price');
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *

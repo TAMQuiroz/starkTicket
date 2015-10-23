@@ -29,8 +29,8 @@ class StoreModuleRequest extends Request
             'district'      =>  'required|max:20',
             'province'      =>  'required|max:20',
             'state'         =>  'required|max:20',
-            'phone'         =>  'required|max:15',
-            'email'         =>  'required|max:30',
+            'phone'         =>  'required',
+            'email'         =>  'required|max:50',
             'starTime'      =>  'required',
             'endTime'       =>  'required',
             'image'         =>  'required|image'
