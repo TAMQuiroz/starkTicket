@@ -27,7 +27,7 @@
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Numero de puntos</label>
         <div class="col-sm-10">
-          {!!Form::input('number','points', null ,['class'=>'form-control','id'=>'points','required','min'=>0])!!}
+          {!!Form::input('number','points', null ,['class'=>'form-control','id'=>'points','required','min'=>1])!!}
         </div>
       </div>
       <div class="form-group">
