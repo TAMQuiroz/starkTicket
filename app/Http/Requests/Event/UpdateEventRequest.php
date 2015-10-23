@@ -4,7 +4,7 @@ namespace App\Http\Requests\Event;
 
 use App\Http\Requests\Request;
 
-class StoreEventRequest extends Request
+class UpdateEventRequest extends Request
 {
     public function authorize() {
         return true;

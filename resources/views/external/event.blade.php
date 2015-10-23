@@ -36,14 +36,13 @@
 							        </tr>
 							    </thead>
 							    <tbody>
+							    	@foreach ($event->zones() as $zones)
 							        <tr>
-							            <td>VIP</td>
-							            <td>S/150.00</td>
+							            <td>{{$zones->name}}</td>
+							            <td>S/. {{$zones->price}}</td>
 							        </tr>
-							        <tr>
-							            <td>Platea</td>
-							            <td>S/.70</td>
-							        </tr>
+							        @endforeach
+
 							    </tbody>
 							  </table>
 							</div>

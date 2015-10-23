@@ -1,22 +1,10 @@
 @extends('layoutExternal')
 
 @section('style')
-	{!!Html::style('css/skeletoGift.css')!!}
-	{!!Html::style('css/estiloGift.css')!!}
+	{!!Html::style('css/datepicker.css')
 	<style type="text/css">
-		#nav .sixth{
-            color: white;
-        }
-        .btn-primary{
-            background-color: #83D3C9;
-            border-color: #83D3C9;
-        }
-        .btn-primary:hover{
-            background-color: #329DB7;
-            border-color: #329DB7;
-        }
-        .category{
-        	color: #83D3C9;
+		.full img{
+            width: 100%;
         }
 	</style>
 @stop
@@ -46,7 +34,7 @@
 											<p><b>Precio: </b> S/. 20.00 <br>
 												<b>Fecha: </b> 20/12/2015<br>
 												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
 										</section>
 									</div>
 									<div class="4u">
@@ -56,7 +44,7 @@
 											<p><b>Precio: </b> S/. 20.00 <br>
 												<b>Fecha: </b> 20/12/2015<br>
 												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
 										</section >
 									</div>
 									<div class="4u">
@@ -66,7 +54,7 @@
 											<p><b>Precio: </b> S/. 20.00 <br>
 												<b>Date: </b> 20/12/2015<br>
 												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
 										</section>
 									</div>
 								</div>
@@ -78,7 +66,7 @@
 											<p><b>Precio: </b> S/. 20.00 <br>
 												<b>Date: </b> 20/12/2015<br>
 												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
 										</section>
 									</div>
 									<div class="4u">
@@ -88,7 +76,7 @@
 											<p><b>Precio: </b> S/. 20.00 <br>
 												<b>Date: </b> 20/12/2015<br>
 												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
 										</section style="text-align:center;">
 									</div>
 									<div class="4u">
@@ -98,7 +86,7 @@
 											<p><b>Precio: </b> S/. 20.00 <br>
 												<b>Date: </b> 20/12/2015<br>
 												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
 										</section>
 									</div>
 								</div>
@@ -109,28 +97,26 @@
 
 					<!-- Sidebar -->
 						<div id="sidebar" class="4u">
-							<section>
+							<section class="ui-state-default">
 								<header>
 									<h3>Calendario de eventos</h3>
 								</header>
-								<img src="images/calendar.png" width="90%">
+
+								<script>
+
+								$(function(){
+
+								    $("#datepicker").datepicker();
+								});
+								  </script>
+								  <div class="ll-skin-latoja">
+								<div id="datepicker"></div>
+								  </div>
+
 
 								<header>
 									<h3>Categorias</h3>
 								</header>
-								<!--
-								<ul class="list-unstyled">
-									<li><a href="#">Categoria 1.</a></li>
-									<li><a href="#">Categoria 2.</a></li>
-									<li><a href="#">Categoria 3.</a></li>
-									<li><a href="#">Categoria 4.</a></li>
-									<li><a href="#">Categoria 5.</a></li>
-									<li><a href="#">Categoria 6.</a></li>
-									<li><a href="#">Categoria 7.</a></li>
-									<li><a href="#">Categoria 8.</a></li>
-									<li><a href="#">Categoria 9.</a></li>
-									<li><a href="#">Categoria 10.</a></li>
-								</ul> -->
 								<p><a href="event" class="category">Categoria 1</a> </p>
 								<p><a href="event" class="category">Categoria 2</a> </p>
 								<p><a href="event" class="category">Categoria 3</a> </p>
@@ -152,5 +138,5 @@
 @stop
 
 @section('javascript')
-
+{!!Html::script('js/jquery-ui.min.js')!!}
 @stop

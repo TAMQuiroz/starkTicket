@@ -7,6 +7,7 @@
 
 	<title>@yield('title') | StarkTicket</title>
 
+    {!!Html::script('js/jquery-1.11.3.min.js')!!}
 	{!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
 	{!!Html::style('css/style.css')!!}
@@ -88,9 +89,6 @@
 		<li><a href="#" class="icon circle fa-dribbble"><span class="label">Dribbble</span>k</a></li>
 	</ul>
 </footer>
-
-	{!!Html::script('js/jQuery-2.1.4.min.js')!!}
-	{!!Html::script('js/jquery-1.11.3.min.js')!!}
 	{!!Html::script('js/bootstrap.min.js')!!}
 	@yield('javascript')
 

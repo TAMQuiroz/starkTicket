@@ -3,20 +3,7 @@
 @extends('layoutExternal')
 
 @section('style')
-    {!!Html::style('css/estiloRegister.css')!!}
-    <style type="text/css">
-        .btn-info{
-            background-color: #83D3C9;
-            border-color: #83D3C9;
-        }
-        .btn-info:hover{
-            background-color: #329DB7;
-            border-color: #329DB7;
-        }
-        .form-group label{
-           
-        }
-    </style>
+
 @stop
 
 @section('title')
@@ -24,6 +11,7 @@
 @stop
 
 @section('content')
+@include('errors.list')
 {!! Form::open(['url'=>'auth/register','method'=>'POST']) !!}
 
     {!! csrf_field() !!}
@@ -44,24 +32,24 @@
                     {!! Form::text('lastname', null, array('class' => 'form-control', 'id' => 'input2', 'required')) !!}
                   </div>
                 </div>
-              </div> 
+              </div>
               <br>
               <div style="-webkit-columns: 100px 2;">
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">Doc. Id.</label>
                   <div class="col-sm-10">
-                    {!! Form::select('typeDocument', ['DNI', 'Carnet de Extranjería', 'Pasaporte'], null, ['class' => 'form-control', 'required']) !!}
+                    {!! Form::select('di_type', ['DNI', 'Carnet de Extranjería', 'Pasaporte'], null, ['class' => 'form-control', 'required']) !!}
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="input3" class="col-sm-2 control-label">Nro. Doc.</label>
                   <div class="col-sm-10">
-                    {!! Form::text('typeDocument', null, array('class' => 'form-control', 'id' => 'input3', 'required')) !!}
+                    {!! Form::text('di', null, array('class' => 'form-control', 'id' => 'input3', 'required')) !!}
                   </div>
                 </div>
               </div>
               <br>
-              <div style="-webkit-columns: 100px 2;">  
+              <div style="-webkit-columns: 100px 2;">
                 <div class="form-group">
                   <label for="input4" class="col-sm-2 control-label">Dirección</label>
                   <div class="col-sm-10">
@@ -74,13 +62,13 @@
                     {!!Form::input('date','birthday', null ,['class'=>'form-control','id'=>'input5','required'])!!}
                   </div>
                 </div>
-              </div> 
+              </div>
               <br>
               <div style="-webkit-columns: 100px 2;">
                 <div class="form-group">
                   <label for="input6" class="col-sm-2 control-label">Teléfono</label>
                   <div class="col-sm-10">
-                    {!! Form::text('telephone', null, array('class' => 'form-control', 'id' => 'input6', 'required')) !!}
+                    {!! Form::text('phone', null, array('class' => 'form-control', 'id' => 'input6', 'required')) !!}
                   </div>
                 </div>
                 <div class="form-group">
@@ -91,7 +79,7 @@
                 </div>
               </div>
               <br>
-              <div style="-webkit-columns: 100px 2;">  
+              <div style="-webkit-columns: 100px 2;">
                 <div class="form-group">
                   <label for="input8" class="col-sm-2 control-label">Password</label>
                   <div class="col-sm-10">
@@ -101,18 +89,9 @@
                   <div class="form-group">
                   <label for="input9" class="col-sm-2 control-label">Confirmar</label>
                   <div class="col-sm-10">
-                    {!! Form::password('confirmPassword', array('class' => 'form-control', 'id'=> 'input9', 'required')) !!}
+                    {!! Form::password('password_confirmation', array('class' => 'form-control', 'id'=> 'input9', 'required')) !!}
                   </div>
                 </div>
-              </div>  
-              <br>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Agrege las categorías de su preferencia</label>
-                  <div class="col-sm-10" style="width:300px;">
-                    {!! Form::select('category1', ['Categoria 1', 'Categoria 2', 'Categoria 3', 'Categoria 4'], null, ['class' => 'form-control', 'required']) !!}
-                    
-                  </div>
-                <button type="submit" class="btn btn-info">Agregar</button>  
               </div>
               <br>
               <div class="form-group">
@@ -128,7 +107,7 @@
 
 {!!Form::close()!!}
 
-@include('errors.list')
+
 
 @stop
 
