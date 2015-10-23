@@ -22,8 +22,8 @@ class CreateLocalsTable extends Migration
             $table->string('province');
             $table->string('state');
             $table->string('image');
-            $table->integer('row');
-            $table->integer('column');
+            $table->integer('rows')->nullable();
+            $table->integer('columns')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
