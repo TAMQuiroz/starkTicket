@@ -19,7 +19,7 @@ Route::get('login_worker', 'Auth\AuthController@worker');
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::post('auth/register', 'ClientController@store');
 
 
 Route::get('/', 'PagesController@home');
@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth', 'client']], function () {
     Route::post('client/update', 'ClientController@update');
     Route::get('client/password', 'ClientController@password');
     Route::post('client/password', 'ClientController@passwordUpdate');
+    Route::get('client/photo', 'ClientController@photoEdit');
+    Route::post('client/photo', 'ClientController@photoUpdate');
     Route::get('client/home', 'PagesController@clientHome');
     Route::get('client/event_record', 'EventController@showClientRecord');
     //Estos 2 inician en el detalle del evento
@@ -138,6 +140,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/modules/{id}/delete', 'ModuleController@destroy');
 
     Route::get('admin/client', 'ClientController@index');
+    Route::post('admin/client/desactive', 'ClientController@desactive');
 
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');

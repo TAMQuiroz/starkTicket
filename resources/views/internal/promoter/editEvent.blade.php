@@ -13,30 +13,32 @@
         <!-- Contenido-->
         <div class="row">
           <div class="col-sm-8">
+            {!!Form::open(array('route' => ['events.update',$events->id],'files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
+              {!!Form::hidden('id', $events->id)!!}
             <form class="form-horizontal" method="post">
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="" value="{{$events->name}}" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Lugar</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Descripción</label>
                 <div class="col-sm-10">
-                  <textarea type="text" class="form-control" rows="5" id="comment">
+                  <textarea type="text" class="form-control" rows="5" id="comment" required>
                   </textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Categoría</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="sel1">
+                    <select class="form-control" id="sel1" required>
                         <option>Concierto</option>
                         <option>Teatro</option>
                         <option>Ferias y Circo</option>
@@ -47,7 +49,7 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Sub categoría</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="sel1">
+                    <select class="form-control" id="sel1" required>
                         <option>Rock</option>
                         <option>Cumbia</option>
                         <option>Tropical</option>
@@ -58,7 +60,7 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Organizador</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="sel1">
+                    <select class="form-control" id="sel1" required>
                         <option>Pepitos Produccione</option>
                         <option>Rayo en la botella</option>
                         <option>Hermanos yaipen</option>
@@ -68,13 +70,13 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Imagen ubicación</label>
                 <div class="col-sm-10">
-                  <input type="file" class="form-control" id="inputEmail3" placeholder="">
+                  <input type="file" class="form-control" id="inputEmail3" placeholder="" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Imagen evento</label>
                 <div class="col-sm-10">
-                  <input type="file" class="form-control" id="inputEmail3" placeholder="">
+                  <input type="file" class="form-control" id="inputEmail3" placeholder="" required>
                 </div>
               </div>     
               <div class="form-group">
