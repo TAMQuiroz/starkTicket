@@ -69,6 +69,13 @@
     <div class="container">
         <h1>@yield('title')</h1>
         <hr>
+        @if($errors->any())
+        <ul class="alert alert-danger">
+            @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+        @endif
         @if(Session::has('message'))
         <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
         @endif
