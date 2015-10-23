@@ -111,7 +111,7 @@
 								  </script>
 								  <div class="ll-skin-latoja">
 								<div id="datepicker"></div>
-								  </div>		
+								  </div>
 
 
 								<header>
@@ -138,5 +138,5 @@
 @stop
 
 @section('javascript')
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+{!!Html::script('js/jquery-ui.min.js')!!}
 @stop
