@@ -44,7 +44,7 @@
               <div class="form-group">
                 <label for="inputDi" class="col-sm-2 control-label">Documento de Identidad</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','di', $user->di ,['class'=>'form-control','id'=>'inputDi','required','min'=>0])!!} 
+                  {!!Form::input('number','di', $user->di ,['class'=>'form-control','id'=>'inputDi','required','min'=>0,"onKeyDown" => "justNumbers()"])!!} 
                 </div>
               </div>
               <div class="form-group">
@@ -56,7 +56,7 @@
               <div class="form-group">
                 <label for="inputPhone" class="col-sm-2 control-label">Teléfono(s)</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','phone', $user->phone ,['class'=>'form-control','id'=>'inputPhone','required','min'=>0])!!}
+                  {!!Form::input('number','phone', $user->phone ,['class'=>'form-control','id'=>'inputPhone','required','min'=>0,"onKeyDown" => "justNumbers()"])!!}
                 </div>
               </div>
               <div class="form-group">
@@ -98,5 +98,20 @@
 @stop
 
 @section('javascript')
+
+  <script>
+    function justNumbers(){
+      var e = event || window.event;  
+      var key = e.keyCode || e.which; 
+
+      if (key < 48 || key > 57) { 
+        if(key == 8 || key == 9 || key == 46){} //allow backspace and delete                                   
+        else{
+           if (e.preventDefault) e.preventDefault(); 
+           e.returnValue = false; 
+        }
+      }
+    }
+  </script>
 
 @stop
