@@ -18,5 +18,6 @@ class Organizer extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['organizerName', 'organizerLastName', 'businessName', 'ruc', 'countNumber', 'telephone','dni', 'email', 'address'];
+    
 }
       
