@@ -8,9 +8,6 @@
 		.discL{
 			maxlength:2;
 		}
-		.dateL{
-			maxlength:5;
-		}
 		.descripL{
 			maxlength:30;
 		}
@@ -24,22 +21,29 @@
 @section('content')
 	<legend>Ingrese datos de nueva promoción</legend>
 	<div style="-webkit-columns: 100px 3;">
-		<h4>Código</h4>
-		{!! Form::text('codePromotion','9898083', array('class' => 'form-control','required','disabled')) !!}
-		<h4>Nombre</h4>
-		{!! Form::text('promotionName','', array('class' => 'form-control nameL','required')) !!}	
-		<h4>Descuento (%)</h4>
-		{!! Form::text('discount','%', array('class' => 'form-control discL','required')) !!}
+		<div>
+			<h4>Código</h4>
+			{!! Form::text('codePromotion','9898083', array('class' => 'form-control','required','disabled')) !!}	
+		</div>
+		<div>
+			<h4>Nombre</h4>
+			{!! Form::text('promotionName','', array('class' => 'form-control nameL','required')) !!}		
+		</div>
+		<div>
+			<h4>Descuento (%)</h4>
+			{!! Form::input('number', 'discount', '%', ['class' => 'form-control', 'maxlength'=>'2']) !!} 
+		</div>
+		
 	</div>
 	<div style="-webkit-columns: 100px 4;">
 		<h4>Fecha Inicio</h4>
-		{!! Form::date('dateIni','', array('class' => 'form-control dateL','required')) !!}
+		{!! Form::date('dateIni','', array('class' => 'form-control','required')) !!}
 		<h4>Fecha Fin</h4>
-		{!! Form::date('dateEnd','', array('class' => 'form-control dateL','required')) !!}
+		{!! Form::date('dateEnd','', array('class' => 'form-control','required')) !!}
 		<h4>Hora Inicio</h4>
-		{!! Form::time('timeIni','', array('class' => 'form-control dateL','required')) !!}
+		{!! Form::time('timeIni','', array('class' => 'form-control','required')) !!}
 		<h4>Hora Fin</h4>
-		{!! Form::time('timeEnd','', array('class' => 'form-control dateL','required')) !!}
+		{!! Form::time('timeEnd','', array('class' => 'form-control','required')) !!}
 	</div>
 	<h4>Descripción</h4>
 	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control descripL', 'required']) !!}
