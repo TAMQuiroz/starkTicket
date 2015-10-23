@@ -22,13 +22,12 @@
 @stop
 
 @section('content')
-	<div style="-webkit-columns: 100px 3;">
-		<h4>Código</h4>
-		{!! Form::text('codePromotion','9898083', array('class' => 'form-control','required','disabled')) !!}
+	<div style="-webkit-columns: 100px 2;">
+
 		<h4>Nombre</h4>
 		{!! Form::text('promotionName','', array('class' => 'form-control nameL','required')) !!}	
 		<h4>Descuento (%)</h4>
-		{!! Form::text('discount','%', array('class' => 'form-control discL','required')) !!}
+		{!! Form::text('discount','', array('class' => 'form-control discL','required')) !!}
 	</div>
 	<div style="-webkit-columns: 100px 4;">
 		<h4>Fecha Inicio</h4>
