@@ -371,7 +371,7 @@ class EventController extends Controller
         //esto ocurre cuando hay cambio de local pero está antes del selling date
             
         }
-        //debo verificar que no se esten cambiando la capacidad o fila/columna de zona si ya se empezó a vender
+        //verificar que no se esten cambiando la capacidad o fila/columna de zona si ya se empezó a vender
         if($now->getTimestamp() > $request->input('selling_date')){
             $zones = Zone::where('event_id', $id)->get();
             $i = 0;
@@ -442,8 +442,7 @@ class EventController extends Controller
                 $i++;
             }
         }
-        //si No estamos haciendo un cambio de local, solo se updatea el evento, zona y presentacion, no se tocan los sitios
-        //y no se borra nada -_-
+        //si no estamos haciendo un cambio de local, solo se updatea el evento, zona y presentacion
         //return redirect()->route('events.edit', $event->id);
         return response()->json(['message' => 'Event modified']);
     }
@@ -462,7 +461,7 @@ class EventController extends Controller
         $count = 0;
         foreach ($zones as $zone) {
             $new_capacity = $data['zone_capacity'][$count];
-            $max_sold_slots = $this->getMaxOccupiedSlots($event_id, $zone->id);//query de buscar max asientos ocupados de esta zona;
+            $max_sold_slots = $this->getMaxOccupiedSlots($event_id, $zone->id);
             if($new_capacity < $max_sold_slots)
                 return ['error' => 'no se puede modificar la zona a una capacidad menor a las entradas vendidas'];
             $zone->name = $data['zone_names'][$count];
