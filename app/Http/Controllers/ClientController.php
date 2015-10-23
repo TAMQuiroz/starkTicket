@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Http\Requests\Client\StoreClientRequest;
+use App\Http\Requests\Client\PasswordClientRequest;
+use App\Http\Requests\Client\UpdateClientRequest;
 use App\Http\Controllers\Controller;
 use App\User;
 use Auth;
@@ -67,19 +70,8 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreClientRequest $request)
     {
-
-        $this->validate($request, [
-            'name' => 'required|min:3|max:16',
-            'lastname' => 'required|min:3|max:16',
-            'password' => 'required|min:8|max:16',
-            'di_type' => 'required|digits_between:0,2',
-            'di' => 'required|min:8|max:16',
-            'email' => 'required|min:12|max:32',
-            'birthday' => 'required|date'
-        ]);
-
         $input = $request->all();
 
         $user = new User ;
@@ -132,19 +124,10 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateClientRequest $request)
     {
         $id = Auth::user()->id;
         $obj = User::findOrFail($id);
-
-        $this->validate($request, [
-            'name' => 'required|min:3|max:16',
-            'lastname' => 'required|min:3|max:16',
-            'di_type' => 'required|digits_between:0,2',
-            'di' => 'required|min:8|max:16',
-            'email' => 'required|min:12|max:32',
-            'birthday' => 'required|date'
-        ]);
 
         $input = $request->all();
 
@@ -196,15 +179,10 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function passwordUpdate(Request $request)
+    public function passwordUpdate(PasswordClientRequest $request)
     {
         $id = Auth::user()->id;
         $obj = User::findOrFail($id);
-
-        $this->validate($request, [
-            'password' => 'required|min:8|max:16',
-            'new_password' => 'required|confirmed|min:8|max:16'
-        ]);
 
         $auth = Auth::attempt( array(
             'email' => $obj->email,

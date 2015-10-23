@@ -39,15 +39,15 @@
 							    	@foreach ($event->zones() as $zones)
 							        <tr>
 							            <td>{{$zones->name}}</td>
-							            <td>S/. ,{{$zones->price}}</td>
+							            <td>S/. {{$zones->price}}</td>
 							        </tr>
 							        @endforeach
-							        
+
 							    </tbody>
 							  </table>
 							</div>
 							@if(isset($user) && $user->role_id == config('constants.salesman'))
-							<a href="{{url('salesman/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a> 
+							<a href="{{url('salesman/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
 							@else
 							<a href="{{url('client/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
 							@endif

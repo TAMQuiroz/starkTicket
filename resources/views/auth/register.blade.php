@@ -8,10 +8,10 @@
 
 @section('title')
     Registro de cliente
-@include('errors.list')
 @stop
 
 @section('content')
+@include('errors.list')
 {!! Form::open(['url'=>'auth/register','method'=>'POST']) !!}
 
     {!! csrf_field() !!}
