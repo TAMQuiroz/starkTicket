@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Promotions;
+use App\Models\Event;
+
+use App\Models\Category;
+
+
 
 class PromoController extends Controller
 {
@@ -23,10 +29,6 @@ class PromoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('internal.promoter.newPromotion');
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -36,8 +38,54 @@ class PromoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $input = $request->all();
+
+        $promotions               =   new Promotions ;
+        $promotions->name         =   $input['promotionName'];
+        $promotions->description  =   $input['description'];
+        $promotions->startday  =   $input['dateIni'];
+        $aux = $input['dateIni']. ' '. $input['timeIni'];
+         $promotions->startday  =    $aux;
+
+
+
+       $aux =   $input['dateEnd']     .' '. $input['timeEnd'];
+
+
+
+ $promotions->endday =   $aux  ; 
+        
+
+
+        $promotions->desc  =   $input['discount'];
+        $promotions->event_id  = $input['select'] ;
+
+
+       /*
+        $user->password     =   bcrypt($input['password']);
+        $user->di_type      =   $input['di_type'];
+        $user->di           =   $input['di'];
+        $user->address      =   $input['address'];      
+        $user->phone        =   $input['phone'];      
+        $user->email        =   $input['email'];      
+        $user->birthday     =   new Carbon($input['birthday']);      
+        $user->role_id      =   $input['role_id'];      
+       /*
+        if($request->file('image')!=null)
+        $gift->image        =   $this->file_service->upload($request->file('image'),'gift'); */
+
+
+        $promotions->save();
+
+        return redirect('promoter/promotion');
+      
+      //  return $input['select'] ;
+
+      
     }
+
+
 
     /**
      * Display the specified resource.
@@ -45,6 +93,41 @@ class PromoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
+    public function create()
+    {
+
+          $events = Event::all();
+
+
+
+
+
+
+        return view('internal.promoter.newPromotion', compact('events'));
+    }
+
+
+  
+    public function promotion()
+    {
+
+          $promotions = Promotions::all();
+
+
+
+
+
+
+        return view('internal.promoter.promotions', compact('promotions'));
+    }
+
+
+ 
+
+
+
     public function show($id)
     {
         //

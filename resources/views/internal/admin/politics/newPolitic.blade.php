@@ -67,6 +67,7 @@
 
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
+                
                   <button type="submit" class="btn btn-info">Guardar</button>
                   <button type="reset" class="btn btn-info">Cancelar</button>
                 </div>

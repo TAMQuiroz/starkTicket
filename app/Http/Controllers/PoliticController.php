@@ -51,6 +51,15 @@ class PoliticController extends Controller
         return view('internal.admin.politics.politics', compact('politics'));
     }
 
+
+
+       public function politicsPromotor()
+    {
+        $politics = politics::all();
+  
+        return view('internal.promoter.politics', compact('politics'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -65,7 +74,7 @@ class PoliticController extends Controller
         $politics               =   new politics ;
         $politics->name         =   $input['name'];
         $politics->description  =   $input['description'];
-         $politics->state = 'Activo'; 
+         $politics->state =  $input['state'];; 
             /*
         $user->password     =   bcrypt($input['password']);
         $user->di_type      =   $input['di_type'];

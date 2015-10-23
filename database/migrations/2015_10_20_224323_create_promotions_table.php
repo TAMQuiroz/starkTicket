@@ -24,7 +24,7 @@ class CreatePromotionsTable extends Migration
             $table->float('desc');
             $table->timestamps();
             $table->softDeletes();
-
+            $table->integer('event_id')->unsigned();
           
         });
 
@@ -40,6 +40,6 @@ class CreatePromotionsTable extends Migration
      */
     public function down()
     {
-         Schema::drop('promotionsd');
+         Schema::drop('promotions');
     }
 }

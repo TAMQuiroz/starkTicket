@@ -13,6 +13,18 @@
         <div class="row">
             <!-- Content Column -->
             <div class="col-md-9">
+  
+
+
+
+
+
+
+
+
+
+
+
 				<div class="container">  <!-- Comienza primer despliegue-->
 									    
 				    <br><br>
@@ -22,35 +34,35 @@
 					        <tr>
 					            <th>Nombre</th>
 					            <th>Usuario creador</th>
-					            <th>Fecha Fin</th>
-					            <th>Hora Fin</th>
+					            <th>Fecha y hora fin</th>
+					          
 					            <th>Ver</th>
 					            <th>Editar</th>
 					            <th>Eliminar</th>
 					        </tr>
 					    </thead>
 					    <tbody>
+ 							@foreach($promotions as $promotion)
 					        <tr>
-					            <td>Promoción Visa Platinium</td>
-					            <td>Samoel Sarmiento</td>
-					            <td>13/10/2015</td>
-					            <td>24:00</td>
+					            <td>{{$promotion->name}}</td>
+					            <td>Promotor</td>
+					            <td>{{$promotion->endday}}</td>
+					            
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
 					            <td><a href="{{url('promoter/promotion/1/edit')}}"><button class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i></button></a></td>
 					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
 					        </tr>
-					        <tr>
-					            <td>Promoción Mastercard</td>
-					            <td>Samoel Sarmiento</td>
-					            <td>20/12/2015</td>
-					            <td>20:00</td>
-					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
-					            <td><a href="{{url('promoter/promotion/1/edit')}}"><button type="button" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i></button></a></td>
-					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
-					        </tr>
+					   
+					          @endforeach
+
+
 					    </tbody>
+
+
+
 					  </table>
 					</div>
+
 					
 					<div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 					  <div class="modal-dialog" role="document">
@@ -104,7 +116,15 @@
 					    </div>
 					  </div>
 					</div>
+
+
+
+
 				</div>
+
+
+				  
+
 			</div>
 		</div>
 @stop
