@@ -88,10 +88,35 @@
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <!-- <a class="btn btn-info"  data-toggle="modal" data-target="#agregado">Guardar</a> -->
-                  <button type="submit" class="btn btn-info">Guardar</button>
+                  <a class="btn btn-info" type="button" href=""  title="Create"  data-toggle="modal" data-target="#editModalAdmin">Guardar</a>
+                  <!-- <button type="submit" class="btn btn-info">Guardar</button> -->
                   <button type="reset" class="btn btn-info">Cancelar</button
                 </div>
               </div>
+
+
+               <!-- MODAL -->
+              <div class="modal fade"  id="editModalAdmin">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">¿Estas seguro que desea guardar los cambios?</h4>
+                    </div>
+                    <div class="modal-body">
+                      <h5 class="modal-title">Los cambios serán permanentes</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>                        
+                        <button type="submit" class="btn btn-info">Sí</button>
+                        <!--
+                        <a class="btn btn-info" href="" title="Create" >Sí</a>
+                        -->
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
+
            {!!Form::close()!!}
           </div>
         </div>
