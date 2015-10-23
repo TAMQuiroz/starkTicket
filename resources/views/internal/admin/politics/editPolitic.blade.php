@@ -1,6 +1,15 @@
 @extends('layout.admin')
 
 @section('style')
+<style type="text/css">
+  .descripL{
+    maxlength:10;
+  } 
+  .inputL{
+    maxlength:30;
+  } 
+
+</style>
 
 @stop
 
@@ -25,7 +34,7 @@
                   <!--
                   <input type="text" class="form-control" id="inputEmail3" placeholder="" value="Politica 1">
                   -->
-                  {!!Form::text('name', $politics->name ,['class'=>'form-control','id'=>'inputEmail3','required'])!!}
+                  {!!Form::text('name', $politics->name ,['class'=>'form-control inputL','id'=>'inputEmail3','required'])!!}
                 </div>
               </div>
               <div class="form-group">
@@ -35,7 +44,7 @@
                   <textarea class="form-control" rows="5">Lorem ipsum dolor sit amet.</textarea>
                   -->
 
-                  {!!Form::textarea('description', $politics->description ,['class'=>'form-control','required'])!!}
+                  {!!Form::textarea('description', $politics->description ,['class'=>'form-control descripL','required'])!!}
                 </div>
               </div>
               <div class="form-group">
@@ -46,17 +55,17 @@
                   -->
 
 
-  @if($politics->state =='Activo')
-         <label class="radio-inline">{!!Form::radio('state','Activo' ,'true')!!}Activo</label>
-         <label class="radio-inline">{!!Form::radio('state', 'Inactivo')!!}Inactivo</label> 
+            @if($politics->state =='Activo')
+             <label class="radio-inline">{!!Form::radio('state','Activo' ,'true')!!}Activo</label>
+             <label class="radio-inline">{!!Form::radio('state', 'Inactivo')!!}Inactivo</label> 
 
-        @else
-            <label class="radio-inline">{!!Form::radio('state','Activo' )!!}Activo</label>
-         <label class="radio-inline">{!!Form::radio('state','Inactivo','true' )!!}Inactivo</label> 
+            @else
+                <label class="radio-inline">{!!Form::radio('state','Activo' )!!}Activo</label>
+             <label class="radio-inline">{!!Form::radio('state','Inactivo','true' )!!}Inactivo</label> 
 
 
 
-        @endif
+            @endif
 
 
 
@@ -66,7 +75,7 @@
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
              <!--     <a class="btn btn-info" type = "submit"  data-toggle="  modal" data-target="#save" data-whatever="@mdo">Guardar</a>  -->
-                  <button type="submit" class="btn btn-info">Guardar</button>
+                  <button type="submit" class="btn btn-info" data-toggle="  modal" data-target="#save" data-whatever="@mdo">Guardar</button>
 
                   <a class="btn btn-info" href="{{url('admin/politics')}}">Cancelar</a>
                 </div>
@@ -76,7 +85,7 @@
         </div>
         <!-- Final Contenido -->
      </div>
-<!-- 
+
     <div class="modal fade" id="save" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -96,7 +105,7 @@
          {!!Form::close()!!}
     </div>
     </div>
-    -->
+    
 @stop
 
 @section('javascript')

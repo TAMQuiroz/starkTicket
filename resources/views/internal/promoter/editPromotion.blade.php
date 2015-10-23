@@ -1,7 +1,20 @@
 @extends('layout.promoter')
 
 @section('style')
-
+	<style type="text/css">
+		.nameL{
+			maxlength:15;
+		}
+		.discL{
+			maxlength:2;
+		}
+		.dateL{
+			maxlength:5;
+		}
+		.descripL{
+			maxlength:30;
+		}
+	</style>
 @stop
 
 @section('title')
@@ -13,26 +26,26 @@
 		<h4>Código</h4>
 		{!! Form::text('codePromotion','9898083', array('class' => 'form-control','required','disabled')) !!}
 		<h4>Nombre</h4>
-		{!! Form::text('promotionName','', array('class' => 'form-control','required')) !!}	
+		{!! Form::text('promotionName','', array('class' => 'form-control nameL','required')) !!}	
 		<h4>Descuento (%)</h4>
-		{!! Form::text('discount','%', array('class' => 'form-control','required')) !!}
+		{!! Form::text('discount','%', array('class' => 'form-control discL','required')) !!}
 	</div>
 	<div style="-webkit-columns: 100px 4;">
 		<h4>Fecha Inicio</h4>
-		{!! Form::date('dateIni','', array('class' => 'form-control','required')) !!}
+		{!! Form::date('dateIni','', array('class' => 'form-control dateL','required')) !!}
 		<h4>Fecha Fin</h4>
-		{!! Form::date('dateEnd','', array('class' => 'form-control','required')) !!}
+		{!! Form::date('dateEnd','', array('class' => 'form-control dateL','required')) !!}
 		<h4>Hora Inicio</h4>
-		{!! Form::time('timeIni','', array('class' => 'form-control','required')) !!}
+		{!! Form::time('timeIni','', array('class' => 'form-control dateL','required')) !!}
 		<h4>Hora Fin</h4>
-		{!! Form::time('timeEnd','', array('class' => 'form-control','required')) !!}
+		{!! Form::time('timeEnd','', array('class' => 'form-control dateL','required')) !!}
 	</div>
 	<h4>Descripción</h4>
-	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'required']) !!}
+	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control descripL', 'required']) !!}
 	
 	<h4>Agregar evento:</h4>
 	<div class="input-group" style="width:300px">
-  		{!! Form::text('eventName','', array('class' => 'form-control','required')) !!}
+  		{!! Form::text('eventName','', array('class' => 'form-control nameL','required')) !!}
   		<span class="input-group-btn">
 	    	<button class="btn btn-info" type="button">Buscar</button>
 	    </span>
