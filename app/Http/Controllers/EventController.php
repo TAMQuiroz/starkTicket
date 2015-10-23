@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Http\Requests;
 use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
@@ -14,7 +12,6 @@ use App\Models\Category;
 use App\Models\Organizer;
 use App\Models\Local;
 use App\Services\FileService;
-
 class EventController extends Controller
 {
     /**
@@ -22,16 +19,13 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function __construct(){
         $this->file_service = new FileService();
     }
-
     public function index()
     {
         //
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +35,6 @@ class EventController extends Controller
     {
         return view('external.events');
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -57,7 +50,6 @@ class EventController extends Controller
                 'locals_list'       =>$locals_list];
         return view('internal.promoter.newEvent', $array);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -78,7 +70,6 @@ class EventController extends Controller
         $event->save();
         return $event;
     }
-
     public function storePresentation($data, $event){
         $function = new Presentation();
         $function->starts_at = strtotime($data['starts_at']);
@@ -88,12 +79,10 @@ class EventController extends Controller
         $function->save();
         return $function;
     }
-
     public function storeZone($data, $event){
         $zone = new Zone();
         $zone->name         = $data['name'];
         $zone->price        = $data['price'];
-
         if($data['columns'] != '' || $data['columns'] != null){ 
             $zone->columns      = $data['columns'];
             $zone->rows         = $data['rows'];
@@ -105,12 +94,10 @@ class EventController extends Controller
             $zone->capacity     = $data['capacity'];
             $zone->slots_availables = $data['capacity'];
         }
-
         $zone->event()->associate($event);
         $zone->save();
         return $zone;
     }
-
     public function storeRestOfEvent($zone_data, $data, $event){
         $functions_ids = array();
         foreach($data['function_starts_at'] as $key=>$value){
@@ -154,7 +141,6 @@ class EventController extends Controller
         }
         
     }
-
     public function store(StoreEventRequest $request)
     {
         $temp = array_unique($request->input('function_starts_at'));
@@ -194,7 +180,6 @@ class EventController extends Controller
         //return redirect()->route('events.edit', $event->id);
         return response()->json(['message' => 'Event added']);
     }
-
     /**
      * Display the specified resource.
      *
@@ -205,7 +190,6 @@ class EventController extends Controller
     {
         //
     }
-
     /**
      * Display the specified resource.
      *
@@ -215,7 +199,6 @@ class EventController extends Controller
     public function showExternal($id)
     {
         $user = \Auth::user();
-
         // $object = Event::findOrFail($id);
         $object = array(
                 "id" => $id,
@@ -231,7 +214,6 @@ class EventController extends Controller
             );
         return view('external.event', ['event' => (object)$object, 'user'=>$user]);
     }
-
     /**
      * Display the specified resource.
      *
@@ -241,7 +223,6 @@ class EventController extends Controller
     {
         return view('internal.client.record');
     }
-
     /**
      * Display the specified resource.
      *
@@ -251,7 +232,6 @@ class EventController extends Controller
     {
         return view('internal.promoter.record');
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -261,14 +241,12 @@ class EventController extends Controller
     {
         return view('internal.promoter.addFunction');
     }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function deletePresentations($event_id){
         $presentations = Presentation::where('event_id', $event_id)->get();
         foreach ($presentations as $presentation) {
@@ -277,7 +255,6 @@ class EventController extends Controller
         }
         
     }
-
     public function deleteZones($event_id){
         $zones = Zone::where('event_id', $event_id)->get();
         foreach ($zones as $zone) {
@@ -300,7 +277,6 @@ class EventController extends Controller
         else
             $old_event->image = $image_url;
         $old_event->save();
-
         return $old_event;
     }
     public function edit($id)
@@ -308,7 +284,6 @@ class EventController extends Controller
         Event::find($id);
         return view('internal.promoter.editEvent', $event);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -316,7 +291,6 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function capacity_validation($data){
         $total_capacity = 0;
         $temp = array_unique($data['zone_names']);
@@ -355,7 +329,6 @@ class EventController extends Controller
         ];
         return $result;
     }
-
     public function calculateEventCapacity($event_id){
         $zones = Zone::where('event_id', $event_id)->get();
         $capacity = 0;
@@ -397,7 +370,23 @@ class EventController extends Controller
                 }
             }
         //esto ocurre cuando hay cambio de local pero está antes del selling date
-            $data = [
+            
+        }
+        //debo verificar que no se esten cambiando la capacidad o fila/columna de zona si ya se empezó a vender
+        if($now() > $request->input('selling_date')){
+            $zones = Zone::where('event_id', $id)->get();
+            $i = 0;
+            foreach($zones as $zone){
+                if($zone->capacity != $request->input('zone_capacity.'.$i)||
+                $zone->start_row != $request->input('start_row.'.$i)||
+                $zone->start_column != $request->input('start_column.'.$i)||
+                $zone->columns != $request->input('zone_columns.'.$i)||
+                $zone->rows != $request->input('zone_rows.'.$i))
+                    return redirect()->back()->withInput()->withErrors(['errors' => 'Venta de evento iniciada. No se puede modificar la capacidad');
+                $i++;
+            }
+        }
+        $data = [
                 'name'          => $request->input('name'),
                 'description'   => $request->input('description'),
                 'category_id'   => $request->input('category_id'),
@@ -408,8 +397,10 @@ class EventController extends Controller
                 'time_length'  => $request->input('time_length'),
                 'image'        => $request->file('image')
             ];
-            $this->deletePresentations($event->id); //NO DEBE BORRAR PRESENTACIONES, SOLO HACERLES UPDATE
-            $this->deleteZones($event->id); //TAMPOCO DEBE BORRAR ZONAS, SOLO HACERLES UPDATE
+        if(now() < $request->input('selling_date')){
+            //antes del sellingdate en general
+            $this->deletePresentations($event->id); 
+            $this->deleteZones($event->id); 
             $updated_event = $this->updateEvent($data, $event);
             $zone_data = [
                 'zone_names'      => $request->input('zone_names'),
@@ -424,17 +415,42 @@ class EventController extends Controller
                 'function_starts_at' => $request->input('function_starts_at')
             ];
             $this->storeRestOfEvent($zone_data, $data2, $updated_event);
+            
+        } else{
+            //despues del selling date pero sin cambio de local, se puede agregar zonas pero no funciones
+            $updated_event = $this->updateEvent($data, $event);
+            //para presentaciones, solo se agregan o se cambian con fecha pasadas la fecha actual
+            $presentations = Presentation::where('event_id', $id)->get();
+            $i = 0;
+            foreach($presentations as $presentation){
+                if(now() < $presentation->starts_at){
+                    $presentation->starts_at = strtotime($request->input('function_starts_at.'.$i));
+                    $presentation->save();
+                }
+            }
+            if($presentations->count() < count($request->input('function_starts_at'))){
+                for($i = $presentations->count() ; $i<count($request->input('function_starts_at')); $i++){
+                    $data = ['starts_at' => $request->input('function_starts_at.'.$i)];
+                    $this->storePresentation($data, $event);
+                }
+            }
+            //para zonas, se puede cambiar nombre nada más :v
+            $zones = Zone::where('event_id', $id)->get();
+            $i = 0;
+            foreach($zones as $zone){
+                $zone->name = $request->input('zone_names.'.$i);
+                $zone->save();
+                $i++;
+            }
         }
         //si No estamos haciendo un cambio de local, solo se updatea el evento, zona y presentacion, no se tocan los sitios
         //y no se borra nada -_-
-        //debo verificar que no se esten cambiando la capacidad o fila/columna de zona si ya se empezó a vender
         //return redirect()->route('events.edit', $event->id);
         return response()->json(['message' => 'Event modified']);
     }
-
     public function updateSellingEvent($data, $event_id){
         //no se considera el cancelar
-        //si ya se esta vendiendo, puede modificar la hora de la funcion? ahorita esta que si pero falta verificar eso
+        //si ya se esta vendiendo, puede modificar la hora de la funcion? ahorita esta que si pero solo para agregar o cambiar funciones posteriores al selling date
         $event = Event::find($event_id);
         $updatedEvent = $this->updateEvent($data, $event);
         $presentations = Presentation::where('event_id', $event_id)->get();
@@ -447,7 +463,7 @@ class EventController extends Controller
         $count = 0;
         foreach ($zones as $zone) {
             $new_capacity = $data['zone_capacity'][$count];
-            $max_sold_slots = //query de buscar max asientos ocupados de esta zona;
+            $max_sold_slots = $this->getMaxOccupiedSlots($event_id, $zone->id);//query de buscar max asientos ocupados de esta zona;
             if($new_capacity < $max_sold_slots)
                 return ['error' => 'no se puede modificar la zona a una capacidad menor a las entradas vendidas'];
             $zone->name = $data['zone_names'][$count];
@@ -465,11 +481,46 @@ class EventController extends Controller
                 }
             }
             if($old_capacity > $new_capacity){
+                $difference = $old_capacity - $new_capacity;
                 //aqui solo hare dettach
+                $slots = Slot::where('zone_id',$zone->id)->get();
+                $cant = $presentations->count();
+                $dettached = array();
+                for($i=0;i<$cant;$i++)
+                    $dettached[$i] = 0;
+                foreach($slots as $slot){
+                    $i = 0;
+                    foreach($slot->presentation as $presentation){
+                        if($dettached[i] < $difference && $presentation->pivot->status == config('constants.seat_available')){
+                            $slot->presentation()->dettach($presentation->id);
+                            $dettached[$i] = $dettached[$i]++;
+                        }
+                        $i++;
+                    }
+                }
             }
             $count++;
         }
         return ['error' => ''];
+    }
+    
+    public function getMaxOccupiedSlots($event_id, $zone_id){
+        $zone = Zone::find($zone_id);
+        $slots = Slot::where('zone_id', $zone_id)->get();
+        $presentations = Presentation::where('event_id', $event_id)->get();
+        $max = 0;
+        
+        foreach($presentations as $presentation){
+            $count = 0;
+            foreach($presentation->slots as $slot){
+                if($slot->pivot->status == config('constants.seat_occupied')){
+                    $count++;
+                }
+            }
+            if($count > $max) $max = $count;
+        }
+        return $max;
+        
     }
     /**
      * Remove the specified resource from storage.
