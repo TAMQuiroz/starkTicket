@@ -30,8 +30,8 @@ class StoreLocalRequest extends Request
             'district'      =>  'required|max:20',
             'province'      =>  'required|max:20',
             'state'         =>  'required|max:20',
-            'row'           =>  'min:0',
-            'column'        =>  'min:0',
+            'row'           =>  'min:0|required_with:column',
+            'column'        =>  'min:0|required_with:row',
             'image'         =>  'required|image'
         ];
     }

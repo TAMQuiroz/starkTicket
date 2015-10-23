@@ -47,6 +47,7 @@ class LocalController extends Controller
     {
         //
         $input = $request->all();
+        
 
         $local               =   new Local;
         $local->name         =   $input['name'];

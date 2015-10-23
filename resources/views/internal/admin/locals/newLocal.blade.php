@@ -51,7 +51,7 @@
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Filas</label>
         <div class="col-sm-10">
-         {!!Form::input('number','row', null ,['class'=>'form-control','id'=>'row','min'=>0])!!}
+         {!!Form::input('number','row', null ,['class'=>'form-control','id'=>'row','required','min'=>0])!!}
          <!-- {!!Form::radio('sex', 'male') !!}<br>
           {!!Form::radio('sex', 'female') !!} -->
         </div>
@@ -59,7 +59,7 @@
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Columnas</label>
         <div class="col-sm-10">
-          {!!Form::input('number','column', null ,['class'=>'form-control','id'=>'column','min'=>0])!!}
+          {!!Form::input('number','column', null ,['class'=>'form-control','id'=>'column','required','min'=>0])!!}
         </div>
       </div>
       <div class="form-group">
