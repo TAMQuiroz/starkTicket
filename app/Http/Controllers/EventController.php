@@ -12,6 +12,7 @@ use App\Models\Category;
 use App\Models\Organizer;
 use App\Models\Local;
 use App\Services\FileService;
+use DateTime;
 class EventController extends Controller
 {
     /**
@@ -89,10 +90,8 @@ class EventController extends Controller
             $zone->start_column = $data['start_column'];
             $zone->start_row    = $data['start_row'];
             $zone->capacity     = $zone->columns* $zone->rows;
-            $zone->slots_availables = $zone->columns* $zone->rows;
         } else {
             $zone->capacity     = $data['capacity'];
-            $zone->slots_availables = $data['capacity'];
         }
         $zone->event()->associate($event);
         $zone->save();
@@ -151,7 +150,6 @@ class EventController extends Controller
         if($result['error'] != '')
             //return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
             return response()->json(['message' => $result['error']]);
-        die();
         $data = [
             'name'          => $request->input('name'),
             'description'   => $request->input('description'),
@@ -339,6 +337,7 @@ class EventController extends Controller
     }
     public function update(UpdateEventRequest $request, $id)
     {
+        $now = new DateTime();
         $temp = array_unique($request->input('function_starts_at'));
         if(count($temp) < count($request->input('function_starts_at')))
             //return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
@@ -353,9 +352,9 @@ class EventController extends Controller
         $old_capacity = $this->calculateEventCapacity($id);
         $new_capacity = $result['total_capacity'];
         if($event->local_id != $request->input('local_id')){
-            if($actual_local->rows >=1 && $request->input('selling_date')<now())
+            if($actual_local->rows >=1 && $request->input('selling_date')<$now->getTimestamp())
                 return redirect()->back()->withInput()->withErrors(['errors' => 'Ya inició la venta del evento. No se puede modificar el local']);
-            if($actual_local->rows == null && $request->input('selling_date')<now()){
+            if($actual_local->rows == null && $request->input('selling_date')<$now->getTimestamp()){
                 if($new_local->rows != null)
                     return redirect()->back()->withInput()->withErrors(['errors' => 'Ya inició la venta del evento. No se puede modificar el local a uno numerado']);
                 if($new_local->rows == null && $new_capacity < $old_capacity)
@@ -373,7 +372,7 @@ class EventController extends Controller
             
         }
         //debo verificar que no se esten cambiando la capacidad o fila/columna de zona si ya se empezó a vender
-        if($now() > $request->input('selling_date')){
+        if($now->getTimestamp() > $request->input('selling_date')){
             $zones = Zone::where('event_id', $id)->get();
             $i = 0;
             foreach($zones as $zone){
@@ -382,7 +381,7 @@ class EventController extends Controller
                 $zone->start_column != $request->input('start_column.'.$i)||
                 $zone->columns != $request->input('zone_columns.'.$i)||
                 $zone->rows != $request->input('zone_rows.'.$i))
-                    return redirect()->back()->withInput()->withErrors(['errors' => 'Venta de evento iniciada. No se puede modificar la capacidad');
+                    return redirect()->back()->withInput()->withErrors(['errors' => 'Venta de evento iniciada. No se puede modificar la capacidad']);
                 $i++;
             }
         }
@@ -397,7 +396,7 @@ class EventController extends Controller
                 'time_length'  => $request->input('time_length'),
                 'image'        => $request->file('image')
             ];
-        if(now() < $request->input('selling_date')){
+        if($now->getTimestamp() < $request->input('selling_date')){
             //antes del sellingdate en general
             $this->deletePresentations($event->id); 
             $this->deleteZones($event->id); 
@@ -423,7 +422,7 @@ class EventController extends Controller
             $presentations = Presentation::where('event_id', $id)->get();
             $i = 0;
             foreach($presentations as $presentation){
-                if(now() < $presentation->starts_at){
+                if($now->getTimestamp() < $presentation->starts_at){
                     $presentation->starts_at = strtotime($request->input('function_starts_at.'.$i));
                     $presentation->save();
                 }

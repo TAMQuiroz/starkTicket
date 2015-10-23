@@ -18,7 +18,6 @@ class CreateZonesTable extends Migration
             $table->timestamps(); 
             $table->string('name');
             $table->integer('capacity');
-            $table->integer('slots_availables');
             $table->integer('columns')->nullable();
             $table->integer('rows')->nullable();
             $table->integer('start_column')->nullable();
