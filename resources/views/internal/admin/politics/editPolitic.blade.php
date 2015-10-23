@@ -34,7 +34,7 @@
                   <!--
                   <input type="text" class="form-control" id="inputEmail3" placeholder="" value="Politica 1">
                   -->
-                  {!!Form::text('name', $politics->name ,['class'=>'form-control inputL','id'=>'inputEmail3','required'])!!}
+                  {!!Form::text('name', $politics->name ,['class'=>'form-control','id'=>'inputEmail3','maxlenght'=>'10' ,'required'])!!}
                 </div>
               </div>
               <div class="form-group">

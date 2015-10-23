@@ -18,28 +18,28 @@
 	<div style="-webkit-columns: 100px 2;">
 	
 		<h4>Nombre</h4>
-		{!! Form::text('promotionName','', array('class' => 'form-control')) !!}	
+		{!! Form::text('promotionName','', array('class' => 'form-control', 'required')) !!}	
 		<h4>Descuento (%)</h4>
-		{!! Form::text('discount','', array('class' => 'form-control')) !!}
+		{!! Form::text('discount','', array('class' => 'form-control' , 'required')) !!}
 	</div>
 	<div style="-webkit-columns: 100px 4;">
 		<h4>Fecha Inicio</h4>
 
 
 
-		{!! Form::date('dateIni','', array('class' => 'form-control')) !!}
+		{!! Form::date('dateIni','', array('class' => 'form-control' , 'required')) !!}
 		<h4>Fecha Fin</h4>
-		{!! Form::date('dateEnd','', array('class' => 'form-control')) !!}
+		{!! Form::date('dateEnd','', array('class' => 'form-control', 'required')) !!}
 		<h4>Hora Inicio</h4>
-		{!! Form::time('timeIni','', array('class' => 'form-control')) !!}
+		{!! Form::time('timeIni','', array('class' => 'form-control', 'required')) !!}
 		<h4>Hora Fin</h4>
-		{!! Form::time('timeEnd','', array('class' => 'form-control')) !!}
+		{!! Form::time('timeEnd','', array('class' => 'form-control', 'required')) !!}
 
 
 
 	</div>
 	<h4>Descripción</h4>
-	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control']) !!}
+	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'required']) !!}
 	
 <!-- 
 
@@ -119,9 +119,9 @@
 
 	<div style="-webkit-columns: 100px 2;">
 		<h4>Zona</h4>
-		{!! Form::select('zone', ['VIP','Platea'],null,['class' => 'form-control']) !!}
+		{!! Form::select('zone', ['VIP','Platea'],null,['class' => 'form-control' , 'required']) !!}
 		<h4>Tipo de Cliente</h4>
-		{!! Form::select('zone', ['Niño','Adulto', 'Adulto Mayor'],null,['class' => 'form-control']) !!}
+		{!! Form::select('zone', ['Niño','Adulto', 'Adulto Mayor'],null,['class' => 'form-control'] , 'required') !!}
 	</div>
 	<br><br>
 	<button type="submit" class="btn btn-info" data-toggle="modal" data-target="#end" data-whatever="@mdo">Guardar</button>
