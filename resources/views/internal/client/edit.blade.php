@@ -12,6 +12,7 @@ Cambia información
 {!! Form::model($obj, [ 'method' => 'POST', 'url' => 'client/update']) !!}
 
     <div class="col-sm-12">
+        </div>
         <div class="form-group">
             {!! Form::label('name', 'Nombre:', ['class' => 'control-label']) !!}
             {!! Form::text('name', null, ['class' => 'form-control']) !!}
@@ -20,7 +21,18 @@ Cambia información
             {!! Form::label('lastname', 'Apellidos:', ['class' => 'control-label']) !!}
             {!! Form::text('lastname', null, ['class' => 'form-control']) !!}
         </div>
-        {!! Form::submit('Actualizar', ['class' => 'btn btn-primary']) !!}
+        <div class="form-group">
+            {!! Form::label('address', 'Dirección', ['class' => 'control-label']) !!}
+            {!! Form::text('address', null, ['class' => 'form-control']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::label('phone', 'Telefono', ['class' => 'control-label']) !!}
+            {!! Form::text('phone', null, ['class' => 'form-control']) !!}
+        </div>
+
+        
+
+        {!! Form::submit('Actualizar', ['class' => 'btn btn-info']) !!}
     </div>
 
 {!! Form::close() !!}

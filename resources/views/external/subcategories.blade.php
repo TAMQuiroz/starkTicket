@@ -29,29 +29,23 @@
 @stop
 
 @section('content')
-	<legend>Categoria 1</legend>	
+    <legend>{{$category->name}}</legend>
+	<p>{{$category->description}}</p>
+    @if (count($subcategories)>0)
 	<div class="row">
+        @foreach ($subcategories as $subcategory)
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
             <h3>Subcategoria 1</h3>
-            <p><a href="{{url('event')}}" class="btn btn-primary" role="button" data-target="#info" data-whatever="@mdo">Ver más</a></p>
+            <p><a href="subcategory/{{$subcategory->id}}" class="btn btn-primary" role="button" data-target="#info" data-whatever="@mdo">Ver más</a></p>
         </div>
-        <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Subcategoria 2</h3>
-            <p><a href="{{url('event')}}" class="btn btn-primary" role="button"  data-target="#info" data-whatever="@mdo">Ver más</a></p>
-        </div>
-        <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Subcategoria 3</h3>
-            <p><a href="{{url('event')}}" class="btn btn-primary" role="button"  data-target="#info" data-whatever="@mdo">Ver más</a> </p>
-        </div>
-        <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Categoria 4</h3>
-            <p><a href="{{url('cevent')}}" class="btn btn-primary" role="button"  data-target="#info" data-whatever="@mdo">Ver más</a></p>
-        </div>
+        @endforeach
     </div>
+    @else
+    <div class="alert alert-info">No tiene sub categorias</div>
+    @endif
+    <hr>
+    <p><b>Recomendados</b></p>
     <div class="row">
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}

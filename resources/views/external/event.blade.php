@@ -36,19 +36,18 @@
 							        </tr>
 							    </thead>
 							    <tbody>
+							    	@foreach ($event->zones() as $zones)
 							        <tr>
-							            <td>VIP</td>
-							            <td>S/150.00</td>
+							            <td>{{$zones->name}}</td>
+							            <td>S/. {{$zones->price}}</td>
 							        </tr>
-							        <tr>
-							            <td>Platea</td>
-							            <td>S/.70</td>
-							        </tr>
+							        @endforeach
+
 							    </tbody>
 							  </table>
 							</div>
 							@if(isset($user) && $user->role_id == config('constants.salesman'))
-							<a href="{{url('salesman/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a> 
+							<a href="{{url('salesman/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
 							@else
 							<a href="{{url('client/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
 							@endif
