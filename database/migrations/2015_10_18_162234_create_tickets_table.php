@@ -25,12 +25,6 @@ class CreateTicketsTable extends Migration
             $table->float('price');
             $table->timestamps();
             $table->softDeletes();
-            
-            //Falta hacer llaves foraneas de evento y asiento
-            $table->foreign('owner_id')
-                ->references('id')
-                ->on('users');
-             
         });
     }
 

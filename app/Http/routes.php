@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
     Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
     Route::get('getClient', ['uses'=>'TicketController@getClient','as'=>'ajax.getClient']);
+    Route::get('getPrice', ['uses'=>'TicketController@getPrice','as'=>'ajax.getPrice']);
 });
 
 Route::group(['middleware' => ['auth', 'promoter']], function () {
@@ -156,3 +157,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/promoter/{id}/edit', 'AdminController@updatePromoter');
     Route::get('admin/promoter/{id}/delete', 'AdminController@destroyPromoter');
 })  ;
+/*
+Route::get('token',function(){
+    return csrf_token();
+});
+*/
+

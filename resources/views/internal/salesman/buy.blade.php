@@ -27,7 +27,8 @@
                     <h4 class="boxy"> Funciones del evento </h4>
                     {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=> 'getInnerText(this)']) !!}
                     <h4 > Zona del Evento </h4>
-                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control']) !!}
+                    <!--{!! Form::select('zone_id', $zones, null, ['class' => 'form-control']) !!}-->
+                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getPrice(this)','id'=>'zone_id']) !!}
                 </div>
                 <h4> Promoción </h4>
                 {!! Form::select('promotion_id', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
@@ -85,7 +86,10 @@
                 <div style="clear:both"></div>
            </div>
         </div>
-        {!!Form::hidden('seats',null, array('id'=>'seats'))!!}
+        {!!Form::select('seats[]',$slots,null,['multiple'])!!}
+
+        <!--{!!Form::hidden('seats',json_encode(array($event->presentations[0]->slots[22]->id,$event->presentations[0]->slots[23]->id)), array('id'=>'seats'))!!}-->
+        
         <!-- Content Row -->
         <!-- /.row -->
         <hr>
@@ -166,7 +170,8 @@
     <script type="text/javascript">
         var config = {
         routes: [
-            { zone: "{{ URL::route('ajax.getClient') }}" }
+            { zone: "{{ URL::route('ajax.getClient') }}" },
+            { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
         ]
     };
     </script>

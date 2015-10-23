@@ -25,10 +25,12 @@ class StoreTicketRequest extends Request
     {
         return [
             'seats'             =>  'required',
-            'event_id'          =>  'required',
-            'presentation_id'   =>  'required',
-            'seats'             =>  'required',
-            'payMode'           =>  'required'
+            'event_id'          =>  'required|integer',
+            'zone_id'           =>  'required|integer',
+            'promotion_id'      =>  'required|integer',
+            'user_id'           =>  'integer',
+            'presentation_id'   =>  'required|integer',
+            'payMode'           =>  'required|integer'
         ];
     }
 }

@@ -13,7 +13,7 @@ class StoreEventRequest extends Request
     public function rules() {
         $rules =  [
             'name'          => 'required|unique:categories|max:30',
-            'image'         => 'required|image',
+            //'image'         => 'required|image',
             'description'   => 'required',
             'category_id'   => 'required|exists:categories,id',
             'organizer_id'  => 'required|exists:organizers,id',
