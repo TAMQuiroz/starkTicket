@@ -101,7 +101,7 @@
                       <h5 class="modal-title">Los cambios serán permanentes</h5>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>                        
                         <button type="submit" class="btn btn-info">Sí</button>
                         <!--
                         <a class="btn btn-info" href="" title="Create" >Sí</a>
