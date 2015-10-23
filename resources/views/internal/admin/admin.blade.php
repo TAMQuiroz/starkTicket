@@ -42,7 +42,7 @@
             <a class="btn btn-info" href="" data-toggle="modal" data-target="#edit{{$user->id}}" title="Detalles"><i class="glyphicon glyphicon-plus"></i></a>
           </td> 
           <td>
-            <a class="btn btn-info" href="{{url('admin/admin/'.$user->id.'/edit')}}" title="Editatr"><i class="glyphicon glyphicon-pencil"></i></a>
+            <a class="btn btn-info" href="{{url('admin/admin/'.$user->id.'/edit')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
             <div class="modal fade" id="edit{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
