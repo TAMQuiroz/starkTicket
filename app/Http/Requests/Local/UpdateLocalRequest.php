@@ -25,13 +25,13 @@ class UpdateLocalRequest extends Request
     {
         return [
             'name'          =>  'required|max:30',
-            'capacity'      =>  'required',
+            'capacity'      =>  'required|min:0',
             'address'       =>  'required|max:50',
             'district'      =>  'required|max:20',
             'province'      =>  'required|max:20',
             'state'         =>  'required|max:20',
-            'row'           =>  'integer',
-            'column'        =>  'integer',
+            'row'           =>  'min:0',
+            'column'        =>  'min:0',
             'image'         =>  'image'
         ];
     }
