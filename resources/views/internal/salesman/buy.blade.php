@@ -25,7 +25,7 @@
                 </div>
                 <div style="-webkit-columns: 100px 2;">
                     <h4 class="boxy"> Funciones del evento </h4>
-                    {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy']) !!}
+                    {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=> 'getInnerText(this)']) !!}
                     <h4 > Zona del Evento </h4>
                     {!! Form::select('zone_id', $zones, null, ['class' => 'form-control']) !!}
                 </div>
@@ -55,7 +55,7 @@
             <div style="-webkit-columns: 100px 2;">
                 <h5>Ingrese Usuario</h5>
                 <div class="input-group" style="width:290px">
-                    {!! Form::number('number', null, ['class' => 'form-control', 'placeholder' => 'Documento de Identidad...','id'=>'user_di','min'=>0]) !!}
+                    {!! Form::number('number', null, ['class' => 'form-control', 'placeholder' => 'Documento de Identidad...','id'=>'user_di','min'=>0,'max'=>99999999]) !!}
                 </div><!-- /input-group -->
                 <h5>Nombre de Cliente</h5>
                 {!! Form::text('name', null, ['class' => 'form-control', 'disabled', 'id'=>'user_name']) !!}
@@ -66,9 +66,6 @@
             <br>
         </fieldset>
         <legend>Selección de Ubicación</legend>
-        <h5>Zona:</h5>
-        {!! Form::text('zoneSelected', 'VIP', ['class' => 'form-control', 'disabled']) !!}
-        <br>
         <div class="seats">
             <div class="demo">
                 <div id="seat-map">
@@ -77,8 +74,8 @@
                 <br>
                 <div class="booking-details">
                     <h4 style="text-decoration:underline;text-align: center;">Resumen</h4>
-                    <p>Evento: <span> Piaf de Pam Gems</span></p>
-                    <p>Día: <span>Octubre 13, 21:00</span></p>
+                    <p>Evento: <span> {{$event->name}}</span></p>
+                    <p>Día: <span id="funcion">{{reset($presentations)}}</span></p>
                     <p>Asiento(s): </p>
                     <ul id="selected-seats"></ul>
                     <p>Tickets: <span id="counter">0</span></p>
@@ -93,7 +90,7 @@
         <!-- /.row -->
         <hr>
         <div class= "button-final">
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#mix2" data-whatever="@mdo">Realizar Pago</button>
+            <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#mix2" data-whatever="@mdo" disabled="">Realizar Pago</button>
             <button type="button" class="btn btn-info">Cancelar Venta</button>
             <button type="button" class="btn btn-info" data-dismiss="modal" data-target="#visualizarVenta"><i class="glyphicon glyphicon-print"></i></button>
 
@@ -107,31 +104,40 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Monto a Pagar</label>
-                                <input type="text" class="form-control" placeholder="S/.90.00" readonly="">
+                                <input type="number" id="total2" class="form-control" readonly="" placeholder="S/.">
                                 <br>
                                 <div class="form-group checkbox pay">
-                                    <label><input type="checkbox" value="" id="creditCardPay">Pago con tarjeta</label>
+                                    <label><input type="radio" name="payMode" value="0" id="creditCardPay">Pago con tarjeta</label>
                                     <hr>
                                     <label for="exampleInputEmail2">Número de Tarjeta</label>
-                                    <input type="number" id="creditCardNumber" class="form-control" placeholder="1234 5678 9012 3456" disabled="true">
+                                    <input type="number" id="creditCardNumber" class="form-control" placeholder="1234 5678 9012 3456" disabled="true" min="1" required>
                                     <label for="exampleInputEmail2">Fecha de expiración</label>
-                                    <input type="date" id="expirationDate" class="form-control" placeholder="mm/aa" disabled="true">
+                                    <input type="date" id="expirationDate" class="form-control" disabled="true" min="{{date("Y-m-j")}}" required>
                                     <label for="exampleInputEmail2">Código de Seguridad</label>
-                                    <input type="number" id="securityCode" class="form-control" placeholder="123" disabled="true">
-                                    <label for="exampleInputEmail2">Monto a pagar con tarjeta</label>
-                                    <input type="number" id="payment" class="form-control" placeholder="60" disabled="true">
+                                    <input type="number" id="securityCode" class="form-control" placeholder="123" disabled="true" min="0" max="999" required>
                                 </div>
                                 <br>  
                                 <div class="form-group checkbox pay">
-                                    <label><input type="checkbox" value="" id="cashPay">Pago con efectivo</label>
+                                    <label><input type="radio" name="payMode" value="1" id="cashPay">Pago con efectivo</label>
                                     <h5>Tipo de Cambio: S/.2.90</h5>
                                     <hr>
                                     <label for="exampleInputEmail2">Monto Ingresado</label>
-                                    <input type="text" id="amount" class="form-control" placeholder="S/.50.00" disabled="true">
+                                    <input type="number" id="amountIn" class="form-control" placeholder="S/." disabled="true" min="0">
                                     <label for="exampleInputEmail2">Vuelto</label>
-                                    <input type="text" class="form-control" placeholder="S/.10.00" readonly>
+                                    <input type="text" id="change" class="form-control" placeholder="S/." readonly>
+                                </div>
+                                <br>  
+                                <div class="form-group checkbox pay">
+                                    <label><input type="radio" name="payMode" value="2" id="mixPay">Pago mixto</label>
+                                    <hr>
+                                    <label for="exampleInputEmail2">Cantidad a pagar en efectivo</label>
+                                    <input type="text" id="paymentMix" class="form-control" placeholder="S/." disabled="true" min="0">
+                                    <label for="exampleInputEmail2">Monto Ingresado</label>
+                                    <input type="number" id="amountMix" class="form-control" placeholder="S/." disabled="true" min="0">
+                                    <label for="exampleInputEmail2">Vuelto</label>
+                                    <input type="text" id="changeMix" class="form-control" placeholder="S/." readonly>
                                     <br>
-                                    {!!Form::submit('Pagar Entrada',array('class'=>'btn btn-info'))!!}
+                                    {!!Form::submit('Pagar Entrada',array('id'=>'pay','class'=>'btn btn-info', 'disabled'))!!}
                                     <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>

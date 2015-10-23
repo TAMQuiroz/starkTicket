@@ -9,6 +9,7 @@ $.ajaxSetup({
 
 			$counter = $('#counter'), //Votes
 			$total = $('#total'); //Total money
+			$total2 = $('#total2'); //Total money
 			var selected = [];
 			var sc = $('#seat-map').seatCharts({
 				map: [  //Seating chart
@@ -46,17 +47,19 @@ $.ajaxSetup({
 						
 						$counter.text(sc.find('selected').length+1);
 						$total.text(recalculateTotal(sc)+price);
+						$total2.val(recalculateTotal(sc)+price);
 						
 						selected.push(this.settings.id);
 						console.log(JSON.stringify(selected));
 						$('#seats').val(JSON.stringify(selected));
-						
+						$('#payModal').prop('disabled',false);
 						return 'selected';
 					} else if (this.status() == 'selected') { //Checked
 						//Update Number
 						$counter.text(sc.find('selected').length-1);
 						//update totalnum
 						$total.text(recalculateTotal(sc)-price);
+						$total2.val(recalculateTotal(sc)-price);
 						//Delete reservation
 						$('#cart-item-'+this.settings.id).remove();
 						//optional
@@ -65,8 +68,10 @@ $.ajaxSetup({
 						if(index > -1){
 							selected.splice(index,1);
 							$('#seats').val(JSON.stringify(selected));
-							if(selected.length == 0)
+							if(selected.length == 0){
+								$('#payModal').prop('disabled',true);
 								$('#seats').val("");
+							}
 							console.log(JSON.stringify(selected));
 
 						}

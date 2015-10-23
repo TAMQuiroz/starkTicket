@@ -82,7 +82,7 @@ class TicketController extends Controller
         foreach($presentations as $key => $pres){
             $presentations[$key] = date("Y-m-d", $pres);
         }
-
+        $presentations = $presentations->toArray();
         $zones = Zone::where('event_id', $id)->lists('name','id');
         return view('internal.salesman.buy',compact('event','presentations','zones'));
     }

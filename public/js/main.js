@@ -1,29 +1,110 @@
-$('#creditCardPay').change(function() {
+var change = 0;
 
+function cleanForm() {
+    $('#payment').val(0);
+    $('#amount').val(0);
+    $('#amountIn').val(0);
+    $('#amountMix').val(0);
+    $('#paymentMix').val(0);
+    $('#change').val(0);
+    $('#changeMix').val(0);
+}
+
+$('#creditCardPay').change(function() {
 	if($('#creditCardPay').is(":checked")){
-		//console.log('true');
-		$('#creditCardNumber').prop('disabled',false);
+	    $('#creditCardNumber').prop('disabled',false);
 		$('#expirationDate').prop('disabled',false);
 		$('#securityCode').prop('disabled',false);
-		$('#payment').prop('disabled',false);
-	}else{
-		//console.log('false');
-		$('#creditCardNumber').prop('disabled',true);
-		$('#expirationDate').prop('disabled',true);
-		$('#securityCode').prop('disabled',true);
-		$('#payment').prop('disabled',true);
-	}
-
+        $('#amountIn').prop('disabled',true);
+        $('#pay').prop('disabled',false);
+        $('#amountCredit').prop('disabled',true);
+        $('#paymentMix').prop('disabled',true);
+        $('#amountMix').prop('disabled',true);
+        cleanForm()
+    }
 });
 
 $('#cashPay').change(function(){
 	if ($('#cashPay').is(":checked")) {
-		console.log('true');
-		$('#amount').prop('disabled',false);
-	}else{
-		$('#amount').prop('disabled',true);
+        $('#creditCardNumber').prop('disabled',true);
+        $('#expirationDate').prop('disabled',true);
+        $('#securityCode').prop('disabled',true);
+        $('#amountIn').prop('disabled',false);
+        $('#pay').prop('disabled',true);
+        $('#amountCredit').prop('disabled',true);
+        $('#payment').prop('disabled',true);
+        $('#paymentMix').prop('disabled',true);
+        $('#amountMix').prop('disabled',true);
+        cleanForm()
 	}
-});	
+});
+
+$('#mixPay').change(function(){
+    if ($('#mixPay').is(":checked")) {
+        $('#amountIn').prop('disabled',true);
+        $('#creditCardNumber').prop('disabled',false);
+        $('#expirationDate').prop('disabled',false);
+        $('#securityCode').prop('disabled',false);
+        $('#paymentMix').prop('disabled',false);
+        $('#amountMix').prop('disabled',true);
+        $('#pay').prop('disabled',true);
+        cleanForm()
+    }
+});
+
+$('#amountMix').change(function(){
+    if($(this).val() != "" && $(this).val() != 0){
+        if($(this).val() < $('#paymentMix').val()){
+            $('#changeMix').val('Falta dinero');
+            $('#pay').prop('disabled',true);
+        }else{
+            $('#changeMix').val($(this).val() - $('#paymentMix').val());
+            $('#pay').prop('disabled',false);
+        }
+    }else{
+        $('#changeMix').val('Ingresar un valor a pagar');
+        $('#pay').prop('disabled',true);
+    }
+});
+
+$('#paymentMix').change(function(){
+    if($(this).val() != "" && $(this).val() != 0){
+       $('#amountMix').prop('disabled',false);
+    }else{
+        $('#changeMix').val('Ingresar un valor a pagar');
+        $('#pay').prop('disabled',true);
+        $('#amountMix').prop('disabled',true);
+    }
+});
+
+$('#amountCredit').change(function(){
+    if($(this).val() != "" && $(this).val() != 0){
+        $('#amountIn').prop('disabled',false);
+    }else{
+        $('#change').val('Ingresar un valor a pagar');
+        $('#pay').prop('disabled',true);
+    }
+});
+
+$('#amountIn').change(function(){
+    if($(this).val() != "" && $(this).val() != 0){
+        if($(this).val() < $('#total2').val()){
+            $('#change').val('Falta dinero');
+            $('#pay').prop('disabled',true);
+        }else{
+            $('#change').val($(this).val() - $('#total2').val());
+            $('#pay').prop('disabled',false);
+        }
+    }else{
+        $('#change').val('Ingresar un valor a pagar');
+        $('#pay').prop('disabled',true);
+    }
+});
+
+function getInnerText(element) {
+    var text = element.options[element.selectedIndex].text;
+    document.getElementById("funcion").innerHTML = text;
+}
 
 $('#user_di').focusout( function() {
     $.ajax({
