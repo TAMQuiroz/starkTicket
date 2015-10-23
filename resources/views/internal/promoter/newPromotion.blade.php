@@ -1,9 +1,13 @@
+
+
+
+
+
 @extends('layout.promoter')
 
 @section('style')
 
-    {!!Html::style('css/bootstrap.min.css')!!}
-
+ 
 @stop
 
 @section('title')
@@ -14,7 +18,7 @@
  {!!Form::open(array('url' => 'promoter/promotion/new','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
 
 
-	<legend>Ingrese datos de nueva promoción</legend>
+
 	<div style="-webkit-columns: 100px 2;">
 	
 		<h4>Nombre</h4>
@@ -39,7 +43,7 @@
 
 	</div>
 	<h4>Descripción</h4>
-	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'required']) !!}
+	{!! Form::textarea('description', '', ['size' => '30x3', 'class' => 'form-control', 'required']) !!}
 	
 <!-- 
 
