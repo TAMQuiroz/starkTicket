@@ -29,5 +29,8 @@ class TestUserTableSeeder extends Seeder
                         'email' => 'admin@mail.com', 'phone' => '944133643', 'birthday'=>Carbon::create(1994,1,24)->toDateString(), 
                         'iniDate'=>Carbon::today(), 'role_id'=>4, 'password' => bcrypt('admin')]);
 
+
+
+
     }
 }

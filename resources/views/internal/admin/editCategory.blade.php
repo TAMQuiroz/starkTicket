@@ -13,9 +13,10 @@
         <div class="row">
           <div class="col-sm-8">
             {!!Form::open(array('route' => ['categories.update',$category->id],'files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
+              
               {!!Form::hidden('id', $category->id)!!}
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
+                <label for="inputEmail3" class="col-sm-2 control-label">Nombresss</label>
                 <div class="col-sm-10">
                   <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="" value="{{$category->name}}" required>
                 </div>

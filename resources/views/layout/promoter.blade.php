@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>@yield('title') | StarkTicket</title>
-
+ 
     {!!Html::style('css/bootstrap.min.css')!!}
+    {!!Html::style('css/jquery.dataTables.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/admin.css')!!}
 
@@ -36,6 +37,7 @@
                             <li class="divider"></li>
                             <li><a href="{{url('promoter/event/record')}}">Historial</a></li>
                             <li><a href="{{url('promoter/promotion')}}">Promociones</a></li>
+                            <li><a href="{{url('promoter/promotion/new')}}">Nueva Promoción</a></li>
                         </ul>
                     </li>
                     <li>
@@ -83,9 +85,16 @@
         <hr>
         <p><b>Desarrollado por Stark</b></p>
     </div>
+  
+
+        
 
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}
-    {!!Html::script('js/bootstrap.min.js')!!}
+
+         {!!Html::script('js/bootstrap.min.js')!!}
+    
+
+
     @yield('javascript')
 
 </body>
