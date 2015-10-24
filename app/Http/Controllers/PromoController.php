@@ -61,7 +61,7 @@ class PromoController extends Controller
 
 
         $promotions->desc  =   $input['discount'];
-        $promotions->event_id  = $input['select'] ;
+        $promotions->event_id  = $input['evento'] ;
 
         $promotions->save();
 

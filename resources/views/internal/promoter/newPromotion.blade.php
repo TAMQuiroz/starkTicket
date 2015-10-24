@@ -52,7 +52,7 @@
 
 	</div>
 	<h4>Descripción</h4>
-	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'maxlength'=>'40', 'required']) !!}
+	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'maxlength'=>'200', 'required']) !!}
 
 
 	<br>
@@ -94,7 +94,7 @@
 
 
 
-	    	<td> {!! Form::radio('select', $event->id ,   (Input::old('select') == $event->id ), array('id'=>'true', 'class'=>'radio' ,'required' ))  !!} </td>	
+	    	<td> {!! Form::radio('evento', $event->id ,   (Input::old('evento') == $event->id ), array('id'=>'true', 'class'=>'radio' ,'required' ))  !!} </td>	
 
 
 
