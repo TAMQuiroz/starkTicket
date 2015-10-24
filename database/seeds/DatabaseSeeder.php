@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoryTableSeeder::class);
         $this->call(LocalTableSeeder::class);
         $this->call(OrganizerTableSeeder::class);
-        
+        $this->call(politicsSeeder::class);
+
         Model::reguard();
     }
 }

@@ -30,4 +30,6 @@ class Event extends Model
     public function presentations(){
         return $this->hasMany('App\Models\Presentation');
     }
+
+    
 }

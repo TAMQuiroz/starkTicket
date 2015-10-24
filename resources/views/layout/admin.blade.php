@@ -81,7 +81,6 @@
                             <li><a href="{{url('admin/ticket_return/new')}}">Nueva Devolucion </a></li>
                             <li class="divider"></li>
                             <li><a href="{{url('admin/politics')}}">Politicas </a></li>
-                            <li><a href="{{url('admin/politics/new')}}">Nueva Politica </a></li>
                         </ul>
                     </li>
                     <li>

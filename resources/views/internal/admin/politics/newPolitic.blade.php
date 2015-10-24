@@ -11,44 +11,79 @@
 @section('content')
         <div class="row">
           <div class="col-sm-8">
-            <form class="form-horizontal" method="post">
+           {!!Form::open(array('url' => 'admin/politics/new','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
+  
+       
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
+
+                <label for="string1" class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
                   <!--
                   <input type="text" class="form-control" id="inputEmail3" placeholder="" required>
+
                   -->
-                  {!!Form::text('name', '' ,['class'=>'form-control','id'=>'inputEmail3','required'])!!}
+
+
+
+
+                    <!--
+                  estos son los datos que voy a redireccionar 
+                  
+                  -->
+                
+                  {!!Form::input('text','name', null ,['class'=>'form-control','id'=>'string1','required'])!!}
+
                 </div>
               </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Descripcion</label>
+       
+
+
+     <div class="form-group">
+                <label for="text" class="col-sm-2 control-label">Descripcion</label>
                 <div class="col-sm-10">
                   <!--
                   <textarea class="form-control" rows="10" id="description">
                   -->
-                  {!!Form::textarea('description', '' ,['class'=>'form-control','required'])!!}
-                  </textarea>
+                  
+
+                  {!!Form::input('text','description', null ,['class'=>'form-control','id'=>'text','required'])!!}
+
+              
                 </div>
               </div>
+
+
+
+
+
+
+
+
+
+
+         
+
+
+
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
+                
                   <button type="submit" class="btn btn-info">Guardar</button>
                   <button type="reset" class="btn btn-info">Cancelar</button>
                 </div>
               </div>
-            </form>
+
+
+  
+   {!!Form::close()!!}
           </div>
         </div>
 @stop
 
 @section('javascript')
 
-<script src="//cdn.ckeditor.com/4.5.3/standard/ckeditor.js"></script>
-  <script type="text/javascript">
-    CKEDITOR.replace( 'description',
-    {
-        toolbar : 'Basic',
-    });
-  </script>
+
+
+
+  
 @stop

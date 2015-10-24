@@ -48,6 +48,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    
                     <h4 class="modal-title" id="myModalLabel">Detalle del Administrador</h4>
                   </div>
                   <div class="modal-body">
@@ -68,6 +69,9 @@
                     <h4>Cumpleaños</h4>
                     {{$user->birthday}}
                   </div>
+
+
+
                   <div class="modal-footer">
                     <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
                   </div>
@@ -78,6 +82,7 @@
               <a class="btn btn-info" href="" title="Eliminar" data-toggle="modal" data-target="#deleteModal{{$user->id}}"><i class="glyphicon glyphicon-remove"></i></a>
             </td>
             <!-- MODAL -->
+            
             <div class="modal fade"  id="deleteModal{{$user->id}}">
               <div class="modal-dialog">
                 <div class="modal-content">

@@ -15,7 +15,7 @@
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
         <div class="col-sm-10">
-          {!!Form::input('text','name', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
+          {!!Form::input('text','name', null ,['class'=>'form-control','id'=>'inputEmai3', 'maxlength'=>'15','required'])!!}
         </div>
       </div>
       <div class="form-group">
@@ -39,7 +39,7 @@
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Descripción</label>
         <div class="col-sm-10">
-          {!!Form::textarea('description', null, ['class'=>'form-control','size' => '30x5','required']) !!}
+          {!!Form::textarea('description', null, ['class'=>'form-control','size' => '30x5', 'maxlength'=>'40','required']) !!}
         </div>
       </div>
       <div class="form-group">
