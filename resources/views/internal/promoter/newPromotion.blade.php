@@ -33,7 +33,7 @@
 		<h4>Nombre</h4>
 		{!! Form::text('promotionName','', array('class' => 'form-control', 'maxlength'=>'15', 'required')) !!}	
 		<h4>Descuento (%)</h4>
-		{!! Form::number('discount','', array('class' => 'form-control', 'max'=>'100', 'required')) !!}
+		{!! Form::number('discount','', array('class' => 'form-control', 'min'=>'0', 'max'=>'100', 'required')) !!}
 	</div>
 	<div style="-webkit-columns: 100px 4;">
 		<h4>Fecha Inicio</h4>
