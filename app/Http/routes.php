@@ -160,9 +160,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/promoter/{id}/edit', 'AdminController@updatePromoter');
     Route::get('admin/promoter/{id}/delete', 'AdminController@destroyPromoter');
 })  ;
-/*
+
 Route::get('token',function(){
     return csrf_token();
 });
-*/
+
 

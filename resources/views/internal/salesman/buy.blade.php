@@ -88,8 +88,6 @@
         </div>
         {!!Form::select('seats[]',$slots,null,['multiple'])!!}
 
-        <!--{!!Form::hidden('seats',json_encode(array($event->presentations[0]->slots[22]->id,$event->presentations[0]->slots[23]->id)), array('id'=>'seats'))!!}-->
-        
         <!-- Content Row -->
         <!-- /.row -->
         <hr>

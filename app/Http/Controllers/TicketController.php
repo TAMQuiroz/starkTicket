@@ -80,7 +80,7 @@ class TicketController extends Controller
         $event = Event::find($id);
         $presentations = Presentation::where('event_id', $id)->lists('starts_at','id');
         foreach($presentations as $key => $pres){
-            $presentations[$key] = date("Y-m-d", $pres);
+            $presentations[$key] = date("Y-m-d H:i", $pres);
         }
         $presentations = $presentations->toArray();
         $zones = Zone::where('event_id', $id)->lists('name','id');
@@ -98,7 +98,7 @@ class TicketController extends Controller
     public function store(StoreTicketRequest $request)
     {
         //Deberia jalar los ids de los asientos del evento pero estoy usando un json por mientras
-        //dd($request->all());
+        var_dump($request->all());
         //return back()->withInput($request->except('seats'))->withErrors(['El asiento 1 no esta libre']);
         $seats = $request['seats'];
         
@@ -124,7 +124,7 @@ class TicketController extends Controller
                     ->update(['status' => config('constants.seat_taken')]);
                 
                 $zone = Zone::find($request['zone_id']);
-
+                var_dump($zone->price);
                 //Crear ticket
                 if($request['user_id']!=""){
                     DB::table('tickets')->insert(
@@ -148,6 +148,7 @@ class TicketController extends Controller
                     ['payment_date'         => new Carbon(),
                      'reserve'              => 0,
                      'cancelled'            => 0,
+                     'owner_id'             => null,
                      'event_id'             => $request['event_id'],
                      'price'                => $zone->price, //Falta reducir el porcentaje de promocion
                      'presentation_id'      => $request['presentation_id'],
@@ -160,13 +161,13 @@ class TicketController extends Controller
                 $event = Event::find($request['event_id']);
                 //DB::table('events')->where('id', $request['event_id'])->update(['available' => $event->available - 1]);
 
-                //var_dump('llego');
+                var_dump('llego');
             }
             
-            //die();
+            
             DB::commit();
         }catch (\Exception $e){
-            //var_dump($e);
+            var_dump($e);
             //dd('rollback');
             DB::rollback();
         }

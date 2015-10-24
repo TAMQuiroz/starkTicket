@@ -19,7 +19,7 @@ class LocalTableSeeder extends Seeder
         				'province'	=> 'Lima',
         				'state'		=> 'Lima',
         				'image'		=> asset('images/examples/Local.jpg'),
-        				'row'		=> 20,
-        				'column'	=> 20]);
+        				'rows'		=> null,
+        				'columns'	=> null]);
     }
 }
