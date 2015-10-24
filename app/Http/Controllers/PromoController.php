@@ -10,6 +10,8 @@ use App\Models\Event;
 
 use App\Models\Category;
 
+use App\Http\Requests\Promotions\StorePromotionRequest;
+
 
 
 class PromoController extends Controller
@@ -36,7 +38,7 @@ class PromoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePromotionRequest $request)
     {
 
         $input = $request->all();
@@ -61,28 +63,13 @@ class PromoController extends Controller
         $promotions->desc  =   $input['discount'];
         $promotions->event_id  = $input['select'] ;
 
-
-       /*
-        $user->password     =   bcrypt($input['password']);
-        $user->di_type      =   $input['di_type'];
-        $user->di           =   $input['di'];
-        $user->address      =   $input['address'];      
-        $user->phone        =   $input['phone'];      
-        $user->email        =   $input['email'];      
-        $user->birthday     =   new Carbon($input['birthday']);      
-        $user->role_id      =   $input['role_id'];      
-       /*
-        if($request->file('image')!=null)
-        $gift->image        =   $this->file_service->upload($request->file('image'),'gift'); */
-
-
         $promotions->save();
 
         return redirect('promoter/promotion');
       
       //  return $input['select'] ;
 
-      
+       
     }
 
 

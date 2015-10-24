@@ -1,13 +1,22 @@
+
+
+
+
+
 @extends('layout.promoter')
 
 @section('style')
 
+<<<<<<< HEAD
     {!!Html::style('css/bootstrap.min.css')!!}
     <style type="text/css">
     h1{
     	margin-top: 80px;
     }
     </style>
+=======
+ 
+>>>>>>> b31321307c0c3580a6f25f255309aae6ff9b39ca
 @stop
 
 @section('title')
@@ -18,7 +27,7 @@
  {!!Form::open(array('url' => 'promoter/promotion/new','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
 
 
-	<legend>Ingrese datos de nueva promoción</legend>
+
 	<div style="-webkit-columns: 100px 2;">
 	
 		<h4>Nombre</h4>
@@ -44,16 +53,8 @@
 	</div>
 	<h4>Descripción</h4>
 	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'maxlength'=>'40', 'required']) !!}
-	
-<!-- 
 
-	<h4>Agregar evento:</h4>
-	<div class="input-group" style="width:300px">
-  		{!! Form::text('eventName','', array('class' => 'form-control')) !!}
-  		<span class="input-group-btn">
-	    	<button class="btn btn-info" type="button">Buscar</button>
-	    </span>
-	</div><!-- /input-group -->
+
 	<br>
 	<br><br>
 	<legend>Seleccione los datos del evento</legend>
