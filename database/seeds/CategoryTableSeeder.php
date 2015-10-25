@@ -14,7 +14,7 @@ class CategoryTableSeeder extends Seeder
     {
         Category::insert([  'name' => 'Categoria 1', 
         				'description'=> 'Descripcion de categoria 1', 
-        				'image' => asset('images/examples/Local.jpg'),
+        				'image' => 'images/examples/Local.jpg',
                         'type' => 1, 
                         'father_id' => null]);
     }

@@ -19,6 +19,7 @@ class CreateOrganizerTable extends Migration
             $table->string('organizerLastName');
             $table->string('businessName');
             $table->string('ruc');
+            $table->integer('events');
             $table->integer('countNumber');
             $table->integer('telephone');
             $table->string('dni');

@@ -97,8 +97,7 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
-        //Deberia jalar los ids de los asientos del evento pero estoy usando un json por mientras
-        var_dump($request->all());
+        //var_dump($request->all());
         //return back()->withInput($request->except('seats'))->withErrors(['El asiento 1 no esta libre']);
         $seats = $request['seats'];
         
@@ -108,7 +107,7 @@ class TicketController extends Controller
                 ->where('presentation_id', $request['presentation_id'])
                 ->first();
             if($slot->status != config('constants.seat_available')){
-                return back()->withInput()->withErrors(['El asiento '. $seat_id.' no esta libre']);
+                return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
             }
         }
                
@@ -124,7 +123,8 @@ class TicketController extends Controller
                     ->update(['status' => config('constants.seat_taken')]);
                 
                 $zone = Zone::find($request['zone_id']);
-                var_dump($zone->price);
+                //var_dump($zone->price);
+                
                 //Crear ticket
                 if($request['user_id']!=""){
                     DB::table('tickets')->insert(

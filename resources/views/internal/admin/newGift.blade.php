@@ -70,10 +70,5 @@
 @stop
 
 @section('javascript')
-<script type="text/javascript">
-  $('#yes').click(function(){
-    $('#submitModal').modal('hide');  
-  });
-  
-</script>
+
 @stop

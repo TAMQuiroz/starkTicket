@@ -18,7 +18,7 @@ class LocalTableSeeder extends Seeder
         				'district' 	=> 'San Borja',
         				'province'	=> 'Lima',
         				'state'		=> 'Lima',
-        				'image'		=> asset('images/examples/Local.jpg'),
+        				'image'		=> 'images/examples/Local.jpg',
         				'rows'		=> null,
         				'columns'	=> null]);
     }

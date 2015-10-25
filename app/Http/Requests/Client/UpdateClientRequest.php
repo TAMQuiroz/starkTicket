@@ -26,10 +26,8 @@ class UpdateClientRequest extends Request
         return [
             'name' => 'required|min:3|max:16',
             'lastname' => 'required|min:3|max:16',
-            'di_type' => 'required|digits_between:0,2',
-            'di' => 'required|min:8|max:16',
-            'email' => 'required|min:12|max:32',
-            'birthday' => 'required|date'
+            'address' => 'required|min:12|max:32',
+            'phone' => 'required|min:7|max:9',
         ];
     }
 

@@ -27,10 +27,13 @@ class StoreClientRequest extends Request
             'name' => 'required|min:3|max:16',
             'lastname' => 'required|min:3|max:16',
             'password' => 'required|min:8|max:16',
+            'address' => 'required|min:3|max:16',
+            'phone' => 'required|min:7|max:9',
             'di_type' => 'required|digits_between:0,2',
             'di' => 'required|min:8|max:16',
             'email' => 'required|min:12|max:32',
-            'birthday' => 'required|date'
+            'birthday' => 'required|date',
+            'password_confirmation' => 'required|same:password'
         ];
     }
 

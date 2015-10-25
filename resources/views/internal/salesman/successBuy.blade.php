@@ -34,7 +34,7 @@
 	    	@foreach($tickets as $ticket)
 	        <tr>
 	        	<td>{{$ticket->event->name}}</td>
-	        	<td>{{date("Y-m-d", $ticket->presentation->starts_at)}}</td>
+	        	<td>{{date("Y-m-d h:i", $ticket->presentation->starts_at)}}</td>
 	            <td>{{$ticket->seat->zone->name}}</td>  
 	            <td>
 	            	@if($ticket->seat->row)

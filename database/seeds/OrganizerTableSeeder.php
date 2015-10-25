@@ -21,6 +21,6 @@ class OrganizerTableSeeder extends Seeder
         					'dni'					=> '46898966',
         					'email'					=> 'organizador@mail.com',
         					'address'				=> 'Calle las calles #666',
-        					'image'					=> asset('image/example/Local.jpg')]);
+        					'image'					=> 'image/example/Local.jpg']);
     }
 }

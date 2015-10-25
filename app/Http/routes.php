@@ -116,17 +116,12 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
 
-
-
     Route::get('admin/', 'PagesController@adminHome'); 
     Route::get('admin/politics', 'PoliticController@politics');
     Route::get('admin/politics/new', 'PoliticController@create');
     Route::post('admin/politics/new', 'PoliticController@store');
     Route::get('admin/politics/{id}/edit', 'PoliticController@edit');
     Route::post('admin/politics/{id}/edit', 'PoliticController@update');
-
-
-
 
     Route::get('admin/local', 'LocalController@index');
     Route::get('admin/local/new', 'LocalController@create');
@@ -151,9 +146,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/category/{id}/edit', ['as' => 'categories.update', 'uses' =>'CategoryController@update']);
     Route::post('admin/category/{id}/delete', ['as' => 'categories.delete', 'uses' =>'CategoryController@destroy']);
     Route::get('admin/category/{id}/subcategories', ['as' => 'subcategories.index', 'uses' =>'CategoryController@indexSubAdmin']);
-
-
-
 
     Route::get('admin/ticket_return', 'TicketController@indexReturn');
     Route::get('admin/ticket_return/new', 'TicketController@createReturn');
@@ -180,17 +172,17 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
-    Route::get('admin/promoter', 'AdminController@promoter');
-    Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
-    Route::get('admin/admin', 'AdminController@admin');
+
     Route::get('admin/user/new', 'AdminController@newUser');
-    //StoreEditDeleteAdmin
     Route::post('admin/user/new', 'AdminController@store');
 
+    Route::get('admin/admin', 'AdminController@admin');
     Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
-    
+    //MANTENER PROMOTOR: No existia la ruta de post :C
+    Route::post('admin/admin/{id}/edit', 'AdminController@updateAdmin');
+    //
     Route::get('admin/admin/{id}/delete', 'AdminController@destroy');
-    //StoreEditDeleteSellPromoter
+
     Route::get('admin/promoter', 'AdminController@promoter');
     Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
     Route::post('admin/promoter/{id}/edit', 'AdminController@updatePromoter');

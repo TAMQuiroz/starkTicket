@@ -7,6 +7,7 @@
         height: 400px;
       }
     </style>
+    {!!Html::style('css/images.css')!!}
 @stop
 
 @section('title')
@@ -78,11 +79,11 @@
 							<h3 class="dates">Fechas del evento</h3>
 							<p>Del 17 de Septiembre al 26 de Octubre 2015</p>
 							<h3 class="dates">Horario</h3>
-							<p>Función a las 20:00</p>
+							<p>Función a las {{date_format(date_create($event->presentations->first()->starts_at),"H:i")}}</p>
 							<h3 class="dates">Ubicación</h3>
 
 							<p>{{$event->place->address}}</p>
-							<div id="map"></div>
+							{!! Html::image($event->place->image,null, ['class'=>'carousel_img']) !!}
 
 							<h3 class="dates">Distribución de Zonas</h3>
 							<p>{!! Html::image('images/asientos.jpg') !!}</p>

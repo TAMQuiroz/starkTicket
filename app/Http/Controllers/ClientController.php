@@ -43,11 +43,11 @@ class ClientController extends Controller
         {
             $user = User::findOrFail($input['client_id']);
             $user->delete();
-
-            Session::flash('message', 'Client deleted');
+            //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+            Session::flash('message', 'Cliente Borrado!');
             Session::flash('alert-class','alert-success');
         } else {
-            Session::flash('message', 'Client not found!');
+            Session::flash('message', 'Cliente no encontrado!');
             Session::flash('alert-class','alert-danger');
         }
 
@@ -87,7 +87,8 @@ class ClientController extends Controller
         $user->role_id = 1;
         $user->save();
 
-        Session::flash('message', 'Client created!');
+        //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+        Session::flash('message', 'Cliente Creado!');
         Session::flash('alert-class','alert-success');
 
         return redirect('/');
@@ -133,7 +134,8 @@ class ClientController extends Controller
 
         $obj->fill($input)->save();
 
-        Session::flash('message', 'Profile information successfully updated!');
+        //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+        Session::flash('message', 'Informacion de perfil correctamente actualizada!');
         Session::flash('alert-class','alert-success');
         return redirect('client');
     }
@@ -195,10 +197,11 @@ class ClientController extends Controller
             $obj->password = $newPassword;
             $obj->save();
 
-            Session::flash('message', 'Your password updated!');
+            //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+            Session::flash('message', 'Su contraseña fue actualizada!');
             Session::flash('alert-class','alert-success');
         } else {
-            Session::flash('message', 'Password!');
+            Session::flash('message', 'Contraseña!');
             Session::flash('alert-class','alert-danger');
         }
 
@@ -234,7 +237,8 @@ class ClientController extends Controller
         $obj->image = $this->file_service->upload($request->file('image'),'client');
         $obj->save();
 
-        Session::flash('message', 'Your image updated!');
+        //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+        Session::flash('message', 'Su imagen se actualizo!');
         Session::flash('alert-class','alert-success');
 
         return redirect('client');

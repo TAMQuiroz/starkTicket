@@ -92,13 +92,8 @@
         <!-- /.row -->
         <hr>
         <div class= "button-final">
-<<<<<<< HEAD
             <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#mix2" data-whatever="@mdo" disabled="">Realizar Pago</button>
-            <button type="button" class="btn btn-info">Cancelar Venta</button>
-=======
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#mix2" data-whatever="@mdo">Realizar Pago</button>
             <a href="{{url('salesman/')}}"><button type="button" class="btn btn-info">Cancelar Venta</button></a>
->>>>>>> ebcbb9f90559c9350dfee3cbe3988b87cdab728e
             <button type="button" class="btn btn-info" data-dismiss="modal" data-target="#visualizarVenta"><i class="glyphicon glyphicon-print"></i></button>
 
             <div class="modal fade" id="mix2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
