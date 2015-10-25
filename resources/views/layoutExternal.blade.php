@@ -89,7 +89,29 @@
 		<li><a href="#" class="icon circle fa-dribbble"><span class="label">Dribbble</span>k</a></li>
 	</ul>
 </footer>
+	{!!Html::script('js/jQuery-2.1.4.min.js')!!}
 	{!!Html::script('js/bootstrap.min.js')!!}
+    {!!Html::script('js/jquery.validate.min.js')!!}
+    {!!Html::script('js/messages_es_PE.js')!!}
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('#form').validate({
+        errorElement: "span",
+        rules: {
+        },
+        highlight: function(element) {
+            $(element).closest('.form-group')
+            .removeClass('has-success').addClass('has-error');
+        },
+        success: function(element) {
+            $(element)
+            .addClass('help-inline')
+            .closest('.form-group')
+            .removeClass('has-error').addClass('has-success');
+            }
+        });
+    });
+    </script>
 	@yield('javascript')
 
 </html>

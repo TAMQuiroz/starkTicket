@@ -58,13 +58,15 @@
             <div class="form-group">
               <label for="inputStartTime" class="col-sm-2 control-label">Hora de Apertura</label>
               <div class="col-sm-10">
-                {!!Form::input('time','starTime', $module->starTime,['class'=>'form-control','id'=>'starTime','required'])!!}
+                <!--Asi puedes darle un formato de solo hora al string de fecha que viene de la base de datos, el formato debe ser HH:MM o asi-->
+                {!!Form::input('time','starTime', date_format(date_create($module->starTime),"H:i:s"),['class'=>'form-control','id'=>'starTime','required'])!!}
               </div>
             </div>
             <div class="form-group">
               <label for="inputEndTime" class="col-sm-2 control-label">Hora de Cierre</label>
               <div class="col-sm-10">
-                {!!Form::input('time','endTime', $module->endTime ,['class'=>'form-control','id'=>'endTime','required'])!!}
+                <!--Asi puedes darle un formato de solo hora al string de fecha que viene de la base de datos, el formato debe ser HH:MM o asi-->
+                {!!Form::input('time','endTime', date_format(date_create($module->endTime),"H:i:s") ,['class'=>'form-control','id'=>'endTime','required'])!!}
               </div>
             </div>
             <div class="form-group">

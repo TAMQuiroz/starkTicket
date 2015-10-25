@@ -159,6 +159,9 @@
             .removeClass('has-error').addClass('has-success');
             }
         });
+        $('#yes').click(function(){
+            $('.modal').modal('hide');  
+        });
     });
     </script>
     @yield('javascript')

@@ -16,23 +16,22 @@
             <label>
                 <div style="-webkit-columns: 100px 3;">
                     <h4 class="boxy"> Codigo del Evento </h4>
-                    {!! Form::text('code', '09213241', ['class' => 'form-control boxy', 'disabled']) !!}
+                    {!! Form::text('code', $event->id, ['class' => 'form-control boxy', 'disabled']) !!}
                     {!!Form::hidden('event_id',$event['id'])!!}
                     <h4 > Nombre del Evento </h4>
-                    {!! Form::text('event_name', 'Piaf de Pam Gems', ['class' => 'form-control', 'disabled']) !!}
+                    {!! Form::text('event_name', $event->name, ['class' => 'form-control', 'disabled']) !!}
                     <h4 >Entradas Disponibles</h4>
                     {!! Form::text('available', '520', ['class' => 'form-control', 'disabled']) !!}  
                 </div>
-                <div style="-webkit-columns: 100px 3;">
-                    <h4 class="boxy"> Fecha del Evento </h4>
-                    {!! Form::select('date', ['18 Octubre', '19 Octubre', '20 Octubre'], null, ['class' => 'form-control boxy']) !!}
-                    <h4 > Hora </h4>
-                    {!! Form::select('hour', ['19:00', '21:00'], null, ['class' => 'form-control']) !!}
+                <div style="-webkit-columns: 100px 2;">
+                    <h4 class="boxy"> Funciones del evento </h4>
+                    {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=> 'getInnerText(this)']) !!}
                     <h4 > Zona del Evento </h4>
-                    {!! Form::select('zone', ['VIP', 'Platea'], null, ['class' => 'form-control']) !!}
+                    <!--{!! Form::select('zone_id', $zones, null, ['class' => 'form-control']) !!}-->
+                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getPrice(this)','id'=>'zone_id']) !!}
                 </div>
                 <h4> Promoción </h4>
-                {!! Form::select('promotion', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
+                {!! Form::select('promotion_id', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
             </label>
         </div>
         <br>
@@ -45,22 +44,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>VIP</td>  
-                    <td>S/.150.00</td>
-                </tr>
-                <tr>
-                    <td>VIP Pre-venta</td>  
-                    <td>S/.135.00</td>
-                </tr>
-                <tr>
-                    <td>Platea</td>  
-                    <td>S/.70</td>
-                </tr>
-                <tr>
-                    <td>Platea - %30 descuento con Visa Platinium</td>  
-                    <td>S/.49</td>
-                </tr>
+                @foreach($event->zones as $zone)
+                    <td>{{$zone->name}}</td>
+                    <td>S/. {{$zone->price}}</td>
+                @endforeach
             </tbody>
           </table>
         </div>
@@ -69,7 +56,7 @@
             <div style="-webkit-columns: 100px 2;">
                 <h5>Ingrese Usuario</h5>
                 <div class="input-group" style="width:290px">
-                    {!! Form::number('number', null, ['class' => 'form-control', 'placeholder' => 'Documento de Identidad...','id'=>'user_di','min'=>0]) !!}
+                    {!! Form::number('number', null, ['class' => 'form-control', 'placeholder' => 'Documento de Identidad...','id'=>'user_di','min'=>0,'max'=>99999999]) !!}
                 </div><!-- /input-group -->
                 <h5>Nombre de Cliente</h5>
                 {!! Form::text('name', null, ['class' => 'form-control', 'disabled', 'id'=>'user_name']) !!}
@@ -80,9 +67,6 @@
             <br>
         </fieldset>
         <legend>Selección de Ubicación</legend>
-        <h5>Zona:</h5>
-        {!! Form::text('zoneSelected', 'VIP', ['class' => 'form-control', 'disabled']) !!}
-        <br>
         <div class="seats">
             <div class="demo">
                 <div id="seat-map">
@@ -91,8 +75,8 @@
                 <br>
                 <div class="booking-details">
                     <h4 style="text-decoration:underline;text-align: center;">Resumen</h4>
-                    <p>Evento: <span> Piaf de Pam Gems</span></p>
-                    <p>Día: <span>Octubre 13, 21:00</span></p>
+                    <p>Evento: <span> {{$event->name}}</span></p>
+                    <p>Día: <span id="funcion">{{reset($presentations)}}</span></p>
                     <p>Asiento(s): </p>
                     <ul id="selected-seats"></ul>
                     <p>Tickets: <span id="counter">0</span></p>
@@ -102,12 +86,13 @@
                 <div style="clear:both"></div>
            </div>
         </div>
-        {!!Form::hidden('seats',null, array('id'=>'seats'))!!}
+        {!!Form::select('seats[]',$slots,null,['multiple'])!!}
+
         <!-- Content Row -->
         <!-- /.row -->
         <hr>
         <div class= "button-final">
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#mix2" data-whatever="@mdo">Realizar Pago</button>
+            <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#mix2" data-whatever="@mdo" disabled="">Realizar Pago</button>
             <a href="{{url('salesman/')}}"><button type="button" class="btn btn-info">Cancelar Venta</button></a>
             <button type="button" class="btn btn-info" data-dismiss="modal" data-target="#visualizarVenta"><i class="glyphicon glyphicon-print"></i></button>
 
@@ -121,31 +106,46 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Monto a Pagar</label>
-                                <input type="text" class="form-control" placeholder="S/.90.00" readonly="">
+                                {!!Form::number('',null,['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
                                 <br>
                                 <div class="form-group checkbox pay">
-                                    <label><input type="checkbox" value="" id="creditCardPay">Pago con tarjeta</label>
+                                    <label>
+                                        {!!Form::radio('payMode', 0, null,['id'=>'creditCardPay'])!!}Pago con tarjeta
+                                    </label>
                                     <hr>
                                     <label for="exampleInputEmail2">Número de Tarjeta</label>
-                                    <input type="number" id="creditCardNumber" class="form-control" placeholder="1234 5678 9012 3456" disabled="true">
+                                    {!!Form::number('',null,['id'=>'creditCardNumber','class'=>'form-control','placeholder'=>'1234 5678 9012 3456','disabled','min'=>1, 'max'=>9999999999999999,'required'])!!}
                                     <label for="exampleInputEmail2">Fecha de expiración</label>
-                                    <input type="date" id="expirationDate" class="form-control" placeholder="mm/aa" disabled="true">
+                                    <input type="date" id="expirationDate" class="form-control" disabled="true" min="{{date("Y-m-j")}}" required>
                                     <label for="exampleInputEmail2">Código de Seguridad</label>
-                                    <input type="number" id="securityCode" class="form-control" placeholder="123" disabled="true">
-                                    <label for="exampleInputEmail2">Monto a pagar con tarjeta</label>
-                                    <input type="number" id="payment" class="form-control" placeholder="60" disabled="true">
+                                    {!!Form::number('',null,['id'=>'securityCode','class'=>'form-control','placeholder'=>'123','disabled','min'=>0,'max'=>999,'required'])!!}
                                 </div>
                                 <br>  
                                 <div class="form-group checkbox pay">
-                                    <label><input type="checkbox" value="" id="cashPay">Pago con efectivo</label>
+                                    <label>
+                                        {!!Form::radio('payMode', 1, null,['id'=>'cashPay'])!!}Pago con efectivo
+                                    </label>
                                     <h5>Tipo de Cambio: S/.2.90</h5>
                                     <hr>
                                     <label for="exampleInputEmail2">Monto Ingresado</label>
-                                    <input type="text" id="amount" class="form-control" placeholder="S/.50.00" disabled="true">
+                                    {!!Form::number('',null,['id'=>'amountIn','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
                                     <label for="exampleInputEmail2">Vuelto</label>
-                                    <input type="text" class="form-control" placeholder="S/.10.00" readonly>
+                                    {!!Form::text('',null,['id'=>'change','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}
+                                </div>
+                                <br>  
+                                <div class="form-group checkbox pay">
+                                    <label>
+                                        {!!Form::radio('payMode', 2, null,['id'=>'mixPay'])!!}Pago mixto
+                                    </label>
+                                    <hr>
+                                    <label for="exampleInputEmail2">Cantidad a pagar en efectivo</label>
+                                    {!!Form::number('paymentMix',null,['id'=>'paymentMix','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
+                                    <label for="exampleInputEmail2">Monto Ingresado</label>
+                                    {!!Form::number('paymentMix',null,['id'=>'amountMix','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
+                                    <label for="exampleInputEmail2">Vuelto</label>
+                                    {!!Form::text('',null,['id'=>'changeMix','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}
                                     <br>
-                                    {!!Form::submit('Pagar Entrada',array('class'=>'btn btn-info'))!!}
+                                    {!!Form::submit('Pagar Entrada',array('id'=>'pay','class'=>'btn btn-info', 'disabled'))!!}
                                     <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>
@@ -168,7 +168,8 @@
     <script type="text/javascript">
         var config = {
         routes: [
-            { zone: "{{ URL::route('ajax.getClient') }}" }
+            { zone: "{{ URL::route('ajax.getClient') }}" },
+            { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
         ]
     };
     </script>

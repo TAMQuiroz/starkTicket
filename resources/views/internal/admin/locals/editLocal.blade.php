@@ -52,13 +52,13 @@
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">Filas</label>
               <div class="col-sm-10">
-                {!!Form::input('number','row', $local->row ,['class'=>'form-control','id'=>'row','required','min'=>0])!!}
+                {!!Form::input('number','row', $local->rows ,['class'=>'form-control','id'=>'row','required','min'=>0])!!}
               </div>
             </div>
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">Columnas</label>
               <div class="col-sm-10">
-                {!!Form::input('number','column', $local->column ,['class'=>'form-control','id'=>'column','required','min'=>0])!!}
+                {!!Form::input('number','column', $local->columns ,['class'=>'form-control','id'=>'column','required','min'=>0])!!}
               </div>
             </div>
             <div class="form-group">
