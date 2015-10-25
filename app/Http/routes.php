@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
     Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
     Route::get('getClient', ['uses'=>'TicketController@getClient','as'=>'ajax.getClient']);
+    Route::get('getPrice', ['uses'=>'TicketController@getPrice','as'=>'ajax.getPrice']);
 });
 
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
@@ -70,17 +71,42 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/', 'PagesController@promoterHome');
     Route::get('promoter/politics', 'PoliticController@index');
+    Route::get('promoter/politics', 'PoliticController@politicsPromotor');
+
     Route::get('promoter/event/recordPayment', 'PaymentController@index');
     Route::get('promoter/transfer_payments', 'PaymentController@create');
     Route::get('promoter/event/record', 'EventController@showPromoterRecord');
     Route::get('promoter/event/create', 'EventController@create');
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
+
+
+
+
+ 
     Route::get('promoter/promotion', 'PromoController@index');
+     Route::get('promoter/promotion', 'PromoController@promotion');
+    Route::get('promoter/promotion/new', ['as'=>'promo.create','uses'=>'PromoController@create']);
+
+    Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);
+
+
+
+    Route::get('promoter/promotion/{id}/edit', ['as'=>'promo.edit','uses'=>'PromoController@edit']);
+    Route::post('promoter/promotion/{id}/edit', ['as'=>'promo.update','uses'=>'PromoController@update']);
+
+
+
+
+
+
 
     //Aca se inicia el CRUD de promotor
     Route::get('promoter/organizers', 'OrganizerController@index');
     Route::get('promoter/organizer/create', 'OrganizerController@create');
+
+
+
 
     Route::post('promoter/organizer/create', 'OrganizerController@store');
     Route::get('promoter/organizer/{id}/edit', 'OrganizerController@edit');
@@ -89,11 +115,13 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
-    Route::get('admin/', 'PagesController@adminHome');
 
-    Route::get('admin/politics', 'PoliticController@indexAdmin');
+    Route::get('admin/', 'PagesController@adminHome'); 
+    Route::get('admin/politics', 'PoliticController@politics');
     Route::get('admin/politics/new', 'PoliticController@create');
+    Route::post('admin/politics/new', 'PoliticController@store');
     Route::get('admin/politics/{id}/edit', 'PoliticController@edit');
+    Route::post('admin/politics/{id}/edit', 'PoliticController@update');
 
     Route::get('admin/local', 'LocalController@index');
     Route::get('admin/local/new', 'LocalController@create');
@@ -144,18 +172,25 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
-    Route::get('admin/promoter', 'AdminController@promoter');
-    Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
-    Route::get('admin/admin', 'AdminController@admin');
+
     Route::get('admin/user/new', 'AdminController@newUser');
-    //StoreEditDeleteAdmin
     Route::post('admin/user/new', 'AdminController@store');
+
+    Route::get('admin/admin', 'AdminController@admin');
     Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
+    //MANTENER PROMOTOR: No existia la ruta de post :C
     Route::post('admin/admin/{id}/edit', 'AdminController@updateAdmin');
+    //
     Route::get('admin/admin/{id}/delete', 'AdminController@destroy');
-    //StoreEditDeleteSellPromoter
+
     Route::get('admin/promoter', 'AdminController@promoter');
     Route::get('admin/promoter/{id}/edit', 'AdminController@editPromoter');
     Route::post('admin/promoter/{id}/edit', 'AdminController@updatePromoter');
     Route::get('admin/promoter/{id}/delete', 'AdminController@destroyPromoter');
 })  ;
+
+Route::get('token',function(){
+    return csrf_token();
+});
+
+

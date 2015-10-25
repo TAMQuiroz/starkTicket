@@ -63,9 +63,28 @@
                   <a class="btn btn-info" href="{{url('admin/promoter/'.$promoter->id.'/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
                 </td>
                 <td>
-                  <a class="btn btn-info" href="{{url('admin/promoter/'.$promoter->id.'/delete')}}"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
+                  <a class="btn btn-info" href=""  data-toggle="modal" data-target="#deleteModal{{$promoter->id}}" title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
                 </td>
             </tr>
+
+            <!-- MODAL -->
+            <div class="modal fade"  id="deleteModal{{$promoter->id}}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">¿Estas seguro que desea eliminar a un promotor?</h4>
+                  </div>
+                  <div class="modal-body">
+                    <h5 class="modal-title">Los cambios serán permanentes</h5>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                      <a class="btn btn-info" href="{{url('admin/promoter/'.$promoter->id.'/delete')}}" title="Delete" >Sí</a>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
             @endforeach
 
         </table>

@@ -138,5 +138,4 @@
 @stop
 
 @section('javascript')
-{!!Html::script('js/jquery-ui.min.js')!!}
 @stop

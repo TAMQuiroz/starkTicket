@@ -7,6 +7,7 @@
         height: 400px;
       }
     </style>
+    {!!Html::style('css/images.css')!!}
 @stop
 
 @section('title')
@@ -36,10 +37,10 @@
 							        </tr>
 							    </thead>
 							    <tbody>
-							    	@foreach ($event->zones() as $zones)
+							    	@foreach ($event->zones as $zone)
 							        <tr>
-							            <td>{{$zones->name}}</td>
-							            <td>S/. {{$zones->price}}</td>
+							            <td>{{$zone->name}}</td>
+							            <td>S/. {{$zone->price}}</td>
 							        </tr>
 							        @endforeach
 
@@ -47,11 +48,11 @@
 							  </table>
 							</div>
 							@if(isset($user) && $user->role_id == config('constants.salesman'))
-							<a href="{{url('salesman/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
+							<a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a> 
 							@else
-							<a href="{{url('client/event/1/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
+							<a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
 							@endif
-							<a href="{{url('client/1/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
+							<a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
 							<br><br>
 							<div class="form-group">
 							  <label for="comment">Ingrese comentario:</label>
@@ -78,11 +79,11 @@
 							<h3 class="dates">Fechas del evento</h3>
 							<p>Del 17 de Septiembre al 26 de Octubre 2015</p>
 							<h3 class="dates">Horario</h3>
-							<p>Función a las 20:00</p>
+							<p>Función a las {{date_format(date_create($event->presentations->first()->starts_at),"H:i")}}</p>
 							<h3 class="dates">Ubicación</h3>
 
-							<p>Av. Gregorio Escobedo 803, Jesús María 15076</p>
-							<div id="map"></div>
+							<p>{{$event->place->address}}</p>
+							{!! Html::image($event->place->image,null, ['class'=>'carousel_img']) !!}
 
 							<h3 class="dates">Distribución de Zonas</h3>
 							<p>{!! Html::image('images/asientos.jpg') !!}</p>

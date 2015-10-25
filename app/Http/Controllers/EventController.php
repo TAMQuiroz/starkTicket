@@ -34,7 +34,8 @@ class EventController extends Controller
      */
     public function indexExternal()
     {
-        return view('external.events');
+        $events = Event::all();
+        return view('external.events',compact('events'));
     }
     /**
      * Show the form for creating a new resource.
@@ -138,7 +139,6 @@ class EventController extends Controller
                 }
             }
         }
-        
     }
 
     public function join_date_time($times, $dates){
@@ -209,9 +209,14 @@ class EventController extends Controller
      */
     public function showExternal($id)
     {
-        $object = Event::findOrFail($id);
-        return view('external.event', ['event' => $object]);
+        $user = \Auth::user();
+
+        $event = Event::findOrFail($id);
+        
+        return view('external.event', ['event' => $event, 'user'=>$user]);
     }
+
+
     /**
      * Display the specified resource.
      *
