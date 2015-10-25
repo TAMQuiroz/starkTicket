@@ -84,7 +84,7 @@ class TicketController extends Controller
         }
         $presentations = $presentations->toArray();
         $zones = Zone::where('event_id', $id)->lists('name','id');
-        $slots = DB::table('slot_presentation')->where('presentation_id',$event->presentations[0]->id)->where('status',1)->lists('slot_id','slot_id');
+        $slots = DB::table('slot_presentation')->where('presentation_id',$event->presentations[0]->id)->where('status',config('constants.seat_available'))->lists('slot_id','slot_id');
         //$slots = $event->presentations[0]->slots->where('status',1)->lists('id','id');
         return view('internal.salesman.buy',compact('event','presentations','zones','slots'));
     }
