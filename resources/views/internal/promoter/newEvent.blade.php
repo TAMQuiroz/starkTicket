@@ -350,6 +350,7 @@
           arreglo.push(texto);
         }
         console.log(arreglo);
+        $('#seat-map').show();
         var sc = $('#seat-map').seatCharts({
           map: arreglo,
         naming : {
@@ -366,7 +367,9 @@
             [ 'a', 'reserved', 'Reservado']
           ]
         } });
+        $('#seat-map').show();
       }else{
+        $('#seat-map').empty();
         var sc = $('#seat-map').hide();
       }
     });
