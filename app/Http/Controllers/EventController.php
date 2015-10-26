@@ -50,7 +50,7 @@ class EventController extends Controller
     public function create()
     {
         $categories_list = Category::all()->lists('name','id');
-        $organizers_list = Organizer::all()->lists('name','id');
+        $organizers_list = Organizer::all()->lists('organizerName','id');
         $locals_list = Local::all()->lists('name','id');
         $array = ['categories_list' =>$categories_list,
                 'organizers_list'   =>$organizers_list,
@@ -210,7 +210,7 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateEventRequest $request, $id)
-    {}
+    {
         $event = Event::find($id);
         if($request->input('name', '')!= '')
             $event->name         = $request->input('name');
