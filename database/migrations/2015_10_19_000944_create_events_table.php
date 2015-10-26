@@ -22,8 +22,9 @@ class CreateEventsTable extends Migration
             $table->string('image');
             $table->timestamps();       
             $table->softDeletes();
-            $table->timestamp('publication_date');
-            $table->timestamp('selling_date');
+            $table->string('publication_date');
+            $table->string('selling_date');
+            $table->string('time_length');
         });
     }
 

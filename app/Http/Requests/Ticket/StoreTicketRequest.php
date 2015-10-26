@@ -24,7 +24,13 @@ class StoreTicketRequest extends Request
     public function rules()
     {
         return [
-            'seats' =>  'required'
+            'seats'             =>  'required',
+            'event_id'          =>  'required|integer',
+            'zone_id'           =>  'required|integer',
+            'promotion_id'      =>  'required|integer',
+            'user_id'           =>  'integer',
+            'presentation_id'   =>  'required|integer',
+            'payMode'           =>  'required|integer'
         ];
     }
 }

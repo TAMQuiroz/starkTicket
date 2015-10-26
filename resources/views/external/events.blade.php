@@ -35,88 +35,20 @@
 </div>
 <br><br>
 <div class="row">
+    @foreach($events as $event)
     <div class="3u">
         <section>
             <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 1</h3>
-            <p><b>Precio: </b> S/. 20.00 <br>
+            <h3>{{$event->name}}</h3>
+            <p>
                 <b>Fecha: </b> 20/12/2015<br>
-                Av. venezuela Nro 255 </p>
-            <p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
+                <b>Lugar: </b> {{$event->place->name}} <br>
+                <b>Direccion:</b> {{$event->place->address}} <br>
+            </p>
+            <p><a href="event/{{$event->id}}"  class="btn btn-primary" role="button" >Detalle</a></p>
         </section>
     </div>
-    <div class="3u">
-        <section>
-            <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 2</h3>
-            <p><b>Precio: </b> S/. 20.00 <br>
-                <b>Fecha: </b> 20/12/2015<br>
-                Av. venezuela Nro 255 </p>
-            <p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
-        </section>
-    </div>
-    <div class="3u">
-        <section>
-            <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 3</h3>
-            <p><b>Precio: </b> S/. 20.00 <br>
-                <b>Fecha: </b> 20/12/2015<br>
-                Av. venezuela Nro 255 </p>
-            <p><a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
-        </section>
-    </div>
-    <div class="3u">
-        <section>
-            <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 4</h3>
-            <p><b>Precio: </b> S/. 20.00 <br>
-                <b>Fecha: </b> 20/12/2015<br>
-                Av. venezuela Nro 255 </p>
-            <p> <a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
-        </section>
-    </div>
-</div>
-<div class="row">
-    <div class="3u">
-        <section>
-            <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 5</h3>
-            <p><b>Precio: </b> S/. 20.00 <br>
-                <b>Fecha: </b> 20/12/2015<br>
-                Av. venezuela Nro 255 </p>
-            <p> <a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
-        </section>
-    </div>
-    <div class="3u">
-        <section>
-            <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 6</h3>
-            <p><b>Precio: </b> S/. 20.00 <br>
-                <b>Fecha: </b> 20/12/2015<br>
-                Av. venezuela Nro 255 </p>
-            <p> <a href="event/1"  class="btn btn-primary" role="button" >Detalle</a></p>
-        </section>
-    </div>
-    <div class="3u">
-        <section>
-            <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 7</h3>
-            <p><b>Precio: </b> S/. 20.00 <br>
-                <b>Fecha: </b> 20/12/2015<br>
-                Av. venezuela Nro 255 </p>
-            <p><a href="event/1" class="btn btn-primary" role="button" >Detalle</a></p>
-        </section>
-    </div>
-    <div class="3u">
-        <section>
-            <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
-            <h3>Titulo del Evento 8</h3>
-            <p><b>Precio: </b> S/. 20.00 <br>
-                <b>Fecha: </b> 20/12/2015<br>
-                Av. venezuela Nro 255 </p>
-            <p> <a href="event/1" class="btn btn-primary" role="button" >Detalle</a></p>
-        </section>
-    </div>
+    @endforeach
 </div>
 @stop
 

@@ -15,6 +15,3 @@
 @section('javascript')
 
 @stop
-
-@section('content')
-  <!-- Contenido-->

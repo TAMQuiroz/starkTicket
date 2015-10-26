@@ -47,17 +47,21 @@ class LocalController extends Controller
     {
         //
         $input = $request->all();
+        
 
         $local               =   new Local;
         $local->name         =   $input['name'];
-        $local->capacity     =   $input['capacity'];
+        /*$local->capacity     =   $input['capacity'];*/
         $local->address      =   $input['address'];
         $local->district     =   $input['district'];
         $local->province     =   $input['province']; 
         $local->state        =   $input['state'];  
-        $local->row          =   $input['row'];
-        $local->column       =   $input['column'];
-
+        $local->rows          =   $input['row'];
+        $local->columns       =   $input['column'];
+        if($local->rows == 0 ||  $local->columns == 0)
+            $local->capacity     =   $input['capacity'];
+        else
+            $local->capacity     =   $local->rows * $local->columns;
         
         //Control de subida de imagen
         $local->image        =   $this->file_service->upload($request->file('image'),'local');
@@ -106,13 +110,17 @@ class LocalController extends Controller
 
         
         $local->name         =   $input['name'];
-        $local->capacity     =   $input['capacity'];
+        /*$local->capacity     =   $input['capacity'];*/
         $local->address      =   $input['address'];
         $local->district     =   $input['district'];
         $local->province     =   $input['province']; 
         $local->state        =   $input['state'];
-        $local->row          =   $input['row'];     
-        $local->column       =   $input['column'];            
+        $local->rows          =   $input['row'];     
+        $local->columns       =   $input['column'];   
+        if($local->rows == 0 ||  $local->columns == 0)
+            $local->capacity     =   $input['capacity'];
+        else
+            $local->capacity     =   $local->rows * $local->columns;         
         
         //Control de subida de imagen
         if($request->file('image')!=null)

@@ -22,72 +22,6 @@
             <th>Editar</th>
             <th>Eliminar</th>
         </tr>
-        <!--
-        <tr>
-            <td>Contenido 1</td>
-            <td>Contenido 2</td>
-            <td>Contenido 3</td>
-            <td>Contenido 4</td>
-            <td>Contenido 5</td>
-            <td>
-               <a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i></a> 
-            </td>
-            <td>
-                <a class="btn btn-info" href="{{url('admin/modules/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-             </td>    
-             <td>
-                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>Contenido 1</td>
-            <td>Contenido 2</td>
-            <td>Contenido 3</td>
-            <td>Contenido 4</td>
-            <td>Contenido 5</td>
-            <td>
-               <a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i></a> 
-            </td>
-            <td>
-                <a class="btn btn-info" href="{{url('admin/modules/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-             </td>    
-             <td>
-                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>Contenido 1</td>
-            <td>Contenido 2</td>
-            <td>Contenido 3</td>
-            <td>Contenido 4</td>
-            <td>Contenido 5</td>
-            <td>
-               <a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i></a> 
-            </td>
-            <td>
-                <a class="btn btn-info" href="{{url('admin/modules/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-             </td>    
-             <td>
-                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>Contenido 1</td>
-            <td>Contenido 2</td>
-            <td>Contenido 3</td>
-            <td>Contenido 4</td>
-            <td>Contenido 5</td>
-            <td>
-               <a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i></a> 
-            </td>
-            <td>
-                <a class="btn btn-info" href="{{url('admin/modules/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-             </td>    
-             <td>
-                <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
-            </td>
-        </tr> -->
-
         @foreach($modules as $module)
         <tr>
           <td>{{$module->name}}</td>
@@ -95,9 +29,7 @@
           <td>{{$module->district}}</td>
           <td>{{$module->province}}</td>
           <td>{{$module->state}}</td>
-          <!--<td>{{$module->phone}}</td>
-          <td>{{$module->email}}</td> -->
-          <td>{!! Html::image($module->image, null, array('class'=>'gift_img')) !!}</td>
+          <td>{{$module->phone}}</td>
           <td>
             <a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#edit{{$module->id}}"><i class="glyphicon glyphicon-plus"></i></a> 
             <div class="modal fade" id="edit{{$module->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

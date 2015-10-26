@@ -84,7 +84,13 @@
     <div class="container">
         <h1>@yield('title')</h1>
         <hr>
-
+        @if($errors->any())
+        <ul class="alert alert-danger">
+            @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+        @endif
         @if(Session::has('message'))
         <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
         @endif
@@ -97,7 +103,30 @@
 
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}
     {!!Html::script('js/bootstrap.min.js')!!}
-
+    {!!Html::script('js/jquery.validate.min.js')!!}
+    {!!Html::script('js/messages_es_PE.js')!!}
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('#form').validate({
+        errorElement: "span",
+        rules: {
+        },
+        highlight: function(element) {
+            $(element).closest('.form-group')
+            .removeClass('has-success').addClass('has-error');
+        },
+        success: function(element) {
+            $(element)
+            .addClass('help-inline')
+            .closest('.form-group')
+            .removeClass('has-error').addClass('has-success');
+            }
+        });
+        $('#yes').click(function(){
+            $('.modal').modal('hide');  
+        });
+    });
+    </script>
     @yield('javascript')
 </body>
 </html>
