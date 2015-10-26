@@ -286,8 +286,8 @@ class EventController extends Controller
     }
     public function edit($id)
     {
-        Event::find($id);
-        return view('internal.promoter.editEvent', $event);
+        $event = Event::find($id);
+        return view('internal.promoter.editEvent', ['events' => $event]);
     }
     /**
      * Update the specified resource in storage.

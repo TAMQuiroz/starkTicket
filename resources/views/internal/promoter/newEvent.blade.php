@@ -3,6 +3,7 @@
 @section('style')
   <!--{!!Html::style('css/modern-business.css')!!} -->
   <!-- {!!Html::style('css/estilos.css')!!} -->
+  {!!Html::style('css/jquery.seat-charts.css')!!}
 @stop
 
 @section('title')
@@ -50,9 +51,12 @@
     document.getElementById('input-function-date').min = document.getElementsByName('selling_date')[0].value;
   }
 </script>
+
         <!-- Contenido-->
         @foreach ($capacity_list as $capacity)
           {!! Form::hidden ('capacity_'.$capacity->id, $capacity->capacity) !!}
+          {!! Form::hidden ('row_'.$capacity->id, $capacity->rows,  array('id' =>'row_'.$capacity->id)) !!}
+          {!! Form::hidden ('column_'.$capacity->id, $capacity->columns, array('id' =>'column_'.$capacity->id)) !!}
         @endforeach
         <div class="row">
           <div class="col-sm-8">
@@ -118,7 +122,7 @@
                 </div>
               </div>         
               <br>
-
+              <div id="seat-map" class="seatCharts-container" tabindex ="0"></div>
               <!-- ZONA -->
               <legend>Agregar zona:</legend>
               <div class="form-group">
@@ -319,10 +323,62 @@
 
         </div>
 
+        {!!Html::script('js/jquery-1.11.3.min.js')!!}
+{!!Html::script('js/jquery.seat-charts.js')!!}
+<script src="{{URL::asset('js/jquery.seat-charts.js')}}"> </script>
+<script>
+  $(document).ready(function() {
+    
+    $('[name=local_id]').click(function(){
+      var e = $('[name=local_id]')[0];
+      var index= e.options[e.selectedIndex].value;
+      
+      var algo = $('#row_' + index).val();
+      console.log("algo "+algo); 
+      if(algo !== undefined && algo >=1){
+        console.log("index "+index);
+        var rows = $('#row_'+index).val();
+        var columns = $('#column_'+index).val();
+        console.log("columnas "+columns);
+        var arreglo = new Array();
+        for(i=0; i<rows;i++){
+          var texto = 'a';
+          for(j=1; j<columns; j++){
+            texto += 'a';
+          }
+          console.log(texto);
+          arreglo.push(texto);
+        }
+        console.log(arreglo);
+        var sc = $('#seat-map').seatCharts({
+          map: arreglo,
+        naming : {
+          top : false,
+          getLabel : function (character, row, column) {
+            return column;
+          }
+        },
+        legend : { //Definition legend
+          node : $('#legend'),
+          items : [
+            [ 'a', 'available',   'Libre' ],
+            [ 'a', 'unavailable', 'Ocupado'],
+            [ 'a', 'reserved', 'Reservado']
+          ]
+        } });
+      }else{
+        var sc = $('#seat-map').hide();
+      }
+    });
+  });
+</script>
+
 
 @stop
 
 @section('javascript')
+          {!!Html::script('js/jquery-1.11.3.min.js')!!}
+{!!Html::script('js/jquery.seat-charts.js')!!}
 
   {!!Html::script('js/moment.js')!!}
   {!!Html::script('js/rangepicker.js')!!}
