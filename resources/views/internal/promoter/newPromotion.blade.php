@@ -17,7 +17,7 @@
 
 @section('content')
  {!!Form::open(array('url' => 'promoter/promotion/new','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
-	<h3>Seleccione los datos del evento</h3>
+	<h3>Seleccione evento a relacionar</h3>
 	<br>
 	<table id="example" class="display" cellspacing="2" width="90%"   align="center">
 	  	<thead>
