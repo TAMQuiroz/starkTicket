@@ -35,7 +35,7 @@
         @foreach ($subcategories as $subcategory)
         <div class="col-sm-3">
             {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Subcategoria 1</h3>
+            <h3>{{$subcategory->name}}</h3>
             <p><a href="subcategory/{{$subcategory->id}}" class="btn btn-primary" role="button" data-target="#info" data-whatever="@mdo">Ver más</a></p>
         </div>
         @endforeach
