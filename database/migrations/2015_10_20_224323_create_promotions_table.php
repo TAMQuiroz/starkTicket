@@ -33,7 +33,8 @@ class CreatePromotionsTable extends Migration
             $table->float('desc')->nullable();
             $table->string('access')->nullable();
         //Promocion oferta
-            $table->integer('zone_id')->nullable();
+            $table->integer('zone_id')->unsigned()->nullable();
+
             $table->integer('carry')->nullable();
             $table->integer('pay')->nullable();
 

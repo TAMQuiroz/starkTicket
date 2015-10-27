@@ -77,7 +77,8 @@
 	    <div id="collapse1" class="panel-collapse collapse">
 	    	<div style="-webkit-columns: 100px 2;">
 		      	<h4>Seleccione el acceso a la promocion</h4>
-				{!! Form::select('access', ['Cualquier modo de pago', 'Todas las tarjetas','INTERBANK','BBVA', 'BCP'],null,['class' => 'form-control']) !!}
+			{!! Form::select('access', array( 'L' => 'Cualquier modo de pago',  'L' => 'Todas las tarjetas', 'L' => 'INTERBANK', 'L' => 'BBVA', 'L' => 'BCP')    ,null,['class' => 'form-control']) !!}
+
 				<h4>Descuento (%)</h4>
 				{!! Form::number('discount','', array('class' => 'form-control', 'min'=>'0', 'max'=>'100', 'required')) !!}
 			</div>

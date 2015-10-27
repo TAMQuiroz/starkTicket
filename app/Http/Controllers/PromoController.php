@@ -42,8 +42,8 @@ class PromoController extends Controller
     {
 
         $input = $request->all();
-
         $promotions               =   new Promotions ;
+
         $promotions->name         =   $input['promotionName'];
         $promotions->description  =   $input['description'];
         $promotions->startday  =   $input['dateIni'];
@@ -54,18 +54,47 @@ class PromoController extends Controller
         $aux =   $input['dateEnd']     .' '. $input['timeEnd'];
         $promotions->endday =   $aux  ; 
         
-
-
-        $promotions->desc  =   $input['discount'];
         $promotions->event_id  = $input['evento'] ;
 
-      //  $promotions->user_id  = 3  ;
 
-        $promotions->save();
 
-        return redirect('promoter/promotion');
+
+
+        
+
+
+
+
+        $promotions->user_id  = 3 ;
+        $promotions->typePromotion    =  1;  //indica que se trata de un descuento 
+
+
+        if(  $promotions->typePromotion    ==  1  ){
+                $promotions->desc  =   $input['discount'];
+                 $promotions->access =  $input['access'];
+
+
+        }
+
+
+
+        if(  $promotions->typePromotion    ==  2  ){
+            $promotions->carry =    $input['carry'];
+            $promotions->pay =    $input['pay'];
+            $promotions->zone_id =  $input['zone_id'];
+        }
+     
+
+
+
+
+
+
+       //  $promotions->save();
+
+      //   return redirect('promoter/promotion');
       
-      //  return $input['select'] ;
+       return $promotions ;
 
        
     }
