@@ -47,24 +47,23 @@ h1{
 	<hr>
 	<h3>Ingrese información de promoción</h3>
 	<div>
-		<div style="-webkit-columns: 100px 2;">
-				<h4>Nombre</h4>
-				{!! Form::text('promotionName','', array('class' => 'form-control', 'maxlength'=>'15', 'required')) !!}	
-				<h4>Descuento (%)</h4>
-				{!! Form::number('discount','', array('class' => 'form-control', 'min'=>'0', 'max'=>'100', 'required')) !!}
-			</div>
-			<div style="-webkit-columns: 100px 4;">
-				<h4>Fecha Inicio</h4>
-				{!! Form::date('dateIni','', array('class' => 'form-control' , 'required')) !!}
-				<h4>Fecha Fin</h4>
-				{!! Form::date('dateEnd','', array('class' => 'form-control', 'required')) !!}
-				<h4>Hora Inicio</h4>
-				{!! Form::time('timeIni','', array('class' => 'form-control', 'required')) !!}
-				<h4>Hora Fin</h4>
-				{!! Form::time('timeEnd','', array('class' => 'form-control', 'required')) !!}
-			</div>
-			<h4>Descripción</h4>
-			{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'maxlength'=>'200', 'required']) !!}
+		<div style="width: 500px ;">
+			<h4>Nombre</h4>
+			{!! Form::text('promotionName','', array('class' => 'form-control', 'maxlength'=>'15', 'required')) !!}		
+		</div>
+		<br>
+		<div style="-webkit-columns: 100px 4;">
+			<h4>Fecha Inicio</h4>
+			{!! Form::date('dateIni','', array('class' => 'form-control' , 'required')) !!}
+			<h4>Fecha Fin</h4>
+			{!! Form::date('dateEnd','', array('class' => 'form-control', 'required')) !!}
+			<h4>Hora Inicio</h4>
+			{!! Form::time('timeIni','', array('class' => 'form-control', 'required')) !!}
+			<h4>Hora Fin</h4>
+			{!! Form::time('timeEnd','', array('class' => 'form-control', 'required')) !!}
+		</div>
+		<h4>Descripción</h4>
+		{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'maxlength'=>'200', 'required']) !!}
 	</div>
 	<br>
 	<hr>
@@ -79,8 +78,12 @@ h1{
 	      </h4>
 	    </div>
 	    <div id="collapse1" class="panel-collapse collapse">
-	      	<h4>Seleccionar tarjeta</h4>
-			{!! Form::select('card', ['Interbank','BBVA', 'BCP'],null,['class' => 'form-control']) !!}
+	    	<div style="-webkit-columns: 100px 2;">
+		      	<h4>Seleccionar tarjeta</h4>
+				{!! Form::select('card', ['Interbank','BBVA', 'BCP'],null,['class' => 'form-control']) !!}
+				<h4>Descuento (%)</h4>
+				{!! Form::number('discount','', array('class' => 'form-control', 'min'=>'0', 'max'=>'100', 'required')) !!}
+			</div>
 			<br><br>
 			<button type="submit" class="btn btn-info" data-toggle="modal" data-target="#end" data-whatever="@mdo">Guardar</button>
 			<a href="{{url('promoter/promotion')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
