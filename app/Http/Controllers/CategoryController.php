@@ -40,7 +40,8 @@ class CategoryController extends Controller
      */
     public function indexExternal()
     {
-        return view('external.categories');
+        $categories = Category::where('type','1')->get();
+        return view('external.categories',["categories"=>$categories]);
     }
 
     /**
