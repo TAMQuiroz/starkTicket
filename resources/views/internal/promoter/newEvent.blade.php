@@ -384,9 +384,9 @@
     $("#category_id").change(function(){
 
       category_id = $("#category_id").val();
-
+      url_base = "{{ url('/') }}";
       // Peticion ajax
-      $.getJSON("http://laravel.local/promoter/"+category_id+"/subcategories", function(data)
+      $.getJSON(url_base+"/promoter/"+category_id+"/subcategories", function(data)
       {
         $("#subcategory_id").empty();
         $.each( data, function( id, name ) {
