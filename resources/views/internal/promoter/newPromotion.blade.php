@@ -7,16 +7,6 @@
 
 @section('style')
 
-<<<<<<< HEAD
-    {!!Html::style('css/bootstrap.min.css')!!}
-    <style type="text/css">
-    h1{
-    	margin-top: 80px;
-    }
-    </style>
-=======
- 
->>>>>>> b31321307c0c3580a6f25f255309aae6ff9b39ca
 @stop
 
 @section('title')
@@ -29,9 +19,9 @@
 
 
 	<div style="-webkit-columns: 100px 2;">
-	
+
 		<h4>Nombre</h4>
-		{!! Form::text('promotionName','', array('class' => 'form-control', 'maxlength'=>'15', 'required')) !!}	
+		{!! Form::text('promotionName','', array('class' => 'form-control', 'maxlength'=>'15', 'required')) !!}
 		<h4>Descuento (%)</h4>
 		{!! Form::number('discount','', array('class' => 'form-control', 'min'=>'0', 'max'=>'100', 'required')) !!}
 	</div>
@@ -58,7 +48,7 @@
 	<br>
 	<br><br>
 	<legend>Seleccione los datos del evento</legend>
-       
+
 <br>
 
 
@@ -88,13 +78,13 @@
 	    	<td>{{$event->name}}</td>
 
 
-	   
+
 
 	    	<td> {{$event->description}}   </td>
 
 
 
-	    	<td> {!! Form::radio('select', $event->id ,   (Input::old('select') == $event->id ), array('id'=>'true', 'class'=>'radio' ,'required' ))  !!} </td>	
+	    	<td> {!! Form::radio('select', $event->id ,   (Input::old('select') == $event->id ), array('id'=>'true', 'class'=>'radio' ,'required' ))  !!} </td>
 
 
 
@@ -107,8 +97,8 @@
 
 	     </tbody>
 
-          
-	</table>    
+
+	</table>
 
 <br>
 <br>
@@ -149,7 +139,7 @@
 
   {!!Html::script('js/jquery.dataTables.min.js')!!}
 
-<script>  
+<script>
 $(document).ready(function() {
    $('#example').DataTable( {
        "language": {
