@@ -24,12 +24,46 @@ class AdminController extends Controller
     }
     public function salesman()
     {
-        return view('internal.admin.salesman');
+
+        $vendedores = User::where('role_id',2)->paginate(2);
+        $vendedores->setPath('salesman');
+
+        return view('internal.admin.salesman',compact('vendedores'));
     }
 
     public function editSalesman($id)
     {
-        return view('internal.admin.editSalesman');
+        $user = User::find($id);
+        return view('internal.admin.editSalesman',compact('user'));
+    }
+
+
+    public function updateSalesman(UpdateAdminRequest $request, $id)
+    {
+
+        $input = $request->all();
+
+        $user = User::find($id);
+        $user->name         =   $input['name'];
+        $user->lastName     =   $input['lastname'];
+
+        if ($input['password'] != null )
+            $user->password     =   bcrypt($input['password']);
+
+        $user->di_type      =   $input['di_type'];
+        $user->di           =   $input['di'];
+        $user->address      =   $input['address'];
+        $user->phone        =   $input['phone'];
+        $user->email        =   $input['email'];
+        $user->birthday     =   new Carbon($input['birthday']);
+        $user->role_id      =   $input['role_id'];
+        /*
+        if($request->file('image')!=null)
+           $user->image        =   $this->file_service->upload($request->file('image'),'user');
+        */
+        $user->save();
+
+        return redirect('admin/salesman');
     }
 
     public function promoter()
@@ -144,8 +178,11 @@ class AdminController extends Controller
 
         if($user->role_id == '4')
              return redirect('admin/admin');
-        else
+        elseif ($user->role_id == '3')
             return redirect('admin/promoter');
+        else
+            return redirect('admin/salesman');
+
     }
 
         public function destroy($id)
@@ -161,6 +198,13 @@ class AdminController extends Controller
         $user = User::find($id);
         $user->delete();
         return redirect('admin/promoter');
+    }
+
+    public function destroySalesman($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+        return redirect('admin/salesman');
     }
 
 }
