@@ -25,11 +25,10 @@
 @stop
 
 @section('title')
-	Subcategorias
+	{{$category->name}}
 @stop
 
 @section('content')
-    <legend>{{$category->name}}</legend>
 	<p>{{$category->description}}</p>
     @if (count($subcategories)>0)
 	<div class="row">

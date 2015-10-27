@@ -138,8 +138,9 @@ class CategoryController extends Controller
      */
     public function showSub($id, $id2)
     {
-        $objs = Event::where('category_id',$id2)->paginate(10);
-        return view('external.subcategory',["events"=>$objs]);
+        $category = Category::findOrFail($id2);
+        $events = Event::where('category_id',$id2)->paginate(10);
+        return view('external.subcategory',["events"=>$events,"category"=>$category]);
     }
 
     /**
