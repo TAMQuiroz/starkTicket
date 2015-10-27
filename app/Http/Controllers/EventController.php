@@ -539,4 +539,9 @@ class EventController extends Controller
     {
         //
     }
+    public function subcategoriesToAjax($id)
+    {
+        $subcategories = Category::where('father_id',$id)->lists('name','id');
+        return json_encode($subcategories);
+    }
 }
