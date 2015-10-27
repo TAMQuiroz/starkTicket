@@ -103,7 +103,7 @@
                     <div class="modal-footer">
                         
                         <button type="button" class="btn btn-info" data-dismiss="modal">No</button>     
-                        <button type="submit" class="btn btn-info">Sí</button>
+                        <button type="submit" class="btn btn-info" id="yes">Sí</button>
                         <!--                    
                         <a class="btn btn-info" href="{{url('promoter/organizer/'.$organizador->id.'/edit')}}" title="Edit" >Sí</a>
                         -->

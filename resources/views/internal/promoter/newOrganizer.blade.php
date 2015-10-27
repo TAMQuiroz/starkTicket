@@ -76,7 +76,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Imagen</label>
                 <div class="col-sm-10">
-                  {!! Form::file('image', ['class' => 'form-control', 'id' => 'inputImage','accept'=>'image/*']) !!}
+                  {!! Form::file('image', ['class' => 'form-control', 'id' => 'inputImage','accept'=>'image/*','required']) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -102,7 +102,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-info" data-dismiss="modal">No</button>                        
-                        <button type="submit" class="btn btn-info">Sí</button>
+                        <button type="submit" class="btn btn-info" id="yes">Sí</button>
                         <!--
                         <a class="btn btn-info" href="" title="Create" >Sí</a>
                         -->
@@ -131,6 +131,7 @@
         }
       }
     }
+
   </script>
 
 

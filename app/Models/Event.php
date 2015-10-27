@@ -12,7 +12,7 @@ class Event extends Model
     protected $dates = ['deleted_at'];
 
     public function organization(){
-        return $this->belongsTo('App\Models\Organizer');
+        return $this->belongsTo('App\Models\Organizer','organizer_id');
     }
 
     public function category(){
@@ -20,7 +20,7 @@ class Event extends Model
     }
 
     public function place(){
-        return $this->belongsTo('App\Models\Locals');
+        return $this->belongsTo('App\Models\Local','local_id');
     }
 
     public function zones(){

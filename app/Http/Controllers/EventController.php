@@ -34,7 +34,8 @@ class EventController extends Controller
      */
     public function indexExternal()
     {
-        return view('external.events');
+        $events = Event::all();
+        return view('external.events',compact('events'));
     }
     /**
      * Show the form for creating a new resource.
@@ -44,11 +45,13 @@ class EventController extends Controller
     public function create()
     {
         $categories_list = Category::all()->lists('name','id');
-        $organizers_list = Organizer::all()->lists('name','id');
+        $organizers_list = Organizer::all()->lists('businessName','id');
         $locals_list = Local::all()->lists('name','id');
+        $capacity_list = Local::all();
         $array = ['categories_list' =>$categories_list,
                 'organizers_list'   =>$organizers_list,
-                'locals_list'       =>$locals_list];
+                'locals_list'       =>$locals_list,
+                'capacity_list'     =>$capacity_list];
         return view('internal.promoter.newEvent', $array);
     }
     /**
@@ -138,18 +141,28 @@ class EventController extends Controller
                 }
             }
         }
-        
     }
+
+    public function join_date_time($times, $dates){
+        $function_starts_at = array();
+        foreach ($dates as $key=>$value) {
+            $function_starts_at[$key] = $value.' '.$times[$key];
+        }
+        return $function_starts_at;
+    }
+
     public function store(StoreEventRequest $request)
     {
-        $temp = array_unique($request->input('function_starts_at'));
-        if(count($temp) < count($request->input('function_starts_at')))
-            //return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
-            return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
+        
+        $result_dates = $this->join_date_time($request->input('start_time'),$request->input('start_date'));
+        $temp = array_unique($result_dates);
+        if(count($temp) < count($result_dates))
+            return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
+            //return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
         $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad 
         if($result['error'] != '')
-            //return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
-            return response()->json(['message' => $result['error']]);
+            return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
+            //return response()->json(['message' => $result['error']]);
         $data = [
             'name'          => $request->input('name'),
             'description'   => $request->input('description'),
@@ -172,7 +185,9 @@ class EventController extends Controller
             'start_row'    => $request->input('start_row')
         ];
         $data2 = [
-            'function_starts_at' => $request->input('function_starts_at')
+            //'start_date'    => $request->input('start_date'),
+            //'start_time'    => $request->input('start_time'),
+            'function_starts_at' => $result_dates
         ];
         $this->storeRestOfEvent($zone_data, $data2, $event);
         //return redirect()->route('events.edit', $event->id);
@@ -196,9 +211,14 @@ class EventController extends Controller
      */
     public function showExternal($id)
     {
-        $object = Event::findOrFail($id);
-        return view('external.event', ['event' => $object]);
+        $user = \Auth::user();
+
+        $event = Event::findOrFail($id);
+        
+        return view('external.event', ['event' => $event, 'user'=>$user]);
     }
+
+
     /**
      * Display the specified resource.
      *
@@ -266,8 +286,8 @@ class EventController extends Controller
     }
     public function edit($id)
     {
-        Event::find($id);
-        return view('internal.promoter.editEvent', $event);
+        $event = Event::find($id);
+        return view('internal.promoter.editEvent', ['events' => $event]);
     }
     /**
      * Update the specified resource in storage.
