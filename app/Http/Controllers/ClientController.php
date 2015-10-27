@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Http\Requests\Client\StoreClientRequest;
+use App\Http\Requests\Client\PasswordClientRequest;
+use App\Http\Requests\Client\UpdateClientRequest;
 use App\Http\Controllers\Controller;
 use App\User;
 use Auth;
 use Session;
+use Carbon\Carbon;
+use App\Services\FileService;
 
 class ClientController extends Controller
 {
@@ -16,10 +21,37 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $this->file_service = new FileService();
+    }
     public function index()
     {
         $clients = User::where('role_id','1')->paginate(10);
         return view('internal.admin.client.clients', ['clients' => $clients]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function desactive(Request $request)
+    {
+        $input = $request->all();
+        if(isset($input['client_id']))
+        {
+            $user = User::findOrFail($input['client_id']);
+            $user->delete();
+            //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+            Session::flash('message', 'Cliente Borrado!');
+            Session::flash('alert-class','alert-success');
+        } else {
+            Session::flash('message', 'Cliente no encontrado!');
+            Session::flash('alert-class','alert-danger');
+        }
+
+        return redirect('/admin/client');
     }
 
     /**
@@ -38,9 +70,28 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreClientRequest $request)
     {
-        //
+        $input = $request->all();
+
+        $user = new User ;
+        $user->name = $input['name'];
+        $user->lastName = $input['lastname'];
+        $user->password = bcrypt($input['password']);
+        $user->di_type = $input['di_type'];
+        $user->di = $input['di'];
+        $user->address = $input['address'];
+        $user->phone = $input['phone'];
+        $user->email = $input['email'];
+        $user->birthday = new Carbon($input['birthday']);
+        $user->role_id = 1;
+        $user->save();
+
+        //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+        Session::flash('message', 'Cliente Creado!');
+        Session::flash('alert-class','alert-success');
+
+        return redirect('/');
     }
 
     /**
@@ -74,21 +125,17 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateClientRequest $request)
     {
         $id = Auth::user()->id;
         $obj = User::findOrFail($id);
-
-        $this->validate($request, [
-            'name' => 'required',
-            'lastname' => 'required'
-        ]);
 
         $input = $request->all();
 
         $obj->fill($input)->save();
 
-        Session::flash('message', 'Profile information successfully updated!');
+        //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+        Session::flash('message', 'Informacion de perfil correctamente actualizada!');
         Session::flash('alert-class','alert-success');
         return redirect('client');
     }
@@ -134,15 +181,10 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function passwordUpdate(Request $request)
+    public function passwordUpdate(PasswordClientRequest $request)
     {
         $id = Auth::user()->id;
         $obj = User::findOrFail($id);
-
-        $this->validate($request, [
-            'password' => 'required',
-            'new_password' => 'required|confirmed'
-        ]);
 
         $auth = Auth::attempt( array(
             'email' => $obj->email,
@@ -155,12 +197,49 @@ class ClientController extends Controller
             $obj->password = $newPassword;
             $obj->save();
 
-            Session::flash('message', 'Your password updated!');
+            //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+            Session::flash('message', 'Su contraseña fue actualizada!');
             Session::flash('alert-class','alert-success');
         } else {
-            Session::flash('message', 'Password!');
+            Session::flash('message', 'Contraseña!');
             Session::flash('alert-class','alert-danger');
         }
+
+        return redirect('client');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function photoEdit()
+    {
+        return view('internal.client.photo');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function photoUpdate(Request $request)
+    {
+        $id = Auth::user()->id;
+        $obj = User::findOrFail($id);
+
+        $this->validate($request, [
+            'image' => 'required|image'
+        ]);
+        $obj->image = $this->file_service->upload($request->file('image'),'client');
+        $obj->save();
+
+        //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+        Session::flash('message', 'Su imagen se actualizo!');
+        Session::flash('alert-class','alert-success');
 
         return redirect('client');
     }

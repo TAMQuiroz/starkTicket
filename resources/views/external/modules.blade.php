@@ -3,6 +3,7 @@
 @section('style')
 	{!!Html::style('css/skeletoGift.css')!!}
 	{!!Html::style('css/estiloGift.css')!!}
+  {!!Html::style('css/images.css')!!}
   <style type="text/css">
         #nav .fifth{
             color: white;
@@ -16,11 +17,12 @@
 
 @section('content')
 	<!-- Main -->
+   <!--
 		<div id="main">
 			<div class="container">
 				<div class="row">
 				
-					<!-- Content -->
+					
 						<div id="content" class="8u skel-cell-important">
 							<section>
 								<header>
@@ -31,15 +33,15 @@
 							</section>
 
                             
-                               <div class="col-md-6"> <!-- Sirve para darle anchura a tu columna-->
+                               <div class="col-md-6"> 
                      
                                 </div>
 						</div>
-					<!-- /Content -->
+			
                     
                     
 						
-					<!-- Sidebar -->
+		
 						<div id="sidebar" class="4u">
 							<section class="scrol">
               <style>.scrol{
@@ -49,7 +51,7 @@
               }</style>
 								<header>
 									<h2 class = "title">Puntos de Venta</h2>
-                                    <!--<span class="byline">Entradas para tu evento</span> -->								
+                                   							
                                 </header>
 								<p>Descubre los puntos de venta mas cercanos a tu distrito para que puedas realizar
                                 tu compra de una manera mucho mas rápida y efectiva</p>
@@ -93,12 +95,82 @@
 								
 							</section>
 						</div>
-					<!-- Sidebar -->
+					
 						
 				</div>
 			
 			</div>
-		</div>
+		</div> -->
+    <header>
+    <h1>Ubica nuestros Módulos de Venta </h1>
+
+  </header>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Distrito</th>
+            <th>Provincia</th>
+            <th>Departamento</th>
+            <th>Teléfono</th>
+            <th>Detalle</th>
+        </tr>
+            @foreach($modules as $module)
+        <tr>
+          <td>{{$module->name}}</td>
+          <td>{{$module->address}}</td>
+          <td>{{$module->district}}</td>
+          <td>{{$module->province}}</td>
+          <td>{{$module->state}}</td>
+          <td>{{$module->phone}}</td>
+          <!--<td>{{$module->email}}</td> -->
+          <!--<td>{!! Html::image($module->image, null, array('class'=>'gift_img')) !!}</td> -->
+          <td>
+            <a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#edit{{$module->id}}"><i class="glyphicon glyphicon-plus"></i></a> 
+            <div class="modal fade" id="edit{{$module->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Detalle punto de venta</h4>
+                  </div>
+                  <div class="modal-body">
+                    <h4>Nombre: </h4>
+                    {{$module->name}}
+                    <h4>Direccion: </h4>
+                    {{$module->address}}
+                    <h4>Ciudad: </h4>
+                    {{$module->district}}
+                    <h4>Provincia: </h4>
+                    {{$module->province}}
+                    <h4>Departamento: </h4>
+                    {{$module->state}}
+                    <h4>Teléfono: </h4>
+                    {{$module->phone}}
+                    <h4>Correo: </h4>
+                    {{$module->email}}
+                    <h4>Apertura: </h4>
+                    {{$module->starTime}}
+                    <h4>Cierre: </h4>
+                    {{$module->endTime}}
+                    <br>
+                    <br>
+                    <h4>Ubicanos: </h4>
+                    {!! Html::image($module->image, null, array('class'=>'module_img')) !!}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          @endforeach
+
+
+
+    </table>
+  
 @stop
 
 @section('javascript')

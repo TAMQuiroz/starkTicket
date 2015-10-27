@@ -33,7 +33,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{url('salesman/cash_count')}}">Apertura y Arqueo de caja</a></li>
                             <li><a href="{{url('salesman/exchange_gift')}}">Canjeo de regalos</a></li>
-                            <li><a href="{{url('salesman/event/{id}/buy')}}">Venta Ticket</a></li>
+                            <!--<li><a href="{{url('salesman/event/{id}/buy')}}">Venta Ticket</a></li>-->
                             <li><a href="{{url('salesman/giveaway')}}">Entrega Ticket</a></li>
                             <li><a href="{{url('salesman/event/{id}/pay_booking')}}">Cobrar Reserva</a></li>
                         </ul>
@@ -71,6 +71,30 @@
 
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}
     {!!Html::script('js/bootstrap.min.js')!!}
+    {!!Html::script('js/jquery.validate.min.js')!!}
+    {!!Html::script('js/messages_es_PE.js')!!}
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('#form').validate({
+        errorElement: "span",
+        rules: {
+        },
+        highlight: function(element) {
+            $(element).closest('.form-group')
+            .removeClass('has-success').addClass('has-error');
+        },
+        success: function(element) {
+            $(element)
+            .addClass('help-inline')
+            .closest('.form-group')
+            .removeClass('has-error').addClass('has-success');
+            }
+        });
+        $('#yes').click(function(){
+            $('.modal').modal('hide');  
+        });
+    });
+    </script>
     @yield('javascript')
 
 </body>

@@ -24,36 +24,34 @@
 	    <thead>
 	        <tr>
 	            <th>Evento</th>
-	            <th>Fecha</th>
-	            <th>Hora</th>
+	            <th>Fecha y hora</th>
 	            <th>Zona</th>
 	            <th>Ubicación</th>
 	            <th>Precio</th>
 	        </tr>
 	    </thead>
 	    <tbody>
+	    	@foreach($tickets as $ticket)
 	        <tr>
-	        	<td>Piaf</td>
-	        	<td>13 Octubre 2015</td>
-	        	<td>9:00pm</td>
-	            <td>VIP</td>  
-	            <td>A14</td>
-	            <td>S/150.00</td>
+	        	<td>{{$ticket->event->name}}</td>
+	        	<td>{{date("Y-m-d h:i", $ticket->presentation->starts_at)}}</td>
+	            <td>{{$ticket->seat->zone->name}}</td>  
+	            <td>
+	            	@if($ticket->seat->row)
+	            		F{{$ticket->seat->row}}C{{$ticket->seat->column}}
+	            	@else
+	            		No numerado
+	            	@endif
+	            </td>
+	            <td>S/. {{$ticket->price}}</td>
 	        </tr>
-	        <tr>
-	            <td>Piaf</td>
-	        	<td>13 Octubre 2015</td>
-	        	<td>9:00pm</td>
-	            <td>VIP</td>  
-	            <td>A15</td>
-	            <td>S/150.00</td>
-	        </tr>
+	        @endforeach
 	    </tbody>
 	  </table>
 	</div>
 
 	<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#correo" data-whatever="@mdo">Enviar por Correo</button></td>
-	<td><a href="{{url('event/1')}}"><button type="button" class="btn btn-info">Finalizar</button></a></td>
+	<td><a href="{{url('salesman')}}"><button type="button" class="btn btn-info">Finalizar</button></a></td>
 	<div class="modal fade" id="correo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">

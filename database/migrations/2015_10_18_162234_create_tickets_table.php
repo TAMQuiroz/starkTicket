@@ -20,15 +20,11 @@ class CreateTicketsTable extends Migration
             $table->integer('cancelled');
             $table->integer('owner_id')->unsigned()->nullable();
             $table->integer('event_id')->unsigned();
+            $table->integer('presentation_id')->unsigned();
             $table->integer('seat_id')->unsigned();
+            $table->float('price');
             $table->timestamps();
             $table->softDeletes();
-            
-            //Falta hacer llaves foraneas de evento y asiento
-            $table->foreign('owner_id')
-                ->references('id')
-                ->on('users');
-             
         });
     }
 

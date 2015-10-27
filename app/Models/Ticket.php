@@ -16,12 +16,14 @@ class Ticket extends Model
     }
 
     public function event(){
-    	//return $this->belongsTo('App\Event');
-    	return 1;
+    	return $this->belongsTo('App\Models\Event');
     }
 
     public function seat(){
-    	//return $this->belongsTo('App\Seat');
-    	return 1;
+    	return $this->belongsTo('App\Models\Slot');
+    }
+
+    public function presentation(){
+        return $this->belongsTo('App\Models\Presentation');
     }
 }
