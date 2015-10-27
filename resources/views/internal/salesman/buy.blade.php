@@ -21,13 +21,12 @@
                     <h4 > Nombre del Evento </h4>
                     {!! Form::text('event_name', $event->name, ['class' => 'form-control', 'disabled']) !!}
                     <h4 >Entradas Disponibles</h4>
-                    {!! Form::text('available', '520', ['class' => 'form-control', 'disabled']) !!}  
+                    {!! Form::text('available', count(head($slots_array)), ['id'=>'available','class' => 'form-control', 'disabled']) !!}  
                 </div>
                 <div style="-webkit-columns: 100px 2;">
                     <h4 class="boxy"> Funciones del evento </h4>
-                    {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=> 'getInnerText(this)']) !!}
+                    {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=> 'getInnerText(this),getEventAvailable(this), getSlots(this)']) !!}
                     <h4 > Zona del Evento </h4>
-                    <!--{!! Form::select('zone_id', $zones, null, ['class' => 'form-control']) !!}-->
                     {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getPrice(this)','id'=>'zone_id']) !!}
                 </div>
                 <h4> Promoción </h4>
@@ -88,7 +87,7 @@
                 <div style="clear:both"></div>
            </div>
         </div>
-        {!!Form::select('seats[]',$slots,null,['multiple'])!!}
+        {!!Form::select('seats[]',head($slots_array),null,['id'=>'seats','multiple'])!!}
 
         <!-- Content Row -->
         <!-- /.row -->
@@ -172,6 +171,8 @@
         routes: [
             { zone: "{{ URL::route('ajax.getClient') }}" },
             { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
+            { event_available: "{{URL::route('ajax.getAvailable')}}"},
+            { slots: "{{URL::route('ajax.getSlots')}}"}
         ]
     };
     </script>

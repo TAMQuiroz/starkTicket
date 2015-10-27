@@ -110,6 +110,53 @@ function getInnerText(element) {
     document.getElementById("funcion").innerHTML = text;
 }
 
+function getEventAvailable(element){
+    $.ajax({
+        url: config.routes[2].event_available,
+        type: 'get',
+        data: 
+        { 
+            id: element.options[element.selectedIndex].value
+        },
+        success: function( response ){
+            if(response != "")
+            {
+                $('#available').val(response);
+            }else{
+                console.log('no respuesta');  
+            }
+        },
+        error: function( response ){
+            console.log(response);
+        }
+    });
+}
+
+function getSlots(element){
+    $.ajax({
+        url: config.routes[3].slots,
+        type: 'get',
+        data: 
+        { 
+            id: element.options[element.selectedIndex].value
+        },
+        success: function( response ){
+            
+            if(response != "")
+            {
+                var options = '';
+                for (x in response) options += '<option value="' + response[x] + '">' + response[x] + '</option>';
+                $('#seats').html(options);
+            }else{
+                console.log('no respuesta');  
+            }
+        },
+        error: function( response ){
+            console.log(response);
+        }
+    });
+}
+
 $('#user_di').focusout( function() {
     $.ajax({
         url: config.routes[0].zone,

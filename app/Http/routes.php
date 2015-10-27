@@ -64,6 +64,8 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
     Route::get('getClient', ['uses'=>'TicketController@getClient','as'=>'ajax.getClient']);
     Route::get('getPrice', ['uses'=>'TicketController@getPrice','as'=>'ajax.getPrice']);
+    Route::get('getAvailable', ['uses'=>'TicketController@getAvailable','as'=>'ajax.getAvailable']);
+    Route::get('getSlots', ['uses'=>'TicketController@getSlots','as'=>'ajax.getSlots']);
 });
 
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
