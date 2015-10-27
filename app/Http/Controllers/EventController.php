@@ -44,7 +44,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        $categories_list = Category::all()->lists('name','id');
+        $categories_list = Category::where('type',1)->lists('name','id');
         $organizers_list = Organizer::all()->lists('businessName','id');
         $locals_list = Local::all()->lists('name','id');
         $capacity_list = Local::all();
@@ -538,5 +538,10 @@ class EventController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function subcategoriesToAjax($id)
+    {
+        $subcategories = Category::where('father_id',$id)->lists('name','id');
+        return json_encode($subcategories);
     }
 }
