@@ -7,12 +7,7 @@
 
 @section('style')
 
-{!!Html::style('css/bootstrap.min.css')!!}
-<style type="text/css">
-h1{
-	margin-top: 80px;
-}
-</style>
+ 		
 
 @stop
 
@@ -44,7 +39,9 @@ h1{
 	    	@endforeach
 		</tbody>
 	</table>  
+
 	<hr>
+	<br><br>
 	<h3>Ingrese información de promoción</h3>
 	<div>
 		<div style="width: 500px ;">
@@ -65,7 +62,7 @@ h1{
 		<h4>Descripción</h4>
 		{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'maxlength'=>'200', 'required']) !!}
 	</div>
-	<br>
+	<br><br><br>
 	<hr>
 	<h3>Seleccione el tipo de promoción</h3>
 	<br>
@@ -74,13 +71,13 @@ h1{
 	    <div class="panel-heading">
 	      <h4 class="panel-title">
 	        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-	        Promoción % descuento</a>
+	        DESCUENTOS</a>
 	      </h4>
 	    </div>
 	    <div id="collapse1" class="panel-collapse collapse">
 	    	<div style="-webkit-columns: 100px 2;">
-		      	<h4>Seleccionar tarjeta</h4>
-				{!! Form::select('card', ['Interbank','BBVA', 'BCP'],null,['class' => 'form-control']) !!}
+		      	<h4>Seleccione el acceso a la promocion</h4>
+				{!! Form::select('access', ['Cualquier modo de pago', 'Todas las tarjetas','INTERBANK','BBVA', 'BCP'],null,['class' => 'form-control']) !!}
 				<h4>Descuento (%)</h4>
 				{!! Form::number('discount','', array('class' => 'form-control', 'min'=>'0', 'max'=>'100', 'required')) !!}
 			</div>
@@ -90,19 +87,30 @@ h1{
 			<br><br>
 	    </div>
 	  </div>
+
+
+
 	  <div class="panel panel-default">
 	    <div class="panel-heading">
 	      <h4 class="panel-title">
 	        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-	        Promoción tipo 3 x 2</a>
+	        OFERTAS</a>
 	      </h4>
 	    </div>
 	    <div id="collapse2" class="panel-collapse collapse">
-		    <div style="-webkit-columns: 100px 2;">
+
+	<div style="-webkit-columns: 100px 2;">
+		      	<h4>Lleve : </h4>
+			{!! Form::number('carry','', array('class' => 'form-control' )) !!}	
+				<h4>Pague por : </h4>
+				{!! Form::number('pay','', array('class' => 'form-control' )) !!}	
+			</div>
+
+
+		    <div style="width: 500px ;">
 				<h4>Zona</h4>
 				{!! Form::select('zone', ['VIP','Platea'],null,['class' => 'form-control']) !!}
-				<h4>Tipo de Cliente</h4>
-				{!! Form::select('zone', ['Niño','Adulto', 'Adulto Mayor'],null,['class' => 'form-control']) !!}
+		
 			</div>
 			<br><br>
 			<button type="submit" class="btn btn-info" data-toggle="modal" data-target="#end" data-whatever="@mdo">Guardar</button>
@@ -110,6 +118,9 @@ h1{
 			<br><br>
 	    </div>
 	  </div>
+
+
+
 	</div>
 
 

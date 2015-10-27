@@ -16,6 +16,6 @@ class Promotions extends Model
     protected $table = 'promotions';
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['id', 'name', 'startday', 'endday', 'description', 'desc', 'event_id'];
+    protected $fillable = ['id', 'name', 'startday', 'endday', 'description',  'event_id','user_id', 'typePromotion','desc', 'access' , 'zone_id','carry','pay' ] ;
 
 }
