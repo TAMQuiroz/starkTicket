@@ -70,12 +70,24 @@
                 <th>Asistencia</th>
             </tr>
             <tr>
-                <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
+            @foreach ($vendedores as $vendedor)
+            
+                <td>{{$vendedor->lastname}} {{$vendedor->name}}</td>
+                <td>{{$vendedor->di}}</td>
                 <td>
-                    <a class="btn btn-info" href="{{url('admin/salesman/1/edit')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
+                   
+                @if($vendedor->di_type == '1')
+                    DNI
+                @else
+                   Carne de Extranjeria
+                @endif
+          
+                </td>
+
+                <td>{{$vendedor->phone}}</td>
+                
+                <td>
+                    <a class="btn btn-info" href="{{url('admin/salesman/'.$vendedor->id.'/edit')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
                 </td>
                 <td>
                     <a class="btn btn-info" href="#" title="Detalle" data-toggle="modal" data-target="#edit"><i class="glyphicon glyphicon-plus"></i></a>
@@ -102,148 +114,18 @@
                     </div>
                     
                 <td>
-                     <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
-                 </td>
-                 <td>    
-                 <a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a>
-                </td>
-            </tr>
-           <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
-                <td>
-                    <a class="btn btn-info" href="{{url('admin/salesman/1/edit')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
-                </td>
-                <td>
-                    <a class="btn btn-info" href="#" title="Detalle" data-toggle="modal" data-target="#edit"><i class="glyphicon glyphicon-plus"></i></a>
-                  </td>
-                    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Detalle del promotor</h4>
-                          </div>
-                          <div class="modal-body">
-                            <h4>Nombre</h4>
-                            <h4>Direccion</h4>
-                            <h4>DNI</h4>
-                            <h4>Telefono</h4>
-                            <h4>Email</h4>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                <td>
-                     <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
-                 </td>
-                 <td>    
-                 <a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a>
-                </td>
-            </tr>
-            <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
-                <td>
-                    <a class="btn btn-info" href="{{url('admin/salesman/1/edit')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
-                </td>
-                <td>
-                    <a class="btn btn-info" href="#" title="Detalle" data-toggle="modal" data-target="#edit"><i class="glyphicon glyphicon-plus"></i></a>
-                  </td>
-                    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Detalle del promotor</h4>
-                          </div>
-                          <div class="modal-body">
-                            <h4>Nombre</h4>
-                            <h4>Direccion</h4>
-                            <h4>DNI</h4>
-                            <h4>Telefono</h4>
-                            <h4>Email</h4>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                <td>
-                     <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
+                     <a class="btn btn-info" href="{{url('admin/salesman/'.$vendedor->id.'/delete')}}"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
                  </td>
                  <td>    
                  <a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a>
                 </td>
             </tr>
 
-            </tr>
-            <td>Contenido 1</td>
-                <td>Contenido 2</td>
-                <td>Contenido 3</td>
-                <td>Contenido 4</td>
-                <td>
-                    <a class="btn btn-info" href="{{url('admin/salesman/1/edit')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
-                </td>
-                <td>
-                    <a class="btn btn-info" href="#" title="Detalle" data-toggle="modal" data-target="#edit"><i class="glyphicon glyphicon-plus"></i></a>
-                  </td>
-                    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Detalle del promotor</h4>
-                          </div>
-                          <div class="modal-body">
-                            <h4>Nombre</h4>
-                            <h4>Direccion</h4>
-                            <h4>DNI</h4>
-                            <h4>Telefono</h4>
-                            <h4>Email</h4>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                <td>
-                     <a class="btn btn-info" href="#"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
-                 </td>
-                 <td>    
-                 <a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a>
-                </td>
-            </tr>
+          @endforeach
         </table>
-        <nav>
-            <ul class="pagination">
-              <li>
-                <a href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li>
-                <a href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+      
+{!!$vendedores->render()!!}
+
 @stop
 
 @section('javascript')
