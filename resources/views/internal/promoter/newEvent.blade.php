@@ -82,7 +82,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Categoría</label>
                 <div class="col-sm-10">
-                    {!! Form::select('category_id', $categories_list->toArray(),null,['class' => 'form-control','required']) !!}
+                    {!! Form::select('category_id', $categories_list->toArray()   ,null,['class' => 'form-control','required']) !!}
                 </div>            
               </div>
               <div class="form-group">
@@ -94,7 +94,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Organizador</label>
                 <div class="col-sm-10">
-                    {!! Form::select('organizer_id', $organizers_list->toArray(),null,['class' => 'form-control','required']) !!}
+                    {!! Form::select('organizer_id', $organizers_list->toArray()   ,null,['class' => 'form-control','required']) !!}
                 </div>            
               </div> 
               <div class="form-group">

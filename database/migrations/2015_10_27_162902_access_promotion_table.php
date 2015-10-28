@@ -12,7 +12,11 @@ class AccessPromotionTable extends Migration
      */
     public function up()
     {
-        //
+         Schema::create('accessPromotion', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('description')->unique();
+    
+        });
     }
 
     /**
@@ -22,6 +26,6 @@ class AccessPromotionTable extends Migration
      */
     public function down()
     {
-        //
+          Schema::drop('accessPromotion');
     }
 }

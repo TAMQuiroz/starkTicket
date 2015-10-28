@@ -31,7 +31,7 @@ class CreatePromotionsTable extends Migration
             $table->integer('typePromotion')->unsigned();//Indicara si la promocion es del tipo descuento u oferta
         //Promocion descuento
             $table->float('desc')->nullable();
-            $table->string('access')->nullable();
+            $table->integer('access_id')->unsigned()->nullable();
         //Promocion oferta
             $table->integer('zone_id')->unsigned()->nullable();
 

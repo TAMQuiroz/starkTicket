@@ -21,7 +21,7 @@
                   <!--
                   <input type="text" class="form-control" id="inputEmail3" placeholder="" value="Politica 1">
                   -->
-                  {!!Form::text('name', $politics->name ,['class'=>'form-control','id'=>'inputEmail3','maxlength'=>'15' ,'required'])!!}
+                  {!!Form::text('name', $politics->name ,['class'=>'form-control','id'=>'inputEmail3','maxlength'=>'70' ,'required'])!!}
                 </div>
               </div>
               <div class="form-group">
@@ -31,7 +31,7 @@
                   <textarea class="form-control" rows="5">Lorem ipsum dolor sit amet.</textarea>
                   -->
 
-                  {!!Form::textarea('description', $politics->description ,['class'=>'form-control', 'maxlength'=>'40','required'])!!}
+                  {!!Form::textarea('description', $politics->description ,['class'=>'form-control', 'maxlength'=>'400','required'])!!}
                 </div>
               </div>
               <div class="form-group">
