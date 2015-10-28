@@ -137,9 +137,8 @@
 
 <p class ="text-center"  >  
 
-	<legend>Seleccione los datos del evento</legend>
 
-<br>
+
 
 
 
