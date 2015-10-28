@@ -44,9 +44,13 @@ class EventController extends Controller
      */
     public function create()
     {
+
         $categories_list = Category::all()->lists('name','id');
 
         $organizers_list = Organizer::all()->lists('organizerName','id');
+
+
+        $categories_list = Category::where('type',1)->lists('name','id');
 
         $organizers_list = Organizer::all()->lists('businessName','id');
 
@@ -91,7 +95,7 @@ class EventController extends Controller
         $zone = new Zone();
         $zone->name         = $data['name'];
         $zone->price        = $data['price'];
-        if($data['columns'] != '' || $data['columns'] != null){ 
+        if($data['columns'] != '' || $data['columns'] != null){
             $zone->columns      = $data['columns'];
             $zone->rows         = $data['rows'];
             $zone->start_column = $data['start_column'];
@@ -156,13 +160,13 @@ class EventController extends Controller
 
     public function store(StoreEventRequest $request)
     {
-        
+
         $result_dates = $this->join_date_time($request->input('start_time'),$request->input('start_date'));
         $temp = array_unique($result_dates);
         if(count($temp) < count($result_dates))
             return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
             //return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
-        $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad 
+        $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
         if($result['error'] != '')
             return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
             //return response()->json(['message' => $result['error']]);
@@ -217,7 +221,7 @@ class EventController extends Controller
         $user = \Auth::user();
 
         $event = Event::findOrFail($id);
-        
+
         return view('external.event', ['event' => $event, 'user'=>$user]);
     }
 
@@ -238,7 +242,9 @@ class EventController extends Controller
      */
     public function showPromoterRecord()
     {
-        return view('internal.promoter.record');
+        $objs = Event::all();
+
+        return view('internal.promoter.record',["events"=>$objs]);
     }
     /**
      * Show the form for editing the specified resource.
@@ -261,14 +267,14 @@ class EventController extends Controller
             //Presentation::where
             $presentation->delete();
         }
-        
+
     }
     public function deleteZones($event_id){
         $zones = Zone::where('event_id', $event_id)->get();
         foreach ($zones as $zone) {
             $zone->delete();
         }
-        
+
     }
     public function updateEvent($data, $old_event){
         $old_event->name         = $data['name'];
@@ -305,7 +311,7 @@ class EventController extends Controller
         if(count($temp) < count($data['zone_names']))
             return ['error' => 'nombres de zonas repetidos'];
         $temp = array();
-        
+
         $local = Local::find($data['local_id']);
         if($local->rows >=1 && !$data['zone_columns'])
             return ['error' => 'se debe especificar filas y columnas para este local numerado'];
@@ -321,7 +327,7 @@ class EventController extends Controller
                 $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
                 $total_capacity = $total_capacity + $capacity;
                 if($data['start_row'][$i] > $local->rows || $data['start_column'][$i] > $local->columns||
-                    $data['start_row'][$i]+$data['zone_rows'][$i] -1> $local->rows || 
+                    $data['start_row'][$i]+$data['zone_rows'][$i] -1> $local->rows ||
                     $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
                     return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
             }
@@ -353,7 +359,7 @@ class EventController extends Controller
         if(count($temp) < count($request->input('function_starts_at')))
             //return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
             return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
-        $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad 
+        $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
         if($result['error'] != '')
             //return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
             return response()->json(['message' => $result['error']]);
@@ -381,7 +387,7 @@ class EventController extends Controller
                 }
             }
         //esto ocurre cuando hay cambio de local pero está antes del selling date
-            
+
         }
         //verificar que no se esten cambiando la capacidad o fila/columna de zona si ya se empezó a vender
         if($now->getTimestamp() > $request->input('selling_date')){
@@ -410,8 +416,8 @@ class EventController extends Controller
             ];
         if($now->getTimestamp() < $request->input('selling_date')){
             //antes del sellingdate en general
-            $this->deletePresentations($event->id); 
-            $this->deleteZones($event->id); 
+            $this->deletePresentations($event->id);
+            $this->deleteZones($event->id);
             $updated_event = $this->updateEvent($data, $event);
             $zone_data = [
                 'zone_names'      => $request->input('zone_names'),
@@ -426,7 +432,7 @@ class EventController extends Controller
                 'function_starts_at' => $request->input('function_starts_at')
             ];
             $this->storeRestOfEvent($zone_data, $data2, $updated_event);
-            
+
         } else{
             //despues del selling date pero sin cambio de local, se puede agregar zonas pero no funciones
             $updated_event = $this->updateEvent($data, $event);
@@ -494,14 +500,19 @@ class EventController extends Controller
         }
         return ['error' => ''];
     }
-    
+
     public function getMaxOccupiedSlots($event_id, $zone_id){
         $zone = Zone::find($zone_id);
         $all_sold = array();
         $presentations = Presentation::where('event_id', $event_id)->get();
         $max = 0;
+
         
         foreach($zone->presentations as $presentation){
+
+
+        foreach($presentations as $presentation){
+
             $count = 0;
             $availables = $presentation->pivot->slots_availables;
             $count = $zone->capacity - $availables;
@@ -509,9 +520,14 @@ class EventController extends Controller
             if($count > $max) $max = $count;
         }
 
+
         $result = ['max' => $max, 'all_sold' => $all_sold];
         return $result;
         
+
+        return $max;
+
+
     }
     /**
      * Remove the specified resource from storage.
@@ -522,5 +538,10 @@ class EventController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function subcategoriesToAjax($id)
+    {
+        $subcategories = Category::where('father_id',$id)->lists('name','id');
+        return json_encode($subcategories);
     }
 }

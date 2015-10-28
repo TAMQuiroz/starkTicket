@@ -30,7 +30,7 @@
     document.getElementById('capacity-display').value = document.getElementsByName('capacity_'+index)[0].value;
 
   }
-  
+
   function incrementSellingDate(){
     var publication_date = document.getElementsByName('publication_date')[0].value;
     document.getElementsByName('publication_date')[0].stepUp();
@@ -88,45 +88,45 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Categoría</label>
                 <div class="col-sm-10">
-                    {!! Form::select('category_id', $categories_list->toArray(),null,['class' => 'form-control','required']) !!}
-                </div>            
+                    {!! Form::select('category_id', $categories_list->toArray(),null,['class' => 'form-control','required','id'=>'category_id']) !!}
+                </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Sub categoría</label>
                 <div class="col-sm-10">
-                    {!! Form::select('subcategory', ['Rock','Cumbia','Tropical','Otros'],null,['class' => 'form-control','required']) !!}
-                </div>            
-              </div>  
+                    {!! Form::select('category_id', ['Rock','Cumbia','Tropical','Otros'],null,['class' => 'form-control','required','id'=>'subcategory_id']) !!}
+                </div>
+              </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Organizador</label>
                 <div class="col-sm-10">
                     {!! Form::select('organizer_id', $organizers_list->toArray(),null,['class' => 'form-control','required']) !!}
-                </div>            
-              </div> 
+                </div>
+              </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Duración Aproximada</label>
                 <div class="col-sm-10">
                   {!! Form::number('time_length','', array('class' => 'form-control','required')) !!}
                 </div>
-              </div> 
+              </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Fecha de publicación del evento</label>
                 <div class="col-sm-10">
                     {!! Form::date('publication_date',\Carbon\Carbon::now(), array('class' => 'form-control','required', 'oninput' => 'incrementSellingDate()')) !!}
                 </div>
-              </div> 
+              </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Fecha de inicio de ventas</label>
                 <div class="col-sm-10">
                     {!! Form::date('selling_date',\Carbon\Carbon::now()->addDay(), array('class' => 'form-control','required', 'oninput' => 'incrementPresentationDate()')) !!}
-                </div>   
-              </div>                                                  
+                </div>
+              </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Imagen evento</label>
                 <div class="col-sm-10">
                   {!! Form::file('image', array('class' => 'form-control')) !!}
                 </div>
-              </div>         
+              </div>
               <br>
               <div id="seat-map" class="seatCharts-container" tabindex ="0"></div>
               <!-- ZONA -->
@@ -148,7 +148,7 @@
                   <div class="col-sm-10">
                       {!! Form::number('zonePrice','', array('class' => 'form-control','id' => 'input-price')) !!}
                   </div>
-              </div>  
+              </div>
 
               <div class="form-group">
                     <label  class="col-sm-3 control-label">capacidad disponible</label>
@@ -161,12 +161,12 @@
                         <button  type="reset" class="btn btn-info">Cancelar</button>
                         -->
                     </div>
-              </div>       
+              </div>
 
                 <script>
 
                     function addZone(){
-      
+
                         var zone = document.getElementById('input-zone').value;
                         var capacity = document.getElementById('input-capacity').value;
                         var price = document.getElementById('input-price').value;
@@ -206,15 +206,15 @@
                         textPrice.style.background = 'transparent';
                         textPrice.required = true;
                         // buttons
-                        
-                        var newDelete = document.createElement('button'); 
+
+                        var newDelete = document.createElement('button');
                         newDelete.className = "btn";
                         newDelete.className += " btn-info glyphicon glyphicon-remove";
                         newDelete.onclick= "deleteZone(newRow)";
 
                         newCell.appendChild(x);
-                        newCell2.appendChild(newText2);                        
-                        newCell3.appendChild(textPrice);                        
+                        newCell2.appendChild(newText2);
+                        newCell3.appendChild(textPrice);
                         newCell5.appendChild(newDelete);
 
                         document.getElementById('input-zone').value = '';
@@ -223,7 +223,7 @@
 
                         var new_capacity = document.getElementById('capacity-display').value;
                         new_capacity = new_capacity - capacity;
-                        document.getElementById('capacity-display').value = new_capacity;                
+                        document.getElementById('capacity-display').value = new_capacity;
                     }
 
                     function deleteZone(btn){
@@ -239,10 +239,10 @@
                         <th>Capacidad</th>
                         <th>Precio</th>
                         <th>Eliminar</th>
-                    </tr>  
+                    </tr>
                 </table>
-                <br>  
-                
+                <br>
+
                               <!-- agregar funciones -->
               <legend>Agregar función:</legend>
               <div class="form-group">
@@ -256,7 +256,7 @@
                   <div class="col-sm-10">
                       {!! Form::time('input_start_time',null, array('class' => 'form-control', 'id' => 'input-function-time')) !!}
                   </div>
-              </div> 
+              </div>
 
               <div class="form-group">
                     <div class="col-sm-offset-10 col-sm-10">
@@ -265,12 +265,12 @@
                         <button  type="reset" class="btn btn-info">Cancelar</button>
                         -->
                     </div>
-              </div>       
+              </div>
 
                 <script>
 
                     function addFunction(){
-      
+
                         var start_date = document.getElementById('input-function-date').value;
                         var start_time = document.getElementById('input-function-time').value;
 
@@ -305,12 +305,12 @@
                         newDelete.className += " btn-info glyphicon glyphicon-remove";
                         newDelete.onclick= "deleteFunction(newRow)";
                         newCell.appendChild(x);
-                        newCell2.appendChild(newText2);                                             
+                        newCell2.appendChild(newText2);
                         newCell4.appendChild(newDelete);
 
-                        
+
                         document.getElementById('input-function-date')[0].value = '';
-                
+
                     }
                     function deleteFunction(btn){
                         var row=btn.parentNode.parentNode.rowIndex;
@@ -324,7 +324,7 @@
                         <th>Fecha</th>
                         <th>Hora</th>
                         <th>Eliminar</th>
-                    </tr>  
+                    </tr>
                 </table>
                 <br>
                 {!! Form::hidden ('yesterday', ''.\Carbon\Carbon::now()->subDay()) !!}
@@ -363,13 +363,13 @@
   {!!Html::script('js/jquery.seat-charts.js')!!}
   <script>
     $(document).ready(function() {
-      
+
       $('[name=local_id]').click(function(){
         var e = $('[name=local_id]')[0];
         var index= e.options[e.selectedIndex].value;
-        
+
         var algo = $('#row_' + index).val();
-        console.log("algo "+algo); 
+        console.log("algo "+algo);
         if(algo !== undefined && algo >=1){
           console.log("index "+index);
           var rows = $('#row_'+index).val();
@@ -410,7 +410,25 @@
       });
     });
   </script>
+  <script>
+  $(document).ready(function(){
+    // Poblar sub category
+    $("#category_id").change(function(){
 
+      category_id = $("#category_id").val();
+      url_base = "{{ url('/') }}";
+      // Peticion ajax
+      $.getJSON(url_base+"/promoter/"+category_id+"/subcategories", function(data)
+      {
+        $("#subcategory_id").empty();
+        $.each( data, function( id, name ) {
+            $('#subcategory_id').append("<option value=\""+id+"\">"+name+"</option>");
+      });
+
+      })
+    });
+  });
+  </script>
   {!!Html::script('js/moment.js')!!}
   {!!Html::script('js/rangepicker.js')!!}
 
