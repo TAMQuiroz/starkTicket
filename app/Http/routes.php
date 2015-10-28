@@ -154,6 +154,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/attendance', 'BusinessController@attendance');
 
     Route::get('admin/config/exchange_rate', 'BusinessController@exchangeRate');
+    Route::post('admin/config/exchange_rate', 'BusinessController@storeExchangeRate');
     Route::get('admin/config/about', 'BusinessController@about');
     Route::get('admin/config/system', 'BusinessController@system');
 
