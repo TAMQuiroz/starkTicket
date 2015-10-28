@@ -17,14 +17,10 @@
 @section('content')
 	<!-- Main -->
 		<div id="main">
-			<div class="container">
 				<div class="row">
 					<!-- Content -->
 					<div id="content" class="8u skel-cell-important">
 						<section>
-							<header>
-								<h2>{{ $event->name }}</h2>
-							</header>
 							<p><a href="#" class="image full">{!! Html::image($event->image) !!}</a></p>
 							<p>{{ $event->description }}</p>
 							<br>
@@ -48,7 +44,7 @@
 							  </table>
 							</div>
 							@if(isset($user) && $user->role_id == config('constants.salesman'))
-							<a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a> 
+							<a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
 							@else
 							<a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
 							@endif
@@ -90,10 +86,7 @@
 						</section>
 					</div>
 					<!-- Sidebar -->
-
 				</div>
-
-			</div>
 		</div>
 	<!-- Main -->
 

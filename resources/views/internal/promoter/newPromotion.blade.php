@@ -7,7 +7,6 @@
 
 @section('style')
 
- 		
 
 @stop
 
@@ -51,6 +50,16 @@
 
 
 
+
+	<div style="-webkit-columns: 100px 2;">
+
+		<h4>Nombre</h4>
+		{!! Form::text('promotionName','', array('class' => 'form-control', 'maxlength'=>'15', 'required')) !!}
+		<h4>Descuento (%)</h4>
+		{!! Form::number('discount','', array('class' => 'form-control', 'min'=>'0', 'max'=>'100', 'required')) !!}
+	</div>
+	<div style="-webkit-columns: 100px 4;">
+		<h4>Fecha Inicio</h4>
 
 
 
@@ -156,7 +165,13 @@
 	  </div>
 
 	<br><br>
+
 <p class ="text-center"  >  
+
+	<legend>Seleccione los datos del evento</legend>
+
+<br>
+
 
 
 <button type="submit" class="btn btn-info btn-lg" data-toggle="modal" data-target="#end" data-whatever="@mdo">Guardar</button>
@@ -189,6 +204,7 @@
 	  	});
 
 
+
 	 	$(".evento_id").click(function(){ // punto para michis , michis para id, id es unico 
           variable  =  $( this).val() ;
 
@@ -202,21 +218,14 @@
            $('#id_zoneCombo').append("<option value=\""+id+"\">"+name+"</option>");
      });
 
+
      })
 
 
 
 
 
-
-
-
-
   		});
-
-	 
-
-
 
    
 
@@ -229,8 +238,6 @@
 
 	});
 	</script>
-
-
 
 
 
@@ -264,9 +271,6 @@
    });
  });
  </script>
-
-
-
 
 
 
