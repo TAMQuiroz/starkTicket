@@ -15,7 +15,7 @@ use Illuminate\Auth\Authenticatable;
 
 class accessPromotion extends Model
 {
-    protected $table = 'accesspromotion';
+    protected $table = 'accessPromotion';
   protected $fillable = ['id', 'description'   ] ;
 
 

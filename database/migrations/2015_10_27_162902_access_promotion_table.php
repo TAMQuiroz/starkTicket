@@ -15,7 +15,7 @@ class AccessPromotionTable extends Migration
          Schema::create('accessPromotion', function (Blueprint $table) {
             $table->increments('id');
             $table->string('description')->unique();
-    
+
         });
     }
 

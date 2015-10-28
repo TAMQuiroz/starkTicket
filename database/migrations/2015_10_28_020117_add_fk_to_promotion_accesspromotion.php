@@ -17,7 +17,7 @@ class AddFkToPromotionAccesspromotion extends Migration
        Schema::table('promotions', function (Blueprint $table) {
             $table->foreign('access_id')
                   ->references('id')
-                  ->on('accesspromotion')->onDelete('cascade');
+                  ->on('accessPromotion')->onDelete('cascade');
         });
 
 
