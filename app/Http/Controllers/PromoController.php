@@ -60,30 +60,15 @@ class PromoController extends Controller
         $aux = $input['dateIni']. ' '. $input['timeIni'];
         $promotions->startday  =    $aux;
 
-
-
-
-
-
-
         $aux =   $input['dateEnd']     .' '. $input['timeEnd'];
         $promotions->endday =   $aux  ; 
         
         $promotions->event_id  = $input['evento'] ;
 
-
-
-
-
-
-
         $id = Auth::user()->id;
         $promotions->user_id  =   $id;
 
-
-
-
-           if(  ( $input['carry'] == ''  )  and  ( $input['pay'] == ''   ) )    {
+        if(  ( $input['carry'] == ''  )  and  ( $input['pay'] == ''   ) )    {
              
                 $promotions->typePromotion    =  1  ;
                 $promotions->desc  =   $input['discount'];
@@ -96,23 +81,10 @@ class PromoController extends Controller
             $promotions->pay =    $input['pay'];
             $promotions->zone_id =  $input['zone'];
 
-
-
-
         }
 
 
-
-
-
-     
-
-
-
-
-
-
-        $promotions->save();
+          $promotions->save();
 
            return redirect('promoter/promotion');
       
@@ -154,7 +126,10 @@ return view('internal.promoter.newPromotion',  ['events' => $events , 'accessPro
           $promotions = Promotions::all();
 
         $users = User::all(); 
-        $accessPromotion= accessPromotion::all(); 
+     
+
+        $accessPromotion = accessPromotion::orderBy('id')->get();
+
 
 $events  = Event::all();
         $zones = Zone::all();

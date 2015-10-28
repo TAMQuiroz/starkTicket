@@ -48,42 +48,8 @@
 
 
 
-
-
-
-	<div style="-webkit-columns: 100px 2;">
-
-		<h4>Nombre</h4>
-		{!! Form::text('promotionName','', array('class' => 'form-control', 'maxlength'=>'15', 'required')) !!}
-		<h4>Descuento (%)</h4>
-		{!! Form::number('discount','', array('class' => 'form-control', 'min'=>'0', 'max'=>'100', 'required')) !!}
-	</div>
-	<div style="-webkit-columns: 100px 4;">
-		<h4>Fecha Inicio</h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	<hr>
-	<br><br>
+	<br>
 	<h3>Ingrese información de promoción</h3>
 	<div>
 		<div style="width: 500px ;">
@@ -94,10 +60,13 @@
 		<div style="-webkit-columns: 100px 4;">
 			<h4>Fecha Inicio</h4>
 			{!! Form::date('dateIni','', array('class' => 'form-control' , 'required')) !!}
+
+	<h4>Hora Inicio</h4>
+			{!! Form::time('timeIni','', array('class' => 'form-control', 'required')) !!}
+			
 			<h4>Fecha Fin</h4>
 			{!! Form::date('dateEnd','', array('class' => 'form-control', 'required')) !!}
-			<h4>Hora Inicio</h4>
-			{!! Form::time('timeIni','', array('class' => 'form-control', 'required')) !!}
+		
 			<h4>Hora Fin</h4>
 			{!! Form::time('timeEnd','', array('class' => 'form-control', 'required')) !!}
 		</div>
