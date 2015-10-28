@@ -13,7 +13,7 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 use App\Models\Category;
-
+use Config;
 use App\Http\Requests\Promotions\StorePromotionRequest;
 use App\Http\Requests\Promotions\UpdatePromotionRequest;
 
@@ -70,13 +70,13 @@ class PromoController extends Controller
 
         if(  ( $input['carry'] == ''  )  and  ( $input['pay'] == ''   ) )    {
              
-                $promotions->typePromotion    =  1  ;
+                $promotions->typePromotion    =      Config::get('constants.discount')    ;
                 $promotions->desc  =   $input['discount'];
                 $promotions->access_id =  $input['access_id'];
 
 
         } else {
-            $promotions->typePromotion    =  2  ;
+            $promotions->typePromotion    =   Config::get('constants.ofert')     ;
             $promotions->carry =    $input['carry'];
             $promotions->pay =    $input['pay'];
             $promotions->zone_id =  $input['zone'];
@@ -170,8 +170,7 @@ $event  = Event::find($promotion->event_id);
 $accessPromotion = accessPromotion::orderBy('id')->get()->lists('description','id') ;
 
 
-
-$zones = Zone::orderBy('id')->get()->lists('name','id') ;
+$zones = Zone::where('event_id', $promotion->event_id  )->get()->lists('name','id') ;
 
 //trabajamos las fechas para mostrarlas.
 
@@ -243,7 +242,7 @@ $finishHour =  substr($promotion->endday, 11);
 
 
 
-           if(  $promotions->typePromotion   == 1  )    {
+           if(  $promotions->typePromotion   ==   Config::get('constants.discount')  )    {
              
              
                 $promotions->desc  =   $input['discount'];
