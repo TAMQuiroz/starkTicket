@@ -33,7 +33,7 @@ class AddFkToPromotionAccesspromotion extends Migration
     public function down()
     {
          Schema::table('promotions', function (Blueprint $table) {
-            $table->dropForeign('promotions_accesspromotion_id_foreign');
+            $table->dropForeign('promotions_access_id_foreign');
         });
     }
 }
