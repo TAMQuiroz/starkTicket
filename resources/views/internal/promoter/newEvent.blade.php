@@ -60,7 +60,7 @@
         @endforeach
 
         @foreach ($locals_list as $local)
-         
+          <div id="seat-map_'+local->id+'" div/>
         @endforeach
 
 
@@ -94,7 +94,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Sub categoría</label>
                 <div class="col-sm-10">
-                    {!! Form::select('category_id', ['Rock','Cumbia','Tropical','Otros'],null,['class' => 'form-control','required','id'=>'subcategory_id']) !!}
+                    {!! Form::select('category_id',$categories_list->toArray(),null,['class' => 'form-control','required','id'=>'subcategory_id']) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -128,7 +128,7 @@
                 </div>
               </div>
               <br>
-              <div id="seat-map" class="seatCharts-container" tabindex ="0"></div>
+
               <!-- ZONA -->
               <legend>Agregar zona:</legend>
               <div class="form-group">
@@ -143,6 +143,30 @@
                       {!! Form::number('zoneCapacity','', array('class' => 'form-control','id' => 'input-capacity')) !!}
                   </div>
               </div>
+              <div class="form-group">
+                  <label  class="col-sm-2 control-label">Columnas</label>
+                  <div class="col-sm-10">
+                      {!! Form::number('zone_columns','', array('class' => 'form-control','id' => 'input-capacity')) !!}
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label  class="col-sm-2 control-label">Filas</label>
+                  <div class="col-sm-10">
+                      {!! Form::number('zone_rows','', array('class' => 'form-control','id' => 'input-capacity')) !!}
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label  class="col-sm-2 control-label">Columna inicial</label>
+                  <div class="col-sm-10">
+                      {!! Form::number('start_column','', array('class' => 'form-control','id' => 'input-capacity')) !!}
+                  </div>
+              </div>     
+              <div class="form-group">
+                  <label  class="col-sm-2 control-label">Fila inicial</label>
+                  <div class="col-sm-10">
+                      {!! Form::number('start_row','', array('class' => 'form-control','id' => 'input-capacity')) !!}
+                  </div>
+              </div>                                                     
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Precio</label>
                   <div class="col-sm-10">
@@ -162,7 +186,13 @@
                         -->
                     </div>
               </div>
-
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Distribución evento</label>
+                    <div class="col-sm-10">
+                      <div id="seat-map" class="seatCharts-container" tabindex ="0"></div>
+                  </div>
+              </div>              
+              
                 <script>
 
                     function addZone(){

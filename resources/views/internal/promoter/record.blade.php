@@ -14,11 +14,10 @@
         <tr>
           <th>Código de Evento</th>
           <th>Nombre de Evento</th>
-          <th>Fecha Inicio</th>
-          <th>Fecha Fin</th>
-          <th>Estado</th>
-          <th>Entradas Vendidas</th>
-          <th>Monto Acumulado</th>
+          <th>Fecha publicación</th>
+          <th>Categoría</th>
+          <th>SubCategoría</th>
+          <th>Organizador</th>
           <th>Ver</th>
           <th>Editar</th>
           <th>Cancelar</th>
@@ -29,11 +28,10 @@
         <tr>
           <td>{{$event->id}}</td>
           <td>{{$event->name}}</td>
-          <td>19/09/2015</td>
-          <td>25/10/2015</td>
-          <td>Vigente</td>
-          <td>1500</td>
-          <td>17500.00</td>
+          <td>{{$event->publication_date}}</td>
+          <td>{{$event->category_id}}</td>
+          <td>{{$event->category_id}}</td>
+          <td>{{$event->organizer_id}}</td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info{{$event->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button>
       <div class="modal fade" id="info{{$event->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
