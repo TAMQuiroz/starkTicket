@@ -58,6 +58,12 @@
           {!! Form::hidden ('row_'.$capacity->id, $capacity->rows,  array('id' =>'row_'.$capacity->id)) !!}
           {!! Form::hidden ('column_'.$capacity->id, $capacity->columns, array('id' =>'column_'.$capacity->id)) !!}
         @endforeach
+
+        @foreach ($locals_list as $local)
+         
+        @endforeach
+
+
         <div class="row">
           <div class="col-sm-8">
             {!!Form::open(array('route' => 'events.store','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
@@ -204,6 +210,13 @@
                         var newDelete = document.createElement('button'); 
                         newDelete.className = "btn";
                         newDelete.className += " btn-info glyphicon glyphicon-remove";
+                        if (newDelete.addEventListener) {  // all browsers except IE before version 9
+                          newDelete.addEventListener("click", function(){deleteZone(newDelete);}, false);
+                        } else {
+                          if (newDelete.attachEvent) {   // IE before version 9
+                            newDelete.attachEvent("click", function(){deleteZone(newDelete);});
+                          }
+                        }
 
                         newCell.appendChild(x);
                         newCell2.appendChild(newText2);                        
@@ -219,6 +232,15 @@
                         document.getElementById('capacity-display').value = new_capacity;                
                     }
 
+                    function deleteZone(btn){
+                        var row=btn.parentNode.parentNode.rowIndex;
+                        var row2 = row-1;
+                        var act_val = parseInt(document.getElementById('capacity-display').value);
+                        act_val += parseInt(document.getElementsByName('zone_capacity[]')[row2].value);
+                        document.getElementById('capacity-display').value = act_val;
+                        document.getElementById('table-zone') .deleteRow(row);
+                
+                    }    
                 </script>
 
                 <table id="table-zone" class="table table-bordered table-striped ">
@@ -291,7 +313,7 @@
                         var newDelete = document.createElement('button');
                         newDelete.className = "btn";
                         newDelete.className += " btn-info glyphicon glyphicon-remove";
-
+                        newDelete.onclick= "deleteFunction(newRow)";
                         newCell.appendChild(x);
                         newCell2.appendChild(newText2);                                             
                         newCell4.appendChild(newDelete);
@@ -300,7 +322,11 @@
                         document.getElementById('input-function-date')[0].value = '';
                 
                     }
-
+                    function deleteFunction(btn){
+                        var row=btn.parentNode.parentNode.rowIndex;
+                        document.getElementById('functions-table') .deleteFunction(row);
+                
+                    }  
                 </script>
 
                 <table id="functions-table" class="table table-bordered table-striped ">
@@ -314,10 +340,26 @@
                 {!! Form::hidden ('yesterday', ''.\Carbon\Carbon::now()->subDay()) !!}
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-info">Guardar Evento</button>
-                  <button  type="reset" class="btn btn-info">Cancelar</button>
+                  <a class="btn btn-info" href="" title="submit" data-toggle="modal" data-target="#submitModal" >Guardar Evento</a>
+                  <a href="{{action('EventController@create')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
                 </div>
               </div>
+
+              <!-- MODAL -->
+              <div class="modal fade"  id="submitModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">¿Estas seguro que desea crear el evento?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="yes" type="submit" class="btn btn-info">Si</button>
+                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
             </form>
           </div>
 
@@ -381,4 +423,14 @@
 
   {!!Html::script('js/moment.js')!!}
   {!!Html::script('js/rangepicker.js')!!}
+
+
+
+  <script type="text/javascript">
+    $('#yes').click(function(){
+      $('#submitModal').modal('hide');  
+    });
+    
+  </script>
+
 @stop

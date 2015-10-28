@@ -45,7 +45,11 @@ class EventController extends Controller
     public function create()
     {
         $categories_list = Category::all()->lists('name','id');
+
+        $organizers_list = Organizer::all()->lists('organizerName','id');
+
         $organizers_list = Organizer::all()->lists('businessName','id');
+
         $locals_list = Local::all()->lists('name','id');
         $capacity_list = Local::all();
         $array = ['categories_list' =>$categories_list,
@@ -343,6 +347,7 @@ class EventController extends Controller
     }
     public function update(UpdateEventRequest $request, $id)
     {
+
         $now = new DateTime();
         $temp = array_unique($request->input('function_starts_at'));
         if(count($temp) < count($request->input('function_starts_at')))
@@ -352,6 +357,7 @@ class EventController extends Controller
         if($result['error'] != '')
             //return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
             return response()->json(['message' => $result['error']]);
+
         $event = Event::find($id);
         $actual_local = Local::find($event->local_id);
         $new_local = Local::find($request->input('local_id'));
