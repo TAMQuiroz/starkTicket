@@ -244,7 +244,13 @@
                         var newDelete = document.createElement('button');
                         newDelete.className = "btn";
                         newDelete.className += " btn-info glyphicon glyphicon-remove";
-                        newDelete.onclick= "deleteZone(newRow)";
+                        if (newDelete.addEventListener) {  // all browsers except IE before version 9
+                          newDelete.addEventListener("click", function(){deleteZone(newDelete);}, false);
+                        } else {
+                          if (newDelete.attachEvent) {   // IE before version 9
+                            newDelete.attachEvent("click", function(){deleteZone(newDelete);});
+                          }
+                        }
 
                         newCell.appendChild(x);
                         newCell2.appendChild(newText2);
@@ -262,7 +268,11 @@
 
                     function deleteZone(btn){
                         var row=btn.parentNode.parentNode.rowIndex;
-                        document.getElementById('table-zone') .deleteZone(row);
+                        var row2 = row-1;
+                        var act_val = parseInt(document.getElementById('capacity-display').value);
+                        act_val += parseInt(document.getElementsByName('zone_capacity[]')[row2].value);
+                        document.getElementById('capacity-display').value = act_val;
+                        document.getElementById('table-zone') .deleteRow(row);
                 
                     }    
                 </script>
