@@ -133,12 +133,11 @@ class EventController extends Controller
                 }
             }
             else{
-                for( $i=1; $i<= ($zone->capacity); $i++) {
-                    $seat = new Slot();
-                    $seat->zone()->associate($zone);
-                    $seat->save();
-                    $seat->presentation()->attach($functions_ids);
+                $functions_ids_zones = array();
+                foreach ($functions_ids as $key => $value) {
+                    $functions_ids_zones[$key] = ['slots_availables' => $zone->capacity];
                 }
+                $zone->presentation()->attach($functions_ids_zones);
             }
         }
     }
@@ -470,42 +469,23 @@ class EventController extends Controller
         $count = 0;
         foreach ($zones as $zone) {
             $new_capacity = $data['zone_capacity'][$count];
-            $max_sold_slots = $this->getMaxOccupiedSlots($event_id, $zone->id);
+            $result = $this->getMaxOccupiedSlots($event_id, $zone->id);//query de buscar max asientos ocupados de esta zona;
+            $max_sold_slots = $result['max'];
+            $sold = $result['all_sold'];
             if($new_capacity < $max_sold_slots)
                 return ['error' => 'no se puede modificar la zona a una capacidad menor a las entradas vendidas'];
             $zone->name = $data['zone_names'][$count];
             $zone->price = $data['price'][$count];
             $old_capacity = $zone->capacity;
             $zone->capacity = $data['zone_capacity'][$count];
+            $functions_ids_zones = array();
+            $i=0;
+            foreach ($functions_ids as $key => $value) {
+                $functions_ids_zones[$key] = ['slots_availables' => abs($new_capacity-$sold[$i])];
+                $i++;
+            }
+            $zone->presentation()->sync($functions_ids_zones);
             $zone->save();
-            if($old_capacity < $new_capacity){
-                $difference = $new_capacity - $old_capacity;
-                for($i = 1; $i <= $difference; $i++){
-                    $seat = new Slot();
-                    $seat->zone()->associate($zone);
-                    $seat->save();
-                    $seat->presentation()->attach($functions_ids);
-                }
-            }
-            if($old_capacity > $new_capacity){
-                $difference = $old_capacity - $new_capacity;
-                //aqui solo hare dettach
-                $slots = Slot::where('zone_id',$zone->id)->get();
-                $cant = $presentations->count();
-                $dettached = array();
-                for($i=0;i<$cant;$i++)
-                    $dettached[$i] = 0;
-                foreach($slots as $slot){
-                    $i = 0;
-                    foreach($slot->presentation as $presentation){
-                        if($dettached[i] < $difference && $presentation->pivot->status == config('constants.seat_available')){
-                            $slot->presentation()->dettach($presentation->id);
-                            $dettached[$i] = $dettached[$i]++;
-                        }
-                        $i++;
-                    }
-                }
-            }
             $count++;
         }
         return ['error' => ''];
@@ -513,21 +493,21 @@ class EventController extends Controller
 
     public function getMaxOccupiedSlots($event_id, $zone_id){
         $zone = Zone::find($zone_id);
-        $slots = Slot::where('zone_id', $zone_id)->get();
+        $all_sold = array();
         $presentations = Presentation::where('event_id', $event_id)->get();
         $max = 0;
-
-        foreach($presentations as $presentation){
+      
+        foreach($zone->presentations as $presentation){
             $count = 0;
-            foreach($presentation->slots as $slot){
-                if($slot->pivot->status == config('constants.seat_occupied')){
-                    $count++;
-                }
-            }
+            $availables = $presentation->pivot->slots_availables;
+            $count = $zone->capacity - $availables;
+            array_push($all_sold, $count);
             if($count > $max) $max = $count;
         }
-        return $max;
 
+        $result = ['max' => $max, 'all_sold' => $all_sold];
+        return $result;
+        
     }
     /**
      * Remove the specified resource from storage.
