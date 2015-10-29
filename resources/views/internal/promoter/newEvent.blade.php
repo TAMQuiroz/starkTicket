@@ -57,11 +57,9 @@
           {!! Form::hidden ('capacity_'.$capacity->id, $capacity->capacity) !!}
           {!! Form::hidden ('row_'.$capacity->id, $capacity->rows,  array('id' =>'row_'.$capacity->id)) !!}
           {!! Form::hidden ('column_'.$capacity->id, $capacity->columns, array('id' =>'column_'.$capacity->id)) !!}
+          {!! Form::hidden('invisible', 'secret', array('id' => 'invisible_id')) !!}
         @endforeach
 
-        @foreach ($locals_list as $local)
-         
-        @endforeach
 
 
         <div class="row">
@@ -96,7 +94,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Sub categoría</label>
                 <div class="col-sm-10">
-                    {!! Form::select('category_id', ['Rock','Cumbia','Tropical','Otros'],null,['class' => 'form-control','required','id'=>'subcategory_id']) !!}
+                    {!! Form::select('category_id',$categories_list->toArray(),null,['class' => 'form-control','required','id'=>'subcategory_id']) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -132,7 +130,7 @@
                 </div>
               </div>
               <br>
-              <div id="seat-map" class="seatCharts-container" tabindex ="0"></div>
+
               <!-- ZONA -->
               <legend>Agregar zona:</legend>
               <div class="form-group">
@@ -147,6 +145,30 @@
                       {!! Form::number('zoneCapacity','', array('class' => 'form-control','id' => 'input-capacity')) !!}
                   </div>
               </div>
+              <div class="form-group" id="label_col">
+                  <label  class="col-sm-2 control-label" >Columnas</label>
+                  <div class="col-sm-10">
+                      {!! Form::number('zone_columns','', array('class' => 'form-control','id' => 'input-column')) !!}
+                  </div>
+              </div>
+              <div class="form-group" id="label_fil">
+                  <label  class="col-sm-2 control-label" >Filas</label>
+                  <div class="col-sm-10">
+                      {!! Form::number('zone_rows','', array('class' => 'form-control','id' => 'input-row')) !!}
+                  </div>
+              </div>
+              <div class="form-group" id="label_fini">
+                  <label  class="col-sm-2 control-label" >Columna inicial</label>
+                  <div class="col-sm-10">
+                      {!! Form::number('start_column','', array('class' => 'form-control','id' => 'input-colIni')) !!}
+                  </div>
+              </div>     
+              <div class="form-group" id="label_cini">
+                  <label  class="col-sm-2 control-label" >Fila inicial</label>
+                  <div class="col-sm-10">
+                      {!! Form::number('start_row','', array('class' => 'form-control','id' => 'input-rowIni')) !!}
+                  </div>
+              </div>                                                     
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Precio</label>
                   <div class="col-sm-10">
@@ -166,7 +188,11 @@
                         -->
                     </div>
               </div>
-
+              <div class="form-group" id="dist">
+                <label  class="col-sm-2 control-label">Distribución evento</label>
+                  
+              </div>              
+              
                 <script>
 
                     function addZone(){
@@ -283,6 +309,8 @@
 
                 <script>
 
+
+
                     function addFunction(){
 
                         var start_date = document.getElementById('input-function-date').value;
@@ -378,29 +406,45 @@
   <script>
     $(document).ready(function() {
 
+       
+
       $('[name=local_id]').click(function(){
         var e = $('[name=local_id]')[0];
-        var index= e.options[e.selectedIndex].value;
 
+        var index= e.options[e.selectedIndex].value;
+        console.log(index);
         var algo = $('#row_' + index).val();
-        console.log("algo "+algo);
+        //console.log("algo "+algo);
         if(algo !== undefined && algo >=1){
-          console.log("index "+index);
+          //si el local tiene asientos y filas numeradas Do this 
+          //console.log("index "+index);
           var rows = $('#row_'+index).val();
           var columns = $('#column_'+index).val();
           console.log("columnas "+columns);
+
+          console.log("filas "+rows);
+
           var arreglo = new Array();
+
           for(i=0; i<rows;i++){
             var texto = 'a';
             for(j=1; j<columns; j++){
               texto += 'a';
             }
-            console.log(texto);
+            //console.log(texto);
             arreglo.push(texto);
           }
           console.log(arreglo);
-          $('#seat-map').show();
-          var sc = $('#seat-map').seatCharts({
+          //console.log(arreglo);
+          var seatid="seat-map-"+index;
+          console.log(seatid);
+
+          var tam= $('[id=invisible_id]').size();
+          for(i=1;i<=tam;i++){
+            $('#seat-map-'+i).hide();
+          }          
+          
+          var sc = $('#seat-map-'+index).seatCharts({
             map: arreglo,
           naming : {
             top : false,
@@ -416,10 +460,38 @@
               [ 'a', 'reserved', 'Reservado']
             ]
           } });
-          $('#seat-map').show();
+          $('#seat-map-'+index).show();
+
+          
+          $('#input-column').show();
+          $('#input-row').show();
+          $('#input-colIni').show();
+          $('#input-rowIni').show();
+          $('#label_col').show();
+          $('#label_fil').show();
+          $('#label_fini').show();
+          $('#label_cini').show();
+          $('#dist').show();
+
+
         }else{
-          $('#seat-map').empty();
-          var sc = $('#seat-map').hide();
+          //si el local no tiene asientos numerados Do this 
+          //$('#seat-map').empty();
+          var tam= $('[id=invisible_id]').size();
+          for(i=1;i<=tam;i++){
+            $('#seat-map-'+i).hide();
+          }
+          //$('#seat-map').hide();
+          
+          $('#input-column').hide();
+          $('#input-row').hide();
+          $('#input-colIni').hide();
+          $('#input-rowIni').hide();
+          $('#label_col').hide();
+          $('#label_fil').hide();
+          $('#label_fini').hide();
+          $('#label_cini').hide();
+          // $('#dist').hide();
         }
       });
     });
@@ -443,6 +515,17 @@
     });
   });
   </script>
+
+
+  <script>
+  $(document).ready(function(){
+    //var locals=$locals_list.size();
+    var tam= $('[id=invisible_id]').size();
+    console.log("tamano "+tam);
+    for(var i=1;i<=tam;i++)
+      $('#dist').append("<div id=seat-map-"+i+" class=seatCharts-container tabindex =0> </div>")
+  });
+  </script>  
   {!!Html::script('js/moment.js')!!}
   {!!Html::script('js/rangepicker.js')!!}
 
