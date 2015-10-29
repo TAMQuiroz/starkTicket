@@ -57,6 +57,14 @@ class AdminController extends Controller
         $user->email        =   $input['email'];
         $user->birthday     =   new Carbon($input['birthday']);
         $user->role_id      =   $input['role_id'];
+
+        $birthday =  new \DateTime ($input['birthday']);
+        $currentDate = new \DateTime('now');
+        $interval = $birthday->diff($currentDate);
+        if($interval->format('%y') < 18){ 
+            //return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
+            return back()->withErrors(['El usuario debe tener más de 18 años']);
+        }
         /*
         if($request->file('image')!=null)
            $user->image        =   $this->file_service->upload($request->file('image'),'user');
@@ -99,6 +107,14 @@ class AdminController extends Controller
         $user->email        =   $input['email'];
         $user->birthday     =   new Carbon($input['birthday']);
         $user->role_id      =   $input['role_id'];
+
+        $birthday =  new \DateTime ($input['birthday']);
+        $currentDate = new \DateTime('now');
+        $interval = $birthday->diff($currentDate);
+        if($interval->format('%y') < 18){ 
+            //return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
+            return back()->withErrors(['El usuario debe tener más de 18 años']);
+        }
         /*
         if($request->file('image')!=null)
            $user->image        =   $this->file_service->upload($request->file('image'),'user');
@@ -140,6 +156,14 @@ class AdminController extends Controller
         $user->email        =   $input['email'];
         $user->birthday     =   new Carbon($input['birthday']);
         $user->role_id      =   $input['role_id'];
+
+        $birthday =  new \DateTime ($input['birthday']);
+        $currentDate = new \DateTime('now');
+        $interval = $birthday->diff($currentDate);
+        if($interval->format('%y') < 18){ 
+            //return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
+            return back()->withErrors(['El usuario debe tener más de 18 años']);
+        }
         /*
         if($request->file('image')!=null)
            $user->image        =   $this->file_service->upload($request->file('image'),'user');
@@ -169,10 +193,23 @@ class AdminController extends Controller
         $user->address      =   $input['address'];
         $user->phone        =   $input['phone'];
         $user->email        =   $input['email'];
+
         $user->birthday     =   new Carbon($input['birthday']);
+
+
         $user->role_id      =   $input['role_id'];
         if($request->file('image')!=null)
            $user->image        =   $this->file_service->upload($request->file('image'),'user');
+
+        // validate la edad del usuario 
+
+        $birthday =  new \DateTime ($input['birthday']);
+        $currentDate = new \DateTime('now');
+        $interval = $birthday->diff($currentDate);
+        if($interval->format('%y') < 18){ 
+            //return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
+            return back()->withErrors(['El usuario debe tener más de 18 años']);
+        }
 
         $user->save();
 
