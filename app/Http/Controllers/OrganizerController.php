@@ -141,5 +141,8 @@ class OrganizerController extends Controller
         $organizer = organizer::find($id);
         $organizer->delete();
         return redirect('promoter/organizers');
+
+
+        
     }
 }

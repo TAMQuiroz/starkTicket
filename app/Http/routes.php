@@ -80,6 +80,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/event/record', 'EventController@showPromoterRecord');
     Route::get('promoter/event/create', 'EventController@create');
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
+
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
     Route::get('promoter/{category_id}/subcategories', 'EventController@subcategoriesToAjax');
     Route::get('getLocal/{id}',['as'=>'ajax.getLocal','uses'=>'EventController@getLocal']);
@@ -89,17 +90,16 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
 
     Route::get('promoter/promotion', 'PromoController@index');
      Route::get('promoter/promotion', 'PromoController@promotion');
+
+
+
     Route::get('promoter/promotion/new', ['as'=>'promo.create','uses'=>'PromoController@create']);
-
-    Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);
-
-
-
+     Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);
+    Route::get('promoter/promotion/new/{event_id}', 'PromoController@ajax');
     Route::get('promoter/promotion/{id}/edit', ['as'=>'promo.edit','uses'=>'PromoController@edit']);
-    Route::post('promoter/promotion/{id}/edit', ['as'=>'promo.update','uses'=>'PromoController@update']);
-
-
-
+    Route::post('promoter/promotion/{id}/edit',  'PromoController@update');
+    Route::get('promoter/promotion/{id}/delete',  'PromoController@destroy');
+    
 
 
 

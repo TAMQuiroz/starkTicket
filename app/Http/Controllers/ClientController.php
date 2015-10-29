@@ -28,7 +28,7 @@ class ClientController extends Controller
     public function index()
     {
         $clients = User::where('role_id','1')->paginate(10);
-        return view('internal.admin.client.clients', ['clients' => $clients]);
+        return view('internal.admin.client.clients',   ['clients' => $clients]    );
     }
 
     /**

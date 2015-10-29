@@ -8,78 +8,122 @@
 @stop
 
 @section('content')
-	<div style="-webkit-columns: 100px 2;">
-		<h4>Nombre</h4>
-		{!! Form::text('promotionName','', array('class' => 'form-control', 'maxlength'=>'15','required')) !!}	
-		<h4>Descuento (%)</h4>
-		{!! Form::number('discount','%', array('class' => 'form-control','min'=>'0', 'max'=>'100','required')) !!}
-	</div>
-	<div style="-webkit-columns: 100px 4;">
-		<h4>Fecha Inicio</h4>
-		{!! Form::date('dateIni','', array('class' => 'form-control','required')) !!}
-		<h4>Fecha Fin</h4>
-		{!! Form::date('dateEnd','', array('class' => 'form-control','required')) !!}
-		<h4>Hora Inicio</h4>
-		{!! Form::time('timeIni','', array('class' => 'form-control','required')) !!}
-		<h4>Hora Fin</h4>
-		{!! Form::time('timeEnd','', array('class' => 'form-control','required')) !!}
-	</div>
-	<h4>Descripción</h4>
-	{!! Form::textarea('description', null, ['size' => '30x3', 'class' => 'form-control', 'maxlength'=>'40', 'required']) !!}
-	
-	<h4>Agregar evento:</h4>
-	<div class="input-group" style="width:300px">
-  		{!! Form::text('eventName','', array('class' => 'form-control','required')) !!}
-  		<span class="input-group-btn">
-	    	<button class="btn btn-info" type="button">Buscar</button>
-	    </span>
-	</div><!-- /input-group -->
+
+{!!Form::open(array('url' => 'promoter/promotion/'.$promotion->id.'/edit','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
 	<br>
-	<table class="table table-bordered table-striped">
-	    <tr>
-	        <th>Nombre</th>
-	        <th>Categoría</th>
-	        <th>Seleccionar</th>
-	    </tr>
-	    <tr>
-	    	<td>Viva por el rock 6</td>
-	    	<td>Concierto</td>
-	    	<td><input type="radio" name="group1"></td>	
-	    </tr>
-	    <tr>
-	    	<td>Viva la Fête</td>
-	    	<td>Concierto</td>
-	    	<td><input type="radio" name="group1"></td>
-	    </tr>
-	</table>    
-	<div style="-webkit-columns: 100px 2;">
-		<h4>Zona</h4>
-		{!! Form::select('zone', ['VIP','Platea'],null,['class' => 'form-control','required']) !!}
-		<h4>Tipo de Cliente</h4>
-		{!! Form::select('zone', ['Niño','Adulto', 'Adulto Mayor'],null,['class' => 'form-control','required']) !!}
+ 
+			<div style="width: 500px ;">
+		<h3>Nombre del Evento</h3>
+			{!! Form::text( '' , $event->name , array('class' => 'form-control', 'maxlength'=>'70','disabled' => 'disabled' ,'required')) !!}		
+			</div>
+
+
+	
+
+	<hr>
+	
+	<h3>Datos de la promoción</h3>
+	<div>
+		<div style="width: 500px ;">
+			<h4>Nombre</h4>
+			{!! Form::text('promotionName', $promotion->name  , array('class' => 'form-control', 'maxlength'=>'70', 'required')) !!}		
+		</div>
+		<br>
+		<div style="-webkit-columns: 100px 4;">
+			<h4>Fecha Inicio</h4>
+			{!! Form::date('dateIni', $startDay  , array('class' => 'form-control' , 'required')) !!}
+
+					<h4>Hora Inicio</h4>
+			{!! Form::time('timeIni',  $startHour , array('class' => 'form-control', 'required')) !!}
+
+
+			<h4>Fecha Fin</h4>
+			{!! Form::date('dateEnd',$endDay   , array('class' => 'form-control', 'required')) !!}
+	
+			<h4>Hora Fin</h4>
+			{!! Form::time('timeEnd', $finishHour, array('class' => 'form-control', 'required')) !!}
+		</div>
+		<h4>Descripción</h4>
+		{!! Form::textarea('description', $promotion->description  , ['size' => '30x4', 'class' => 'form-control', 'maxlength'=>'400', 'required']) !!}
 	</div>
-	<br><br>
-	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#end" data-whatever="@mdo">Guardar</button>
-	<a href="{{url('promoter/promotion')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
-	<div class="modal fade" id="end" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-		<div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		        <div class="modal-header">
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        	<h4 class="modal-title" id="exampleModalLabel">Promociones</h4>
-		    	</div>
-		    	<div class="modal-body">
-		        	<form>
-		              	<div class="form-group">
-		                	<label for="exampleInputEmail2">Promoción editada!</label>
-		          		</div>
-		        	</form>
-		   		</div>
-		    </div>
-		</div> 
-	</div>	
+	<br>
+	<hr>
+ 
+
+  @if($promotion->typePromotion == 1)
+<h3>Tipo de promoción:  Descuento  </h3>
+
+
+
+<div style="-webkit-columns: 100px 2;">
+		      	<h4>Seleccione el acceso a la promocion</h4>
+				{!! Form::select('access_id',  $accessPromotion  ,  $promotion->access_id    ,['class' => 'form-control']) !!}
+
+
+				<h4>Descuento (%)</h4>
+				{!! Form::number('discount',$promotion->desc , array('class' => 'form-control', 'min'=>'0', 'max'=>'100', 'required')) !!}
+			</div>
+
+
+
+
+
+            @else
+
+
+<h3>Tipo de promoción: Oferta </h3>
+
+
+
+		<div style="-webkit-columns: 100px 2;">
+		      	<h4>Lleve : </h4>
+			{!! Form::number('carry',$promotion->carry , array('class' => 'form-control' )) !!}	
+				<h4>Pague por : </h4>
+				{!! Form::number('pay', $promotion->pay , array('class' => 'form-control' )) !!}	
+			</div>
+		    <div style="width: 500px ;">
+				<h4>Zona</h4>
+				{!! Form::select('zone',     $zones       ,      $promotion->zone_id   ,['class' => 'form-control']) !!}
+			</div>
+
+
+
+
+            @endif
+
+	<br>
+<button type="submit" class="btn btn-info" data-toggle="modal" data-target="#save" data-whatever="@mdo">Guardar</button>
+  
+
+	
+
+
+
+
+
+
+
+
+ 
+
+
+
 @stop
 
+         {!!Form::close()!!}
+
 @section('javascript')
+
+  {!!Html::script('js/jquery.dataTables.min.js')!!}
+
+	<script>  
+	$(document).ready(function() {
+	   $('#example').DataTable( {
+	       "language": {
+	           "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+	       }
+	   } );
+	} );
+	</script>
 
 @stop

@@ -17,6 +17,9 @@ class Category extends Model
         return $this->hasMany('App\Models\Event');
     }
     */
+
+
+
     public function subcategories(){
         return $this->hasMany('App\Models\Category');
     }
@@ -24,4 +27,11 @@ class Category extends Model
     public function parentCategory(){
         return $this->belongsTo('App\Models\Category', 'father_id');
     }
+
+
+
+
+
+
+    
 }
