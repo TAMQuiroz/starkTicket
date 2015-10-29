@@ -92,7 +92,7 @@
                   <button type="submit" class="btn btn-info">Guardar</button>
                   -->
                   <a class="btn btn-info" type="submit" href=""  title="Edit"  data-toggle="modal" data-target="#editModal">Guardar</a>
-                  <button type="reset" class="btn btn-info">Cancelar</button
+                  <button type="reset" class="btn btn-info">Cancelar</button>
                 </div>
               </div>
 
@@ -109,8 +109,8 @@
                       <h5 class="modal-title">Los cambios serán permanentes</h5>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-info">Sí</button>
+                        <button type="button" class="btn btn-info" data-dismiss="modal" >No</button>
+                        <button id="botonModal"type="submit" class="btn btn-info" action="hideModal">Sí</button>   
                         <!--
                         <a class="btn btn-info" href="" title="Create" >Sí</a>
                         -->
@@ -140,6 +140,13 @@
         }
       }
     }
+
+
+    $("#botonModal").click(function(){
+        $("#editModal").modal('toggle');
+    });
   </script>
+
+
 
 @stop

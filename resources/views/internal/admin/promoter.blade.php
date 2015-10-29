@@ -46,12 +46,22 @@
                           </div>
                           <div class="modal-body">
                             <h4>Nombre</h4>
-                            <h4>Sexo</h4>  
+                            {{$promoter->name.' '.$promoter->lastname}}
+                            <!-- <h4>Sexo</h4> -->
                             <h4>Documento Identidad</h4>
+                            @if($promoter->di_type == 1)
+                            DNI
+                            @else
+                            Carnet de Extranjeria
+                            @endif
                             <h4>Número de Documento</h4>
+                            {{$promoter->di}}
                             <h4>Teléfono</h4>
+                            {{$promoter->phone}}
                             <h4>Direccion</h4>
+                            {{$promoter->address}}
                           </div>
+                      
                           <div class="modal-footer">
                             <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
                           </div>
