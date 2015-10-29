@@ -27,12 +27,16 @@ class StorePromotionRequest extends Request
       return [
           
                
-            'promotionName'          =>  'max:40',
+            'promotionName'          =>  'required|min:5|max:50',
             'dateIni'       =>  'required|max:20',
             'dateEnd'      =>  'required|max:20',
-            'description'      =>  'required|max:200',
+            'description'      =>  'required|min:10|max:400',
             'discount'      =>  'numeric',
-            'select'      =>  'exists:events,id'
+            'evento'      =>  'required|exists:events,id'
+               
+
+
+            
 
 
         ];

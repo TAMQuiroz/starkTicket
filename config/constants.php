@@ -24,4 +24,11 @@ return [
    	'seat_available' => 1,
    	'seat_reserved'  => 2, 
    	'seat_taken'	 => 3,    
+
+
+   	//Tipo de promocion
+   	'discount' => 1,
+	'ofert' => 2,
+
+
 ];
