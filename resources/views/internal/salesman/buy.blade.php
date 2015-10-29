@@ -2,6 +2,7 @@
 
 @section('style')
     {!!Html::style('css/seats.css')!!}
+    {!!Html::style('css/admin.css')!!}
 @stop
 
 @section('title')
@@ -9,33 +10,40 @@
 @stop
 
 @section('content')
-    {!!Form::open(array('route' => 'ticket.store'))!!}
-    <fieldset>
+    {!!Form::open(array('route' => 'ticket.store','id'=>'form'))!!}
         <legend>Información del evento</legend>
         <div class="select Type"> 
             <label>
-                <div style="-webkit-columns: 100px 3;">
+                <div class="col-md-4">
                     <h4 class="boxy"> Codigo del Evento </h4>
-                    {!! Form::text('code', $event->id, ['class' => 'form-control boxy', 'disabled']) !!}
+                    {!! Form::text('code', $event->id, ['class' => 'form-control boxy', 'disabled','id'=>'event_id']) !!}
                     {!!Form::hidden('event_id',$event['id'])!!}
+                </div>
+                <div class="col-md-4">
                     <h4 > Nombre del Evento </h4>
                     {!! Form::text('event_name', $event->name, ['class' => 'form-control', 'disabled']) !!}
+                </div>
+                <div class="col-md-4">
                     <h4 >Entradas Disponibles</h4>
-                    {!! Form::text('available', count(head($slots_array)), ['id'=>'available','class' => 'form-control', 'disabled']) !!}  
+                    {!! Form::text('available', null, ['id'=>'available','class' => 'form-control', 'disabled']) !!}  
                 </div>
-                <div style="-webkit-columns: 100px 2;">
+                <div class="col-md-4">
                     <h4 class="boxy"> Funciones del evento </h4>
-                    {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=>'getEventAvailable(this), getSlots(this)']) !!}
-                    <h4 > Zona del Evento </h4>
-                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getPrice(this), getSlots(this)','id'=>'zone_id']) !!}
+                    {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=>'getAvailable(); getSlots()']) !!}
                 </div>
-                <h4> Promoción </h4>
-                {!! Form::select('promotion_id', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
+                <div class="col-md-4"> 
+                    <h4 > Zona del Evento </h4>
+                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getAvailable(); getPrice(); getSlots(); makeArray()','id'=>'zone_id']) !!}
+                </div>
+                <div class="col-md-4">
+                    <h4> Promoción </h4>
+                    {!! Form::select('promotion_id', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
+                </div>
             </label>
         </div>
         <br>
-        <div class="table-responsive">
-          <table class="table table-bordered" style="widht:1px">
+        <div class="table-responsive col-md-12" >
+          <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Zona</th>
@@ -52,21 +60,17 @@
             </tbody>
           </table>
         </div>
-        <fieldset>
             <legend>Información del cliente</legend>
-            <div style="-webkit-columns: 100px 2;">
-                <h5>Ingrese Usuario</h5>
-                <div class="input-group" style="width:290px">
-                    {!! Form::number('number', null, ['class' => 'form-control', 'placeholder' => 'Documento de Identidad...','id'=>'user_di','min'=>0,'max'=>99999999]) !!}
-                </div><!-- /input-group -->
-                <h5>Nombre de Cliente</h5>
+            <div class="col-md-6">
+                <h4>Ingrese Usuario</h4>
+                {!! Form::number('number', null, ['class' => 'form-control', 'placeholder' => 'Documento de Identidad...','id'=>'user_di','min'=>0,'max'=>99999999]) !!}
+            </div>
+            <div class="col-md-6">
+                <h4>Nombre de Cliente</h4>
                 {!! Form::text('name', null, ['class' => 'form-control', 'disabled', 'id'=>'user_name']) !!}
                 {!! Form::hidden('user_id', null, ['id'=>'user_id'])!!}
             </div>
-            
-            <br>
-            <br>
-        </fieldset>
+
 
         @if($event->place->rows != null)
             
@@ -74,14 +78,13 @@
         <legend>Selección de Ubicación</legend>
         <div class="seats">
             <div class="demo">
-                <div id="seat-map">
-                    <div class="front">Escenario</div>                  
+                <div id="parent-map">
+                    <div id="seat-map"></div>
                 </div>
                 <br>
                 <div class="booking-details">
                     <h4 style="text-decoration:underline;text-align: center;">Resumen</h4>
                     <p>Evento: <span> {{$event->name}}</span></p>
-                    <p>Día: <span id="funcion">{{reset($presentations)}}</span></p>
                     <p>Asiento(s): </p>
                     <ul id="selected-seats"></ul>
                     <p>Tickets: <span id="counter">0</span></p>
@@ -91,20 +94,23 @@
                 <div style="clear:both"></div>
            </div>
         </div>
-
-        {!!Form::select('seats[]',head($slots_array), null,['id'=>'seats','multiple','onClick'=>'addQuantity(this)'])!!}
-        
-        Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','readonly', 'class'=>'form-control'])!!}
-
+        <div class="col-md-2">
+            {!!Form::select('seats[]',head($slots_array), null,['class'=>'form-control','id'=>'seats','multiple','onClick'=>'addQuantity(this)'])!!}
+        </div>
+        <div class="col-md-3">
+            Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','readonly', 'class'=>'form-control'])!!}
+        </div>
         @else
         
-        Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','class'=>'form-control'])!!}
-
+        <div class="col-md-3">
+            Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','class'=>'form-control','min'=>'1'])!!}
+        </div>
         @endif
         <!-- Content Row -->
         <!-- /.row -->
-        <hr>
-        <div class= "button-final">
+        
+        <div class="col-md-12"><hr></div>
+        <div class= "button-final col-md-12">
             <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#mix2" data-whatever="@mdo" disabled="">Realizar Pago</button>
             <a href="{{url('salesman/')}}"><button type="button" class="btn btn-info">Cancelar Venta</button></a>
             <button type="button" class="btn btn-info" data-dismiss="modal" data-target="#visualizarVenta"><i class="glyphicon glyphicon-print"></i></button>
@@ -167,7 +173,6 @@
                 </div>
             </div> 
         </div>
-    </fieldset>  
     {!!Form::close()!!}
 
 
@@ -184,7 +189,8 @@
             { zone: "{{ URL::route('ajax.getClient') }}" },
             { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
             { event_available: "{{URL::route('ajax.getAvailable')}}"},
-            { slots: "{{URL::route('ajax.getSlots')}}"}
+            { slots: "{{URL::route('ajax.getSlots')}}"},
+            { makeArray: "{{URL::route('ajax.getZone')}}"}
         ]
     };
     </script>

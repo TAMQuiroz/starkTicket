@@ -66,6 +66,7 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('getPrice', ['uses'=>'TicketController@getPrice','as'=>'ajax.getPrice']);
     Route::get('getAvailable', ['uses'=>'TicketController@getAvailable','as'=>'ajax.getAvailable']);
     Route::get('getSlots', ['uses'=>'TicketController@getSlots','as'=>'ajax.getSlots']);
+    Route::get('getZone', ['uses'=>'TicketController@getZone','as'=>'ajax.getZone']);
 });
 
 Route::group(['middleware' => ['auth', 'promoter']], function () {
@@ -83,9 +84,6 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
 
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
     Route::get('promoter/{category_id}/subcategories', 'EventController@subcategoriesToAjax');
-    Route::get('getLocal/{id}',['as'=>'ajax.getLocal','uses'=>'EventController@getLocal']);
-
-
 
 
     Route::get('promoter/promotion', 'PromoController@index');

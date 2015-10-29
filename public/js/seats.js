@@ -4,8 +4,12 @@ $.ajaxSetup({
     }
 })
 
-var price; //price
+$('document').ready(function () {
+	makeArray();
+});
 
+var price; //price
+var map = [];
 function getPrice(element){
 	//console.log(element.options[element.selectedIndex].value);
 	$.ajax({
@@ -34,7 +38,49 @@ function getPrice(element){
     });
 }
 
-$(document).ready(function() {
+function makeArray(){
+	zona = $('#zone_id').val();
+	$.ajax({
+        url: config.routes[4].makeArray,
+        type: 'get',
+        data: 
+        { 
+            zone_id: zona
+        },
+        success: function( response ){
+            if(response != "")
+            {
+            	map = [];
+            	rows = response.rows;
+            	columns = response.columns;
+            	console.log('F'+rows+' C'+columns);
+            	for(var i = 0; i < rows; i++){
+            		var texto = '';
+            		for(var j = 0; j < columns; j++){
+            			texto += 'a';
+            		}
+            		//console.log(texto);
+            		map.push(texto);
+            	}
+                console.log(map);
+                $('#parent-map').empty();
+                $('#legend').empty();
+                $('#parent-map').append('<div id="seat-map"></div>');
+                renderSeats();
+            }
+            else
+            {
+             	console.log('no respuesta');  
+            }
+        },
+        error: function( response ){
+            
+        }
+    });
+	
+}
+
+function renderSeats() {
 
 	getPrice(document.getElementById('zone_id'));
 
@@ -45,17 +91,7 @@ $(document).ready(function() {
 	$total2 = $('#total2'); //Total money
 	var selected = [];
 	var sc = $('#seat-map').seatCharts({
-		map: [  //Seating chart
-			'aaaaaaaaaa',
-            'aaaaaaaaaa',
-            'aaaaaaaaaa',
-            'aaaaaaaaaa',
-			'aaaaaaaaaa',
-			'aaaaaaaaaa',
-			'aaaaaaaaaa',
-			'aaaaaaaaaa',
-            'aaaaaaaaaa'
-		],
+		map: map,
 		naming : {
 			top : false,
 			getLabel : function (character, row, column) {
@@ -122,7 +158,7 @@ $(document).ready(function() {
 	//sc.get(['4_4','4_5','6_6','6_7','8_5','8_6','8_7','8_8', '10_1', '10_2']).status('unavailable');
 	//sc.get(['1_1','5_5']).status('reserved');
 	
-});
+};
 //sum total money
 function recalculateTotal(sc) {
 	var total = 0;

@@ -1,6 +1,11 @@
 var change = 0;
 var price = 0;
 
+$('document').ready(function () {
+    getAvailable();
+    getSlots();
+})
+
 function cleanForm() {
     $('#payment').val(0);
     $('#amount').val(0);
@@ -129,14 +134,13 @@ function addQuantity(element) {
     }
 }  
 
-function getPrice(element){
-    //console.log(element.options[element.selectedIndex].value);
+function getPrice(){
     $.ajax({
         url: config.routes[1].price_ajax,
         type: 'get',
         data: 
         { 
-            id: element.options[element.selectedIndex].value
+            id: $('#zone_id').val(),
         },
         success: function( response ){
             //console.log(response);
@@ -144,10 +148,13 @@ function getPrice(element){
             {
                 //console.log(response.price);
                 price = response.price;
+                $('#quantity').val(0);
+                $('#payModal').prop('disabled',true);
+                $('#total2').val("");
             }
             else
             {
-                //console.log('no respuesta');  
+                console.log('no respuesta precio');  
                 price = 0; 
             }
         },
@@ -157,20 +164,26 @@ function getPrice(element){
     });
 } 
 
-function getEventAvailable(element){
+function getAvailable(){
+    funcion = $('#pres_selection').val();
+    zona = $('#zone_id').val();
+    evento = $('#event_id').val();
     $.ajax({
         url: config.routes[2].event_available,
         type: 'get',
         data: 
         { 
-            id: element.options[element.selectedIndex].value
+            event_id: evento,
+            function_id: funcion,
+            zone_id: zona,
         },
         success: function( response ){
             if(response != "")
             {
                 $('#available').val(response);
+                $('#quantity').prop('max',response);
             }else{
-                console.log('no respuesta');  
+                console.log(response);  
             }
         },
         error: function( response ){
@@ -179,28 +192,29 @@ function getEventAvailable(element){
     });
 }
 
-function getSlots(element){
-    var funcion = $('#pres_selection').val();
-    var zona = $('#zone_id').val();
-    console.log('Funcion: ' + funcion + ' Zona: ' + zona);
+function getSlots(){
+    funcion = $('#pres_selection').val();
+    zona = $('#zone_id').val();
+    evento = $('#event_id').val();
     $.ajax({
         url: config.routes[3].slots,
         type: 'get',
         data: 
         { 
+            event_id: evento,
             function_id: funcion,
             zone_id: zona,
 
         },
         success: function( response ){
-            
+            //console.log(response);
             if(response != "")
             {
                 var options = '';
                 for (x in response) options += '<option value="' + response[x] + '">' + response[x] + '</option>';
                 $('#seats').html(options);
             }else{
-                console.log('no respuesta');  
+                //console.log('no respuesta slots');  
             }
         },
         error: function( response ){
