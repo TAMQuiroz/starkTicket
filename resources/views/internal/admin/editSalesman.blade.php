@@ -88,7 +88,7 @@
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <!-- <a class="btn btn-info"  data-toggle="modal" data-target="#agregado">Guardar</a> -->
-                  <a class="btn btn-info" type="button" href=""  title="Create"  data-toggle="modal" data-target="#editModalAdmin">Guardar</a>
+                  <a class="btn btn-info" type="button" href=""  title="Create"  data-toggle="modal" data-target="#editModalSalesman">Guardar</a>
                   <!-- <button type="submit" class="btn btn-info">Guardar</button> -->
                   <button type="reset" class="btn btn-info">Cancelar</button
                 </div>
@@ -96,7 +96,7 @@
 
 
                <!-- MODAL -->
-              <div class="modal fade"  id="editModalAdmin">
+              <div class="modal fade"  id="editModalSalesman">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -108,7 +108,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-info" data-dismiss="modal">No</button>                        
-                        <button type="submit" class="btn btn-info">Sí</button>
+                        <button id="botonModal" type="submit" class="btn btn-info">Sí</button>
                         <!--
                         <a class="btn btn-info" href="" title="Create" >Sí</a>
                         -->
@@ -137,6 +137,9 @@
         }
       }
     }
+    $("#botonModal").click(function(){
+        $("#editModalSalesman").modal('toggle');
+    });
   </script>
 
 @stop

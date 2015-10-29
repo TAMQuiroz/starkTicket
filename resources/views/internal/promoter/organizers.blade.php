@@ -11,7 +11,7 @@
 
 @section('content')
 
-{!! Form::text('eventPlace','', array('class' => 'form-control')) !!}
+{!! Form::text('eventPlace','', array('class' => 'form-control', 'style' => 'width:50%;')) !!} 
 <br>
 <button type="button" class="btn btn-info">Buscar</button>
 <br><br>
