@@ -32,10 +32,12 @@
 					  <table class="table table-bordered table-striped">
 					    <thead>
 					        <tr>
-					            <th>Nombre</th>
-					            <th>Usuario creador</th>
-					            <th>Fecha y hora fin</th>
-					          
+					            <th>Nombre Promoción</th>
+					            <th>Nombre del evento</th>
+					        
+					               <th>Usuario creador</th>
+					                 <th>Fecha de Finalizacion</th>
+
 					            <th>Ver</th>
 					            <th>Editar</th>
 					            <th>Eliminar</th>
@@ -45,26 +47,23 @@
  							@foreach($promotions as $promotion)
 					        <tr>
 					            <td>{{$promotion->name}}</td>
-					            <td>Promotor</td>
-					            <td>{{$promotion->endday}}</td>
-					            
-					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
-					            <td><a href="{{url('promoter/promotion/1/edit')}}"><button class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i></button></a></td>
-					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
-					        </tr>
-					   
-					          @endforeach
-
-
-					    </tbody>
+					        
+					            <td>{{$events[($promotion->event_id)-1]['name']}}</td>
 
 
 
-					  </table>
-					</div>
+					            <td>{{$users[($promotion->user_id)-1]['name']}}</td>
 
-					
-					<div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+								<td>{{$promotion->endday}}</td>
+
+
+					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info{{$promotion->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
+
+
+
+
+
+<div class="modal fade" id="info{{$promotion->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 					  <div class="modal-dialog" role="document">
 					    <div class="modal-content">
 					      <div class="modal-header">
@@ -74,14 +73,35 @@
 					      <div class="modal-body">
 					        <form>
 					          <div class="form-group">
-				            	<h4>Promoción Visa Platinium</h4>
-								<p>Código CA21231J. Creada por Samoel Sarmiento</p>
-								<p>Válida del 01/08/2015 a las 00:00 hasta el 13/10/2015 a las 24:00.</p>
-								<p>%30 de descuento: Promoción exclusiva con tarjetas Visa Platinium.</p>
-								<h5>Aplica para el evento evento:</h5>
-								<ul>
-									<li>Viva por el Rock 6 - Zona VIP</li>
-								</ul>
+				            	<h3>{{$promotion->name}}</h3>
+								<p>Código = {{$promotion->id}} </p>
+								<p>Creada por el usuario =  {{$users[($promotion->user_id)-1]['name']}}    </p>
+								<p>FECHA INICIO {{$promotion->startday}}    </p>
+								<p>FECHA FIN {{$promotion->endday}} horas   </p>
+
+  @if($promotion->typePromotion == 1 )
+  	<p> Promoción de descuento del  {{$promotion->desc}}%  </p>
+	<p> Válido para  </p>	<ul>
+             <li> {{$accessPromotions[($promotion->access_id)-1]['description'] }}
+
+</li>
+      
+</ul>
+            @else
+          	<p> OFERTA   {{$promotion->carry}} x {{$promotion->pay}}  </p>
+          	<p>  Lleva  {{$promotion->carry}} y paga   {{$promotion->pay}} </p>
+    	<p>   Valido únicamente para la zona     </p>
+    	<ul>
+<li>{{$zones[($promotion->zone_id)-1]['name'] }}   </li>
+
+
+
+	</ul>
+            @endif
+
+
+
+							
 					          </div>
 					        </form>
 					      </div>
@@ -92,7 +112,21 @@
 					  </div>
 					</div>
 
-					<div class="modal fade" id="remove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+
+
+
+
+					
+     
+					            <td><a href="{{url('promoter/promotion/'.$promotion->id.'/edit')}}"><button class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i></button></a></td>
+					            <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#remove{{$promotion->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
+
+
+
+
+
+
+	<div class="modal fade" id="remove{{$promotion->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 					  <div class="modal-dialog" role="document">
 					    <div class="modal-content">
 					      <div class="modal-header">
@@ -104,7 +138,7 @@
 					        	<div class="form-group">
 						            <label for="recipient-name" class="control-label">¿Está seguro que desea continuar?</label>
 						            <br><br>
-						            <button type="button" class="btn btn-info" data-dismiss="modal">Continuar</button>
+						      <a class="btn btn-info" href="{{url('promoter/promotion/'.$promotion->id.'/delete')}}" title="Delete" >Sí</a>
 						            <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
 						        </div>
 					        </form>
@@ -113,6 +147,55 @@
 					  </div>
 					</div>
 
+
+
+
+
+					        </tr>
+					   
+					          @endforeach
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					    </tbody>
+
+
+
+					  </table>
+					</div>
+
+					
+					
+
+				
 
 
 
