@@ -57,11 +57,9 @@
           {!! Form::hidden ('capacity_'.$capacity->id, $capacity->capacity) !!}
           {!! Form::hidden ('row_'.$capacity->id, $capacity->rows,  array('id' =>'row_'.$capacity->id)) !!}
           {!! Form::hidden ('column_'.$capacity->id, $capacity->columns, array('id' =>'column_'.$capacity->id)) !!}
+          {!! Form::hidden('invisible', 'secret', array('id' => 'invisible_id')) !!}
         @endforeach
 
-        @foreach ($locals_list as $local)
-          <div id="seat-map_'+local->id+'" div/>
-        @endforeach
 
 
         <div class="row">
@@ -190,11 +188,9 @@
                         -->
                     </div>
               </div>
-              <div class="form-group">
+              <div class="form-group" id="dist">
                 <label  class="col-sm-2 control-label">Distribución evento</label>
-                    <div class="col-sm-10">
-                      <div id="seat-map" class="seatCharts-container" tabindex ="0"></div>
-                  </div>
+                  
               </div>              
               
                 <script>
@@ -420,7 +416,7 @@
         var algo = $('#row_' + index).val();
         //console.log("algo "+algo);
         if(algo !== undefined && algo >=1){
-          //si el local tiene asientos y filas numeradas Do this shit
+          //si el local tiene asientos y filas numeradas Do this 
           //console.log("index "+index);
           var rows = $('#row_'+index).val();
           var columns = $('#column_'+index).val();
@@ -429,6 +425,7 @@
           console.log("filas "+rows);
 
           var arreglo = new Array();
+
           for(i=0; i<rows;i++){
             var texto = 'a';
             for(j=1; j<columns; j++){
@@ -437,11 +434,17 @@
             //console.log(texto);
             arreglo.push(texto);
           }
+          console.log(arreglo);
           //console.log(arreglo);
+          var seatid="seat-map-"+index;
+          console.log(seatid);
 
-
-          $('#seat-map').show();
-          var sc = $('#seat-map').seatCharts({
+          var tam= $('[id=invisible_id]').size();
+          for(i=1;i<=tam;i++){
+            $('#seat-map-'+i).hide();
+          }          
+          
+          var sc = $('#seat-map-'+index).seatCharts({
             map: arreglo,
           naming : {
             top : false,
@@ -457,8 +460,7 @@
               [ 'a', 'reserved', 'Reservado']
             ]
           } });
-          $('#seat-map').show();
-
+          $('#seat-map-'+index).show();
 
           
           $('#input-column').show();
@@ -469,12 +471,17 @@
           $('#label_fil').show();
           $('#label_fini').show();
           $('#label_cini').show();
+          $('#dist').show();
+
 
         }else{
-          //si el local no tiene asientos numerados Do this shit
-          $('#seat-map').empty();
-          var sc = $('#seat-map').hide();
-
+          //si el local no tiene asientos numerados Do this 
+          //$('#seat-map').empty();
+          var tam= $('[id=invisible_id]').size();
+          for(i=1;i<=tam;i++){
+            $('#seat-map-'+i).hide();
+          }
+          //$('#seat-map').hide();
           
           $('#input-column').hide();
           $('#input-row').hide();
@@ -484,6 +491,7 @@
           $('#label_fil').hide();
           $('#label_fini').hide();
           $('#label_cini').hide();
+          // $('#dist').hide();
         }
       });
     });
@@ -507,6 +515,17 @@
     });
   });
   </script>
+
+
+  <script>
+  $(document).ready(function(){
+    //var locals=$locals_list.size();
+    var tam= $('[id=invisible_id]').size();
+    console.log("tamano "+tam);
+    for(var i=1;i<=tam;i++)
+      $('#dist').append("<div id=seat-map-"+i+" class=seatCharts-container tabindex =0> </div>")
+  });
+  </script>  
   {!!Html::script('js/moment.js')!!}
   {!!Html::script('js/rangepicker.js')!!}
 
