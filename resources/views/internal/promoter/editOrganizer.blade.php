@@ -83,14 +83,14 @@
                   <!--
                   <button type="submit" href="" class="btn btn-info" data-toggle="modal" data-target="#editModal{{$organizador->id}}">Guardar</button>
                   -->
-                  <a class="btn btn-info" href=""  title="Edit"  data-toggle="modal" data-target="#editModal{{$organizador->id}}">Guardar</a>
+                  <a class="btn btn-info" href=""  title="Edit"  data-toggle="modal" data-target="#editModal">Guardar</a>
                   <button type="reset" class="btn btn-info">Cancelar</button>
                 </div>
               </div>
 
 
               <!-- MODAL -->
-              <div class="modal fade"  id="editModal{{$organizador->id}}">
+              <div class="modal fade"  id="editModal">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -102,8 +102,8 @@
                     </div>
                     <div class="modal-footer">
                         
-                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>     
-                        <button type="submit" class="btn btn-info" id="yes">Sí</button>
+                        <button  type="button" class="btn btn-info" data-dismiss="modal">No</button>     
+                        <button  id = "botonModal" type="submit" class="btn btn-info" id="yes">Sí</button>
                         <!--                    
                         <a class="btn btn-info" href="{{url('promoter/organizer/'.$organizador->id.'/edit')}}" title="Edit" >Sí</a>
                         -->
@@ -132,6 +132,10 @@
         }
       }
   }
+
+   $("#botonModal").click(function(){
+        $("#editModal").modal('toggle');
+    });
 
 </script>
 
