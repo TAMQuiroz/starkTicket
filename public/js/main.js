@@ -1,4 +1,5 @@
 var change = 0;
+var price = 0;
 
 function cleanForm() {
     $('#payment').val(0);
@@ -105,10 +106,56 @@ $('#amountIn').change(function(){
     }
 });
 
-function getInnerText(element) {
-    var text = element.options[element.selectedIndex].text;
-    document.getElementById("funcion").innerHTML = text;
-}
+$('#quantity').change(function(){
+    count = $(this).val();
+    if($(this).val() > 0){
+        $('#payModal').prop('disabled',false);
+        $('#total2').val(count*price);
+    }else{
+        $('#payModal').prop('disabled',true);
+        $('#total2').val("");
+    }
+});
+
+function addQuantity(element) {
+    count = $('#seats option:selected').length;
+    $('#quantity').val(count);
+    if(count == 0){
+        $('#payModal').prop('disabled',true);
+        $('#total2').val("");
+    }else{
+        $('#payModal').prop('disabled',false);
+        $('#total2').val(count*price);
+    }
+}  
+
+function getPrice(element){
+    //console.log(element.options[element.selectedIndex].value);
+    $.ajax({
+        url: config.routes[1].price_ajax,
+        type: 'get',
+        data: 
+        { 
+            id: element.options[element.selectedIndex].value
+        },
+        success: function( response ){
+            //console.log(response);
+            if(response != "")
+            {
+                //console.log(response.price);
+                price = response.price;
+            }
+            else
+            {
+                //console.log('no respuesta');  
+                price = 0; 
+            }
+        },
+        error: function( response ){
+            
+        }
+    });
+} 
 
 function getEventAvailable(element){
     $.ajax({
@@ -133,12 +180,17 @@ function getEventAvailable(element){
 }
 
 function getSlots(element){
+    var funcion = $('#pres_selection').val();
+    var zona = $('#zone_id').val();
+    console.log('Funcion: ' + funcion + ' Zona: ' + zona);
     $.ajax({
         url: config.routes[3].slots,
         type: 'get',
         data: 
         { 
-            id: element.options[element.selectedIndex].value
+            function_id: funcion,
+            zone_id: zona,
+
         },
         success: function( response ){
             

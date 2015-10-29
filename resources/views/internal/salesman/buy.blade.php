@@ -25,9 +25,9 @@
                 </div>
                 <div style="-webkit-columns: 100px 2;">
                     <h4 class="boxy"> Funciones del evento </h4>
-                    {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=> 'getInnerText(this),getEventAvailable(this), getSlots(this)']) !!}
+                    {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=>'getEventAvailable(this), getSlots(this)']) !!}
                     <h4 > Zona del Evento </h4>
-                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getPrice(this)','id'=>'zone_id']) !!}
+                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getPrice(this), getSlots(this)','id'=>'zone_id']) !!}
                 </div>
                 <h4> Promoción </h4>
                 {!! Form::select('promotion_id', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
@@ -67,6 +67,10 @@
             <br>
             <br>
         </fieldset>
+
+        @if($event->place->rows != null)
+            
+        
         <legend>Selección de Ubicación</legend>
         <div class="seats">
             <div class="demo">
@@ -87,8 +91,16 @@
                 <div style="clear:both"></div>
            </div>
         </div>
-        {!!Form::select('seats[]',head($slots_array),null,['id'=>'seats','multiple'])!!}
 
+        {!!Form::select('seats[]',head($slots_array), null,['id'=>'seats','multiple','onClick'=>'addQuantity(this)'])!!}
+        
+        Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','readonly', 'class'=>'form-control'])!!}
+
+        @else
+        
+        Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','class'=>'form-control'])!!}
+
+        @endif
         <!-- Content Row -->
         <!-- /.row -->
         <hr>

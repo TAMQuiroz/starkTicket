@@ -104,14 +104,14 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
-        //var_dump($request->all());
-        
-        $seats = $request['seats'];
-        $nTickets = count($seats);
-        //if(capacidad de la zona - $nTickets <= 0)
-                //return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
-        
-        //if (evento es numerado)
+        //dd($request->all());
+        $event = Event::find($request['event_id']);
+        $zone = Zone::find($request['zone_id']);
+        $nTickets = $request['quantity'];
+
+        if ($event->place->row != null){ //Es numerado
+            $seats = $request['seats'];
+
             foreach($seats as $seat_id){
                 $slot = DB::table('slot_presentation')->where('slot_id',$seat_id)->where('presentation_id', $request['presentation_id'])->first();
 
@@ -119,6 +119,11 @@ class TicketController extends Controller
                     return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
                 }
             }
+
+        }else{ //No es numerado
+            if($zone->capacity - $nTickets <= 0) //Deberia ser zona x presentacion
+                return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
+        }
             
                
         DB::beginTransaction();
@@ -127,21 +132,20 @@ class TicketController extends Controller
             $tickets = array();
             for($i = 0; $i < $nTickets; $i++){
 
-                $event = Event::find($request['event_id']);
-                //if(evento es numerado)
+                
+                if ($event->place->row != null){
                     //Cambiar estado de asiento
                     DB::table('slot_presentation')
                         ->where('slot_id', $seats[$i])
                         ->where('presentation_id', $request['presentation_id'])
                         ->update(['status' => config('constants.seat_taken')]);
-                //else
+                }else{
                     //Disminuir capacidad en la zona de esa presentacion
                     //DB::table('zoneXPresentation')->where('zone_id', $request['zone_id'])
                     //                              ->where('presentation_id',$request['presentation_id'])
                     //                              ->decrement('slots_availables');;
+                }
                 
-                $zone = Zone::find($request['zone_id']);
-
                 //Crear ticket
                 
                 $id = DB::table('tickets')->insertGetId(
@@ -165,9 +169,9 @@ class TicketController extends Controller
 
                 }   
                 
-                //Si (evento es numerado)
+                if ($event->place->row != null)
                     DB::table('tickets')->where('id',$id)->update(['seat_id' => $seats[$i]]);
-
+                
                 array_push($tickets,$id);
                 //var_dump('llego');
             }
@@ -176,7 +180,7 @@ class TicketController extends Controller
 
         }catch (\Exception $e){
             var_dump($e);
-            //dd('rollback');
+            dd('rollback');
             DB::rollback();
             return back()->withInput($request->except('seats'))->withErrors(['Por favor intentelo nuevamente']);
         }
@@ -292,7 +296,7 @@ class TicketController extends Controller
 
     public function getSlots(request $request)
     {
-        $slots = DB::table('slot_presentation')->where('presentation_id',$request['id'])->where('status',config('constants.seat_available'))->lists('slot_id','slot_id');   
+        $slots = DB::table('slot_presentation')->where('presentation_id',$request['function_id'])->where('status',config('constants.seat_available'))->lists('slot_id','slot_id');   
 
         return $slots;
     }
