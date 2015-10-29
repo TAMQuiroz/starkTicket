@@ -143,28 +143,28 @@
                       {!! Form::number('zoneCapacity','', array('class' => 'form-control','id' => 'input-capacity')) !!}
                   </div>
               </div>
-              <div class="form-group">
-                  <label  class="col-sm-2 control-label">Columnas</label>
+              <div class="form-group" id="label_col">
+                  <label  class="col-sm-2 control-label" >Columnas</label>
                   <div class="col-sm-10">
-                      {!! Form::number('zone_columns','', array('class' => 'form-control','id' => 'input-capacity')) !!}
+                      {!! Form::number('zone_columns','', array('class' => 'form-control','id' => 'input-column')) !!}
                   </div>
               </div>
-              <div class="form-group">
-                  <label  class="col-sm-2 control-label">Filas</label>
+              <div class="form-group" id="label_fil">
+                  <label  class="col-sm-2 control-label" >Filas</label>
                   <div class="col-sm-10">
-                      {!! Form::number('zone_rows','', array('class' => 'form-control','id' => 'input-capacity')) !!}
+                      {!! Form::number('zone_rows','', array('class' => 'form-control','id' => 'input-row')) !!}
                   </div>
               </div>
-              <div class="form-group">
-                  <label  class="col-sm-2 control-label">Columna inicial</label>
+              <div class="form-group" id="label_fini">
+                  <label  class="col-sm-2 control-label" >Columna inicial</label>
                   <div class="col-sm-10">
-                      {!! Form::number('start_column','', array('class' => 'form-control','id' => 'input-capacity')) !!}
+                      {!! Form::number('start_column','', array('class' => 'form-control','id' => 'input-colIni')) !!}
                   </div>
               </div>     
-              <div class="form-group">
-                  <label  class="col-sm-2 control-label">Fila inicial</label>
+              <div class="form-group" id="label_cini">
+                  <label  class="col-sm-2 control-label" >Fila inicial</label>
                   <div class="col-sm-10">
-                      {!! Form::number('start_row','', array('class' => 'form-control','id' => 'input-capacity')) !!}
+                      {!! Form::number('start_row','', array('class' => 'form-control','id' => 'input-rowIni')) !!}
                   </div>
               </div>                                                     
               <div class="form-group">
@@ -299,6 +299,8 @@
 
                 <script>
 
+
+
                     function addFunction(){
 
                         var start_date = document.getElementById('input-function-date').value;
@@ -394,27 +396,36 @@
   <script>
     $(document).ready(function() {
 
+       
+
       $('[name=local_id]').click(function(){
         var e = $('[name=local_id]')[0];
-        var index= e.options[e.selectedIndex].value;
 
+        var index= e.options[e.selectedIndex].value;
+        console.log(index);
         var algo = $('#row_' + index).val();
-        console.log("algo "+algo);
+        //console.log("algo "+algo);
         if(algo !== undefined && algo >=1){
-          console.log("index "+index);
+          //si el local tiene asientos y filas numeradas Do this shit
+          //console.log("index "+index);
           var rows = $('#row_'+index).val();
           var columns = $('#column_'+index).val();
           console.log("columnas "+columns);
+
+          console.log("filas "+rows);
+
           var arreglo = new Array();
           for(i=0; i<rows;i++){
             var texto = 'a';
             for(j=1; j<columns; j++){
               texto += 'a';
             }
-            console.log(texto);
+            //console.log(texto);
             arreglo.push(texto);
           }
-          console.log(arreglo);
+          //console.log(arreglo);
+
+
           $('#seat-map').show();
           var sc = $('#seat-map').seatCharts({
             map: arreglo,
@@ -433,9 +444,32 @@
             ]
           } });
           $('#seat-map').show();
+
+
+          
+          $('#input-column').show();
+          $('#input-row').show();
+          $('#input-colIni').show();
+          $('#input-rowIni').show();
+          $('#label_col').show();
+          $('#label_fil').show();
+          $('#label_fini').show();
+          $('#label_cini').show();
+
         }else{
+          //si el local no tiene asientos numerados Do this shit
           $('#seat-map').empty();
           var sc = $('#seat-map').hide();
+
+          
+          $('#input-column').hide();
+          $('#input-row').hide();
+          $('#input-colIni').hide();
+          $('#input-rowIni').hide();
+          $('#label_col').hide();
+          $('#label_fil').hide();
+          $('#label_fini').hide();
+          $('#label_cini').hide();
         }
       });
     });

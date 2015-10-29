@@ -41,7 +41,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Sub categoría</label>
                 <div class="col-sm-10">
-                    {!! Form::select('category_id', ['Rock','Cumbia','Tropical','Otros'],$event->category_id,['class' => 'form-control','required','id'=>'subcategory_id']) !!}
+                    {!! Form::select('category_id', $categories_list->toArray() ,$event->category_id,['class' => 'form-control','required','id'=>'subcategory_id']) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -317,12 +317,12 @@
                     </tr>     
 
                      <!-- MODAL -->
-                      <div class="modal fade"  id="deleteModal{{$organizer->id}}">
+                      <div class="modal fade"  id="deleteModal{{$function->id}}">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title">¿Estas seguro que desea eliminar a un organizador?</h4>
+                              <h4 class="modal-title">¿Estas seguro que desea eliminar esta función ?</h4>
                             </div>
                             <div class="modal-body">
                               <h5 class="modal-title">Los cambios serán permanentes</h5>
