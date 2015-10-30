@@ -54,13 +54,13 @@
 		<br>
 		<div style="-webkit-columns: 100px 4;">
 			<h4>Fecha Inicio</h4>
-			{!! Form::date('dateIni','', array('class' => 'form-control' , 'required')) !!}
+			{!! Form::date('dateIni',\Carbon\Carbon::now(), array('class' => 'form-control' , 'required')) !!}
 
 	<h4>Hora Inicio</h4>
 			{!! Form::time('timeIni','', array('class' => 'form-control', 'required')) !!}
 			
 			<h4>Fecha Fin</h4>
-			{!! Form::date('dateEnd','', array('class' => 'form-control', 'required')) !!}
+			{!! Form::date('dateEnd',\Carbon\Carbon::now()->addDay(), array('class' => 'form-control', 'oninput' => 'incrementDate()', 'required')) !!}
 		
 			<h4>Hora Fin</h4>
 			{!! Form::time('timeEnd','', array('class' => 'form-control', 'required')) !!}
@@ -191,6 +191,21 @@
      })
    });
  });
+ function incrementDate(){
+    var publication_date = document.getElementsByName('dateIni')[0].value;
+    document.getElementsByName('dateIni')[0].stepUp();
+    var publication_date_1 = document.getElementsByName('dateIni')[0].value;
+    document.getElementsByName('dateIni')[0].stepDown();
+    var today = new Date();
+    var publicDate = new Date(document.getElementsByName('dateIni')[0].value);
+    var timeToday = today.getTime();
+    var timePublic = publicDate.getTime();
+    var month = today.getMonth() +1;
+    if(timeToday > timePublic)
+      document.getElementsByName('dateEnd')[0].min = ''+today.getFullYear()+'-'+month+'-'+today.getDate();
+    else
+      document.getElementsByName('dateEnd')[0].min = publication_date_1;
+  }
  </script>
 
 
