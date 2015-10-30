@@ -87,16 +87,16 @@
                 <label class="col-sm-2 control-label">Categoría</label>
                 <div class="col-sm-10">
 
-                    {!! Form::select('category_id', $categories_list->toArray(),null,['class' => 'form-control','required','id'=>'category_id']) !!}
+                    {!! Form::select('parent_category_id', $categories_list->toArray(),null,['class' => 'form-control','required','id'=>'category_id']) !!}
                 </div>
 
               </div>
-<!--               <div class="form-group">
+              <div class="form-group">
                 <label class="col-sm-2 control-label">Sub categoría</label>
                 <div class="col-sm-10">
-                    {!! Form::select('category_id',$categories_list->toArray(),null,['class' => 'form-control','required','id'=>'subcategory_id']) !!}
+                    {!! Form::select('category_id',$categories_list->toArray(),null,['class' => 'form-control','required','id'=>'subcategory_id','onLoad'=>'getSubs()']) !!}
                 </div>
-              </div> -->
+              </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Organizador</label>
                 <div class="col-sm-10">
@@ -114,7 +114,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Fecha de publicación del evento</label>
                 <div class="col-sm-10">
-                    {!! Form::date('publication_date',\Carbon\Carbon::now(), array('class' => 'form-control','required', 'oninput' => 'incrementSellingDate()')) !!}
+                    {!! Form::date('publication_date',\Carbon\Carbon::now(), array('class' => 'form-control','required', 'oninput' => 'incrementSellingDate()', 'min'=>\Carbon\Carbon::now()->toDateString())) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -581,6 +581,26 @@
     });
   </script>
   <script>
+
+
+$('document').ready(function () {
+  getSubs();
+})
+
+  function getSubs(){
+      category_id = $("#category_id").val();
+      url_base = "{{ url('/') }}";
+      // Peticion ajax
+      $.getJSON(url_base+"/promoter/"+category_id+"/subcategories", function(data)
+      {
+        $("#subcategory_id").empty();
+        $.each( data, function( id, name ) {
+            $('#subcategory_id').append("<option value=\""+id+"\">"+name+"</option>");
+      });
+
+    });
+  }
+
   $(document).ready(function(){
     // Poblar sub category
     $("#category_id").change(function(){
