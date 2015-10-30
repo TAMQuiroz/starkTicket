@@ -151,10 +151,32 @@ class EventController extends Controller
         return $function_starts_at;
     }
 
+    public function validateFreeLocal($starts_at, $local_id, $time_length){
+        $events = Event::where('local_id', $local_id)->get();
+        if($events->count()>0){
+            foreach ($starts_at as $start_at) {
+                $min_date = strtotime($start_at);
+                $max_date = $min_date + ($time_length*3600);
+                foreach ($events as $event) {
+                    $presentations = $event->presentations;
+                    foreach ($presentations as $presentation) {
+                        $date = intval($presentation->starts_at);
+                        if($date<=$max_date || $date>=$min_date)
+                            return ['error' => 'This local has presentations on the specified dates and times'];
+                    }
+                }
+            }
+        }   
+        else return null;
+    }
+
     public function store(StoreEventRequest $request)
     {
-
         $result_dates = $this->join_date_time($request->input('start_time'),$request->input('start_date'));
+        $result_local_validation = $this->validateFreeLocal($result_dates, $request->input('local_id'), $request->input('time_length'));
+        if($result_local_validation != null){
+            return redirect()->back()->withInput()->withErrors($result_local_validation);
+        }
         $temp = array_unique($result_dates);
         if(count($temp) < count($result_dates))
             return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
@@ -163,6 +185,7 @@ class EventController extends Controller
         if($result['error'] != '')
             return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
             //return response()->json(['message' => $result['error']]);
+        
         $data = [
             'name'          => $request->input('name'),
             'description'   => $request->input('description'),
