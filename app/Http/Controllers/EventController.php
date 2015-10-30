@@ -289,7 +289,16 @@ class EventController extends Controller
     public function edit($id)
     {
         $event = Event::find($id);
-        return view('internal.promoter.editEvent', ['events' => $event]);
+        $categories_list = Category::where('type',1)->lists('name','id');
+        $organizers_list = Organizer::all()->lists('businessName','id');
+        $locals_list = Local::all()->lists('name','id');
+        $capacity_list = Local::all();
+        $array = ['categories_list' =>$categories_list,
+                'organizers_list'   =>$organizers_list,
+                'locals_list'       =>$locals_list,
+                'capacity_list'     =>$capacity_list,
+                'event'   => $event];
+        return view('internal.promoter.editEvent', $array);
     }
     /**
      * Update the specified resource in storage.
@@ -516,7 +525,6 @@ class EventController extends Controller
         $slots = Slot::where('zone_id', $zone_id)->get();
         $presentations = Presentation::where('event_id', $event_id)->get();
         $max = 0;
-
         foreach($presentations as $presentation){
             $count = 0;
             foreach($presentation->slots as $slot){
@@ -526,8 +534,8 @@ class EventController extends Controller
             }
             if($count > $max) $max = $count;
         }
-        return $max;
-
+        $result = ['max' => $max, 'all_sold' => $all_sold];
+        return $result;
     }
     /**
      * Remove the specified resource from storage.
@@ -537,7 +545,9 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $event = Event::find($id);
+        $event->delete();
+        return redirect()->route('events.indexPromoter');
     }
     public function subcategoriesToAjax($id)
     {
