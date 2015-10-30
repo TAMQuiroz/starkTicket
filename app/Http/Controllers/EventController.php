@@ -44,6 +44,10 @@ class EventController extends Controller
      */
     public function create()
     {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 28437e7401a486417b467ed415725f8cb0ecfbd3
         $categories_list = Category::where('type',1)->lists('name','id');
         $organizers_list = Organizer::all()->lists('businessName','id');
 
