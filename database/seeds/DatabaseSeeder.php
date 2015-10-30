@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         $this->call(LocalTableSeeder::class);
         $this->call(OrganizerTableSeeder::class);
         $this->call(politicsSeeder::class);
+      $this->call(AccessPromotionSeeder::class);
+         $this->call(ExchangeRateTableSeeder::class);
+
 
         Model::reguard();
     }

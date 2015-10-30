@@ -66,9 +66,9 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('getPrice', ['uses'=>'TicketController@getPrice','as'=>'ajax.getPrice']);
 });
 
+Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
     Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
-Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/', 'PagesController@promoterHome');
     Route::get('promoter/politics', 'PoliticController@index');
     Route::get('promoter/politics', 'PoliticController@politicsPromotor');
@@ -78,25 +78,26 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/event/record', 'EventController@showPromoterRecord');
     Route::get('promoter/event/create', 'EventController@create');
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
+
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
+    Route::get('promoter/{category_id}/subcategories', 'EventController@subcategoriesToAjax');
 
 
 
 
- 
+
     Route::get('promoter/promotion', 'PromoController@index');
      Route::get('promoter/promotion', 'PromoController@promotion');
+
+
+
     Route::get('promoter/promotion/new', ['as'=>'promo.create','uses'=>'PromoController@create']);
-
-    Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);
-
-
-
+     Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);
+    Route::get('promoter/promotion/new/{event_id}', 'PromoController@ajax');
     Route::get('promoter/promotion/{id}/edit', ['as'=>'promo.edit','uses'=>'PromoController@edit']);
-    Route::post('promoter/promotion/{id}/edit', ['as'=>'promo.update','uses'=>'PromoController@update']);
-
-
-
+    Route::post('promoter/promotion/{id}/edit',  'PromoController@update');
+    Route::get('promoter/promotion/{id}/delete',  'PromoController@destroy');
+    
 
 
 
@@ -116,7 +117,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
 
-    Route::get('admin/', 'PagesController@adminHome'); 
+    Route::get('admin/', 'PagesController@adminHome');
     Route::get('admin/politics', 'PoliticController@politics');
     Route::get('admin/politics/new', 'PoliticController@create');
     Route::post('admin/politics/new', 'PoliticController@store');
@@ -153,6 +154,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/attendance', 'BusinessController@attendance');
 
     Route::get('admin/config/exchange_rate', 'BusinessController@exchangeRate');
+    Route::post('admin/config/exchange_rate', 'BusinessController@storeExchangeRate');
     Route::get('admin/config/about', 'BusinessController@about');
     Route::get('admin/config/system', 'BusinessController@system');
 
@@ -170,8 +172,12 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/client', 'ClientController@index');
     Route::post('admin/client/desactive', 'ClientController@desactive');
 
+
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
+    Route::post('admin/salesman/{id}/edit', 'AdminController@updateSalesman');
+    Route::get('admin/salesman/{id}/delete', 'AdminController@destroySalesman');
+
 
     Route::get('admin/user/new', 'AdminController@newUser');
     Route::post('admin/user/new', 'AdminController@store');

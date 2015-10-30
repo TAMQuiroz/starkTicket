@@ -24,7 +24,7 @@ class PasswordClientRequest extends Request
     public function rules()
     {
         return [
-            'password' => 'required|min:8|max:16',
+            'password' => 'required|min:6|max:16',
             'new_password' => 'required|confirmed|min:8|max:16'
         ];
     }

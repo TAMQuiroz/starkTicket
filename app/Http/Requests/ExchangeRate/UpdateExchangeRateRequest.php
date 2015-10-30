@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Politics;
+namespace App\Http\Requests\ExchangeRate;
 
 use App\Http\Requests\Request;
 
-
-class UpdatePoliticRequest extends Request
+class UpdateExchangeRateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +24,9 @@ class UpdatePoliticRequest extends Request
     public function rules()
     {
         return [
-            'name'          =>  'required|max:70',
-            'description'       =>  'required|max:300',
-            'state'      =>  'required|max:20'
-
+            'buyingRate'    =>  'required',
+            'sellingRate'   =>  'required',
         ];
-
     }
+
 }

@@ -45,7 +45,7 @@
        <div class="form-group">
         <label for="inputPhone" class="col-sm-2 control-label">Teléfono</label>
         <div class="col-sm-10">
-          {!!Form::input('number','phone', null ,['class'=>'form-control','id'=>'phone','required'])!!}
+          {!!Form::input('number','phone', null ,['class'=>'form-control','id'=>'phone','required','min'>=1])!!}
         </div>
       </div>
       <div class="form-group">

@@ -24,12 +24,12 @@ class StoreModuleRequest extends Request
     public function rules()
     {
         return [
-            'name'          =>  'required|max:15',
+            'name'          =>  'required|max:30',
             'address'       =>  'required|max:50',
-            'district'      =>  'required|max:20',
-            'province'      =>  'required|max:20',
-            'state'         =>  'required|max:20',
-            'phone'         =>  'required',
+            'district'      =>  'required|max:30',
+            'province'      =>  'required|max:30',
+            'state'         =>  'required|max:30',
+            'phone'         =>  'required|max:10|numeric',
             'email'         =>  'required|max:50',
             'starTime'      =>  'required',
             'endTime'       =>  'required',
