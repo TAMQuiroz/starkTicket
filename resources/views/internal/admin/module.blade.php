@@ -55,9 +55,9 @@
                     <h4>Correo: </h4>
                     {{$module->email}}
                     <h4>Apertura: </h4>
-                    {{$module->starTime}}
+                    {{date_format(date_create($module->starTime),"H:i:s")}}
                     <h4>Cierre: </h4>
-                    {{$module->endTime}}
+                    {{date_format(date_create($module->endTime),"H:i:s")}}
                     <br>
                     <br>
                     {!! Html::image($module->image, null, array('class'=>'module_img')) !!}
