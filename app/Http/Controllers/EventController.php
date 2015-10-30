@@ -44,14 +44,7 @@ class EventController extends Controller
      */
     public function create()
     {
-<<<<<<< HEAD
-        $categories_list = Category::all()->lists('name','id');
-
-        $organizers_list = Organizer::all()->lists('organizerName','id');
-
-=======
         $categories_list = Category::where('type',1)->lists('name','id');
->>>>>>> 7c536b3fdc1a4bacfeea9f9cf318f2ff4a77e389
         $organizers_list = Organizer::all()->lists('businessName','id');
 
         $locals_list = Local::all()->lists('name','id');
@@ -506,28 +499,17 @@ class EventController extends Controller
         $all_sold = array();
         $presentations = Presentation::where('event_id', $event_id)->get();
         $max = 0;
-<<<<<<< HEAD
         
         foreach($zone->presentations as $presentation){
-=======
-
-        foreach($presentations as $presentation){
->>>>>>> 7c536b3fdc1a4bacfeea9f9cf318f2ff4a77e389
             $count = 0;
             $availables = $presentation->pivot->slots_availables;
             $count = $zone->capacity - $availables;
             array_push($all_sold, $count);
             if($count > $max) $max = $count;
         }
-<<<<<<< HEAD
 
         $result = ['max' => $max, 'all_sold' => $all_sold];
         return $result;
-        
-=======
-        return $max;
-
->>>>>>> 7c536b3fdc1a4bacfeea9f9cf318f2ff4a77e389
     }
     /**
      * Remove the specified resource from storage.
