@@ -211,7 +211,11 @@ function getSlots(){
             if(response != "")
             {
                 var options = '';
-                for (x in response) options += '<option value="' + response[x] + '">' + response[x] + '</option>';
+                for (x in response)
+                { 
+                    console.log(x);
+                    options += '<option value="' + x + '">' + response[x] + '</option>';
+                }
                 $('#seats').html(options);
             }else{
                 //console.log('no respuesta slots');  

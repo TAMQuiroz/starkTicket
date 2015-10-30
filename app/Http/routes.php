@@ -72,13 +72,13 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
     Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
-    Route::get('promoter/', 'PagesController@promoterHome');
+    Route::get('promoter/', ['as'=>'promoter.home','uses'=>'PagesController@promoterHome']);
     Route::get('promoter/politics', 'PoliticController@index');
     Route::get('promoter/politics', 'PoliticController@politicsPromotor');
 
     Route::get('promoter/event/recordPayment', 'PaymentController@index');
     Route::get('promoter/transfer_payments', 'PaymentController@create');
-    Route::get('promoter/event/record', 'EventController@showPromoterRecord');
+    Route::get('promoter/event/record', ['as'=>'promoter.record','uses'=>'EventController@showPromoterRecord']);
     Route::get('promoter/event/create', 'EventController@create');
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
 

@@ -11,7 +11,7 @@
 @stop
 
 @section('title')
-	Evento
+	{{$event->name}}
 @stop
 
 @section('content')
