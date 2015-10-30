@@ -96,7 +96,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Sub categoría</label>
                 <div class="col-sm-10">
-                    {!! Form::select('category_id', ['Rock','Cumbia','Tropical','Otros'],null,['class' => 'form-control','required','id'=>'subcategory_id']) !!}
+                    {!! Form::select('no_category_id', ['Rock','Cumbia','Tropical','Otros'],null,['class' => 'form-control','required','id'=>'subcategory_id']) !!}
                 </div>
               </div>
               <div class="form-group">
