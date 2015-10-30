@@ -59,13 +59,13 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Fecha de publicación del evento</label>
                 <div class="col-sm-10">
-                    {!! Form::date('publication_date',$event->publication_date, array('class' => 'form-control','required', 'oninput' => 'incrementSellingDate()')) !!}
+                    {!! Form::date('publication_date',date('Y-m-d',$event->publication_date), array('class' => 'form-control','required', 'oninput' => 'incrementSellingDate()')) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Fecha de inicio de ventas</label>
                 <div class="col-sm-10">
-                    {!! Form::date('selling_date',$event->selling_date, array('class' => 'form-control','required', 'oninput' => 'incrementPresentationDate()')) !!}
+                    {!! Form::date('selling_date',date('Y-m-d',$event->selling_date), array('class' => 'form-control','required', 'oninput' => 'incrementPresentationDate()')) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -190,32 +190,13 @@
 
                     @foreach($event->zones as $zone)
                     <tr>
-                        <td>$zone->name</td>
-                        <td>$zone->capacity</td>
-                        <td>$zone->Price</td>
+                        <td><input type="text" style = "border:none" name="zone_names[]" value="{{$zone->name}}"></td>
+                        <td><input type="number" style = "border:none" name="zone_capacity[]" value="{{$zone->capacity}}"></td>
+                        <td><input type="number" name="price[]" style = "border:none" value="{{$zone->price}}"></td>
                         <td>
                           <a class="btn btn-info" href=""  title="Eliminar"    data-toggle="modal" data-target="#deleteModal{{$zone->id}}"><i class="glyphicon glyphicon-remove"></i></a>
                         </td>
                     </tr>     
-
-                     <!-- MODAL -->
-                      <div class="modal fade"  id="deleteModal{{$organizer->id}}">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title">¿Estas seguro que desea eliminar a un organizador?</h4>
-                            </div>
-                            <div class="modal-body">
-                              <h5 class="modal-title">Los cambios serán permanentes</h5>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                                <a class="btn btn-info" href="{{url('promoter/event/'.$zone->id.'/delete')}}" title="Delete" >Sí</a>
-                            </div>
-                          </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                      </div><!-- /.modal -->
 
                     @endforeach
 
@@ -309,8 +290,8 @@
 
                     @foreach($event->presentations as $function)
                     <tr>
-                        <td>$function->start_date</td>
-                        <td>$function->start_time</td>
+                        <td><input type="date" value="{{date('Y-m-d',$function->starts_at)}}" style = "border:none"></td>
+                        <td><input type="time" value="{{date('h:i:s',$function->starts_at)}}" style = "border:none"></td>
                         <td>
                           <a class="btn btn-info" href=""  title="Eliminar"    data-toggle="modal" data-target="#deleteModal{{$function->id}}"><i class="glyphicon glyphicon-remove"></i></a>
                         </td>

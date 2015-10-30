@@ -525,7 +525,6 @@ class EventController extends Controller
         $slots = Slot::where('zone_id', $zone_id)->get();
         $presentations = Presentation::where('event_id', $event_id)->get();
         $max = 0;
-
         foreach($presentations as $presentation){
             $count = 0;
             foreach($presentation->slots as $slot){
@@ -535,8 +534,8 @@ class EventController extends Controller
             }
             if($count > $max) $max = $count;
         }
-        return $max;
-
+        $result = ['max' => $max, 'all_sold' => $all_sold];
+        return $result;
     }
     /**
      * Remove the specified resource from storage.
@@ -546,7 +545,9 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $event = Event::find($id);
+        $event->delete();
+        return redirect()->route('events.indexPromoter');
     }
     public function subcategoriesToAjax($id)
     {
