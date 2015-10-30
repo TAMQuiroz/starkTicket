@@ -17,8 +17,4 @@ class Presentation extends Model
         return $this->belongsToMany('App\Models\Slot','slot_presentation')->withPivot('status');
     }
 
-    public function zones(){
-        return $this->belongsToMany('App\Models\Zone','zone_presentation')->withPivot('slots_availables');
-    }
-
 }

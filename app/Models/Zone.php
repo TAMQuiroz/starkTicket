@@ -16,8 +16,4 @@ class Zone extends Model
     public function slots(){
         return $this->hasMany('App\Models\Slot');
     }
-
-    public function presentation(){
-        return $this->belongsToMany('App\Models\Presentation','zone_presentation')->withPivot('slots_availables');
-    }
 }
