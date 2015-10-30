@@ -28,7 +28,7 @@
     var e = document.getElementsByName('local_id')[0];
     var index= e.options[e.selectedIndex].value;
     document.getElementById('capacity-display').value = document.getElementsByName('capacity_'+index)[0].value;
-
+    document.getElementById("input-capacity").max=document.getElementById("capacity-display").value;
   }
 
   function incrementSellingDate(){
@@ -68,19 +68,19 @@
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                  {!! Form::text('name','', array('class' => 'form-control','required')) !!}
+                  {!! Form::text('name','', array('class' => 'form-control','required','maxlength' => 50)) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Lugar</label>
                 <div class="col-sm-10">
-                  {!! Form::select('local_id', $locals_list->toArray(), null, ['class' => 'form-control','required', 'onclick' => 'changeCapacity()']) !!}
+                  {!! Form::select('local_id', $locals_list->toArray(), null, ['class' => 'form-control','required', 'onclick' => 'changeCapacity()','maxlength' => 50]) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Descripción</label>
                 <div class="col-sm-10">
-                  {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => '5']) !!}
+                  {!! Form::textarea('description', null, ['class' => 'form-control','style' => 'resize:none','rows' => '3','maxlength' => 100]) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -91,24 +91,24 @@
                 </div>
 
               </div>
-              <div class="form-group">
+<!--               <div class="form-group">
                 <label class="col-sm-2 control-label">Sub categoría</label>
                 <div class="col-sm-10">
                     {!! Form::select('category_id',$categories_list->toArray(),null,['class' => 'form-control','required','id'=>'subcategory_id']) !!}
                 </div>
-              </div>
+              </div> -->
               <div class="form-group">
                 <label class="col-sm-2 control-label">Organizador</label>
                 <div class="col-sm-10">
 
-                    {!! Form::select('organizer_id', $organizers_list->toArray(),null,['class' => 'form-control','required']) !!}
+                    {!! Form::select('organizer_id', $organizers_list->toArray(),null,['class' => 'form-control','required','maxlength' => 50]) !!}
                 </div>
               </div>
 
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Duración Aproximada</label>
                 <div class="col-sm-10">
-                  {!! Form::number('time_length','', array('class' => 'form-control','required')) !!}
+                  {!! Form::number('time_length',1, array('class' => 'form-control','min' => '1','required')) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -136,70 +136,72 @@
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Nombre</label>
                   <div class="col-sm-10">
-                      {!! Form::text('zoneName','', array('class' => 'form-control','id' => 'input-zone')) !!}
+                      {!! Form::text('zoneName','', array('class' => 'form-control','id' => 'input-zone','maxlength' => 50)) !!}
                   </div>
               </div>
               <div class="form-group">
-                  <label  class="col-sm-2 control-label">Capacidad</label>
+                  <label  class="col-sm-2 control-label" id="label_capacity">Capacidad</label>
                   <div class="col-sm-10">
-                      {!! Form::number('zoneCapacity','', array('class' => 'form-control','id' => 'input-capacity')) !!}
+                      {!! Form::number('zoneCapacity','', array('class' => 'form-control','id' => 'input-capacity','min' => '1')) !!}
                   </div>
               </div>
               <div class="form-group" id="label_col">
                   <label  class="col-sm-2 control-label" >Columnas</label>
                   <div class="col-sm-10">
-                      {!! Form::number('zone_columns','', array('class' => 'form-control','id' => 'input-column')) !!}
+                      {!! Form::number('zone_columns1','', array('class' => 'form-control','id' => 'input-column','min' => '1')) !!}
                   </div>
               </div>
               <div class="form-group" id="label_fil">
                   <label  class="col-sm-2 control-label" >Filas</label>
                   <div class="col-sm-10">
-                      {!! Form::number('zone_rows','', array('class' => 'form-control','id' => 'input-row')) !!}
+                      {!! Form::number('zone_rows1','', array('class' => 'form-control','id' => 'input-row','min' => '1')) !!}
                   </div>
               </div>
               <div class="form-group" id="label_fini">
                   <label  class="col-sm-2 control-label" >Columna inicial</label>
                   <div class="col-sm-10">
-                      {!! Form::number('start_column','', array('class' => 'form-control','id' => 'input-colIni')) !!}
+                      {!! Form::number('start_column1',1, array('class' => 'form-control','id' => 'input-colIni','min' => '1')) !!}
                   </div>
               </div>     
               <div class="form-group" id="label_cini">
                   <label  class="col-sm-2 control-label" >Fila inicial</label>
                   <div class="col-sm-10">
-                      {!! Form::number('start_row','', array('class' => 'form-control','id' => 'input-rowIni')) !!}
+                      {!! Form::number('start_row1',1, array('class' => 'form-control','id' => 'input-rowIni','min' => '1')) !!}
                   </div>
               </div>                                                     
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Precio</label>
                   <div class="col-sm-10">
-                      {!! Form::number('zonePrice','', array('class' => 'form-control','id' => 'input-price')) !!}
+                      {!! Form::number('zonePrice','', array('class' => 'form-control','id' => 'input-price','maxlength' => 50,'min' => '0')) !!}
                   </div>
               </div>
-
               <div class="form-group">
-                    <label  class="col-sm-3 control-label">capacidad disponible</label>
-                    <div class="col-sm-3">
-                    <input type="text" id="capacity-display" class="form-control" disabled>
-                    </div>
+                  <label  class="col-sm-2 control-label">Capacidad disponible</label>
+                  <div class="col-sm-10">
+                      <input type="text" id="capacity-display" class="form-control" disabled>
+                  </div>
+              </div>
+              <div  id="dist">
+                <label  class="col-sm-2 control-label" id="labelDist">Distribución evento</label>
+                <br><br><br>
+              </div>              
+              <div class="form-group">
                     <div class="col-sm-offset-10 col-sm-6">
                         <a class="btn btn-info" onclick="addZone()">Agregar</a>
-                        <!--
-                        <button  type="reset" class="btn btn-info">Cancelar</button>
-                        -->
                     </div>
-              </div>
-              <div class="form-group" id="dist">
-                <label  class="col-sm-2 control-label">Distribución evento</label>
-                  
               </div>              
-              
                 <script>
 
                     function addZone(){
 
                         var zone = document.getElementById('input-zone').value;
-                        var capacity = document.getElementById('input-capacity').value;
+                        
                         var price = document.getElementById('input-price').value;
+
+                        var capacity = document.getElementById('input-capacity').value;
+
+
+
 
                         var tableRef = document.getElementById('table-zone').getElementsByTagName('tbody')[0];
 
@@ -211,6 +213,56 @@
                         var newCell2 = newRow.insertCell(1);
                         var newCell3 = newRow.insertCell(2);
                         var newCell5 = newRow.insertCell(3);
+
+                        var column= document.getElementById('input-column').value;
+                        var row= document.getElementById('input-row').value ;
+                        var rowini= document.getElementById('input-rowIni').value;
+                        var colini= document.getElementById('input-colIni').value;
+
+                        var y1 = document.createElement("INPUT");
+                        y1.setAttribute("type", "text");
+                        y1.setAttribute("value", column);
+                        y1.setAttribute("name", "zone_columns[]");
+                        y1.style.border = 'none';
+                        y1.style.background = 'transparent';
+                        y1.required = false;
+
+                        var y2 = document.createElement("INPUT");
+                        y2.setAttribute("type", "text");
+                        y2.setAttribute("value", row);
+                        y2.setAttribute("name", "zone_rows[]");
+                        y2.style.border = 'none';
+                        y2.style.background = 'transparent';
+                        y2.required = false;
+
+                        var y3 = document.createElement("INPUT");
+                        y3.setAttribute("type", "text");
+                        y3.setAttribute("value", colini);
+                        y3.setAttribute("name", "start_column[]");
+                        y3.style.border = 'none';
+                        y3.style.background = 'transparent';
+                        y3.required = false;
+
+                        var y4 = document.createElement("INPUT");
+                        y4.setAttribute("type", "text");
+                        y4.setAttribute("value", rowini);
+                        y4.setAttribute("name", "start_row[]");
+                        y4.style.border = 'none';
+                        y4.style.background = 'transparent';
+                        y4.required = false;   
+
+
+                        if( document.getElementById('input-capacity').disabled==true){ 
+                        //  Add values when is a numerated local but dont show it
+                            y1.required=true;
+                            y2.required=true;
+                            y3.required=true;
+                            y4.required=true;
+                            capacity=row*column;               
+                        }
+
+
+
 
                         // Append values to cells
                         var newText  = document.createTextNode(zone);
@@ -253,13 +305,19 @@
                         newCell3.appendChild(textPrice);
                         newCell5.appendChild(newDelete);
 
+
                         document.getElementById('input-zone').value = '';
                         document.getElementById('input-capacity').value = '';
                         document.getElementById('input-price').value = '';
+                        // document.getElementById('input-column').value = '';
+                        // document.getElementById('input-row').value = '';
+                        // document.getElementById('input-colIni').value = '';
+                        // document.getElementById('input-rowIni').value = '';
 
                         var new_capacity = document.getElementById('capacity-display').value;
                         new_capacity = new_capacity - capacity;
                         document.getElementById('capacity-display').value = new_capacity;
+                        document.getElementById("input-capacity").max=new_capacity;
                     }
 
                     function deleteZone(btn){
@@ -345,23 +403,29 @@
                         var newDelete = document.createElement('button');
                         newDelete.className = "btn";
                         newDelete.className += " btn-info glyphicon glyphicon-remove";
-                        newDelete.onclick= "deleteFunction(newRow)";
+                        if (newDelete.addEventListener) {  // all browsers except IE before version 9
+                          newDelete.addEventListener("click", function(){deleteFunction(newDelete);}, false);
+                        } else {
+                          if (newDelete.attachEvent) {   // IE before version 9
+                            newDelete.attachEvent("click", function(){deleteFunction(newDelete);});
+                          }
+                        }
                         newCell.appendChild(x);
                         newCell2.appendChild(newText2);
                         newCell4.appendChild(newDelete);
 
 
-                        document.getElementById('input-function-date')[0].value = '';
+                        //document.getElementById('input-function-date')[0].value = '';
 
                     }
                     function deleteFunction(btn){
                         var row=btn.parentNode.parentNode.rowIndex;
-                        document.getElementById('functions-table') .deleteFunction(row);
+                        document.getElementById('functions-table') .deleteRow(row);
                 
                     }  
                 </script>
 
-                <table id="functions-table" class="table table-bordered table-striped ">
+                <table id="functions-table" class="table table-bordered table-striped " disabled>
                     <tr>
                         <th>Fecha</th>
                         <th>Hora</th>
@@ -415,11 +479,25 @@
         console.log(index);
         var algo = $('#row_' + index).val();
         //console.log("algo "+algo);
+        var table = document.getElementById("table-zone");
+
+        for(var i = table.rows.length - 1; i > 0; i--)
+        {
+            table.deleteRow(i);
+        }
+
         if(algo !== undefined && algo >=1){
           //si el local tiene asientos y filas numeradas Do this 
           //console.log("index "+index);
           var rows = $('#row_'+index).val();
           var columns = $('#column_'+index).val();
+
+          // setear maximo filas maxima col
+          document.getElementById("input-column").max=columns;
+          document.getElementById("input-row").max=rows;
+          document.getElementById("input-colIni").max=columns;
+          document.getElementById("input-rowIni").max=rows;
+
           console.log("columnas "+columns);
 
           console.log("filas "+rows);
@@ -472,11 +550,15 @@
           $('#label_fini').show();
           $('#label_cini').show();
           $('#dist').show();
+          $('#label_capacity').hide();
+          $('#input-capacity').hide();
 
-
+          document.getElementById('input-capacity').disabled=true;
         }else{
           //si el local no tiene asientos numerados Do this 
           //$('#seat-map').empty();
+
+          document.getElementById('input-capacity').disabled=false;
           var tam= $('[id=invisible_id]').size();
           for(i=1;i<=tam;i++){
             $('#seat-map-'+i).hide();
@@ -491,7 +573,9 @@
           $('#label_fil').hide();
           $('#label_fini').hide();
           $('#label_cini').hide();
-          // $('#dist').hide();
+          $('#dist').hide();
+          $('#label_capacity').show();
+          $('#input-capacity').show();
         }
       });
     });
@@ -523,7 +607,7 @@
     var tam= $('[id=invisible_id]').size();
     console.log("tamano "+tam);
     for(var i=1;i<=tam;i++)
-      $('#dist').append("<div id=seat-map-"+i+" class=seatCharts-container tabindex =0> </div>")
+      $('#dist').append("<div id=seat-map-"+i+" class=seatCharts-container  tabindex =0> </div>")
   });
   </script>  
   {!!Html::script('js/moment.js')!!}
