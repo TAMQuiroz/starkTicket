@@ -1,4 +1,10 @@
 var change = 0;
+var price = 0;
+
+$('document').ready(function () {
+    getAvailable();
+    getSlots();
+})
 
 function cleanForm() {
     $('#payment').val(0);
@@ -105,9 +111,120 @@ $('#amountIn').change(function(){
     }
 });
 
-function getInnerText(element) {
-    var text = element.options[element.selectedIndex].text;
-    document.getElementById("funcion").innerHTML = text;
+$('#quantity').change(function(){
+    count = $(this).val();
+    if($(this).val() > 0){
+        $('#payModal').prop('disabled',false);
+        $('#total2').val(count*price);
+    }else{
+        $('#payModal').prop('disabled',true);
+        $('#total2').val("");
+    }
+});
+
+function addQuantity(element) {
+    count = $('#seats option:selected').length;
+    $('#quantity').val(count);
+    if(count == 0){
+        $('#payModal').prop('disabled',true);
+        $('#total2').val("");
+    }else{
+        $('#payModal').prop('disabled',false);
+        $('#total2').val(count*price);
+    }
+}  
+
+function getPrice(){
+    $.ajax({
+        url: config.routes[1].price_ajax,
+        type: 'get',
+        data: 
+        { 
+            id: $('#zone_id').val(),
+        },
+        success: function( response ){
+            //console.log(response);
+            if(response != "")
+            {
+                //console.log(response.price);
+                price = response.price;
+                $('#quantity').val(0);
+                $('#payModal').prop('disabled',true);
+                $('#total2').val("");
+            }
+            else
+            {
+                console.log('no respuesta precio');  
+                price = 0; 
+            }
+        },
+        error: function( response ){
+            
+        }
+    });
+} 
+
+function getAvailable(){
+    funcion = $('#pres_selection').val();
+    zona = $('#zone_id').val();
+    evento = $('#event_id').val();
+    $.ajax({
+        url: config.routes[2].event_available,
+        type: 'get',
+        data: 
+        { 
+            event_id: evento,
+            function_id: funcion,
+            zone_id: zona,
+        },
+        success: function( response ){
+            if(response != "")
+            {
+                $('#available').val(response);
+                $('#quantity').prop('max',response);
+            }else{
+                console.log(response);  
+            }
+        },
+        error: function( response ){
+            console.log(response);
+        }
+    });
+}
+
+function getSlots(){
+    funcion = $('#pres_selection').val();
+    zona = $('#zone_id').val();
+    evento = $('#event_id').val();
+    $.ajax({
+        url: config.routes[3].slots,
+        type: 'get',
+        data: 
+        { 
+            event_id: evento,
+            function_id: funcion,
+            zone_id: zona,
+
+        },
+        success: function( response ){
+            //console.log(response);
+            if(response != "")
+            {
+                var options = '';
+                for (x in response)
+                { 
+                    console.log(x);
+                    options += '<option value="' + x + '">' + response[x] + '</option>';
+                }
+                $('#seats').html(options);
+            }else{
+                //console.log('no respuesta slots');  
+            }
+        },
+        error: function( response ){
+            console.log(response);
+        }
+    });
 }
 
 $('#user_di').focusout( function() {

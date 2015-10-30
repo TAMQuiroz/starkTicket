@@ -2,6 +2,10 @@ body{
     margin-top: 70px;
 }
 
-span#name-error{
+span.error{
 	color:#a94442;
+}
+
+legend {
+    padding-top: 20px;
 }

@@ -14,7 +14,7 @@ class StoreEventRequest extends Request
         $rules =  [
             'yesterday'     => 'date',
             'name'          => 'required|max:30',
-            'image'         => 'image',
+            'image'         => 'required|image',
             'description'   => 'required|max:100',
             'time_length'   => 'required|numeric|min:1',
             'category_id'   => 'required|exists:categories,id',
