@@ -23,9 +23,9 @@
             <tr>
                 <td>{{$category->name}}</td>
                 <td>{{$category->description}}</td>
-                <td>0</td>
-                <td class="button-center"><a class="btn btn-info" href={{route('subcategories.index', $category->id)}} title="Editar" >{{$subcategories[$category->name]->count()}}</a></td>
-                <td class="button-center"><a class="btn btn-info" href={{route('categories.edit', $category->id)}} title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
+                <td>{{$category->events->count()}}</td>
+                <td class="button-center"><a class="btn btn-info" href="{{url('admin/category/1/subcategory')}}" title="Editar" ><i class="glyphicon glyphicon-copy"></a></td>
+                <td class="button-center"><a class="btn btn-info" href="{{url('admin/category/1/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
                 </td> 
                 <td class="button-center"><a id="delete {{$category->id}}"class="btn btn-info" data-toggle="modal" data-target="#deleteModal{{$category->id}}" href=""><i class="glyphicon glyphicon-remove"></i></a></td>
             </tr>
