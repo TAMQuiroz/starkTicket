@@ -44,6 +44,7 @@ class EventController extends Controller
      */
     public function create()
     {
+
         $categories_list = Category::where('type',1)->lists('name','id');
         $organizers_list = Organizer::all()->lists('businessName','id');
         $locals_list = Local::all()->lists('name','id');
@@ -518,6 +519,7 @@ class EventController extends Controller
         $max = 0;
 
         foreach($presentations as $presentation){
+
             $count = 0;
             foreach($presentation->slots as $slot){
                 if($slot->pivot->status == config('constants.seat_occupied')){
@@ -528,8 +530,6 @@ class EventController extends Controller
         }
 
         return $max;
-
-
     }
     /**
      * Remove the specified resource from storage.
