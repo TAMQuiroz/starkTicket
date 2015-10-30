@@ -38,10 +38,10 @@
     @foreach($events as $event)
     <div class="3u">
         <section>
-            <a href="#" class="image full">{!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}</a>
+            <a href="#" class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
             <h3>{{$event->name}}</h3>
             <p>
-                <b>Fecha: </b> 20/12/2015<br>
+                <b>Fecha de venta: </b> {{date('Y-m-d',$event->presentations->first()->selling_date)}}<br>
                 <b>Lugar: </b> {{$event->place->name}} <br>
                 <b>Direccion:</b> {{$event->place->address}} <br>
             </p>

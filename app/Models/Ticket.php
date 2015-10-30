@@ -23,6 +23,10 @@ class Ticket extends Model
     	return $this->belongsTo('App\Models\Slot');
     }
 
+    public function zone(){
+        return $this->belongsTo('App\Models\Zone');
+    }
+
     public function presentation(){
         return $this->belongsTo('App\Models\Presentation');
     }

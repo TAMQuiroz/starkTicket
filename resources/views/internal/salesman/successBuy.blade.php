@@ -35,9 +35,9 @@
 	        <tr>
 	        	<td>{{$ticket->event->name}}</td>
 	        	<td>{{date("Y-m-d h:i", $ticket->presentation->starts_at)}}</td>
-	            <td>{{$ticket->seat->zone->name}}</td>  
+	            <td>{{$ticket->zone->name}}</td>  
 	            <td>
-	            	@if($ticket->seat->row)
+	            	@if($ticket->seat_id != null)
 	            		F{{$ticket->seat->row}}C{{$ticket->seat->column}}
 	            	@else
 	            		No numerado

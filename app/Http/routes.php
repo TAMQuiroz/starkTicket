@@ -64,26 +64,26 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
     Route::get('getClient', ['uses'=>'TicketController@getClient','as'=>'ajax.getClient']);
     Route::get('getPrice', ['uses'=>'TicketController@getPrice','as'=>'ajax.getPrice']);
+    Route::get('getAvailable', ['uses'=>'TicketController@getAvailable','as'=>'ajax.getAvailable']);
+    Route::get('getSlots', ['uses'=>'TicketController@getSlots','as'=>'ajax.getSlots']);
+    Route::get('getZone', ['uses'=>'TicketController@getZone','as'=>'ajax.getZone']);
 });
 
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
     Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
-    Route::get('promoter/', 'PagesController@promoterHome');
+    Route::get('promoter/', ['as'=>'promoter.home','uses'=>'PagesController@promoterHome']);
     Route::get('promoter/politics', 'PoliticController@index');
     Route::get('promoter/politics', 'PoliticController@politicsPromotor');
 
     Route::get('promoter/event/recordPayment', 'PaymentController@index');
     Route::get('promoter/transfer_payments', 'PaymentController@create');
-    Route::get('promoter/event/record', 'EventController@showPromoterRecord');
+    Route::get('promoter/event/record', ['as'=>'promoter.record','uses'=>'EventController@showPromoterRecord']);
     Route::get('promoter/event/create', 'EventController@create');
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
 
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
     Route::get('promoter/{category_id}/subcategories', 'EventController@subcategoriesToAjax');
-
-
-
 
 
     Route::get('promoter/promotion', 'PromoController@index');

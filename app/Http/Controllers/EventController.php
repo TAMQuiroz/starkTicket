@@ -71,7 +71,7 @@ class EventController extends Controller
         $event->time_length  = $data['time_length'];
         $event->publication_date = strtotime($data['publication_date']);
         $event->selling_date = strtotime($data['selling_date']);
-        $event->image        = 'imagen'; //$this->file_service->upload($data['image'],'event');
+        $event->image        = $this->file_service->upload($data['image'],'event');
         $event->save();
         return $event;
     }
@@ -194,7 +194,7 @@ class EventController extends Controller
             'local_id'      => $request->input('local_id'),
             'publication_date' => $request->input('publication_date'),
             'selling_date'  => $request->input('selling_date'),
-            'imagen'        => $request->file('image'),
+            'image'        => $request->file('image'),
             'time_length'   => $request->input('time_length')
         ];
         $event = $this->storeEvent($data);
@@ -213,8 +213,9 @@ class EventController extends Controller
             'function_starts_at' => $result_dates
         ];
         $this->storeRestOfEvent($zone_data, $data2, $event);
+        return redirect()->route('promoter.record');
         //return redirect()->route('events.edit', $event->id);
-        return response()->json(['message' => 'Event added']);
+        //return response()->json(['message' => 'Event added']);
     }
     /**
      * Display the specified resource.
@@ -522,7 +523,7 @@ class EventController extends Controller
         $all_sold = array();
         $presentations = Presentation::where('event_id', $event_id)->get();
         $max = 0;
-        
+
         foreach($zone->presentations as $presentation){
             $count = 0;
             $availables = $presentation->pivot->slots_availables;

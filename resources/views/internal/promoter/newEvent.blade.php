@@ -153,6 +153,27 @@
                       {!! Form::number('zonePrice','', array('class' => 'form-control','id' => 'input-price')) !!}
                   </div>
               </div>
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Filas</label>
+                <div class="col-sm-4">
+                    {!! Form::number('rows','', array('class' => 'form-control','id' => 'input-rows')) !!}
+                </div>
+                <label  class="col-sm-2 control-label">Fila Ini</label>
+                <div class="col-sm-4">
+                    {!! Form::number('rowsIni','', array('class' => 'form-control','id' => 'input-rowsI')) !!}
+                </div>
+              </div>
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Columnas</label>
+                <div class="col-sm-4">
+                    {!! Form::number('columns','', array('class' => 'form-control','id' => 'input-columns')) !!}
+                </div>
+                <label  class="col-sm-2 control-label">Col Ini</label>
+                <div class="col-sm-4">
+                    {!! Form::number('columnsIni','', array('class' => 'form-control','id' => 'input-columnsI')) !!}
+                </div>
+              </div>
+
 
               <div class="form-group">
                     <label  class="col-sm-3 control-label">capacidad disponible</label>
@@ -175,6 +196,11 @@
                         var capacity = document.getElementById('input-capacity').value;
                         var price = document.getElementById('input-price').value;
 
+                        var rows = document.getElementById('input-rows').value;
+                        var columns = document.getElementById('input-columns').value;
+                        var rowsI = document.getElementById('input-rowsI').value;
+                        var columnsI = document.getElementById('input-columnsI').value;
+
                         var tableRef = document.getElementById('table-zone').getElementsByTagName('tbody')[0];
 
                         // Insert a row in the table at the last row
@@ -184,7 +210,13 @@
                         var newCell  = newRow.insertCell(0);
                         var newCell2 = newRow.insertCell(1);
                         var newCell3 = newRow.insertCell(2);
-                        var newCell5 = newRow.insertCell(3);
+
+                        var newCell4 = newRow.insertCell(3);
+                        var newCell5 = newRow.insertCell(4);
+                        var newCell6 = newRow.insertCell(5);
+                        var newCell7 = newRow.insertCell(6);
+
+                        var newCell8 = newRow.insertCell(7);
 
                         // Append values to cells
                         var newText  = document.createTextNode(zone);
@@ -215,15 +247,55 @@
                         newDelete.className = "btn";
                         newDelete.className += " btn-info glyphicon glyphicon-remove";
                         newDelete.onclick= "deleteZone(newRow)";
+                        var textRows = document.createElement("INPUT");
+                        textRows.setAttribute("type", "text");
+                        textRows.setAttribute("value", rows);
+                        textRows.setAttribute("name", "zone_rows[]");
+                        textRows.style.border = 'none';
+                        textRows.style.background = 'transparent';
+                        var textRowsI = document.createElement("INPUT");
+                        textRowsI.setAttribute("type", "text");
+                        textRowsI.setAttribute("value", rowsI);
+                        textRowsI.setAttribute("name", "start_row[]");
+                        textRowsI.style.border = 'none';
+                        textRowsI.style.background = 'transparent';
+                        var textColumns = document.createElement("INPUT");
+                        textColumns.setAttribute("type", "text");
+                        textColumns.setAttribute("value", columns);
+                        textColumns.setAttribute("name", "zone_columns[]");
+                        textColumns.style.border = 'none';
+                        textColumns.style.background = 'transparent';
+                        var textColumnsI = document.createElement("INPUT");
+                        textColumnsI.setAttribute("type", "text");
+                        textColumnsI.setAttribute("value", columnsI);
+                        textColumnsI.setAttribute("name", "start_column[]");
+                        textColumnsI.style.border = 'none';
+                        textColumnsI.style.background = 'transparent';
+
+
 
                         newCell.appendChild(x);
                         newCell2.appendChild(newText2);
                         newCell3.appendChild(textPrice);
-                        newCell5.appendChild(newDelete);
+                        //Por fines de prueba
+                        /*
+                        newCell4.appendChild(textRows);
+                        newCell5.appendChild(textRowsI);
+                        newCell6.appendChild(textColumns);
+                        newCell7.appendChild(textColumnsI);
+                        */
+                        
+
+                        newCell8.appendChild(newDelete);
 
                         document.getElementById('input-zone').value = '';
                         document.getElementById('input-capacity').value = '';
                         document.getElementById('input-price').value = '';
+
+                        document.getElementById('input-rows').value = '';
+                        document.getElementById('input-rowsI').value = '';
+                        document.getElementById('input-columns').value = '';
+                        document.getElementById('input-columnsI').value = '';
 
                         var new_capacity = document.getElementById('capacity-display').value;
                         new_capacity = new_capacity - capacity;
@@ -416,6 +488,20 @@
   </script>
   <script>
   $(document).ready(function(){
+    getSub();
+    function getSub(){
+        category_id = $("#category_id").val();
+        url_base = "{{ url('/') }}";
+        // Peticion ajax
+        $.getJSON(url_base+"/promoter/"+category_id+"/subcategories", function(data)
+        {
+            $("#subcategory_id").empty();
+            $.each( data, function( id, name ) {
+                $('#subcategory_id').append("<option value=\""+id+"\">"+name+"</option>");
+            });
+        })
+    }
+
     // Poblar sub category
     $("#category_id").change(function(){
 
