@@ -27,7 +27,7 @@ class UpdateAdminRequest extends Request
         //
               'name' => 'required',
               'lastname' => 'required',
-              //'password' => 'required',
+              'password' => 'required',
               'di_type' =>'required',
               'di' => 'required|numeric  ',
               'address' => 'required', 

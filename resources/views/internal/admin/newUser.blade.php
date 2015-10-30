@@ -16,19 +16,19 @@
               <div class="form-group">
                 <label for="inputName" class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                   {!!Form::input('text','name', null ,['class'=>'form-control','id'=>'inputName','required'])!!}
+                   {!!Form::input('text','name', null ,['class'=>'form-control','id'=>'inputName','maxlength' => 50,'required'])!!}
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputLast" class="col-sm-2 control-label">Apellidos</label>
                 <div class="col-sm-10">
-                  {!!Form::input('text','lastname', null ,['class'=>'form-control','id'=>'inputLast','required'])!!}
+                  {!!Form::input('text','lastname', null ,['class'=>'form-control','id'=>'inputLast','maxlength' => 50,'required'])!!}
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputPass" class="col-sm-2 control-label">Contraseña</label>
                 <div class="col-sm-10">
-                    {!!Form::input('password','password', null ,['class'=>'form-control','id'=>'inputPass','required'])!!}
+                    {!!Form::input('password','password', null ,['class'=>'form-control','id'=>'inputPass','maxlength' => 30,'required'])!!}
                 </div>
               </div>
               <div class="form-group">
@@ -43,25 +43,25 @@
               <div class="form-group">
                 <label for="inputDi" class="col-sm-2 control-label">Documento de Identidad</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','di', null ,['class'=>'form-control','id'=>'inputDi','required','min'=>0,"onKeyDown" => "justNumbers()"])!!} 
+                  {!!Form::input('number','di', null ,['class'=>'form-control','id'=>'inputDi','required','maxlength' => 8, 'min'=>0,"onKeyDown" => "justNumbers()"])!!} 
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputAddress" class="col-sm-2 control-label">Dirección</label>
                 <div class="col-sm-10">
-                  {!!Form::input('text','address', null ,['class'=>'form-control','id'=>'inputAddress','required'])!!}
+                  {!!Form::input('text','address', null ,['class'=>'form-control','id'=>'inputAddress','maxlength' => 50,'required'])!!}
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputPhone" class="col-sm-2 control-label">Teléfono(s)</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','phone', null ,['class'=>'form-control','id'=>'inputPhone','required','min'=>0,"onKeyDown" => "justNumbers()"])!!}
+                  {!!Form::input('number','phone', null ,['class'=>'form-control','id'=>'inputPhone','required','maxlength' => 10,'min'=>0,"onKeyDown" => "justNumbers()"])!!}
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">E-mail(s)</label>
                 <div class="col-sm-10">
-                    {!!Form::input('text','email', null ,['class'=>'form-control','id'=>'inputEmai3','required'])!!}
+                    {!!Form::input('text','email', null ,['class'=>'form-control','id'=>'inputEmai3','maxlength' => 30,'required'])!!}
                 </div>
               </div>
               <div class="form-group">
@@ -80,7 +80,7 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Imagen</label>
                 <div class="col-sm-10">
-                    {!!Form::input('file','image', null ,['class'=>'form-control','id'=>'inputEmai3'])!!}
+                    {!!Form::input('file','image', null ,['class'=>'form-control','id'=>'inputEmai3','accept'=>'image/*'])!!}
                 </div>
               </div> 
                
@@ -89,9 +89,9 @@
                   <!-- <a class="btn btn-info"  data-toggle="modal" data-target="#agregado">Guardar</a> -->
                   <a class="btn btn-info" type="button" href=""  title="Create"  data-toggle="modal" data-target="#saveModalUser">Guardar</a>
                   <!-- <button type="submit" class="btn btn-info">Guardar</button>-->
-                  <button type="reset" class="btn btn-info">Cancelar</button
+                  <button type="reset" class="btn btn-info">Cancelar</button>
                 </div>
-              </div>x
+              </div>
 
 
               <!-- MODAL -->
@@ -107,7 +107,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-info" data-dismiss="modal">No</button>                        
-                        <button type="submit" class="btn btn-info">Sí</button>
+                        <button id = "botonModal" type="submit" class="btn btn-info">Sí</button>
                         <!--
                         <a class="btn btn-info" href="" title="Create" >Sí</a>
                         -->
@@ -136,6 +136,12 @@
         }
       }
     }
+
+      $("#botonModal").click(function(){
+        $("#saveModalUser").modal('toggle');
+    });
+
+
   </script>
 
 @stop

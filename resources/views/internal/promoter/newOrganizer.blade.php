@@ -102,7 +102,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-info" data-dismiss="modal">No</button>                        
-                        <button type="submit" class="btn btn-info" id="yes">Sí</button>
+                        <button id = "botonModal" type="submit" class="btn btn-info" id="yes">Sí</button>
                         <!--
                         <a class="btn btn-info" href="" title="Create" >Sí</a>
                         -->
@@ -131,6 +131,10 @@
         }
       }
     }
+
+     $("#botonModal").click(function(){
+        $("#saveModal").modal('toggle');
+    });
 
   </script>
 

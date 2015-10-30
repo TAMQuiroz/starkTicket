@@ -154,6 +154,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/attendance', 'BusinessController@attendance');
 
     Route::get('admin/config/exchange_rate', 'BusinessController@exchangeRate');
+    Route::post('admin/config/exchange_rate', 'BusinessController@storeExchangeRate');
     Route::get('admin/config/about', 'BusinessController@about');
     Route::get('admin/config/system', 'BusinessController@system');
 
@@ -171,8 +172,12 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/client', 'ClientController@index');
     Route::post('admin/client/desactive', 'ClientController@desactive');
 
+
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
+    Route::post('admin/salesman/{id}/edit', 'AdminController@updateSalesman');
+    Route::get('admin/salesman/{id}/delete', 'AdminController@destroySalesman');
+
 
     Route::get('admin/user/new', 'AdminController@newUser');
     Route::post('admin/user/new', 'AdminController@store');
