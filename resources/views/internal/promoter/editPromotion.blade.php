@@ -33,12 +33,12 @@
 			<h4>Fecha Inicio</h4>
 			{!! Form::date('dateIni', $startDay  , array('class' => 'form-control' , 'required')) !!}
 
-					<h4>Hora Inicio</h4>
+			<h4>Hora Inicio</h4>
 			{!! Form::time('timeIni',  $startHour , array('class' => 'form-control', 'required')) !!}
 
 
 			<h4>Fecha Fin</h4>
-			{!! Form::date('dateEnd',$endDay   , array('class' => 'form-control', 'required')) !!}
+			{!! Form::date('dateEnd',$endDay   , array('class' => 'form-control', 'oninput' => 'incrementDate()', 'required')) !!}
 	
 			<h4>Hora Fin</h4>
 			{!! Form::time('timeEnd', $finishHour, array('class' => 'form-control', 'required')) !!}
@@ -92,21 +92,11 @@
             @endif
 
 	<br>
-<button type="submit" class="btn btn-info" data-toggle="modal" data-target="#save" data-whatever="@mdo">Guardar</button>
-  
-
-	
-
-
-
-
-
-
-
-
- 
-
-
+	<!--<button type="submit" class="btn btn-info" data-toggle="modal" data-target="#save" data-whatever="@mdo">Guardar</button>-->
+	<p class ="text-center"  >  
+		<button type="submit" class="btn btn-info btn-lg" data-toggle="modal" data-target="#save" data-whatever="@mdo">Guardar</button>
+		<a href="{{url('promoter/promotion')}}"><button type="button" class="btn btn-info btn-lg">Cancelar</button></a>
+	</p>
 
 @stop
 
@@ -124,6 +114,21 @@
 	       }
 	   } );
 	} );
+	function incrementDate(){
+    var publication_date = document.getElementsByName('dateIni')[0].value;
+    document.getElementsByName('dateIni')[0].stepUp();
+    var publication_date_1 = document.getElementsByName('dateIni')[0].value;
+    document.getElementsByName('dateIni')[0].stepDown();
+    var today = new Date();
+    var publicDate = new Date(document.getElementsByName('dateIni')[0].value);
+    var timeToday = today.getTime();
+    var timePublic = publicDate.getTime();
+    var month = today.getMonth() +1;
+    if(timeToday > timePublic)
+      document.getElementsByName('dateEnd')[0].min = ''+today.getFullYear()+'-'+month+'-'+today.getDate();
+    else
+      document.getElementsByName('dateEnd')[0].min = publication_date_1;
+  }
 	</script>
 
 @stop
