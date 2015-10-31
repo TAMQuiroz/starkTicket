@@ -73,7 +73,7 @@
         </div>
       </div>
           </td>
-          <td><a type="button" class="btn btn-info" href="{{url('promoter/event/editEvent')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
+          <td><a type="button" class="btn btn-info" href="{{url('promoter/event/'.$event->id.'/edit')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancel" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
         </tr>
         @endforeach
