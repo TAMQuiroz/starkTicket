@@ -92,7 +92,7 @@
                   <button type="submit" class="btn btn-info">Guardar</button>
                   -->
                   <a class="btn btn-info" type="submit" href=""  title="Edit"  data-toggle="modal" data-target="#editModal">Guardar</a>
-                  <button type="reset" class="btn btn-info">Cancelar</button>
+                  <a href="{{route('admin.home')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
                 </div>
               </div>
 

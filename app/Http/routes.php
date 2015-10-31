@@ -84,6 +84,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
 
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
     Route::get('promoter/{category_id}/subcategories', 'EventController@subcategoriesToAjax');
+    Route::get('getLocal/{id}',['as'=>'ajax.getLocal','uses'=>'EventController@getLocal']);
 
 
     Route::get('promoter/promotion', 'PromoController@index');
@@ -117,7 +118,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
 
-    Route::get('admin/', 'PagesController@adminHome');
+    Route::get('admin/', ['uses'=>'PagesController@adminHome','as'=>'admin.home']);
     Route::get('admin/politics', 'PoliticController@politics');
     Route::get('admin/politics/new', 'PoliticController@create');
     Route::post('admin/politics/new', 'PoliticController@store');

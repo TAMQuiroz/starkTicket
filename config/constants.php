@@ -30,5 +30,7 @@ return [
    	'discount' => 1,
 	'ofert' => 2,
 
-
+	//Tipo de local
+	'numbered'				=> 1,
+	'notNumbered'			=> 2,
 ];
