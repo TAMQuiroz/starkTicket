@@ -1,8 +1,3 @@
-
-
-
-
-
 @extends('layout.promoter')
 
 @section('style')
@@ -59,13 +54,13 @@
 		<br>
 		<div style="-webkit-columns: 100px 4;">
 			<h4>Fecha Inicio</h4>
-			{!! Form::date('dateIni','', array('class' => 'form-control' , 'required')) !!}
+			{!! Form::date('dateIni',\Carbon\Carbon::now(), array('class' => 'form-control' , 'required')) !!}
 
 	<h4>Hora Inicio</h4>
 			{!! Form::time('timeIni','', array('class' => 'form-control', 'required')) !!}
 			
 			<h4>Fecha Fin</h4>
-			{!! Form::date('dateEnd','', array('class' => 'form-control', 'required')) !!}
+			{!! Form::date('dateEnd',\Carbon\Carbon::now()->addDay(), array('class' => 'form-control', 'oninput' => 'incrementDate()', 'required')) !!}
 		
 			<h4>Hora Fin</h4>
 			{!! Form::time('timeEnd','', array('class' => 'form-control', 'required')) !!}
@@ -136,33 +131,9 @@
 	<br><br>
 
 	<p class ="text-center"  >  
-		<!--<button type="submit" class="btn btn-info btn-lg" data-toggle="modal" data-target="#saveModalUser">Guardar</button>-->
-		<a class="btn btn-info btn-lg" type="button" href=""  title="Create"  data-toggle="modal" data-target="#saveModalUser">Guardar</a>
+		<button type="submit" class="btn btn-info btn-lg" data-toggle="modal" data-target="#end" data-whatever="@mdo">Guardar</button>
 		<a href="{{url('promoter/promotion')}}"><button type="button" class="btn btn-info btn-lg">Cancelar</button></a>
 	</p>
-
-	<div class="modal fade"  id="saveModalUser">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">¿Esta seguro que desea agregar un nuevo usuario?</h4>
-            </div>
-            <div class="modal-body">
-              <h5 class="modal-title">Los cambios serán permanentes</h5>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>                        
-                <button id = "botonModal" type="submit" class="btn btn-info">Sí</button>
-                <!--
-                <a class="btn btn-info" href="" title="Create" >Sí</a>
-                -->
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-
-
 	</div>
 
 
@@ -186,14 +157,9 @@
 	           "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
 	       }
 	  	});
-
-
-
 	 	$(".evento_id").click(function(){ // punto para michis , michis para id, id es unico 
           variable  =  $( this).val() ;
-
       url_base = "{{ url('/') }}";
-
  // Peticion ajax
      $.getJSON( url_base + "/promoter/promotion/new/"+variable  , function(data)
      {
@@ -201,11 +167,10 @@
        $.each( data, function( id, name ) {
            $('#id_zoneCombo').append("<option value=\""+id+"\">"+name+"</option>");
      });
-
      })
-
   		});
-
+   
+   
 	});
 	</script>
 
@@ -214,7 +179,6 @@
  $(document).ready(function(){
    // Poblar sub category
    $("#category_id").change(function(){
-
      category_id = $("#category_id").val();
      url_base = "{{ url('/') }}";
      // Peticion ajax
@@ -224,33 +188,25 @@
        $.each( data, function( id, name ) {
            $('#subcategory_id').append("<option value=\""+id+"\">"+name+"</option>");
      });
-
      })
    });
  });
+ function incrementDate(){
+    var publication_date = document.getElementsByName('dateIni')[0].value;
+    document.getElementsByName('dateIni')[0].stepUp();
+    var publication_date_1 = document.getElementsByName('dateIni')[0].value;
+    document.getElementsByName('dateIni')[0].stepDown();
+    var today = new Date();
+    var publicDate = new Date(document.getElementsByName('dateIni')[0].value);
+    var timeToday = today.getTime();
+    var timePublic = publicDate.getTime();
+    var month = today.getMonth() +1;
+    if(timeToday > timePublic)
+      document.getElementsByName('dateEnd')[0].min = ''+today.getFullYear()+'-'+month+'-'+today.getDate();
+    else
+      document.getElementsByName('dateEnd')[0].min = publication_date_1;
+  }
  </script>
-
-
-  <script>
-    function justNumbers(){
-      var e = event || window.event;  
-      var key = e.keyCode || e.which; 
-
-      if (key < 48 || key > 57) { 
-        if(key == 8 || key == 9 || key == 46){} //allow backspace and delete                                   
-        else{
-           if (e.preventDefault) e.preventDefault(); 
-           e.returnValue = false; 
-        }
-      }
-    }
-
-      $("#botonModal").click(function(){
-        $("#saveModalUser").modal('toggle');
-    });
-  </script>
-
-
 
 
 
