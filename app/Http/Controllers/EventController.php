@@ -46,6 +46,7 @@ class EventController extends Controller
     {
         $categories_list = Category::where('type',1)->lists('name','id');
         $organizers_list = Organizer::all()->lists('businessName','id');
+
         $locals_list = Local::all()->lists('name','id');
         $capacity_list = Local::all();
         $array = ['categories_list' =>$categories_list,
@@ -70,7 +71,7 @@ class EventController extends Controller
         $event->time_length  = $data['time_length'];
         $event->publication_date = strtotime($data['publication_date']);
         $event->selling_date = strtotime($data['selling_date']);
-        $event->image        = 'imagen'; //$this->file_service->upload($data['image'],'event');
+        $event->image        = $this->file_service->upload($data['image'],'event');
         $event->save();
         return $event;
     }
@@ -133,12 +134,11 @@ class EventController extends Controller
                 }
             }
             else{
-                for( $i=1; $i<= ($zone->capacity); $i++) {
-                    $seat = new Slot();
-                    $seat->zone()->associate($zone);
-                    $seat->save();
-                    $seat->presentation()->attach($functions_ids);
+                $functions_ids_zones = array();
+                foreach ($functions_ids as $key => $value) {
+                    $functions_ids_zones[$key] = ['slots_availables' => $zone->capacity];
                 }
+                $zone->presentation()->attach($functions_ids_zones);
             }
         }
     }
@@ -151,10 +151,32 @@ class EventController extends Controller
         return $function_starts_at;
     }
 
+    public function validateFreeLocal($starts_at, $local_id, $time_length){
+        $events = Event::where('local_id', $local_id)->get();
+        if($events->count()>0){
+            foreach ($starts_at as $start_at) {
+                $min_date = strtotime($start_at);
+                $max_date = $min_date + ($time_length*3600);
+                foreach ($events as $event) {
+                    $presentations = $event->presentations;
+                    foreach ($presentations as $presentation) {
+                        $date = intval($presentation->starts_at);
+                        if($date<=$max_date || $date>=$min_date)
+                            return ['error' => 'This local has presentations on the specified dates and times'];
+                    }
+                }
+            }
+        }   
+        else return null;
+    }
+
     public function store(StoreEventRequest $request)
     {
-
         $result_dates = $this->join_date_time($request->input('start_time'),$request->input('start_date'));
+        $result_local_validation = $this->validateFreeLocal($result_dates, $request->input('local_id'), $request->input('time_length'));
+        if($result_local_validation != null){
+            return redirect()->back()->withInput()->withErrors($result_local_validation);
+        }
         $temp = array_unique($result_dates);
         if(count($temp) < count($result_dates))
             return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
@@ -163,6 +185,7 @@ class EventController extends Controller
         if($result['error'] != '')
             return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
             //return response()->json(['message' => $result['error']]);
+        
         $data = [
             'name'          => $request->input('name'),
             'description'   => $request->input('description'),
@@ -171,7 +194,7 @@ class EventController extends Controller
             'local_id'      => $request->input('local_id'),
             'publication_date' => $request->input('publication_date'),
             'selling_date'  => $request->input('selling_date'),
-            'imagen'        => $request->file('image'),
+            'image'        => $request->file('image'),
             'time_length'   => $request->input('time_length')
         ];
         $event = $this->storeEvent($data);
@@ -190,8 +213,9 @@ class EventController extends Controller
             'function_starts_at' => $result_dates
         ];
         $this->storeRestOfEvent($zone_data, $data2, $event);
+        return redirect()->route('promoter.record');
         //return redirect()->route('events.edit', $event->id);
-        return response()->json(['message' => 'Event added']);
+        //return response()->json(['message' => 'Event added']);
     }
     /**
      * Display the specified resource.
@@ -346,6 +370,7 @@ class EventController extends Controller
     }
     public function update(UpdateEventRequest $request, $id)
     {
+
         $now = new DateTime();
         $temp = array_unique($request->input('function_starts_at'));
         if(count($temp) < count($request->input('function_starts_at')))
@@ -355,6 +380,7 @@ class EventController extends Controller
         if($result['error'] != '')
             //return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
             return response()->json(['message' => $result['error']]);
+
         $event = Event::find($id);
         $actual_local = Local::find($event->local_id);
         $new_local = Local::find($request->input('local_id'));
@@ -470,42 +496,23 @@ class EventController extends Controller
         $count = 0;
         foreach ($zones as $zone) {
             $new_capacity = $data['zone_capacity'][$count];
-            $max_sold_slots = $this->getMaxOccupiedSlots($event_id, $zone->id);
+            $result = $this->getMaxOccupiedSlots($event_id, $zone->id);//query de buscar max asientos ocupados de esta zona;
+            $max_sold_slots = $result['max'];
+            $sold = $result['all_sold'];
             if($new_capacity < $max_sold_slots)
                 return ['error' => 'no se puede modificar la zona a una capacidad menor a las entradas vendidas'];
             $zone->name = $data['zone_names'][$count];
             $zone->price = $data['price'][$count];
             $old_capacity = $zone->capacity;
             $zone->capacity = $data['zone_capacity'][$count];
+            $functions_ids_zones = array();
+            $i=0;
+            foreach ($functions_ids as $key => $value) {
+                $functions_ids_zones[$key] = ['slots_availables' => abs($new_capacity-$sold[$i])];
+                $i++;
+            }
+            $zone->presentation()->sync($functions_ids_zones);
             $zone->save();
-            if($old_capacity < $new_capacity){
-                $difference = $new_capacity - $old_capacity;
-                for($i = 1; $i <= $difference; $i++){
-                    $seat = new Slot();
-                    $seat->zone()->associate($zone);
-                    $seat->save();
-                    $seat->presentation()->attach($functions_ids);
-                }
-            }
-            if($old_capacity > $new_capacity){
-                $difference = $old_capacity - $new_capacity;
-                //aqui solo hare dettach
-                $slots = Slot::where('zone_id',$zone->id)->get();
-                $cant = $presentations->count();
-                $dettached = array();
-                for($i=0;i<$cant;$i++)
-                    $dettached[$i] = 0;
-                foreach($slots as $slot){
-                    $i = 0;
-                    foreach($slot->presentation as $presentation){
-                        if($dettached[i] < $difference && $presentation->pivot->status == config('constants.seat_available')){
-                            $slot->presentation()->dettach($presentation->id);
-                            $dettached[$i] = $dettached[$i]++;
-                        }
-                        $i++;
-                    }
-                }
-            }
             $count++;
         }
         return ['error' => ''];
@@ -513,21 +520,20 @@ class EventController extends Controller
 
     public function getMaxOccupiedSlots($event_id, $zone_id){
         $zone = Zone::find($zone_id);
-        $slots = Slot::where('zone_id', $zone_id)->get();
+        $all_sold = array();
         $presentations = Presentation::where('event_id', $event_id)->get();
         $max = 0;
 
-        foreach($presentations as $presentation){
+        foreach($zone->presentations as $presentation){
             $count = 0;
-            foreach($presentation->slots as $slot){
-                if($slot->pivot->status == config('constants.seat_occupied')){
-                    $count++;
-                }
-            }
+            $availables = $presentation->pivot->slots_availables;
+            $count = $zone->capacity - $availables;
+            array_push($all_sold, $count);
             if($count > $max) $max = $count;
         }
-        return $max;
 
+        $result = ['max' => $max, 'all_sold' => $all_sold];
+        return $result;
     }
     /**
      * Remove the specified resource from storage.
