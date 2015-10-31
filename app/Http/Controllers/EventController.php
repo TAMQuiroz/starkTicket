@@ -313,7 +313,18 @@ class EventController extends Controller
     public function edit($id)
     {
         $event = Event::find($id);
-        return view('internal.promoter.editEvent', ['events' => $event]);
+        $categories_list = Category::where('type',1)->lists('name','id');
+        $organizers_list = Organizer::all()->lists('businessName','id');
+
+        $locals_list = Local::all()->lists('name','id');
+        $capacity_list = Local::all();
+        $array = [
+                'event'             =>$event,
+                'categories_list'   =>$categories_list,
+                'organizers_list'   =>$organizers_list,
+                'locals_list'       =>$locals_list,
+                'capacity_list'     =>$capacity_list];
+        return view('internal.promoter.editEvent', $array);
     }
     /**
      * Update the specified resource in storage.
