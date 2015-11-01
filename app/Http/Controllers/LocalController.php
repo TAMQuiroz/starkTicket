@@ -51,21 +51,21 @@ class LocalController extends Controller
 
         $local               =   new Local;
         $local->name         =   $input['name'];
-        /*$local->capacity     =   $input['capacity'];*/
         $local->address      =   $input['address'];
         $local->district     =   $input['district'];
         $local->province     =   $input['province']; 
         $local->state        =   $input['state'];  
-        $local->rows          =   $input['row'];
-        $local->columns       =   $input['column'];
-        if($local->rows == 0 ||  $local->columns == 0)
-            $local->capacity     =   $input['capacity'];
-        else
+        
+        if($input['local_type'] == config('constants.numbered')){
+            $local->rows          =   $input['row'];
+            $local->columns       =   $input['column'];
             $local->capacity     =   $local->rows * $local->columns;
+        }else{
+            $local->capacity     =   $input['capacity'];
+        }
         
         //Control de subida de imagen
         $local->image        =   $this->file_service->upload($request->file('image'),'local');
-
 
         $local->save();
         return redirect('admin/local');

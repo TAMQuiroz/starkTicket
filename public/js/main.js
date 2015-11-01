@@ -122,7 +122,7 @@ $('#quantity').change(function(){
     }
 });
 
-function addQuantity(element) {
+function addQuantity() {
     count = $('#seats option:selected').length;
     $('#quantity').val(count);
     if(count == 0){
@@ -165,6 +165,7 @@ function getPrice(){
 } 
 
 function getAvailable(){
+
     funcion = $('#pres_selection').val();
     zona = $('#zone_id').val();
     evento = $('#event_id').val();
@@ -193,6 +194,8 @@ function getAvailable(){
 }
 
 function getSlots(){
+    
+
     funcion = $('#pres_selection').val();
     zona = $('#zone_id').val();
     evento = $('#event_id').val();
@@ -207,13 +210,12 @@ function getSlots(){
 
         },
         success: function( response ){
-            //console.log(response);
             if(response != "")
             {
                 var options = '';
                 for (x in response)
                 { 
-                    console.log(x);
+                    //console.log(x);
                     options += '<option value="' + x + '">' + response[x] + '</option>';
                 }
                 $('#seats').html(options);

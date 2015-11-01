@@ -4,36 +4,45 @@ $.ajaxSetup({
     }
 })
 
-$('document').ready(function () {
-	makeArray();
-});
-
 var price; //price
 var map = [];
-function getPrice(element){
-	//console.log(element.options[element.selectedIndex].value);
-	$.ajax({
-        url: config.routes[1].price_ajax,
+var taken = [];
+
+$('document').ready(function () {
+	getPrice();
+	getTakenSlots();
+	
+
+});
+
+function getTakenSlots(){
+    funcion = $('#pres_selection').val();
+    zona = $('#zone_id').val();
+    evento = $('#event_id').val();
+    $.ajax({
+        url: config.routes[5].takenSlots,
         type: 'get',
         data: 
         { 
-            id: element.options[element.selectedIndex].value
+            function_id: funcion,
+            zone_id: zona,
+            event_id: evento,
         },
         success: function( response ){
             //console.log(response);
-            if(response != "")
+            if(response != -1 )
             {
-                //console.log(response.price);
-                price = response.price;
-            }
-            else
-            {
-             	//console.log('no respuesta');  
-             	price = 0; 
+                taken = response;
+                makeArray();
+            }else if (response == ""){
+            	console.log('vacio');
+            	taken = [];
+            	getPrice();
+                makeArray();
             }
         },
         error: function( response ){
-            
+            console.log(response);
         }
     });
 }
@@ -45,7 +54,7 @@ function makeArray(){
         type: 'get',
         data: 
         { 
-            zone_id: zona
+            zone_id: zona,
         },
         success: function( response ){
             if(response != "")
@@ -53,7 +62,7 @@ function makeArray(){
             	map = [];
             	rows = response.rows;
             	columns = response.columns;
-            	console.log('F'+rows+' C'+columns);
+            	//console.log('F'+rows+' C'+columns);
             	for(var i = 0; i < rows; i++){
             		var texto = '';
             		for(var j = 0; j < columns; j++){
@@ -62,7 +71,7 @@ function makeArray(){
             		//console.log(texto);
             		map.push(texto);
             	}
-                console.log(map);
+                //console.log(map);
                 $('#parent-map').empty();
                 $('#legend').empty();
                 $('#parent-map').append('<div id="seat-map"></div>');
@@ -82,7 +91,7 @@ function makeArray(){
 
 function renderSeats() {
 
-	getPrice(document.getElementById('zone_id'));
+
 
 	var $cart = $('#selected-seats'), //Sitting Area
 
@@ -118,8 +127,17 @@ function renderSeats() {
 				$total2.val(recalculateTotal(sc)+price);
 				
 				selected.push(this.settings.id);
-				console.log(JSON.stringify(selected));
-				//$('#seats').val(JSON.stringify(selected));
+				//console.log(JSON.stringify(selected));
+				count = selected.length;
+				$('#quantity').val(count);
+				if(count == 0){
+			        $('#payModal').prop('disabled',true);
+			        $('#total2').val("");
+			    }else{
+			        $('#payModal').prop('disabled',false);
+			        $('#total2').val(count*price);
+			    }
+				$('#seats').val(JSON.stringify(selected));
 				$('#payModal').prop('disabled',false);
 				return 'selected';
 			} else if (this.status() == 'selected') { //Checked
@@ -135,13 +153,21 @@ function renderSeats() {
 				var index = selected.indexOf(this.settings.id);
 				if(index > -1){
 					selected.splice(index,1);
-					//$('#seats').val(JSON.stringify(selected));
+					$('#seats').val(JSON.stringify(selected));
 					if(selected.length == 0){
 						$('#payModal').prop('disabled',true);
-						//$('#seats').val("");
+						$('#seats').val("");
 					}
-					console.log(JSON.stringify(selected));
-
+					//console.log(JSON.stringify(selected));
+					count = selected.length;
+					$('#quantity').val(count);
+					if(count == 0){
+				        $('#payModal').prop('disabled',true);
+				        $('#total2').val("");
+				    }else{
+				        $('#payModal').prop('disabled',false);
+				        $('#total2').val(count*price);
+				    }
 				}
 
 				return 'available';
@@ -154,8 +180,10 @@ function renderSeats() {
 			}
 		}
 	});
+
 	//sold seat
-	//sc.get(['4_4','4_5','6_6','6_7','8_5','8_6','8_7','8_8', '10_1', '10_2']).status('unavailable');
+	
+	sc.get(taken).status('unavailable');
 	//sc.get(['1_1','5_5']).status('reserved');
 	
 };
@@ -168,3 +196,4 @@ function recalculateTotal(sc) {
 			
 	return total;
 }
+

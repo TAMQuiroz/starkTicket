@@ -74,7 +74,7 @@
                       {{$local->capacity}}
                       <h4>Direccion: </h4>
                       {{$local->address}}
-                      <h4>Ciudad: </h4>
+                      <h4>Distrito: </h4>
                       {{$local->district}}
                       <h4>Provincia: </h4>
                       {{$local->province}}

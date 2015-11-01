@@ -561,4 +561,10 @@ class EventController extends Controller
         $subcategories = Category::where('father_id',$id)->lists('name','id');
         return json_encode($subcategories);
     }
+
+    public function getLocal($id)
+    {
+        $local = Local::find($id);
+        return $local;
+    }
 }
