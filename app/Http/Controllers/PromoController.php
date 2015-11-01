@@ -280,7 +280,9 @@ $finishHour =  substr($promotion->endday, 11);
     public function destroy($id)
     {
        $promotion = Promotions::find($id);
-        $promotion->delete();
+       if( $promotion !=NULL )
+            {    $promotion->delete();  } 
+        
         return redirect('promoter/promotion');
     }
 

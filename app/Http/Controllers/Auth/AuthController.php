@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
+
+use Illuminate\Http\Request;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Models\Assistance;
+use Auth;
+use Carbon\Carbon;
+
+
+
 
 class AuthController extends Controller
 {
@@ -23,7 +31,8 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    protected $redirectAfterLogout = 'auth/login';
+    protected $redirectAfterLogout = 'auth/login'; 
+
     protected $loginPath = '/auth/login';
     /**
      * Create a new authentication controller instance.
@@ -79,6 +88,33 @@ class AuthController extends Controller
      *
      * @return string
      */
+
+   public function getLogoutpost()
+    {
+
+// grabo mi fecha de deslogueo !! 
+
+ 
+        $assitance               =   new Assistance ;
+
+        $assitance->tipo         =  2 ;
+     
+        $assitance->datetime  =        new Carbon() ;
+
+  $assitance->datetime  = $assitance->datetime->subHour(5) ;
+
+        $id = Auth::user()->id;
+        $assitance->salesman_id  =  $id  ;
+
+if(Auth::user()->role_id ==  2    ){   
+         $assitance->save(); 
+
+          }
+
+        return redirect('/'); // porlas no llega aqui
+    }
+
+
     public function redirectPath()
     {
         switch (\Auth::user()->role_id) {

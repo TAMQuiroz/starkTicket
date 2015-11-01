@@ -66,7 +66,22 @@ class BusinessController extends Controller
     }
 
     public function attendance()
-    {
-        return view('internal.admin.attendance');
+    {      
+        $dateParStart = Carbon::createFromDate(null, null, 01); // defecto el año y el mes, dia 01
+ //$dateParStart =  $dateParStart->format('d-m-y');
+
+
+        //        $dateParStart =     Carbon::parse($dateParStart)->format('d/m/Y');
+        
+
+
+          $dateParEnd = Carbon::createFromDate(null, null, 01);
+
+            $dateParEnd =$dateParEnd->addMonth(); 
+   $dateParEnd =$dateParEnd->subDay(); 
+
+         return view('internal.admin.attendance ', compact('dateParStart' ,  'dateParEnd' )  );
+
+        //return $datePar ;
     }
 }

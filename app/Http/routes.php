@@ -14,6 +14,8 @@
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::post('auth/logout', 'Auth\AuthController@getLogoutpost');
+
 
 Route::get('login_worker', 'Auth\AuthController@worker');
 
@@ -98,8 +100,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/promotion/{id}/edit',  'PromoController@update');
     Route::get('promoter/promotion/{id}/delete',  'PromoController@destroy');
     
-
-
+    
 
 
     //Aca se inicia el CRUD de promotor

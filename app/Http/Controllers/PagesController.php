@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Assistance;
+use Auth;
+use App\User;
+use Carbon\Carbon;
+
 
 class PagesController extends Controller
 {
@@ -35,6 +40,36 @@ class PagesController extends Controller
 
     public function salesmanHome()
     {
+
+//aqui agregamos una entrada a la asistencia 
+
+
+
+
+       
+        $assitance               =   new Assistance ;
+
+        $assitance->tipo         =  1 ;
+     
+        $assitance->datetime  =        new Carbon() ;
+
+  $assitance->datetime  = $assitance->datetime->subHour(5) ;
+
+        $id = Auth::user()->id;
+        $assitance->salesman_id  =   $id;
+
+
+          $assitance->save();
+
+        //   return redirect('promoter/promotion');
+      
+      // return $promotions ;
+
+
+
+
+
+
         return view('internal.salesman.home');
     }
 
