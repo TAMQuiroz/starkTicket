@@ -116,7 +116,7 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
-        var_dump($request->all());
+        //var_dump($request->all());
         $event = Event::find($request['event_id']);
         $zone = Zone::find($request['zone_id']);
         $nTickets = $request['quantity'];
