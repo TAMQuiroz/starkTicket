@@ -67,6 +67,7 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('getAvailable', ['uses'=>'TicketController@getAvailable','as'=>'ajax.getAvailable']);
     Route::get('getSlots', ['uses'=>'TicketController@getSlots','as'=>'ajax.getSlots']);
     Route::get('getZone', ['uses'=>'TicketController@getZone','as'=>'ajax.getZone']);
+    Route::get('getTakenSlots', ['uses'=>'TicketController@getTakenSlots','as'=>'ajax.getTakenSlots']);
 });
 
 Route::group(['middleware' => ['auth', 'promoter']], function () {

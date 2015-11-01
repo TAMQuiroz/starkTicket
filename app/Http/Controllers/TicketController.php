@@ -96,6 +96,18 @@ class TicketController extends Controller
         return view('internal.salesman.buy',compact('event','presentations','zones','slots_array'));
     }
 
+    public function getSelectedSlots($seats, $zone_id)
+    {
+        $seats = json_decode($seats);
+        foreach ($seats as $key => $seat){
+            $seats[$key] = explode("_",$seat);
+            $seats[$key] = Slot::where('column',$seats[$key][1])->where('row',$seats[$key][0])->where('zone_id',$zone_id)->first()->id;
+        }
+        
+        return $seats;
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -104,7 +116,7 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
-        //dd($request->all());
+        var_dump($request->all());
         $event = Event::find($request['event_id']);
         $zone = Zone::find($request['zone_id']);
         $nTickets = $request['quantity'];
@@ -112,7 +124,10 @@ class TicketController extends Controller
         if ($event->place->rows != null){ //Es numerado
             $seats = $request['seats'];
 
+            $seats = $this->getSelectedSlots($seats, $zone->id);
+            
             foreach($seats as $seat_id){
+
                 $slot = DB::table('slot_presentation')->where('slot_id',$seat_id)->where('presentation_id', $request['presentation_id'])->first();
 
                 if($slot->status != config('constants.seat_available')){
@@ -125,7 +140,7 @@ class TicketController extends Controller
                 return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
         }
             
-               
+
         DB::beginTransaction();
 
         try{
@@ -322,6 +337,25 @@ class TicketController extends Controller
             if($slot->zone->id == $request['zone_id']){
                 $slots[$slot->id] = "F".$slot->row." C".$slot->column;
             }
+        }
+
+        return $slots;
+    }
+
+    public function getTakenSlots(request $request)
+    {
+        $event = Event::find($request['event_id']);
+        if($event->place->rows != null){
+            $slots = [];
+            $slot_presentation = DB::table('slot_presentation')->where('presentation_id',$request['function_id'])->where('status',config('constants.seat_taken'))->get();   
+            foreach ($slot_presentation as $s_p) {
+                $slot = Slot::find($s_p->slot_id);
+                if($slot->zone->id == $request['zone_id']){
+                    array_push($slots, $slot->row."_".$slot->column);
+                }
+            }
+        } else {
+            $slots = -1;
         }
 
         return $slots;
