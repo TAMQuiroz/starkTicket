@@ -22,7 +22,7 @@
 @stop
 
 @section('title')
-	Piaf de Pam Gems
+	{{$event->name}}
 @stop
 
 @section('content')
@@ -30,10 +30,10 @@
        <!-- Content -->
       <div>
           <h5>Selecciona fecha y horario</h5>
-          {!! Form::select('date', ['13 de Octubre', '14 de Octubre', '15 de Octubre'], null, ['class' => 'form-control']) !!}
+          {!! Form::select('presentation_id', $presentations->toArray(), null, ['class' => 'form-control'])!!}
           {!! Form::select('hour', ['18:00', '21:00'], null, ['class' => 'form-control']) !!}
           <h5>Selecciona Zona y Promoción</h5>
-          {!! Form::select('zone', ['VIP', 'Platea'], null, ['class' => 'form-control']) !!}
+          {!! Form::select('zone_id',$zones->toArray(), null, ['class' => 'form-control']) !!}
           {!! Form::select('promotion', ['Ninguna', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
       </div>
       <br>
