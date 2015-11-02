@@ -85,7 +85,7 @@
                   <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#saveModal">Guardar</button>
                   -->
                   <a class="btn btn-info" type="button" href=""  title="Create"  data-toggle="modal" data-target="#saveModal">Guardar</a>
-                  <button type="reset" class="btn btn-info">Cancelar</button>
+                  <a href="{{route('promoter.home')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
                 </div>
               </div>
 

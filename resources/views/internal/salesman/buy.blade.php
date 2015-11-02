@@ -29,11 +29,19 @@
                 </div>
                 <div class="col-md-4">
                     <h4 class="boxy"> Funciones del evento </h4>
-                    {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=>'getAvailable(); getSlots()']) !!}
+                    @if($event->place->rows == null)
+                    {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=>'getAvailable()']) !!}
+                    @else
+                    {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=>'getAvailable(); getTakenSlots()']) !!}
+                    @endif
                 </div>
                 <div class="col-md-4"> 
                     <h4 > Zona del Evento </h4>
-                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getAvailable(); getPrice(); getSlots(); makeArray()','id'=>'zone_id']) !!}
+                    @if($event->place->rows == null)
+                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getAvailable(); getPrice()','id'=>'zone_id']) !!}
+                    @else
+                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getAvailable(); getPrice(); getTakenSlots()','id'=>'zone_id']) !!}
+                    @endif
                 </div>
                 <div class="col-md-4">
                     <h4> Promoción </h4>
@@ -94,9 +102,7 @@
                 <div style="clear:both"></div>
            </div>
         </div>
-        <div class="col-md-2">
-            {!!Form::select('seats[]',head($slots_array), null,['class'=>'form-control','id'=>'seats','multiple','onClick'=>'addQuantity(this)'])!!}
-        </div>
+        {!!Form::hidden('seats',null,['id'=>'seats'])!!}
         <div class="col-md-3">
             Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','readonly', 'class'=>'form-control'])!!}
         </div>
@@ -190,7 +196,8 @@
             { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
             { event_available: "{{URL::route('ajax.getAvailable')}}"},
             { slots: "{{URL::route('ajax.getSlots')}}"},
-            { makeArray: "{{URL::route('ajax.getZone')}}"}
+            { makeArray: "{{URL::route('ajax.getZone')}}"},
+            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"}
         ]
     };
     </script>
