@@ -74,6 +74,9 @@ function makeArray(){
                 //console.log(map);
                 $('#parent-map').empty();
                 $('#legend').empty();
+                $('#selected-seats').empty();
+		        $('#total').empty();
+		        $('#counter').empty();
                 $('#parent-map').append('<div id="seat-map"></div>');
                 renderSeats();
             }

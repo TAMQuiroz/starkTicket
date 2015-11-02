@@ -44,8 +44,8 @@
                     @endif
                 </div>
                 <div class="col-md-4">
-                    <h4> Promoción </h4>
-                    {!! Form::select('promotion_id', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
+                    <h4>{!!Form::checkbox('check_promo',null,null,['id'=>'check_promo','onChange'=>'addPromo()'])!!} Promoción </h4>
+                    {!! Form::select('promotion_id', $promos, null, ['id'=>'promotion_id','class' => 'form-control','disabled','onChange'=>'getPromo()']) !!}
                 </div>
             </label>
         </div>
@@ -197,7 +197,8 @@
             { event_available: "{{URL::route('ajax.getAvailable')}}"},
             { slots: "{{URL::route('ajax.getSlots')}}"},
             { makeArray: "{{URL::route('ajax.getZone')}}"},
-            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"}
+            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
+            { promo: "{{URL::route('ajax.getPromo')}}"}
         ]
     };
     </script>

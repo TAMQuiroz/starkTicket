@@ -8,6 +8,7 @@ use App\Models\Ticket;
 use App\Models\Slot;
 use App\Models\Event;
 use App\Models\Presentation;
+use App\Models\Promotions;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 use App\Http\Requests\Ticket\StoreTicketRequest;
@@ -93,7 +94,9 @@ class TicketController extends Controller
         $presentations = $presentations->toArray();
         $zones = Zone::where('event_id', $id)->lists('name','id');
 
-        return view('internal.salesman.buy',compact('event','presentations','zones','slots_array'));
+        $promos = Promotions::where('event_id',$event->id)->lists('name','id');
+
+        return view('internal.salesman.buy',compact('event','presentations','zones','slots_array','promos'));
     }
 
     public function getSelectedSlots($seats, $zone_id)
@@ -176,6 +179,12 @@ class TicketController extends Controller
                  'updated_at'           => new Carbon(),
                 ]);
                 
+                if($request['promotion_id']!=""){
+                    $promo = Promotions::find($request['promotion_id']);
+                    if($promo->desc != null)
+                        DB::table('tickets')->where('id',$id)->decrement('price', $zone->price * ($promo->desc/100));
+                }
+
                 //Si existe cliente
                 if($request['user_id']!=""){ 
 
@@ -365,6 +374,12 @@ class TicketController extends Controller
     {
         $zone = Zone::find($request['zone_id']);
         return $zone;
+    }
+
+    public function getPromo(request $request)
+    {
+        $promo = Promotions::find($request['promo_id']);
+        return $promo;
     }
 }
 
