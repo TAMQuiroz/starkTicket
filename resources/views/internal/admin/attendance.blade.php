@@ -81,12 +81,12 @@ Asistencia de Pedro Alva
   <tr>
     <td>Detalle</td>
     
-    <td><a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
 
   </tr>
 
@@ -154,12 +154,12 @@ Asistencia de Pedro Alva
   <tr>
     <td>Detalle</td>
     
-    <td><a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
+    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
 
   </tr>
 

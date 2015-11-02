@@ -60,6 +60,8 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman/exchange_gift', 'GiftController@createExchange');
     Route::get('salesman/event/{id}/pay_booking', 'BookingController@pay');
     Route::get('salesman/giveaway', 'TicketController@giveaway');
+ // Route::get('salesman/mirutajodida', 'PagesController@salesmanHome');
+
     //Este inicia en el detalle del evento
     Route::get('salesman/event/{id}/buy', 'TicketController@createSalesman');
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
@@ -153,6 +155,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/ticket_return/new', 'TicketController@createReturn');
 
     Route::get('admin/attendance', 'BusinessController@attendance');
+    Route::get('admin/attendance/detail', 'BusinessController@attendanceDetail');
+
 
     Route::get('admin/config/exchange_rate', 'BusinessController@exchangeRate');
     Route::post('admin/config/exchange_rate', 'BusinessController@storeExchangeRate');

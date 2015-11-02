@@ -84,4 +84,16 @@ class BusinessController extends Controller
 
         //return $datePar ;
     }
+
+
+     public function attendanceDetail()
+    {      
+      
+         return view('internal.admin.attendanceDetail '  );
+
+        //return $datePar ;
+    }
+
+
+
 }
