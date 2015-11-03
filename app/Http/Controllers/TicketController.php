@@ -66,7 +66,24 @@ class TicketController extends Controller
      */
     public function createClient($id)
     {
-        return view('internal.client.buy');
+        //Buscar y enviar info de evento con $id
+        $event = Event::find($id);
+        $presentations = Presentation::where('event_id', $id)->get();
+
+        $slots_array = array();
+        foreach ($presentations as $pres) {
+            $slots = DB::table('slot_presentation')->where('presentation_id',$pres->id)->where('status',config('constants.seat_available'))->lists('slot_id','slot_id');    
+            $slots_array[$pres->id] = $slots;
+        }
+
+        $presentations = $presentations->lists('starts_at','id');
+        foreach($presentations as $key => $pres){
+            $presentations[$key] = date("Y-m-d H:i", $pres);
+        }
+        $presentations = $presentations->toArray();
+        $zones = Zone::where('event_id', $id)->lists('name','id');
+
+        return view('internal.client.buy', compact('event','presentations','zones','slots_array'));
     }
 
     /**
@@ -173,10 +190,14 @@ class TicketController extends Controller
                  'presentation_id'      => $request['presentation_id'],
                  'zone_id'              => $request['zone_id'],
                  'seat_id'              => null,
-                 'salesman_id'          => \Auth::user()->id,
+                 'salesman_id'          => null,
                  'created_at'           => new Carbon(),
                  'updated_at'           => new Carbon(),
                 ]);
+
+                if(\Auth::user()->role_id == config('constants.salesman')){
+                    DB::table('tickets')->where('id',$id)->update(['salesman_id'=>\Auth::user()->id]);
+                }
                 
                 if($request['promotion_id']!=""){
                     $promo = Promotions::find($request['promotion_id']);
@@ -208,14 +229,18 @@ class TicketController extends Controller
 
         }catch (\Exception $e){
             var_dump($e);
-            //dd('rollback');
+            dd('rollback');
             DB::rollback();
             return back()->withInput($request->except('seats'))->withErrors(['Por favor intentelo nuevamente']);
         }
 
         session(['tickets'=>$tickets]);
-
-        return redirect()->route('ticket.success.salesman');
+        if(\Auth::user()->role_id == config('constants.salesman')){
+            return redirect()->route('ticket.success.salesman');
+        }else if(\Auth::user()->role_id == config('constants.client')){
+            return redirect()->route('ticket.success.client');
+        }
+        
     }
 
     /**
@@ -236,7 +261,12 @@ class TicketController extends Controller
      */
     public function showSuccess()
     {
-        return view('internal.client.successBuy');
+        $tickets = array();
+        $tickets_id = session('tickets');
+        foreach ($tickets_id as $ticket_id) {
+            array_push($tickets,Ticket::find($ticket_id));
+        }
+        return view('internal.client.successBuy', compact('tickets'));
     }
 
     /**
