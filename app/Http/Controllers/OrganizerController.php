@@ -9,6 +9,7 @@ use App\Http\Requests\Organizer\StoreOrganizerRequest;
 use App\Http\Requests\Organizer\UpdateOrganizerRequest;
 use App\Http\Controllers\Controller;
 use App\Services\FileService;
+use App\Models\Event;
 
 class OrganizerController extends Controller
 {
@@ -138,8 +139,15 @@ class OrganizerController extends Controller
      */
     public function destroy($id)
     {
-        $organizer = organizer::find($id);
-        $organizer->delete();
+
+        $events = Event::where('organizer_id',$id)->get();
+        if ($events->count()==0){
+            $organizer = organizer::find($id);
+            $organizer->delete();
+        }
+        else{
+            return back()->withErrors(['No se puede eliminar un organizador con eventos asociados']);
+        }
         return redirect('promoter/organizers');
 
 

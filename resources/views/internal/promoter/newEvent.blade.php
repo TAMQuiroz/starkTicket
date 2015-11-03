@@ -214,10 +214,13 @@
                         var newCell3 = newRow.insertCell(2);
                         var newCell5 = newRow.insertCell(3);
                         
-                        var newCell6 = newRow.insertCell(4);
-                        var newCell7 = newRow.insertCell(5);
-                        var newCell8 = newRow.insertCell(6);
-                        var newCell9 = newRow.insertCell(7);
+
+                        if( document.getElementById('input-capacity').disabled==true){ 
+                            var newCell6 = newRow.insertCell(4);
+                            var newCell7 = newRow.insertCell(5);
+                            var newCell8 = newRow.insertCell(6);
+                            var newCell9 = newRow.insertCell(7);
+                        }
 
 
                         var column= document.getElementById('input-column').value;
@@ -310,12 +313,14 @@
                         newCell2.appendChild(newText2);
                         newCell3.appendChild(textPrice);
                         newCell5.appendChild(newDelete);
-                        /*
-                        newCell6.appendChild(y1);
-                        newCell7.appendChild(y2);
-                        newCell8.appendChild(y3);
-                        newCell9.appendChild(y4);
-                        */
+                        
+
+                        if( document.getElementById('input-capacity').disabled==true){ 
+                            newCell6.appendChild(y1);
+                            newCell7.appendChild(y2);
+                            newCell8.appendChild(y3);
+                            newCell9.appendChild(y4);
+                        }
 
                         document.getElementById('input-zone').value = '';
                         document.getElementById('input-capacity').value = '';

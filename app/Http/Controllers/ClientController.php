@@ -129,10 +129,14 @@ class ClientController extends Controller
     {
         $id = Auth::user()->id;
         $obj = User::findOrFail($id);
-
+        //dd($request->all());
         $input = $request->all();
 
-        $obj->fill($input)->save();
+        $obj->name = $input['name'];
+        $obj->lastname = $input['lastname'];
+        $obj->address = $input['address'];
+        $obj->phone = $input['phone'];
+        $obj->save();
 
         //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
         Session::flash('message', 'Informacion de perfil correctamente actualizada!');

@@ -190,16 +190,4 @@ Fin de comentario-->
 
 @section('javascript')
 
-{!!Html::script('js/jquery.dataTables.min.js')!!}
-{!!Html::script('js/dataTables.bootstrap.min.js')!!}
-<script>
-$(document).ready(function() {
-   $('#example').DataTable( {
-       "language": {
-           "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-       }
-   } );
-} );
-</script>
-
 @stop

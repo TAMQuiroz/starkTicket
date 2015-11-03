@@ -29,7 +29,7 @@ class StoreModuleRequest extends Request
             'district'      =>  'required|max:30',
             'province'      =>  'required|max:30',
             'state'         =>  'required|max:30',
-            'phone'         =>  'required|max:10|numeric',
+            'phone'         =>  'required|digits_between:7,9|numeric',
             'email'         =>  'required|max:50',
             'starTime'      =>  'required',
             'endTime'       =>  'required',

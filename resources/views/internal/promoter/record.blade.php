@@ -29,8 +29,10 @@
         <tr>
           <td>{{$event->id}}</td>
           <td>{{$event->name}}</td>
-          <td>19/09/2015</td>
-          <td>25/10/2015</td>
+          <!--<td>19/09/2015</td>
+          <td>25/10/2015</td> -->
+          <td>{{date("d/m/Y",$event->selling_date)}}</td>
+          <td>{{date("d/m/Y", strtotime("+".$event->time_length."days",$event->selling_date))}}</td>
           <td>Vigente</td>
           <td>1500</td>
           <td>17500.00</td>
@@ -45,24 +47,42 @@
             <div class="modal-body">
               <form>
                 <div class="form-group">
-                  <h4>Nubeluz El Encuentro</h4>
-            <p>Código 000001. </p>
-            <p>Creado Por: Juan Perez</p>
-            <p>Promotor: Juanita Perez</p>
-            <p>Fecha Creación del 01/09/2015</p>
-            <p>Fecha Duración del 19/09/2015 al 25/10/2015</p>
-            <h4>Entradas:</h4>
-            <ul>
-              <li>Normal : 100.00</li>
-              <li>Vip    : 350.00</li>
-              <li>Haters : 90.00</li>
-            </ul>
-            <br>
-            <h4>Información de Ventas</h4>
-            <p>Status           : Vigente</p>
-            <p>Entradas Vendidas: 1500</p>
-            <p>Total Acumulado  : 17500.00</p>
-            <p>Deposito Creador : 3000.00</p>
+                  <h4>{{$event->name}}</h4>
+                  <p>Codigo: {{$event->id}}</p>
+                  <p>Creado Por: {{$event->organization->businessName}}</p>
+                  <p>Promotor: {{$event->organization->organizerName}} {{$event->organization->organizerLastName}}</p>
+                  <!--<p>Fecha Creación: {{$event->created_at}}</p>
+                  <p>Fecha Duración: 19/09/2015 al 25/10/2015</p> -->
+                  <p>Descripción:  {{$event->description}} </p>
+                  <p>Local: {{$event->place->name}} </p>
+                  <p>Categoria: {{$event->category->parentCategory->name}} </p>
+                  <p>Sub Categoria: {{$event->category->name}} </p>
+                  <p>Fecha Creación: {{date_format(date_create($event->created_at),"d/m/Y")}}</p>
+                  <p>Fecha Publicación: {{date("d/m/Y",$event->publication_date)}}</p>
+                  <p>Fecha Inicio Venta del {{date("d/m/Y",$event->selling_date)}}</p>
+                 <!-- <p>Fecha Venta del {{date("d/m/Y",$event->presentations->first()->starts_at)}} al {{date("d/m/Y",strtotime("+".$event->time_length."days",$event->presentations->first()->starts_at))}}</p> -->
+                  <p>Funciones desde el {{date("d/m/Y",$event->presentations->first()->starts_at)}} al {{date("d/m/Y",$event->presentations->last()->starts_at)}}</p> 
+                  <h4>Entradas:</h4>
+                  <ul>
+                    @foreach($event->zones as $zone)
+                    <li>{{$zone->name}} : {{$zone->price}}</li>
+                    @endforeach
+                  </ul>
+                  <h4>Funciones:</h4>
+                  <ul>
+                    @foreach ($event->presentations as $present)
+                      <li>
+                          Funcion: {{date("d/m/Y",$present->starts_at)}}
+
+                      </li>
+                    @endforeach
+                  </ul>
+                  <br>
+                  <h4>Información de Ventas</h4>
+                  <p>Status           : Vigente</p>
+                  <p>Entradas Vendidas: 1500</p>
+                  <p>Total Acumulado  : 17500.00</p>
+                  <p>Deposito Creador : 3000.00</p>
                 </div>
               </form>
             </div>
@@ -109,15 +129,5 @@
 @stop
 
 @section('javascript')
-{!!Html::script('js/jquery.dataTables.min.js')!!}
-{!!Html::script('js/dataTables.bootstrap.min.js')!!}
-<script>
-$(document).ready(function() {
-   $('#events').DataTable( {
-       "language": {
-           "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-       }
-   } );
-} );
-</script>
+
 @stop
