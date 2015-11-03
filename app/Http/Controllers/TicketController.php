@@ -94,9 +94,7 @@ class TicketController extends Controller
         $presentations = $presentations->toArray();
         $zones = Zone::where('event_id', $id)->lists('name','id');
 
-        $promos = Promotions::where('event_id',$event->id)->lists('name','id');
-
-        return view('internal.salesman.buy',compact('event','presentations','zones','slots_array','promos'));
+        return view('internal.salesman.buy',compact('event','presentations','zones','slots_array'));
     }
 
     public function getSelectedSlots($seats, $zone_id)
