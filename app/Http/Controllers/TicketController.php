@@ -173,6 +173,7 @@ class TicketController extends Controller
                  'presentation_id'      => $request['presentation_id'],
                  'zone_id'              => $request['zone_id'],
                  'seat_id'              => null,
+                 'salesman_id'          => \Auth::user()->id,
                  'created_at'           => new Carbon(),
                  'updated_at'           => new Carbon(),
                 ]);

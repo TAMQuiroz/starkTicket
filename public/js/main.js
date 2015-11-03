@@ -141,6 +141,7 @@ function getPromo(){
                 getPrice();
             }else{
                 discount = 0;
+                getPrice();
                 //analizar oferta
             }
             
