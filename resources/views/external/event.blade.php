@@ -73,12 +73,13 @@
 								<!--<span class="byline">Praesent lacus congue rutrum</span>-->
 							</header>
 							<h3 class="dates">Fechas del evento</h3>
-							<p>Del 17 de Septiembre al 26 de Octubre 2015</p>
+							<!--<p>Del 17 de Septiembre al 26 de Octubre 2015</p> -->
+							<p>Del {{date("d/m/Y", $event->presentations->first()->starts_at)}} Al {{date("d/m/Y", $event->presentations->last()->starts_at)}}</p>
 							<h3 class="dates">Horario</h3>
 							<p>Función a las {{date("H:i", $event->presentations->first()->starts_at)}}</p>
 							<h3 class="dates">Ubicación</h3>
 
-							<p>{{$event->place->address}}</p>
+							<p>{{$event->place->address}}, {{$event->place->district}}</p>
 							{!! Html::image($event->place->image,null, ['class'=>'carousel_img']) !!}
 
 							<h3 class="dates">Distribución de Zonas</h3>
