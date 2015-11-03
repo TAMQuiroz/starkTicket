@@ -66,7 +66,24 @@ class TicketController extends Controller
      */
     public function createClient($id)
     {
-        return view('internal.client.buy');
+        //Buscar y enviar info de evento con $id
+        $event = Event::find($id);
+        $presentations = Presentation::where('event_id', $id)->get();
+
+        $slots_array = array();
+        foreach ($presentations as $pres) {
+            $slots = DB::table('slot_presentation')->where('presentation_id',$pres->id)->where('status',config('constants.seat_available'))->lists('slot_id','slot_id');    
+            $slots_array[$pres->id] = $slots;
+        }
+
+        $presentations = $presentations->lists('starts_at','id');
+        foreach($presentations as $key => $pres){
+            $presentations[$key] = date("Y-m-d H:i", $pres);
+        }
+        $presentations = $presentations->toArray();
+        $zones = Zone::where('event_id', $id)->lists('name','id');
+
+        return view('internal.client.buy', compact('event','presentations','zones','slots_array'));
     }
 
     /**

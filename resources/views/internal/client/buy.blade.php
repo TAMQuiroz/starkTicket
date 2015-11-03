@@ -22,24 +22,21 @@
 @stop
 
 @section('title')
-	Piaf de Pam Gems
+	{{$event->name}}
 @stop
 
 @section('content')
 	
 	<div>
 		<div class="chooser">
-			<h5>Selecciona fecha y horario</h5>
-	        {!! Form::select('date', ['13 de Octubre', '14 de Octubre', '15 de Octubre'], null, ['class' => 'form-control']) !!}
-	        {!! Form::select('hour', ['18:00', '21:00'], null, ['class' => 'form-control']) !!}
-	        <h5>Selecciona Zona y Promoción</h5>
-	        {!! Form::select('zone', ['VIP', 'Platea'], null, ['class' => 'form-control']) !!}
-	        {!! Form::select('promotion', ['Ninguna', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
+			{!!Form::hidden('event_id',$event['id'],['id'=>'event_id'])!!}
+			<h5>Seleccione Funcion</h5>
+	        {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control', 'id'=>'pres_selection']) !!}
+	        <h5>Seleccione Zona</h5>
+	        {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','id'=>'zone_id']) !!}
 		</div>
 	</div>	
 	<legend>Selección de Ubicación</legend>
-    <h5>Zona:</h5>
-    {!! Form::text('selectedZone', 'VIP', ['class' => 'form-control', 'disabled']) !!}
     <br>
 	<div class="seats">
 		<div class="demo">
@@ -94,5 +91,18 @@
 @section('javascript')
 	{!!Html::script('js/jquery.seat-charts.min.js')!!}
 	{!!Html::script('js/seats.js')!!}
-	
+	{!!Html::script('js/main.js')!!}
+    <script type="text/javascript">
+        var config = {
+        routes: [
+            { zone: "{{ URL::route('ajax.getClient') }}" },
+            { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
+            { event_available: "{{URL::route('ajax.getAvailable')}}"},
+            { slots: "{{URL::route('ajax.getSlots')}}"},
+            { makeArray: "{{URL::route('ajax.getZone')}}"},
+            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
+            { promo: "{{URL::route('ajax.getPromo')}}"}
+        ]
+    };
+    </script>
 @stop
