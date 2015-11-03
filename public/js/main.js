@@ -1,9 +1,11 @@
 var change = 0;
 var price = 0;
+var discount = 0;
 
 $('document').ready(function () {
     getAvailable();
     getSlots();
+    getPromo();
 })
 
 function cleanForm() {
@@ -122,6 +124,34 @@ $('#quantity').change(function(){
     }
 });
 
+function getPromo(){
+
+    $.ajax({
+        url: config.routes[6].promo,
+        type: 'get',
+        data: 
+        { 
+            event_id: $('#event_id').val(),
+            zone_id: $('#zone_id').val(),
+        },
+        success: function( response ){
+            if (response.desc != null){
+                $('#promotion_id').val(response.id);
+                discount = response.desc/100;
+                getPrice();
+            }else{
+                discount = 0;
+                getPrice();
+                //analizar oferta
+            }
+            
+        },
+        error: function( response ){
+            console.log(response);
+        }
+    });
+}
+
 function addQuantity() {
     count = $('#seats option:selected').length;
     $('#quantity').val(count);
@@ -147,7 +177,7 @@ function getPrice(){
             if(response != "")
             {
                 //console.log(response.price);
-                price = response.price;
+                price = response.price * (1 - discount);
                 $('#quantity').val(0);
                 $('#payModal').prop('disabled',true);
                 $('#total2').val("");
@@ -157,6 +187,7 @@ function getPrice(){
                 console.log('no respuesta precio');  
                 price = 0; 
             }
+            //console.log(price);
         },
         error: function( response ){
             
