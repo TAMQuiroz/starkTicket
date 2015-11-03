@@ -9,6 +9,7 @@ use App\Http\Requests\Local\StoreLocalRequest;
 use App\Http\Requests\Local\UpdateLocalRequest;
 use App\Models\Local;
 use App\Services\FileService;
+use App\Models\Event;
 
 class LocalController extends Controller
 {
@@ -140,9 +141,15 @@ class LocalController extends Controller
     public function destroy($id)
     {
         //
-        $local = Local::find($id);
+        $events = Event::where('local_id',$id)->get();
+       
+        if ($events->count()==0){
+            $local = Local::find($id);
+            $local->delete();
+        }else{
+            return back()->withErrors(['No se puede eliminar un local con eventos asociados']);
+        }
         
-        $local->delete();
         return redirect('admin/local');
     }
 }
