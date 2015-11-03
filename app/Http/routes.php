@@ -62,14 +62,18 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman/event/{id}/buy', 'TicketController@createSalesman');
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
     Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
-    Route::get('getClient', ['uses'=>'TicketController@getClient','as'=>'ajax.getClient']);
-    Route::get('getPrice', ['uses'=>'TicketController@getPrice','as'=>'ajax.getPrice']);
-    Route::get('getAvailable', ['uses'=>'TicketController@getAvailable','as'=>'ajax.getAvailable']);
-    Route::get('getSlots', ['uses'=>'TicketController@getSlots','as'=>'ajax.getSlots']);
-    Route::get('getZone', ['uses'=>'TicketController@getZone','as'=>'ajax.getZone']);
-    Route::get('getTakenSlots', ['uses'=>'TicketController@getTakenSlots','as'=>'ajax.getTakenSlots']);
-    Route::get('getPromo', ['uses'=>'TicketController@getPromo','as'=>'ajax.getPromo']);
+    
 });
+
+//Rutas generales para peticiones ajax, pueden ser usadas por varios usuarios, por eso lo saque
+Route::get('getClient', ['uses'=>'TicketController@getClient','as'=>'ajax.getClient']);
+Route::get('getPrice', ['uses'=>'TicketController@getPrice','as'=>'ajax.getPrice']);
+Route::get('getAvailable', ['uses'=>'TicketController@getAvailable','as'=>'ajax.getAvailable']);
+Route::get('getSlots', ['uses'=>'TicketController@getSlots','as'=>'ajax.getSlots']);
+Route::get('getZone', ['uses'=>'TicketController@getZone','as'=>'ajax.getZone']);
+Route::get('getTakenSlots', ['uses'=>'TicketController@getTakenSlots','as'=>'ajax.getTakenSlots']);
+Route::get('getPromo', ['uses'=>'TicketController@getPromo','as'=>'ajax.getPromo']);
+
 
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
