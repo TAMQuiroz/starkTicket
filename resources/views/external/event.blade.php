@@ -73,7 +73,7 @@
 								<!--<span class="byline">Praesent lacus congue rutrum</span>-->
 							</header>
 							<h3 class="dates">Fechas del evento</h3>
-							<p>Del 17 de Septiembre al 26 de Octubre 2015</p>
+							<p>Del {{date($event->selling_date)}} 17 de Septiembre al 26 de Octubre 2015</p>
 							<h3 class="dates">Horario</h3>
 							<p>Función a las {{date("H:i", $event->presentations->first()->starts_at)}}</p>
 							<h3 class="dates">Ubicación</h3>
