@@ -9,7 +9,6 @@ var map = [];
 var taken = [];
 
 $('document').ready(function () {
-	getPrice();
 	getTakenSlots();
 	
 

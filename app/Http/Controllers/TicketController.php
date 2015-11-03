@@ -378,8 +378,22 @@ class TicketController extends Controller
 
     public function getPromo(request $request)
     {
-        $promo = Promotions::find($request['promo_id']);
-        return $promo;
+        $maxDiscount = 0;
+        $bestPromo = null;
+        $promos = Promotions::where('event_id',$request['event_id'])->get();
+        foreach ($promos as $key => $promo) {
+            if ($promo->typePromotion == config('constants.discount')){
+                if ($promo->desc > $maxDiscount){
+                    $maxDiscount = $promo->desc;
+                    $bestPromo = $promo;
+                }
+            }else{
+                //GG OFERTA X por Y ÑO QUIERO
+            }
+            
+        }
+
+        return $bestPromo;
     }
 }
 

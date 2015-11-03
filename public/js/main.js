@@ -5,6 +5,7 @@ var discount = 0;
 $('document').ready(function () {
     getAvailable();
     getSlots();
+    getPromo();
 })
 
 function cleanForm() {
@@ -123,42 +124,26 @@ $('#quantity').change(function(){
     }
 });
 
-function addPromo() {
-    promo_status = $('#check_promo').is(':checked');
-    if (promo_status == true){
-        $('#promotion_id').prop('disabled',false);
-        getPromo();
-    }else{
-        $('#promotion_id').prop('disabled',true);
-        discount = 0;
-        getPrice();
-    }
-}
-
 function getPromo(){
-    $('#parent-map').empty();
-    $('#legend').empty();
-    $('#selected-seats').empty();
-    $('#total').empty();
-    $('#counter').empty();
-    $('#parent-map').append('<div id="seat-map"></div>');
-    renderSeats();
+
     $.ajax({
         url: config.routes[6].promo,
         type: 'get',
         data: 
         { 
-            promo_id: $('#promotion_id').val(),
+            event_id: $('#event_id').val(),
+            zone_id: $('#zone_id').val(),
         },
         success: function( response ){
             if (response.desc != null){
+                $('#promotion_id').val(response.id);
                 discount = response.desc/100;
-
+                getPrice();
             }else{
                 discount = 0;
                 //analizar oferta
             }
-            getPrice();
+            
         },
         error: function( response ){
             console.log(response);
