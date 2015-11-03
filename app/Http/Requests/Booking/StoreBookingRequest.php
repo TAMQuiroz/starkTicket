@@ -27,7 +27,7 @@ class StoreBookingRequest extends Request
             'quantity'          =>  'required|integer',
             'event_id'          =>  'required|integer|exists:events,id',
             'zone_id'           =>  'required|integer|exists:zones,id',
-            'promotion_id'      =>  'required|integer',
+            'promotion_id'      =>  'integer',
             'presentation_id'   =>  'required|integer|exists:presentations,id',
             //'payMode'           =>  'required|integer'
         ];
