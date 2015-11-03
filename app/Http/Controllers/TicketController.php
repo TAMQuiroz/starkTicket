@@ -8,6 +8,7 @@ use App\Models\Ticket;
 use App\Models\Slot;
 use App\Models\Event;
 use App\Models\Presentation;
+use App\Models\Promotions;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 use App\Http\Requests\Ticket\StoreTicketRequest;
@@ -172,10 +173,17 @@ class TicketController extends Controller
                  'presentation_id'      => $request['presentation_id'],
                  'zone_id'              => $request['zone_id'],
                  'seat_id'              => null,
+                 'salesman_id'          => \Auth::user()->id,
                  'created_at'           => new Carbon(),
                  'updated_at'           => new Carbon(),
                 ]);
                 
+                if($request['promotion_id']!=""){
+                    $promo = Promotions::find($request['promotion_id']);
+                    if($promo->desc != null)
+                        DB::table('tickets')->where('id',$id)->decrement('price', $zone->price * ($promo->desc/100));
+                }
+
                 //Si existe cliente
                 if($request['user_id']!=""){ 
 
@@ -365,6 +373,26 @@ class TicketController extends Controller
     {
         $zone = Zone::find($request['zone_id']);
         return $zone;
+    }
+
+    public function getPromo(request $request)
+    {
+        $maxDiscount = 0;
+        $bestPromo = null;
+        $promos = Promotions::where('event_id',$request['event_id'])->get();
+        foreach ($promos as $key => $promo) {
+            if ($promo->typePromotion == config('constants.discount')){
+                if ($promo->desc > $maxDiscount){
+                    $maxDiscount = $promo->desc;
+                    $bestPromo = $promo;
+                }
+            }else{
+                //GG OFERTA X por Y ÑO QUIERO
+            }
+            
+        }
+
+        return $bestPromo;
     }
 }
 
