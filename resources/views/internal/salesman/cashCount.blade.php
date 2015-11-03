@@ -30,30 +30,37 @@
   <div class="row">
       
     <div class="col-md-2">
-      <h4>Monto Inicial:</h4>
+      <h4>Nuevo Monto Inicial:</h4>
     </div>
     <div class="col-md-4">
       {!! Form::text('initial', '', array('class' => 'form-control')) !!} 
     </div>
-    <div class="col-md-2"> <button type="button" class="btn btn-info" onclick="myFunction()" data-toggle="collapse" data-target="#demo2" >Agregar Monto</button> </div>
+    <!--<div class="col-md-2"> <button type="button" class="btn btn-info" onclick="myFunction()" data-toggle="collapse" data-target="#demo2" >Agregar Monto</button> </div>
     <div class="col-md-4">  
       <div>
         <h4 id="demo3" style="visibility:hidden"> Monto Inicial: 1000.00</h4>
+      </div>
+    </div> -->
+    <div class="col-md-2"> <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo2" >Modificar Monto</button> </div>
+    <div class="col-md-4">  
+      <div>
+        <h4 id="demo3"> Monto Inicial Actual:  </h4>
       </div>
     </div>
   </div>
   <h2>Ventas</h2>   
     <table class="table table-bordered table-striped">
+      
       <tr>
         <th>Nombre Cliente</th>
         <th>Nombre del Evento</th>
         <th>Tipo de Zona</th>
+        <th>Función</th>
         <th>Cantidad de Entradas</th>
         <th>Precio Individual</th>
         <th>Sub total</th>
-
       </tr>
-
+      <!--
       <tr>
         <td>Cliente Feliz 1</td>
         <td>Nubeluz Reencuentro</td>
@@ -62,7 +69,6 @@
         <td>50.00</td>
         <td>150.00</td>
       </tr>
-
       <tr>
         <td>Cliente Feliz 1</td>
         <td>Nubeluz Reencuentro</td>
@@ -71,7 +77,6 @@
         <td>25.00</td>
         <td>50.00</td>
       </tr>
-
       <tr>
         <td>Cliente Feliz 2</td>
         <td>Kiko y la Chili</td>
@@ -111,7 +116,21 @@
         <td>5</td>
         <td>100.00</td>
         <td>500.00</td>
+      </tr> -->
+      
+      @foreach($sales as $sale)
+      <tr>
+        <td>{{$sale->clientName}} {{$sale->clientLast}}</td>
+        <td>{{$sale->eventName}}</td>
+        <td>{{$sale->zoneName}}</td>
+        <td>{{date("d/m/Y H:i",$sale->funtionTime)}}</td>
+        <td>{{$sale->totalTicket}}</td>
+        <td>{{$sale->zonePrice}}</td>
+        <td>{{$sale->subtotal}}</td>
       </tr>
+      @endforeach
+    
+
 
       <tr>
         <!--<th scope="row">TOTAL</th>-->
@@ -120,8 +139,9 @@
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
         <td><strong>TOTAL<strong></td>
-        <td>1160.00</td>
+        <td>{{$sumSale}}</td>
       </tr>
     </table>
 
@@ -131,12 +151,23 @@
         <th>Nombre Cliente</th>
         <th>Nombre del Evento</th>
         <th>Tipo de Zona</th>
+        <th>Función</th>
         <th>Cantidad de Entradas</th>
         <th>Precio Individual</th>
         <th>Sub total</th>
-
       </tr>
-
+      @foreach($refunds as $refund)
+      <tr>
+        <td>{{$refund->clientName}} {{$refund->clientLast}}</td>
+        <td>{{$refund->eventName}}</td>
+        <td>{{$refund->zoneName}}</td>
+        <td>{{date("d/m/Y H:i",$refund->funtionTime)}}</td>
+        <td>{{$refund->totalTicket}}</td>
+        <td>{{$refund->zonePrice}}</td>
+        <td>{{$refund->subtotal}}</td>
+      </tr>
+      @endforeach
+      <!--
       <tr>
         <td>Cliente Amargado 3</td>
         <td>Fatmagul, el Musical en 2D</td>
@@ -163,7 +194,7 @@
         <td>100.00</td>
         <td>300.00</td>
       </tr>
-
+      -->
       <tr>
         <!--<th scope="row">TOTAL</th>-->
 
@@ -171,15 +202,16 @@
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
         <td><strong>TOTAL<strong></td>
-        <td>750.00</td>
+        <td>{{$sumRefound}}</td>
       </tr>
     </table>
     
     <div class="row">
       <div class="col-md-8"></div>
       <div class="col-md-4">
-           <h2 class="totalType">Total del Día: <strong>1000.00</strong></h2>
+           <h2 class="totalType">Total del Día: <strong>{{$sumTotal}}</strong></h2>
            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#info" data-whatever="@mdo">Arqueo de Caja</button>
 
 
