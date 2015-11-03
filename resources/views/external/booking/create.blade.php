@@ -29,7 +29,7 @@
     <form action="{{action('BookingController@store')}}" enctype="multipart/form-data">		
        <!-- Content -->
       <div>
-      {!! Form::text('code', $event->id, ['class' => 'form-control boxy', 'disabled','id'=>'event_id']) !!}
+          {!! Form::hidden('code', $event->id, ['class' => 'form-control', 'disabled','id'=>'event_id']) !!}
           {!!Form::hidden('event_id',$event['id'])!!}
           <h5>Selecciona función</h5>
           <!--{!! Form::select('presentation_id', $presentations->toArray(), null, ['class' => 'form-control'])!!}-->
@@ -38,16 +38,16 @@
           @else
           {!! Form::select('presentation_id', $presentations->toArray(), null, ['class' => 'form-control', 'id'=>'pres_selection', 'onChange'=>'getAvailable(); getTakenSlots()']) !!}
           @endif
-          <h5>Selecciona Zona y Promoción</h5>
+          <h5>Selecciona Zona</h5>
           <!--{!! Form::select('zone_id',$zones->toArray(), null, ['class' => 'form-control']) !!}-->
           @if($event->place->rows == null)
           {!! Form::select('zone_id', $zones->toArray(), null, ['class' => 'form-control','onChange'=>'getAvailable(); getPrice()','id'=>'zone_id']) !!}
           @else
           {!! Form::select('zone_id', $zones->toArray(), null, ['class' => 'form-control','onChange'=>'getAvailable(); getPrice(); getTakenSlots()','id'=>'zone_id']) !!}
           @endif
-          {!! Form::select('promotion', ['Ninguna', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
+          <!--{!! Form::select('promotion', ['Ninguna', 'Visa Platinium'], null, ['class' => 'form-control']) !!}-->
+          {!! Form::hidden('promotion_id', null, ['id'=>'promotion_id']) !!}
       </div>
-      <br>
       <!--<legend>Selección de Ubicación</legend>
       <h5>Zona:</h5>
       {!! Form::text('selectedZone', 'VIP', ['class' => 'form-control', 'disabled']) !!}-->
@@ -111,7 +111,7 @@
                       <label for="exampleInputEmail2">Persona Autorizada</label>
                       {!! Form::text('autorized', '', ['class' => 'form-control', 'placeholder' => 'Juan Pérez']) !!}
                     </div>
-                    <a href="{{url('client/reservaexitosa')}}"><button type="button" class="btn btn-info">Aceptar</button></a>
+                    <a href="{{url('client/reservaexitosa')}}"><button type="submit" class="btn btn-info">Aceptar</button></a>
                     <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                   </div>
                 </form>
@@ -136,7 +136,8 @@
             { event_available: "{{URL::route('ajax.getAvailable')}}"},
             { slots: "{{URL::route('ajax.getSlots')}}"},
             { makeArray: "{{URL::route('ajax.getZone')}}"},
-            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"}
+            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
+            { promo: "{{URL::route('ajax.getPromo')}}"}
         ]
     };
     </script>
