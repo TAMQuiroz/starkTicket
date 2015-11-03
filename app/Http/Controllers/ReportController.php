@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Excel;
 
 class ReportController extends Controller
 {
@@ -26,6 +27,56 @@ class ReportController extends Controller
     public function create()
     {
         //
+    }
+
+    public function actionExcel(){
+
+        Excel::create('Probando archivo de Excel', function ($excel){
+
+          $excel->sheet('Sheetname', function($sheet){
+
+                $sheet->mergeCells('A1:C1');
+
+                $sheet->setBorder('A1:F1','thin');
+
+                $sheet->cells('A1:F1',function($cells){
+
+                    $cells->setBackground('#000000');
+                    $cells->setFontColor('#FFFFFF');
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+
+                });
+
+                $sheet->setWidth(
+                    array(
+                        'D' => '50'
+                    )
+
+                );
+
+
+                $sheet->setHeight(
+                    array(   
+                        '1' => '20'
+                    )
+
+                );
+
+                $data = [];
+                array_push($data,array('Gerardo',  '',  '',  'Davila', 'Garcia', 'Paolo'));
+                array_push($data,array('Timoteo',  '',  '',  'Sexy', 'Sensual', 'Hermoso'));
+                array_push($data,array('Matias',  '',  '',  'Gato', 'Grande', 'Gordo'));
+
+
+                $sheet->fromArray($data, null, 'A1', false, false);
+
+          });
+
+
+
+
+        })->download('xlsx');
     }
 
     /**

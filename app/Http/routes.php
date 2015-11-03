@@ -160,6 +160,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('admin/report/assistance', 'ReportController@showAssistance');
     Route::get('admin/report/sales', 'ReportController@showSales');
+    Route::get('admin/report/sales/download','ReportController@actionExcel');
     Route::get('admin/report/assignment', 'ReportController@showAssigment');
 
     Route::get('admin/modules', 'ModuleController@index');
