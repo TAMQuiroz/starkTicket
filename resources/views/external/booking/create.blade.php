@@ -29,10 +29,22 @@
     <form action="{{action('BookingController@store')}}" enctype="multipart/form-data">		
        <!-- Content -->
       <div>
+      {!! Form::text('code', $event->id, ['class' => 'form-control boxy', 'disabled','id'=>'event_id']) !!}
+          {!!Form::hidden('event_id',$event['id'])!!}
           <h5>Selecciona función</h5>
-          {!! Form::select('presentation_id', $presentations->toArray(), null, ['class' => 'form-control'])!!}
+          <!--{!! Form::select('presentation_id', $presentations->toArray(), null, ['class' => 'form-control'])!!}-->
+          @if($event->place->rows == null)
+          {!! Form::select('presentation_id', $presentations->toArray(), null, ['class' => 'form-control', 'id'=>'pres_selection', 'onChange'=>'getAvailable()']) !!}
+          @else
+          {!! Form::select('presentation_id', $presentations->toArray(), null, ['class' => 'form-control', 'id'=>'pres_selection', 'onChange'=>'getAvailable(); getTakenSlots()']) !!}
+          @endif
           <h5>Selecciona Zona y Promoción</h5>
-          {!! Form::select('zone_id',$zones->toArray(), null, ['class' => 'form-control']) !!}
+          <!--{!! Form::select('zone_id',$zones->toArray(), null, ['class' => 'form-control']) !!}-->
+          @if($event->place->rows == null)
+          {!! Form::select('zone_id', $zones->toArray(), null, ['class' => 'form-control','onChange'=>'getAvailable(); getPrice()','id'=>'zone_id']) !!}
+          @else
+          {!! Form::select('zone_id', $zones->toArray(), null, ['class' => 'form-control','onChange'=>'getAvailable(); getPrice(); getTakenSlots()','id'=>'zone_id']) !!}
+          @endif
           {!! Form::select('promotion', ['Ninguna', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
       </div>
       <br>
@@ -73,9 +85,12 @@
         </div>
         @endif
       <br>
-      <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo" >Reservar Entrada</button>
-      <a href="{{url('salesman/')}}"><button type="button" class="btn btn-info">Cancelar Reserva</button></a>
-
+      <div class="col-md-12"><hr></div>
+      <div class= "button-final col-md-12">
+        <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo" >Reservar Entrada</button>
+        <a href=""><button type="button" class="btn btn-info">Cancelar Reserva</button></a>
+      </div>
+      <br><br>
       <div class="modal fade" id="pay" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -85,17 +100,18 @@
             </div>
             <div class="modal-body">
               <label>Costo Total:</label>
-              {!! Form::text('total', 'S/. 300.00', ['class' => 'form-control', 'disabled']) !!}
+              <!--{!! Form::text('total', 'S/. 300.00', ['class' => 'form-control', 'disabled']) !!}-->
+              {!!Form::number('',null,['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
               <hr>  
                 <form>
                   <div class="form-group">
                     <div class="form-group">
                       <label>Fecha de expiración</label>
-                      {!! Form::text('expiration', '', ['class' => 'form-control', 'placeholder' => 'mm/aa']) !!}
+                      {!! Form::text('expiration', \Carbon\Carbon::now('America/Lima')->addHours(12), ['class' => 'form-control', 'disabled']) !!}
                       <label for="exampleInputEmail2">Persona Autorizada</label>
                       {!! Form::text('autorized', '', ['class' => 'form-control', 'placeholder' => 'Juan Pérez']) !!}
                     </div>
-                    <a href="{{url('client/reservaexitosa')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
+                    <a href="{{url('client/reservaexitosa')}}"><button type="button" class="btn btn-info">Aceptar</button></a>
                     <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                   </div>
                 </form>
@@ -103,53 +119,6 @@
           </div>
            
         </div>  
-
-    <!--<div class="seats">
-      <div class="demo">
-          <div id="seat-map">
-          <div class="front">Escenario</div>          
-      </div>
-        <div class="booking-details">
-          
-          <p>Día: {!! Form::text('selectedDate', 'Octubre 13, 21:00', ['class' => 'form-control', 'disabled']) !!}</p>
-          <p>Asiento(s): </p>
-          <ul id="selected-seats"></ul>
-          <p>Tickets: <span id="counter">0</span></p>
-          <p>Total: <b>S/.<span id="total">0</span></b></p>
-          <div id="legend"></div>
-              
-          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo">Reservar Entrada</button>
-          <div class="modal fade" id="pay" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="exampleModalLabel">Detalle de Reserva:</h4>
-                  </div>
-                  <div class="modal-body">
-                    <label>Costo Total:</label>
-                    {!! Form::text('total', 'S/. 300.00', ['class' => 'form-control', 'disabled']) !!}
-                    <hr>  
-                      <form>
-                        <div class="form-group">
-                          <div class="form-group">
-                            <label>Fecha de expiración</label>
-                            {!! Form::text('expiration', '', ['class' => 'form-control', 'placeholder' => 'mm/aa']) !!}
-                            <label for="exampleInputEmail2">Persona Autorizada</label>
-                            {!! Form::text('autorized', '', ['class' => 'form-control', 'placeholder' => 'Juan Pérez']) !!}
-                          </div>
-                          <a href="{{url('client/reservaexitosa')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
-                          <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                        </div>
-                      </form>
-                  </div>
-                </div>
-             
-          </div>  
-        </div>
-        <div style="clear:both"></div>
-
-    </div>-->
 
 			
 @stop
