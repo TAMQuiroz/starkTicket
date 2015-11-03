@@ -190,10 +190,14 @@ class TicketController extends Controller
                  'presentation_id'      => $request['presentation_id'],
                  'zone_id'              => $request['zone_id'],
                  'seat_id'              => null,
-                 'salesman_id'          => \Auth::user()->id,
+                 'salesman_id'          => null,
                  'created_at'           => new Carbon(),
                  'updated_at'           => new Carbon(),
                 ]);
+
+                if(\Auth::user()->role_id == config('constants.salesman')){
+                    DB::table('tickets')->where('id',$id)->update(['salesman_id'=>\Auth::user()->id]);
+                }
                 
                 if($request['promotion_id']!=""){
                     $promo = Promotions::find($request['promotion_id']);
@@ -225,14 +229,18 @@ class TicketController extends Controller
 
         }catch (\Exception $e){
             var_dump($e);
-            //dd('rollback');
+            dd('rollback');
             DB::rollback();
             return back()->withInput($request->except('seats'))->withErrors(['Por favor intentelo nuevamente']);
         }
 
         session(['tickets'=>$tickets]);
-
-        return redirect()->route('ticket.success.salesman');
+        if(\Auth::user()->role_id == config('constants.salesman')){
+            return redirect()->route('ticket.success.salesman');
+        }else if(\Auth::user()->role_id == config('constants.client')){
+            return redirect()->route('ticket.success.client');
+        }
+        
     }
 
     /**
@@ -253,7 +261,12 @@ class TicketController extends Controller
      */
     public function showSuccess()
     {
-        return view('internal.client.successBuy');
+        $tickets = array();
+        $tickets_id = session('tickets');
+        foreach ($tickets_id as $ticket_id) {
+            array_push($tickets,Ticket::find($ticket_id));
+        }
+        return view('internal.client.successBuy', compact('tickets'));
     }
 
     /**
