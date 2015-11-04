@@ -9,9 +9,12 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use App\Models\Assistance;
+use App\Models\Attendance;
 use Auth;
 use Carbon\Carbon;
+use App\Models\AttendanceDetail;
+
+
 
 
 
@@ -29,9 +32,66 @@ class AuthController extends Controller
     |
     */
 
+
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    protected $redirectAfterLogout = 'auth/login'; 
+
+ public function getLogout()
+    {
+
+ 
+     
+        if(Auth::user()->role_id == 2 ){ // solo lo hago si soy vendedor
+      
+
+      $dateToday  =   new Carbon() ; 
+      $dateToday  = $dateToday->subHour(5) ;
+      $dateToday =  $dateToday->toDateString(); 
+     
+
+
+      $dateTimeToday  =   new Carbon() ; 
+      $dateTimeToday  = $dateTimeToday->subHour(5) ;
+     
+
+      $id = Auth::user()->id;
+
+
+
+    $Attendance = Attendance::where('datetime',$dateToday  )->where('salesman_id',$id)->get(); 
+
+
+
+    $assitancedetail  =   new AttendanceDetail() ;
+    $assitancedetail->datetime  =         $dateTimeToday ;
+    $assitancedetail->tipo =  2  ; // ya que se trata de un ingreso
+    $assitancedetail->attendance_id =  $Attendance[0]->id;
+    $assitancedetail->save();
+
+//Busco la fecha y actualizo lafecha de salida .
+
+    $updateAttendance = Attendance::find( $Attendance[0]->id );
+    $updateAttendance->datetimeend = $dateTimeToday; 
+
+
+     $updateAttendance->save();
+
+
+
+
+}
+
+
+
+        Auth::logout();
+
+        return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
+    }
+
+
+
+
+    protected $redirectAfterLogout = '/auth/login'; 
 
     protected $loginPath = '/auth/login';
     /**
@@ -59,6 +119,13 @@ class AuthController extends Controller
         ]);
     }
 
+
+
+
+
+
+    
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -81,6 +148,11 @@ class AuthController extends Controller
 
     public function worker()
     {
+        
+
+
+   
+
         return view('external.workerLogin');
     }
     /**
@@ -89,30 +161,7 @@ class AuthController extends Controller
      * @return string
      */
 
-   public function getLogoutpost()
-    {
 
-// grabo mi fecha de deslogueo !! 
-
- 
-        $assitance               =   new Assistance ;
-
-        $assitance->tipo         =  2 ;
-     
-        $assitance->datetime  =        new Carbon() ;
-
-  $assitance->datetime  = $assitance->datetime->subHour(5) ;
-
-        $id = Auth::user()->id;
-        $assitance->salesman_id  =  $id  ;
-
-if(Auth::user()->role_id ==  2    ){   
-         $assitance->save(); 
-
-          }
-
-        return redirect('/'); // porlas no llega aqui
-    }
 
 
     public function redirectPath()
@@ -125,6 +174,75 @@ if(Auth::user()->role_id ==  2    ){
                 return '/promoter';
                 break;
             case '2':
+
+
+//aqui agregamos una entrada a la asistencia 
+
+
+
+           $dateToday  =   new Carbon() ; 
+      $dateToday  = $dateToday->subHour(5) ;
+      $dateToday =  $dateToday->toDateString(); 
+     
+
+
+      $dateTimeToday  =   new Carbon() ; 
+      $dateTimeToday  = $dateTimeToday->subHour(5) ;
+     
+
+ 
+
+
+
+      $id = Auth::user()->id;
+    
+
+
+      $Attendance = Attendance::where('datetime', $dateToday  )->where('salesman_id',$id)->get(); 
+ 
+       
+     if($Attendance->count() == 0 ) { // si no lo encuentro creo la fecha 
+         $assitance  =   new Attendance() ;
+         $assitance->datetime = $dateToday ;
+           $assitance->salesman_id  =  $id  ;
+        $assitance->datetimestart  =     $dateTimeToday ;
+        $assitance->save(); 
+      }
+      {              // si lo encuentro actualizo la fecha de finalizacion de sesion a null 
+        
+
+
+         $assitance = Attendance::find($Attendance[0]->id);
+         $assitance->datetimeend = NULL ;
+         $assitance->save(); 
+      }
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+      //ahora creo el detalle de la asistencia. esto es si o si
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $assitancedetail  =   new AttendanceDetail() ;
+    $assitancedetail->datetime  =         $dateTimeToday ;
+    $assitancedetail->tipo = 1 ; // ya que se trata de un ingreso
+ 
+
+      $id = Auth::user()->id;
+
+
+    $Attendance = Attendance::where('datetime',$dateToday  )->where('salesman_id',$id)->get(); 
+
+     $assitancedetail->attendance_id =  $Attendance[0]->id;
+     $assitancedetail->save();
+
+
+
+      
+
+
+
+
+
+
+
+
                 return '/salesman';
                 break;
             case '1':

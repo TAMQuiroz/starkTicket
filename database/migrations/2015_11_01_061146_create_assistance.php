@@ -14,14 +14,15 @@ class CreateAssistance extends Migration
     {
        
 
-           Schema::create('assistance', function (Blueprint $table) {
+           Schema::create('attendance', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tipo');
+
             $table->timestamp('datetime');
+            $table->timestamp('datetimestart');
+            $table->timestamp('datetimeend')->nullable();
             $table->integer('salesman_id')->unsigned();
             $table->timestamps();
-           
-
+            $table->softDeletes();
 
         });
 
@@ -36,6 +37,6 @@ class CreateAssistance extends Migration
      */
     public function down()
     {
-              Schema::drop('assistance');
+              Schema::drop('attendance');
     }
 }

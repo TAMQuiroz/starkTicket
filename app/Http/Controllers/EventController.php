@@ -84,6 +84,23 @@ class EventController extends Controller
         $function->save();
         return $function;
     }
+
+     public function feedback(){
+
+         return view('internal.client.event_feedback' );
+    }
+
+
+
+     public function attendanceDetail()
+    {      
+      
+         return view('internal.admin.attendanceDetail '  );
+
+        //return $datePar ;
+    }
+
+
     public function storeZone($data, $event){
         $zone = new Zone();
         $zone->name         = $data['name'];

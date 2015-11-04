@@ -30,6 +30,7 @@
             <th>Número de Tickets</th>
             <th>Costo Total</th>
             <th>Lugar del Evento</th>
+            <th>Deja un comentario! </th>
         </tr>
         <tr>
            <td>12/02/2015</td>
@@ -37,6 +38,8 @@
            <td>3</td>
            <td>420</td>
            <td>Estadio Nacional</td>
+           <td><a class="btn btn-info" href="{{url('client/event_record/feedback')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></td>
+          
         </tr>
         <tr>
             <td>03/04/2015</td>
@@ -44,6 +47,9 @@
             <td>5</td>
             <td>140</td>
             <td>Teatro Fondo de bikini</td>
+            <td><a class="btn btn-info" href="{{url('client/event_record/feedback')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></td>
+        
+
         </tr>
          <tr>
             <td>23/04/2015</td>
@@ -51,6 +57,8 @@
             <td>1</td>
             <td>200</td>
             <td>Polideportivo PUCP</td>
+            <td><a class="btn btn-info" href="{{url('client/event_record/feedback')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></td>
+        
         </tr>
          <tr>
             <td>23/04/2015</td>
@@ -58,6 +66,8 @@
             <td>1</td>
             <td>450</td>
             <td>Polideportivo PUCP</td>
+            <td><a class="btn btn-info" href="{{url('client/event_record/feedback')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></td>
+        
         </tr>
         <tr>
             <td>27/06/2015</td>
@@ -65,6 +75,8 @@
             <td>4</td>
             <td>240</td>
             <td>Estadio Alejandro Villanueva</td>
+            <td><a class="btn btn-info" href="{{url('client/event_record/feedback')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></td>
+        
         </tr>
     </table>
                  
