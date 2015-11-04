@@ -202,15 +202,15 @@
 
                         var capacity = document.getElementById('input-capacity').value;
 
-                        var column= "";
-                        var row= "";
-                        var rowini= "";
-                        var colini= "";
+
 
                         if( new_capacity-capacity<0) return;
                         if(zone.length==0 || price.length==0) return;
                         if( document.getElementById('input-capacity').disabled==true){
-
+                          var column= "";
+                          var row= "";
+                          var rowini= "";
+                          var colini= "";
                           column= document.getElementById('input-column').value;
                           row= document.getElementById('input-row').value ;
                           rowini= document.getElementById('input-rowIni').value;
@@ -287,8 +287,14 @@
                             y2.required=true;
                             y3.required=true;
                             y4.required=true;
-                            capacity=row*column;               
+                            capacity=row*column;        
+                           newCell6.appendChild(y1);
+                          newCell7.appendChild(y2);
+                          newCell8.appendChild(y3);
+                          newCell9.appendChild(y4);       
                         }
+
+
 
 
 
@@ -340,10 +346,7 @@
                         newCell3.appendChild(textPrice);
                         newCell5.appendChild(newDelete);
                         
-                        newCell6.appendChild(y1);
-                        newCell7.appendChild(y2);
-                        newCell8.appendChild(y3);
-                        newCell9.appendChild(y4);
+
 
                         document.getElementById('input-zone').value = '';
                         document.getElementById('input-capacity').value = '';
@@ -495,8 +498,8 @@
                     </tr>
                     @foreach($event->presentations as $function)
                     <tr>
-                        <td><input name="function_starts_at[]" type="date" value="{{date('Y-m-d',$function->starts_at)}}" style = "border:none"></td>
-                        <td><input type="time" value="{{date('h:i:s',$function->starts_at)}}" style = "border:none"></td>
+                        <td><input name="start_date[]" type="date" value="{{date('Y-m-d',$function->starts_at)}}" style = "border:none"></td>
+                        <td><input type="time" name="start_time[]" value="{{date('h:i:s',$function->starts_at)}}" style = "border:none"></td>
                         <td>
                           <a class="btn btn-info"   title="Eliminar"    onclick="deleteFunction(this)"><i class="glyphicon glyphicon-remove"></i></a>
                           <!-- <a class="btn btn-info" href=""  title="Eliminar"    data-toggle="modal" data-target="#deleteModal{{$function->id}}"><i class="glyphicon glyphicon-remove"></i></a> -->
