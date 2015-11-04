@@ -17,8 +17,8 @@
     var today = new Date();
     var month = today.getMonth() +1;
     var todayDate = ''+today.getFullYear()+'-'+month+'-'+today.getDate();
-    document.getElementsByName('selling_date')[0].min = todayDate;
-    document.getElementById('input-function-date').min = todayDate;
+    // document.getElementsByName('selling_date')[0].min = todayDate;
+    // document.getElementById('input-function-date').min = todayDate;
     var e = document.getElementsByName('local_id')[0];
     var index= e.options[e.selectedIndex].value;
     document.getElementById('capacity-display').value = document.getElementsByName('capacity_'+index)[0].value;
@@ -41,10 +41,10 @@
     var timeToday = today.getTime();
     var timePublic = publicDate.getTime();
     var month = today.getMonth() +1;
-    if(timeToday > timePublic)
-      document.getElementsByName('selling_date')[0].min = ''+today.getFullYear()+'-'+month+'-'+today.getDate();
-    else
-      document.getElementsByName('selling_date')[0].min = publication_date_1;
+    // if(timeToday > timePublic)
+    //   document.getElementsByName('selling_date')[0].min = ''+today.getFullYear()+'-'+month+'-'+today.getDate();
+    // else
+    //   document.getElementsByName('selling_date')[0].min = publication_date_1;
   }
 
   function incrementPresentationDate(){
@@ -106,7 +106,7 @@
               </div>
 
               <div class="form-group">
-                <label  class="col-sm-2 control-label">Duración Aproximada</label>
+                <label  class="col-sm-2 control-label">Duración Aproximada (horas) </label>
                 <div class="col-sm-10">
                   {!! Form::number('time_length',1, array('class' => 'form-control','min' => '1','required')) !!}
                 </div>
@@ -181,7 +181,7 @@
                       <input type="text" id="capacity-display" class="form-control" disabled>
                   </div>
               </div>
-              <div  id="dist">
+              <div  id="dist" class="col-sm-10">
                 <label  class="col-sm-2 control-label" id="labelDist">Distribución evento</label>
                 <br><br><br>
               </div>              
@@ -194,14 +194,32 @@
 
                     function addZone(){
 
+
+                        var new_capacity = document.getElementById('capacity-display').value;
+
                         var zone = document.getElementById('input-zone').value;
                         
                         var price = document.getElementById('input-price').value;
 
                         var capacity = document.getElementById('input-capacity').value;
 
+                        var column= "";
+                        var row= "";
+                        var rowini= "";
+                        var colini= "";
 
+                        if( new_capacity-capacity<0) return;
+                        if(zone.length==0 || price.length==0) return;
+                        if( document.getElementById('input-capacity').disabled==true){
+                          column= document.getElementById('input-column').value;
+                          row= document.getElementById('input-row').value ;
+                          rowini= document.getElementById('input-rowIni').value;
+                          colini= document.getElementById('input-colIni').value;
 
+                          if(column.length==0 || row.length==0 || rowini.length==0 || colini.length==0) return;
+
+                        }
+                        else if(capacity.length==0) return;
 
                         var tableRef = document.getElementById('table-zone').getElementsByTagName('tbody')[0];
 
@@ -212,53 +230,55 @@
                         var newCell  = newRow.insertCell(0);
                         var newCell2 = newRow.insertCell(1);
                         var newCell3 = newRow.insertCell(2);
-                        var newCell5 = newRow.insertCell(3);
+                       
+                        var newCell6 = newRow.insertCell(3);
+                        var newCell7 = newRow.insertCell(4);
+                        var newCell8 = newRow.insertCell(5);
+                        var newCell9 = newRow.insertCell(6);
                         
-
-                        if( document.getElementById('input-capacity').disabled==true){ 
-                            var newCell6 = newRow.insertCell(4);
-                            var newCell7 = newRow.insertCell(5);
-                            var newCell8 = newRow.insertCell(6);
-                            var newCell9 = newRow.insertCell(7);
-                        }
+                        var newCell5 = newRow.insertCell(7);
 
 
-                        var column= document.getElementById('input-column').value;
-                        var row= document.getElementById('input-row').value ;
-                        var rowini= document.getElementById('input-rowIni').value;
-                        var colini= document.getElementById('input-colIni').value;
 
                         var y1 = document.createElement("INPUT");
-                        y1.setAttribute("type", "hidden");
+                        //y1.setAttribute("type", "hidden");
                         y1.setAttribute("value", column);
                         y1.setAttribute("name", "zone_columns[]");
                         y1.style.border = 'none';
                         y1.style.background = 'transparent';
+                        y1.style.width='40px';
                         y1.required = false;
+                        y1.setAttribute("readonly","readonly");
 
                         var y2 = document.createElement("INPUT");
-                        y2.setAttribute("type", "hidden");
+                        //y2.setAttribute("type", "hidden");
                         y2.setAttribute("value", row);
                         y2.setAttribute("name", "zone_rows[]");
                         y2.style.border = 'none';
                         y2.style.background = 'transparent';
+                        y2.style.width='40px';
                         y2.required = false;
+                        y2.setAttribute("readonly","readonly");
 
                         var y3 = document.createElement("INPUT");
-                        y3.setAttribute("type", "hidden");
+                        //y3.setAttribute("type", "hidden");
                         y3.setAttribute("value", colini);
                         y3.setAttribute("name", "start_column[]");
                         y3.style.border = 'none';
                         y3.style.background = 'transparent';
+                        y3.style.width='40px';
                         y3.required = false;
+                        y3.setAttribute("readonly","readonly");
 
                         var y4 = document.createElement("INPUT");
-                        y4.setAttribute("type", "hidden");
+                        //y4.setAttribute("type", "hidden");
                         y4.setAttribute("value", rowini);
                         y4.setAttribute("name", "start_row[]");
                         y4.style.border = 'none';
                         y4.style.background = 'transparent';
+                        y4.style.width='40px';
                         y4.required = false;   
+                        y4.setAttribute("readonly","readonly");
 
 
                         if( document.getElementById('input-capacity').disabled==true){ 
@@ -273,6 +293,7 @@
 
 
 
+
                         // Append values to cells
                         var newText  = document.createTextNode(zone);
                         var x = document.createElement("INPUT");
@@ -282,20 +303,27 @@
                         x.style.border = 'none';
                         x.style.background = 'transparent';
                         x.required = true;
+                        x.setAttribute("readonly","readonly");
+
                         var newText2 = document.createElement("INPUT");
                         newText2.setAttribute("type", "text");
                         newText2.setAttribute("value", capacity);
                         newText2.setAttribute("name", "zone_capacity[]");
                         newText2.style.border = 'none';
                         newText2.style.background = 'transparent';
+                        newText2.style.width='40px';
                         newText2.required = true;
+                        newText2.setAttribute("readonly","readonly");
+
                         var textPrice = document.createElement("INPUT");
                         textPrice.setAttribute("type", "text");
                         textPrice.setAttribute("value", price);
                         textPrice.setAttribute("name", "price[]");
                         textPrice.style.border = 'none';
                         textPrice.style.background = 'transparent';
+                        textPrice.style.width='80px';
                         textPrice.required = true;
+                        textPrice.setAttribute("readonly","readonly");
                         // buttons
 
                         var newDelete = document.createElement('button');
@@ -314,13 +342,10 @@
                         newCell3.appendChild(textPrice);
                         newCell5.appendChild(newDelete);
                         
-
-                        if( document.getElementById('input-capacity').disabled==true){ 
-                            newCell6.appendChild(y1);
-                            newCell7.appendChild(y2);
-                            newCell8.appendChild(y3);
-                            newCell9.appendChild(y4);
-                        }
+                        newCell6.appendChild(y1);
+                        newCell7.appendChild(y2);
+                        newCell8.appendChild(y3);
+                        newCell9.appendChild(y4);
 
                         document.getElementById('input-zone').value = '';
                         document.getElementById('input-capacity').value = '';
@@ -330,10 +355,11 @@
                         // document.getElementById('input-colIni').value = '';
                         // document.getElementById('input-rowIni').value = '';
 
-                        var new_capacity = document.getElementById('capacity-display').value;
+                        
                         new_capacity = new_capacity - capacity;
                         document.getElementById('capacity-display').value = new_capacity;
                         document.getElementById("input-capacity").max=new_capacity;
+
                     }
 
                     function deleteZone(btn){
@@ -352,6 +378,10 @@
                         <th>Nombre</th>
                         <th>Capacidad</th>
                         <th>Precio</th>
+                        <th>Columnas</th>
+                        <th>Filas</th>
+                        <th>Columna inicial</th>
+                        <th>Fila inicial</th>
                         <th>Eliminar</th>
                     </tr>
                 </table>
@@ -390,6 +420,7 @@
                         var start_date = document.getElementById('input-function-date').value;
                         var start_time = document.getElementById('input-function-time').value;
 
+                        if(start_time.length==0 || start_time.length==0) return;
                         var tableRef = document.getElementById('functions-table').getElementsByTagName('tbody')[0];
 
                         // Insert a row in the table at the last row
@@ -489,7 +520,12 @@
        holi();
 
        function holi(){
-                var e = $('[name=local_id]')[0];
+       var tam= $('[id=invisible_id]').size();
+       console.log("tamano "+tam);
+       for(var i=1;i<=tam;i++)
+       $('#dist').append("<div id=seat-map-"+i+" class=seatCharts-container  tabindex =0> </div>");
+
+        var e = $('[name=local_id]')[0];
 
         var index= e.options[e.selectedIndex].value;
         console.log(index);
@@ -593,7 +629,7 @@
           $('#label_capacity').show();
           $('#input-capacity').show();
         }
-       }
+      }
 
       $('[name=local_id]').click(function(){
         var e = $('[name=local_id]')[0];
@@ -744,15 +780,7 @@ $('document').ready(function () {
   </script>
 
 
-  <script>
-  $(document).ready(function(){
-    //var locals=$locals_list.size();
-    var tam= $('[id=invisible_id]').size();
-    console.log("tamano "+tam);
-    for(var i=1;i<=tam;i++)
-      $('#dist').append("<div id=seat-map-"+i+" class=seatCharts-container  tabindex =0> </div>")
-  });
-  </script>  
+
   {!!Html::script('js/moment.js')!!}
   {!!Html::script('js/rangepicker.js')!!}
 

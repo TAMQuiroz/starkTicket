@@ -153,21 +153,21 @@ class EventController extends Controller
 
     public function validateFreeLocal($starts_at, $local_id, $time_length){
         $events = Event::where('local_id', $local_id)->get();
-        if($events->count()>0){
-            foreach ($starts_at as $start_at) {
-                $min_date = strtotime($start_at);
-                $max_date = $min_date + ($time_length*3600);
-                foreach ($events as $event) {
-                    $presentations = $event->presentations;
-                    foreach ($presentations as $presentation) {
-                        $date = intval($presentation->starts_at);
-                        if($date<=$max_date || $date>=$min_date)
-                            return ['error' => 'This local has presentations on the specified dates and times'];
-                    }
-                }
-            }
-        }   
-        else return null;
+        // if($events->count()>0){
+        //     foreach ($starts_at as $start_at) {
+        //         $min_date = strtotime($start_at);
+        //         $max_date = $min_date + ($time_length*3600);
+        //         foreach ($events as $event) {
+        //             $presentations = $event->presentations;
+        //             foreach ($presentations as $presentation) {
+        //                 $date = intval($presentation->starts_at);
+        //                 if($date<=$max_date || $date>=$min_date)
+        //                     return ['error' => 'This local has presentations on the specified dates and times'];
+        //             }
+        //         }
+        //     }
+        // }   
+        // else return null;
     }
 
     public function store(StoreEventRequest $request)
@@ -304,7 +304,8 @@ class EventController extends Controller
         $old_event->selling_date = strtotime($data['selling_date']);
         $image_url = $old_event->image;
         if($data['image'] != null)
-            $old_event->image        = 'imagen_updated'; //$this->file_service->upload($data['image'],'event');
+            $old_event->image        = $this->file_service->upload($data['image'],'event');
+       
         else
             $old_event->image = $image_url;
         $old_event->save();
@@ -343,26 +344,26 @@ class EventController extends Controller
         $local = Local::find($data['local_id']);
         if($local->rows >=1 && !$data['zone_columns'])
             return ['error' => 'se debe especificar filas y columnas para este local numerado'];
-        if($data['zone_columns']){
-            for($i = 0; $i < count($data['zone_names']); $i++){
-                $temp[$i] = [$data['start_column'][$i], $data['start_row'][$i]];
-                for($j = $i -1; $j >=0; $j--){
-                    if($temp[$j][0] == $data['start_column'][$i] && $temp[$j][1] == $data['start_row'][$i])
-                        return ['error' => 'Hay zonas ubicadas en la misma fila y columna'];
-                }
-            }
-            for ($i = 0; $i < count($data['zone_columns']); $i++) {
-                $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
-                $total_capacity = $total_capacity + $capacity;
-                if($data['start_row'][$i] > $local->rows || $data['start_column'][$i] > $local->columns||
-                    $data['start_row'][$i]+$data['zone_rows'][$i] -1> $local->rows ||
-                    $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
-                    return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
-            }
-        } else {
-            for($i= 0; $i < count($data['zone_names']);$i++)
-                $total_capacity = $total_capacity + $data['zone_capacity'][$i];
-        }
+        // if($data['zone_columns']){ // esta entrando a pesar de no ser numerado el local :S :S
+        //     for($i = 0; $i < count($data['zone_names']); $i++){
+        //         $temp[$i] = [$data['start_column'][$i], $data['start_row'][$i]];
+        //         for($j = $i -1; $j >=0; $j--){
+        //             if($temp[$j][0] == $data['start_column'][$i] && $temp[$j][1] == $data['start_row'][$i])
+        //                 return ['error' => 'Hay zonas ubicadas en la misma fila y columna'];
+        //         }
+        //     }
+        //     for ($i = 0; $i < count($data['zone_columns']); $i++) {
+        //         $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
+        //         $total_capacity = $total_capacity + $capacity;
+        //         if($data['start_row'][$i] > $local->rows || $data['start_column'][$i] > $local->columns||
+        //             $data['start_row'][$i]+$data['zone_rows'][$i] -1> $local->rows ||
+        //             $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
+        //             return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
+        //     }
+        // } else {
+        //     for($i= 0; $i < count($data['zone_names']);$i++)
+        //         $total_capacity = $total_capacity + $data['zone_capacity'][$i];
+        // }
         if($total_capacity > $local->capacity)
             return ['error' => 'la capacidad del evento excede a la del local'];
         $result = [

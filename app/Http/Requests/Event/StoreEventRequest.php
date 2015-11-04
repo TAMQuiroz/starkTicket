@@ -25,7 +25,7 @@ class StoreEventRequest extends Request
             'start_date'    => 'required',
             'start_time'    => 'required',
             'publication_date'   => 'required|date|after:yesterday',
-            'selling_date'       => 'required|date|after:publication_date'
+            'selling_date'       => 'required|date'
         ];
         $zones = $this->request->get('zone_names'); 
         if($zones)
@@ -42,7 +42,7 @@ class StoreEventRequest extends Request
         $presentations = $this->request->get('start_date');
         if($presentations)
         foreach($presentations as $key=>$val){
-            $rules['start_date.'.$key]  = 'required|date|after:selling_date';
+            $rules['start_date.'.$key]  = 'required|date';
             $rules['start_time.'.$key]  = 'required_with:start_date';
 
         }
