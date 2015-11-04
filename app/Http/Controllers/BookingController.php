@@ -39,14 +39,15 @@ class BookingController extends Controller
 		$event = Event::find($request['event_id']);
         $zone = Zone::find($request['zone_id']);
         $nTickets = $request['quantity'];
-
+        $seats_array = array();
         if ($event->place->rows != null){ //Es numerado
             $seats = $request['seats'];
 
             $seats = $this->getSelectedSlots($seats, $zone->id);
             
             foreach($seats as $seat_id){
-
+                $seat = Slot::find($seat_id);
+                array_push($seats_array, $seat);
                 $slot = DB::table('slot_presentation')->where('slot_id',$seat_id)->where('presentation_id', $request['presentation_id'])->first();
 
                 if($slot->status != config('constants.seat_available')){
@@ -123,11 +124,16 @@ class BookingController extends Controller
             DB::rollback();
             return back()->withInput($request->except('seats'))->withErrors(['Por favor intentelo nuevamente']);
         }
-
+        $presentation = Presentation::find($request->input('presentation_id'));
         session(['tickets'=>$tickets]);
         $array = ['event' => $event, 
                 'zone'    => $zone,
-                'cant'    => $nTickets];
+                'cant'    => $nTickets,
+                'eventDate' => gmdate("d-m-Y H:i:s",$presentation->starts_at),
+                'seats'   => ''];
+        if($event->place->rows != null){
+            $array['seats'] = $seats_array;
+        }
 		return view('external.booking.results', $array);
 	}
 	
