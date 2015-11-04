@@ -16,7 +16,7 @@
   window.onload = function(){
     var today = new Date();
     var month = today.getMonth() +1;
-    var todayDate = ''+today.getFullYear()+'-'+month+'-'+today.getDate();
+    var todayDate = ''+today.getFullYear()+'-'+month+'-0'+today.getDate();
     document.getElementsByName('selling_date')[0].min = todayDate;
     document.getElementById('input-function-date').min = todayDate;
     var e = document.getElementsByName('local_id')[0];
@@ -42,7 +42,7 @@
     var timePublic = publicDate.getTime();
     var month = today.getMonth() +1;
     if(timeToday > timePublic)
-      document.getElementsByName('selling_date')[0].min = ''+today.getFullYear()+'-'+month+'-'+today.getDate();
+      document.getElementsByName('selling_date')[0].min = ''+today.getFullYear()+'-'+month+'-0'+today.getDate();
     else
       document.getElementsByName('selling_date')[0].min = publication_date_1;
   }

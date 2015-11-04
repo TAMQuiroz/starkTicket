@@ -8,6 +8,7 @@ use App\Models\Ticket;
 use App\Models\Slot;
 use App\Models\Event;
 use App\Models\Presentation;
+use App\Models\Promotions;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 use App\Http\Requests\Ticket\StoreTicketRequest;
@@ -65,7 +66,24 @@ class TicketController extends Controller
      */
     public function createClient($id)
     {
-        return view('internal.client.buy');
+        //Buscar y enviar info de evento con $id
+        $event = Event::find($id);
+        $presentations = Presentation::where('event_id', $id)->get();
+
+        $slots_array = array();
+        foreach ($presentations as $pres) {
+            $slots = DB::table('slot_presentation')->where('presentation_id',$pres->id)->where('status',config('constants.seat_available'))->lists('slot_id','slot_id');    
+            $slots_array[$pres->id] = $slots;
+        }
+
+        $presentations = $presentations->lists('starts_at','id');
+        foreach($presentations as $key => $pres){
+            $presentations[$key] = date("Y-m-d H:i", $pres);
+        }
+        $presentations = $presentations->toArray();
+        $zones = Zone::where('event_id', $id)->lists('name','id');
+
+        return view('internal.client.buy', compact('event','presentations','zones','slots_array'));
     }
 
     /**
@@ -136,7 +154,8 @@ class TicketController extends Controller
             }
 
         }else{ //No es numerado
-            if($zone->capacity - $nTickets <= 0) //Deberia ser zona x presentacion
+            $zoneXpres = DB::table('zone_presentation')->where('zone_id',$request['zone_id'])->where('presentation_id', $request['presentation_id'])->first();
+            if($zoneXpres->slots_availables - $nTickets < 0) //Deberia ser zona x presentacion
                 return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
         }
             
@@ -145,6 +164,7 @@ class TicketController extends Controller
 
         try{
             $tickets = array();
+            $sale_id = Ticket::max('sale_id');
             for($i = 0; $i < $nTickets; $i++){
 
                 
@@ -160,7 +180,7 @@ class TicketController extends Controller
                                                   ->where('presentation_id',$request['presentation_id'])
                                                   ->decrement('slots_availables');;
                 }
-                
+
                 //Crear ticket
                 $id = DB::table('tickets')->insertGetId(
                 ['payment_date'         => new Carbon(),
@@ -172,10 +192,29 @@ class TicketController extends Controller
                  'presentation_id'      => $request['presentation_id'],
                  'zone_id'              => $request['zone_id'],
                  'seat_id'              => null,
+                 'salesman_id'          => null,
+                 'picked_up'            => false,
+                 'sale_id'              => 1,
                  'created_at'           => new Carbon(),
                  'updated_at'           => new Carbon(),
                 ]);
+
+                if(\Auth::user()->role_id == config('constants.salesman')){
+                    DB::table('tickets')->where('id',$id)->update(['salesman_id'=>\Auth::user()->id]);
+                    DB::table('tickets')->where('id',$id)->update(['picked_up'=>true]);
+                    DB::table('tickets')->where('id',$id)->update(['designee'=>null]);
+                }
+
+                if($sale_id != null){
+                    DB::table('tickets')->where('id',$id)->update(['sale_id'=>$sale_id+1]);
+                }
                 
+                if($request['promotion_id']!=""){
+                    $promo = Promotions::find($request['promotion_id']);
+                    if($promo->desc != null)
+                        DB::table('tickets')->where('id',$id)->decrement('price', $zone->price * ($promo->desc/100));
+                }
+
                 //Si existe cliente
                 if($request['user_id']!=""){ 
 
@@ -200,14 +239,18 @@ class TicketController extends Controller
 
         }catch (\Exception $e){
             var_dump($e);
-            //dd('rollback');
+            dd('rollback');
             DB::rollback();
             return back()->withInput($request->except('seats'))->withErrors(['Por favor intentelo nuevamente']);
         }
 
         session(['tickets'=>$tickets]);
-
-        return redirect()->route('ticket.success.salesman');
+        if(\Auth::user()->role_id == config('constants.salesman')){
+            return redirect()->route('ticket.success.salesman');
+        }else if(\Auth::user()->role_id == config('constants.client')){
+            return redirect()->route('ticket.success.client');
+        }
+        
     }
 
     /**
@@ -228,7 +271,12 @@ class TicketController extends Controller
      */
     public function showSuccess()
     {
-        return view('internal.client.successBuy');
+        $tickets = array();
+        $tickets_id = session('tickets');
+        foreach ($tickets_id as $ticket_id) {
+            array_push($tickets,Ticket::find($ticket_id));
+        }
+        return view('internal.client.successBuy', compact('tickets'));
     }
 
     /**
@@ -365,6 +413,34 @@ class TicketController extends Controller
     {
         $zone = Zone::find($request['zone_id']);
         return $zone;
+    }
+
+    public function getPromo(request $request)
+    {
+        $maxDiscount = 0;
+        $bestPromo = null;
+        if($request['type_id']==config('constants.credit')){
+            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',2)->get();
+        }else if($request['type_id']==config('constants.cash')){
+            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->get();
+        }else{
+            $promos = null;
+        }
+        
+        if($promos){
+            foreach ($promos as $key => $promo) {
+                if ($promo->typePromotion == config('constants.discount')){
+                    if ($promo->desc > $maxDiscount){
+                        $maxDiscount = $promo->desc;
+                        $bestPromo = $promo;
+                    }
+                }else{
+                    //GG OFERTA X por Y ÑO QUIERO
+                }
+                
+            }
+        }
+        return $bestPromo;
     }
 }
 
