@@ -29,7 +29,12 @@
 <label>Cantidad de entradas</label> {{$cant}}
 <br>
 @if($event->place->rows != null)
-	<label>Asientos</label> 
+	<label>Asientos:</label> 
+	@foreach($seats as $seat)
+		<br>
+		{{$seat->row}}{{$seat->column}}
+	@endforeach
+	
 @endif
 	
 
