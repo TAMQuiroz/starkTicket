@@ -164,6 +164,7 @@ class TicketController extends Controller
 
         try{
             $tickets = array();
+            $sale_id = Ticket::max('sale_id');
             for($i = 0; $i < $nTickets; $i++){
 
                 
@@ -179,7 +180,7 @@ class TicketController extends Controller
                                                   ->where('presentation_id',$request['presentation_id'])
                                                   ->decrement('slots_availables');;
                 }
-                
+
                 //Crear ticket
                 $id = DB::table('tickets')->insertGetId(
                 ['payment_date'         => new Carbon(),
@@ -192,12 +193,20 @@ class TicketController extends Controller
                  'zone_id'              => $request['zone_id'],
                  'seat_id'              => null,
                  'salesman_id'          => null,
+                 'picked_up'            => false,
+                 'sale_id'              => 1,
                  'created_at'           => new Carbon(),
                  'updated_at'           => new Carbon(),
                 ]);
 
                 if(\Auth::user()->role_id == config('constants.salesman')){
                     DB::table('tickets')->where('id',$id)->update(['salesman_id'=>\Auth::user()->id]);
+                    DB::table('tickets')->where('id',$id)->update(['picked_up'=>true]);
+                    DB::table('tickets')->where('id',$id)->update(['designee'=>null]);
+                }
+
+                if($sale_id != null){
+                    DB::table('tickets')->where('id',$id)->update(['sale_id'=>$sale_id+1]);
                 }
                 
                 if($request['promotion_id']!=""){
