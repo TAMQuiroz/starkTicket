@@ -39,6 +39,7 @@ class BookingController extends Controller
 		$event = Event::find($request['event_id']);
         $zone = Zone::find($request['zone_id']);
         $nTickets = $request['quantity'];
+        $codigo_reserva = uniqid();
         $seats_array = array();
         if ($event->place->rows != null){ //Es numerado
             $seats = $request['seats'];
@@ -84,9 +85,9 @@ class BookingController extends Controller
                 //Crear ticket
                 $id = DB::table('tickets')->insertGetId(
                 ['payment_date'         => null,
-                 'reserve'              => 1,
+                 'reserve'              => $codigo_reserva,
                  'cancelled'            => 0,
-                 'owner_id'             => null, //\Auth->user()->id
+                 'owner_id'             => \Auth::user()->id
                  'event_id'             => $request['event_id'],
                  'price'                => $zone->price, //Falta reducir el porcentaje de promocion
                  'presentation_id'      => $request['presentation_id'],
@@ -95,6 +96,8 @@ class BookingController extends Controller
                  'created_at'           => new Carbon(),
                  'updated_at'           => new Carbon(),
                 ]);
+                if($request['dni_recojo']!=''||$request['dni_recojo']!=null)
+                    $id['dni'] => $request['dni_recojo'];
                 
                 //Si existe cliente
                 if($request['user_id']!=""){ 
@@ -130,10 +133,12 @@ class BookingController extends Controller
                 'zone'    => $zone,
                 'cant'    => $nTickets,
                 'eventDate' => gmdate("d-m-Y H:i:s",$presentation->starts_at),
+                'codigo'  => $codigo_reserva,
                 'seats'   => ''];
         if($event->place->rows != null){
             $array['seats'] = $seats_array;
         } 
+        var_dump($array['codigo']);die();
 		return view('external.booking.results', $array);
 	}
 	
