@@ -154,7 +154,8 @@ class TicketController extends Controller
             }
 
         }else{ //No es numerado
-            if($zone->capacity - $nTickets <= 0) //Deberia ser zona x presentacion
+            $zoneXpres = DB::table('zone_presentation')->where('zone_id',$request['zone_id'])->where('presentation_id', $request['presentation_id'])->first();
+            if($zoneXpres->slots_availables - $nTickets < 0) //Deberia ser zona x presentacion
                 return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
         }
             
@@ -409,19 +410,27 @@ class TicketController extends Controller
     {
         $maxDiscount = 0;
         $bestPromo = null;
-        $promos = Promotions::where('event_id',$request['event_id'])->get();
-        foreach ($promos as $key => $promo) {
-            if ($promo->typePromotion == config('constants.discount')){
-                if ($promo->desc > $maxDiscount){
-                    $maxDiscount = $promo->desc;
-                    $bestPromo = $promo;
-                }
-            }else{
-                //GG OFERTA X por Y ÑO QUIERO
-            }
-            
+        if($request['type_id']==config('constants.credit')){
+            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',2)->get();
+        }else if($request['type_id']==config('constants.cash')){
+            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->get();
+        }else{
+            $promos = null;
         }
-
+        
+        if($promos){
+            foreach ($promos as $key => $promo) {
+                if ($promo->typePromotion == config('constants.discount')){
+                    if ($promo->desc > $maxDiscount){
+                        $maxDiscount = $promo->desc;
+                        $bestPromo = $promo;
+                    }
+                }else{
+                    //GG OFERTA X por Y ÑO QUIERO
+                }
+                
+            }
+        }
         return $bestPromo;
     }
 }

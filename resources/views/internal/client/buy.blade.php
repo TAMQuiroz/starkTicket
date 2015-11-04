@@ -44,6 +44,7 @@
 	        @endif
 		</div>
 		{!! Form::hidden('promotion_id', null, ['id'=>'promotion_id']) !!}
+        {!! Form::radio('payMode', config('constants.credit'), true,['style'=>'visibility: hidden']) !!}
 	</div>	
 	<div class="table-responsive col-md-12" >
 	    <table class="table table-bordered">
@@ -92,12 +93,12 @@
     </div>
     @else
     <div class="col-md-3">
-        Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','class'=>'form-control','min'=>'1'])!!}
+        Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','class'=>'form-control','min'=>0])!!}
     </div>
     @endif
     <div class="col-md-12"><hr></div>
     <div class= "button-final col-md-12">
-	    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo" id="payModal">Comprar Entrada</button>
+	    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo" id="payModal" disabled onclick="getPromo()">Comprar Entrada</button>
 	    <a href="{{url('client/home')}}"><button type="button" class="btn btn-info">Cancelar Venta</button></a>
 		
 		<div class="modal fade" id="pay" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -114,7 +115,6 @@
 				        <form>
 				          	<div class="form-group">
 								<div class="form-group">
-									{!!Form::hidden('payMode',2)!!}
 									<label>Número de Tarjeta</label>
 									{!! Form::number('', null, ['id'=>'creditCardNumber','class' => 'form-control', 'placeholder' => '1234 5678 9012 3456','min'=>1,'max'=>9999999999999999,'required']) !!}
 									<label>Fecha de expiración</label>
