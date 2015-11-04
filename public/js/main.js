@@ -1,9 +1,12 @@
 var change = 0;
 var price = 0;
+var discount = 0;
 
 $('document').ready(function () {
     getAvailable();
     getSlots();
+    //getPromo();
+    getPrice();
 })
 
 function cleanForm() {
@@ -122,6 +125,38 @@ $('#quantity').change(function(){
     }
 });
 
+function getPromo(){
+    console.log("promo");
+    $.ajax({
+        url: config.routes[6].promo,
+        type: 'get',
+        data: 
+        { 
+            event_id: $('#event_id').val(),
+            zone_id: $('#zone_id').val(),
+            type_id: $('input[name="payMode"]:checked').val(),
+        },
+        success: function( response ){
+            console.log(response);
+            if (response.desc != null){
+                $('#promotion_id').val(response.id);
+                discount = response.desc/100;
+                
+            }else{
+                discount = 0;
+                $('#promotion_id').val("");
+            }
+            getPrice();
+            price = price * (1 - discount);
+            //console.log(price);
+            $('#total2').val(price*$('#quantity').val());
+        },
+        error: function( response ){
+            console.log(response);
+        }
+    });
+}
+
 function addQuantity() {
     count = $('#seats option:selected').length;
     $('#quantity').val(count);
@@ -133,6 +168,12 @@ function addQuantity() {
         $('#total2').val(count*price);
     }
 }  
+
+function resetPay(){
+    $('#quantity').val(0);
+    $('#payModal').prop('disabled',true);
+    $('#total2').val("");
+}
 
 function getPrice(){
     $.ajax({
@@ -148,15 +189,13 @@ function getPrice(){
             {
                 //console.log(response.price);
                 price = response.price;
-                $('#quantity').val(0);
-                $('#payModal').prop('disabled',true);
-                $('#total2').val("");
             }
             else
             {
                 console.log('no respuesta precio');  
                 price = 0; 
             }
+            //console.log(price);
         },
         error: function( response ){
             
@@ -179,6 +218,7 @@ function getAvailable(){
             zone_id: zona,
         },
         success: function( response ){
+            //console.log(response);
             if(response != "")
             {
                 $('#available').val(response);
