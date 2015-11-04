@@ -125,7 +125,10 @@ class BookingController extends Controller
         }
 
         session(['tickets'=>$tickets]);
-		return view('external.booking.results');
+        $array = ['event' => $event, 
+                'zone'    => $zone,
+                'cant'    => $nTickets];
+		return view('external.booking.results', $array);
 	}
 	
 	public function pay($id)
