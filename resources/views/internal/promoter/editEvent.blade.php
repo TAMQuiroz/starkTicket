@@ -576,8 +576,9 @@
         var numZones=zones.length;
         console.log("numero de zonas " + numZones);
         var capacity=document.getElementsByName("zone_capacity[]");
-        
-       for(var i=0;i<numZones;i++){
+
+      
+       for(var i=0;i<numZones;i++)
          document.getElementById('capacity-display').value=document.getElementById('capacity-display').value-capacity[i].value;
        }  
 

@@ -138,7 +138,6 @@ class BookingController extends Controller
         if($event->place->rows != null){
             $array['seats'] = $seats_array;
         } 
-        var_dump($array['codigo']);die();
 		return view('external.booking.results', $array);
 	}
 	
