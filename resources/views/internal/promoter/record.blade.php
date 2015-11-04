@@ -51,10 +51,11 @@
             <p>Promotor: {{$event->organization->organizerName}} {{$event->organization->organizerLastName}}</p>
             <p>Descripción:  {{$event->description}} </p>
             <p>Local: {{$event->place->name}} </p>
-            <p>Categoria: {{$event->category->parentCategory->name}} </p>
-            <p>Sub Categoria: {{$event->category->name}} </p>
+            <p>Categoria: {{$event->category->name}} </p>
+            <!-- <p>Sub Categoria: {{$event->category->name}} </p> -->
             <p>Fecha Creación: {{date_format(date_create($event->created_at),"d/m/Y")}}</p>
             <p>Fecha Publicación: {{date("d/m/Y",$event->publication_date)}}</p>
+            <p>Fecha Inicio ventas: {{date("d/m/Y",$event->selling_date)}}</p>
             <p>Duracion función: {{$event->time_length}} hora(s) </p>
             <!-- <p>Fecha Duración del {{date("d/m/Y",$event->selling_date)}} al {{date("d/m/Y",strtotime("+".$event->time_length."days",$event->selling_date))}}</p> -->
             <h4>Entradas:</h4>

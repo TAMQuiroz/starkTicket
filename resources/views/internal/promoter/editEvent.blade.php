@@ -19,9 +19,10 @@
     var todayDate = ''+today.getFullYear()+'-'+month+'-'+today.getDate();
     // document.getElementsByName('selling_date')[0].min = todayDate;
     // document.getElementById('input-function-date').min = todayDate;
-    var e = document.getElementsByName('local_id')[0];
-    var index= e.options[e.selectedIndex].value;
-    document.getElementById('capacity-display').value = document.getElementsByName('capacity_'+index)[0].value;
+    // var e = document.getElementsByName('local_id')[0];
+    // var index= e.options[e.selectedIndex].value;
+    // document.getElementById('capacity-display').value = document.getElementsByName('capacity_'+index)[0].value;
+    document.getElementById("input-capacity").max=document.getElementById("capacity-display").value;
   }
 
   function changeCapacity(){
@@ -91,12 +92,12 @@
                 </div>
 
               </div>
-              <div class="form-group">
+<!--               <div class="form-group">
                 <label class="col-sm-2 control-label">Sub categoría</label>
                 <div class="col-sm-10">
                     {!! Form::select('category_id', $categories_list->toArray(),$event->category_id,['class' => 'form-control','required','id'=>'category_id']) !!}
                 </div>
-              </div>
+              </div> -->
               <div class="form-group">
                 <label class="col-sm-2 control-label">Organizador</label>
                 <div class="col-sm-10">
@@ -134,13 +135,13 @@
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Nombre</label>
                   <div class="col-sm-10">
-                      {!! Form::text('zoneName','', array('class' => 'form-control','id' => 'input-zone','maxlength' => 50)) !!}
+                      {!! Form::text('zoneName1','', array('class' => 'form-control','id' => 'input-zone','maxlength' => 50)) !!}
                   </div>
               </div>
               <div class="form-group">
                   <label  class="col-sm-2 control-label" id="label_capacity">Capacidad</label>
                   <div class="col-sm-10">
-                      {!! Form::number('zoneCapacity','', array('class' => 'form-control','id' => 'input-capacity','min' => '1')) !!}
+                      {!! Form::number('zoneCapacity1','', array('class' => 'form-control','id' => 'input-capacity','min' => '1')) !!}
                   </div>
               </div>
               <div class="form-group" id="label_col">
@@ -565,6 +566,17 @@
        holi();
 
        function holi(){
+        var e = document.getElementsByName('local_id')[0];
+        var index= e.options[e.selectedIndex].value;
+        document.getElementById('capacity-display').value = document.getElementsByName('capacity_'+index)[0].value;        
+        var zones=document.getElementsByName("zone_names[]");
+        var numZones=zones.length;
+        console.log("numero de zonas " + numZones);
+        var capacity=document.getElementsByName("zone_capacity[]");
+        console.log("capacity "+ capacity[1].value);
+       for(var i=0;i<numZones;i++)
+         document.getElementById('capacity-display').value=document.getElementById('capacity-display').value-capacity[i].value;
+
        var tam= $('[id=invisible_id]').size();
        console.log("tamano "+tam);
        for(var i=1;i<=tam;i++)
