@@ -38,9 +38,9 @@
                 <div class="col-md-6"> 
                     <h4 > Zona del Evento </h4>
                     @if($event->place->rows == null)
-                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getAvailable(); getPromo()','id'=>'zone_id']) !!}
+                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getAvailable(); resetPay(); getPrice()','id'=>'zone_id']) !!}
                     @else
-                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getAvailable(); getPromo(); getTakenSlots()','id'=>'zone_id']) !!}
+                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getAvailable(); resetPay(); getPrice(); getTakenSlots()','id'=>'zone_id']) !!}
                     @endif
                 </div>
                 {!! Form::hidden('promotion_id', null, ['id'=>'promotion_id']) !!}
@@ -106,7 +106,7 @@
         @else
         
         <div class="col-md-3">
-            Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','class'=>'form-control','min'=>'1'])!!}
+            Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','class'=>'form-control','min'=>0])!!}
         </div>
         @endif
         <!-- Content Row -->
@@ -132,7 +132,7 @@
                                 <br>
                                 <div class="form-group checkbox pay">
                                     <label>
-                                        {!!Form::radio('payMode', 0, null,['id'=>'creditCardPay'])!!}Pago con tarjeta
+                                        {!!Form::radio('payMode', config('constants.credit'), null,['id'=>'creditCardPay','onChange'=>'getPromo()'])!!}Pago con tarjeta
                                     </label>
                                     <hr>
                                     <label for="exampleInputEmail2">Número de Tarjeta</label>
@@ -145,7 +145,7 @@
                                 <br>  
                                 <div class="form-group checkbox pay">
                                     <label>
-                                        {!!Form::radio('payMode', 1, null,['id'=>'cashPay'])!!}Pago con efectivo
+                                        {!!Form::radio('payMode', config('constants.cash'), null,['id'=>'cashPay','onChange'=>'getPromo()'])!!}Pago con efectivo
                                     </label>
                                     <h5>Tipo de Cambio: S/.2.90</h5>
                                     <hr>
@@ -157,7 +157,7 @@
                                 <br>  
                                 <div class="form-group checkbox pay">
                                     <label>
-                                        {!!Form::radio('payMode', 2, null,['id'=>'mixPay'])!!}Pago mixto
+                                        {!!Form::radio('payMode', config('constants.mix'), null,['id'=>'mixPay', 'onChange'=>'getPromo()'])!!}Pago mixto
                                     </label>
                                     <hr>
                                     <label for="exampleInputEmail2">Cantidad a pagar en efectivo</label>

@@ -36,6 +36,7 @@ function getTakenSlots(){
             }else if (response == ""){
             	console.log('vacio');
             	taken = [];
+            	resetPay();
             	getPrice();
                 makeArray();
             }
@@ -70,7 +71,7 @@ function makeArray(){
             		//console.log(texto);
             		map.push(texto);
             	}
-                console.log(map);
+                //console.log(map);
                 $('#parent-map').empty();
                 $('#legend').empty();
                 $('#selected-seats').empty();
