@@ -125,8 +125,6 @@ class BookingController extends Controller
         }
 
         session(['tickets'=>$tickets]);
-
-        return redirect()->route('ticket.success.salesman');
 		return view('external.booking.results');
 	}
 	
