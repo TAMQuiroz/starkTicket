@@ -16,7 +16,6 @@
   window.onload = function(){
     var today = new Date();
     var month = today.getMonth() +1;
-<<<<<<< HEAD
     var day = today.getDate();
     var string_month = '' + month;
     var string_day = '' + day;
