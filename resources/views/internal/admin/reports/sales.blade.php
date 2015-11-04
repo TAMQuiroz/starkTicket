@@ -96,7 +96,7 @@
 </div>
 
 
-<div id="chartContainer"   style="height: 300; width: 100%;"    ></div>
+<!--<div id="chartContainer"   style="height: 300; width: 100%;"    ></div>-->
 
  {!!Form::close()!!}
 

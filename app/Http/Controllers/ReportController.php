@@ -73,7 +73,7 @@ class ReportController extends Controller
 
                 //$sheet->mergeCells('A1:C1');
 
-                $sheet->setBorder('A1:G1','thin');
+                $sheet->setBorder('A1:G500','thin');
                 $sheet->setCellValue('A1', "Nombre del evento");
                 $sheet->setCellValue('B1', "Fecha del evento");
                 $sheet->setCellValue('C1', "Entradas vendidas online");
@@ -85,14 +85,15 @@ class ReportController extends Controller
                 //$cells->setAlignment('center');
                 $sheet->cells('A1:G1',function($cells){
 
-                    $cells->setBackground('#000000');
+                    $cells->setFontWeight('bold');
+                    $cells->setBackground('#008000');
                     $cells->setFontColor('#FFFFFF');
                     $cells->setAlignment('center');
                     $cells->setValignment('center');
 
                 });
 
-                $sheet->cells('A1:G54',function($cells){
+                $sheet->cells('A1:G500',function($cells){
 
                     $cells->setAlignment('center');
                     $cells->setValignment('center');
@@ -113,7 +114,6 @@ class ReportController extends Controller
                     )
 
                 );
-
 
                 $sheet->setHeight(
                     array(   
