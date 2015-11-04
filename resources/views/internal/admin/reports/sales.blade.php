@@ -6,9 +6,13 @@
 
 @section('title')
 	Reporte de Ventas
+
+
 @stop
 
 @section('content')
+{!!Form::open(array('url' => 'admin/report/sales', 'id'=>'form','class'=>'form-horizontal'))!!}
+
 <div class="row">
     <div class="col-sm-3">
        <label>Ingrese nombre del evento</label>
@@ -16,7 +20,7 @@
             <!-- 
             <input type="text" class="form-control" placeholder="Nombre del evento...">
             -->
-            {!!Form::text('name', null ,['class'=>'form-control','required', 'id'=>'search','placeholder' => 'Nombre del evento'])!!}
+            {!!Form::text('nameEvent', null ,['class'=>'form-control', 'id'=>'search','placeholder' => 'Nombre del evento'])!!}
             <span class="input-group-btn">
             <button class="btn btn-info" type="button" id = 'botoncito' >Buscar</button>
             </span>
@@ -46,10 +50,15 @@
     </div>
     -->
 
+
+
+ 
     <div class="col-sm-3">
         <br>
-                <a type="button" href="{{url('admin/report/sales/download')}}" class="btn btn-info" >Descargar Archivo Excel</a>
-    </div>
+            <!--<a type="button" href="{{url('admin/report/sales/download')}}" class="btn btn-info" >Descargar Archivo Excel</a>-->    
+            <button type="submit" class="btn btn-info">Descargar Archivo Excel</button>
+
+            </div>
 </div>
 <hr>
 
@@ -59,6 +68,7 @@
         <thead>
         <tr>
             <th>Nombre del evento</th>
+            <th>Fecha del evento</th>
             <th>Número de entradas vendidas online</th>
             <th>Subtotal</th>
             <th>Número de entradas vendidas en módulo</th>
@@ -67,48 +77,28 @@
         </tr>
         </thead>
         <tbody id="fbody">
+        @foreach($eventInformation as $event)
         <tr>
-            <td>Peppa King</td>
-            <td>500</td>
-            <td>3750.00</td>
-            <td>200</td>
-            <td>1500</td>
-            <td>5200.50</td>
+            <td>{{$event[0]}}</td>
+            <td>{{$event[2]}}</td>
+            <td>{{$event[3]}}</td>
+            <td>{{$event[4]}}</td>
+            <td>{{$event[5]}}</td>
+            <td>{{$event[6]}}</td>
+            <td>{{$event[7]}}</td>
         </tr>
-        <tr>
-            <td>Arctic Monkeys Concert</td>
-            <td>500</td>
-            <td>3750.00</td>
-            <td>200</td>
-            <td>1500</td>
-            <td>5200.50</td>
-        </tr>
-        <tr>
-            <td>Fuerza Bruta</td>
-            <td>500</td>
-            <td>3750.00</td>
-            <td>200</td>
-            <td>1500</td>
-            <td>5200.50</td>
-        </tr>
-        <tr>
-            <td>Peppa y sus amigos</td>
-            <td>500</td>
-            <td>3750.00</td>
-            <td>200</td>
-            <td>1500</td>
-            <td>5200.50</td>
-        </tr>
+        @endforeach
+
         </tbody>
     </table>
 </div>
 
 
-
 <div id="chartContainer"   style="height: 300; width: 100%;"    ></div>
 
+ {!!Form::close()!!}
 
-@stop"
+@stop
 
 @section('javascript')
 
@@ -125,7 +115,7 @@ var hehe = document.getElementById("search")//by id
 
 if (hehe.value.length) {
     var data = hehe.value.split(" ");
-    $.examplech(data, function (index, value) {
+    $.each(data, function (index, value) {
         rows.filter(":contains('" + value + "')").show();
     });
 } else rows.show();
