@@ -14,18 +14,86 @@ Detalle de asistencia de Pedro alva
              <table class="table table-bordered table-striped">
               <thead>
                 <tr>
+               
                   <th>Hora Ingreso</th>
                   <th>Hora Salida</th>
                   <th>Editar</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <th>10:00 am</th>
-                  <th>20:00 pm</th>
-                  <th><a class="btn btn-info" href="" title="Editar" data-toggle="modal" data-target="#editModal"><i class="glyphicon glyphicon-pencil"></i></a></th>
-                </tr>
-              </tbody>
+
+
+
+<tbody>
+
+
+<?php
+
+$i=0;
+while ($i< $detailsAttendances->count() ){
+?>
+
+
+
+  <tr>
+
+                  <th> {{$detailsAttendances[$i]->datetime}}  </th>
+
+
+
+
+<?php
+
+$i++;
+
+if ( $i==1){  
+
+?>
+                  <th>  </th>
+
+                    <th><a class="btn btn-info" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></th>
+           
+           </tr>     
+
+
+<?php
+  $i++;
+} 
+
+else if ( $i==2){ 
+?>
+
+  <th>{{$detailsAttendances[$i ]->datetime}}   </th>
+
+  <th><a class="btn btn-info" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></th>
+       
+
+                </tr>       
+
+   <?php
+   $i++;
+
+}
+?>
+
+
+
+
+
+
+<?php 
+
+     }
+
+?>
+
+
+
+
+
+
+
+    </tbody>
+          
              </table>
 
 

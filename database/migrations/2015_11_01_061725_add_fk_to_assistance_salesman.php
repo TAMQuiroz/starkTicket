@@ -14,7 +14,7 @@ class AddFkToAssistanceSalesman extends Migration
     {
        
           
-       Schema::table('assistance', function (Blueprint $table) {
+       Schema::table('attendance', function (Blueprint $table) {
             $table->foreign('salesman_id')
                   ->references('id')
                   ->on('users')->onDelete('cascade');
@@ -30,8 +30,8 @@ class AddFkToAssistanceSalesman extends Migration
      */
     public function down()
     {
-          Schema::table('assistance', function (Blueprint $table) {
-            $table->dropForeign('assistance_salesman_id_foreign');
+          Schema::table('attendance', function (Blueprint $table) {
+            $table->dropForeign('attendance_salesman_id_foreign');
         });
 
 

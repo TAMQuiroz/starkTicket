@@ -14,7 +14,9 @@
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
-Route::post('auth/logout', 'Auth\AuthController@getLogoutpost');
+
+//Route::post('auth/logout/vendedor', 'Auth\AuthController@sabana');
+
 
 
 Route::get('login_worker', 'Auth\AuthController@worker');
@@ -47,6 +49,7 @@ Route::group(['middleware' => ['auth', 'client']], function () {
     Route::post('client/photo', 'ClientController@photoUpdate');
     Route::get('client/home', 'PagesController@clientHome');
     Route::get('client/event_record', 'EventController@showClientRecord');
+    Route::get('client/event_record/feedback', 'EventController@feedback');
     //Estos 2 inician en el detalle del evento
     Route::get('client/event/{id}/buy', 'TicketController@createClient');
     Route::get('client/{id}/reservanueva', ['as' => 'booking.create' , 'uses' => 'BookingController@create']);
@@ -155,10 +158,13 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('admin/ticket_return', 'TicketController@indexReturn');
     Route::get('admin/ticket_return/new', 'TicketController@createReturn');
+    Route::get('admin/{id}/attendance', 'BusinessController@attendance');
+    Route::post('admin/{id}/attendanceSubmit', 'BusinessController@attendanceSubmit');
 
-    Route::get('admin/attendance', 'BusinessController@attendance');
-    Route::get('admin/attendance/detail', 'BusinessController@attendanceDetail');
+    Route::get('admin/attendance/{id}/detail', 'BusinessController@attendanceDetail');
 
+    
+              
 
     Route::get('admin/config/exchange_rate', 'BusinessController@exchangeRate');
     Route::post('admin/config/exchange_rate', 'BusinessController@storeExchangeRate');

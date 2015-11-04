@@ -5,11 +5,18 @@
 @stop
 
 @section('title')
-Asistencia de Pedro Alva
+Asistencia de   {{$salesman->name}}  {{$salesman->lastname}}
+
 @stop
+
 
 @section('content')
 <div class="row">
+   {!!Form::open(array('url' => 'admin/'.$salesman->id.'/attendanceSubmit' ,'files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
+ 
+
+
+
     <div class="col-sm-3"><label>Desde:</label>
 
             {!! Form::date('dateIni', $dateParStart  , array('class' => 'form-control' , 'required')) !!}
@@ -22,151 +29,116 @@ Asistencia de Pedro Alva
     </div>
     <div class="col-sm-3"><br><input type="submit" value="Filtrar" class="btn btn-info"></div>
 </div>
+    
+
 <hr>
+
 <table class="table table-bordered table-striped">
     <thead>
   <tr>  
  
-        <th></th>
-
-
-
-
-        <th> {{$dateParStart->format('l')}}  </th>
-        <th>{{$dateParStart->addDay(1)->format('l')}} </th>
-        <th>{{$dateParStart->addDay(1)->format('l')}} </th>
-        <th>{{$dateParStart->addDay(1)->format('l')}} </th>
-        <th>{{$dateParStart->addDay(1)->format('l')}} </th>
-        <th>{{$dateParStart->addDay(1)->format('l')}} </th>
+        <th>Nombre de Día</th>
+        <th>Fecha  </th> 
+        <th>Hora de ingreso </th>
+        <th>Hora de salida  </th>
+        <th>Total de horas </th>
+        <th>Detalle </th>
+        
   </tr>
     </thead>
+
+
+  @foreach( $Attendances as $Attendance )
+
         <tbody>
   <tr>
-    <td>Fecha registro</td>
-    <td> {{$dateParStart->format('d/m/y')}}    </td>
-    <td>{{$dateParStart->addDay(1)->format('d/m/y')}}</td>
-    <td>{{$dateParStart->addDay(2)->format('d/m/y')}}</td>
-    <td>{{$dateParStart->addDay(3)->format('d/m/y')}}</td>
-    <td>{{$dateParStart->addDay(4)->format('d/m/y')}}</td>
-    <td>{{$dateParStart->addDay(5)->format('d/m/y')}}</td>
-  </tr>
-  <tr>
-    <td>Hora Ingreso</td>
-    <td>8:00 am</td>
-    <td>8:00 am</td>
-    <td>8:00 am</td>
-    <td>8:00 am</td>
-    <td>-</td>
-    <td>8:00 am</td>
-  </tr>
-  <tr>
-    <td>Hora Salida</td>
-    <td>5:30 pm</td>
-    <td>4:00 pm</td>
-    <td>5:00 pm</td>
-    <td>5:30 pm</td>
-    <td>-</td>
-    <td>6:00 pm</td>
-  </tr>
-  <tr>
-    <td>Total horas</td>
-    <td>8.5</td>
-    <td>8</td>
-    <td>9</td>
-    <td>9.5</td>
-    <td>0</td>
-    <td>10</td>
-  </tr>
-
-  <tr>
-    <td>Detalle</td>
-    
-    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-
-  </tr>
 
 
 
-         </tbody>
-</table>
-
-<br>
-<table class="table table-bordered table-striped">
-    <thead>
-  <tr>  
+ @if (  date( "l", strtotime(  $Attendance->datetime)) == 'Monday')
+      
+             <td> Lunes  </td>
  
-        <th></th>
+@endif
+
+ @if (date( "l", strtotime(  $Attendance->datetime)) == 'Tuesday')
+      
+             <td> Martes  </td>
+ 
+    @endif
+
+
+ @if (date( "l", strtotime(  $Attendance->datetime)) == 'Wednesday')
+      
+             <td> Miercoles  </td>
+ 
+    @endif
+
+ @if (date( "l", strtotime(  $Attendance->datetime)) == 'Thursday')
+      
+             <td> Jueves  </td>
+ 
+    @endif
+
+ @if (date( "l", strtotime(  $Attendance->datetime)) == 'Friday')
+      
+             <td> Viernes  </td>
+ 
+    @endif
+
+ @if (date( "l", strtotime(  $Attendance->datetime)) == 'Saturday')
+      
+             <td> Sábado  </td>
+ 
+ @endif
 
 
 
 
-        <th> {{$dateParStart->format('l')}}  </th>
-        <th>{{$dateParStart->addDay(1)->format('l')}} </th>
-        <th>{{$dateParStart->addDay(1)->format('l')}} </th>
-        <th>{{$dateParStart->addDay(1)->format('l')}} </th>
-        <th>{{$dateParStart->addDay(1)->format('l')}} </th>
-        <th>{{$dateParStart->addDay(1)->format('l')}} </th>
+       <td>{{  date( "d -m - Y", strtotime(  $Attendance->datetime))    }} </td>
+
+
+
+    <td> {{  date( "g:ia", strtotime(  $Attendance->datetimestart))    }}   </td>
+
+  @if ( $Attendance->datetimeend ==NULL )
+
+  <td>No se registro</td>
+@else
+
+    <td> {{  date( "g:ia", strtotime(  $Attendance->datetimeend  ))    }}  </td>
+
+@endif
+
+
+
+
+
+
+
+  @if ( $Attendance->datetimeend ==NULL )
+
+  <td>  </td>
+@else
+
+    <td>        {{  round(  (   strtotime(   $Attendance->datetimeend )   - strtotime(  $Attendance->datetimestart  )  )    / 3600   , 2)    }}    horas      </td>
+
+
+    @endif
+
+
+
+    <td><a  class="btn btn-info" href="{{ url('admin/attendance/'.$Attendance->id.'/detail') }}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
   </tr>
-    </thead>
-        <tbody>
-  <tr>
-    <td>Fecha registro</td>
-    <td> {{$dateParStart->format('d/m/y')}}    </td>
-    <td>{{$dateParStart->addDay(1)->format('d/m/y')}}</td>
-    <td>{{$dateParStart->addDay(2)->format('d/m/y')}}</td>
-    <td>{{$dateParStart->addDay(3)->format('d/m/y')}}</td>
-    <td>{{$dateParStart->addDay(4)->format('d/m/y')}}</td>
-    <td>{{$dateParStart->addDay(5)->format('d/m/y')}}</td>
-  </tr>
-  <tr>
-    <td>Hora Ingreso</td>
-    <td>8:00 am</td>
-    <td>8:00 am</td>
-    <td>8:00 am</td>
-    <td>8:00 am</td>
-    <td>-</td>
-    <td>8:00 am</td>
-  </tr>
-  <tr>
-    <td>Hora Salida</td>
-    <td>5:30 pm</td>
-    <td>4:00 pm</td>
-    <td>5:00 pm</td>
-    <td>5:30 pm</td>
-    <td>-</td>
-    <td>6:00 pm</td>
-  </tr>
-  <tr>
-    <td>Total horas</td>
-    <td>8.5</td>
-    <td>8</td>
-    <td>9</td>
-    <td>9.5</td>
-    <td>0</td>
-    <td>10</td>
-  </tr>
-
-  <tr>
-    <td>Detalle</td>
-    
-    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-    <td><a  class="btn btn-info" href="{{url('admin/attendance/detail')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a></td>
-
-  </tr>
+        </tbody>
 
 
 
-         </tbody>
+  @endforeach
+     
 </table>
+
+  
 
 
 @stop
