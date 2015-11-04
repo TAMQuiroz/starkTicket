@@ -14,7 +14,7 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamp('payment_date');
+            $table->timestamp('payment_date')->nullable();
             $table->integer('reserve');
             $table->timestamp('refund_date')->nullable();
             $table->integer('cancelled');
@@ -24,6 +24,9 @@ class CreateTicketsTable extends Migration
             $table->integer('seat_id')->unsigned()->nullable();
             $table->integer('zone_id')->unsigned();
             $table->integer('salesman_id')->nullable()->unsigned();
+            $table->integer('sale_id')->unsigned();
+            $table->integer('designee')->nullable()->unsigned();
+            $table->boolean('picked_up');
             $table->float('price');
             $table->timestamps();
             $table->softDeletes();

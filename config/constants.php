@@ -30,6 +30,11 @@ return [
    	'discount' => 1,
 	'ofert' => 2,
 
+	//Tipo de pago
+	'credit'	=> 1,
+	'cash'		=> 2,
+	'mix'		=> 3,
+
 	//Tipo de local
 	'numbered'				=> 1,
 	'notNumbered'			=> 2,
