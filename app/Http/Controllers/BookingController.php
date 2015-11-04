@@ -83,7 +83,7 @@ class BookingController extends Controller
                 
                 //Crear ticket
                 $id = DB::table('tickets')->insertGetId(
-                ['payment_date'         => new Carbon(), //<- este campo debería ser null
+                ['payment_date'         => null,
                  'reserve'              => 1,
                  'cancelled'            => 0,
                  'owner_id'             => null, //\Auth->user()->id
