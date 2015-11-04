@@ -82,6 +82,7 @@
         
         <div class="col-md-3">
             Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','class'=>'form-control','min'=>'1'])!!}
+            Total: {!!Form::number('',null,['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
         </div>
         @endif
       <br>
