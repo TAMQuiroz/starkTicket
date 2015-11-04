@@ -29,11 +29,13 @@
     <br><br><br><br>
     <div class="col-sm-2">
         <label>Desde</label>
-        <input type="date" class="form-control">
+        
+        <input id="fecha-ini" type="date" class="form-control" required="required">
+        
     </div>
     <div class="col-sm-2">
         <label>Hasta</label>
-        <input type="date" class="form-control">
+        <input id="fecha-fin" type="date" class="form-control">
     </div>
    
     <!--
@@ -68,7 +70,7 @@
         <thead>
         <tr>
             <th>Nombre del evento</th>
-            <th>Fecha del evento</th>
+            <th>Fecha</th>
             <th>Número de entradas vendidas online</th>
             <th>Subtotal</th>
             <th>Número de entradas vendidas en módulo</th>
@@ -103,10 +105,7 @@
 @section('javascript')
 
 <script>
-
-
-
-
+/*
 $("#botoncito").click(function () {
 
 var rows = $("#fbody").find("tr").hide();
@@ -115,13 +114,119 @@ var hehe = document.getElementById("search")//by id
 
 if (hehe.value.length) {
     var data = hehe.value.split(" ");
+<<<<<<< HEAD
     $.each(data, function (index, value) {
         rows.filter(":contains('" + value + "')").show();
+=======
+    
+    $.each(data, function (index, value) {
+        //rows.filter(":contains('" + value + "')").show();   
+        var $rows = $(this); 
+        var textFromRowNodes = $rows.children("td:nth-child(n)").text().toLowerCase();
+        var searchText = data.toString().toLowerCase();
+        alert(textFromRowNodes);
+        if (textFromRowNodes.indexOf(searchText) !== -1) {
+            alert('LO ENCONTRO');
+            $rows.children("td:nth-child(n)").show();
+            //return true;
+            
+        }    
+        alert('no LO ENCONTRO');
+>>>>>>> 6aa7ffd69682f5e9838694818d908b7e985baec9
     });
+        
 } else rows.show();
 
 });
 
+*/
+
+$("#botoncito").click(function () {
+
+    var rows = $("#fbody").find("tr").hide();
+    var name = document.getElementById("search");    
+    var data = name.value;
+    var search = data.toString().toLowerCase();
+    var date1 = document.getElementById("fecha-ini");
+    var date2 = document.getElementById("fecha-fin");
+
+    var dateS1 = date1.value.toString();
+    var dateS2 = date2.value.toString();
+    var d1 = new Date(dateS1);
+    var d2 = new Date(dateS2);
+
+    if(search==null || search == ''){ 
+
+        //alert('23/11/1993'.split("/").reverse().join("-"));
+
+        if(dateS1=='' && dateS2==''){
+            rows.show(); 
+            //alert('vacio D:'); 
+        }
+        if((dateS1!='' && dateS2=='') || (dateS1=='' && dateS2!='')){
+            alert('Ingrese un rango de fechas');
+            dateS1=='' ? $("#fecha-ini").prop('required',true) : $("#fecha-fin").prop('required',true);;
+        }
+        if(dateS1!='' && dateS2!=''){
+            //rows.show();
+            $rows = rows;
+            $rows.each(function(){
+                var $this = $(this);
+                var dateST= $this.find(':nth-child(2)').text();
+                var dtabl = new Date(dateST.split("/").reverse().join("-"));
+                if(dtabl>=d1 && dtabl<=d2){
+                    $this.show(); 
+                }
+            });
+        }
+    }
+    else{
+
+        if(dateS1=='' && dateS2==''){
+            $rows = rows;
+            $rows.each(function(){
+                var $this = $(this);
+                $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show(); 
+            });
+        }
+        if((dateS1!='' && dateS2=='') || (dateS1=='' && dateS2!='')){
+            alert('Ingrese un rango de fechas');
+            dateS1=='' ? $("#fecha-ini").prop('required',true) : $("#fecha-fin").prop('required',true);
+        }
+        if(dateS1!='' && dateS2!=''){
+            //rows.show();
+            $rows = rows;
+            $rows.each(function(){
+                var $this = $(this);
+                var dateST= $this.find(':nth-child(2)').text();
+                var dtabl = new Date(dateST.split("/").reverse().join("-"));
+                if(dtabl>=d1 && dtabl<=d2){
+                    $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show(); 
+                }
+            });
+        }
+        
+    }
+
+    
+});
+
+    /*
+    var date1 = document.getElementById("fecha-ini");
+    var date2 = document.getElementById("fecha-fin");
+    //On change
+    var addOrRemoveRequiredAttribute = function () {
+        if (date1.value.toString()!='') {
+            date2.prop('required', true);
+        }
+        else {
+            date2.prop('required', false);
+        }
+    };
+
+    // And when textarea changes
+    date1.on('change', addOrRemoveRequiredAttribute);
+    */
 </script>
 
 
