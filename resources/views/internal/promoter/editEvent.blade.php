@@ -576,9 +576,10 @@
         var numZones=zones.length;
         console.log("numero de zonas " + numZones);
         var capacity=document.getElementsByName("zone_capacity[]");
-        console.log("capacity "+ capacity[1].value);
-       for(var i=0;i<numZones;i++)
+        
+       for(var i=0;i<numZones;i++){
          document.getElementById('capacity-display').value=document.getElementById('capacity-display').value-capacity[i].value;
+       }  
 
        var tam= $('[id=invisible_id]').size();
        console.log("tamano "+tam);
@@ -595,6 +596,11 @@
 
 
         if(algo !== undefined && algo >=1){
+
+          document.getElementsByName("zone_columns[]").name="none";
+          document.getElementsByName("zone_row[]").name="none";
+          document.getElementsByName("start_column[]").name="none";
+          document.getElementsByName("start_row[]").name="none";
           //si el local tiene asientos y filas numeradas Do this 
           //console.log("index "+index);
           var rows = $('#row_'+index).val();
