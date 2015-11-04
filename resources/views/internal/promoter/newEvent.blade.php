@@ -24,7 +24,6 @@
     if(day<10)
       string_day = '0' + day;
     var todayDate = ''+today.getFullYear()+'-'+string_month+'-'+string_day;
-
     document.getElementsByName('selling_date')[0].min = todayDate;
     document.getElementById('input-function-date').min = todayDate;
     var e = document.getElementsByName('local_id')[0];
@@ -151,13 +150,13 @@
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Nombre</label>
                   <div class="col-sm-10">
-                      {!! Form::text('zoneName','', array('class' => 'form-control','id' => 'input-zone','maxlength' => 50)) !!}
+                      {!! Form::text('zoneName1','', array('class' => 'form-control','id' => 'input-zone','maxlength' => 50)) !!}
                   </div>
               </div>
               <div class="form-group">
                   <label  class="col-sm-2 control-label" id="label_capacity">Capacidad</label>
                   <div class="col-sm-10">
-                      {!! Form::number('zoneCapacity','', array('class' => 'form-control','id' => 'input-capacity','min' => '1')) !!}
+                      {!! Form::number('zoneCapacity1','', array('class' => 'form-control','id' => 'input-capacity','min' => '1')) !!}
                   </div>
               </div>
               <div class="form-group" id="label_col">
@@ -187,7 +186,7 @@
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Precio</label>
                   <div class="col-sm-10">
-                      {!! Form::number('zonePrice','', array('class' => 'form-control','id' => 'input-price','maxlength' => 50,'min' => '0')) !!}
+                      {!! Form::number('zonePrice1','', array('class' => 'form-control','id' => 'input-price','maxlength' => 50,'min' => '0')) !!}
                   </div>
               </div>
               <div class="form-group">
@@ -218,14 +217,15 @@
 
                         var capacity = document.getElementById('input-capacity').value;
 
-                        var column= "";
-                        var row= "";
-                        var rowini= "";
-                        var colini= "";
+
 
                         if( new_capacity-capacity<0) return;
                         if(zone.length==0 || price.length==0) return;
                         if( document.getElementById('input-capacity').disabled==true){
+                          var column= "";
+                          var row= "";
+                          var rowini= "";
+                          var colini= "";
                           column= document.getElementById('input-column').value;
                           row= document.getElementById('input-row').value ;
                           rowini= document.getElementById('input-rowIni').value;
@@ -302,7 +302,11 @@
                             y2.required=true;
                             y3.required=true;
                             y4.required=true;
-                            capacity=row*column;               
+                            capacity=row*column;        
+                           newCell6.appendChild(y1);
+                          newCell7.appendChild(y2);
+                          newCell8.appendChild(y3);
+                          newCell9.appendChild(y4);       
                         }
 
 
@@ -357,10 +361,7 @@
                         newCell3.appendChild(textPrice);
                         newCell5.appendChild(newDelete);
                         
-                        newCell6.appendChild(y1);
-                        newCell7.appendChild(y2);
-                        newCell8.appendChild(y3);
-                        newCell9.appendChild(y4);
+
 
                         document.getElementById('input-zone').value = '';
                         document.getElementById('input-capacity').value = '';
