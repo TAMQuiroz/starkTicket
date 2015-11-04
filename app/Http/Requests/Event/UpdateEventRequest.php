@@ -23,8 +23,8 @@ class UpdateEventRequest extends Request
             'zone_names'    => 'required',
             'price'         => 'required',
             'function_starts_at' => 'required',
-            'publication_date'   => 'required|date|after:yesterday',
-            'selling_date'       => 'required|date|after:publication_date'
+            'publication_date'   => 'required|date',
+            'selling_date'       => 'required|date'
         ];
         $zones = $this->request->get('zone_names'); 
         if($zones)
@@ -41,7 +41,7 @@ class UpdateEventRequest extends Request
         $presentations = $this->request->get('function_starts_at');
         if($presentations)
         foreach($presentations as $key=>$val){
-            $rules['function_starts_at.'.$key]  = 'required|date|after:selling_date';
+            $rules['function_starts_at.'.$key]  = 'required|date';
 
         }
         return $rules;
