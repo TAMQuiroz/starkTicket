@@ -385,6 +385,7 @@ class EventController extends Controller
     }
     public function update(UpdateEventRequest $request, $id)
     {
+
         $result_dates = $this->join_date_time($request->input('start_time'),$request->input('start_date'));
         $now = new DateTime();
         $temp = array_unique($result_dates);
@@ -414,8 +415,7 @@ class EventController extends Controller
                     $result = $this->updateSellingEvent($request->all(), $id);
                     if($result['error'] != '')
                         return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
-                    //return redirect()->route('events.edit', $event->id);
-                    return response()->json(['message' => 'Event modified']);
+                    return redirect()->route('promoter.record');
                 }
             }
         //esto ocurre cuando hay cambio de local pero está antes del selling date
@@ -494,8 +494,8 @@ class EventController extends Controller
             }
         }
         //si no estamos haciendo un cambio de local, solo se updatea el evento, zona y presentacion
-        //return redirect()->route('events.edit', $event->id);
-        return response()->json(['message' => 'Event modified']);
+        return redirect()->route('promoter.record');
+        //return response()->json(['message' => 'Event modified']);
     }
     public function updateSellingEvent($data, $event_id){
         //no se considera el cancelar
