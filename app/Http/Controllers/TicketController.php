@@ -154,7 +154,8 @@ class TicketController extends Controller
             }
 
         }else{ //No es numerado
-            if($zone->capacity - $nTickets <= 0) //Deberia ser zona x presentacion
+            $zoneXpres = DB::table('zone_presentation')->where('zone_id',$request['zone_id'])->where('presentation_id', $request['presentation_id'])->first();
+            if($zoneXpres->slots_availables - $nTickets < 0) //Deberia ser zona x presentacion
                 return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
         }
             
@@ -163,6 +164,7 @@ class TicketController extends Controller
 
         try{
             $tickets = array();
+            $sale_id = Ticket::max('sale_id');
             for($i = 0; $i < $nTickets; $i++){
 
                 
@@ -178,7 +180,7 @@ class TicketController extends Controller
                                                   ->where('presentation_id',$request['presentation_id'])
                                                   ->decrement('slots_availables');;
                 }
-                
+
                 //Crear ticket
                 $id = DB::table('tickets')->insertGetId(
                 ['payment_date'         => new Carbon(),
@@ -191,12 +193,20 @@ class TicketController extends Controller
                  'zone_id'              => $request['zone_id'],
                  'seat_id'              => null,
                  'salesman_id'          => null,
+                 'picked_up'            => false,
+                 'sale_id'              => 1,
                  'created_at'           => new Carbon(),
                  'updated_at'           => new Carbon(),
                 ]);
 
                 if(\Auth::user()->role_id == config('constants.salesman')){
                     DB::table('tickets')->where('id',$id)->update(['salesman_id'=>\Auth::user()->id]);
+                    DB::table('tickets')->where('id',$id)->update(['picked_up'=>true]);
+                    DB::table('tickets')->where('id',$id)->update(['designee'=>null]);
+                }
+
+                if($sale_id != null){
+                    DB::table('tickets')->where('id',$id)->update(['sale_id'=>$sale_id+1]);
                 }
                 
                 if($request['promotion_id']!=""){
@@ -409,19 +419,27 @@ class TicketController extends Controller
     {
         $maxDiscount = 0;
         $bestPromo = null;
-        $promos = Promotions::where('event_id',$request['event_id'])->get();
-        foreach ($promos as $key => $promo) {
-            if ($promo->typePromotion == config('constants.discount')){
-                if ($promo->desc > $maxDiscount){
-                    $maxDiscount = $promo->desc;
-                    $bestPromo = $promo;
-                }
-            }else{
-                //GG OFERTA X por Y ÑO QUIERO
-            }
-            
+        if($request['type_id']==config('constants.credit')){
+            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',2)->get();
+        }else if($request['type_id']==config('constants.cash')){
+            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->get();
+        }else{
+            $promos = null;
         }
-
+        
+        if($promos){
+            foreach ($promos as $key => $promo) {
+                if ($promo->typePromotion == config('constants.discount')){
+                    if ($promo->desc > $maxDiscount){
+                        $maxDiscount = $promo->desc;
+                        $bestPromo = $promo;
+                    }
+                }else{
+                    //GG OFERTA X por Y ÑO QUIERO
+                }
+                
+            }
+        }
         return $bestPromo;
     }
 }

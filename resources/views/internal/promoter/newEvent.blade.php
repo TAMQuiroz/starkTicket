@@ -16,6 +16,7 @@
   window.onload = function(){
     var today = new Date();
     var month = today.getMonth() +1;
+<<<<<<< HEAD
     var day = today.getDate();
     var string_month = '' + month;
     var string_day = '' + day;
@@ -24,6 +25,7 @@
     if(day<10)
       string_day = '0' + day;
     var todayDate = ''+today.getFullYear()+'-'+string_month+'-'+string_day;
+
     document.getElementsByName('selling_date')[0].min = todayDate;
     document.getElementById('input-function-date').min = todayDate;
     var e = document.getElementsByName('local_id')[0];
@@ -56,7 +58,11 @@
     if(day<10)
       string_day = '0' + day;
     if(timeToday > timePublic)
+<<<<<<< HEAD
       document.getElementsByName('selling_date')[0].min = ''+today.getFullYear()+'-'+string_month+'-'+string_day;
+=======
+      document.getElementsByName('selling_date')[0].min = ''+today.getFullYear()+'-'+month+'-0'+today.getDate();
+>>>>>>> f1dbb3255cd73e024937382335ff7d1b3c8f9903
     else
       document.getElementsByName('selling_date')[0].min = publication_date_1;
   }
