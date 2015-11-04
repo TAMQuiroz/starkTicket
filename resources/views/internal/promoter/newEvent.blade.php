@@ -57,11 +57,7 @@
     if(day<10)
       string_day = '0' + day;
     if(timeToday > timePublic)
-<<<<<<< HEAD
       document.getElementsByName('selling_date')[0].min = ''+today.getFullYear()+'-'+string_month+'-'+string_day;
-=======
-      document.getElementsByName('selling_date')[0].min = ''+today.getFullYear()+'-'+month+'-0'+today.getDate();
->>>>>>> f1dbb3255cd73e024937382335ff7d1b3c8f9903
     else
       document.getElementsByName('selling_date')[0].min = publication_date_1;
   }
