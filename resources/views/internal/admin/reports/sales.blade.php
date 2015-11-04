@@ -30,7 +30,7 @@
     <div class="col-sm-2">
         <label>Desde</label>
         
-        <input id="fecha-ini" type="date" class="form-control" required="required">
+        <input id="fecha-ini" type="date" class="form-control" >
         
     </div>
     <div class="col-sm-2">

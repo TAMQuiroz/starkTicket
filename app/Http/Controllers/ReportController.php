@@ -60,7 +60,7 @@ class ReportController extends Controller
 
                         }
                     }
-                    array_push($eventInformation,array($event->name, $eventDate->starts_at, $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
+                    array_push($eventInformation,array($event->name, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
                 }
 
             }
@@ -176,13 +176,13 @@ class ReportController extends Controller
 
                     }
                 }
-                array_push($eventInformation,array($event->name,$eventDate->id, $eventDate->starts_at, $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
+                array_push($eventInformation,array($event->name,$eventDate->id, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
             }
 
         }
         
-
-
+        //
+        //return $eventInformation;
         return view('internal.admin.reports.sales',compact('eventInformation'));
     }
 
