@@ -391,7 +391,7 @@
                         <td><input type="text" style = "border:none" name="zone_names[]" value="{{$zone->name}}" readonly></td>
                         <td><input type="number" style = "width:40px;border:none" name="zone_capacity[]" value="{{$zone->capacity}}" readonly></td>
                         <td><input type="number" name="price[]" style = "width:80px;border:none" value="{{$zone->price}}" readonly></td>
-                        <td><input type="number" name="zone_columns[]" style = "width:40px;border:none" value="{{$zone->columns}}" readonly></td>
+                        <td><input type="number" class="hating" name="zone_columns[]" style = "width:40px;border:none" value="{{$zone->columns}}" readonly></td>
                         <td><input type="number" name="zone_rows[]" style = "width:40px;border:none" value="{{$zone->rows}}" readonly></td>
                         <td><input type="number" name="start_column[]" style = "width:40px;border:none" value="{{$zone->start_column}}" readonly></td>
                         <td><input type="number" name="start_row[]" style = "width:40px;border:none" value="{{$zone->start_row}}" readonly></td>
@@ -578,7 +578,7 @@
         var capacity=document.getElementsByName("zone_capacity[]");
 
       
-       for(var i=0;i<numZones;i++)
+       for(var i=0;i<numZones;i++){
          document.getElementById('capacity-display').value=document.getElementById('capacity-display').value-capacity[i].value;
        }  
 
@@ -598,10 +598,6 @@
 
         if(algo !== undefined && algo >=1){
 
-          document.getElementsByName("zone_columns[]").name="none";
-          document.getElementsByName("zone_row[]").name="none";
-          document.getElementsByName("start_column[]").name="none";
-          document.getElementsByName("start_row[]").name="none";
           //si el local tiene asientos y filas numeradas Do this 
           //console.log("index "+index);
           var rows = $('#row_'+index).val();
@@ -670,6 +666,13 @@
 
           document.getElementById('input-capacity').disabled=true;
         }else{
+
+
+          var ocultos=document.getElementsByClassName("hating");
+          console.log("ocultos: " + ocultos.length);
+          for(var i=0;i<ocultos.length;i++)
+            ocultos[i].name="none"+i;
+
           //si el local no tiene asientos numerados Do this 
           //$('#seat-map').empty();
 
