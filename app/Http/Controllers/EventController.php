@@ -161,7 +161,8 @@ class EventController extends Controller
                     $presentations = $event->presentations;
                     foreach ($presentations as $presentation) {
                         $date = intval($presentation->starts_at);
-                        if($date<=$max_date && $date>=$min_date)
+                        $end_date = $date + (3600*$event->time_length);
+                        if(($date<=$max_date && $date>=$min_date)|| ($end_date<=$max_date && $end_date>=$min_date)) 
                             return ['error' => 'Este local tiene programadas presentaciones en las fechas y horas especificadas'];
                     }
                 }
