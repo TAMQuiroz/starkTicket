@@ -12,7 +12,7 @@
 @section('content')
     {!!Form::open(array('route' => 'ticket.store','id'=>'form'))!!}
         <legend>Información del evento</legend>
-        <div class="select Type"> 
+        <div class="select Type col-md-12"> 
             <label>
                 <div class="col-md-4">
                     <h4 class="boxy"> Codigo del Evento </h4>
@@ -27,7 +27,7 @@
                     <h4 >Entradas Disponibles</h4>
                     {!! Form::text('available', null, ['id'=>'available','class' => 'form-control', 'disabled']) !!}  
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <h4 class="boxy"> Funciones del evento </h4>
                     @if($event->place->rows == null)
                     {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=>'getAvailable()']) !!}
@@ -35,18 +35,15 @@
                     {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=>'getAvailable(); getTakenSlots()']) !!}
                     @endif
                 </div>
-                <div class="col-md-4"> 
+                <div class="col-md-6"> 
                     <h4 > Zona del Evento </h4>
                     @if($event->place->rows == null)
-                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getAvailable(); getPrice()','id'=>'zone_id']) !!}
+                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getAvailable(); getPromo()','id'=>'zone_id']) !!}
                     @else
-                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getAvailable(); getPrice(); getTakenSlots()','id'=>'zone_id']) !!}
+                    {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','onChange'=>'getAvailable(); getPromo(); getTakenSlots()','id'=>'zone_id']) !!}
                     @endif
                 </div>
-                <div class="col-md-4">
-                    <h4> Promoción </h4>
-                    {!! Form::select('promotion_id', ['Ninguna', 'Pre-venta', 'Visa Platinium'], null, ['class' => 'form-control']) !!}
-                </div>
+                {!! Form::hidden('promotion_id', null, ['id'=>'promotion_id']) !!}
             </label>
         </div>
         <br>
@@ -197,7 +194,8 @@
             { event_available: "{{URL::route('ajax.getAvailable')}}"},
             { slots: "{{URL::route('ajax.getSlots')}}"},
             { makeArray: "{{URL::route('ajax.getZone')}}"},
-            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"}
+            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
+            { promo: "{{URL::route('ajax.getPromo')}}"}
         ]
     };
     </script>

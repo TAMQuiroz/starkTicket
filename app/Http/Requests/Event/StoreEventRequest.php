@@ -59,4 +59,19 @@ class StoreEventRequest extends Request
 
         return redirect()->back()->withInput()->withErrors($errors);
     }
+
+    public function messages(){
+        $messages = array();
+        $messages['image.image'] = 'La imagen debe ser del tipo .jpg o .png';
+        $zones = $this->request->get('zone_names'); 
+        if($zones)
+        foreach($zones as $key=>$val)
+        {
+            $messages['zone_columns.'.$key.'.required_with'] = 'Se deben completar los campos de filas y columnas de la zona '.($key+1);
+            $messages['zone_rows.'.$key.'.required_with'] = 'Se deben completar los campos de filas y columnas de la zona '.($key+1);
+            $messages['start_column.'.$key.'.required_with'] = 'Se deben completar los campos de filas y columnas de la zona '.($key+1);
+            $messages['start_row.'.$key.'.required_with'] = 'Se deben completar los campos de filas y columnas de la zona '.($key+1);
+        }
+        return $messages;
+    }
 }

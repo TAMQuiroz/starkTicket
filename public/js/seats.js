@@ -9,7 +9,6 @@ var map = [];
 var taken = [];
 
 $('document').ready(function () {
-	getPrice();
 	getTakenSlots();
 	
 
@@ -71,10 +70,13 @@ function makeArray(){
             		//console.log(texto);
             		map.push(texto);
             	}
-                //console.log(map);
+                console.log(map);
                 $('#parent-map').empty();
                 $('#legend').empty();
-                $('#parent-map').append('<div id="seat-map"></div>');
+                $('#selected-seats').empty();
+		        $('#total').empty();
+		        $('#counter').empty();
+                $('#parent-map').append('<div id="seat-map"><div class="front">Escenario</div></div>');
                 renderSeats();
             }
             else

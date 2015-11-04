@@ -26,5 +26,13 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('inspire')
                  ->hourly();
+        $schedule->call(function(){
+            $reservas = DB::table('tickets')->where('reserve',0)->get();
+            foreach ($reservas as $reserva) {
+                $reserve_date = strtotime($reserva->created_at);
+                if($reserva_date + (3600*24) >= time())
+                    $reserva->delete();
+            }
+        })->hourly();
     }
 }

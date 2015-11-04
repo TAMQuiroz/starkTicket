@@ -41,8 +41,8 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>Puntos Acumulados: 200</a></li>
-                    <li><a href="{{url('client')}}">Cliente</a></li>
+                    <li><a>Puntos Acumulados: {{Auth::user()->points}}</a></li>
+                    <li><a href="{{url('client')}}">{{\Auth::user()->name}}</a></li>
                     <li><a href="{{url('auth/logout')}}">Salir</a></li>
               </ul>
             </div>

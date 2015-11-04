@@ -30,4 +30,8 @@ class Ticket extends Model
     public function presentation(){
         return $this->belongsTo('App\Models\Presentation');
     }
+
+    public function salesman(){
+        return $this->belongsTo('App\User');
+    }
 }

@@ -21,7 +21,7 @@
 					<!-- Content -->
 					<div id="content" class="8u skel-cell-important">
 						<section>
-							<p><a href="#" class="image full">{!! Html::image($event->image) !!}</a></p>
+							<p><a href="#" class="image full">{!! Html::image($event->image, null,['class'=>'carousel_img']) !!}</a></p>
 							<p>{{ $event->description }}</p>
 							<br>
 							<div class="table-responsive">
@@ -47,8 +47,9 @@
 							<a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
 							@else
 							<a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
-							@endif
 							<a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
+							@endif
+							
 							<br><br>
 							<div class="form-group">
 							  <label for="comment">Ingrese comentario:</label>
