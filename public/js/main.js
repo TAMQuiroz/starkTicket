@@ -5,7 +5,8 @@ var discount = 0;
 $('document').ready(function () {
     getAvailable();
     getSlots();
-    getPromo();
+    //getPromo();
+    getPrice();
 })
 
 function cleanForm() {
@@ -125,7 +126,7 @@ $('#quantity').change(function(){
 });
 
 function getPromo(){
-
+    console.log("promo");
     $.ajax({
         url: config.routes[6].promo,
         type: 'get',
@@ -133,18 +134,22 @@ function getPromo(){
         { 
             event_id: $('#event_id').val(),
             zone_id: $('#zone_id').val(),
+            type_id: $('input[name="payMode"]:checked').val(),
         },
         success: function( response ){
+            console.log(response);
             if (response.desc != null){
                 $('#promotion_id').val(response.id);
                 discount = response.desc/100;
-                getPrice();
+                
             }else{
                 discount = 0;
-                getPrice();
-                //analizar oferta
+                $('#promotion_id').val("");
             }
-            
+            getPrice();
+            price = price * (1 - discount);
+            //console.log(price);
+            $('#total2').val(price*$('#quantity').val());
         },
         error: function( response ){
             console.log(response);
@@ -164,6 +169,12 @@ function addQuantity() {
     }
 }  
 
+function resetPay(){
+    $('#quantity').val(0);
+    $('#payModal').prop('disabled',true);
+    $('#total2').val("");
+}
+
 function getPrice(){
     $.ajax({
         url: config.routes[1].price_ajax,
@@ -177,10 +188,7 @@ function getPrice(){
             if(response != "")
             {
                 //console.log(response.price);
-                price = response.price * (1 - discount);
-                $('#quantity').val(0);
-                $('#payModal').prop('disabled',true);
-                $('#total2').val("");
+                price = response.price;
             }
             else
             {
@@ -210,6 +218,7 @@ function getAvailable(){
             zone_id: zona,
         },
         success: function( response ){
+            //console.log(response);
             if(response != "")
             {
                 $('#available').val(response);
