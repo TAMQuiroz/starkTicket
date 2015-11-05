@@ -161,8 +161,10 @@ class EventController extends Controller
                     $presentations = $event->presentations;
                     foreach ($presentations as $presentation) {
                         $date = intval($presentation->starts_at);
-                        if($date<=$max_date || $date>=$min_date)
-                            return ['error' => 'Este local tiene presentaciones en la fecha y hora introducida'];
+                        $end_date = $date + (3600*$event->time_length);
+                        if(($date<=$max_date && $date>=$min_date)|| ($end_date<=$max_date && $end_date>=$min_date)) 
+                            return ['error' => 'Este local tiene programadas presentaciones en las fechas y horas especificadas'];
+
                     }
                 }
             }
@@ -172,6 +174,7 @@ class EventController extends Controller
 
     public function store(StoreEventRequest $request)
     {
+        
         $result_dates = $this->join_date_time($request->input('start_time'),$request->input('start_date'));
         $result_local_validation = $this->validateFreeLocal($result_dates, $request->input('local_id'), $request->input('time_length'));
         if($result_local_validation != null){
@@ -304,7 +307,8 @@ class EventController extends Controller
         $old_event->selling_date = strtotime($data['selling_date']);
         $image_url = $old_event->image;
         if($data['image'] != null)
-            $old_event->image        = 'imagen_updated'; //$this->file_service->upload($data['image'],'event');
+            $old_event->image        = $this->file_service->upload($data['image'],'event');
+       
         else
             $old_event->image = $image_url;
         $old_event->save();
@@ -343,26 +347,26 @@ class EventController extends Controller
         $local = Local::find($data['local_id']);
         if($local->rows >=1 && !$data['zone_columns'])
             return ['error' => 'se debe especificar filas y columnas para este local numerado'];
-        if($data['zone_columns']){
-            for($i = 0; $i < count($data['zone_names']); $i++){
-                $temp[$i] = [$data['start_column'][$i], $data['start_row'][$i]];
-                for($j = $i -1; $j >=0; $j--){
-                    if($temp[$j][0] == $data['start_column'][$i] && $temp[$j][1] == $data['start_row'][$i])
-                        return ['error' => 'Hay zonas ubicadas en la misma fila y columna'];
-                }
-            }
-            for ($i = 0; $i < count($data['zone_columns']); $i++) {
-                $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
-                $total_capacity = $total_capacity + $capacity;
-                if($data['start_row'][$i] > $local->rows || $data['start_column'][$i] > $local->columns||
-                    $data['start_row'][$i]+$data['zone_rows'][$i] -1> $local->rows ||
-                    $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
-                    return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
-            }
-        } else {
-            for($i= 0; $i < count($data['zone_names']);$i++)
-                $total_capacity = $total_capacity + $data['zone_capacity'][$i];
-        }
+        if($data['zone_columns']){ // esta entrando a pesar de no ser numerado el local :S :S
+             for($i = 0; $i < count($data['zone_names']); $i++){
+                 $temp[$i] = [$data['start_column'][$i], $data['start_row'][$i]];
+                 for($j = $i -1; $j >=0; $j--){
+                     if($temp[$j][0] == $data['start_column'][$i] && $temp[$j][1] == $data['start_row'][$i])
+                         return ['error' => 'Hay zonas ubicadas en la misma fila y columna'];
+                 }
+             }
+             for ($i = 0; $i < count($data['zone_columns']); $i++) {
+                 $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
+                 $total_capacity = $total_capacity + $capacity;
+                 if($data['start_row'][$i] > $local->rows || $data['start_column'][$i] > $local->columns||
+                     $data['start_row'][$i]+$data['zone_rows'][$i] -1> $local->rows ||
+                     $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
+                     return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
+             }
+         } else {
+             for($i= 0; $i < count($data['zone_names']);$i++)
+                 $total_capacity = $total_capacity + $data['zone_capacity'][$i];
+         }
         if($total_capacity > $local->capacity)
             return ['error' => 'la capacidad del evento excede a la del local'];
         $result = [
@@ -382,15 +386,16 @@ class EventController extends Controller
     public function update(UpdateEventRequest $request, $id)
     {
 
+        $result_dates = $this->join_date_time($request->input('start_time'),$request->input('start_date'));
         $now = new DateTime();
-        $temp = array_unique($request->input('function_starts_at'));
-        if(count($temp) < count($request->input('function_starts_at')))
-            //return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
-            return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
+        $temp = array_unique($result_dates);
+        if(count($temp) < count($result_dates))
+            return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
+            //return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
         $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
         if($result['error'] != '')
-            //return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
-            return response()->json(['message' => $result['error']]);
+            return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
+            //return response()->json(['message' => $result['error']]);
 
         $event = Event::find($id);
         $actual_local = Local::find($event->local_id);
@@ -410,8 +415,6 @@ class EventController extends Controller
                     $result = $this->updateSellingEvent($request->all(), $id);
                     if($result['error'] != '')
                         return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
-                    //return redirect()->route('events.edit', $event->id);
-                    return response()->json(['message' => 'Event modified']);
                 }
             }
         //esto ocurre cuando hay cambio de local pero está antes del selling date
@@ -444,6 +447,7 @@ class EventController extends Controller
             ];
         if($now->getTimestamp() < $request->input('selling_date')){
             //antes del sellingdate en general
+            
             $this->deletePresentations($event->id);
             $this->deleteZones($event->id);
             $updated_event = $this->updateEvent($data, $event);
@@ -457,7 +461,8 @@ class EventController extends Controller
                 'start_row'    => $request->input('start_row')
             ];
             $data2 = [
-                'function_starts_at' => $request->input('function_starts_at')
+            //'start_date'    => $request->input('start_date'),
+                'function_starts_at' => $result_dates
             ];
             $this->storeRestOfEvent($zone_data, $data2, $updated_event);
 
@@ -469,13 +474,16 @@ class EventController extends Controller
             $i = 0;
             foreach($presentations as $presentation){
                 if($now->getTimestamp() < $presentation->starts_at){
-                    $presentation->starts_at = strtotime($request->input('function_starts_at.'.$i));
+                    $presentation->starts_at = strtotime($result_dates[$i]);
                     $presentation->save();
+                } else{
+                    if($presentation->starts_at != $result_dates[$i])
+                        return redirect()->back()->withInput()->withErrors(['errors' => 'No se puede modificar una presentación con fecha pasada']);
                 }
             }
-            if($presentations->count() < count($request->input('function_starts_at'))){
-                for($i = $presentations->count() ; $i<count($request->input('function_starts_at')); $i++){
-                    $data = ['starts_at' => $request->input('function_starts_at.'.$i)];
+            if($presentations->count() < count($result_dates)){
+                for($i = $presentations->count() ; $i<count($result_dates); $i++){
+                    $data = ['starts_at' => $result_dates[$i]];
                     $this->storePresentation($data, $event);
                 }
             }
@@ -489,8 +497,8 @@ class EventController extends Controller
             }
         }
         //si no estamos haciendo un cambio de local, solo se updatea el evento, zona y presentacion
-        //return redirect()->route('events.edit', $event->id);
-        return response()->json(['message' => 'Event modified']);
+        return redirect()->route('promoter.record');
+        //return response()->json(['message' => 'Event modified']);
     }
     public function updateSellingEvent($data, $event_id){
         //no se considera el cancelar
