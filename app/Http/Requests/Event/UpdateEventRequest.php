@@ -22,9 +22,10 @@ class UpdateEventRequest extends Request
             'local_id'      => 'required|exists:locals,id',
             'zone_names'    => 'required',
             'price'         => 'required',
-            'function_starts_at' => 'required',
-            'publication_date'   => 'required|date|after:yesterday',
-            'selling_date'       => 'required|date|after:publication_date'
+            'start_date'    => 'required',
+            'start_time'    => 'required',
+            'publication_date'   => 'required|date',
+            'selling_date'       => 'required|date'
         ];
         $zones = $this->request->get('zone_names'); 
         if($zones)
@@ -38,10 +39,11 @@ class UpdateEventRequest extends Request
             $rules['start_row.'.$key]       = 'numeric|min:1|required_with:zone_columns.'.$key.',zone_rows.'.$key.',start_column.'.$key.'|required_without_all:zone_capacity.'.$key;
             $rules['price.'.$key]           = 'required|numeric|min:0';
         }
-        $presentations = $this->request->get('function_starts_at');
+        $presentations = $this->request->get('start_date');
         if($presentations)
         foreach($presentations as $key=>$val){
-            $rules['function_starts_at.'.$key]  = 'required|date|after:selling_date';
+            $rules['start_date.'.$key]  = 'required|date';
+            $rules['start_time.'.$key]  = 'required_with:start_date';
 
         }
         return $rules;
