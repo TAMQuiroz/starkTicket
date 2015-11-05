@@ -565,7 +565,11 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $event = Event::find($id);
+        if(is_null($event)
+            return redirect()->back()->withErrors(['error' => 'Seleccione un evento válido']);
+        $event->delete();
+        return redirect()->back();
     }
     public function subcategoriesToAjax($id)
     {
