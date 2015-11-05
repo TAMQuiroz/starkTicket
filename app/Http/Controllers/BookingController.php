@@ -76,7 +76,7 @@ class BookingController extends Controller
                     DB::table('slot_presentation')
                         ->where('slot_id', $seats[$i])
                         ->where('presentation_id', $request['presentation_id'])
-                        ->update(['status' => config('constants.seat_taken')]);
+                        ->update(['status' => config('constants.seat_reserved')]);
                 }else{
                     //Disminuir capacidad en la zona de esa presentacion
                     DB::table('zone_presentation')->where('zone_id', $request['zone_id'])
