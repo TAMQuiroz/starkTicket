@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman/event/{id}/buy', 'TicketController@createSalesman');
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
     Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
-    
+
 });
 
 //Rutas generales para peticiones ajax, pueden ser usadas por varios usuarios, por eso lo saque
@@ -85,7 +85,10 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/politics', 'PoliticController@politicsPromotor');
 
     Route::get('promoter/event/recordPayment', 'PaymentController@index');
-    Route::get('promoter/transfer_payments', 'PaymentController@create');
+    Route::get('promoter/transfer_payments/', 'PaymentController@index');
+    Route::get('promoter/transfer_payments/{payment_id}', 'PaymentController@show');
+    Route::get('promoter/transfer_payments/{event_id}/create', 'PaymentController@create');
+    Route::post('promoter/transfer_payments/{event_id}/create', 'PaymentController@store');
     Route::get('promoter/event/record', ['as'=>'promoter.record','uses'=>'EventController@showPromoterRecord']);
     Route::get('promoter/event/create', 'EventController@create');
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
@@ -106,7 +109,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/promotion/{id}/edit', ['as'=>'promo.edit','uses'=>'PromoController@edit']);
     Route::post('promoter/promotion/{id}/edit',  'PromoController@update');
     Route::get('promoter/promotion/{id}/delete',  'PromoController@destroy');
-    
+
 
 
 

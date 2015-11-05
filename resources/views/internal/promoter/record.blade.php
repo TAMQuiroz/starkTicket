@@ -19,6 +19,7 @@
           <th>Estado</th>
           <th>Entradas Vendidas</th>
           <th>Monto Acumulado</th>
+          <th>Pagar</th>
           <th>Ver</th>
           <th>Editar</th>
           <th>Cancelar</th>
@@ -36,6 +37,7 @@
           <td>Vigente</td>
           <td>1500</td>
           <td>17500.00</td>
+          <td><a href="{{ url ('promoter/transfer_payments/'.$event->id.'/create') }}" class="btn btn-info">$</a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info{{$event->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button>
       <div class="modal fade" id="info{{$event->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
@@ -61,7 +63,7 @@
                   <p>Fecha Publicación: {{date("d/m/Y",$event->publication_date)}}</p>
                   <p>Fecha Inicio Venta del {{date("d/m/Y",$event->selling_date)}}</p>
                  <!-- <p>Fecha Venta del {{date("d/m/Y",$event->presentations->first()->starts_at)}} al {{date("d/m/Y",strtotime("+".$event->time_length."days",$event->presentations->first()->starts_at))}}</p> -->
-                  <p>Funciones desde el {{date("d/m/Y",$event->presentations->first()->starts_at)}} al {{date("d/m/Y",$event->presentations->last()->starts_at)}}</p> 
+                  <p>Funciones desde el {{date("d/m/Y",$event->presentations->first()->starts_at)}} al {{date("d/m/Y",$event->presentations->last()->starts_at)}}</p>
                   <h4>Entradas:</h4>
                   <ul>
                     @foreach($event->zones as $zone)
