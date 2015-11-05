@@ -10,91 +10,41 @@ Detalle de asistencia de Pedro alva
 
 @section('content')
     <div class="row">
-          <div class="col-sm-8">
-             <table class="table table-bordered table-striped">
-              <thead>
-                <tr>
-               
-                  <th>Hora Ingreso</th>
-                  <th>Hora Salida</th>
-                  <th>Editar</th>
-                </tr>
-              </thead>
+      <div class="col-sm-8">
+         <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Hora Ingreso</th>
+              <th>Hora Salida</th>
+              <th>Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+              $i=1;
+              while ($i< $detailsAttendances->count()){ ?>
 
+            <tr>
+              <th> {{$detailsAttendances[$i-1]->datetime}}  </th>
+              <?php
+                
+                if ($detailsAttendances[$i]->tipo==1){
+                  echo "<th>No se cerró sesión</th>";   
+                } else {
+                  echo "<th>{$detailsAttendances[$i]->datetime}</th>";
+                  $i++;
+                }
+                $i++;  
+              ?>
+              <th><a class="btn btn-info" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></th>      
+            </tr>     
 
+            <?php 
 
-<tbody>
-
-
-<?php
-
-$i=0;
-while ($i< $detailsAttendances->count() ){
-?>
-
-
-
-  <tr>
-
-                  <th> {{$detailsAttendances[$i]->datetime}}  </th>
-
-
-
-
-<?php
-
-$i++;
-
-if ( $i==1){  
-
-?>
-                  <th>  </th>
-
-                    <th><a class="btn btn-info" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></th>
-           
-           </tr>     
-
-
-<?php
-  $i++;
-} 
-
-else if ( $i==2){ 
-?>
-
-  <th>{{$detailsAttendances[$i ]->datetime}}   </th>
-
-  <th><a class="btn btn-info" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></th>
-       
-
-                </tr>       
-
-   <?php
-   $i++;
-
-}
-?>
-
-
-
-
-
-
-<?php 
-
-     }
-
-?>
-
-
-
-
-
-
-
-    </tbody>
-          
-             </table>
+               }
+            ?>
+          </tbody>
+        </table>
 
 
                <!-- MODAL -->
