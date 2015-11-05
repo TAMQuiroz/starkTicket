@@ -57,7 +57,8 @@ class BookingController extends Controller
             }
 
         }else{ //No es numerado
-            if($zone->capacity - $nTickets <= 0) //Deberia ser zona x presentacion
+            $zoneXpres = DB::table('zone_presentation')->where('zone_id',$request['zone_id'])->where('presentation_id', $request['presentation_id'])->first();
+            if($zoneXpres->slots_availables - $nTickets < 0) //Deberia ser zona x presentacion
                 return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
         }
             
@@ -66,6 +67,7 @@ class BookingController extends Controller
 
         try{
             $tickets = array();
+            $sale_id = Ticket::max('sale_id');
             for($i = 0; $i < $nTickets; $i++){
 
                 
@@ -96,6 +98,17 @@ class BookingController extends Controller
                  'created_at'           => new Carbon(),
                  'updated_at'           => new Carbon(),
                 ]);
+
+                if($sale_id != null){
+                    DB::table('tickets')->where('id',$id)->update(['sale_id'=>$sale_id+1]);
+                }
+
+                if($request['promotion_id']!=""){
+                    $promo = Promotions::find($request['promotion_id']);
+                    if($promo->desc != null)
+                        DB::table('tickets')->where('id',$id)->decrement('price', $zone->price * ($promo->desc/100));
+                }
+                
                 if($request['dni_recojo']!=''||$request['dni_recojo']!=null)
                     $id['dni'] = $request['dni_recojo'];
                 
