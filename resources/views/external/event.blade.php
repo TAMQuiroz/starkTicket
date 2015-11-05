@@ -47,8 +47,9 @@
 							<a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
 							@else
 							<a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
-							@endif
 							<a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
+							@endif
+							
 							<br><br>
 							<div class="form-group">
 							  <label for="comment">Ingrese comentario:</label>

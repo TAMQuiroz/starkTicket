@@ -19,45 +19,31 @@
 @section('content')
 
 
-Su reserva se realizó con éxito. 
-	<div class="table-responsive">
-	  <table class="table table-bordered" style="widht:1px">
-	    <thead>
-	        <tr>
-	            <th>Evento</th>
-	            <th>Fecha</th>
-	            <th>Hora</th>
-	            <th>Zona</th>
-	            <th>Ubicación</th>
-	            <th>Precio</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	        <tr>
-	        	<td>Piaf</td>
-	        	<td>13 Octubre 2015</td>
-	        	<td>9:00pm</td>
-	            <td>VIP</td>  
-	            <td>A14</td>
-	            <td>S/150.00</td>
-	        </tr>
-	        <tr>
-	            <td>Piaf</td>
-	        	<td>13 Octubre 2015</td>
-	        	<td>9:00pm</td>
-	            <td>VIP</td>  
-	            <td>A15</td>
-	            <td>S/150.00</td>
-	        </tr>
-	    </tbody>
-	  </table>
-	</div>
-	<h5> Su código de Reserva es 2134415674 y ha sido enviado a su correo electrónico </h5>	
+<h4>Su reserva se realizó con éxito.</h4>
+<label>Evento: </label> {{$event->name}}
+<br>
+<label>Fecha</label> {{$eventDate}}
+<br>
+<label>Zona</label> {{$zone->name}}
+<br>
+<label>Cantidad de entradas</label> {{$cant}}
+<br>
+@if($event->place->rows != null)
+	<label>Asientos:</label> 
+	@foreach($seats as $seat)
+		<br>
+		{{$seat->row}}{{$seat->column}}
+	@endforeach
+	
+@endif
+	
+
+	<!--<h5> Su código de Reserva es 2134415674 y ha sido enviado a su correo electrónico </h5>	-->
 	<br>
 	 
 
 	<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#correo" data-whatever="@mdo">Enviar información al Correo</button></td>
-	<td><a href="{{url('event/1')}}"><button type="button" class="btn btn-info">Finalizar</button></a></td>
+	<td><a href={{url('event/'.$event->id)}}><button type="button" class="btn btn-info">Finalizar</button></a></td>
 	<div class="modal fade" id="correo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
