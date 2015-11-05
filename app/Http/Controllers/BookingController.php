@@ -139,7 +139,9 @@ class BookingController extends Controller
             $array['seats'] = $seats_array;
         } 
 		return view('external.booking.results', $array);
-	}
+	
+        //return  $array['seats'][0]->row ;
+    }
 	
 	public function pay($id)
 	{
