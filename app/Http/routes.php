@@ -160,8 +160,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/category/{id}/delete', ['as' => 'categories.delete', 'uses' =>'CategoryController@destroy']);
     Route::get('admin/category/{id}/subcategories', ['as' => 'subcategories.index', 'uses' =>'CategoryController@indexSubAdmin']);
 
-    Route::get('admin/ticket_return', 'TicketController@indexReturn');
-    Route::get('admin/ticket_return/new', 'TicketController@createReturn');
+    Route::get('admin/devolutions/', 'DevolutionController@index');
+    Route::get('admin/devolutions/new', 'DevolutionController@create');
+    Route::post('admin/devolutions/new', 'DevolutionController@store');
+    Route::get('admin/devolutions/{devolution_id}', 'DevolutionController@show');
 
     Route::get('admin/attendance', 'BusinessController@attendance');
 
