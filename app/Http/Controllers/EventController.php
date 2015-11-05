@@ -415,7 +415,6 @@ class EventController extends Controller
                     $result = $this->updateSellingEvent($request->all(), $id);
                     if($result['error'] != '')
                         return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
-                    return redirect()->route('promoter.record');
                 }
             }
         //esto ocurre cuando hay cambio de local pero está antes del selling date
@@ -448,6 +447,7 @@ class EventController extends Controller
             ];
         if($now->getTimestamp() < $request->input('selling_date')){
             //antes del sellingdate en general
+            
             $this->deletePresentations($event->id);
             $this->deleteZones($event->id);
             $updated_event = $this->updateEvent($data, $event);
@@ -474,13 +474,16 @@ class EventController extends Controller
             $i = 0;
             foreach($presentations as $presentation){
                 if($now->getTimestamp() < $presentation->starts_at){
-                    $presentation->starts_at = strtotime($request->input('function_starts_at.'.$i));
+                    $presentation->starts_at = strtotime($result_dates[$i]);
                     $presentation->save();
+                } else{
+                    if($presentation->starts_at != $result_dates[$i])
+                        return redirect()->back()->withInput()->withErrors(['errors' => 'No se puede modificar una presentación con fecha pasada']);
                 }
             }
-            if($presentations->count() < count($request->input('function_starts_at'))){
-                for($i = $presentations->count() ; $i<count($request->input('function_starts_at')); $i++){
-                    $data = ['starts_at' => $request->input('function_starts_at.'.$i)];
+            if($presentations->count() < count($result_dates)){
+                for($i = $presentations->count() ; $i<count($result_dates); $i++){
+                    $data = ['starts_at' => $result_dates[$i]];
                     $this->storePresentation($data, $event);
                 }
             }

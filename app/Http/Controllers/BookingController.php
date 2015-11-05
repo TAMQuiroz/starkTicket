@@ -87,7 +87,7 @@ class BookingController extends Controller
                 ['payment_date'         => null,
                  'reserve'              => $codigo_reserva,
                  'cancelled'            => 0,
-                 'owner_id'             => \Auth::user()->id
+                 'owner_id'             => \Auth::user()->id,
                  'event_id'             => $request['event_id'],
                  'price'                => $zone->price, //Falta reducir el porcentaje de promocion
                  'presentation_id'      => $request['presentation_id'],
@@ -97,7 +97,7 @@ class BookingController extends Controller
                  'updated_at'           => new Carbon(),
                 ]);
                 if($request['dni_recojo']!=''||$request['dni_recojo']!=null)
-                    $id['dni'] => $request['dni_recojo'];
+                    $id['dni'] = $request['dni_recojo'];
                 
                 //Si existe cliente
                 if($request['user_id']!=""){ 

@@ -38,7 +38,7 @@
 	 
 
 	<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#correo" data-whatever="@mdo">Enviar información al Correo</button></td>
-	<td><a href="{{url('event/1')}}"><button type="button" class="btn btn-info">Finalizar</button></a></td>
+	<td><a href={{url('event/'.$event->id)}}><button type="button" class="btn btn-info">Finalizar</button></a></td>
 	<div class="modal fade" id="correo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
