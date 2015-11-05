@@ -50,18 +50,23 @@
 							<a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
 							@endif
 							
-							<br><br>
-							<div class="form-group">
-							  <label for="comment">Ingrese comentario:</label>
-							  	{!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '5']) !!}
-							  <button type="submit" class="btn btn-info">Aceptar</button>
-							  <br><br>
-							  <label for="comment">Comentarios:</label>
-							  <h6><button class="btn btn-info">x</button> Peppa: </h6>
-							  {!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.', 'readonly']) !!}
-							  <h6><button class="btn btn-info">x</button> Suzy: </h6>
-							  {!! Form::textarea('pastComment2', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.', 'readonly']) !!}
-							</div>
+							@if(isset($user) && $user->role_id == config('constants.client'))
+								<br><br>
+								<div class="form-group">
+								  <label for="comment">Ingrese comentario:</label>
+								  	{!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '5']) !!}
+								  <button type="submit" class="btn btn-info">Aceptar</button>
+								  <br>
+							@else
+								<div class="form-group">
+							@endif	  
+								  <br>
+								  <label for="comment">Comentarios:</label>
+								  <h6>Peppa: </h6>
+								  {!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.', 'readonly']) !!}
+								  <h6> Suzy: </h6>
+								  {!! Form::textarea('pastComment2', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.', 'readonly']) !!}
+								</div>
 						</section>
 					</div>
 					<!-- /Content -->
