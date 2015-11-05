@@ -425,7 +425,7 @@ class EventController extends Controller
         if($now->getTimestamp() > strtotime($request->input('selling_date'))){
             $zones = Zone::where('event_id', $id)->get();
             $i = 0;
-            if($zones->count() != $request->input('zone_names')->count())
+            if($zones->count() != count($request->input('zone_names')))
                 return redirect()->back()->withErrors(['Venta de evento iniciada. No se puede alterar la cantidad de zonas.']);
             foreach($zones as $zone){
                 if($zone->capacity != $request->input('zone_capacity.'.$i)||
