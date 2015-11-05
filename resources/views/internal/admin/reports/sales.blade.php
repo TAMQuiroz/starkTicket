@@ -22,7 +22,9 @@
             -->
             {!!Form::text('nameEvent', null ,['class'=>'form-control', 'id'=>'search','placeholder' => 'Nombre del evento'])!!}
             <span class="input-group-btn">
+            <!--
             <button class="btn btn-info" type="button" id = 'botoncito' >Buscar</button>
+            -->
             </span>
         </div> 
     </div>
@@ -37,31 +39,21 @@
         <label>Hasta</label>
         <input id="fecha-fin" type="date" class="form-control">
     </div>
-   
-    <!--
-    <div class="col-sm-2">
-        <label>Tipo</label>
 
-        {!!Form::select('select1', [
-           'op0' => 'Tabla',
-           'op1' => 'Excel',
-           'op2' => 'PDF'],
-           null,
-           ['class' => 'form-control']
-        )!!}
-    </div>
-    -->
-
-
-
- 
-    <div class="col-sm-3">
-        <br>
-            <!--<a type="button" href="{{url('admin/report/sales/download')}}" class="btn btn-info" >Descargar Archivo Excel</a>-->    
-            <button type="submit" class="btn btn-info">Descargar Archivo Excel</button>
-
-            </div>
 </div>
+
+    <!--
+    BOTONES
+    -->
+    <div class="row-sm-2">
+        <br>
+            <!--<a type="button" href="{{url('admin/report/sales/download')}}" class="btn btn-info" >Descargar Archivo Excel</a>-->  
+            <button class="btn btn-info" type="button" id = 'botoncito' >Buscar</button>  
+            <!--
+            <button type="submit" class="btn btn-info">Descargar Archivo Excel</button>
+            -->
+    </div>
+
 <hr>
 
 
@@ -94,7 +86,11 @@
         </tbody>
     </table>
 </div>
-
+<div class="row-sm-2">
+        <br>
+            <!--<a type="button" href="{{url('admin/report/sales/download')}}" class="btn btn-info" >Descargar Archivo Excel</a>-->  
+        <button type="submit" class="btn btn-info">Descargar Archivo Excel</button>
+</div>
 
 <!--<div id="chartContainer"   style="height: 300; width: 100%;"    ></div>-->
 
@@ -156,17 +152,34 @@ $("#botoncito").click(function () {
     var d2 = new Date(dateS2);
 
     if(search==null || search == ''){ 
-
         //alert('23/11/1993'.split("/").reverse().join("-"));
-
         if(dateS1=='' && dateS2==''){
             rows.show(); 
             //alert('vacio D:'); 
         }
-        if((dateS1!='' && dateS2=='') || (dateS1=='' && dateS2!='')){
-            alert('Ingrese un rango de fechas');
-            dateS1=='' ? $("#fecha-ini").prop('required',true) : $("#fecha-fin").prop('required',true);;
+        if(dateS1!='' && dateS2==''){
+            $rows = rows;
+            $rows.each(function(){
+                var $this = $(this);
+                var dateST= $this.find(':nth-child(2)').text();
+                var dtabl = new Date(dateST.split("/").reverse().join("-"));
+                if(dtabl>=d1){
+                    $this.show(); 
+                }
+            });
         }
+        if(dateS1=='' && dateS2!=''){
+            $rows = rows;
+            $rows.each(function(){
+                var $this = $(this);
+                var dateST= $this.find(':nth-child(2)').text();
+                var dtabl = new Date(dateST.split("/").reverse().join("-"));
+                if(dtabl<=d2){
+                    $this.show(); 
+                }
+            });
+        }
+
         if(dateS1!='' && dateS2!=''){
             //rows.show();
             $rows = rows;
@@ -189,9 +202,38 @@ $("#botoncito").click(function () {
                 $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show(); 
             });
         }
+        /*
         if((dateS1!='' && dateS2=='') || (dateS1=='' && dateS2!='')){
+            //alert('Ingrese un rango de fechas');
+            dateS1=='' ? $("#fecha-ini").prop('required',true) : $("#fecha-fin").prop('required',true);
+        }
+        */
+        if(dateS1!='' && dateS2==''){
+            /*
             alert('Ingrese un rango de fechas');
             dateS1=='' ? $("#fecha-ini").prop('required',true) : $("#fecha-fin").prop('required',true);
+            */
+            $rows = rows;
+            $rows.each(function(){
+                var $this = $(this);
+                var dateST= $this.find(':nth-child(2)').text();
+                var dtabl = new Date(dateST.split("/").reverse().join("-"));
+                if(dtabl>=d1){
+                    $this.show(); 
+                }
+            });
+        }
+
+        if(dateS1=='' && dateS2!=''){
+            $rows = rows;
+            $rows.each(function(){
+                var $this = $(this);
+                var dateST= $this.find(':nth-child(2)').text();
+                var dtabl = new Date(dateST.split("/").reverse().join("-"));
+                if(dtabl<=d2){
+                    $this.show(); 
+                }
+            });
         }
         if(dateS1!='' && dateS2!=''){
             //rows.show();
@@ -258,6 +300,7 @@ $("#botoncito").click(function () {
         chart.render();
     }
 </script>
+
 <!--<script type="text/javascript" src="canvas-1.7.0/canvasjs.min.js"></script> -->
 {!!Html::script('js/canvasjs.min.js')!!}
 
