@@ -13,7 +13,7 @@ class TestUserTableSeeder extends Seeder
      */
     public function run()
     {
-        User::insert([  'name' => 'Cliente','lastname' => 'ApellidoC', 'di_type'=> config('constants.national'), 'di' => '23454523', 'address'=>'Av. Cliente #532 San Borja',
+        User::insert([  'name' => 'Cliente','lastname' => 'ApellidoC', 'di_type'=> config('constants.national'), 'di' => '46898966', 'address'=>'Av. Cliente #532 San Borja',
                         'email' => 'cliente@mail.com', 'phone' => '944133643', 'points'=>0, 'birthday'=>Carbon::create(1991,1,8)->toDateString(), 
                         'iniDate'=>Carbon::today(), 'role_id'=>1, 'password' => bcrypt('cliente')]);
 

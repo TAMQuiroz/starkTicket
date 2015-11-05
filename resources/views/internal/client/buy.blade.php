@@ -88,14 +88,17 @@
 		</div>
 	</div>
 	{!!Form::hidden('seats',null,['id'=>'seats'])!!}
-	<div class="col-md-3">
+	<div class="col-md-6">
         Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','readonly', 'class'=>'form-control'])!!}
     </div>
     @else
-    <div class="col-md-3">
+    <div class="col-md-6">
         Cantidad: {!!Form::number('quantity',0,['id'=>'quantity','class'=>'form-control','min'=>0])!!}
     </div>
     @endif
+	<div class="col-md-6">
+    	DNI designado: {!!Form::number('designee',null,['class'=>'form-control','min'=>0,'maxlength'=>8,'required'])!!}
+    </div>
     <div class="col-md-12"><hr></div>
     <div class= "button-final col-md-12">
 	    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo" id="payModal" disabled onclick="getPromo()">Comprar Entrada</button>
@@ -122,7 +125,7 @@
 									<label for="exampleInputEmail2">Código de Seguridad</label>
 									{!!Form::number('',null,['id'=>'securityCode','class'=>'form-control','placeholder'=>'123','min'=>0,'max'=>999,'required'])!!}
 								</div>
-								{!!Form::submit('Pagar Entrada',array('id'=>'pay','class'=>'btn btn-info'))!!}
+								{!!Form::submit('Pagar Entrada',array('id'=>'yes','class'=>'btn btn-info'))!!}
 								<button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
 					     	</div>
 				        </form>
@@ -139,7 +142,7 @@
 	{!!Html::script('js/seats.js')!!}
 	{!!Html::script('js/main.js')!!}
     <script type="text/javascript">
-        var config = {
+    var config = {
         routes: [
             { zone: "{{ URL::route('ajax.getClient') }}" },
             { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
@@ -150,5 +153,8 @@
             { promo: "{{URL::route('ajax.getPromo')}}"}
         ]
     };
+    $('#yes').click(function(){
+        $('#submitModal').modal('hide');  
+    });
     </script>
 @stop

@@ -55,11 +55,14 @@ Route::group(['middleware' => ['auth', 'client']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'salesman']], function () {
-    Route::get('salesman', 'PagesController@salesmanHome');
+    Route::get('salesman', ['uses'=>'PagesController@salesmanHome','as'=>'salesman.home']);
     Route::get('salesman/cash_count', 'BusinessController@cashCount');
     Route::get('salesman/exchange_gift', 'GiftController@createExchange');
     Route::get('salesman/event/{id}/pay_booking', 'BookingController@pay');
-    Route::get('salesman/giveaway', 'TicketController@giveaway');
+    Route::get('salesman/giveaway', ['uses'=>'TicketController@giveaway','as'=>'ticket.giveaway']);
+    Route::post('salesman/giveaway', ['uses'=>'TicketController@giveawayShow','as'=>'ticket.giveaway.show']);
+    Route::post('salesman/giveaway/confirm', ['uses'=>'TicketController@giveawayConfirm','as'=>'ticket.giveaway.confirm']);
+
     //Este inicia en el detalle del evento
     Route::get('salesman/event/{id}/buy', 'TicketController@createSalesman');
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
