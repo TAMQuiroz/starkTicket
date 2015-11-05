@@ -15,7 +15,7 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamp('payment_date')->nullable();
-            $table->integer('reserve');
+            $table->string('reserve');
             $table->timestamp('refund_date')->nullable();
             $table->integer('cancelled');
             $table->integer('owner_id')->unsigned()->nullable();
