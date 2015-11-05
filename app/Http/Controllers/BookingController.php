@@ -108,20 +108,9 @@ class BookingController extends Controller
                     if($promo->desc != null)
                         DB::table('tickets')->where('id',$id)->decrement('price', $zone->price * ($promo->desc/100));
                 }
-                
+
                 if($request['dni_recojo']!=''||$request['dni_recojo']!=null)
                     $id['dni'] = $request['dni_recojo'];
-                
-                //Si existe cliente
-                if($request['user_id']!=""){ 
-
-                    //Asignar cliente
-                    DB::table('tickets')->where('id',$id)->update(['owner_id' => $request['user_id']]);
-
-                    //Aumentar puntos de cliente
-                    DB::table('users')->where('id', $request['user_id'])->increment('points');
-
-                }   
                 
                 if ($event->place->rows != null){
                     //Asignar id en caso sea numerado
