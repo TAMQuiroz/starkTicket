@@ -65,7 +65,7 @@ class ReportController extends Controller
 
             }
         }
-     //return $eventInformation;
+    // return $eventInformation;
 
 
         Excel::create('Probando archivo de Excel', function ($excel) use($eventInformation){

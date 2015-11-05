@@ -948,6 +948,7 @@
                 "random"
             ],
             "time": "2015-10-23 13:21:37"
+
         },
         {
             "name": "phpoffice/phpexcel",
@@ -1005,6 +1006,7 @@
                 "xlsx"
             ],
             "time": "2015-05-01 07:00:55"
+
         },
         {
             "name": "psr/log",
@@ -1846,6 +1848,7 @@
                 "dump"
             ],
             "time": "2015-10-25 17:17:38"
+<<<<<<< HEAD
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -1893,6 +1896,8 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2015-04-01 14:40:03"
+=======
+>>>>>>> 6ab10b98035efbefcdc30e4ec60deb96d625ccbd
         },
         {
             "name": "vlucas/phpdotenv",
