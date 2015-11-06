@@ -111,7 +111,7 @@
                       {!! Form::text('expiration', \Carbon\Carbon::now('America/Lima')->addHours(12), ['class' => 'form-control', 'disabled']) !!}
                       <label for="exampleInputEmail2">DNI de Persona Autorizada</label>
                       <!--{!! Form::text('autorized', '', ['class' => 'form-control', 'placeholder' => 'Juan Pérez']) !!}-->
-                      {!!Form::input('number','dni_recojo', '' ,['class'=>'form-control','id'=>'inputDi','maxlength' => 8,'min'=>7])!!}
+                      {!!Form::input('number','dni_recojo', '' ,['class'=>'form-control','id'=>'inputDi','maxlength' => 8,'size'=>8])!!}
                     </div>
                     <a href="{{url('client/reservaexitosa')}}"><button type="submit" class="btn btn-info">Aceptar</button></a>
                     <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
