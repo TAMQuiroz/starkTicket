@@ -30,7 +30,7 @@ Route::get('category/{id}', 'CategoryController@showExternal');
 Route::get('category/{id}/subcategory', 'CategoryController@indexSub');
 Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@indexExternal');
-
+Route::get('event/successBuy', 'TicketController@showSuccess');
 Route::get('event/{id}', 'EventController@showExternal');
 Route::post('event/{id}', 'EventController@showExternalPost');
 
@@ -182,6 +182,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('admin/report/assistance', 'ReportController@showAssistance');
     Route::get('admin/report/sales', 'ReportController@showSales');
+    Route::post('admin/report/sales','ReportController@actionExcel');
+    //Route::get('admin/report/sales/download','ReportController@actionExcel');
     Route::get('admin/report/assignment', 'ReportController@showAssigment');
 
     Route::get('admin/modules', 'ModuleController@index');

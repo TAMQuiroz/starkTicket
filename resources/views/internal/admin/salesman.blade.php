@@ -65,6 +65,14 @@
         </fieldset>
 
 Fin de comentario--> 
+        
+
+
+        <!-- barra de busqueda -->
+        {!! Form::text('eventPlace','', array('id' => 'search', 'class' => 'form-control', 'style' => 'width:50%;')) !!} 
+        <br>
+        <button id="btnBuscar" type="button" class="btn btn-info">Buscar</button>
+        <br><br>
 
         <table class="table table-bordered table-striped" id="example">
          <thead>
@@ -79,7 +87,7 @@ Fin de comentario-->
                 <th>Asistencia</th>
             </tr>
          </thead>
-         <tbody>
+         <tbody id="fbody">
             @foreach ($vendedores as $vendedor)
             <tr>
             
@@ -106,7 +114,7 @@ Fin de comentario-->
                   </td>
                     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                       <div class="modal-dialog" role="document">
-                        <div class="modal-content">
+                          <div class="modal-content">
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="myModalLabel">Detalle del promotor</h4>
@@ -188,11 +196,32 @@ Fin de comentario-->
 
 
         </table>
-      
+
 {!!$vendedores->render()!!}
 
+
+
+{!!Html::script('js/canvasjs.min.js')!!}
 @stop
 
 @section('javascript')
+    <script>
+        $('#btnBuscar').click(function(){
 
+          var rows = $("#fbody").find("tr").hide();
+          var name = document.getElementById("search");    
+          var data = name.value;
+          var search = data.toString().toLowerCase();
+
+          if (search!=null || search != '') {
+              //rows.show();
+              $rows = rows;
+              $rows.each(function(){
+                  var $this = $(this);
+                  $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show(); 
+              });
+          } else rows.show();
+
+        });
+    </script>
 @stop
