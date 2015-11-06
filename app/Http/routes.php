@@ -57,6 +57,9 @@ Route::group(['middleware' => ['auth', 'client']], function () {
 Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman', 'PagesController@salesmanHome');
     Route::get('salesman/cash_count', 'BusinessController@cashCount');
+    Route::post('salesman/cash_count', 'BusinessController@updateCash');
+    //Route::post('salesman/cash_count', 'BusinessController@updateCashCount');
+  
     Route::get('salesman/exchange_gift', 'GiftController@createExchange');
     Route::get('salesman/event/{id}/pay_booking', 'BookingController@pay');
     Route::get('salesman/giveaway', 'TicketController@giveaway');
