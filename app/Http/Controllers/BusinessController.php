@@ -11,6 +11,7 @@ use App\Models\ExchangeRate;
 use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\Ticket;
+use App\Models\Module;
 use DB;
 /*use App\Services\FileService;*/
 
@@ -33,12 +34,17 @@ class BusinessController extends Controller
         foreach ($sales as $sale) {
             $sumSale += $sale->subtotal; 
         }
-        $cashStart = DB::table('users')
-                    ->select(DB::raw('modules.cash as valueCash'))
-                    ->leftJoin('modules', 'users.module_id', '=', 'modules.id')
+        $cashStarts = DB::table('users')
                     ->where('users.id',\Auth::user()->id)
+                    ->select(DB::raw('modules.cash as cashMo'))
+                    ->leftJoin('modules','modules.id', '=','users.module_id')
+                   // ->where('users.id',\Auth::user()->id) -> where('modules.id','users.module_id')
                     ->get();
-
+        $cashFirst = 0;
+        $moduleid = \Auth::user()->module_id;
+        foreach ($cashStarts as $var) {
+            $cashFirst += $var->cashMo; 
+        }             
         $refunds = DB::table('tickets')
                     ->select(DB::raw('refund_date, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, zones.price as zonePrice, presentations.starts_at as funtionTime, count(*) as totalTicket, Sum(tickets.price) as subtotal'))
                     ->where('refund_date','<',new Carbon())->where('refund_date','>=',Carbon::today())->where('salesman_id',\Auth::user()->id)
@@ -52,7 +58,7 @@ class BusinessController extends Controller
         foreach ($refunds as $refund) {
             $sumRefound += $refund->subtotal; 
         }
-        $sumTotal = $sumSale - $sumRefound;
+        $sumTotal = $sumSale - $sumRefound + $cashFirst;
 
         /*
         foreach ($tickets as $ticket ) {
@@ -60,7 +66,7 @@ class BusinessController extends Controller
             $exchangeRate->finishDate     =   new Carbon();
             $exchangeRate->save();
         }*/
-        return view('internal.salesman.cashCount',compact('sales','refunds','sumSale','sumRefound','sumTotal','cashStart'));
+        return view('internal.salesman.cashCount',compact('sales','refunds','sumSale','sumRefound','sumTotal','cashFirst','moduleid'));
     }
 
     public function exchangeRate()
@@ -99,6 +105,23 @@ class BusinessController extends Controller
         
         return redirect('admin/config/exchange_rate');
     }
+    public function updateCash(request $request)
+    {
+        
+       // $modules = Module::where('id',\Auth::user()->id_module)->get();
+         $module = Module::find(\Auth::user()->module_id);
+         $module->cash    = $request['cash'];
+         $module->save();
+             
+         return redirect('salesman/cash_count');
+    }
+    /*public function updateCashCount(request $request)
+    {
+        $module = Module::find(\Auth::user()->module_id);
+        $module->cash    = $request['total'];
+        $module->save();
+        return redirect('salesman/cash_count');
+    }*/
 
     public function about()
     {

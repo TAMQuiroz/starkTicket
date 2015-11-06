@@ -1,4 +1,4 @@
-9@extends('layout.promoter')
+@extends('layout.promoter')
 
 @section('style')
 
