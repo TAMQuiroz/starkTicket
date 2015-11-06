@@ -15,17 +15,18 @@ class AccessPromotionSeeder extends Seeder
     public function run()
     {
         
+    accessPromotion::insert(['description'=> 'SOLO EFECTIVO']);
 
  	accessPromotion::insert(['description'=> 'CUALQUIER MODO DE PAGO']);
     
 	accessPromotion::insert(['description'=> 'TODAS LAS TARJETAS']);
     
-	accessPromotion::insert(['description'=> 'TARJETA INTERBANK']);
+//	accessPromotion::insert(['description'=> 'TARJETA INTERBANK']);
     
-	accessPromotion::insert(['description'=> 'TARJETA BBVA']);
+//	accessPromotion::insert(['description'=> 'TARJETA BBVA']);
     
 
-	accessPromotion::insert(['description'=> 'TARJETA CMR'	]);
+//	accessPromotion::insert(['description'=> 'TARJETA CMR'	]);
     
 
     }

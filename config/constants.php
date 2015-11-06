@@ -38,4 +38,10 @@ return [
 	//Tipo de local
 	'numbered'				=> 1,
 	'notNumbered'			=> 2,
+
+	//Tipo de Asistencia Vendedor
+	'in'	=> 1,
+	'out'	=> 2,
+
+
 ];
