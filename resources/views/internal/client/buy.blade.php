@@ -28,24 +28,33 @@
 @section('content')
 {!!Form::open(array('route' => 'ticket.store.client','id'=>'form'))!!}
 	<div>
-		<div class="chooser">
+		<div class="col-md-12">
 			{!!Form::hidden('event_id',$event['id'],['id'=>'event_id'])!!}
-			<h5>Seleccione Funcion</h5>
-			@if($event->place->rows == null)
-	        {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control', 'id'=>'pres_selection','onChange'=>'getAvailable()']) !!}
-	        @else
-	        {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control', 'id'=>'pres_selection','onChange'=>'getAvailable(); getTakenSlots()']) !!}
-	        @endif
-	        <h5>Seleccione Zona</h5>
-	        @if($event->place->rows == null)
-	        {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','id'=>'zone_id','onChange'=>'getAvailable(); getPromo()']) !!}
-	        @else
-			{!! Form::select('zone_id', $zones, null, ['class' => 'form-control','id'=>'zone_id','onChange'=>'getAvailable(); getPromo(); getTakenSlots()']) !!}
-	        @endif
+			<div class="col-md-4">
+				<h4>Seleccione Funcion</h5>
+				@if($event->place->rows == null)
+		        {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control', 'id'=>'pres_selection','onChange'=>'getAvailable()']) !!}
+		        @else
+		        {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control', 'id'=>'pres_selection','onChange'=>'getAvailable(); getTakenSlots()']) !!}
+		        @endif
+	        </div>
+	        <div class="col-md-4">
+		        <h4>Seleccione Zona</h5>
+		        @if($event->place->rows == null)
+		        {!! Form::select('zone_id', $zones, null, ['class' => 'form-control','id'=>'zone_id','onChange'=>'getAvailable(); getPromo()']) !!}
+		        @else
+				{!! Form::select('zone_id', $zones, null, ['class' => 'form-control','id'=>'zone_id','onChange'=>'getAvailable(); getPromo(); getTakenSlots()']) !!}
+		        @endif
+	        </div>
+	        <div class="col-md-4">
+				<h4 >Entradas Disponibles</h4>
+        		{!! Form::text('available', null, ['id'=>'available','class' => 'form-control', 'disabled']) !!} 
+	        </div>
 		</div>
 		{!! Form::hidden('promotion_id', null, ['id'=>'promotion_id']) !!}
         {!! Form::radio('payMode', config('constants.credit'), true,['style'=>'visibility: hidden']) !!}
-	</div>	
+	</div>
+	
 	<div class="table-responsive col-md-12" >
 	    <table class="table table-bordered">
 	        <thead>
