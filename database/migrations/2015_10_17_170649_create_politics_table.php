@@ -16,7 +16,7 @@ class CreatePoliticsTable extends Migration
 
 
         Schema::create('politics', function (Blueprint $table) {
-              $table->increments('id');
+            $table->increments('id')->unique();
             $table->string('name');
             $table->text('description');
             $table->string('state');

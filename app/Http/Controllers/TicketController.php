@@ -12,6 +12,7 @@ use App\Models\Promotions;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 use App\Http\Requests\Ticket\StoreTicketRequest;
+use App\Http\Requests\Giveaway\StoreGiveawayRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -29,16 +30,6 @@ class TicketController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexReturn()
-    {
-        return view('internal.admin.ticketReturn');
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -46,16 +37,6 @@ class TicketController extends Controller
     public function create()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function createReturn()
-    {
-        return view('internal.admin.newTicketReturn');
     }
 
     /**
@@ -72,7 +53,7 @@ class TicketController extends Controller
 
         $slots_array = array();
         foreach ($presentations as $pres) {
-            $slots = DB::table('slot_presentation')->where('presentation_id',$pres->id)->where('status',config('constants.seat_available'))->lists('slot_id','slot_id');    
+            $slots = DB::table('slot_presentation')->where('presentation_id',$pres->id)->where('status',config('constants.seat_available'))->lists('slot_id','slot_id');
             $slots_array[$pres->id] = $slots;
         }
 
@@ -100,7 +81,7 @@ class TicketController extends Controller
 
         $slots_array = array();
         foreach ($presentations as $pres) {
-            $slots = DB::table('slot_presentation')->where('presentation_id',$pres->id)->where('status',config('constants.seat_available'))->lists('slot_id','slot_id');    
+            $slots = DB::table('slot_presentation')->where('presentation_id',$pres->id)->where('status',config('constants.seat_available'))->lists('slot_id','slot_id');
             $slots_array[$pres->id] = $slots;
         }
 
@@ -121,7 +102,7 @@ class TicketController extends Controller
             $seats[$key] = explode("_",$seat);
             $seats[$key] = Slot::where('column',$seats[$key][1])->where('row',$seats[$key][0])->where('zone_id',$zone_id)->first()->id;
         }
-        
+
         return $seats;
     }
 
@@ -143,7 +124,7 @@ class TicketController extends Controller
             $seats = $request['seats'];
 
             $seats = $this->getSelectedSlots($seats, $zone->id);
-            
+
             foreach($seats as $seat_id){
 
                 $slot = DB::table('slot_presentation')->where('slot_id',$seat_id)->where('presentation_id', $request['presentation_id'])->first();
@@ -158,7 +139,7 @@ class TicketController extends Controller
             if($zoneXpres->slots_availables - $nTickets < 0) //Deberia ser zona x presentacion
                 return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
         }
-            
+
 
         DB::beginTransaction();
 
@@ -167,7 +148,7 @@ class TicketController extends Controller
             $sale_id = Ticket::max('sale_id');
             for($i = 0; $i < $nTickets; $i++){
 
-                
+
                 if ($event->place->rows != null){
                     //Cambiar estado de asiento
                     DB::table('slot_presentation')
@@ -194,6 +175,7 @@ class TicketController extends Controller
                  'seat_id'              => null,
                  'salesman_id'          => null,
                  'picked_up'            => false,
+                 'designee'             => null,
                  'sale_id'              => 1,
                  'created_at'           => new Carbon(),
                  'updated_at'           => new Carbon(),
@@ -205,10 +187,14 @@ class TicketController extends Controller
                     DB::table('tickets')->where('id',$id)->update(['designee'=>null]);
                 }
 
+                if($request['designee'] != null){
+                    DB::table('tickets')->where('id',$id)->update(['designee'=>$request['designee']]);
+                }
+
                 if($sale_id != null){
                     DB::table('tickets')->where('id',$id)->update(['sale_id'=>$sale_id+1]);
                 }
-                
+
                 if($request['promotion_id']!=""){
                     $promo = Promotions::find($request['promotion_id']);
                     if($promo->desc != null)
@@ -216,7 +202,7 @@ class TicketController extends Controller
                 }
 
                 //Si existe cliente
-                if($request['user_id']!=""){ 
+                if($request['user_id']!=""){
 
                     //Asignar cliente
                     DB::table('tickets')->where('id',$id)->update(['owner_id' => $request['user_id']]);
@@ -224,13 +210,13 @@ class TicketController extends Controller
                     //Aumentar puntos de cliente
                     DB::table('users')->where('id', $request['user_id'])->increment('points');
 
-                }   
-                
+                }
+
                 if ($event->place->rows != null){
                     //Asignar id en caso sea numerado
                     DB::table('tickets')->where('id',$id)->update(['seat_id' => $seats[$i]]);
                 }
-                
+
                 array_push($tickets,$id);
                 //var_dump('llego');
             }
@@ -250,7 +236,7 @@ class TicketController extends Controller
         }else if(\Auth::user()->role_id == config('constants.client')){
             return redirect()->route('ticket.success.client');
         }
-        
+
     }
 
     /**
@@ -330,7 +316,32 @@ class TicketController extends Controller
 
     public function giveaway()
     {
+        
         return view('internal.salesman.giveaway');
+    }
+
+    public function giveawayShow(StoreGiveawayRequest $request)
+    {
+        $tickets = Ticket::where('sale_id',$request['sale_id'])->get();
+        if($tickets == null){
+            return back()->withInput()->withErrors(['Esta venta no existe']);
+        }else if($tickets[0]->picked_up == true){
+            return back()->withInput()->withErrors(['Estos tickets ya fueron recogidos']);
+        }else if($tickets[0]->designee != $request['designee'])
+            return back()->withInput()->withErrors(['El usuario asignado no es el mismo que el ingresado']); 
+
+        return view('internal.salesman.giveawayShow',compact('tickets'));
+    }
+
+    public function giveawayConfirm(request $request)
+    {
+        $tickets = Ticket::where('sale_id',$request['sale_id'])->get();
+        foreach ($tickets as $ticket) {
+            $ticket->picked_up = true;
+            $ticket->save();
+        }
+
+        return redirect()->route('salesman.home');
     }
 
     /**
@@ -360,7 +371,7 @@ class TicketController extends Controller
         $event = Event::find($request['event_id']);
 
         if($event->place->rows == null){
-            $zone_presentation = DB::table('zone_presentation')->where('presentation_id', $request['function_id'])->where('zone_id', $request['zone_id'])->first();    
+            $zone_presentation = DB::table('zone_presentation')->where('presentation_id', $request['function_id'])->where('zone_id', $request['zone_id'])->first();
             $availables = $zone_presentation->slots_availables;
         }else{
             $availables = 0;
@@ -379,7 +390,7 @@ class TicketController extends Controller
     public function getSlots(request $request)
     {
         $slots = [];
-        $slot_presentation = DB::table('slot_presentation')->where('presentation_id',$request['function_id'])->where('status',config('constants.seat_available'))->get();   
+        $slot_presentation = DB::table('slot_presentation')->where('presentation_id',$request['function_id'])->where('status',config('constants.seat_available'))->get();
         foreach ($slot_presentation as $s_p) {
             $slot = Slot::find($s_p->slot_id);
             if($slot->zone->id == $request['zone_id']){
@@ -395,13 +406,24 @@ class TicketController extends Controller
         $event = Event::find($request['event_id']);
         if($event->place->rows != null){
             $slots = [];
-            $slot_presentation = DB::table('slot_presentation')->where('presentation_id',$request['function_id'])->where('status',config('constants.seat_taken'))->get();   
+            $taken = [];
+            $reserved = [];
+            $slot_presentation = DB::table('slot_presentation')->where('presentation_id',$request['function_id'])->where('status',config('constants.seat_taken'))->get();
             foreach ($slot_presentation as $s_p) {
                 $slot = Slot::find($s_p->slot_id);
                 if($slot->zone->id == $request['zone_id']){
-                    array_push($slots, $slot->row."_".$slot->column);
+                    array_push($taken, $slot->row."_".$slot->column);
                 }
             }
+            $slot_presentation = DB::table('slot_presentation')->where('presentation_id',$request['function_id'])->where('status',config('constants.seat_reserved'))->get();
+            foreach ($slot_presentation as $s_p) {
+                $slot = Slot::find($s_p->slot_id);
+                if($slot->zone->id == $request['zone_id']){
+                    array_push($reserved, $slot->row."_".$slot->column);
+                }
+            }
+            array_push($slots,$taken);
+            array_push($slots,$reserved);
         } else {
             $slots = -1;
         }
@@ -420,13 +442,13 @@ class TicketController extends Controller
         $maxDiscount = 0;
         $bestPromo = null;
         if($request['type_id']==config('constants.credit')){
-            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',2)->get();
+            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',2)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
         }else if($request['type_id']==config('constants.cash')){
-            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->get();
+            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
         }else{
             $promos = null;
         }
-        
+
         if($promos){
             foreach ($promos as $key => $promo) {
                 if ($promo->typePromotion == config('constants.discount')){
@@ -437,10 +459,15 @@ class TicketController extends Controller
                 }else{
                     //GG OFERTA X por Y ÑO QUIERO
                 }
-                
+
             }
         }
         return $bestPromo;
+    }
+    public function getTicketToJson($id)
+    {
+        $ticket =Ticket::findOrFail($id);
+        return $ticket;
     }
 }
 

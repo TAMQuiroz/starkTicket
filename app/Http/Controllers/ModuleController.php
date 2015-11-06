@@ -70,7 +70,8 @@ class ModuleController extends Controller
         $module->province     =   $input['province']; 
         $module->state        =   $input['state'];    
         $module->phone        =   $input['phone'];
-        $module->email        =   $input['email'];     
+        $module->email        =   $input['email'];
+        $module->cash         =   0;      
         $module->starTime     =   new Carbon($input['starTime']); 
         $module->endTime      =   new Carbon($input['endTime']);       
         

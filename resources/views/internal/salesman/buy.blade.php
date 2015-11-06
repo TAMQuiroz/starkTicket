@@ -187,7 +187,7 @@
     {!!Html::script('js/main.js')!!}
 
     <script type="text/javascript">
-        var config = {
+    var config = {
         routes: [
             { zone: "{{ URL::route('ajax.getClient') }}" },
             { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
@@ -198,6 +198,9 @@
             { promo: "{{URL::route('ajax.getPromo')}}"}
         ]
     };
+    $('#yes').click(function(){
+        $('#submitModal').modal('hide');  
+    });
     </script>
         
 @stop

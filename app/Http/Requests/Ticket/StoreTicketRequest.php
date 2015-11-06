@@ -30,7 +30,8 @@ class StoreTicketRequest extends Request
             'promotion_id'      =>  'integer',
             'user_id'           =>  'integer',
             'presentation_id'   =>  'required|integer',
-            'payMode'           =>  'required|integer'
+            'payMode'           =>  'required|integer',
+            'designee'          =>  'integer|digits:8'
         ];
     }
 }

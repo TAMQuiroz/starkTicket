@@ -11,7 +11,7 @@
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/admin.css')!!}
     @yield('style')
-    
+
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -77,8 +77,8 @@
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Negocio <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{url('admin/ticket_return')}}">Devoluciones </a></li>
-                            <li><a href="{{url('admin/ticket_return/new')}}">Nueva Devolucion </a></li>
+                            <li><a href="{{url('admin/devolutions/')}}">Devoluciones </a></li>
+                            <li><a href="{{url('admin/devolutions/new')}}">Nueva Devolucion </a></li>
                             <li class="divider"></li>
                             <li><a href="{{url('admin/politics')}}">Politicas </a></li>
                         </ul>
@@ -161,7 +161,7 @@
             }
         });
         $('#yes').click(function(){
-            $('.modal').modal('hide');  
+            $('.modal').modal('hide');
         });
     });
     </script>

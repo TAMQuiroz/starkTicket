@@ -161,8 +161,13 @@ Fin de comentario-->
                     <a class="btn btn-info" href=""  data-toggle="modal" data-target="#deleteModal{{$vendedor->id}}" title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
                  </td>
                  <td>    
-                 <a  class="btn btn-info" href="{{url('admin/attendance')}}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a>
+                 <a  class="btn btn-info" href="{{url('admin/'.$vendedor->id.'/attendance'  ) }}" title="Asistencia" ><i class="glyphicon glyphicon-time"></i></a>
                 </td>
+
+
+
+
+
 
                 <!-- MODAL -->
                 <div class="modal fade"  id="deleteModal{{$vendedor->id}}">
