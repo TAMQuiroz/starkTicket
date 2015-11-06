@@ -110,7 +110,7 @@ class BookingController extends Controller
                 }
 
                 if($request['dni_recojo']!=''||$request['dni_recojo']!=null)
-                    $id['dni'] = $request['dni_recojo'];
+                    DB::table('tickets')->where('id',$id)->update(['designee' => $request['dni_recojo']]);
                 
                 if ($event->place->rows != null){
                     //Asignar id en caso sea numerado
