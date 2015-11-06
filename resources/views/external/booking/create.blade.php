@@ -88,7 +88,7 @@
       <br>
       <div class="col-md-12"><hr></div>
       <div class= "button-final col-md-12">
-        <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo" >Reservar Entrada</button>
+        <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo" disabled>Reservar Entrada</button>
         <a href=""><button type="button" class="btn btn-info">Cancelar Reserva</button></a>
       </div>
       <br><br>

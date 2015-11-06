@@ -32,14 +32,14 @@
 	<label>Asientos:</label> 
 	@foreach($seats as $seat)
 		<br>
-		{{$seat->row}}{{$seat->column}}
+		&nbsp; F{{$seat->row}}C{{$seat->column}}
 	@endforeach
 	
 @endif
 	
 
 	<!--<h5> Su código de Reserva es 2134415674 y ha sido enviado a su correo electrónico </h5>	-->
-	<br>
+	<br><br>
 	 
 
 	<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#correo" data-whatever="@mdo">Enviar información al Correo</button></td>
