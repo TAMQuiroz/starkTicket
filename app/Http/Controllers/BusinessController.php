@@ -8,14 +8,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ExchangeRate\StoreExchangeRateRequest;
 use App\Http\Requests\ExchangeRate\UpdateExchangeRateRequest;
 use App\Models\ExchangeRate;
-
-
+use App\Http\Requests\Attendance\AttendanceRequest;
+use App\Http\Requests\Attendance\AttendanceSubmitRequest;
 use Auth;
 use App\User;
 use Carbon\Carbon;
-
-
-
 use App\Models\Attendance;
 use App\Models\AttendanceDetail;
 
@@ -132,7 +129,7 @@ class BusinessController extends Controller
 
 
 
-    public function attendanceSubmit(Request $request,  $idSalesman)
+    public function attendanceSubmit(AttendanceSubmitRequest $request,  $idSalesman)
     {       
 
         $input = $request->all();
@@ -149,7 +146,7 @@ class BusinessController extends Controller
 
     }
 
-    public function attendance(Request $request,  $idSalesman)
+    public function attendance(AttendanceRequest $request,  $idSalesman)
     {       
         $salesman = User::find( $idSalesman ); 
         $dateParStart = Carbon::createFromDate(null, null, 01); // defecto el año y el mes, dia 01
