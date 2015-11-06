@@ -55,7 +55,7 @@ class DevolutionController extends Controller
         $devolution->observation = $input['observation'];
         $devolution->save();
 
-        Session::flash('message', 'Devolution realizado!');
+        Session::flash('message', 'Devolución realizado!');
         Session::flash('alert-class','alert-success');
 
         return redirect('/admin/devolutions');
