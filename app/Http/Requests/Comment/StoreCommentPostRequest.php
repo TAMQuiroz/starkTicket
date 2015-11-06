@@ -25,9 +25,7 @@ class StoreCommentPostRequest extends Request
     {
         return [
                  'comment'          =>  'required|max:300',
-                 
-
-        ];
+                ];
     }
 }
 

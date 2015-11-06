@@ -15,7 +15,7 @@
 @stop
 
 @section('content')
-<<<<<<< HEAD
+
 <!-- Main -->
 <div id="main">
 
@@ -47,34 +47,7 @@
 
 						</tbody>
 					</table>
-=======
-	<!-- Main -->
-		<div id="main">
-				<div class="row">
-					<!-- Content -->
-					<div id="content" class="8u skel-cell-important">
-						<section>
-							<p><a href="#" class="image full">{!! Html::image($event->image, null,['class'=>'carousel_img']) !!}</a></p>
-							<p>{{ $event->description }}</p>
-							<br>
-							<div class="table-responsive">
-							  <table class="table table-bordered" style="widht:1px">
-							    <thead>
-							        <tr>
-							            <th>Zona</th>
-							            <th>Precio</th>
-							        </tr>
-							    </thead>
-							    <tbody>
-							    	@foreach ($event->zones as $zone)
-							        <tr>
-							            <td>{{$zone->name}}</td>
-							            <td>S/. {{$zone->price}}</td>
-							        </tr>
-							        @endforeach
 
-							    </tbody>
-							  </table>
 							</div>
 							@if(isset($user) && $user->role_id == config('constants.salesman'))
 							<a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
@@ -83,18 +56,40 @@
 							<a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
 							@endif
 							
-							<br><br>
-							<div class="form-group">
-							  <label for="comment">Ingrese comentario:</label>
-							  	{!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '5']) !!}
-							  <button type="submit" class="btn btn-info">Aceptar</button>
-							  <br><br>
-							  <label for="comment">Comentarios:</label>
-							  <h6><button class="btn btn-info">x</button> Peppa: </h6>
-							  {!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.', 'readonly']) !!}
-							  <h6><button class="btn btn-info">x</button> Suzy: </h6>
-							  {!! Form::textarea('pastComment2', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.', 'readonly']) !!}
-							</div>
+							<br>
+					 
+@if(isset($user) && $user->role_id == config('constants.client'))
+
+				<br><br>
+				<div class="form-group">
+					<label for="comment">Ingrese comentario:</label>
+					{!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '5']) !!}
+					<button type="submit" class="btn btn-info">Aceptar</button>
+					<br>
+
+
+					@else
+					<div class="form-group">
+						@endif	  
+
+						<br>
+						<label for="comment">Comentarios:</label>
+
+						@foreach ($Comments as $Comment)
+						<h6>{{$users[($Comment->user_id)-1]['name'] }} {{ date ( "d-m-Y H:ia" , strtotime( $Comment->time )) }}    </h6>
+						{!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> $Comment->description, 'readonly']) !!}
+
+						@endforeach
+
+					</div>
+
+
+
+
+
+
+
+
 						</section>
 					</div>
 					<!-- /Content -->
@@ -121,65 +116,16 @@
 						</section>
 					</div>
 					<!-- Sidebar -->
->>>>>>> 08ae027c781147cc8b7ee8a77c0c9a9685a7d84b
+
 				</div>
-				@if(isset($user) && $user->role_id == config('constants.salesman'))
-				<a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
-				@else
-				<a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
-				<a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
-				@endif
+				
 
-				@if(isset($user) && $user->role_id == config('constants.client'))
-
-				<br><br>
-				<div class="form-group">
-					<label for="comment">Ingrese comentario:</label>
-					{!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '5']) !!}
-					<button type="submit" class="btn btn-info">Aceptar</button>
-					<br>
-
-
-					@else
-					<div class="form-group">
-						@endif	  
-
-						<br>
-						<label for="comment">Comentarios:</label>
-
-						@foreach ($Comments as $Comment)
-						<h6>{{$users[($Comment->user_id)-1]['name'] }} {{ date ( "d-m-Y H:ia" , strtotime( $Comment->time )) }}    </h6>
-						{!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> $Comment->description, 'readonly']) !!}
-
-						@endforeach
-
-					</div>
+				
 				</section>
 			</div>
 			<!-- /Content -->
 
-			<!-- Sidebar -->
-			<div id="sidebar" class="4u">
-				<section>
-					<header>
-						<h2 class="detail">Detalle de evento</h2>
-						<!--<span class="byline">Praesent lacus congue rutrum</span>-->
-					</header>
-					<h3 class="dates">Fechas del evento</h3>
-					<!--<p>Del 17 de Septiembre al 26 de Octubre 2015</p> -->
-					<p>Del {{date("d/m/Y", $event->presentations->first()->starts_at)}} Al {{date("d/m/Y", $event->presentations->last()->starts_at)}}</p>
-					<h3 class="dates">Horario</h3>
-					<p>Función a las {{date("H:i", $event->presentations->first()->starts_at)}}</p>
-					<h3 class="dates">Ubicación</h3>
-
-					<p>{{$event->place->address}}, {{$event->place->district}}</p>
-					{!! Html::image($event->place->image,null, ['class'=>'carousel_img']) !!}
-
-					<h3 class="dates">Distribución de Zonas</h3>
-					<p>{!! Html::image('images/asientos.jpg') !!}</p>
-				</section>
-			</div>
-			<!-- Sidebar -->
+	
 		</div>
 	</div>
 	<!-- Main -->

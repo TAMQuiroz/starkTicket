@@ -12,14 +12,6 @@ class Comment extends Model
     protected $table = 'comment';
     protected $dates = ['deleted_at'];
 
-
-
-
-
-
-// protected $fillable = ['id', 'user_id', 'event_id', 'description' , 'time' ] ;
-
-
   public function event(){
         return $this->belongsTo('App\Models\Event','event_id');
     }

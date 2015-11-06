@@ -271,8 +271,6 @@ public function store(StoreEventRequest $request)
        return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments , 'users' => $users]);
     }
 
-
-
     public function showExternalPost(StoreCommentPostRequest $request , $id)
     {
 

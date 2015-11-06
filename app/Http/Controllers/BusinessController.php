@@ -71,12 +71,6 @@ class BusinessController extends Controller
         }
         $sumTotal = $sumSale - $sumRefound + $cashFirst;
 
-        /*
-        foreach ($tickets as $ticket ) {
-            $exchangeRate->status         =    0;
-            $exchangeRate->finishDate     =   new Carbon();
-            $exchangeRate->save();
-        }*/
         return view('internal.salesman.cashCount',compact('sales','refunds','sumSale','sumRefound','sumTotal','cashFirst','moduleid'));
     }
 
@@ -111,7 +105,6 @@ class BusinessController extends Controller
         
         //Control de subida de imagen
 
-
         $module->save();
         
         return redirect('admin/config/exchange_rate');
@@ -126,17 +119,6 @@ class BusinessController extends Controller
              
          return redirect('salesman/cash_count');
     }
-    /*public function updateCashCount(request $request)
-    {
-        $module = Module::find(\Auth::user()->module_id);
-        $module->cash    = $request['total'];
-        $module->save();
-        return redirect('salesman/cash_count');
-    }*/
-
-
-
-
 
     public function about()
     {
@@ -167,8 +149,6 @@ class BusinessController extends Controller
 
     }
 
-
-
     public function attendance(Request $request,  $idSalesman)
     {       
         $salesman = User::find( $idSalesman ); 
@@ -197,16 +177,11 @@ public function attendanceDetail(  $idAttendance )
 {      
 
     $Attendance = Attendance::find($idAttendance);
-
     $salesman = User::find( $Attendance->salesman_id ); 
     $detailsAttendances = AttendanceDetail::where('attendance_id' ,$idAttendance )->get();
-
     $index = 0 ;
-
-
     return view('internal.admin.attendanceDetail '  , compact('detailsAttendances' , 'index', 'salesman','Attendance')  );
 
-    // return $detailsAttendances ;
 }
 
 

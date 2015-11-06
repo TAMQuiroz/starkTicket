@@ -9,7 +9,7 @@ class Category extends Model
 {
 
     protected $table = 'categories';
-
+   use SoftDeletes;
     protected $dates = ['deleted_at'];
     
     public function events() {

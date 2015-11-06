@@ -15,10 +15,6 @@ use Carbon\Carbon;
 use App\Models\AttendanceDetail;
 use Config;
 
-
-
-
-
 class AuthController extends Controller
 {
     /*
@@ -38,9 +34,6 @@ class AuthController extends Controller
 
     public function getLogout()
     {
-
-
-
         if(Auth::user()->role_id == 2 ){ // solo lo hago si soy vendedor
 
 
@@ -66,17 +59,10 @@ class AuthController extends Controller
             sleep(0.1);
 
         }   
-
-
-
         Auth::logout();
 
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
-
-
-
-
     protected $redirectAfterLogout = '/auth/login'; 
 
     protected $loginPath = '/auth/login';
@@ -105,13 +91,6 @@ class AuthController extends Controller
             ]);
     }
 
-
-
-
-
-
-    
-
     /**
      * Create a new user instance after a valid registration.
      *
@@ -130,14 +109,8 @@ class AuthController extends Controller
             'role_id' => $role
             ]);
     }
-
-
     public function worker()
     {
-
-
-
-
 
         return view('external.workerLogin');
     }
@@ -146,9 +119,6 @@ class AuthController extends Controller
      *
      * @return string
      */
-
-
-
 
     public function redirectPath()
     {
@@ -171,25 +141,25 @@ class AuthController extends Controller
             $Attendance = Attendance::where('datetime', $dateToday  )->where('salesman_id',$id)->get(); 
 
      if($Attendance->count() == 0 ) { // si no lo encuentro creo la fecha 
-         $assitance  =   new Attendance() ;
-         $assitance->datetime = $dateToday ;
-         $assitance->salesman_id  =  $id  ;
-         $assitance->datetimestart  =     $dateTimeToday ;
-         $assitance->save(); 
+       $assitance  =   new Attendance() ;
+       $assitance->datetime = $dateToday ;
+       $assitance->salesman_id  =  $id  ;
+       $assitance->datetimestart  =     $dateTimeToday ;
+       $assitance->save(); 
 
-         sleep(0.1);
-     }
+       sleep(0.1);
+   }
      else {              // si lo encuentro actualizo la fecha de finalizacion de sesion a null 
 
-         $assitance = Attendance::find($Attendance[0]->id);
-         $assitance->datetimeend = NULL ;
-         $assitance->save(); 
-     }
+       $assitance = Attendance::find($Attendance[0]->id);
+       $assitance->datetimeend = NULL ;
+       $assitance->save(); 
+   }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
       //ahora creo el detalle de la asistencia. esto es si o si
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-     $assitancedetail  =   new AttendanceDetail() ;
-     $assitancedetail->datetime  =         $dateTimeToday ;
+   $assitancedetail  =   new AttendanceDetail() ;
+   $assitancedetail->datetime  =         $dateTimeToday ;
     $assitancedetail->tipo = Config::get('constants.in')     ;  ; // ya que se trata de un ingreso
 
 

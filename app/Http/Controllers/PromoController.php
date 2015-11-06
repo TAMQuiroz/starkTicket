@@ -207,9 +207,6 @@ class PromoController extends Controller
         $promotions->zone_id =  $input['zone'];
 
     }
-
-
-
     $promotions->save();
 
     return redirect('promoter/promotion');
@@ -231,9 +228,6 @@ class PromoController extends Controller
     return redirect('promoter/promotion');
 }
 
-
-
-
 public function ajax($event_id)
 {
 
@@ -243,8 +237,5 @@ public function ajax($event_id)
 
     return  json_encode(  $zones);  
 }
-
-
-
 
 }

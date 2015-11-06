@@ -14,11 +14,6 @@
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
-
-//Route::post('auth/logout/vendedor', 'Auth\AuthController@sabana');
-
-
-
 Route::get('login_worker', 'Auth\AuthController@worker');
 
 // Registration routes...
@@ -179,10 +174,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/devolutions/new', 'DevolutionController@create');
     Route::post('admin/devolutions/new', 'DevolutionController@store');
     Route::get('admin/devolutions/{devolution_id}', 'DevolutionController@show');
-
-
-    
-    
 
     Route::get('admin/config/exchange_rate', 'BusinessController@exchangeRate');
     Route::post('admin/config/exchange_rate', 'BusinessController@storeExchangeRate');
