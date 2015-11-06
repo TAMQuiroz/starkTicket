@@ -21,6 +21,7 @@ class CreateModulesTable extends Migration
             $table->string('state');
             $table->string('phone');
             $table->string('email');
+            $table->double('cash');
             $table->timestamp('starTime');
             $table->timestamp('endTime');
             $table->string('image');

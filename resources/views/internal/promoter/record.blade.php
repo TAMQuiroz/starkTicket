@@ -48,6 +48,7 @@
             <div class="modal-body">
               <form>
                 <div class="form-group">
+
             <h4>Nombre: {{$event->name}}</h4>
             <p>Código:  {{$event->id}} </p>
             <p>Creado Por: {{$event->organization->organizerName}} {{$event->organization->organizerLastName}}  </p>
@@ -74,6 +75,7 @@
               @foreach ($event->presentations as $present)
                 <li>
                     Funcion: {{date("d/m/Y",$present->starts_at)}}
+
                 </li>
               @endforeach
             </ul>
