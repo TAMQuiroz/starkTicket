@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Ticket;
+use Session;
+use Auth;
 use App\Models\Devolution;
 
 class DevolutionController extends Controller
@@ -42,10 +45,12 @@ class DevolutionController extends Controller
 
         $input = $request->all();
 
+        $ticket = Ticket::findOrFail($input['ticket_id']);
         $devolution = new Devolution;
         $devolution->ticket_id = $input['ticket_id'];
+        $devolution->client_id = $ticket->owner_id;
         $devolution->user_id = $user_id;
-        $devolution->price = $input['price'];
+        $devolution->price = $ticket->price;
         $devolution->repayment = $input['repayment'];
         $devolution->observation = $input['observation'];
         $devolution->save();
