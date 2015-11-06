@@ -1,7 +1,7 @@
 @extends('layout.promoter')
 
 @section('style')
-
+  {!!Html::style('css/images.css')!!}
 @stop
 
 @section('title')
@@ -84,7 +84,7 @@
             <p>Proximamente</p>
 
             <br>
-            {!! Html::image($event->image, null, array('class'=>'module_img')) !!}
+            {!! Html::image($event->image, null, array('class'=>'carousel_img')) !!}
                 </div>
               </form>
             </div>
