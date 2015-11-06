@@ -165,6 +165,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/devolutions/new', 'DevolutionController@store');
     Route::get('admin/devolutions/{devolution_id}', 'DevolutionController@show');
 
+    Route::get('admin/ticket/{devolution_id}/tojson', 'TicketController@getTicketToJson');
+
     Route::get('admin/attendance', 'BusinessController@attendance');
 
     Route::get('admin/config/exchange_rate', 'BusinessController@exchangeRate');

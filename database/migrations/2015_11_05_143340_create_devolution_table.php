@@ -19,6 +19,7 @@ class CreateDevolutionTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->double('price');
             $table->double('repayment');
+            $table->string('observation');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->softDeletes();

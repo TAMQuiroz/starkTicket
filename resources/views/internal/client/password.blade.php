@@ -23,6 +23,7 @@ Cambia información
         <div class="form-group">
             {!! Form::label('password', 'Nueva Contraseña:', ['class' => 'control-label']) !!}
             {!! Form::text('new_password', null, ['class' => 'form-control']) !!}
+            <span class="help-block small">Ingrese mínimo 8 caracteres.</span>
         </div>
         <div class="form-group">
             {!! Form::label('password', 'Confirmar:', ['class' => 'control-label']) !!}
