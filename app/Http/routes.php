@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth', 'client']], function () {
     Route::get('client/event_record/feedback', 'EventController@feedback');
     //Estos 2 inician en el detalle del evento
     Route::get('client/event/{id}/buy', 'TicketController@createClient');
+    Route::post('client/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store.client']);
+    Route::get('client/event/successBuy', ['uses'=>'TicketController@showSuccess','as'=>'ticket.success.client']);
     Route::get('client/{id}/reservanueva', ['as' => 'booking.create' , 'uses' => 'BookingController@create']);
     //Fin
     Route::get('client/reservaexitosa', 'BookingController@store');
