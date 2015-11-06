@@ -452,9 +452,10 @@ public function update(UpdateEventRequest $request, $id)
         $old_capacity = $this->calculateEventCapacity($id);
         $new_capacity = $result['total_capacity'];
         if($event->local_id != $request->input('local_id')){
-            if($actual_local->rows >=1 && $request->input('selling_date')<$now->getTimestamp())
+            if($actual_local->rows >=1 && strtotime($request->input('selling_date'))<$now->getTimestamp()){
                 return redirect()->back()->withInput()->withErrors(['errors' => 'Ya inició la venta del evento. No se puede modificar el local']);
-            if($actual_local->rows == null && $request->input('selling_date')<$now->getTimestamp()){
+            }
+            if($actual_local->rows == null && strtotime($request->input('selling_date'))<$now->getTimestamp()){
                 if($new_local->rows != null)
                     return redirect()->back()->withInput()->withErrors(['errors' => 'Ya inició la venta del evento. No se puede modificar el local a uno numerado']);
                 if($new_local->rows == null && $new_capacity < $old_capacity)
@@ -470,9 +471,11 @@ public function update(UpdateEventRequest $request, $id)
 
         }
         //verificar que no se esten cambiando la capacidad o fila/columna de zona si ya se empezó a vender
-        if($now->getTimestamp() > $request->input('selling_date')){
+        if($now->getTimestamp() > strtotime($request->input('selling_date'))){
             $zones = Zone::where('event_id', $id)->get();
             $i = 0;
+            if($zones->count() != count($request->input('zone_names')))
+                return redirect()->back()->withErrors(['Venta de evento iniciada. No se puede alterar la cantidad de zonas.']);
             foreach($zones as $zone){
                 if($zone->capacity != $request->input('zone_capacity.'.$i)||
                     $zone->start_row != $request->input('start_row.'.$i)||
@@ -484,17 +487,18 @@ public function update(UpdateEventRequest $request, $id)
             }
         }
         $data = [
-        'name'          => $request->input('name'),
-        'description'   => $request->input('description'),
-        'category_id'   => $request->input('category_id'),
-        'organizer_id'  => $request->input('organizer_id'),
-        'local_id'      => $request->input('local_id'),
-        'publication_date' => $request->input('publication_date'),
-        'selling_date'  => $request->input('selling_date'),
-        'time_length'  => $request->input('time_length'),
-        'image'        => $request->file('image')
-        ];
-        if($now->getTimestamp() < $request->input('selling_date')){
+
+                'name'          => $request->input('name'),
+                'description'   => $request->input('description'),
+                'category_id'   => $request->input('category_id'),
+                'organizer_id'  => $request->input('organizer_id'),
+                'local_id'      => $request->input('local_id'),
+                'publication_date' => $request->input('publication_date'),
+                'selling_date'  => $request->input('selling_date'),
+                'time_length'  => $request->input('time_length'),
+                'image'        => $request->file('image')
+            ];
+        if($now->getTimestamp() < strtotime($request->input('selling_date'))){
             //antes del sellingdate en general
 
             $this->deletePresentations($event->id);
@@ -611,7 +615,11 @@ public function update(UpdateEventRequest $request, $id)
      */
     public function destroy($id)
     {
-        //
+        $event = Event::find($id);
+        if(is_null($event))
+            return redirect()->back()->withErrors(['error' => 'Seleccione un evento válido']);
+        $event->delete();
+        return redirect()->back();
     }
     public function subcategoriesToAjax($id)
     {
