@@ -32,7 +32,6 @@
           <td>{{$event->name}}</td>
           <td>{{date("d/m/Y",$event->publication_date)}}</td>
           <td>{{date("d/m/Y",$event->selling_date)}}</td>
-          <td>{{date("d/m/Y", strtotime("+".$event->time_length."days",$event->selling_date))}}</td>
           <td>Vigente</td> <!--falta la logica de vigente -->
           <td>1500</td> <!--no hay -->
           <td>17500.00</td> <!--no hay -->

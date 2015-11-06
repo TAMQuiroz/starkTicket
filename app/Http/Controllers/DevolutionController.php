@@ -38,7 +38,22 @@ class DevolutionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user_id = Auth::user()->id;
+
+        $input = $request->all();
+
+        $devolution = new Devolution;
+        $devolution->ticket_id = $input['ticket_id'];
+        $devolution->user_id = $user_id;
+        $devolution->price = $input['price'];
+        $devolution->repayment = $input['repayment'];
+        $devolution->observation = $input['observation'];
+        $devolution->save();
+
+        Session::flash('message', 'Devolution realizado!');
+        Session::flash('alert-class','alert-success');
+
+        return redirect('/admin/devolutions');
     }
 
     /**

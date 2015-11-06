@@ -29,7 +29,9 @@ Cambia información
             {!! Form::label('password', 'Confirmar:', ['class' => 'control-label']) !!}
             {!! Form::text('new_password_confirmation', null, ['class' => 'form-control']) !!}
         </div>
+        <div class="form-group">
         {!! Form::submit('Actualizar', ['class' => 'btn btn-info']) !!}
+        </div>
     </div>
 
 {!! Form::close() !!}
