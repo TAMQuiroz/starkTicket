@@ -72,7 +72,7 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman/event/{id}/buy', 'TicketController@createSalesman');
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
     Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
-    
+
 });
 
 //Rutas generales para peticiones ajax, pueden ser usadas por varios usuarios, por eso lo saque
@@ -93,7 +93,10 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/politics', 'PoliticController@politicsPromotor');
 
     Route::get('promoter/event/recordPayment', 'PaymentController@index');
-    Route::get('promoter/transfer_payments', 'PaymentController@create');
+    Route::get('promoter/transfer_payments/', 'PaymentController@index');
+    Route::get('promoter/transfer_payments/{payment_id}', 'PaymentController@show');
+    Route::get('promoter/transfer_payments/{event_id}/create', 'PaymentController@create');
+    Route::post('promoter/transfer_payments/{event_id}/create', 'PaymentController@store');
     Route::get('promoter/event/record', ['as'=>'promoter.record','uses'=>'EventController@showPromoterRecord']);
     Route::get('promoter/event/create', 'EventController@create');
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
@@ -114,8 +117,14 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/promotion/{id}/edit', ['as'=>'promo.edit','uses'=>'PromoController@edit']);
     Route::post('promoter/promotion/{id}/edit',  'PromoController@update');
     Route::get('promoter/promotion/{id}/delete',  'PromoController@destroy');
+<<<<<<< HEAD
     
     
+=======
+
+
+
+>>>>>>> 08ae027c781147cc8b7ee8a77c0c9a9685a7d84b
 
 
     //Aca se inicia el CRUD de promotor
@@ -164,12 +173,19 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/category/{id}/delete', ['as' => 'categories.delete', 'uses' =>'CategoryController@destroy']);
     Route::get('admin/category/{id}/subcategories', ['as' => 'subcategories.index', 'uses' =>'CategoryController@indexSubAdmin']);
 
+<<<<<<< HEAD
     Route::get('admin/ticket_return', 'TicketController@indexReturn');
     Route::get('admin/ticket_return/new', 'TicketController@createReturn');
     Route::get('admin/{id}/attendance', 'BusinessController@attendance');
     Route::post('admin/{id}/attendanceSubmit', 'BusinessController@attendanceSubmit');
 
     Route::get('admin/attendance/{id}/detail', 'BusinessController@attendanceDetail');
+=======
+    Route::get('admin/devolutions/', 'DevolutionController@index');
+    Route::get('admin/devolutions/new', 'DevolutionController@create');
+    Route::post('admin/devolutions/new', 'DevolutionController@store');
+    Route::get('admin/devolutions/{devolution_id}', 'DevolutionController@show');
+>>>>>>> 08ae027c781147cc8b7ee8a77c0c9a9685a7d84b
 
     
     

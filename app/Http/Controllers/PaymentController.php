@@ -4,7 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Http\Requests\Payment\StorePaymentRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Event;
+use App\Models\Ticket;
+use App\Models\Payment;
+use Session;
+use Auth;
 
 class PaymentController extends Controller
 {
@@ -15,7 +21,8 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        return view('internal.promoter.recordPayment');
+        $payments = Payment::all();
+        return view('internal.promoter.payment.payments',["payments"=>$payments]);
     }
 
     /**
@@ -23,9 +30,21 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($event_id)
     {
-        return view('internal.promoter.transferPayments');
+        $event = Event::findOrFail($event_id);
+        $fullAmount = Ticket::where("event_id",$event_id)->sum('price');
+        $paid = Payment::where("event_id",$event_id)->sum('paid');
+        $debt = 0;
+        if ($fullAmount > $paid)
+            $debt = $fullAmount - $paid;
+        $objs = array(
+            "event"=>$event,
+            "fullAmount"=>$fullAmount,
+            "paid"=>$paid,
+            "debt"=>$debt,
+            );
+        return view('internal.promoter.payment.create',$objs);
     }
 
     /**
@@ -34,9 +53,23 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePaymentRequest $request,$event_id)
     {
-        //
+        $user_id = Auth::user()->id;
+
+        $input = $request->all();
+
+        $payment = new Payment;
+        $payment->event_id = $event_id;
+        $payment->promoter_id = $user_id;
+        $payment->paid = $input['paid'];
+        $payment->date_delivery = $input['dateDelivery'];
+        $payment->save();
+
+        Session::flash('message', 'Pago a organizador realizado!');
+        Session::flash('alert-class','alert-success');
+
+        return redirect('/promoter/transfer_payments');
     }
 
     /**
@@ -47,7 +80,8 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-        //
+        $obj = Payment::findOrFail($id);
+        return view('internal.promoter.payment.show', ['payment' => $obj]);
     }
 
     /**
