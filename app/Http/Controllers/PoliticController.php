@@ -72,18 +72,7 @@ class PoliticController extends Controller
     public function store(Request $request)
     {     
 
-       $input = $request->all();
-
-       $politics               =   new politics ;
-       $politics->name         =   $input['name'];
-       $politics->description  =   $input['description'];
-       $politics->state =  $input['state'];; 
-
-
-       $politics->save();
-
-       return redirect('admin/politics');
-
+   
    }
 
     /**
