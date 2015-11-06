@@ -1,7 +1,7 @@
 @extends('layout.promoter')
 
 @section('style')
-
+  {!!Html::style('css/images.css')!!}
 @stop
 
 @section('title')
@@ -47,6 +47,7 @@
             <div class="modal-body">
               <form>
                 <div class="form-group">
+
             <h4>Nombre: {{$event->name}}</h4>
             <p>Código:  {{$event->id}} </p>
             <p>Creado Por: {{$event->organization->organizerName}} {{$event->organization->organizerLastName}}  </p>
@@ -73,6 +74,7 @@
               @foreach ($event->presentations as $present)
                 <li>
                     Funcion: {{date("d/m/Y",$present->starts_at)}}
+
                 </li>
               @endforeach
             </ul>
@@ -81,7 +83,7 @@
             <p>Proximamente</p>
 
             <br>
-            {!! Html::image($event->image, null, array('class'=>'module_img')) !!}
+            {!! Html::image($event->image, null, array('class'=>'carousel_img')) !!}
                 </div>
               </form>
             </div>

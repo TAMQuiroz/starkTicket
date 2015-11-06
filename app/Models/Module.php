@@ -16,5 +16,5 @@ class Module extends Model
      */
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['name', 'address', 'district', 'province', 'state', 'phone','email','starTime','endTime','image'];
+    protected $fillable = ['name', 'address', 'district', 'province', 'state', 'phone','email','cash','starTime','endTime','image'];
 }

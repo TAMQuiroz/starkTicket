@@ -14,13 +14,11 @@
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
-
 Route::get('login_worker', 'Auth\AuthController@worker');
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'ClientController@store');
-
 
 Route::get('/', 'PagesController@home');
 Route::get('about', 'PagesController@about');
@@ -34,6 +32,7 @@ Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@indexExternal');
 
 Route::get('event/{id}', 'EventController@showExternal');
+Route::post('event/{id}', 'EventController@showExternalPost');
 
 Route::group(['middleware' => ['auth', 'client']], function () {
     Route::get('client/', 'ClientController@profile');
@@ -45,6 +44,7 @@ Route::group(['middleware' => ['auth', 'client']], function () {
     Route::post('client/photo', 'ClientController@photoUpdate');
     Route::get('client/home', 'PagesController@clientHome');
     Route::get('client/event_record', 'EventController@showClientRecord');
+    Route::get('client/event_record/feedback', 'EventController@feedback');
     //Estos 2 inician en el detalle del evento
     Route::get('client/event/{id}/buy', 'TicketController@createClient');
     Route::post('client/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store.client']);
@@ -55,11 +55,18 @@ Route::group(['middleware' => ['auth', 'client']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'salesman']], function () {
-    Route::get('salesman', 'PagesController@salesmanHome');
+    Route::get('salesman', ['uses'=>'PagesController@salesmanHome','as'=>'salesman.home']);
     Route::get('salesman/cash_count', 'BusinessController@cashCount');
+    Route::post('salesman/cash_count', 'BusinessController@updateCash');
+    //Route::post('salesman/cash_count', 'BusinessController@updateCashCount');
+
     Route::get('salesman/exchange_gift', 'GiftController@createExchange');
     Route::get('salesman/event/{id}/pay_booking', 'BookingController@pay');
-    Route::get('salesman/giveaway', 'TicketController@giveaway');
+
+    Route::get('salesman/giveaway', ['uses'=>'TicketController@giveaway','as'=>'ticket.giveaway']);
+    Route::post('salesman/giveaway', ['uses'=>'TicketController@giveawayShow','as'=>'ticket.giveaway.show']);
+    Route::post('salesman/giveaway/confirm', ['uses'=>'TicketController@giveawayConfirm','as'=>'ticket.giveaway.confirm']);
+
     //Este inicia en el detalle del evento
     Route::get('salesman/event/{id}/buy', 'TicketController@createSalesman');
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
@@ -75,7 +82,6 @@ Route::get('getSlots', ['uses'=>'TicketController@getSlots','as'=>'ajax.getSlots
 Route::get('getZone', ['uses'=>'TicketController@getZone','as'=>'ajax.getZone']);
 Route::get('getTakenSlots', ['uses'=>'TicketController@getTakenSlots','as'=>'ajax.getTakenSlots']);
 Route::get('getPromo', ['uses'=>'TicketController@getPromo','as'=>'ajax.getPromo']);
-
 
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
@@ -99,27 +105,18 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
 
 
     Route::get('promoter/promotion', 'PromoController@index');
-     Route::get('promoter/promotion', 'PromoController@promotion');
-
-
+    Route::get('promoter/promotion', 'PromoController@promotion');
 
     Route::get('promoter/promotion/new', ['as'=>'promo.create','uses'=>'PromoController@create']);
-     Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);
+    Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);
     Route::get('promoter/promotion/new/{event_id}', 'PromoController@ajax');
     Route::get('promoter/promotion/{id}/edit', ['as'=>'promo.edit','uses'=>'PromoController@edit']);
     Route::post('promoter/promotion/{id}/edit',  'PromoController@update');
     Route::get('promoter/promotion/{id}/delete',  'PromoController@destroy');
 
-
-
-
-
     //Aca se inicia el CRUD de promotor
     Route::get('promoter/organizers', 'OrganizerController@index');
     Route::get('promoter/organizer/create', 'OrganizerController@create');
-
-
-
 
     Route::post('promoter/organizer/create', 'OrganizerController@store');
     Route::get('promoter/organizer/{id}/edit', 'OrganizerController@edit');
@@ -160,6 +157,14 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/category/{id}/delete', ['as' => 'categories.delete', 'uses' =>'CategoryController@destroy']);
     Route::get('admin/category/{id}/subcategories', ['as' => 'subcategories.index', 'uses' =>'CategoryController@indexSubAdmin']);
 
+
+    Route::get('admin/ticket_return', 'TicketController@indexReturn');
+    Route::get('admin/ticket_return/new', 'TicketController@createReturn');
+    Route::get('admin/{id}/attendance', 'BusinessController@attendance');
+    Route::post('admin/{id}/attendanceSubmit', 'BusinessController@attendanceSubmit');
+
+    Route::get('admin/attendance/{id}/detail', 'BusinessController@attendanceDetail');
+
     Route::get('admin/devolutions/', 'DevolutionController@index');
     Route::get('admin/devolutions/new', 'DevolutionController@create');
     Route::post('admin/devolutions/new', 'DevolutionController@store');
@@ -188,19 +193,16 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/client', 'ClientController@index');
     Route::post('admin/client/desactive', 'ClientController@desactive');
 
-
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
     Route::post('admin/salesman/{id}/edit', 'AdminController@updateSalesman');
     Route::get('admin/salesman/{id}/delete', 'AdminController@destroySalesman');
-
 
     Route::get('admin/user/new', 'AdminController@newUser');
     Route::post('admin/user/new', 'AdminController@store');
 
     Route::get('admin/admin', 'AdminController@admin');
     Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
-    //MANTENER PROMOTOR: No existia la ruta de post :C
     Route::post('admin/admin/{id}/edit', 'AdminController@updateAdmin');
     //
     Route::get('admin/admin/{id}/delete', 'AdminController@destroy');
