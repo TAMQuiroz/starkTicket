@@ -42,7 +42,7 @@ class AuthController extends Controller
             $dateTimeToday  =   new Carbon() ; 
             $id = Auth::user()->id;
 
-            sleep(0.1);
+          //  sleep(0.1);
 
             $Attendance = Attendance::where('datetime',$dateToday  )->where('salesman_id',$id)->get(); 
             $assitancedetail  =   new AttendanceDetail() ;
@@ -56,7 +56,7 @@ class AuthController extends Controller
             $updateAttendance = Attendance::find( $Attendance[0]->id );
             $updateAttendance->datetimeend = $dateTimeToday; 
             $updateAttendance->save();
-            sleep(0.1);
+         //   sleep(0.1);
 
         }   
         Auth::logout();
@@ -147,7 +147,7 @@ class AuthController extends Controller
        $assitance->datetimestart  =     $dateTimeToday ;
        $assitance->save(); 
 
-       sleep(0.1);
+      // sleep(0.1);
    }
      else {              // si lo encuentro actualizo la fecha de finalizacion de sesion a null 
 
