@@ -117,15 +117,6 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/promotion/{id}/edit', ['as'=>'promo.edit','uses'=>'PromoController@edit']);
     Route::post('promoter/promotion/{id}/edit',  'PromoController@update');
     Route::get('promoter/promotion/{id}/delete',  'PromoController@destroy');
-<<<<<<< HEAD
-    
-    
-=======
-
-
-
->>>>>>> 08ae027c781147cc8b7ee8a77c0c9a9685a7d84b
-
 
     //Aca se inicia el CRUD de promotor
     Route::get('promoter/organizers', 'OrganizerController@index');
@@ -173,19 +164,19 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/category/{id}/delete', ['as' => 'categories.delete', 'uses' =>'CategoryController@destroy']);
     Route::get('admin/category/{id}/subcategories', ['as' => 'subcategories.index', 'uses' =>'CategoryController@indexSubAdmin']);
 
-<<<<<<< HEAD
+
     Route::get('admin/ticket_return', 'TicketController@indexReturn');
     Route::get('admin/ticket_return/new', 'TicketController@createReturn');
     Route::get('admin/{id}/attendance', 'BusinessController@attendance');
     Route::post('admin/{id}/attendanceSubmit', 'BusinessController@attendanceSubmit');
 
     Route::get('admin/attendance/{id}/detail', 'BusinessController@attendanceDetail');
-=======
+
     Route::get('admin/devolutions/', 'DevolutionController@index');
     Route::get('admin/devolutions/new', 'DevolutionController@create');
     Route::post('admin/devolutions/new', 'DevolutionController@store');
     Route::get('admin/devolutions/{devolution_id}', 'DevolutionController@show');
->>>>>>> 08ae027c781147cc8b7ee8a77c0c9a9685a7d84b
+
 
     
     
