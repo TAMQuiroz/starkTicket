@@ -12,9 +12,11 @@ class AttendanceDetail extends Model
     protected $dates = ['deleted_at'];
     
 
-  protected $fillable = ['id', 'tipo' , 'datetime', 'attendance_id'  ] ;
+  //protected $fillable = ['id', 'tipo' , 'datetime', 'attendance_id'  ] ;
 
-    
+    public function attendance(){
+        return $this->belongsTo('App\Attendance','attendance_id');
+    }
 
 }
         

@@ -1,119 +1,130 @@
 @extends('layoutExternal')
 
 @section('style')
-	<style>
-      #map {
-        width: 400px;
-        height: 400px;
-      }
-    </style>
-    {!!Html::style('css/images.css')!!}
+<style>
+	#map {
+		width: 400px;
+		height: 400px;
+	}
+</style>
+{!!Html::style('css/images.css')!!}
 @stop
 
 @section('title')
-	{{$event->name}}
+{{$event->name}}
 @stop
 
 @section('content')
-	<!-- Main -->
-		<div id="main">
-				<div class="row">
-					<!-- Content -->
-					<div id="content" class="8u skel-cell-important">
-						<section>
-							<p><a href="#" class="image full">{!! Html::image($event->image, null,['class'=>'carousel_img']) !!}</a></p>
-							<p>{{ $event->description }}</p>
-							<br>
-							<div class="table-responsive">
-							  <table class="table table-bordered" style="widht:1px">
-							    <thead>
-							        <tr>
-							            <th>Zona</th>
-							            <th>Precio</th>
-							        </tr>
-							    </thead>
-							    <tbody>
-							    	@foreach ($event->zones as $zone)
-							        <tr>
-							            <td>{{$zone->name}}</td>
-							            <td>S/. {{$zone->price}}</td>
-							        </tr>
-							        @endforeach
+<!-- Main -->
+<div id="main">
 
-							    </tbody>
-							  </table>
-							</div>
-							@if(isset($user) && $user->role_id == config('constants.salesman'))
-							<a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
-							@else
-							<a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
-							<a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
-							@endif
-							
-							@if(isset($user) && $user->role_id == config('constants.client'))
-								<br><br>
-								<div class="form-group">
-								  <label for="comment">Ingrese comentario:</label>
-								  	{!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '5']) !!}
-								  <button type="submit" class="btn btn-info">Aceptar</button>
-								  <br>
-							@else
-								<div class="form-group">
-							@endif	  
-								  <br>
-								  <label for="comment">Comentarios:</label>
-								  <h6>Peppa: </h6>
-								  {!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.', 'readonly']) !!}
-								  <h6> Suzy: </h6>
-								  {!! Form::textarea('pastComment2', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.', 'readonly']) !!}
-								</div>
-						</section>
-					</div>
-					<!-- /Content -->
+	<div class="row">
 
-					<!-- Sidebar -->
-					<div id="sidebar" class="4u">
-						<section>
-							<header>
-								<h2 class="detail">Detalle de evento</h2>
-								<!--<span class="byline">Praesent lacus congue rutrum</span>-->
-							</header>
-							<h3 class="dates">Fechas del evento</h3>
-							<!--<p>Del 17 de Septiembre al 26 de Octubre 2015</p> -->
-							<p>Del {{date("d/m/Y", $event->presentations->first()->starts_at)}} Al {{date("d/m/Y", $event->presentations->last()->starts_at)}}</p>
-							<h3 class="dates">Horario</h3>
-							<p>Función a las {{date("H:i", $event->presentations->first()->starts_at)}}</p>
-							<h3 class="dates">Ubicación</h3>
+		<!-- Content -->
+		<div id="content" class="8u skel-cell-important">
+			{!!Form::open(array('url' => 'event/'.$event->id.'/' ,'files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
 
-							<p>{{$event->place->address}}, {{$event->place->district}}</p>
-							{!! Html::image($event->place->image,null, ['class'=>'carousel_img']) !!}
+			<section>
+				<p><a href="#" class="image full">{!! Html::image($event->image, null,['class'=>'carousel_img']) !!}</a></p>
+				<p>{{ $event->description }}</p>
+				<br>
+				<div class="table-responsive">
+					<table class="table table-bordered" style="widht:1px">
+						<thead>
+							<tr>
+								<th>Zona</th>
+								<th>Precio</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($event->zones as $zone)
+							<tr>
+								<td>{{$zone->name}}</td>
+								<td>S/. {{$zone->price}}</td>
+							</tr>
+							@endforeach
 
-							<h3 class="dates">Distribución de Zonas</h3>
-							<p>{!! Html::image('images/asientos.jpg') !!}</p>
-						</section>
-					</div>
-					<!-- Sidebar -->
+						</tbody>
+					</table>
 				</div>
+				@if(isset($user) && $user->role_id == config('constants.salesman'))
+				<a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
+				@else
+				<a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
+				<a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
+				@endif
+
+				@if(isset($user) && $user->role_id == config('constants.client'))
+
+				<br><br>
+				<div class="form-group">
+					<label for="comment">Ingrese comentario:</label>
+					{!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '5']) !!}
+					<button type="submit" class="btn btn-info">Aceptar</button>
+					<br>
+
+
+					@else
+					<div class="form-group">
+						@endif	  
+
+						<br>
+						<label for="comment">Comentarios:</label>
+
+						@foreach ($Comments as $Comment)
+						<h6>{{$users[($Comment->user_id)-1]['name'] }} {{ date ( "d-m-Y H:ia" , strtotime( $Comment->time )) }}    </h6>
+						{!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> $Comment->description, 'readonly']) !!}
+
+						@endforeach
+
+					</div>
+				</section>
+			</div>
+			<!-- /Content -->
+
+			<!-- Sidebar -->
+			<div id="sidebar" class="4u">
+				<section>
+					<header>
+						<h2 class="detail">Detalle de evento</h2>
+						<!--<span class="byline">Praesent lacus congue rutrum</span>-->
+					</header>
+					<h3 class="dates">Fechas del evento</h3>
+					<!--<p>Del 17 de Septiembre al 26 de Octubre 2015</p> -->
+					<p>Del {{date("d/m/Y", $event->presentations->first()->starts_at)}} Al {{date("d/m/Y", $event->presentations->last()->starts_at)}}</p>
+					<h3 class="dates">Horario</h3>
+					<p>Función a las {{date("H:i", $event->presentations->first()->starts_at)}}</p>
+					<h3 class="dates">Ubicación</h3>
+
+					<p>{{$event->place->address}}, {{$event->place->district}}</p>
+					{!! Html::image($event->place->image,null, ['class'=>'carousel_img']) !!}
+
+					<h3 class="dates">Distribución de Zonas</h3>
+					<p>{!! Html::image('images/asientos.jpg') !!}</p>
+				</section>
+			</div>
+			<!-- Sidebar -->
 		</div>
+	</div>
 	<!-- Main -->
 
-@stop
+	@stop
 
-@section('javascript')
+	@section('javascript')
 	<script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script>
-      function initialize() {
-        var mapCanvas = document.getElementById('map');
-        var mapOptions = {
-          center: new google.maps.LatLng(-12.087444,-77.054986),
-          zoom: 14,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-        var map = new google.maps.Map(mapCanvas, mapOptions)
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
-    <script type="text/javascript">
+	<script>
+		function initialize() {
+			var mapCanvas = document.getElementById('map');
+			var mapOptions = {
+				center: new google.maps.LatLng(-12.087444,-77.054986),
+				zoom: 14,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			}
+			var map = new google.maps.Map(mapCanvas, mapOptions)
+		}
+		google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
+	<script type="text/javascript">
 		var price = 10; //price
 		$(document).ready(function() {
 			var $cart = $('#selected-seats'), //Sitting Area
@@ -122,16 +133,16 @@
 
 			var sc = $('#seat-map').seatCharts({
 				map: [  //Seating chart
-					'aaaaaaaaaa',
-		            'aaaaaaaaaa',
-		            '__________',
-		            'aaaaaaaaaa',
-		            'aaaaaaaaaa',
-					'aaaaaaaaaa',
-					'aaaaaaaaaa',
-					'aaaaaaaaaa',
-					'aaaaaaaaaa',
-		            'aa__aa__aa'
+				'aaaaaaaaaa',
+				'aaaaaaaaaa',
+				'__________',
+				'aaaaaaaaaa',
+				'aaaaaaaaaa',
+				'aaaaaaaaaa',
+				'aaaaaaaaaa',
+				'aaaaaaaaaa',
+				'aaaaaaaaaa',
+				'aa__aa__aa'
 				],
 				naming : {
 					top : false,
@@ -142,17 +153,17 @@
 				legend : { //Definition legend
 					node : $('#legend'),
 					items : [
-						[ 'a', 'available',   'Libre' ],
-						[ 'a', 'unavailable', 'Ocupado'],
-						[ 'a', 'reserved', 'Reservado']
+					[ 'a', 'available',   'Libre' ],
+					[ 'a', 'unavailable', 'Ocupado'],
+					[ 'a', 'reserved', 'Reservado']
 					]
 				},
 				click: function () { //Click event
 					if (this.status() == 'available') { //optional seat
 						$('<li>R'+(this.settings.row+1)+' S'+this.settings.label+'</li>')
-							.attr('id', 'cart-item-'+this.settings.id)
-							.data('seatId', this.settings.id)
-							.appendTo($cart);
+						.attr('id', 'cart-item-'+this.settings.id)
+						.data('seatId', this.settings.id)
+						.appendTo($cart);
 
 						$counter.text(sc.find('selected').length+1);
 						$total.text(recalculateTotal(sc)+price);
@@ -191,5 +202,5 @@
 
 			return total;
 		}
-		</script>
-@stop
+	</script>
+	@stop

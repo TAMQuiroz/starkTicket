@@ -32,7 +32,7 @@ class BusinessController extends Controller
         $exchangeRates->setPath('exchange_rate');
         return view('internal.admin.exchangeRate',compact('exchangeRates'));
 
-       /* return view('internal.admin.exchangeRate'); */
+        /* return view('internal.admin.exchangeRate'); */
     }
     public function storeExchangeRate(StoreExchangeRateRequest $request)
     {
@@ -82,46 +82,17 @@ class BusinessController extends Controller
     public function attendanceSubmit(Request $request,  $idSalesman)
     {       
 
-
-
-
         $input = $request->all();
-
-
-
-
         $salesman = User::find( $idSalesman ); 
 
-
         $dateParStart      =     $input['dateIni']    ;
-      $dateParEnd =    $input['dateEnd']     ; 
+        $dateParEnd =    $input['dateEnd']     ; 
 
-
-       
-//traemos los datos desde la bd 
-  $id = $idSalesman ;
+        $id = $idSalesman ;
 
         $Attendances = Attendance::whereBetween('datetime' , [$dateParStart, $dateParEnd] )->where('salesman_id', $id) ->get();
         
-     
-
-
-
-
-
-
-//return date( "m/d/Y", strtotime($Attendances[0]->datetime));
-
-
-
- // $Attendances[0]->datetime->dob->format('Y-m-d');
-
-
-     return view('internal.admin.attendance ', compact('Attendances', 'dateParStart' , 'dateParEnd' , 'interval' , 'salesman')  );
-
-// return  $input;
-   
- 
+        return view('internal.admin.attendance ', compact('Attendances', 'dateParStart' , 'dateParEnd' , 'interval' , 'salesman')  );
 
     }
 
@@ -129,69 +100,43 @@ class BusinessController extends Controller
 
     public function attendance(Request $request,  $idSalesman)
     {       
-
-
-
-
-
-
-
         $salesman = User::find( $idSalesman ); 
-
-
-  $dateParStart = Carbon::createFromDate(null, null, 01); // defecto el año y el mes, dia 01
+        $dateParStart = Carbon::createFromDate(null, null, 01); // defecto el año y el mes, dia 01
         $dateParEnd = Carbon::createFromDate(null, null, 01);
-
-
 
 
         $dateParEnd =$dateParEnd->addMonth(); 
         $dateParEnd =$dateParEnd->subDay(); 
 //traemos los datos desde la bd 
-  $id = $idSalesman ;
+        $id = $idSalesman ;
 
         $Attendances = Attendance::whereBetween('datetime' , [$dateParStart, $dateParEnd] )->where('salesman_id', $id) ->get();
-        
+
         $interval =   $dateParStart->diff($dateParEnd)->days;
-$interval = $interval /  7 ; 
+        $interval = $interval /  7 ; 
+
+
+  return view('internal.admin.attendance ', compact('Attendances', 'dateParStart' , 'dateParEnd' , 'interval' , 'salesman')  );
+
+}
 
 
 
+public function attendanceDetail(  $idAttendance )
+{      
+
+    $Attendance = Attendance::find($idAttendance);
+
+    $salesman = User::find( $Attendance->salesman_id ); 
+    $detailsAttendances = AttendanceDetail::where('attendance_id' ,$idAttendance )->get();
+
+    $index = 0 ;
 
 
+    return view('internal.admin.attendanceDetail '  , compact('detailsAttendances' , 'index', 'salesman','Attendance')  );
 
-//return date( "m/d/Y", strtotime($Attendances[0]->datetime));
-
-
-
- // $Attendances[0]->datetime->dob->format('Y-m-d');
-
-
-     return view('internal.admin.attendance ', compact('Attendances', 'dateParStart' , 'dateParEnd' , 'interval' , 'salesman')  );
-
-//return  $input;
-   
- 
-
-    }
-
-
-
-     public function attendanceDetail(  $idAttendance )
-    {      
-
-
-        $detailsAttendances = AttendanceDetail::where('attendance_id' ,$idAttendance )->get();
-             $index = 0 ;
-
-
-
-
-
-         return view('internal.admin.attendanceDetail '  , compact('detailsAttendances' , 'index')  );
-
-        // return $detailsAttendances ;
-    }
+    // return $detailsAttendances ;
+}
 
 
 

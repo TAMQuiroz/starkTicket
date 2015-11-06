@@ -12,8 +12,11 @@ class Attendance extends Model
     protected $dates = ['deleted_at'];
     
 
-  protected $fillable = ['id',  'datetime','datetimestart' ,'datetimeend', 'salesman_id'  ] ;
+  //protected $fillable = ['id',  'datetime','datetimestart' ,'datetimeend', 'salesman_id'  ] ;
 
-    
+    public function user(){
+        return $this->belongsTo('App\User','salesman_id');
+    }
+
 
 }

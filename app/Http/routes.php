@@ -38,6 +38,7 @@ Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@indexExternal');
 
 Route::get('event/{id}', 'EventController@showExternal');
+Route::post('event/{id}', 'EventController@showExternalPost');
 
 Route::group(['middleware' => ['auth', 'client']], function () {
     Route::get('client/', 'ClientController@profile');
@@ -103,12 +104,12 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
 
 
     Route::get('promoter/promotion', 'PromoController@index');
-     Route::get('promoter/promotion', 'PromoController@promotion');
+    Route::get('promoter/promotion', 'PromoController@promotion');
 
 
 
     Route::get('promoter/promotion/new', ['as'=>'promo.create','uses'=>'PromoController@create']);
-     Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);
+    Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);
     Route::get('promoter/promotion/new/{event_id}', 'PromoController@ajax');
     Route::get('promoter/promotion/{id}/edit', ['as'=>'promo.edit','uses'=>'PromoController@edit']);
     Route::post('promoter/promotion/{id}/edit',  'PromoController@update');
@@ -171,7 +172,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/attendance/{id}/detail', 'BusinessController@attendanceDetail');
 
     
-              
+    
 
     Route::get('admin/config/exchange_rate', 'BusinessController@exchangeRate');
     Route::post('admin/config/exchange_rate', 'BusinessController@storeExchangeRate');
