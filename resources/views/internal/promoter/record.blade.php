@@ -19,6 +19,7 @@
           <th>Estado</th>
           <th>Entradas Vendidas</th>
           <th>Monto Acumulado</th>
+          <th>Pagar</th>
           <th>Ver</th>
           <th>Editar</th>
           <th>Cancelar</th>
@@ -31,9 +32,11 @@
           <td>{{$event->name}}</td>
           <td>{{date("d/m/Y",$event->publication_date)}}</td>
           <td>{{date("d/m/Y",$event->selling_date)}}</td>
+          <td>{{date("d/m/Y", strtotime("+".$event->time_length."days",$event->selling_date))}}</td>
           <td>Vigente</td> <!--falta la logica de vigente -->
           <td>1500</td> <!--no hay -->
           <td>17500.00</td> <!--no hay -->
+          <td><a href="{{ url ('promoter/transfer_payments/'.$event->id.'/create') }}" class="btn btn-info">$</a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info{{$event->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button>
       <div class="modal fade" id="info{{$event->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
@@ -45,32 +48,33 @@
             <div class="modal-body">
               <form>
                 <div class="form-group">
-                  <h4>{{$event->name}}</h4>
-                  <p>Codigo: {{$event->id}}</p>
-                  <p>Creado Por: {{$event->organization->businessName}}</p>
-                  <p>Promotor: {{$event->organization->organizerName}} {{$event->organization->organizerLastName}}</p>
-                  <!--<p>Fecha Creación: {{$event->created_at}}</p>
-                  <p>Fecha Duración: 19/09/2015 al 25/10/2015</p> -->
-                  <p>Descripción:  {{$event->description}} </p>
-                  <p>Local: {{$event->place->name}} </p>
-                  <p>Categoria: {{$event->category->parentCategory->name}} </p>
-                  <p>Sub Categoria: {{$event->category->name}} </p>
-                  <p>Fecha Creación: {{date_format(date_create($event->created_at),"d/m/Y")}}</p>
-                  <p>Fecha Publicación: {{date("d/m/Y",$event->publication_date)}}</p>
-                  <p>Fecha Inicio Venta del {{date("d/m/Y",$event->selling_date)}}</p>
-                 <!-- <p>Fecha Venta del {{date("d/m/Y",$event->presentations->first()->starts_at)}} al {{date("d/m/Y",strtotime("+".$event->time_length."days",$event->presentations->first()->starts_at))}}</p> -->
-                  <p>Funciones desde el {{date("d/m/Y",$event->presentations->first()->starts_at)}} al {{date("d/m/Y",$event->presentations->last()->starts_at)}}</p> 
-                  <h4>Entradas:</h4>
-                  <ul>
-                    @foreach($event->zones as $zone)
-                    <li>{{$zone->name}} : {{$zone->price}}</li>
-                    @endforeach
-                  </ul>
-                  <h4>Funciones:</h4>
-                  <ul>
-                    @foreach ($event->presentations as $present)
-                      <li>
-                          Funcion: {{date("d/m/Y H:i",$present->starts_at)}}
+
+            <h4>Nombre: {{$event->name}}</h4>
+            <p>Código:  {{$event->id}} </p>
+            <p>Creado Por: {{$event->organization->organizerName}} {{$event->organization->organizerLastName}}  </p>
+            <p>Promotor: {{$event->organization->organizerName}} {{$event->organization->organizerLastName}}</p>
+            <p>Descripción:  {{$event->description}} </p>
+            <p>Local: {{$event->place->name}} </p>
+            <p>Categoria: {{$event->category->name}} </p>
+            <!-- <p>Sub Categoria: {{$event->category->name}} </p> -->
+            <p>Fecha Creación: {{date_format(date_create($event->created_at),"d/m/Y")}}</p>
+            <p>Fecha Publicación: {{date("d/m/Y",$event->publication_date)}}</p>
+            <p>Fecha Inicio ventas: {{date("d/m/Y",$event->selling_date)}}</p>
+            <p>Duracion función: {{$event->time_length}} hora(s) </p>
+            <!-- <p>Fecha Duración del {{date("d/m/Y",$event->selling_date)}} al {{date("d/m/Y",strtotime("+".$event->time_length."days",$event->selling_date))}}</p> -->
+            <h4>Entradas:</h4>
+            <ul>
+              @foreach ($event->zones as $zone)
+                <li>
+                    {{$zone->name}} : S/. {{$zone->price}}
+                </li>
+              @endforeach
+            </ul>
+            <h4>Funciones:</h4>
+            <ul>
+              @foreach ($event->presentations as $present)
+                <li>
+                    Funcion: {{date("d/m/Y",$present->starts_at)}}
 
                 </li>
               @endforeach
@@ -78,7 +82,7 @@
             <br>
             <h4>Información de Ventas</h4>
             <p>Proximamente</p>
-          
+
             <br>
             {!! Html::image($event->image, null, array('class'=>'module_img')) !!}
                 </div>
@@ -126,5 +130,5 @@
       </table>
 
 
-          
+
 @stop
