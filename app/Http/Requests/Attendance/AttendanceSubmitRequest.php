@@ -24,8 +24,8 @@ class AttendanceSubmitRequest extends Request
     public function rules()
     {
         return [
-            'dateIni'       =>  'max:20',
-            'dateEnd'      =>  'max:20'
+            'dateIni'       =>  'max:20|date',
+            'dateEnd'      =>  'max:20|date'
         ];
     }
 }
