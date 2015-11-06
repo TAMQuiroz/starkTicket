@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePoliticsTable extends Migration
+class CreateComment extends Migration
 {
     /**
      * Run the migrations.
@@ -12,22 +12,16 @@ class CreatePoliticsTable extends Migration
      */
     public function up()
     {
-        //
-
-
-        Schema::create('politics', function (Blueprint $table) {
+          Schema::create('comment', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->string('name');
+            $table->integer('user_id')->unsigned();
+            $table->integer('event_id')->unsigned();
             $table->text('description');
-            $table->string('state');
+            $table->timestamp('time');
             $table->timestamps();
             $table->softDeletes();
-          
+
         });
-
-
-
-
     }
 
     /**
@@ -37,6 +31,6 @@ class CreatePoliticsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('politics');
+            Schema::drop('comment');
     }
 }

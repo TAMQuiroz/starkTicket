@@ -69,10 +69,10 @@ class PromoController extends Controller
         $promotions->user_id  =   $id;
 
         if(  ( $input['carry'] == ''  )  and  ( $input['pay'] == ''   ) )    {
-             
-                $promotions->typePromotion    =      Config::get('constants.discount')    ;
-                $promotions->desc  =   $input['discount'];
-                $promotions->access_id =  $input['access_id'];
+
+            $promotions->typePromotion    =      Config::get('constants.discount')    ;
+            $promotions->desc  =   $input['discount'];
+            $promotions->access_id =  $input['access_id'];
 
 
         } else {
@@ -84,13 +84,13 @@ class PromoController extends Controller
         }
 
 
-          $promotions->save();
+        $promotions->save();
 
-           return redirect('promoter/promotion');
-      
+        return redirect('promoter/promotion');
+
       // return $promotions ;
 
-       
+
     }
 
 
@@ -107,47 +107,31 @@ class PromoController extends Controller
     {
 
         $events = Event::all();
+        $accessPromotion = accessPromotion::orderBy('id')->get()->lists('description','id') ;
 
-
-
-         $accessPromotion = accessPromotion::orderBy('id')->get()->lists('description','id') ;
-
-//return view('internal.promoter.newPromotion', compact('events')      );  
-   
-  
-return view('internal.promoter.newPromotion',  ['events' => $events , 'accessPromotion'=> $accessPromotion   ]    );  
+        return view('internal.promoter.newPromotion',  ['events' => $events , 'accessPromotion'=> $accessPromotion   ]    );  
     }
 
 
-  
+
     public function promotion()
     {
 
-          $promotions = Promotions::all();
-
-        $users = User::all(); 
-     
-
-        $accessPromotion = accessPromotion::orderBy('id')->get();
-
-
-$events  = Event::all();
-        $zones = Zone::all();
+      $promotions = Promotions::all();
+      $users = User::all(); 
+      $accessPromotion = accessPromotion::orderBy('id')->get();
+      $events  = Event::all();
+      $zones = Zone::all();
 
 
-
-        return view('internal.promoter.promotions',   ['promotions' => $promotions , 'users'=> $users  , 'accessPromotions'=>   $accessPromotion , 'zones'=>   $zones, 'events'=>   $events]    );
-    }
-
-
- 
+      return view('internal.promoter.promotions',   ['promotions' => $promotions , 'users'=> $users  , 'accessPromotions'=>   $accessPromotion , 'zones'=>   $zones, 'events'=>   $events]    );
+  }
 
 
-
-    public function show($id)
-    {
+  public function show($id)
+  {
         //
-    }
+  }
 
     /**
      * Show the form for editing the specified resource.
@@ -157,39 +141,29 @@ $events  = Event::all();
      */
     public function edit($id)
     {
- 
-  $promotion = Promotions::find($id);
+
+      $promotion = Promotions::find($id);
+
+      $event  = Event::find($promotion->event_id);
+
+      $user = User::find($promotion->user_id ); 
+
+      $accessPromotion = accessPromotion::orderBy('id')->get()->lists('description','id') ;
 
 
+      $zones = Zone::where('event_id', $promotion->event_id  )->get()->lists('name','id') ;
 
-$event  = Event::find($promotion->event_id);
+        //trabajamos las fechas para mostrarlas.
 
-
-        $user = User::find($promotion->user_id ); 
-
-$accessPromotion = accessPromotion::orderBy('id')->get()->lists('description','id') ;
-
-
-$zones = Zone::where('event_id', $promotion->event_id  )->get()->lists('name','id') ;
-
-//trabajamos las fechas para mostrarlas.
-
-$startDay =   substr($promotion->startday, 0, 10);
-$startHour =  substr($promotion->startday, 11); 
+      $startDay =   substr($promotion->startday, 0, 10);
+      $startHour =  substr($promotion->startday, 11); 
 
 
-$endDay =   substr($promotion->endday, 0, 10);
-$finishHour =  substr($promotion->endday, 11); 
+      $endDay =   substr($promotion->endday, 0, 10);
+      $finishHour =  substr($promotion->endday, 11); 
 
-
-
-        return view('internal.promoter.editPromotion' , compact( 'startDay' , 'startHour' , 'endDay' ,'finishHour' ,'promotion' , 'user' ,  'accessPromotion',  'zones', 'event' )    );
-
-
-
-
-            
-    }
+      return view('internal.promoter.editPromotion' , compact( 'startDay' , 'startHour' , 'endDay' ,'finishHour' ,'promotion' , 'user' ,  'accessPromotion',  'zones', 'event' )    );
+  }
 
     /**
      * Update the specified resource in storage.
@@ -200,76 +174,44 @@ $finishHour =  substr($promotion->endday, 11);
      */
     public function update(UpdatePromotionRequest $request, $id)
     {
-     
-
- $input = $request->all();
-
-        $promotions = Promotions::find($id);
 
 
+       $input = $request->all();
+
+       $promotions = Promotions::find($id);
+
+       $promotions->name  =   $input['promotionName'];
 
 
+       $promotions->description  =   $input['description'];
+       $promotions->startday  =   $input['dateIni'];
 
- $promotions->name  =   $input['promotionName'];
+       $aux = $input['dateIni']. ' '. $input['timeIni'];
+       $promotions->startday  =    $aux;
 
+       $aux =   $input['dateEnd']     .' '. $input['timeEnd'];
+       $promotions->endday =   $aux  ; 
 
-        $promotions->description  =   $input['description'];
-        $promotions->startday  =   $input['dateIni'];
-
-        $aux = $input['dateIni']. ' '. $input['timeIni'];
-        $promotions->startday  =    $aux;
-
-
-
-
+    
+       if(  $promotions->typePromotion   ==   Config::get('constants.discount')  )    {
 
 
-
-        $aux =   $input['dateEnd']     .' '. $input['timeEnd'];
-        $promotions->endday =   $aux  ; 
-        
-       // $promotions->event_id  = $input['evento'] ;
+        $promotions->desc  =   $input['discount'];
+        $promotions->access_id =  $input['access_id'];
 
 
+    } else {
 
-
-
-
-
-    //    $id = Auth::user()->id;
-     //   $promotions->user_id  =   $id;
-
-
-
-
-           if(  $promotions->typePromotion   ==   Config::get('constants.discount')  )    {
-             
-             
-                $promotions->desc  =   $input['discount'];
-                $promotions->access_id =  $input['access_id'];
-
-
-        } else {
-         
-            $promotions->carry =    $input['carry'];
-            $promotions->pay =    $input['pay'];
-            $promotions->zone_id =  $input['zone'];
-
-
-
-
-        }
-
-
-
-      $promotions->save();
-
-        return redirect('promoter/promotion');
-
-
-
+        $promotions->carry =    $input['carry'];
+        $promotions->pay =    $input['pay'];
+        $promotions->zone_id =  $input['zone'];
 
     }
+    $promotions->save();
+
+    return redirect('promoter/promotion');
+
+}
 
     /**
      * Remove the specified resource from storage.
@@ -279,30 +221,21 @@ $finishHour =  substr($promotion->endday, 11);
      */
     public function destroy($id)
     {
-       $promotion = Promotions::find($id);
-        $promotion->delete();
-        return redirect('promoter/promotion');
-    }
+     $promotion = Promotions::find($id);
+     if( $promotion !=NULL )
+        {    $promotion->delete();  } 
+
+    return redirect('promoter/promotion');
+}
+
+public function ajax($event_id)
+{
+
+    $zones = Zone::where('event_id' ,$event_id )->lists('name','id') ;;
 
 
 
-
-    public function ajax($event_id)
-    {
-
-        $zones = Zone::where('event_id' ,$event_id )->lists('name','id') ;;
-
-
-
-      //   $accessPromotion = accessPromotion::orderBy('id')->get()->lists('description','id') ;
-
-//return view('internal.promoter.newPromotion', compact('events')      );  
-   
-  
-return  json_encode(  $zones);  
-    }
-
-
-
+    return  json_encode(  $zones);  
+}
 
 }

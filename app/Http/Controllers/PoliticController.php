@@ -42,24 +42,24 @@ class PoliticController extends Controller
     {
 
 
-   
+
    //     return redirect('politics');
         return view('internal.admin.politics.newPolitic');
     }
 
-      public function politics()
+    public function politics()
     {
         $politics = politics::all();
-  
+
         return view('internal.admin.politics.politics', compact('politics'));
     }
 
 
 
-       public function politicsPromotor()
+    public function politicsPromotor()
     {
         $politics = politics::all();
-  
+
         return view('internal.promoter.politics', compact('politics'));
     }
 
@@ -72,31 +72,19 @@ class PoliticController extends Controller
     public function store(Request $request)
     {     
 
-         $input = $request->all();
+       $input = $request->all();
 
-        $politics               =   new politics ;
-        $politics->name         =   $input['name'];
-        $politics->description  =   $input['description'];
-         $politics->state =  $input['state'];; 
-            /*
-        $user->password     =   bcrypt($input['password']);
-        $user->di_type      =   $input['di_type'];
-        $user->di           =   $input['di'];
-        $user->address      =   $input['address'];      
-        $user->phone        =   $input['phone'];      
-        $user->email        =   $input['email'];      
-        $user->birthday     =   new Carbon($input['birthday']);      
-        $user->role_id      =   $input['role_id'];      
-       /*
-        if($request->file('image')!=null)
-           $gift->image        =   $this->file_service->upload($request->file('image'),'gift'); */
+       $politics               =   new politics ;
+       $politics->name         =   $input['name'];
+       $politics->description  =   $input['description'];
+       $politics->state =  $input['state'];; 
 
 
-        $politics->save();
+       $politics->save();
 
-return redirect('admin/politics');
-      
-    }
+       return redirect('admin/politics');
+
+   }
 
     /**
      * Display the specified resource.
@@ -121,7 +109,7 @@ return redirect('admin/politics');
 
         return view('internal.admin.politics.editPolitic', compact('politics'));
 
-      
+
     }
 
     /**
@@ -133,16 +121,13 @@ return redirect('admin/politics');
      */
     public function update(UpdatePoliticRequest $request, $id)
     {
-        
+
         $input = $request->all();
 
         $politics = politics::find($id);
         $politics->name         =   $input['name'];
         $politics->description     =   $input['description'];
         $politics->state     =   $input['state'];
-
-
-
 
         $politics->save();
 
@@ -159,20 +144,6 @@ return redirect('admin/politics');
     {
         //
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

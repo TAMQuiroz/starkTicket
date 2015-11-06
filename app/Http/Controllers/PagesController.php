@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Attendance;
+use App\Models\AttendanceDetail;
+use Auth;
+use App\User;
+use Carbon\Carbon;
+
 
 class PagesController extends Controller
 {
@@ -35,6 +41,11 @@ class PagesController extends Controller
 
     public function salesmanHome()
     {
+
+
+
+   
+
         return view('internal.salesman.home');
     }
 
