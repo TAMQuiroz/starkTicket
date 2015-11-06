@@ -7,6 +7,7 @@ $.ajaxSetup({
 var price; //price
 var map = [];
 var taken = [];
+var reserved = [];
 
 $('document').ready(function () {
 	getTakenSlots();
@@ -28,10 +29,11 @@ function getTakenSlots(){
             event_id: evento,
         },
         success: function( response ){
-            //console.log(response);
+            console.log(response);
             if(response != -1 )
             {
-                taken = response;
+                taken = response[0];
+                reserved = response[1];
                 makeArray();
             }else if (response == ""){
             	console.log('vacio');
@@ -187,7 +189,7 @@ function renderSeats() {
 	//sold seat
 	
 	sc.get(taken).status('unavailable');
-	//sc.get(['1_1','5_5']).status('reserved');
+	sc.get(reserved).status('reserved');
 	
 };
 //sum total money

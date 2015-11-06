@@ -406,13 +406,24 @@ class TicketController extends Controller
         $event = Event::find($request['event_id']);
         if($event->place->rows != null){
             $slots = [];
+            $taken = [];
+            $reserved = [];
             $slot_presentation = DB::table('slot_presentation')->where('presentation_id',$request['function_id'])->where('status',config('constants.seat_taken'))->get();
             foreach ($slot_presentation as $s_p) {
                 $slot = Slot::find($s_p->slot_id);
                 if($slot->zone->id == $request['zone_id']){
-                    array_push($slots, $slot->row."_".$slot->column);
+                    array_push($taken, $slot->row."_".$slot->column);
                 }
             }
+            $slot_presentation = DB::table('slot_presentation')->where('presentation_id',$request['function_id'])->where('status',config('constants.seat_reserved'))->get();
+            foreach ($slot_presentation as $s_p) {
+                $slot = Slot::find($s_p->slot_id);
+                if($slot->zone->id == $request['zone_id']){
+                    array_push($reserved, $slot->row."_".$slot->column);
+                }
+            }
+            array_push($slots,$taken);
+            array_push($slots,$reserved);
         } else {
             $slots = -1;
         }
@@ -431,9 +442,9 @@ class TicketController extends Controller
         $maxDiscount = 0;
         $bestPromo = null;
         if($request['type_id']==config('constants.credit')){
-            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',2)->get();
+            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',2)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
         }else if($request['type_id']==config('constants.cash')){
-            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->get();
+            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
         }else{
             $promos = null;
         }
