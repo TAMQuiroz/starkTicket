@@ -16,7 +16,7 @@
         <p><b>Presentacion(es)</b></p>
         <ul>
             @foreach ( $event->presentations as $presentation)
-            <li>{{ $presentation->starts_at }} - {{$presentation->created_at}}</li>
+            <li>{{date("d/m/Y",$presentation->starts_at)}}</li>
             @endforeach
         </ul>
     </div>

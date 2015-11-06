@@ -464,5 +464,10 @@ class TicketController extends Controller
         }
         return $bestPromo;
     }
+    public function getTicketToJson($id)
+    {
+        $ticket =Ticket::findOrFail($id);
+        return $ticket;
+    }
 }
 

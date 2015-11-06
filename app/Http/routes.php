@@ -20,7 +20,6 @@ Route::get('login_worker', 'Auth\AuthController@worker');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'ClientController@store');
 
-
 Route::get('/', 'PagesController@home');
 Route::get('about', 'PagesController@about');
 Route::get('modules', 'ModuleController@indexExternal');
@@ -60,7 +59,7 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman/cash_count', 'BusinessController@cashCount');
     Route::post('salesman/cash_count', 'BusinessController@updateCash');
     //Route::post('salesman/cash_count', 'BusinessController@updateCashCount');
-  
+
     Route::get('salesman/exchange_gift', 'GiftController@createExchange');
     Route::get('salesman/event/{id}/pay_booking', 'BookingController@pay');
 
@@ -83,7 +82,6 @@ Route::get('getSlots', ['uses'=>'TicketController@getSlots','as'=>'ajax.getSlots
 Route::get('getZone', ['uses'=>'TicketController@getZone','as'=>'ajax.getZone']);
 Route::get('getTakenSlots', ['uses'=>'TicketController@getTakenSlots','as'=>'ajax.getTakenSlots']);
 Route::get('getPromo', ['uses'=>'TicketController@getPromo','as'=>'ajax.getPromo']);
-
 
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
@@ -109,8 +107,6 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/promotion', 'PromoController@index');
     Route::get('promoter/promotion', 'PromoController@promotion');
 
-
-
     Route::get('promoter/promotion/new', ['as'=>'promo.create','uses'=>'PromoController@create']);
     Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);
     Route::get('promoter/promotion/new/{event_id}', 'PromoController@ajax');
@@ -121,9 +117,6 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     //Aca se inicia el CRUD de promotor
     Route::get('promoter/organizers', 'OrganizerController@index');
     Route::get('promoter/organizer/create', 'OrganizerController@create');
-
-
-
 
     Route::post('promoter/organizer/create', 'OrganizerController@store');
     Route::get('promoter/organizer/{id}/edit', 'OrganizerController@edit');
@@ -177,6 +170,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/devolutions/new', 'DevolutionController@store');
     Route::get('admin/devolutions/{devolution_id}', 'DevolutionController@show');
 
+    Route::get('admin/ticket/{devolution_id}/tojson', 'TicketController@getTicketToJson');
+
+    Route::get('admin/attendance', 'BusinessController@attendance');
+
     Route::get('admin/config/exchange_rate', 'BusinessController@exchangeRate');
     Route::post('admin/config/exchange_rate', 'BusinessController@storeExchangeRate');
     Route::get('admin/config/about', 'BusinessController@about');
@@ -196,19 +193,16 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/client', 'ClientController@index');
     Route::post('admin/client/desactive', 'ClientController@desactive');
 
-
     Route::get('admin/salesman', 'AdminController@salesman');
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
     Route::post('admin/salesman/{id}/edit', 'AdminController@updateSalesman');
     Route::get('admin/salesman/{id}/delete', 'AdminController@destroySalesman');
-
 
     Route::get('admin/user/new', 'AdminController@newUser');
     Route::post('admin/user/new', 'AdminController@store');
 
     Route::get('admin/admin', 'AdminController@admin');
     Route::get('admin/admin/{id}/edit', 'AdminController@editAdmin');
-    //MANTENER PROMOTOR: No existia la ruta de post :C
     Route::post('admin/admin/{id}/edit', 'AdminController@updateAdmin');
     //
     Route::get('admin/admin/{id}/delete', 'AdminController@destroy');
