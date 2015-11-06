@@ -19,6 +19,7 @@
           <th>Estado</th>
           <th>Entradas Vendidas</th>
           <th>Monto Acumulado</th>
+          <th>Pagar</th>
           <th>Ver</th>
           <th>Editar</th>
           <th>Cancelar</th>
@@ -31,9 +32,11 @@
           <td>{{$event->name}}</td>
           <td>{{date("d/m/Y",$event->publication_date)}}</td>
           <td>{{date("d/m/Y",$event->selling_date)}}</td>
+          <td>{{date("d/m/Y", strtotime("+".$event->time_length."days",$event->selling_date))}}</td>
           <td>Vigente</td> <!--falta la logica de vigente -->
           <td>1500</td> <!--no hay -->
           <td>17500.00</td> <!--no hay -->
+          <td><a href="{{ url ('promoter/transfer_payments/'.$event->id.'/create') }}" class="btn btn-info">$</a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info{{$event->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button>
       <div class="modal fade" id="info{{$event->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
@@ -71,14 +74,13 @@
               @foreach ($event->presentations as $present)
                 <li>
                     Funcion: {{date("d/m/Y",$present->starts_at)}}
-
                 </li>
               @endforeach
             </ul>
             <br>
             <h4>Información de Ventas</h4>
             <p>Proximamente</p>
-          
+
             <br>
             {!! Html::image($event->image, null, array('class'=>'module_img')) !!}
                 </div>
@@ -126,5 +128,5 @@
       </table>
 
 
-          
+
 @stop
