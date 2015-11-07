@@ -1,8 +1,11 @@
 <?php
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+
 use App\Http\Requests;
 use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
+use App\Http\Requests\Comment\StoreCommentPostRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Zone;
@@ -11,7 +14,12 @@ use App\Models\Slot;
 use App\Models\Category;
 use App\Models\Organizer;
 use App\Models\Local;
+use App\Models\Comment;
 use App\Services\FileService;
+use Carbon\Carbon;
+use App\User;
+use Auth;
+
 use DateTime;
 class EventController extends Controller
 {
@@ -50,9 +58,9 @@ class EventController extends Controller
         $locals_list = Local::all()->lists('name','id');
         $capacity_list = Local::all();
         $array = ['categories_list' =>$categories_list,
-                'organizers_list'   =>$organizers_list,
-                'locals_list'       =>$locals_list,
-                'capacity_list'     =>$capacity_list];
+        'organizers_list'   =>$organizers_list,
+        'locals_list'       =>$locals_list,
+        'capacity_list'     =>$capacity_list];
         return view('internal.promoter.newEvent', $array);
     }
     /**
@@ -84,105 +92,122 @@ class EventController extends Controller
         $function->save();
         return $function;
     }
-    public function storeZone($data, $event){
-        $zone = new Zone();
-        $zone->name         = $data['name'];
-        $zone->price        = $data['price'];
-        if($data['columns'] != '' || $data['columns'] != null){
-            $zone->columns      = $data['columns'];
-            $zone->rows         = $data['rows'];
-            $zone->start_column = $data['start_column'];
-            $zone->start_row    = $data['start_row'];
-            $zone->capacity     = $zone->columns* $zone->rows;
-        } else {
-            $zone->capacity     = $data['capacity'];
-        }
-        $zone->event()->associate($event);
-        $zone->save();
-        return $zone;
+
+    public function feedback(){
+
+       return view('internal.client.event_feedback' );
+   }
+
+
+
+   public function attendanceDetail()
+   {      
+
+       return view('internal.admin.attendanceDetail '  );
+
+        //return $datePar ;
+   }
+
+
+   public function storeZone($data, $event){
+    $zone = new Zone();
+    $zone->name         = $data['name'];
+    $zone->price        = $data['price'];
+    if($data['columns'] != '' || $data['columns'] != null){
+        $zone->columns      = $data['columns'];
+        $zone->rows         = $data['rows'];
+        $zone->start_column = $data['start_column'];
+        $zone->start_row    = $data['start_row'];
+        $zone->capacity     = $zone->columns* $zone->rows;
+    } else {
+        $zone->capacity     = $data['capacity'];
     }
-    public function storeRestOfEvent($zone_data, $data, $event){
-        $functions_ids = array();
-        foreach($data['function_starts_at'] as $key=>$value){
-            $function_data = [
-                'starts_at' => $value,
-            ];
-            $function = $this->storePresentation($function_data, $event);
-            $functions_ids[$function->id] = ['status' => config('constants.seat_available')];
-        }
-        foreach($zone_data['zone_names'] as $key=>$value){
-            $zone_data2 = [
-                'name'      => $value,
-                'capacity'  => $zone_data['zone_capacity'][$key],
-                'price'     => $zone_data['price'][$key],
-                'columns'   => $zone_data['zone_columns'][$key],
-                'rows'      => $zone_data['zone_rows'][$key],
-                'start_column' => $zone_data['start_column'][$key],
-                'start_row'    => $zone_data['start_row'][$key]
-            ];
-            $zone = $this->storeZone($zone_data2, $event);
-            if($zone_data['zone_columns'][$key] != '' || $zone_data['zone_columns'][$key] != null){
-                for($i=1; $i <= $zone->rows;$i++){
-                    for($j=1; $j <= $zone->columns;$j++){
-                        $seat = new Slot();
-                        $seat->row = $i;
-                        $seat->column = $j;
-                        $seat->zone()->associate($zone);
-                        $seat->save();
-                        $seat->presentation()->attach($functions_ids);
-                    }
+    $zone->event()->associate($event);
+    $zone->save();
+    return $zone;
+}
+public function storeRestOfEvent($zone_data, $data, $event){
+    $functions_ids = array();
+    foreach($data['function_starts_at'] as $key=>$value){
+        $function_data = [
+        'starts_at' => $value,
+        ];
+        $function = $this->storePresentation($function_data, $event);
+        $functions_ids[$function->id] = ['status' => config('constants.seat_available')];
+    }
+    foreach($zone_data['zone_names'] as $key=>$value){
+        $zone_data2 = [
+        'name'      => $value,
+        'capacity'  => $zone_data['zone_capacity'][$key],
+        'price'     => $zone_data['price'][$key],
+        'columns'   => $zone_data['zone_columns'][$key],
+        'rows'      => $zone_data['zone_rows'][$key],
+        'start_column' => $zone_data['start_column'][$key],
+        'start_row'    => $zone_data['start_row'][$key]
+        ];
+        $zone = $this->storeZone($zone_data2, $event);
+        if($zone_data['zone_columns'][$key] != '' || $zone_data['zone_columns'][$key] != null){
+            for($i=1; $i <= $zone->rows;$i++){
+                for($j=1; $j <= $zone->columns;$j++){
+                    $seat = new Slot();
+                    $seat->row = $i;
+                    $seat->column = $j;
+                    $seat->zone()->associate($zone);
+                    $seat->save();
+                    $seat->presentation()->attach($functions_ids);
                 }
             }
-            else{
-                $functions_ids_zones = array();
-                foreach ($functions_ids as $key => $value) {
-                    $functions_ids_zones[$key] = ['slots_availables' => $zone->capacity];
+        }
+        else{
+            $functions_ids_zones = array();
+            foreach ($functions_ids as $key => $value) {
+                $functions_ids_zones[$key] = ['slots_availables' => $zone->capacity];
+            }
+            $zone->presentation()->attach($functions_ids_zones);
+        }
+    }
+}
+
+public function join_date_time($times, $dates){
+    $function_starts_at = array();
+    foreach ($dates as $key=>$value) {
+        $function_starts_at[$key] = $value.' '.$times[$key];
+    }
+    return $function_starts_at;
+}
+
+public function validateFreeLocal($starts_at, $local_id, $time_length){
+    $events = Event::where('local_id', $local_id)->get();
+    if($events->count()>0){
+        foreach ($starts_at as $start_at) {
+            $min_date = strtotime($start_at);
+            $max_date = $min_date + ($time_length*3600);
+            foreach ($events as $event) {
+                $presentations = $event->presentations;
+                foreach ($presentations as $presentation) {
+                    $date = intval($presentation->starts_at);
+                    $end_date = $date + (3600*$event->time_length);
+                    if(($date<=$max_date && $date>=$min_date)|| ($end_date<=$max_date && $end_date>=$min_date)) 
+                        return ['error' => 'Este local tiene programadas presentaciones en las fechas y horas especificadas'];
+
                 }
-                $zone->presentation()->attach($functions_ids_zones);
             }
         }
+    }   
+    else return null;
+}
+
+public function store(StoreEventRequest $request)
+{
+
+    $result_dates = $this->join_date_time($request->input('start_time'),$request->input('start_date'));
+    $result_local_validation = $this->validateFreeLocal($result_dates, $request->input('local_id'), $request->input('time_length'));
+    if($result_local_validation != null){
+        return redirect()->back()->withInput()->withErrors($result_local_validation);
     }
-
-    public function join_date_time($times, $dates){
-        $function_starts_at = array();
-        foreach ($dates as $key=>$value) {
-            $function_starts_at[$key] = $value.' '.$times[$key];
-        }
-        return $function_starts_at;
-    }
-
-    public function validateFreeLocal($starts_at, $local_id, $time_length){
-        $events = Event::where('local_id', $local_id)->get();
-        if($events->count()>0){
-            foreach ($starts_at as $start_at) {
-                $min_date = strtotime($start_at);
-                $max_date = $min_date + ($time_length*3600);
-                foreach ($events as $event) {
-                    $presentations = $event->presentations;
-                    foreach ($presentations as $presentation) {
-                        $date = intval($presentation->starts_at);
-                        $end_date = $date + (3600*$event->time_length);
-                        if(($date<=$max_date && $date>=$min_date)|| ($end_date<=$max_date && $end_date>=$min_date)) 
-                            return ['error' => 'Este local tiene programadas presentaciones en las fechas y horas especificadas'];
-
-                    }
-                }
-            }
-        }   
-        else return null;
-    }
-
-    public function store(StoreEventRequest $request)
-    {
-        
-        $result_dates = $this->join_date_time($request->input('start_time'),$request->input('start_date'));
-        $result_local_validation = $this->validateFreeLocal($result_dates, $request->input('local_id'), $request->input('time_length'));
-        if($result_local_validation != null){
-            return redirect()->back()->withInput()->withErrors($result_local_validation);
-        }
-        $temp = array_unique($result_dates);
-        if(count($temp) < count($result_dates))
-            return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
+    $temp = array_unique($result_dates);
+    if(count($temp) < count($result_dates))
+        return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
             //return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
         $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
         if($result['error'] != '')
@@ -190,30 +215,30 @@ class EventController extends Controller
             //return response()->json(['message' => $result['error']]);
         
         $data = [
-            'name'          => $request->input('name'),
-            'description'   => $request->input('description'),
-            'category_id'   => $request->input('category_id'),
-            'organizer_id'  => $request->input('organizer_id'),
-            'local_id'      => $request->input('local_id'),
-            'publication_date' => $request->input('publication_date'),
-            'selling_date'  => $request->input('selling_date'),
-            'image'        => $request->file('image'),
-            'time_length'   => $request->input('time_length')
+        'name'          => $request->input('name'),
+        'description'   => $request->input('description'),
+        'category_id'   => $request->input('category_id'),
+        'organizer_id'  => $request->input('organizer_id'),
+        'local_id'      => $request->input('local_id'),
+        'publication_date' => $request->input('publication_date'),
+        'selling_date'  => $request->input('selling_date'),
+        'image'        => $request->file('image'),
+        'time_length'   => $request->input('time_length')
         ];
         $event = $this->storeEvent($data);
         $zone_data = [
-            'zone_names'      => $request->input('zone_names'),
-            'zone_capacity'  => $request->input('zone_capacity'),
-            'price'     => $request->input('price'),
-            'zone_columns'   => $request->input('zone_columns'),
-            'zone_rows'      => $request->input('zone_rows'),
-            'start_column' => $request->input('start_column'),
-            'start_row'    => $request->input('start_row')
+        'zone_names'      => $request->input('zone_names'),
+        'zone_capacity'  => $request->input('zone_capacity'),
+        'price'     => $request->input('price'),
+        'zone_columns'   => $request->input('zone_columns'),
+        'zone_rows'      => $request->input('zone_rows'),
+        'start_column' => $request->input('start_column'),
+        'start_row'    => $request->input('start_row')
         ];
         $data2 = [
             //'start_date'    => $request->input('start_date'),
             //'start_time'    => $request->input('start_time'),
-            'function_starts_at' => $result_dates
+        'function_starts_at' => $result_dates
         ];
         $this->storeRestOfEvent($zone_data, $data2, $event);
         return redirect()->route('promoter.record');
@@ -239,12 +264,36 @@ class EventController extends Controller
     public function showExternal($id)
     {
         $user = \Auth::user();
-
         $event = Event::findOrFail($id);
-
-        return view('external.event', ['event' => $event, 'user'=>$user]);
+        $users = User::all(); 
+        $Comments = Comment::where('event_id',$id  ) ->get(); 
+       
+       return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments , 'users' => $users]);
     }
 
+    public function showExternalPost(StoreCommentPostRequest $request , $id)
+    {
+
+        $user = \Auth::user();
+        $event = Event::findOrFail($id);
+        $users = User::all(); 
+        $input = $request->all();
+
+    //Agrego el nuevo comentario
+
+        $Comment    =   new Comment ;
+        $Comment->description  =   $input['comment'];
+        $Comment->time =   new Carbon() ; 
+        $Comment->event_id = $id; 
+
+        $idUser = Auth::user()->id;
+        $Comment->user_id = $idUser; 
+
+        $Comment->save(); 
+
+        $Comments = Comment::where('event_id',$id  ) ->get(); 
+        return view('external.event', ['event' => $event, 'user'=>$user , 'Comments'=> $Comments,'users' => $users  ] );
+    }
 
     /**
      * Display the specified resource.
@@ -308,7 +357,7 @@ class EventController extends Controller
         $image_url = $old_event->image;
         if($data['image'] != null)
             $old_event->image        = $this->file_service->upload($data['image'],'event');
-       
+
         else
             $old_event->image = $image_url;
         $old_event->save();
@@ -323,11 +372,11 @@ class EventController extends Controller
         $locals_list = Local::all()->lists('name','id');
         $capacity_list = Local::all();
         $array = [
-                'event'             =>$event,
-                'categories_list'   =>$categories_list,
-                'organizers_list'   =>$organizers_list,
-                'locals_list'       =>$locals_list,
-                'capacity_list'     =>$capacity_list];
+        'event'             =>$event,
+        'categories_list'   =>$categories_list,
+        'organizers_list'   =>$organizers_list,
+        'locals_list'       =>$locals_list,
+        'capacity_list'     =>$capacity_list];
         return view('internal.promoter.editEvent', $array);
     }
     /**
@@ -348,49 +397,49 @@ class EventController extends Controller
         if($local->rows >=1 && !$data['zone_columns'])
             return ['error' => 'se debe especificar filas y columnas para este local numerado'];
         if($data['zone_columns']){ // esta entrando a pesar de no ser numerado el local :S :S
-             for($i = 0; $i < count($data['zone_names']); $i++){
-                 $temp[$i] = [$data['start_column'][$i], $data['start_row'][$i]];
-                 for($j = $i -1; $j >=0; $j--){
-                     if($temp[$j][0] == $data['start_column'][$i] && $temp[$j][1] == $data['start_row'][$i])
-                         return ['error' => 'Hay zonas ubicadas en la misma fila y columna'];
-                 }
-             }
-             for ($i = 0; $i < count($data['zone_columns']); $i++) {
-                 $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
-                 $total_capacity = $total_capacity + $capacity;
-                 if($data['start_row'][$i] > $local->rows || $data['start_column'][$i] > $local->columns||
-                     $data['start_row'][$i]+$data['zone_rows'][$i] -1> $local->rows ||
-                     $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
-                     return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
-             }
-         } else {
-             for($i= 0; $i < count($data['zone_names']);$i++)
-                 $total_capacity = $total_capacity + $data['zone_capacity'][$i];
-         }
-        if($total_capacity > $local->capacity)
-            return ['error' => 'la capacidad del evento excede a la del local'];
-        $result = [
-            'error' => '',
-            'total_capacity' => $total_capacity
-        ];
-        return $result;
+           for($i = 0; $i < count($data['zone_names']); $i++){
+               $temp[$i] = [$data['start_column'][$i], $data['start_row'][$i]];
+               for($j = $i -1; $j >=0; $j--){
+                   if($temp[$j][0] == $data['start_column'][$i] && $temp[$j][1] == $data['start_row'][$i])
+                       return ['error' => 'Hay zonas ubicadas en la misma fila y columna'];
+               }
+           }
+           for ($i = 0; $i < count($data['zone_columns']); $i++) {
+               $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
+               $total_capacity = $total_capacity + $capacity;
+               if($data['start_row'][$i] > $local->rows || $data['start_column'][$i] > $local->columns||
+                   $data['start_row'][$i]+$data['zone_rows'][$i] -1> $local->rows ||
+                   $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
+                   return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
+           }
+       } else {
+           for($i= 0; $i < count($data['zone_names']);$i++)
+               $total_capacity = $total_capacity + $data['zone_capacity'][$i];
+       }
+       if($total_capacity > $local->capacity)
+        return ['error' => 'la capacidad del evento excede a la del local'];
+    $result = [
+    'error' => '',
+    'total_capacity' => $total_capacity
+    ];
+    return $result;
+}
+public function calculateEventCapacity($event_id){
+    $zones = Zone::where('event_id', $event_id)->get();
+    $capacity = 0;
+    foreach ($zones as $zone) {
+        $capacity = $capacity + $zone->capacity;
     }
-    public function calculateEventCapacity($event_id){
-        $zones = Zone::where('event_id', $event_id)->get();
-        $capacity = 0;
-        foreach ($zones as $zone) {
-            $capacity = $capacity + $zone->capacity;
-        }
-        return $capacity;
-    }
-    public function update(UpdateEventRequest $request, $id)
-    {
+    return $capacity;
+}
+public function update(UpdateEventRequest $request, $id)
+{
 
-        $result_dates = $this->join_date_time($request->input('start_time'),$request->input('start_date'));
-        $now = new DateTime();
-        $temp = array_unique($result_dates);
-        if(count($temp) < count($result_dates))
-            return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
+    $result_dates = $this->join_date_time($request->input('start_time'),$request->input('start_date'));
+    $now = new DateTime();
+    $temp = array_unique($result_dates);
+    if(count($temp) < count($result_dates))
+        return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
             //return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
         $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
         if($result['error'] != '')
@@ -429,15 +478,16 @@ class EventController extends Controller
                 return redirect()->back()->withErrors(['Venta de evento iniciada. No se puede alterar la cantidad de zonas.']);
             foreach($zones as $zone){
                 if($zone->capacity != $request->input('zone_capacity.'.$i)||
-                $zone->start_row != $request->input('start_row.'.$i)||
-                $zone->start_column != $request->input('start_column.'.$i)||
-                $zone->columns != $request->input('zone_columns.'.$i)||
-                $zone->rows != $request->input('zone_rows.'.$i))
+                    $zone->start_row != $request->input('start_row.'.$i)||
+                    $zone->start_column != $request->input('start_column.'.$i)||
+                    $zone->columns != $request->input('zone_columns.'.$i)||
+                    $zone->rows != $request->input('zone_rows.'.$i))
                     return redirect()->back()->withInput()->withErrors(['errors' => 'Venta de evento iniciada. No se puede modificar la capacidad']);
                 $i++;
             }
         }
         $data = [
+
                 'name'          => $request->input('name'),
                 'description'   => $request->input('description'),
                 'category_id'   => $request->input('category_id'),
@@ -450,22 +500,22 @@ class EventController extends Controller
             ];
         if($now->getTimestamp() < strtotime($request->input('selling_date'))){
             //antes del sellingdate en general
-            
+
             $this->deletePresentations($event->id);
             $this->deleteZones($event->id);
             $updated_event = $this->updateEvent($data, $event);
             $zone_data = [
-                'zone_names'      => $request->input('zone_names'),
-                'zone_capacity'  => $request->input('zone_capacity'),
-                'price'     => $request->input('price'),
-                'zone_columns'   => $request->input('zone_columns'),
-                'zone_rows'      => $request->input('zone_rows'),
-                'start_column' => $request->input('start_column'),
-                'start_row'    => $request->input('start_row')
+            'zone_names'      => $request->input('zone_names'),
+            'zone_capacity'  => $request->input('zone_capacity'),
+            'price'     => $request->input('price'),
+            'zone_columns'   => $request->input('zone_columns'),
+            'zone_rows'      => $request->input('zone_rows'),
+            'start_column' => $request->input('start_column'),
+            'start_row'    => $request->input('start_row')
             ];
             $data2 = [
             //'start_date'    => $request->input('start_date'),
-                'function_starts_at' => $result_dates
+            'function_starts_at' => $result_dates
             ];
             $this->storeRestOfEvent($zone_data, $data2, $updated_event);
 

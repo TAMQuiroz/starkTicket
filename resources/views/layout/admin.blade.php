@@ -142,6 +142,7 @@
     {!!Html::script('js/bootstrap.min.js')!!}
     {!!Html::script('js/jquery.validate.min.js')!!}
     {!!Html::script('js/messages_es_PE.js')!!}
+    
     <script type="text/javascript">
     $(document).ready(function(){
         $('#form').validate({

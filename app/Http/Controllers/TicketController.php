@@ -12,6 +12,7 @@ use App\Models\Promotions;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 use App\Http\Requests\Ticket\StoreTicketRequest;
+use App\Http\Requests\Giveaway\StoreGiveawayRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -174,6 +175,7 @@ class TicketController extends Controller
                  'seat_id'              => null,
                  'salesman_id'          => null,
                  'picked_up'            => false,
+                 'designee'             => null,
                  'sale_id'              => 1,
                  'created_at'           => new Carbon(),
                  'updated_at'           => new Carbon(),
@@ -183,6 +185,10 @@ class TicketController extends Controller
                     DB::table('tickets')->where('id',$id)->update(['salesman_id'=>\Auth::user()->id]);
                     DB::table('tickets')->where('id',$id)->update(['picked_up'=>true]);
                     DB::table('tickets')->where('id',$id)->update(['designee'=>null]);
+                }
+
+                if($request['designee'] != null){
+                    DB::table('tickets')->where('id',$id)->update(['designee'=>$request['designee']]);
                 }
 
                 if($sale_id != null){
@@ -310,7 +316,32 @@ class TicketController extends Controller
 
     public function giveaway()
     {
+        
         return view('internal.salesman.giveaway');
+    }
+
+    public function giveawayShow(StoreGiveawayRequest $request)
+    {
+        $tickets = Ticket::where('sale_id',$request['sale_id'])->get();
+        if($tickets == null){
+            return back()->withInput()->withErrors(['Esta venta no existe']);
+        }else if($tickets[0]->picked_up == true){
+            return back()->withInput()->withErrors(['Estos tickets ya fueron recogidos']);
+        }else if($tickets[0]->designee != $request['designee'])
+            return back()->withInput()->withErrors(['El usuario asignado no es el mismo que el ingresado']); 
+
+        return view('internal.salesman.giveawayShow',compact('tickets'));
+    }
+
+    public function giveawayConfirm(request $request)
+    {
+        $tickets = Ticket::where('sale_id',$request['sale_id'])->get();
+        foreach ($tickets as $ticket) {
+            $ticket->picked_up = true;
+            $ticket->save();
+        }
+
+        return redirect()->route('salesman.home');
     }
 
     /**
@@ -375,13 +406,24 @@ class TicketController extends Controller
         $event = Event::find($request['event_id']);
         if($event->place->rows != null){
             $slots = [];
+            $taken = [];
+            $reserved = [];
             $slot_presentation = DB::table('slot_presentation')->where('presentation_id',$request['function_id'])->where('status',config('constants.seat_taken'))->get();
             foreach ($slot_presentation as $s_p) {
                 $slot = Slot::find($s_p->slot_id);
                 if($slot->zone->id == $request['zone_id']){
-                    array_push($slots, $slot->row."_".$slot->column);
+                    array_push($taken, $slot->row."_".$slot->column);
                 }
             }
+            $slot_presentation = DB::table('slot_presentation')->where('presentation_id',$request['function_id'])->where('status',config('constants.seat_reserved'))->get();
+            foreach ($slot_presentation as $s_p) {
+                $slot = Slot::find($s_p->slot_id);
+                if($slot->zone->id == $request['zone_id']){
+                    array_push($reserved, $slot->row."_".$slot->column);
+                }
+            }
+            array_push($slots,$taken);
+            array_push($slots,$reserved);
         } else {
             $slots = -1;
         }
@@ -400,9 +442,9 @@ class TicketController extends Controller
         $maxDiscount = 0;
         $bestPromo = null;
         if($request['type_id']==config('constants.credit')){
-            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',2)->get();
+            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',2)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
         }else if($request['type_id']==config('constants.cash')){
-            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->get();
+            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
         }else{
             $promos = null;
         }
@@ -421,6 +463,11 @@ class TicketController extends Controller
             }
         }
         return $bestPromo;
+    }
+    public function getTicketToJson($id)
+    {
+        $ticket =Ticket::findOrFail($id);
+        return $ticket;
     }
 }
 

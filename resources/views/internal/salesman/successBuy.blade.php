@@ -18,40 +18,44 @@
 @stop
 
 @section('content')
-	Su compra se realizó con éxito.
-	<div class="table-responsive">
-	  <table class="table table-bordered" style="widht:1px">
-	    <thead>
-	        <tr>
-	            <th>Evento</th>
-	            <th>Fecha y hora</th>
-	            <th>Zona</th>
-	            <th>Ubicación</th>
-	            <th>Precio</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	    	@foreach($tickets as $ticket)
-	        <tr>
-	        	<td>{{$ticket->event->name}}</td>
-	        	<td>{{date("Y-m-d h:i", $ticket->presentation->starts_at)}}</td>
-	            <td>{{$ticket->zone->name}}</td>  
-	            <td>
-	            	@if($ticket->seat_id != null)
-	            		F{{$ticket->seat->row}}C{{$ticket->seat->column}}
-	            	@else
-	            		No numerado
-	            	@endif
-	            </td>
-	            <td>S/. {{$ticket->price}}</td>
-	        </tr>
-	        @endforeach
-	    </tbody>
-	  </table>
+	<div class="col-md-12">Su compra se realizó con éxito.</div>
+	<div class="col-md-12">Su codigo de comprobante es <b>{{$tickets[0]->sale_id}}</b>, uselo al momento de recoger sus entradas y muestre el documento de identidad de la persona asignada a recogerlas.</div>
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table table-bordered" style="widht:1px">
+		    <thead>
+		        <tr>
+		            <th>Evento</th>
+		            <th>Fecha y hora</th>
+		            <th>Zona</th>
+		            <th>Ubicación</th>
+		            <th>Precio</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    	@foreach($tickets as $ticket)
+		        <tr>
+		        	<td>{{$ticket->event->name}}</td>
+		        	<td>{{date("Y-m-d h:i", $ticket->presentation->starts_at)}}</td>
+		            <td>{{$ticket->zone->name}}</td>  
+		            <td>
+		            	@if($ticket->seat_id != null)
+		            		F{{$ticket->seat->row}}C{{$ticket->seat->column}}
+		            	@else
+		            		No numerado
+		            	@endif
+		            </td>
+		            <td>S/. {{$ticket->price}}</td>
+		        </tr>
+		        @endforeach
+		    </tbody>
+		  </table>
+		</div>
 	</div>
-
-	<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#correo" data-whatever="@mdo">Enviar por Correo</button></td>
-	<td><a href="{{url('salesman')}}"><button type="button" class="btn btn-info">Finalizar</button></a></td>
+	<div class="col-md-12">
+		<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#correo" data-whatever="@mdo">Enviar por Correo</button></td>
+		<td><a href="{{url('salesman')}}"><button type="button" class="btn btn-info">Finalizar</button></a></td>
+	</div>
 	<div class="modal fade" id="correo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">

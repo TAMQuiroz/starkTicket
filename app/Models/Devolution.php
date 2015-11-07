@@ -17,6 +17,9 @@ class Devolution extends Model
     }
 
     public function ticket(){
-    	return $this->belongsTo('App\Models\Ticket','ticket');
+        return $this->belongsTo('App\Models\Ticket','ticket_id');
+    }
+    public function client(){
+        return $this->belongsTo('App\User','client_id');
     }
 }
