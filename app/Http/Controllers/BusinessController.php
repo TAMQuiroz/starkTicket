@@ -8,11 +8,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ExchangeRate\StoreExchangeRateRequest;
 use App\Http\Requests\ExchangeRate\UpdateExchangeRateRequest;
 use App\Models\ExchangeRate;
+use App\Http\Requests\Attendance\AttendanceRequest;
+use App\Http\Requests\Attendance\AttendanceSubmitRequest;
+use Auth;
+use App\User;
 use Carbon\Carbon;
+use App\Models\Attendance;
+use App\Models\AttendanceDetail;
+
 use App\Models\Event;
 use App\Models\Ticket;
 use App\Models\Module;
 use DB;
+
 /*use App\Services\FileService;*/
 
 class BusinessController extends Controller
@@ -60,12 +68,6 @@ class BusinessController extends Controller
         }
         $sumTotal = $sumSale - $sumRefound + $cashFirst;
 
-        /*
-        foreach ($tickets as $ticket ) {
-            $exchangeRate->status         =    0;
-            $exchangeRate->finishDate     =   new Carbon();
-            $exchangeRate->save();
-        }*/
         return view('internal.salesman.cashCount',compact('sales','refunds','sumSale','sumRefound','sumTotal','cashFirst','moduleid'));
     }
 
@@ -75,7 +77,7 @@ class BusinessController extends Controller
         $exchangeRates->setPath('exchange_rate');
         return view('internal.admin.exchangeRate',compact('exchangeRates'));
 
-       /* return view('internal.admin.exchangeRate'); */
+        /* return view('internal.admin.exchangeRate'); */
     }
     public function storeExchangeRate(StoreExchangeRateRequest $request)
     {
@@ -100,7 +102,6 @@ class BusinessController extends Controller
         
         //Control de subida de imagen
 
-
         $module->save();
         
         return redirect('admin/config/exchange_rate');
@@ -115,13 +116,6 @@ class BusinessController extends Controller
              
          return redirect('salesman/cash_count');
     }
-    /*public function updateCashCount(request $request)
-    {
-        $module = Module::find(\Auth::user()->module_id);
-        $module->cash    = $request['total'];
-        $module->save();
-        return redirect('salesman/cash_count');
-    }*/
 
     public function about()
     {
@@ -133,8 +127,60 @@ class BusinessController extends Controller
         return view('internal.admin.system');
     }
 
-    public function attendance()
-    {
-        return view('internal.admin.attendance');
+
+
+    public function attendanceSubmit(AttendanceSubmitRequest $request,  $idSalesman)
+    {       
+
+        $input = $request->all();
+        $salesman = User::find( $idSalesman ); 
+
+        $dateParStart      =     $input['dateIni']    ;
+        $dateParEnd =    $input['dateEnd']     ; 
+
+        $id = $idSalesman ;
+
+        $Attendances = Attendance::whereBetween('datetime' , [$dateParStart, $dateParEnd] )->where('salesman_id', $id) ->get();
+        
+        return view('internal.admin.attendance ', compact('Attendances', 'dateParStart' , 'dateParEnd' , 'interval' , 'salesman')  );
+
     }
+
+    public function attendance(AttendanceRequest $request,  $idSalesman)
+    {       
+        $salesman = User::find( $idSalesman ); 
+        $dateParStart = Carbon::createFromDate(null, null, 01); // defecto el año y el mes, dia 01
+        $dateParEnd = Carbon::createFromDate(null, null, 01);
+
+
+        $dateParEnd =$dateParEnd->addMonth(); 
+        $dateParEnd =$dateParEnd->subDay(); 
+//traemos los datos desde la bd 
+        $id = $idSalesman ;
+
+        $Attendances = Attendance::whereBetween('datetime' , [$dateParStart, $dateParEnd] )->where('salesman_id', $id) ->get();
+
+        $interval =   $dateParStart->diff($dateParEnd)->days;
+        $interval = $interval /  7 ; 
+
+
+  return view('internal.admin.attendance ', compact('Attendances', 'dateParStart' , 'dateParEnd' , 'interval' , 'salesman')  );
+
+}
+
+
+
+public function attendanceDetail(  $idAttendance )
+{      
+
+    $Attendance = Attendance::find($idAttendance);
+    $salesman = User::find( $Attendance->salesman_id ); 
+    $detailsAttendances = AttendanceDetail::where('attendance_id' ,$idAttendance )->get();
+    $index = 0 ;
+    return view('internal.admin.attendanceDetail '  , compact('detailsAttendances' , 'index', 'salesman','Attendance')  );
+
+}
+
+
+
 }

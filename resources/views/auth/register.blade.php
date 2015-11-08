@@ -73,12 +73,14 @@
                   <label for="input8" class="col-sm-2 control-label">Password</label>
                   <div class="col-sm-10">
                     {!! Form::password('password', array('class' => 'form-control', 'id'=> 'input8', 'required')) !!}
+                    <span class="help-block small">Ingrese mínimo 8 caracteres.</span>
                   </div>
                 </div>
                   <div class="form-group col-md-6">
                   <label for="input9" class="col-sm-2 control-label">Confirmar</label>
                   <div class="col-sm-10">
                     {!! Form::password('password_confirmation', array('class' => 'form-control', 'id'=> 'input9', 'required')) !!}
+                    <span class="help-block small">Vuelva a introducir su contraseña.</span>
                   </div>
                 </div>
                 <br>
