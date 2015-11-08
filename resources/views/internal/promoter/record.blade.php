@@ -141,8 +141,11 @@
                 <h5 class="modal-title">Los cambios serán permanentes</h5>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                  <a class="btn btn-info" href="{{url('promoter/event/'.$event->id)}}" method="delete()" title="Delete" >Sí</a>
+                  {!!Form::open(array('route' =>array ('events.delete',$event->id)))!!}
+                  <!-- <form method="post" action={{route('events.delete', $event->id)}}> -->
+                      <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                      <button type="submit" class="btn btn-info">Si</button>
+                  </form>  
               </div>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->

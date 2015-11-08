@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Requests\Event\StoreEventRequest;
+use App\Http\Requests\Event\StoreHighlightRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
 use App\Http\Requests\Comment\StoreCommentPostRequest;
 use App\Http\Controllers\Controller;
@@ -12,6 +13,7 @@ use App\Models\Zone;
 use App\Models\Presentation;
 use App\Models\Slot;
 use App\Models\Category;
+use App\Models\Highlight;
 use App\Models\Organizer;
 use App\Models\Local;
 use App\Models\Comment;
@@ -618,8 +620,15 @@ public function update(UpdateEventRequest $request, $id)
         $event = Event::find($id);
         if(is_null($event))
             return redirect()->back()->withErrors(['error' => 'Seleccione un evento válido']);
+        //verificar que el evento ya terminó completamente o está antes del publication date
+        if($event->publication_date < time()){
+            if($event->presentations->last()->starts_at > time())
+                return redirect()->back()->withErrors(['error' => 'No se puede eliminar este evento ya que aun tiene presentaciones vigentes']);
+        }
+        $this->deletePresentations($id);
+        $this->deleteZones($id);
         $event->delete();
-        return redirect()->back();
+        return redirect()->route('promoter.record');
     }
     public function subcategoriesToAjax($id)
     {
@@ -631,5 +640,46 @@ public function update(UpdateEventRequest $request, $id)
     {
         $local = Local::find($id);
         return $local;
+    }
+
+    public function getHighlights(){
+        $destacados = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->get();
+        return view('internal.promoter.highlights.index', array('destacados'=>$destacados));
+    }
+
+    public function createHighlight(){
+        $activos = Highlight::where('active','1')->orderBy('start_date','desc')->get();
+        $min_date;
+        if($activos->count()<config('constants.maxDestacados')){
+            $min_date = Carbon::now()->addDay();
+        }
+        else{
+            $no_activos = Highlight::where('active','0')->where('start_date', '>', Carbon::now())->get();
+            if($no_activos < config('constants.maxDestacados')){
+                $ultimo_activo = $activos->first();
+                $min_date = $ultimo_activo->start_date->addDays($ultimo_activo->days_active+1);
+            } else{
+                foreach ($no_activos as $no_activo) {
+                    $fecha = $no_activo->start_date->addDays($no_activo->days_active +1);
+                    if($fecha<$min_date || $min_date==null) 
+                        $min_date = $fecha;
+                }
+            }
+        }
+        $eventos = Event::with(['presentations' => function($query){
+            $query->where('starts_at', '<', time());
+        }])->get();
+        return view('internal.promoter.highlights.create', array('fecha_min' => $min_date, 'events' => $eventos));
+    }
+
+    public function storeHighlight(StoreHighlightRequest $request){
+        $highlight = new Highlight;
+        $highlight->days_active = $request->input('days');
+        $highlight->start_date = $request->input('start_date');
+        $highlight->active = false;
+        $event = Event::find($request->input('event_id'));
+        $highlight->associate($event);
+        $highlight->save();
+        return redirect()->route('promoter.highlights.index');
     }
 }
