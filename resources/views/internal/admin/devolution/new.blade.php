@@ -41,8 +41,17 @@
         </form>
     </div>
     <div class="col-sm-6">
-        <div id="ticket">
-        </div>
+      <legend>Ticket</legend>
+      <p><b>ID</b>: <span id="ticket_code"></span></p>
+      <p><b>Price</b>: S/ <span id="ticket_price"></span></p>
+      <legend>Evento</legend>
+      <p><b>ID</b>: <span id="event_id"></span></p>
+      <p><b>Name</b>: <span id="event_name"></span></p>
+      <p><b>Cancelado</b>: <span id="event_cancelled"></span></p>
+      <legend>Cliente</legend>
+      <p><b>ID</b>: <span id="client_id"></span></p>
+      <p><b>Full Name</b>: <span id="client_name"></span></p>
+      <p><b>DI</b>: <span id="client_di"></span></p>
     </div>
 </div>
 @stop
@@ -56,11 +65,23 @@ $(document).ready(function(){
         ticket_detail = "<b>Detalles de ticket</b>";
         $.getJSON(url_base+"/admin/ticket/"+ticket_id+"/tojson", function(data)
         {
-          ticket_detail += "<br>Id : " + data.id;
-          ticket_detail += "<br>Cliente id : " + data.owner_id;
-          ticket_detail += "<br>Evento id : " + data.event_id;
-          ticket_detail += "<br>Precio  : s/" + data.price;
-            $("#ticket").html(ticket_detail);
+          if (data.cancelled == "1")
+            alert("El evento fue cancelado");
+          $("#ticket_code").text(data.ticket_id);
+          $("#ticket_price").text(data.price);
+
+          $("#event_id").text(data.event_id);
+          $("#event_name").text(data.event_name);
+          if (data.event_cancelled)
+            $("#event_cancelled").text("Evento cancelado");
+          else
+            $("#event_cancelled").text("Evento vigente");
+
+
+          $("#client_id").text(data.client_id);
+          $("#client_name").text(data.client_name);
+          $("#client_di").text(data.client_di);
+
         }).fail(function(jqXHR) {
             if (jqXHR.status == 404) {
                 $("#ticket").html("<div class='alert alert-danger'>Ticket no encontrado</div>");

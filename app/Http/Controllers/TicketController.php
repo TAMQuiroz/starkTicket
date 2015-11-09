@@ -465,7 +465,19 @@ class TicketController extends Controller
     public function getTicketToJson($id)
     {
         $ticket =Ticket::findOrFail($id);
-        return $ticket;
+        $ticketDetail = array(
+            "ticket_id"=>$ticket->id,
+            "price"=>$ticket->price,
+            "cancelled"=>$ticket->cancelled,
+            "event_id"=>$ticket->event["id"],
+            "event_name"=>$ticket->event["name"],
+            "event_cancelled"=>$ticket->event["cancelled"],
+
+            "client_id"=>$ticket->owner["id"],
+            "client_name"=>$ticket->owner["name"]." ".$ticket->owner["lastname"],
+            "client_di"=>$ticket->owner["di"]
+            );
+        return json_encode($ticketDetail);
     }
 }
 

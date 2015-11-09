@@ -33,7 +33,7 @@ class PaymentController extends Controller
     public function create($event_id)
     {
         $event = Event::findOrFail($event_id);
-        $fullAmount = Ticket::where(["event_id"=>$event_id,"canceled"=>"0"])->sum('price');
+        $fullAmount = Ticket::where(["event_id"=>$event_id,"cancelled"=>"0"])->sum('price');
         $paid = Payment::where("event_id",$event_id)->sum('paid');
         $debt = 0;
         if ($fullAmount > $paid)
