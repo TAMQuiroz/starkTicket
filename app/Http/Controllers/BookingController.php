@@ -150,6 +150,16 @@ class BookingController extends Controller
 		return view('internal.salesman.payBooking');
 	}
 
+    public function payReserveStore($reserve_id){
+        $tickets = Ticket::where('reserve', $reserve_id);
+        if($tickets->isEmpty())
+            return redirect()->back()->withErrors(['error' => 'no hay reservas para el codigo especificado']);
+        foreach ($tickets as $ticket) {
+            $ticket->reserve = null;
+            $ticket->payment_date = Carbon::now();
+        }
+    }
+
 	public function getSelectedSlots($seats, $zone_id)
     {
         $seats = json_decode($seats);
