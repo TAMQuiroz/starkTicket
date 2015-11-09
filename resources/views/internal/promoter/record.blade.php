@@ -95,35 +95,8 @@
       </div>
           </td>
           <td><a type="button" class="btn btn-info" href="{{url('promoter/event/'.$event->id.'/edit')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#deleteEvent{{$event->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
+          <td><a href="{{ url ('promoter/event/cancel/'.$event->id)}}" class="btn btn-info"><i class="glyphicon glyphicon-remove"></i></a></td>
         </tr>
-
-        <div class="modal fade" id="deleteEvent{{$event->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="exampleModalLabel">Cancelación de Evento</h4>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="form-group">
-                      <h4>{{$event->name}}</h4>
-                <p>Motivo de cancelación </p>
-                <input></input>
-                <p>Fecha de reembolso</p>
-                <input type="date"></input>
-
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-info" data-dismiss="modal">Guardar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
         @endforeach
         </tbody>
       </table>

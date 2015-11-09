@@ -21,7 +21,6 @@ class CreateCancelEventTable extends Migration
             $table->timestamp('date_refund');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
-            $table->softDeletes();
         });
     }
 

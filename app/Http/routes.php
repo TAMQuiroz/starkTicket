@@ -98,6 +98,8 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/event/record', ['as'=>'promoter.record','uses'=>'EventController@showPromoterRecord']);
     Route::get('promoter/event/create', 'EventController@create');
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
+    Route::get('promoter/event/cancel/{event_id}', 'EventController@cancel');
+    Route::post('promoter/event/cancel/{event_id}', 'EventController@cancelStorage');
 
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
     Route::get('promoter/{category_id}/subcategories', 'EventController@subcategoriesToAjax');
