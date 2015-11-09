@@ -8,8 +8,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Module\StoreModuleRequest;
 use App\Http\Requests\Module\UpdateModuleRequest;
 use App\Models\Module;
+use App\Models\ModuleAssigment;
 use Carbon\Carbon;
 use App\Services\FileService;
+use DB;
+use App\User;
 
 class ModuleController extends Controller
 {
@@ -25,7 +28,7 @@ class ModuleController extends Controller
 
     {
         
-        $modules = Module::paginate(2);
+        $modules = Module::paginate(5);
         $modules->setPath('modules');
         return view('internal.admin.module', compact('modules'));
     }
@@ -139,6 +142,77 @@ class ModuleController extends Controller
 
         return redirect('admin/modules');
     }
+    public function showAssigment()
+    {
+        //
+        $assigmentmodules = DB::table('module_assigments')
+                    ->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, module_assigments.dateAssigments as dateAssigment'))
+                    ->where('module_assigments.status','=',1)
+                    ->leftJoin('modules', 'modules.id', '=', 'module_assigments.module_id')
+                    ->leftJoin('users', 'users.id', '=', 'module_assigments.salesman_id')
+                    ->get();
+                    //->lists('modules.name as name','modules.id as id');
+        
+      /* $modules_list = DB::table('modules')
+                    //->select(DB::raw('modules.name as name, modules.id as id'))
+                    //->where('module_assigments.status','=',2)
+                    //-> where('module_assigments.status','is',null)
+                    //->leftJoin('module_assigments', 'modules.id', '=', 'module_assigments.module_id')
+                    //->get();
+                    //->lists('modules.name as name','modules.id as id');*/
+                   
+
+
+        /*$salesmans_list =  DB::table('users')
+                    ->select(DB::raw('users.name as name, users.id as id'))
+                   // ->where('module_assigments.status','=',2) 
+                    -> where('module_assigments.status','is',null)-> where('Susers.role_id','=',2)
+                    ->leftJoin('module_assigments', 'users.id', '=', 'module_assigments.salesman_id')
+                    ->get();
+                    //->lists('users.name as name','users.id as id');*/
+
+        
+        $modules_list = Module::all()->lists('name','id');
+        $salesmans_list = User::all()->where('role_id',2)->where('module_id',null)->lists('di','id');
+
+        $array = ['modules_list' =>$modules_list,
+        'salesmans_list'   =>$salesmans_list];
+
+        //$assigmentmodule->setPath('modules');
+        return view('internal.admin.moduleassigment', compact('assigmentmodules'),$array);
+
+    }
+    public function newAssigment(request $request)
+    {
+        
+       // $modules = Module::where('id',\Auth::user()->id_module)->get();
+
+       // $module = Module::find($request['module_id']);
+       // $module->salesman_id  = $request['salesman_id'];
+       // $module->save();
+
+        $moduleAssiPass = ModuleAssigment::where('module_id',$request['module_id'])->where('status',1)->get();
+
+        if ($moduleAssiPass->count()==0){
+            $salesman = User::find($request['salesman_id']);
+            $salesman->module_id   = $request['module_id'];
+            $salesman->save();
+
+            $moduleassigment                 =   new ModuleAssigment;
+            $moduleassigment->module_id      =   $request['module_id'];
+            $moduleassigment->salesman_id    =   $request['salesman_id'];
+            $moduleassigment->status         =   1;
+            $moduleassigment->dateAssigments =   new Carbon(); 
+          
+
+            $moduleassigment->save();
+
+        }else{
+            return back()->withErrors(['Ese modulo de trabajo ya ha sido asignado']);
+        }
+     
+         return redirect('admin/modules/assigment');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -149,9 +223,32 @@ class ModuleController extends Controller
     public function destroy($id)
     {
         //
-        $module = Module::find($id);
-        
-        $module->delete();
+        $moduleassigment = ModuleAssigment::where('module_id',$id)->where('status',1)->get();
+
+        if ($moduleassigment->count()==0){
+            $module = Module::find($id);
+            $module->delete();
+
+        }else{
+            return back()->withErrors(['Debe primero desasociar el vendedor del punto de venta']);
+        }
+
         return redirect('admin/modules');
+    }
+    public function destroyAssigment($id)
+    {
+        //
+        $moduleassigment = ModuleAssigment::find($id);
+
+        $moduleassigment->status = 2;
+        $moduleassigment->dateMoveAssigments = new Carbon();
+
+        $salesman = User::find($moduleassigment->salesman_id);
+        $salesman->module_id  = null;
+
+        $salesman->save();
+        $moduleassigment->save();
+
+        return redirect('admin/modules/assigment');
     }
 }

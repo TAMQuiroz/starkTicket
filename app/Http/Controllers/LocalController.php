@@ -23,7 +23,7 @@ class LocalController extends Controller
     }
     public function index()
     {
-        $locals = Local::paginate(2);
+        $locals = Local::paginate(10);
         $locals->setPath('local');
         return view('internal.admin.locals.locals',compact('locals'));
     }
