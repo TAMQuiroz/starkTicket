@@ -34,7 +34,7 @@ class Event extends Model
     public function highlights() {
         return $this->hasMany('App\Models\Highlight');
     }
-    public function tickets() {
-        return $this->hasMany('App\Models\Ticket')->count();
+    public function numberTickets() {
+        return $this->hasMany('App\Models\Ticket')->where('event_id',$this->id)->count();
     }
 }
