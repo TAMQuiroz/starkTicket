@@ -66,7 +66,7 @@ $(document).ready(function(){
         $.getJSON(url_base+"/admin/ticket/"+ticket_id+"/tojson", function(data)
         {
           if (data.cancelled == "1")
-            alert("El evento fue cancelado");
+            alert("El ticket ya fue devuelto");
           $("#ticket_code").text(data.ticket_id);
           $("#ticket_price").text(data.price);
 
