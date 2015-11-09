@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use DB;
+use Carbon\Carbon;
 
 class Kernel extends ConsoleKernel
 {
@@ -42,5 +43,22 @@ class Kernel extends ConsoleKernel
                 }
             }
         })->hourly();
+        $schedule->call(function(){
+            $noDestacados = DB::table('highlights')->where('active','1')->get();
+            if($noDestacados)
+                foreach ($noDestacados as $noDestacado) {
+                    $tiempo = strtotime($noDestacado->start_date)+$noDestacado->active_days;
+                    if($tiempo > time()){
+                        $noDestacado->active = false;
+                        $noDestacado->save();
+                    }
+                }
+            $destacados = DB::table('highlights')->where('start_date',Carbon::now())->get();
+            if($destacados)
+                foreach($destacados as $destacado){
+                    $destacado->active = true;
+                    $destacado->save();
+                }
+        })->daily();
     }
 }

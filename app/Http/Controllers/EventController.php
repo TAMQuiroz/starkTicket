@@ -643,13 +643,13 @@ public function update(UpdateEventRequest $request, $id)
     }
 
     public function getHighlights(){
-        $destacados = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->get();
+        $destacados = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->with('event')->get();    
         return view('internal.promoter.highlights.index', array('destacados'=>$destacados));
     }
 
     public function createHighlight(){
         $activos = Highlight::where('active','1')->orderBy('start_date','desc')->get();
-        $min_date;
+        $min_date = Carbon::now();
         if($activos->count()<config('constants.maxDestacados')){
             $min_date = Carbon::now()->addDay();
         }
@@ -666,19 +666,38 @@ public function update(UpdateEventRequest $request, $id)
                 }
             }
         }
+        $destacados = Highlight::lists('event_id');
         $eventos = Event::with(['presentations' => function($query){
             $query->where('starts_at', '<', time());
-        }])->get();
+        }])->whereNotIn('id', $destacados)->get();
         return view('internal.promoter.highlights.create', array('fecha_min' => $min_date, 'events' => $eventos));
     }
 
     public function storeHighlight(StoreHighlightRequest $request){
+        $fecha = strtotime($request->input('start_date'));
+        $fecha_fin = $fecha + ($request->input('days')*3600*24);
+        $eventos = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->get();
+        $dias = array();
+        foreach ($eventos as $evento) {
+            $inicio = strtotime($evento->start_date);
+            $fin = $inicio + ($evento->days_active*24*3600);
+            if(($inicio<=$fecha_fin && $inicio>=$fecha)||($fin<=$fecha_fin && $fin>=$fecha))
+                array_push($dias, ['ini' => $inicio, 'fin' => $fin]);
+        }
+        for($i = $fecha; $i<= $fecha_fin; $i=$i+(3600*24)){
+            $count = 0;
+            foreach ($dias as $key => $value) {
+                if($i >= $value['ini'] && $i <=$value['fin']) $count++;
+            }
+            if($count > config('constants.maxDestacados')-1)
+                return redirect()->back()->withErrors(['error'=> 'Ya hay un evento programado para el rango de fechas seleccionado']);
+        }
         $highlight = new Highlight;
         $highlight->days_active = $request->input('days');
         $highlight->start_date = $request->input('start_date');
         $highlight->active = false;
         $event = Event::find($request->input('event_id'));
-        $highlight->associate($event);
+        $highlight->event()->associate($event);
         $highlight->save();
         return redirect()->route('promoter.highlights.index');
     }

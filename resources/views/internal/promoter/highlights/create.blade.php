@@ -43,7 +43,7 @@
       <label>
           <div class="col-md-6">
               <h4 > Fecha inicio </h4>
-              {!! Form::date('start_date', '', ['class' => 'form-control', 'required']) !!}
+              {!! Form::date('start_date', $fecha_min, ['class' => 'form-control', 'required','min' => $fecha_min]) !!}
           </div>
           <div class="col-md-6">
               <h4 > Duración (días)</h4>
@@ -64,7 +64,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">¿Estas seguro que desea agregar un organizador?</h4>
+          <h4 class="modal-title">¿Estas seguro que desea agregar este evento destacado?</h4>
         </div>
         <div class="modal-body">
           <h5 class="modal-title">Los cambios serán permanentes</h5>
