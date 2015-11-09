@@ -24,6 +24,7 @@ use Carbon\Carbon;
 use App\User;
 use Auth;
 use Session;
+use DB;
 
 use DateTime;
 class EventController extends Controller
@@ -647,14 +648,24 @@ public function update(UpdateEventRequest $request, $id)
     public function cancel($id)
     {
         $event = Event::findOrFail($id);
-        return view('internal.promoter.event.cancel', ['event' => $event]);
+        if ($event->canceled == 1)
+        {
+            Session::flash('message', 'El evento ya fue cancelado!');
+            Session::flash('alert-class','alert-danger');
 
+            return redirect('/promoter/event/record');
+        }
+        return view('internal.promoter.event.cancel', ['event' => $event]);
     }
     public function cancelStorage(CancelEventRequest $request, $event_id)
     {
         $user_id = Auth::user()->id;
 
         $input = $request->all();
+
+        $event = Event::findOrFail($event_id);
+        $event->canceled = "1";
+        $event->save();
 
         $cancel = new CancelEvent;
         $cancel->event_id = $event_id;
