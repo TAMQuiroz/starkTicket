@@ -23,26 +23,44 @@ Fecha  {{ date ( "d-m-Y " , strtotime( $Attendance->datetime )) }}
     </thead>
     <tbody>
       <?php
-      $i=1;
-      while ($i< $detailsAttendances->count()){ ?>
+      $i=0;
+      while ($i< $detailsAttendances->count()){ 
+      ?>
 
       <tr>
-        <th>   {{ date ( "g:i:s a" , strtotime( $detailsAttendances[$i-1]->datetime )) }}  </th>
+        <th>   {{ date ("g:i:s a",strtotime($detailsAttendances[$i]->datetime))}}</th>
+      
         <?php
+        $i++;
+if($i ==  $detailsAttendances->count()  ) { echo "<th>No se cerró sesión</th>"; 
+?>
+
+        <th><a class="btn btn-info" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></th>      
+        </tr>     
+
+      <?php 
+break ; 
+}
+?>
+<?php 
 
         if ($detailsAttendances[$i]->tipo==1){
           echo "<th>No se cerró sesión</th>";   
         } else {
-          echo "<th>{$detailsAttendances[$i]->datetime}</th>";
+
+          ?>
+
+            <th>   {{date("g:i:s a",strtotime($detailsAttendances[$i]->datetime))}}</th>
+
+          <?php   
           $i++;
-        }
-        $i++;  
+        }          
         ?>
-        <th><a class="btn btn-info" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></th>      
-      </tr>     
+
+        <th><a class="btn btn-info" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a></th>      
+        </tr>     
 
       <?php 
-
     }
     ?>
   </tbody>

@@ -54,13 +54,13 @@
 		<br>
 		<div style="-webkit-columns: 100px 4;">
 			<h4>Fecha Inicio</h4>
-			{!! Form::date('dateIni',\Carbon\Carbon::now(), array('class' => 'form-control' , 'required')) !!}
+			{!! Form::date('fechaInicio',\Carbon\Carbon::now(), array('class' => 'form-control' , 'required')) !!}
 
 	<h4>Hora Inicio</h4>
 			{!! Form::time('timeIni','', array('class' => 'form-control', 'required')) !!}
 			
 			<h4>Fecha Fin</h4>
-			{!! Form::date('dateEnd',\Carbon\Carbon::now()->addDay(), array('class' => 'form-control', 'oninput' => 'incrementDate()', 'required')) !!}
+			{!! Form::date('fechaFin',\Carbon\Carbon::now()->addDay(), array('class' => 'form-control', 'required')) !!}
 		
 			<h4>Hora Fin</h4>
 			{!! Form::time('timeEnd','', array('class' => 'form-control', 'required')) !!}
