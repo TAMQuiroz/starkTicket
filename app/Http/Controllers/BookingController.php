@@ -14,6 +14,7 @@ use App\Models\Presentation;
 use App\Models\Zone;
 use App\Http\Requests\Booking\StoreBookingRequest;
 use Carbon\Carbon;
+use Mail;
 use DateTime; use Date;
 
 class BookingController extends Controller
@@ -171,4 +172,13 @@ class BookingController extends Controller
         return $seats;
     }
 
+    public function sendConfirmationMail($reserve_code){
+        $tickets = Ticket::where('reserve', $reserve_code)->get();
+        $mail =  $tickets->first()->owner->email;
+        Mail::send('internal.client.reserveMail', array('tickets' => $tickets), function($message)use($mail){
+            $message->to($mail);
+        });
+        $events = Event::all();
+        return view('external.events',compact('events'));
+    }
 }

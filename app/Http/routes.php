@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth', 'client']], function () {
     Route::get('client/{id}/reservanueva', ['as' => 'booking.create' , 'uses' => 'BookingController@create']);
     //Fin
     Route::get('client/reservaexitosa', 'BookingController@store');
+    Route::get('client/mail/{code}', 'BookingController@sendConfirmationMail');
 });
 
 Route::group(['middleware' => ['auth', 'salesman']], function () {
