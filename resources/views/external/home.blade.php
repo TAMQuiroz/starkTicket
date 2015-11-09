@@ -38,28 +38,18 @@
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="0">
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                        @foreach ($destacados as $key=>$destacado)
+                        <li data-target="#carousel-example-generic" data-slide-to={{$key}} @if($key == 0)class="active" @endif></li>
+                        @endforeach
                     </ol>
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
-                        <div class="item active">
-                            <img class="img-responsive" src="images/peppa.jpg" alt="">
+                        @foreach ($destacados as $key=>$destacado)
+                        <div class="item @if($key==0)active @endif">
+                            <img class="img-responsive" src="{{$destacado->event->image}}" alt="">
 
                         </div>
-                        <div class="item">
-                            <img class="img-responsive" src="images/jaja.jpg" alt="">
-
-                        </div>
-                        <div class="item">
-                            <img class="img-responsive" src="images/arctic.jpg" alt="">
-
-                        </div>
-                        <div class="item">
-                            <img class="img-responsive" src="images/bruta.jpg" alt="">
-                        </div>
+                        @endforeach
                     </div>
 
                     <!-- Controls -->

@@ -23,6 +23,7 @@
           <th>Ver</th>
           <th>Editar</th>
           <th>Cancelar</th>
+          <th>Eliminar</th>
         </tr>
       </thead>
       <tbody>
@@ -96,11 +97,32 @@
           </td>
           <td><a type="button" class="btn btn-info" href="{{url('promoter/event/'.$event->id.'/edit')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
           <td><a href="{{ url ('promoter/event/cancel/'.$event->id)}}" class="btn btn-info"><i class="glyphicon glyphicon-remove"></i></a></td>
+          <td>
+            <a class="btn btn-info" href=""  title="Eliminar"    data-toggle="modal" data-target="#deleteModal{{$event->id}}"><i class="glyphicon glyphicon-remove"></i></a>
+          </td>
         </tr>
+        <!-- MODAL -->
+        <div class="modal fade"  id="deleteModal{{$event->id}}">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">¿Estas seguro que desea eliminar este evento?</h4>
+              </div>
+              <div class="modal-body">
+                <h5 class="modal-title">Los cambios serán permanentes</h5>
+              </div>
+              <div class="modal-footer">
+                  {!!Form::open(array('route' =>array ('events.delete',$event->id)))!!}
+                  <!-- <form method="post" action={{route('events.delete', $event->id)}}> -->
+                      <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                      <button type="submit" class="btn btn-info">Si</button>
+                  </form>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
         @endforeach
         </tbody>
       </table>
-
-
-
 @stop

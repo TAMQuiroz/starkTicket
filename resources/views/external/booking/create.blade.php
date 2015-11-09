@@ -88,7 +88,7 @@
       <br>
       <div class="col-md-12"><hr></div>
       <div class= "button-final col-md-12">
-        <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo" >Reservar Entrada</button>
+        <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#pay" data-whatever="@mdo" disabled>Reservar Entrada</button>
         <a href=""><button type="button" class="btn btn-info">Cancelar Reserva</button></a>
       </div>
       <br><br>
@@ -111,7 +111,7 @@
                       {!! Form::text('expiration', \Carbon\Carbon::now('America/Lima')->addHours(12), ['class' => 'form-control', 'disabled']) !!}
                       <label for="exampleInputEmail2">DNI de Persona Autorizada</label>
                       <!--{!! Form::text('autorized', '', ['class' => 'form-control', 'placeholder' => 'Juan Pérez']) !!}-->
-                      {!!Form::input('number','autorized', '' ,['class'=>'form-control','id'=>'inputDi','maxlength' => 8,'required','min'=>0])!!}
+                      {!!Form::input('number','dni_recojo', '' ,['class'=>'form-control','id'=>'inputDi','min'=>0,'maxlength' => 8,'size'=>8])!!}
                     </div>
                     <a href="{{url('client/reservaexitosa')}}"><button type="submit" class="btn btn-info">Aceptar</button></a>
                     <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>

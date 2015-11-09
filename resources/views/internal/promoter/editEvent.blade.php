@@ -171,7 +171,7 @@
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Precio</label>
                   <div class="col-sm-10">
-                      {!! Form::number('zonePrice','', array('class' => 'form-control','id' => 'input-price','maxlength' => 50,'min' => '0')) !!}
+                      {!! Form::number('zonePrice1','', array('class' => 'form-control','id' => 'input-price','maxlength' => 50,'min' => '0')) !!}
                   </div>
               </div>
               <div class="form-group">
@@ -392,9 +392,9 @@
                         <td><input type="number" style = "width:40px;border:none" name="zone_capacity[]" value="{{$zone->capacity}}" readonly></td>
                         <td><input type="number" name="price[]" style = "width:80px;border:none" value="{{$zone->price}}" readonly></td>
                         <td><input type="number" class="hating" name="zone_columns[]" style = "width:40px;border:none" value="{{$zone->columns}}" readonly></td>
-                        <td><input type="number" name="zone_rows[]" style = "width:40px;border:none" value="{{$zone->rows}}" readonly></td>
-                        <td><input type="number" name="start_column[]" style = "width:40px;border:none" value="{{$zone->start_column}}" readonly></td>
-                        <td><input type="number" name="start_row[]" style = "width:40px;border:none" value="{{$zone->start_row}}" readonly></td>
+                        <td><input type="number" class="hating" name="zone_rows[]" style = "width:40px;border:none" value="{{$zone->rows}}" readonly></td>
+                        <td><input type="number" class="hating" name="start_column[]" style = "width:40px;border:none" value="{{$zone->start_column}}" readonly></td>
+                        <td><input type="number" class="hating" name="start_row[]" style = "width:40px;border:none" value="{{$zone->start_row}}" readonly></td>
                         <td>
                           <a class="btn btn-info"  title="Eliminar"   onclick="deleteZone(this)" ><i class="glyphicon glyphicon-remove"></i></a>
                         </td>
@@ -670,8 +670,9 @@
 
           var ocultos=document.getElementsByClassName("hating");
           console.log("ocultos: " + ocultos.length);
-          for(var i=0;i<ocultos.length;i++)
+          for(var i=0;i<ocultos.length;i++){
             ocultos[i].name="none"+i;
+          }  
 
           //si el local no tiene asientos numerados Do this 
           //$('#seat-map').empty();

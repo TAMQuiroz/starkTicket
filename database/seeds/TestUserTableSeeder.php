@@ -31,7 +31,7 @@ class TestUserTableSeeder extends Seeder
         
         User::insert([  'name' => 'Kevin','lastname' => 'Perez', 'di_type'=> config('constants.national'), 'di' => '12345678', 'address'=>'Av. Dimnsdale',
                         'email' => 'kevinperez@mail.com', 'phone' => '977139700', 'birthday'=>Carbon::create(1990,2,14)->toDateString(), 
-                        'iniDate'=>Carbon::today(), 'role_id'=>2, 'module_id'=>1,'password' => bcrypt('vendedor')]);
+                        'iniDate'=>Carbon::today(), 'role_id'=>2, 'module_id'=>2,'password' => bcrypt('vendedor')]);
 
 
     }

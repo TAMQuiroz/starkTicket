@@ -34,7 +34,7 @@ class AuthController extends Controller
 
     public function getLogout()
     {
-        if(Auth::user()->role_id == 2 ){ // solo lo hago si soy vendedor
+       if(Auth::user()->role_id == 2 ){ // solo lo hago si soy vendedor
 
 
             $dateToday  =   new Carbon() ; 

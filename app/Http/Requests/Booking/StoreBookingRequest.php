@@ -29,6 +29,7 @@ class StoreBookingRequest extends Request
             'zone_id'           =>  'required|integer|exists:zones,id',
             'promotion_id'      =>  'integer',
             'presentation_id'   =>  'required|integer|exists:presentations,id',
+            'dni_recojo'        =>  'numeric|digits:8'
             //'payMode'           =>  'required|integer'
         ];
     }

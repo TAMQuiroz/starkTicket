@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
+use App\Models\Highlight;
 use App\Models\AttendanceDetail;
 use Auth;
 use App\User;
@@ -16,7 +17,8 @@ class PagesController extends Controller
 {
     public function home()
     {
-        return view('external.home');
+        $destacados = Highlight::where('active','1')->get();
+        return view('external.home',array('destacados'=>$destacados));
     }
 
     public function about()
