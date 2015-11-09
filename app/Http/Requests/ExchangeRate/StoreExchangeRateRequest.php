@@ -24,8 +24,8 @@ class StoreExchangeRateRequest extends Request
     public function rules()
     {
         return [
-            'buyingRate'    =>  'required|numeric',
-            'sellingRate'   =>  'required|numeric',
+            'buyingRate'    =>  'required|numeric|max:10',
+            'sellingRate'   =>  'required|numeric|max:10',
         ];
     }
 

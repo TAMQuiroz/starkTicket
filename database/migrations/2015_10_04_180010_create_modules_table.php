@@ -24,6 +24,7 @@ class CreateModulesTable extends Migration
             $table->double('cash');
             $table->timestamp('starTime');
             $table->timestamp('endTime');
+            //$table->integer('salesman_id')->unsigned()->unique()->nullable();
             $table->string('image');
             $table->timestamps();
             $table->softDeletes();

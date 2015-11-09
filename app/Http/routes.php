@@ -192,6 +192,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/modules/{id}/edit', 'ModuleController@edit');
     Route::post('admin/modules/{id}/edit', 'ModuleController@update');
     Route::get('admin/modules/{id}/delete', 'ModuleController@destroy');
+    Route::get('admin/modules/assigment', 'ModuleController@showAssigment');
+    Route::post('admin/modules/assigment', 'ModuleController@newAssigment');
+    Route::get('admin/modules/assigment/{id}/delete', 'ModuleController@destroyAssigment');
 
     Route::get('admin/client', 'ClientController@index');
     Route::post('admin/client/desactive', 'ClientController@desactive');

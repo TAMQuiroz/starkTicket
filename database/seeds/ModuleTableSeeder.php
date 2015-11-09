@@ -23,6 +23,20 @@ class ModuleTableSeeder extends Seeder
         				'cash'		=>  100.00,
         				'starTime'	=>	Carbon::create(2011, 1, 1, 8, 0, 0),
         				'endTime'	=>	Carbon::create(2011, 1, 1, 17, 0, 0),
+                        //'salesman_id' => 2,
         				'image'		=> 'images/examples/map1.PNG']);
+
+           Module::insert([  'name' => 'Punto 2',
+                        'address'   => 'Calle 200',
+                        'district'  => 'San Miguel',
+                        'province'  => 'Lima',
+                        'state'     => 'Lima',
+                        'phone'     => '567890123',
+                        'email'     => 'punto2@mail.com',
+                        'cash'      =>  200.00,
+                        'starTime'  =>  Carbon::create(2011, 1, 1, 8, 0, 0),
+                        'endTime'   =>  Carbon::create(2011, 1, 1, 17, 0, 0),
+                       // 'salesman_id' => 5,
+                        'image'     => 'images/examples/map1.PNG']);
     }
 }
