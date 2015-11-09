@@ -224,8 +224,6 @@ class TicketController extends Controller
             DB::commit();
 
         }catch (\Exception $e){
-            var_dump($e);
-            dd('rollback');
             DB::rollback();
             return back()->withInput($request->except('seats'))->withErrors(['Por favor intentelo nuevamente']);
         }
@@ -316,7 +314,7 @@ class TicketController extends Controller
 
     public function giveaway()
     {
-        
+
         return view('internal.salesman.giveaway');
     }
 
@@ -328,7 +326,7 @@ class TicketController extends Controller
         }else if($tickets[0]->picked_up == true){
             return back()->withInput()->withErrors(['Estos tickets ya fueron recogidos']);
         }else if($tickets[0]->designee != $request['designee'])
-            return back()->withInput()->withErrors(['El usuario asignado no es el mismo que el ingresado']); 
+            return back()->withInput()->withErrors(['El usuario asignado no es el mismo que el ingresado']);
 
         return view('internal.salesman.giveawayShow',compact('tickets'));
     }

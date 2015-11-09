@@ -319,7 +319,7 @@ public function store(StoreEventRequest $request)
     {
         $objs = Event::all();
 
-        return view('internal.promoter.record',["events"=>$objs]);
+        return view('internal.promoter.event.record',["events"=>$objs]);
     }
     /**
      * Show the form for editing the specified resource.
@@ -648,7 +648,7 @@ public function update(UpdateEventRequest $request, $id)
     public function cancel($id)
     {
         $event = Event::findOrFail($id);
-        if ($event->canceled == 1)
+        if ($event->cancelled == 1)
         {
             Session::flash('message', 'El evento ya fue cancelado!');
             Session::flash('alert-class','alert-danger');
@@ -664,7 +664,7 @@ public function update(UpdateEventRequest $request, $id)
         $input = $request->all();
 
         $event = Event::findOrFail($event_id);
-        $event->canceled = "1";
+        $event->cancelled = "1";
         $event->save();
 
         $cancel = new CancelEvent;

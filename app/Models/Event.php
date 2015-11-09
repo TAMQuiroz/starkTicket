@@ -34,4 +34,7 @@ class Event extends Model
     public function highlights() {
         return $this->hasMany('App\Models\Highlight');
     }
+    public function tickets() {
+        return $this->hasMany('App\Models\Ticket')->count();
+    }
 }

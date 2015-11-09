@@ -17,7 +17,7 @@ class CreateTicketsTable extends Migration
             $table->timestamp('payment_date')->nullable();
             $table->string('reserve');
             $table->timestamp('refund_date')->nullable();
-            $table->boolean('canceled')->default(false);
+            $table->boolean('cancelled')->default(false);
             $table->integer('owner_id')->unsigned()->nullable();
             $table->integer('event_id')->unsigned();
             $table->integer('presentation_id')->unsigned();
