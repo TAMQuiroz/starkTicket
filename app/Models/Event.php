@@ -37,4 +37,7 @@ class Event extends Model
     public function numberTickets() {
         return $this->hasMany('App\Models\Ticket')->where('event_id',$this->id)->count();
     }
+    public function amountAccumulated() {
+        return $this->hasMany('App\Models\Ticket')->where('event_id',$this->id)->sum('price');
+    }
 }
