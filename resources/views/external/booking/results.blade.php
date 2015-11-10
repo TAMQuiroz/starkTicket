@@ -42,27 +42,10 @@
 	<br><br>
 	 
 <form action="{{action('BookingController@sendConfirmationMail',$codigo)}}" enctype="multipart/form-data">		
-	<td><button class="btn btn-info" data-toggle="modal" data-target="#send" data-whatever="@mdo">Enviar información al Correo</button></td>
+	<td><button type="submit" class="btn btn-info" data-toggle="modal" data-target="#send" data-whatever="@mdo">Enviar información al Correo</button></td>
 </form>
 	<td><a href={{url('event/'.$event->id)}}><button type="button" class="btn btn-info">Finalizar</button></a></td>
-<!--
-<div class="modal fade" id="send" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Ingrese Email:</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    {!!Form::input('email','',['class'=>'form-control'])!!}
-                    <br>
-                </div>
-                <button type="submit" class="btn btn-info">Enviar</button>
-            </div>
-        </div>
-    </div>
-</div> -->
+
 @stop
 
 @section('javascript')
