@@ -8,7 +8,7 @@
 @stop
 
 @section('title')
-	Lista de vendedores
+  Lista de vendedores
 @stop
 
 @section('content')
@@ -110,24 +110,14 @@ Fin de comentario-->
                     <a class="btn btn-info" href="{{url('admin/salesman/'.$vendedor->id.'/edit')}}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
                 </td>
                 <td>
-                    <a class="btn btn-info" href="#" title="Detalle" data-toggle="modal" data-target="#edit"><i class="glyphicon glyphicon-plus"></i></a>
-                  </td>
-                    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <a class="btn btn-info" href="detalles" title="Detalle" data-toggle="modal" data-target="#edit{{$vendedor->id}}"><i class="glyphicon glyphicon-plus"></i></a>                  
+                    <div class="modal fade" id="edit{{$vendedor->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                       <div class="modal-dialog" role="document">
                           <div class="modal-content">
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Detalle del promotor</h4>
+                            <h4 class="modal-title" id="myModalLabel">Detalle del vendedor</h4>
                           </div>
-                          <!--
-                          <div class="modal-body">
-                            <h4>Nombre</h4>                            
-                            <h4>Direccion</h4>
-                            <h4>DNI</h4>
-                            <h4>Telefono</h4>
-                            <h4>Email</h4>
-                          </div>
-                          -->
                           
                           <div class="modal-body">
                             <h4>Nombre</h4>
@@ -153,7 +143,7 @@ Fin de comentario-->
                         </div>
                       </div>
                     </div>
-                    
+                </td> 
                 <td>
                     <!--
                      <a class="btn btn-info" href="{{url('admin/salesman/'.$vendedor->id.'/delete')}}"  title="Eliminar" ><i class="glyphicon glyphicon-remove"></i></a>
