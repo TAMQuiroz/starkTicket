@@ -62,7 +62,9 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     //Route::post('salesman/cash_count', 'BusinessController@updateCashCount');
 
     Route::get('salesman/exchange_gift', 'GiftController@createExchange');
-    Route::get('salesman/event/{id}/pay_booking', 'BookingController@pay');
+    Route::get('salesman/event/pay_booking', ['as' => 'booking.search', 'uses' =>'BookingController@searchBooking']);
+    Route::post('salesman/event/pay_booking/show', ['as' => 'booking.show', 'uses' =>'BookingController@showPayBooking']);
+    Route::post('salesman/event/pay_booking/store', ['as' => 'booking.store', 'uses' =>'BookingController@storePayBooking']);
 
     Route::get('salesman/giveaway', ['uses'=>'TicketController@giveaway','as'=>'ticket.giveaway']);
     Route::post('salesman/giveaway', ['uses'=>'TicketController@giveawayShow','as'=>'ticket.giveaway.show']);
@@ -83,6 +85,7 @@ Route::get('getSlots', ['uses'=>'TicketController@getSlots','as'=>'ajax.getSlots
 Route::get('getZone', ['uses'=>'TicketController@getZone','as'=>'ajax.getZone']);
 Route::get('getTakenSlots', ['uses'=>'TicketController@getTakenSlots','as'=>'ajax.getTakenSlots']);
 Route::get('getPromo', ['uses'=>'TicketController@getPromo','as'=>'ajax.getPromo']);
+Route::get('getReserves', ['uses'=>'BookingController@getReservesByDni','as'=>'ajax.getReserves']);
 
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/', ['as'=>'promoter.home','uses'=>'PagesController@promoterHome']);

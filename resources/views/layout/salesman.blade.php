@@ -35,7 +35,7 @@
                             <li><a href="{{url('salesman/exchange_gift')}}">Canjeo de regalos</a></li>
                             <!--<li><a href="{{url('salesman/event/{id}/buy')}}">Venta Ticket</a></li>-->
                             <li><a href="{{url('salesman/giveaway')}}">Entrega Ticket</a></li>
-                            <li><a href="{{url('salesman/event/{id}/pay_booking')}}">Cobrar Reserva</a></li>
+                            <li><a href="{{url('salesman/event/pay_booking')}}">Cobrar Reserva</a></li>
                         </ul>
                     </li>
                 </ul>

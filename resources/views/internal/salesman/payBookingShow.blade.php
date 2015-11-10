@@ -15,29 +15,29 @@
         <label>
             <div class="col-md-4">
                 <h4 > Nombre del Evento </h4>
-                {!! Form::text('event_name', '', ['class' => 'form-control', 'disabled']) !!}
+                {!! Form::text('event_name', $event->name, ['class' => 'form-control', 'disabled']) !!}
             </div>
             <div class="col-md-4">
                 <h4 class="boxy"> Función del evento </h4>
-                {!! Form::text('presentation_id', null, ['class' => 'form-control boxy', 'disabled']) !!}
+                {!! Form::text('presentation_id', date('d-m-Y',$presentation->starts_at), ['class' => 'form-control boxy', 'disabled']) !!}
             </div>
             <div class="col-md-4"> 
                 <h4 > Zona del Evento </h4>
-                {!! Form::text('zone_id', null, ['class' => 'form-control', 'disabled']) !!}
+                {!! Form::text('zone_id', $zone->name, ['class' => 'form-control', 'disabled']) !!}
             </div>
             <div class="col-md-6"> 
                 <h4 > Cantidad de entradas </h4>
-                {!! Form::text('quantity', null, ['class' => 'form-control', 'disabled']) !!}
+                {!! Form::text('quantity', $tickets->count(), ['class' => 'form-control', 'disabled']) !!}
             </div>
             <div class="col-md-6"> 
                 <h4 > Total (S/.) </h4>
-                {!! Form::text('total', null, ['class' => 'form-control', 'disabled']) !!}
+                {!! Form::text('total', $tickets->sum('price'), ['class' => 'form-control', 'disabled']) !!}
             </div>
 
         </label>
     </div>
     <div class= "button-final col-md-12">
-        <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#mix2" data-whatever="@mdo" disabled="">Realizar Pago</button>
+        <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#mix2" data-whatever="@mdo">Realizar Pago</button>
         <a href="{{url('salesman/')}}"><button type="button" class="btn btn-info">Cancelar Venta</button></a>
         <button type="button" class="btn btn-info" data-dismiss="modal" data-target="#visualizarVenta"><i class="glyphicon glyphicon-print"></i></button>
 
