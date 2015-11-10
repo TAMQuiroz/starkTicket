@@ -98,6 +98,7 @@ class BookingController extends Controller
                  'seat_id'              => null,
                  'created_at'           => new Carbon(),
                  'updated_at'           => new Carbon(),
+                 'designee'             => \Auth::user()->di,
                 ]);
 
                 if($sale_id != null){
@@ -146,10 +147,25 @@ class BookingController extends Controller
         //return  $array['seats'][0]->row ;
     }
 	
-	public function pay($id)
+	public function searchBooking()
 	{
 		return view('internal.salesman.payBooking');
 	}
+
+    public function showPayBooking(Request $request){
+        $codigo = $request['reserve_code'];
+        $tickets = Ticket::where('reserve',$codigo)->get();
+        $event = $tickets->first()->event;
+        $zone = $tickets->first()->zone;
+        $presentation = $tickets->first()->presentation;
+        return view('internal.salesman.payBookingShow',
+            array('tickets' => $tickets, 'event' => $event,
+                'zone' => $zone, 'presentation' => $presentation));
+    }
+
+    public function storePayBooking(Request $request){
+
+    }
 
     public function payReserveStore($reserve_id){
         $tickets = Ticket::where('reserve', $reserve_id);
@@ -180,5 +196,24 @@ class BookingController extends Controller
         });
         $events = Event::all();
         return view('external.events',compact('events'));
+    }
+
+    public function getReservesByDni(Request $request){
+        $dni = $request['dni'];
+        if(strlen($dni)!=8 || !is_numeric($dni))
+            return response()->json('El dni debe tener 8 digitos',400);
+        $reservas= Ticket::where('designee',$dni)->lists('reserve')->unique();
+        if($reservas->isEmpty())
+            return response()->json('No hay reservas con este dni',400);
+        $arreglo = array();
+        foreach ($reservas as $key=>$value) {
+            $tickets= Ticket::where('reserve',$value)->get();
+            $arreglo[$key] = ['codigo' => $value, 
+            'nombre' => $tickets->first()->event->name,
+            'cantidad' => $tickets->count(),
+            'zona'    => $tickets->first()->zone->name,
+            'funcion' => date('d-m-Y',$tickets->first()->presentation->starts_at)];
+        }
+        return $arreglo;
     }
 }
