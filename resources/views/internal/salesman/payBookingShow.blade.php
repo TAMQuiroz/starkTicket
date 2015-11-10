@@ -51,7 +51,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Monto a Pagar</label>
-                            {!!Form::number('',null,['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
+                            {!!Form::number('',$tickets->sum('price'),['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
                             <br>
                             <div class="form-group checkbox pay">
                                 <label>
