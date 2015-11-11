@@ -197,8 +197,18 @@ class TicketController extends Controller
 
                 if($request['promotion_id']!=""){
                     $promo = Promotions::find($request['promotion_id']);
-                    if($promo->desc != null)
+                    if($promo->desc != null){
                         DB::table('tickets')->where('id',$id)->decrement('price', $zone->price * ($promo->desc/100));
+                    }else{
+	                	$pu = Zone::find($request['zone_id'])->price;
+	                	$quantity = $request['quantity'];
+	                	$pt = $pu * $quantity;
+	                	$discTickets = $quantity / $promo->carry;
+	                	$discTickets = floor($discTickets);
+	                	$pd = $pt - $discTickets*$pu;
+	                	$desc = 100 - ($pd/$pt)*100;
+	                	DB::table('tickets')->where('id',$id)->decrement('price', $zone->price * ($desc/100));
+                    }
                 }
 
                 //Si existe cliente
@@ -442,22 +452,41 @@ class TicketController extends Controller
         $maxDiscount = 0;
         $bestPromo = null;
         if($request['type_id']==config('constants.credit')){
-            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',2)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
+            $promo_disc = Promotions::where('event_id',$request['event_id'])->where('access_id',2)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
         }else if($request['type_id']==config('constants.cash')){
-            $promos = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
+            $promo_disc = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
         }else{
             $promos = null;
         }
 
+        $promos = Promotions::where('event_id',$request['event_id'])->where('typePromotion',2)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
+        $promos = $promos->merge($promo_disc);
+        
         if($promos){
-            foreach ($promos as $key => $promo) {
+            foreach ($promos as $promo) {
                 if ($promo->typePromotion == config('constants.discount')){
                     if ($promo->desc > $maxDiscount){
                         $maxDiscount = $promo->desc;
                         $bestPromo = $promo;
                     }
+
                 }else{
-                    //GG OFERTA X por Y ÑO QUIERO
+                	if($promo->zone_id == $request['zone_id']){
+
+	                	$pu = Zone::find($request['zone_id'])->price;
+	                	$quantity = $request['quantity'];
+	                	$pt = $pu * $quantity;
+	                	$discTickets = $quantity / $promo->carry;
+	                	$discTickets = floor($discTickets);
+	                	$pd = $pt - $discTickets*$pu;
+	                	$desc = 100 - ($pd/$pt)*100;
+	                	if ($desc >= $maxDiscount){
+	                		$maxDiscount = $desc;
+	                		$promo->desc = $desc;
+	                        $bestPromo = $promo;
+
+	                	}
+                	}
                 }
 
             }

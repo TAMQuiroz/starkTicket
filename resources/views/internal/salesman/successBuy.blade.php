@@ -19,7 +19,6 @@
 
 @section('content')
 	<div class="col-md-12">Su compra se realizó con éxito.</div>
-	<div class="col-md-12">Su codigo de comprobante es <b>{{$tickets[0]->sale_id}}</b>, uselo al momento de recoger sus entradas y muestre el documento de identidad de la persona asignada a recogerlas.</div>
 	<div class="col-md-12">
 		<div class="table-responsive">
 		  <table class="table table-bordered" style="widht:1px">
