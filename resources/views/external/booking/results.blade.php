@@ -42,7 +42,7 @@
 	<br><br>
 	 
 <form action="{{action('BookingController@sendConfirmationMail',$codigo)}}" enctype="multipart/form-data">		
-	<td><button type="submit" class="btn btn-info" data-toggle="modal" data-target="#send" data-whatever="@mdo">Enviar información al Correo</button></td>
+	<td><button type="submit" class="btn btn-info">Enviar información al Correo</button></td>
 </form>
 	<td><a href={{url('event/'.$event->id)}}><button type="button" class="btn btn-info">Finalizar</button></a></td>
 
