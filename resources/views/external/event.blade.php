@@ -58,38 +58,32 @@
 							
 							<br>
 					 
-@if(isset($user) && $user->role_id == config('constants.client'))
-
-				<br><br>
-				<div class="form-group">
-					<label for="comment">Ingrese comentario:</label>
-					{!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '5']) !!}
-					<button type="submit" class="btn btn-info">Aceptar</button>
-					<br>
-
-
-					@else
-					<div class="form-group">
-						@endif	  
-
-						<br>
-						<label for="comment">Comentarios:</label>
-
-						@foreach ($Comments as $Comment)
-						<h6>{{$users[($Comment->user_id)-1]['name'] }} {{ date ( "d-m-Y H:ia" , strtotime( $Comment->time )) }}    </h6>
-						{!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> $Comment->description, 'readonly']) !!}
-
-						@endforeach
-
-					</div>
+							@if(isset($user) && $user->role_id == config('constants.client'))
+							<br><br>
+							<div class="form-group">
+								<label for="comment">Ingrese comentario:</label>
+								{!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '5']) !!}
+								<button type="submit" class="btn btn-info">Aceptar</button>
+								<br>
 
 
+							@else
+							<div class="form-group">
+							@endif	  
+								<br>
+								<label for="comment">Comentarios:</label>
 
+								@foreach ($Comments as $Comment)
+								<br>
+								<h6 style="display:inline-block">{{$users[($Comment->user_id)-1]['name'] }} {{ date ( "d-m-Y H:ia" , strtotime( $Comment->time )) }}</h6>
+								@if(isset($user) && $user->role_id == config('constants.admin'))
+								<button type="button" class="btn btn-info" style="float:right">Eliminar</button>
+								@endif
+								{!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> $Comment->description, 'readonly']) !!}
 
+								@endforeach
 
-
-
-
+							</div>
 						</section>
 					</div>
 					<!-- /Content -->
