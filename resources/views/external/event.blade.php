@@ -75,12 +75,29 @@
 
 								@foreach ($Comments as $Comment)
 								<br>
-								<h6 style="display:inline-block">{{$users[($Comment->user_id)-1]['name'] }} {{ date ( "d-m-Y H:ia" , strtotime( $Comment->time )) }}</h6>
-								@if(isset($user) && $user->role_id == config('constants.admin'))
-								<button type="button" class="btn btn-info" style="float:right">Eliminar</button>
-								@endif
+								<h6>{{$users[($Comment->user_id)-1]['name'] }} {{ date ( "d-m-Y H:ia" , strtotime( $Comment->time )) }}</h6>
 								{!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> $Comment->description, 'readonly']) !!}
-
+								@if(isset($user) && $user->role_id == config('constants.admin'))
+								<button type="button" class="btn btn-info" style="float:right" data-toggle="modal" data-target="#deleteModal">Eliminar</button>
+								<!-- MODAL -->
+							    <div class="modal fade"  id="deleteModal">
+							      <div class="modal-dialog">
+							        <div class="modal-content">
+							          <div class="modal-header">
+							            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							            <h4 class="modal-title">¿Estas seguro que desea eliminar el comentario?</h4>
+							          </div>
+							          <div class="modal-body">
+							            <h5 class="modal-title">Los cambios serán permanentes</h5>
+							          </div>
+							          <div class="modal-footer">
+							              <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+							              <a class="btn btn-info" title="Delete" >Sí</a>
+							          </div>
+							        </div><!-- /.modal-content -->
+							      </div><!-- /.modal-dialog -->
+   								</div><!-- /.modal -->
+								@endif
 								@endforeach
 
 							</div>
