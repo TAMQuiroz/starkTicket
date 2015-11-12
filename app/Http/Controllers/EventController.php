@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Requests\Event\StoreEventRequest;
+use App\Http\Requests\Event\StoreHighlightRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
 use App\Http\Requests\Comment\StoreCommentPostRequest;
 use App\Http\Controllers\Controller;
@@ -13,6 +14,7 @@ use App\Models\Zone;
 use App\Models\Presentation;
 use App\Models\Slot;
 use App\Models\Category;
+use App\Models\Highlight;
 use App\Models\Organizer;
 use App\Models\Local;
 use App\Models\Comment;
@@ -632,8 +634,15 @@ public function update(UpdateEventRequest $request, $id)
         $event = Event::find($id);
         if(is_null($event))
             return redirect()->back()->withErrors(['error' => 'Seleccione un evento válido']);
+        //verificar que el evento ya terminó completamente o está antes del publication date
+        if($event->publication_date < time()){
+            if($event->presentations->last()->starts_at > time())
+                return redirect()->back()->withErrors(['error' => 'No se puede eliminar este evento ya que aun tiene presentaciones vigentes']);
+        }
+        $this->deletePresentations($id);
+        $this->deleteZones($id);
         $event->delete();
-        return redirect()->back();
+        return redirect()->route('promoter.record');
     }
     public function subcategoriesToAjax($id)
     {
@@ -645,5 +654,65 @@ public function update(UpdateEventRequest $request, $id)
     {
         $local = Local::find($id);
         return $local;
+    }
+
+    public function getHighlights(){
+        $destacados = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->with('event')->get();    
+        return view('internal.promoter.highlights.index', array('destacados'=>$destacados));
+    }
+
+    public function createHighlight(){
+        $activos = Highlight::where('active','1')->orderBy('start_date','desc')->get();
+        $min_date = Carbon::now();
+        if($activos->count()<config('constants.maxDestacados')){
+            $min_date = Carbon::now()->addDay();
+        }
+        else{
+            $no_activos = Highlight::where('active','0')->where('start_date', '>', Carbon::now())->get();
+            if($no_activos < config('constants.maxDestacados')){
+                $ultimo_activo = $activos->first();
+                $min_date = $ultimo_activo->start_date->addDays($ultimo_activo->days_active+1);
+            } else{
+                foreach ($no_activos as $no_activo) {
+                    $fecha = $no_activo->start_date->addDays($no_activo->days_active +1);
+                    if($fecha<$min_date || $min_date==null) 
+                        $min_date = $fecha;
+                }
+            }
+        }
+        $destacados = Highlight::lists('event_id');
+        $eventos = Event::with(['presentations' => function($query){
+            $query->where('starts_at', '<', time());
+        }])->whereNotIn('id', $destacados)->get();
+        return view('internal.promoter.highlights.create', array('fecha_min' => $min_date, 'events' => $eventos));
+    }
+
+    public function storeHighlight(StoreHighlightRequest $request){
+        $fecha = strtotime($request->input('start_date'));
+        $fecha_fin = $fecha + ($request->input('days')*3600*24);
+        $eventos = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->get();
+        $dias = array();
+        foreach ($eventos as $evento) {
+            $inicio = strtotime($evento->start_date);
+            $fin = $inicio + ($evento->days_active*24*3600);
+            if(($inicio<=$fecha_fin && $inicio>=$fecha)||($fin<=$fecha_fin && $fin>=$fecha))
+                array_push($dias, ['ini' => $inicio, 'fin' => $fin]);
+        }
+        for($i = $fecha; $i<= $fecha_fin; $i=$i+(3600*24)){
+            $count = 0;
+            foreach ($dias as $key => $value) {
+                if($i >= $value['ini'] && $i <=$value['fin']) $count++;
+            }
+            if($count > config('constants.maxDestacados')-1)
+                return redirect()->back()->withErrors(['error'=> 'Ya hay un evento programado para el rango de fechas seleccionado']);
+        }
+        $highlight = new Highlight;
+        $highlight->days_active = $request->input('days');
+        $highlight->start_date = $request->input('start_date');
+        $highlight->active = false;
+        $event = Event::find($request->input('event_id'));
+        $highlight->event()->associate($event);
+        $highlight->save();
+        return redirect()->route('promoter.highlights.index');
     }
 }

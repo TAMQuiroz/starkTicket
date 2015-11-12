@@ -34,10 +34,16 @@
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Eventos <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{url('promoter/event/create')}}">Nuevo</a></li>
-                            <li class="divider"></li>
                             <li><a href="{{url('promoter/event/record')}}">Historial</a></li>
-                            <li><a href="{{url('promoter/promotion')}}">Promociones</a></li>
-                            <li><a href="{{url('promoter/promotion/new')}}">Nueva Promoción</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{url('promoter/highlights')}}">Destacados</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Promociones <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{url('promoter/promotion')}}">Listar</a></li>
+                            <li><a href="{{url('promoter/promotion/new')}}">Nuevo</a></li>
                         </ul>
                     </li>
                     <li>

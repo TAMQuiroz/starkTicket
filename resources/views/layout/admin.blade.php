@@ -72,6 +72,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{url('admin/modules')}}">Listar</a></li>
                             <li><a href="{{url('admin/modules/new')}}">Nuevo</a></li>
+                            <li><a href="{{url('admin/modules/assigment')}}">Asignación de Módulos</a></li>
                         </ul>
                     </li>
                     <li>
@@ -142,6 +143,7 @@
     {!!Html::script('js/bootstrap.min.js')!!}
     {!!Html::script('js/jquery.validate.min.js')!!}
     {!!Html::script('js/messages_es_PE.js')!!}
+    
     <script type="text/javascript">
     $(document).ready(function(){
         $('#form').validate({

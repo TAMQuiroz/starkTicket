@@ -27,19 +27,22 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-left">
-                    <li>
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Ventas <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{url('salesman/cash_count')}}">Apertura y Arqueo de caja</a></li>
-                            <li><a href="{{url('salesman/exchange_gift')}}">Canjeo de regalos</a></li>
-                            <!--<li><a href="{{url('salesman/event/{id}/buy')}}">Venta Ticket</a></li>-->
-                            <li><a href="{{url('salesman/giveaway')}}">Entrega Ticket</a></li>
-                            <li><a href="{{url('salesman/event/{id}/pay_booking')}}">Cobrar Reserva</a></li>
-                        </ul>
-                    </li>
-                </ul>
 
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a href="{{url('salesman/cash_count')}}">Apertura y Arqueo de caja</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a href="{{url('salesman/exchange_gift')}}">Canjeo de regalos</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a href="{{url('event')}}">Venta Ticket</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a href="{{url('salesman/giveaway')}}">Entrega Ticket</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a href="{{url('salesman/event/{id}/pay_booking')}}">Cobrar Reserva</a></li>
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="">{{ Auth::user()->name }}</a></li>
                     <li><a href="{{url('auth/logout')}}">Salir</a></li>
