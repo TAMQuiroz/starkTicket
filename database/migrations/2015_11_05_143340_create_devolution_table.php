@@ -15,7 +15,6 @@ class CreateDevolutionTable extends Migration
         Schema::create('devolutions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('ticket_id')->unsigned();
-            $table->integer('client_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->double('price');
             $table->double('repayment');

@@ -37,70 +37,72 @@
       <tbody>
         @foreach($event_data as $event)
         <tr>
-          <!-- <td>{{$event->id}}</td> -->
-          <td>{{$event->name}}</td>
-          <td>{{date("d/m/Y",$event->publication_date)}}</td>
-          <td>{{date("d/m/Y",$event->selling_date)}}</td>
-          <td>@if ($event->cancelled) Cancelado @else Vigente @endif</td> <!--falta la logica de vigente -->
-          <td>{{ $event->numberTickets() }}</td>
-          <td>S/. {{ $event->amountAccumulated() }}</td>
-          <td><a href="{{ url ('promoter/transfer_payments/'.$event->id.'/create') }}" class="btn btn-info">$</a></td>
-          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info{{$event->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button>
-      <div class="modal fade" id="info{{$event->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="exampleModalLabel">Detalle de Evento</h4>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="form-group">
 
-            <h4>Nombre: {{$event->name}}</h4>
-            <p>Código:  {{$event->id}} </p>
-            <p>Creado Por: {{$event->organization->organizerName}} {{$event->organization->organizerLastName}}  </p>
-            <p>Promotor: {{$event->organization->organizerName}} {{$event->organization->organizerLastName}}</p>
-            <p>Descripción:  {{$event->description}} </p>
-            <p>Local: {{$event->place->name}} </p>
-            <p>Categoria: {{$event->category->name}} </p>
-            <!-- <p>Sub Categoria: {{$event->category->name}} </p> -->
-            <p>Fecha Creación: {{date_format(date_create($event->created_at),"d/m/Y")}}</p>
-            <p>Fecha Publicación: {{date("d/m/Y",$event->publication_date)}}</p>
-            <p>Fecha Inicio ventas: {{date("d/m/Y",$event->selling_date)}}</p>
-            <p>Duracion función: {{$event->time_length}} hora(s) </p>
-            <!-- <p>Fecha Duración del {{date("d/m/Y",$event->selling_date)}} al {{date("d/m/Y",strtotime("+".$event->time_length."days",$event->selling_date))}}</p> -->
-            <h4>Entradas:</h4>
-            <ul>
-              @foreach ($event->zones as $zone)
-                <li>
-                    {{$zone->name}} : S/. {{$zone->price}}
-                </li>
-              @endforeach
-            </ul>
-            <h4>Funciones:</h4>
-            <ul>
-              @foreach ($event->presentations as $present)
-                <li>
-                    Funcion: {{date("d/m/Y",$present->starts_at)}}
+          <td>{{$event['event']->name}}</td>
+          <td>{{date("d/m/Y",$event['event']->publication_date)}}</td>
+          <td>{{date("d/m/Y",$event['event']->selling_date)}}</td>
+          <td>Vigente</td> <!--falta la logica de vigente -->
+          <td>{{$event['ticket_quantity']}}</td> <!--no hay -->
+          <td>{{$event['ticket_sum']}}</td> <!--no hay -->
+          <td><a href="{{ url ('promoter/transfer_payments/'.$event['event']->id.'/create') }}" class="btn btn-info">$</a></td>
+          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info{{$event['event']->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button>
 
-                </li>
-              @endforeach
-            </ul>
-            <br>
-            <h4>Información de Ventas</h4>
-            <p>Proximamente</p>
+            <div class="modal fade" id="info{{$event['event']->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Detalle de Evento</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
 
-            <br>
-            {!! Html::image($event->image, null, array('class'=>'carousel_img')) !!}
+                  <h4>Nombre: {{$event['event']->name}}</h4>
+                  <p>Código:  {{$event['event']->id}} </p>
+                  <p>Creado Por: {{$event['event']->organization->organizerName}} {{$event['event']->organization->organizerLastName}}  </p>
+                  <p>Promotor: {{$event['event']->organization->organizerName}} {{$event['event']->organization->organizerLastName}}</p>
+                  <p>Descripción:  {{$event['event']->description}} </p>
+                  <p>Local: {{$event['event']->place->name}} </p>
+                  <p>Categoria: {{$event['event']->category->name}} </p>
 
+                  <p>Fecha Creación: {{date_format(date_create($event['event']->created_at),"d/m/Y")}}</p>
+                  <p>Fecha Publicación: {{date("d/m/Y",$event['event']->publication_date)}}</p>
+                  <p>Fecha Inicio ventas: {{date("d/m/Y",$event['event']->selling_date)}}</p>
+                  <p>Duracion función: {{$event['event']->time_length}} hora(s) </p>
+
+                  <h4>Entradas:</h4>
+                  <ul>
+                    @foreach ($event['event']->zones as $zone)
+                      <li>
+                          {{$zone->name}} : S/. {{$zone->price}}
+                      </li>
+                    @endforeach
+                  </ul>
+                  <h4>Funciones:</h4>
+                  <ul>
+                    @foreach ($event['event']->presentations as $present)
+                      <li>
+                          Función: {{date("d/m/Y",$present->starts_at)}} {{date('h:i:s',$present->starts_at)}}
+
+                      </li>
+                    @endforeach
+                  </ul>
+                  <br>
+                  <br>
+                  {!! Html::image($event['event']->image, null, array('class'=>'carousel_img')) !!}
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                  </div>
                 </div>
               </div>
             </div>
 
           </td>
           <td><a type="button" class="btn btn-info" href="{{url('promoter/event/'.$event['event']->id.'/edit')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-          <td><a href="{{ url ('promoter/event/cancel/'.$event->id)}}" class="btn btn-info"><i class="glyphicon glyphicon-remove"></i></a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancelEvent{{$event['event']->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
             <!-- MODAL Cancel-->
             <div class="modal fade" id="cancelEvent{{$event['event']->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">

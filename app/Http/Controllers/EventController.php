@@ -333,7 +333,7 @@ public function store(StoreEventRequest $request)
 
         }
 
-        return view('internal.promoter.record',compact('event_data'));
+        return view('internal.promoter.event.record',compact('event_data'));
     }
     /**
      * Show the form for editing the specified resource.

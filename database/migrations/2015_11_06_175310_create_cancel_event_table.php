@@ -14,10 +14,11 @@ class CreateCancelEventTable extends Migration
     {
         Schema::create('cancel_events', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->integer('event_id');
+            $table->integer('presentation_id');
             $table->integer('user_id')->unsigned();
             $table->string('reason');
             $table->integer('duration');
+            $table->boolean('authorized');
             $table->timestamp('date_refund');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
