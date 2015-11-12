@@ -45,22 +45,23 @@ class AuthController extends Controller
           //  sleep(0.1);
 
             $Attendance = Attendance::where('datetime',$dateToday  )->where('salesman_id',$id)->get(); 
-            $assitancedetail  =   new AttendanceDetail() ;
-            $assitancedetail->datetime  =         $dateTimeToday ;
-            $assitancedetail->tipo =   Config::get('constants.out')     ; // ya que se trata de una salida
-            $assitancedetail->attendance_id =  $Attendance[0]->id;
-            $assitancedetail->save();
+        //    $assitancedetail  =   new AttendanceDetail() ;
+       //     $assitancedetail->datetime  =         $dateTimeToday ;
+          //  $assitancedetail->tipo =   Config::get('constants.out')     ; // ya que se trata de una salida
+          //  $assitancedetail->attendance_id =  $Attendance[0]->id;
+           // $assitancedetail->save();
 
 //Busco la fecha y actualizo lafecha de salida .
 
-            $updateAttendance = Attendance::find( $Attendance[0]->id );
-            $updateAttendance->datetimeend = $dateTimeToday; 
+            $updateAttendance = AttendanceDetail::where( 'attendance_id'  , $Attendance[0]->id )->get()->last();
+            $updateAttendance->datetime = $dateTimeToday; 
             $updateAttendance->save();
          //   sleep(0.1);
 
         }   
         Auth::logout();
 
+    
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
     protected $redirectAfterLogout = '/auth/login'; 
@@ -170,6 +171,28 @@ class AuthController extends Controller
 
     $assitancedetail->attendance_id =  $Attendance[0]->id;
     $assitancedetail->save();
+
+//tambien agregamos una salida
+  
+
+
+     $assitancedetail  =   new AttendanceDetail() ;
+  
+    $assitancedetail->tipo = 2  ; // ya que se trata de un ingreso
+
+
+    $id = Auth::user()->id;
+
+
+    $Attendance = Attendance::where('datetime',$dateToday  )->where('salesman_id',$id)->get(); 
+
+    $assitancedetail->attendance_id =  $Attendance[0]->id;
+
+     $assitancedetail->datetime = NULL;
+    $assitancedetail->save();
+
+
+
 
     return '/salesman';
     break;

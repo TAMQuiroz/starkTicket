@@ -32,6 +32,9 @@ Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@indexExternal');
 Route::get('event/successBuy', 'TicketController@showSuccess');
 Route::get('event/{id}', 'EventController@showExternal');
+
+ Route::get('event/delete/{id}/comment', 'EventController@destroyComment');
+
 Route::post('event/{id}', 'EventController@showExternalPost');
 
 Route::group(['middleware' => ['auth', 'client']], function () {
@@ -163,8 +166,12 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/ticket_return/new', 'TicketController@createReturn');
     Route::get('admin/{id}/attendance', 'BusinessController@attendance');
     Route::post('admin/{id}/attendanceSubmit', 'BusinessController@attendanceSubmit');
+  
 
     Route::get('admin/attendance/{id}/detail', 'BusinessController@attendanceDetail');
+  Route::post('admin/{id}/Update/attendanceSubmit', 'BusinessController@attendanceUpdate');  
+
+
 
     Route::get('admin/devolutions/', 'DevolutionController@index');
     Route::get('admin/devolutions/new', 'DevolutionController@create');

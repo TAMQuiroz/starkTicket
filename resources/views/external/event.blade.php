@@ -92,8 +92,9 @@
 							          </div>
 							          <div class="modal-footer">
 							              <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-							              <a class="btn btn-info" title="Delete" >Sí</a>
-							          </div>
+							             <a class="btn btn-info" href="{{url('event/delete/'.$Comment->id.'/comment')}}" title="Delete" >Sí</a>
+											     </div>
+				
 							        </div><!-- /.modal-content -->
 							      </div><!-- /.modal-dialog -->
    								</div><!-- /.modal -->
@@ -129,15 +130,10 @@
 					<!-- Sidebar -->
 
 				</div>
-				
-
-				
-				</section>
+								</section>
 			</div>
 			<!-- /Content -->
-
-	
-		</div>
+			</div>
 	</div>
 	<!-- Main -->
 

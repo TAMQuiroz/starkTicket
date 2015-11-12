@@ -7,12 +7,14 @@
 @section('title')
 Detalle de asistencia de {{$salesman->name}}  {{$salesman->lastname}}
 <br>
-Fecha  {{ date ( "d-m-Y " , strtotime( $Attendance->datetime )) }}     
+
 @stop
 
 @section('content')
 <div class="row">
   <div class="col-sm-8">
+   {!!Form::open(array('url' => 'admin/'.$detailsAttendances[$detailsAttendances->count()-1]->id.'/Update/attendanceSubmit','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
+
    <table class="table table-bordered table-striped">
     <thead>
       <tr>
@@ -22,76 +24,70 @@ Fecha  {{ date ( "d-m-Y " , strtotime( $Attendance->datetime )) }}
       </tr>
     </thead>
     <tbody>
+      <h5>Hora Fin</h5>
+      {!!Form::input('time','horaFin', '06:20' ,['class'=>'form-control','required'])!!}
+      
       <?php
       $i=0;
       while ($i< $detailsAttendances->count()){ 
-      ?>
-
-      <tr>
-        <th>   {{ date ("g:i:s a",strtotime($detailsAttendances[$i]->datetime))}}</th>
-      
-        <?php
-        $i++;
-if($i ==  $detailsAttendances->count()  ) { echo "<th>No se cerró sesión</th>"; 
-?>
-
-        <th><a class="btn btn-info" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></th>      
-        </tr>     
-
-      <?php 
-break ; 
-}
-?>
-<?php 
-
-        if ($detailsAttendances[$i]->tipo==1){
-          echo "<th>No se cerró sesión</th>";   
-        } else {
-
-          ?>
-
-            <th>   {{date("g:i:s a",strtotime($detailsAttendances[$i]->datetime))}}</th>
-
-          <?php   
-          $i++;
-        }          
         ?>
 
-        <th><a class="btn btn-info" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a></th>      
+        <tr>
+          <th>   {{ date ("g:i:s a",strtotime($detailsAttendances[$i]->datetime))}}</th>
+          
+          <?php
+          $i++;
+          ?>
+
+
+          @if ( $detailsAttendances[$i]->datetime == NULL )
+          <th>No se cerró sesión</th>
+          @else
+          <th> {{  date( "g:i:s a", strtotime(  $detailsAttendances[$i]->datetime  ))    }}  </th>
+          @endif
+          <th><a class="btn btn-info" title="Editar" data-toggle="modal" data-target="#editModal{{$i}}">sss<i class="glyphicon glyphicon-pencil"></i></a></th>      
         </tr>     
 
-      <?php 
-    }
-    ?>
-  </tbody>
-</table>
+        <!-- MODAL -->
+        <div class="modal fade"  id="editModal{{$i}}">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modificar hora</h4>
+              </div>
+              <div class="modal-body">
+                <h5>Hora Inicio</h5>
+                {!!Form::input('time', 'horaInicio' , date("H:i",strtotime($detailsAttendances[$i-1]->datetime))   ,['class'=>'form-control','required' ,'readonly'])!!}
+                
+                <h5>Hora Fin</h5>
 
 
-<!-- MODAL -->
-<div class="modal fade"  id="editModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Modificar hora</h4>
-      </div>
-      <div class="modal-body">
-        <h5>Hora Inicio</h5>
-        {!!Form::input('date','horaIni', '',['class'=>'form-control','required'])!!}
-        <h5>Hora Fin</h5>
-        {!!Form::input('date','horaFin', '',['class'=>'form-control','required'])!!}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>                        
-        <button type="submit" class="btn btn-info" data-dismiss="modal">Guardar</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                @if ( $detailsAttendances[$i]->datetime == NULL )
+                {!!Form::input('time','horaFin', ''  ,['class'=>'form-control','required'])!!}
+                @else
+                {!!Form::input('time','horaFin', date("H:i",strtotime($detailsAttendances[$i]->datetime))  ,['class'=>'form-control','required'])!!}
+                @endif
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>                        
+                <button type="submit" class="btn btn-info" >Guardar</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+        <?php   
+        $i++;
+      }
+      ?>
+      
+    </tbody>
+  </table>
 
 </div>
 </div>
-
 
 @stop
 

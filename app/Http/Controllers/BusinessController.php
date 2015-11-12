@@ -10,6 +10,8 @@ use App\Http\Requests\ExchangeRate\UpdateExchangeRateRequest;
 use App\Models\ExchangeRate;
 use App\Http\Requests\Attendance\AttendanceRequest;
 use App\Http\Requests\Attendance\AttendanceSubmitRequest;
+use App\Http\Requests\Attendance\AttendanceUpdate;
+
 use Auth;
 use App\User;
 use Carbon\Carbon;
@@ -79,6 +81,9 @@ class BusinessController extends Controller
 
         /* return view('internal.admin.exchangeRate'); */
     }
+
+
+
     public function storeExchangeRate(StoreExchangeRateRequest $request)
     {
         //
@@ -146,6 +151,8 @@ class BusinessController extends Controller
 
     }
 
+
+
     public function attendance(AttendanceRequest $request,  $idSalesman)
     {       
         $salesman = User::find( $idSalesman ); 
@@ -182,5 +189,29 @@ public function attendanceDetail(  $idAttendance )
 }
 
 
+
+       public function attendanceUpdate( AttendanceUpdate $request,  $idAttendanceDetail)
+    {       
+
+        $input = $request->all();
+        $attendanceDetail = AttendanceDetail::find( $idAttendanceDetail ); 
+
+   
+        $attendanceDetail->datetime   =   Carbon::parse($input['horaFin']  ); 
+
+        $attendanceDetail->save();
+  
+        $Attendance = Attendance::find($attendanceDetail->attendance_id );
+
+        $Attendance->datetimeend    =     Carbon::parse($input['horaFin']  ); 
+        $salesman = User::find( $Attendance->salesman_id ); 
+        $detailsAttendances = AttendanceDetail::where('attendance_id' , $attendanceDetail->attendance_id )->get();
+        $index = 0 ;
+
+        $Attendance->save();
+
+    return view('internal.admin.attendanceDetail '  , compact('detailsAttendances' , 'index', 'salesman','Attendance')  );
+
+      }
 
 }

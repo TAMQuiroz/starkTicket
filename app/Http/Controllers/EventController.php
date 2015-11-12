@@ -621,6 +621,16 @@ public function update(UpdateEventRequest $request, $id)
         $event->delete();
         return redirect()->back();
     }
+
+       public function destroyComment($idComment)
+    {
+        $comment = Comment::find($idComment);
+      $comment->delete();
+
+        return redirect()->back();
+    }
+
+
     public function subcategoriesToAjax($id)
     {
         $subcategories = Category::where('father_id',$id)->lists('name','id');
