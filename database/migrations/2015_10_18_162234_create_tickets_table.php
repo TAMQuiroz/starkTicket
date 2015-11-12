@@ -29,6 +29,7 @@ class CreateTicketsTable extends Migration
             $table->integer('designee')->nullable()->unsigned();
             $table->boolean('picked_up');
             $table->float('price');
+            $table->float('total_price');
             $table->timestamps();
             $table->softDeletes();
         });

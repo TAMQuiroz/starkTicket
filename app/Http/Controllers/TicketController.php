@@ -178,6 +178,7 @@ class TicketController extends Controller
              'picked_up'            => false,
              'discount'             => null,
              'designee'             => null,
+             'total_price'          => $zone->price * $nTickets,
              'created_at'           => new Carbon(),
              'updated_at'           => new Carbon(),
             ]);
@@ -196,6 +197,7 @@ class TicketController extends Controller
                 $promo = Promotions::find($request['promotion_id']);
                 if($promo->desc != null){
                     DB::table('tickets')->where('id',$id)->update(['discount' => $promo->desc]);
+                    DB::table('tickets')->where('id',$id)->decrement('total_price', ($promo->desc/100)*($nTickets*$zone->price));
                 }else{
                 	$pu = Zone::find($request['zone_id'])->price;
                 	$quantity = $request['quantity'];
@@ -205,6 +207,7 @@ class TicketController extends Controller
                 	$pd = $pt - $discTickets*$pu;
                 	$desc = 100 - ($pd/$pt)*100;
                 	DB::table('tickets')->where('id',$id)->update(['discount' => $desc]);
+                    DB::table('tickets')->where('id',$id)->update(['total_price' => $pd]);
                 }
                 DB::table('tickets')->where('id',$id)->update(['promo_id' => $promo->id]);
             }
