@@ -18,13 +18,16 @@ class CreateTicketsTable extends Migration
             $table->string('reserve');
             $table->timestamp('refund_date')->nullable();
             $table->integer('cancelled');
+            $table->integer('quantity');
+            $table->integer('discount')->nullable();
             $table->integer('owner_id')->unsigned()->nullable();
             $table->integer('event_id')->unsigned();
             $table->integer('presentation_id')->unsigned();
-            $table->integer('seat_id')->unsigned()->nullable();
+            //$table->integer('seat_id')->unsigned()->nullable();
             $table->integer('zone_id')->unsigned();
+            $table->integer('promo_id')->unsigned()->nullable();
             $table->integer('salesman_id')->nullable()->unsigned();
-            $table->integer('sale_id')->unsigned();
+            //$table->integer('sale_id')->unsigned();
             $table->integer('designee')->nullable()->unsigned();
             $table->boolean('picked_up');
             $table->float('price');

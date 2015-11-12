@@ -19,9 +19,9 @@ class Ticket extends Model
     	return $this->belongsTo('App\Models\Event');
     }
 
-    public function seat(){
-    	return $this->belongsTo('App\Models\Slot');
-    }
+    //public function seats(){
+    //	return $this->belongsTo('App\Models\Slot');
+    //}
 
     public function zone(){
         return $this->belongsTo('App\Models\Zone');
@@ -33,5 +33,9 @@ class Ticket extends Model
 
     public function salesman(){
         return $this->belongsTo('App\User');
+    }
+
+    public function promo(){
+        return $this->belongsTo('App\Models\Promotions');
     }
 }

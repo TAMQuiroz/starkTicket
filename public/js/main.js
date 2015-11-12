@@ -139,6 +139,18 @@ function getPromo(){
         },
         success: function( response ){
             //console.log(response);
+
+            if (response != ""){
+                $('#promotion_id').val(response.id);
+                $('#total2').val(response.amount);
+                
+            }else{
+                getPrice();
+                $('#promotion_id').val("");
+                $('#total2').val($('#quantity').val()*price);
+            }
+            
+            /*
             if (response.desc != null){
                 $('#promotion_id').val(response.id);
                 discount = response.desc/100;
@@ -153,6 +165,7 @@ function getPromo(){
             totalPrice = price * $('#quantity').val();
             totalPrice = totalPrice.toFixed(2);
             $('#total2').val(totalPrice);
+            */
         },
         error: function( response ){
             console.log(response);
