@@ -56,11 +56,7 @@
 		            <td>No tiene</td>
 		            @endif
 					<td>S/. {{$ticket->price}}</td>
-		            @if($ticket->promo && $ticket->promo->carry != null)
-		            <td>S/. {{$ticket->price * $ticket->quantity - ($ticket->price*floor($ticket->quantity/$ticket->promo->carry))}}</td>
-		            @else
-		            <td>S/. {{$ticket->price * $ticket->quantity - ($ticket->price * $ticket->quantity * $ticket->discount/100)}}</td>
-		            @endif
+		            <td>S/. {{$ticket->total_price}}</td>
 		        </tr>
 		    </tbody>
 		  </table>
