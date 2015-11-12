@@ -4,6 +4,7 @@
   <!--{!!Html::style('css/modern-business.css')!!} -->
   <!-- {!!Html::style('css/estilos.css')!!} -->
   {!!Html::style('css/jquery.seat-charts.css')!!}
+  {!!Html::style('css/seats.css')!!}
 @stop
 
 @section('title')
@@ -147,63 +148,64 @@
 
               <!-- ZONA -->
               <legend>Agregar zona:</legend>
-              <div class="form-group">
-                  <label  class="col-sm-2 control-label">Nombre</label>
-                  <div class="col-sm-10">
-                      {!! Form::text('zoneName1','', array('class' => 'form-control','id' => 'input-zone','maxlength' => 50)) !!}
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label  class="col-md-4 control-label">Nombre</label>
+                      <div class="col-md-8">
+                          {!! Form::text('zoneName1','', array('class' => 'form-control','id' => 'input-zone','maxlength' => 50)) !!}
+                      </div>
                   </div>
-              </div>
-              <div class="form-group">
-                  <label  class="col-sm-2 control-label" id="label_capacity">Capacidad</label>
-                  <div class="col-sm-10">
-                      {!! Form::number('zoneCapacity1','', array('class' => 'form-control','id' => 'input-capacity','min' => '1')) !!}
+                  <div class="form-group">
+                      <label  class="col-md-4 control-label" id="label_capacity">Capacidad</label>
+                      <div class="col-md-8">
+                          {!! Form::number('zoneCapacity1','', array('class' => 'form-control','id' => 'input-capacity','min' => '1')) !!}
+                      </div>
                   </div>
-              </div>
-              <div class="form-group" id="label_col">
-                  <label  class="col-sm-2 control-label" >Columnas</label>
-                  <div class="col-sm-10">
-                      {!! Form::number('zone_columns1','', array('class' => 'form-control','id' => 'input-column','min' => '1')) !!}
+                  <div class="form-group" id="label_col">
+                      <label  class="col-md-4 control-label" >Columnas</label>
+                      <div class="col-md-8">
+                          {!! Form::number('zone_columns1','', array('class' => 'form-control','id' => 'input-column','min' => '1')) !!}
+                      </div>
                   </div>
-              </div>
-              <div class="form-group" id="label_fil">
-                  <label  class="col-sm-2 control-label" >Filas</label>
-                  <div class="col-sm-10">
-                      {!! Form::number('zone_rows1','', array('class' => 'form-control','id' => 'input-row','min' => '1')) !!}
+                  <div class="form-group" id="label_fil">
+                      <label  class="col-md-4 control-label" >Filas</label>
+                      <div class="col-md-8">
+                          {!! Form::number('zone_rows1','', array('class' => 'form-control','id' => 'input-row','min' => '1')) !!}
+                      </div>
                   </div>
-              </div>
-              <div class="form-group" id="label_fini">
-                  <label  class="col-sm-2 control-label" >Columna inicial</label>
-                  <div class="col-sm-10">
-                      {!! Form::number('start_column1',1, array('class' => 'form-control','id' => 'input-colIni','min' => '1')) !!}
+                  <div class="form-group" id="label_fini">
+                      <label  class="col-md-4 control-label" >Columna inicial</label>
+                      <div class="col-md-8">
+                          {!! Form::number('start_column1',1, array('class' => 'form-control','id' => 'input-colIni','min' => '1')) !!}
+                      </div>
+                  </div>     
+                  <div class="form-group" id="label_cini">
+                      <label  class="col-md-4 control-label" >Fila inicial</label>
+                      <div class="col-md-8">
+                          {!! Form::number('start_row1',1, array('class' => 'form-control','id' => 'input-rowIni','min' => '1')) !!}
+                      </div>
+                  </div>                                                     
+                  <div class="form-group">
+                      <label  class="col-md-4 control-label">Precio</label>
+                      <div class="col-md-8">
+                          {!! Form::number('zonePrice1','', array('class' => 'form-control','id' => 'input-price','maxlength' => 50,'min' => '0')) !!}
+                      </div>
                   </div>
-              </div>     
-              <div class="form-group" id="label_cini">
-                  <label  class="col-sm-2 control-label" >Fila inicial</label>
-                  <div class="col-sm-10">
-                      {!! Form::number('start_row1',1, array('class' => 'form-control','id' => 'input-rowIni','min' => '1')) !!}
-                  </div>
-              </div>                                                     
-              <div class="form-group">
-                  <label  class="col-sm-2 control-label">Precio</label>
-                  <div class="col-sm-10">
-                      {!! Form::number('zonePrice1','', array('class' => 'form-control','id' => 'input-price','maxlength' => 50,'min' => '0')) !!}
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label  class="col-sm-2 control-label">Capacidad disponible</label>
-                  <div class="col-sm-10">
-                      <input type="text" id="capacity-display" class="form-control" disabled>
-                  </div>
-              </div>
-              <div  id="dist" class="col-sm-10">
-                <label  class="col-sm-2 control-label" id="labelDist">Distribución evento</label>
-                <br><br><br>
-              </div>              
-              <div class="form-group">
-                    <div class="col-sm-offset-10 col-sm-6">
-                        <a class="btn btn-info" onclick="addZone()">Agregar</a>
-                    </div>
-              </div>              
+                  <div class="form-group">
+                      <label  class="col-md-4 control-label">Capacidad disponible</label>
+                      <div class="col-md-8">
+                          <input type="text" id="capacity-display" class="form-control" disabled>
+                      </div>
+                  </div>        
+                  <div class="form-group">
+                        <div class="col-sm-offset-10 col-sm-6">
+                            <a class="btn btn-info" onclick="addZone()">Agregar</a>
+                        </div>
+                  </div>   
+                </div>   
+                  <div  id="dist" class="col-md-6">
+                    <label  id="labelDist">Distribución evento</label>
+                  </div>                                                
                 <script>
 
                     function addZone(){
@@ -230,7 +232,7 @@
                           row= document.getElementById('input-row').value ;
                           rowini= document.getElementById('input-rowIni').value;
                           colini= document.getElementById('input-colIni').value;
-
+                          if(new_capacity-row*column<0) return;
                           if(column.length==0 || row.length==0 || rowini.length==0 || colini.length==0) return;
 
                         }
@@ -302,7 +304,7 @@
                             y2.required=true;
                             y3.required=true;
                             y4.required=true;
-                            capacity=row*column;        
+                            capacity=row*column;       
                            newCell6.appendChild(y1);
                           newCell7.appendChild(y2);
                           newCell8.appendChild(y3);
@@ -384,6 +386,7 @@
                         var act_val = parseInt(document.getElementById('capacity-display').value);
                         act_val += parseInt(document.getElementsByName('zone_capacity[]')[row2].value);
                         document.getElementById('capacity-display').value = act_val;
+                        document.getElementById("input-capacity").max=act_val;
                         document.getElementById('table-zone') .deleteRow(row);
                 
                     }    
@@ -513,8 +516,8 @@
                       <h4 class="modal-title">¿Estas seguro que desea crear el evento?</h4>
                     </div>
                     <div class="modal-footer">
-                        <button id="yes" type="submit" class="btn btn-info">Si</button>
                         <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                        <button id="yes" type="submit" class="btn btn-info">Si</button>
                     </div>
                   </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->

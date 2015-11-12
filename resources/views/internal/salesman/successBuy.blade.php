@@ -43,13 +43,48 @@
 		            <td>{{$ticket->zone->name}}</td>  
 		            <td>
 		            	@if($ticket->event->place->rows != null)
-		            		@foreach($seats as $seat)
-		            		F{{$seat->row}}C{{$seat->column}}
-		            		@endforeach
-		            	@else
+		            		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#place{{$ticket->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button>
+						@else
 		            		No numerado
-		            	@endif
+		            	@endif	            
 		            </td>
+
+			            <!-- MODAL view-->
+			            <div class="modal fade" id="place{{$ticket->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+			                <div class="modal-dialog" role="document">
+			                  <div class="modal-content">
+			                    <div class="modal-header">
+			                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			                      <h4 class="modal-title" id="exampleModalLabel">Asientos comprados: {{$ticket->event->name}}</h4>
+			                    </div>
+			                    <div class="modal-body">
+			                      <form>
+			                        <div class="form-group">
+			                          <h4>Asientos:</h4>
+			                          <ul>
+			                            @foreach($seats as $seat)
+			                              <li>
+			                                  F{{$seat->row}}C{{$seat->column}}
+
+			                              </li>
+			                            @endforeach
+			                          </ul>
+			                        </div>
+
+			                      </form>
+			                  
+			                    </div>
+			                    <div class="modal-footer">
+			                      <button type="button" class="btn btn-info" data-dismiss="modal" >Aceptar</button>
+
+
+			                    </div>
+			                  </div>
+			                </div>
+			              </div>
+
+
+		            
 		            @if($ticket->promo)
 		            <td>{{$ticket->promo->name}}</td>
 		            @else
