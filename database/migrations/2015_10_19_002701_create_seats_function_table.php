@@ -15,6 +15,7 @@ class CreateSeatsFunctionTable extends Migration
         Schema::create('slot_presentation', function (Blueprint $table) {
             $table->integer('slot_id')->unsigned()->index('slot_presentation_slot_id_foreign');
             $table->integer('presentation_id')->unsigned()->index('slot_presentation_presentation_id_foreign');
+            $table->integer('sale_id')->unsigned()->nullable();
             $table->integer('status');
         });
     }
