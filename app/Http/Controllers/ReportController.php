@@ -34,56 +34,146 @@ class ReportController extends Controller
 
     public function actionExcel(Request $request){
         
-        $input = $request->all();
+        $input = $request->all(); 
+        $flagBetweenDates = false;
+        $flagFilterAll = false;
+        //Condiciones que se pueden dar para filtrar la tabla
+        if (empty($input['name']) and empty($input['firstDate']) and empty($input['lastDate']))
+           $events = Event::all();  
+        else{
+            if ($input['name'] and empty($input['firstDate']) and empty($input['lastDate'])) {
+               $events = Event::where('name', 'LIKE', '%'.$input['name'].'%')->get();
+            }
+            elseif (empty($input['name']) and $input['firstDate'] and $input['lastDate'] ){
+                $flagBetweenDates = true;
+            }
+            elseif ($input['name'] and $input['firstDate'] and $input['lastDate']){
+                $flagFilterAll = true;
+            }
+        }
 
-        $events = Event::all();
         $tickets = Ticket::all();
         $eventInformation = [];
-                
-        if (empty($input->name)){
-            foreach ($events as $event){
+                       
+        if ($flagBetweenDates){
+            $eventsDate = Presentation::whereBetween('starts_at',[ strtotime($input['firstDate']), strtotime($input['lastDate']) ])->get();
+            foreach($eventsDate as $eventDate){
 
+                    $event= Event::where('id','=', $eventDate->event_id)->get(); 
+                    $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
+                    $onlineTickets = 0;  $presentialTicket = 0;
+                    $subTotalOnline = 0; $subTotalPresential = 0;
+                    foreach ($tickets as $ticket){
+                        if (empty($ticket->salesman_id)) {
+                            $onlineTickets = $onlineTickets + $ticket->quantity;
+                            $subTotalPresential = $subTotalPresential + $ticket->total_price;
+                        }
+                        else {
+                            $presentialTicket = $presentialTicket + $ticket->quantity;
+                            $subTotalOnline = $subTotalOnline + $ticket->total_price;
+                        }
+                    }
+                    array_push($eventInformation,array($event[0]->name, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
+            
+            }
+
+
+        }
+
+        elseif ($flagFilterAll){
+
+            $eventsDate = Presentation::whereBetween('starts_at',[ strtotime($input['firstDate']), strtotime($input['lastDate']) ])->get();
+            foreach($eventsDate as $eventDate){
+
+                    //return $eventsDate;
+                    $event =  Event::where('name', 'LIKE', '%'.$input['name'].'%')->where('id','=', $eventDate->event_id)->get(); 
+                    
+                    if ($event->count() != 0) {
+                        $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
+                        $onlineTickets = 0;  $presentialTicket = 0;
+                        $subTotalOnline = 0; $subTotalPresential = 0;
+                        foreach ($tickets as $ticket){
+                            if (empty($ticket->salesman_id)) {
+                                $onlineTickets = $onlineTickets + $ticket->quantity;
+                                $subTotalPresential = $subTotalPresential + $ticket->total_price;
+                            }
+                            else {
+                                $presentialTicket = $presentialTicket + $ticket->quantity;
+                                $subTotalOnline = $subTotalOnline + $ticket->total_price;
+                            }
+                        }
+                        array_push($eventInformation,array($event[0]->name, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
+                    }
+            }
+
+        }
+        else{
+            foreach ($events as $event){
             // pueden ser muchos eventos. Necesito información para llenar la tabla
-                $eventsDate = Presentation::where('event_id','=', $event->id)->get();
+            //filtro fechas si es necesario
+                 
+                $eventsDate = Presentation::where('event_id','=', $event->id)->get(); 
                 foreach ($eventsDate as $eventDate){
                     $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
                     $onlineTickets = 0;  $presentialTicket = 0;
                     $subTotalOnline = 0; $subTotalPresential = 0;
                     foreach ($tickets as $ticket){
                         if (empty($ticket->salesman_id)) {
-                            $onlineTickets = $onlineTickets + 1;
-                            $subTotalPresential = $subTotalPresential + $ticket->price;
+                            $onlineTickets = $onlineTickets + $ticket->quantity;
+                            $subTotalPresential = $subTotalPresential + $ticket->total_price;
                         }
                         else {
-                            $presentialTicket = $presentialTicket + 1;
-                            $subTotalOnline = $subTotalOnline + $ticket->price;
-
+                            $presentialTicket = $presentialTicket + $ticket->quantity;
+                            $subTotalOnline = $subTotalOnline + $ticket->total_price;
                         }
                     }
                     array_push($eventInformation,array($event->name, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
                 }
-
-            }
+            }  
         }
-    // return $eventInformation;
+        
+    
 
 
-        Excel::create('Probando archivo de Excel', function ($excel) use($eventInformation){
-          $excel->sheet('Reporte de ventas', function($sheet) use($eventInformation) {
+        Excel::create('Reporte de ventas starkticket', function ($excel) use($eventInformation,$flagBetweenDates,$input){
+          $excel->sheet('Reporte de ventas', function($sheet) use($eventInformation,$flagBetweenDates,$input) {
 
-                //$sheet->mergeCells('A1:C1');
+                $sheet->mergeCells('A1:G2');
+                $sheet->setCellValue('A1',"Reporte de ventas de tickets");
+                $sheet->cells('A1:G1',function($cells){
 
-                $sheet->setBorder('A1:G500','thin');
-                $sheet->setCellValue('A1', "Nombre del evento");
-                $sheet->setCellValue('B1', "Fecha del evento");
-                $sheet->setCellValue('C1', "Entradas vendidas online");
-                $sheet->setCellValue('D1', "Subtotal");
-                $sheet->setCellValue('E1', "Entradas vendidas módulo");
-                $sheet->setCellValue('F1', "Subtotal");
-                $sheet->setCellValue('G1', "Total");
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+                    $cells->setFontSize(30);
+
+                });      
+
+            
+                $sheet->mergeCells('A3:G3');
+                if ($flagBetweenDates) $sheet->setCellValue('A3','Fecha desde '.$input['firstDate'].'  hasta '.$input['lastDate']);
+                else $sheet->setCellValue('A3',"No hay rango de fechas");
+                $sheet->cells('A3:G3',function($cells){
+
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+                    $cells->setFontSize(14);
+
+                });      
+            
+
+
+
+                $sheet->setBorder('A4:G500','thin');
+                $sheet->setCellValue('A4', "Nombre del evento");
+                $sheet->setCellValue('B4', "Fecha del evento");
+                $sheet->setCellValue('C4', "Entradas vendidas online");
+                $sheet->setCellValue('D4', "Subtotal");
+                $sheet->setCellValue('E4', "Entradas vendidas módulo");
+                $sheet->setCellValue('F4', "Subtotal");
+                $sheet->setCellValue('G4', "Total");
                 
                 //$cells->setAlignment('center');
-                $sheet->cells('A1:G1',function($cells){
+                $sheet->cells('A4:G4',function($cells){
 
                     $cells->setFontWeight('bold');
                     $cells->setBackground('#008000');
@@ -93,7 +183,7 @@ class ReportController extends Controller
 
                 });
 
-                $sheet->cells('A1:G500',function($cells){
+                $sheet->cells('A4:G500',function($cells){
 
                     $cells->setAlignment('center');
                     $cells->setValignment('center');
@@ -123,7 +213,7 @@ class ReportController extends Controller
                 );
 
                 $data = $eventInformation;
-                $sheet->fromArray($data, null, 'A2', false, false);
+                $sheet->fromArray($data, true, 'A5', true, false);
 
           });
 
@@ -166,15 +256,14 @@ class ReportController extends Controller
                 $onlineTickets = 0;  $presentialTicket = 0;
                 $subTotalOnline = 0; $subTotalPresential = 0;
                 foreach ($tickets as $ticket){
-                    if (empty($ticket->salesman_id)) {
-                        $onlineTickets = $onlineTickets + 1;
-                        $subTotalPresential = $subTotalPresential + $ticket->price;
-                    }
-                    else {
-                        $presentialTicket = $presentialTicket + 1;
-                        $subTotalOnline = $subTotalOnline + $ticket->price;
-
-                    }
+                        if (empty($ticket->salesman_id)) {
+                            $onlineTickets = $onlineTickets + $ticket->quantity;
+                            $subTotalPresential = $subTotalPresential + $ticket->total_price;
+                        }
+                        else {
+                            $presentialTicket = $presentialTicket + $ticket->quantity;
+                            $subTotalOnline = $subTotalOnline + $ticket->total_price;
+                        }
                 }
                 array_push($eventInformation,array($event->name,$eventDate->id, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
             }
