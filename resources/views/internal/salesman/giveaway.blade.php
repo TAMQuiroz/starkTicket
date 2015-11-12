@@ -13,7 +13,7 @@
     <div class="col-md-6">
     	<h5>Ingrese Código de Comprobante</h5>
         <div class="input-group" style="width:290px">
-            {!! Form::number('sale_id', null, array('class' => 'form-control', 'placeholder'=>'Código de comprobante','required','min'=>1)) !!} 
+            {!! Form::number('sale_id', null, array('class' => 'form-control', 'placeholder'=>'Código de comprobante','required','min'=>0)) !!} 
         </div><!-- /input-group -->
     </div>
     <div class="col-md-6">
