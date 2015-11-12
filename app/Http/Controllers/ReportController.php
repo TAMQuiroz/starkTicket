@@ -65,12 +65,12 @@ class ReportController extends Controller
                     $subTotalOnline = 0; $subTotalPresential = 0;
                     foreach ($tickets as $ticket){
                         if (empty($ticket->salesman_id)) {
-                            $onlineTickets = $onlineTickets + 1;
-                            $subTotalPresential = $subTotalPresential + $ticket->price;
+                            $onlineTickets = $onlineTickets + $ticket->quantity;
+                            $subTotalPresential = $subTotalPresential + $ticket->total_price;
                         }
                         else {
-                            $presentialTicket = $presentialTicket + 1;
-                            $subTotalOnline = $subTotalOnline + $ticket->price;
+                            $presentialTicket = $presentialTicket + $ticket->quantity;
+                            $subTotalOnline = $subTotalOnline + $ticket->total_price;
                         }
                     }
                     array_push($eventInformation,array($event[0]->name, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
@@ -94,12 +94,12 @@ class ReportController extends Controller
                         $subTotalOnline = 0; $subTotalPresential = 0;
                         foreach ($tickets as $ticket){
                             if (empty($ticket->salesman_id)) {
-                                $onlineTickets = $onlineTickets + 1;
-                                $subTotalPresential = $subTotalPresential + $ticket->price;
+                                $onlineTickets = $onlineTickets + $ticket->quantity;
+                                $subTotalPresential = $subTotalPresential + $ticket->total_price;
                             }
                             else {
-                                $presentialTicket = $presentialTicket + 1;
-                                $subTotalOnline = $subTotalOnline + $ticket->price;
+                                $presentialTicket = $presentialTicket + $ticket->quantity;
+                                $subTotalOnline = $subTotalOnline + $ticket->total_price;
                             }
                         }
                         array_push($eventInformation,array($event[0]->name, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
@@ -119,12 +119,12 @@ class ReportController extends Controller
                     $subTotalOnline = 0; $subTotalPresential = 0;
                     foreach ($tickets as $ticket){
                         if (empty($ticket->salesman_id)) {
-                            $onlineTickets = $onlineTickets + 1;
-                            $subTotalPresential = $subTotalPresential + $ticket->price;
+                            $onlineTickets = $onlineTickets + $ticket->quantity;
+                            $subTotalPresential = $subTotalPresential + $ticket->total_price;
                         }
                         else {
-                            $presentialTicket = $presentialTicket + 1;
-                            $subTotalOnline = $subTotalOnline + $ticket->price;
+                            $presentialTicket = $presentialTicket + $ticket->quantity;
+                            $subTotalOnline = $subTotalOnline + $ticket->total_price;
                         }
                     }
                     array_push($eventInformation,array($event->name, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
@@ -256,15 +256,14 @@ class ReportController extends Controller
                 $onlineTickets = 0;  $presentialTicket = 0;
                 $subTotalOnline = 0; $subTotalPresential = 0;
                 foreach ($tickets as $ticket){
-                    if (empty($ticket->salesman_id)) {
-                        $onlineTickets = $onlineTickets + 1;
-                        $subTotalPresential = $subTotalPresential + $ticket->price;
-                    }
-                    else {
-                        $presentialTicket = $presentialTicket + 1;
-                        $subTotalOnline = $subTotalOnline + $ticket->price;
-
-                    }
+                        if (empty($ticket->salesman_id)) {
+                            $onlineTickets = $onlineTickets + $ticket->quantity;
+                            $subTotalPresential = $subTotalPresential + $ticket->total_price;
+                        }
+                        else {
+                            $presentialTicket = $presentialTicket + $ticket->quantity;
+                            $subTotalOnline = $subTotalOnline + $ticket->total_price;
+                        }
                 }
                 array_push($eventInformation,array($event->name,$eventDate->id, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
             }
