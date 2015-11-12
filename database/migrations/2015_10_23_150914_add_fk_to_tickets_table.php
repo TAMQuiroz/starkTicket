@@ -25,10 +25,6 @@ class AddFkToTicketsTable extends Migration
                 ->references('id')
                 ->on('presentations');
 
-            //$table->foreign('seat_id')
-            //    ->references('id')
-            //    ->on('slots');
-
             $table->foreign('zone_id')
                 ->references('id')
                 ->on('zones');
