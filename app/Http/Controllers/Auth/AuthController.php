@@ -56,6 +56,20 @@ class AuthController extends Controller
             $updateAttendance = AttendanceDetail::where( 'attendance_id'  , $Attendance[0]->id )->get()->last();
             $updateAttendance->datetime = $dateTimeToday; 
             $updateAttendance->save();
+
+
+
+
+        $AttendancetoSave = Attendance::find($updateAttendance->attendance_id );
+
+        $AttendancetoSave->datetimeend    =     $dateTimeToday; 
+        $salesman = User::find( $AttendancetoSave->salesman_id ); 
+        $detailsAttendances = AttendanceDetail::where('attendance_id' , $updateAttendance->attendance_id)->get();
+        $index = 0 ;
+
+        $AttendancetoSave->save();
+
+
          //   sleep(0.1);
 
         }   

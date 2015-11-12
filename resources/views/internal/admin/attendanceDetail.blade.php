@@ -24,9 +24,7 @@ Detalle de asistencia de {{$salesman->name}}  {{$salesman->lastname}}
       </tr>
     </thead>
     <tbody>
-      <h5>Hora Fin</h5>
-      {!!Form::input('time','horaFin', '06:20' ,['class'=>'form-control','required'])!!}
-      
+     
       <?php
       $i=0;
       while ($i< $detailsAttendances->count()){ 
@@ -45,7 +43,7 @@ Detalle de asistencia de {{$salesman->name}}  {{$salesman->lastname}}
           @else
           <th> {{  date( "g:i:s a", strtotime(  $detailsAttendances[$i]->datetime  ))    }}  </th>
           @endif
-          <th><a class="btn btn-info" title="Editar" data-toggle="modal" data-target="#editModal{{$i}}">sss<i class="glyphicon glyphicon-pencil"></i></a></th>      
+          <th><a class="btn btn-info" title="Editar" data-toggle="modal" data-target="#editModal{{$i}}"><i class="glyphicon glyphicon-pencil"></i></a></th>      
         </tr>     
 
         <!-- MODAL -->
@@ -66,7 +64,7 @@ Detalle de asistencia de {{$salesman->name}}  {{$salesman->lastname}}
                 @if ( $detailsAttendances[$i]->datetime == NULL )
                 {!!Form::input('time','horaFin', ''  ,['class'=>'form-control','required'])!!}
                 @else
-                {!!Form::input('time','horaFin', date("H:i",strtotime($detailsAttendances[$i]->datetime))  ,['class'=>'form-control','required'])!!}
+                {!!Form::input('time','horaFin', date("H:i",strtotime($detailsAttendances[$i]->datetime))  ,['class'=>'form-control','required','readonly'])!!}
                 @endif
                 
               </div>
