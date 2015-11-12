@@ -17,7 +17,7 @@ class AccessPromotionSeeder extends Seeder
         
     accessPromotion::insert(['description'=> 'SOLO EFECTIVO']);
 
- 	accessPromotion::insert(['description'=> 'CUALQUIER MODO DE PAGO']);
+//	accessPromotion::insert(['description'=> 'CUALQUIER MODO DE PAGO']);
     
 	accessPromotion::insert(['description'=> 'TODAS LAS TARJETAS']);
     

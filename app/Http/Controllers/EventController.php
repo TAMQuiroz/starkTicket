@@ -10,6 +10,7 @@ use App\Http\Requests\Event\CancelEventRequest;
 use App\Http\Requests\Comment\StoreCommentPostRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Ticket;
 use App\Models\Zone;
 use App\Models\Presentation;
 use App\Models\Slot;
@@ -317,9 +318,22 @@ public function store(StoreEventRequest $request)
      */
     public function showPromoterRecord()
     {
-        $objs = Event::all();
+        $events = Event::all();
+        $event_data = [];
+        foreach ($events as $key => $event) {
+            $ticket_sum = Ticket::where('event_id',$event->id)->sum('total_price');
+            $ticket_quantity = Ticket::where('event_id',$event->id)->sum('quantity');
 
-        return view('internal.promoter.event.record',["events"=>$objs]);
+            $event_data[$key]=
+                    [
+                        "event"             =>  $event,
+                        "ticket_sum"        =>  $ticket_sum,
+                        "ticket_quantity"   =>  $ticket_quantity,
+                    ];
+
+        }
+
+        return view('internal.promoter.record',compact('event_data'));
     }
     /**
      * Show the form for editing the specified resource.
