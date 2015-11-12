@@ -43,5 +43,7 @@ return [
 	'in'	=> 1,
 	'out'	=> 2,
 
+	//Cantidad de eventos destacados
+	'maxDestacados' => 2,
 
 ];

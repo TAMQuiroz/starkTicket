@@ -72,6 +72,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{url('admin/modules')}}">Listar</a></li>
                             <li><a href="{{url('admin/modules/new')}}">Nuevo</a></li>
+                            <li><a href="{{url('admin/modules/assigment')}}">Asignación de Módulos</a></li>
                         </ul>
                     </li>
                     <li>

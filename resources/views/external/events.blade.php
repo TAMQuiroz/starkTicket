@@ -41,7 +41,7 @@
             <a href="#" class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
             <h3>{{$event->name}}</h3>
             <p>
-                <b>Fecha de venta: </b> {{date('Y-m-d',$event->presentations->first()->selling_date)}}<br>
+                <b>Fecha de venta: </b> {{date('Y-m-d',$event->selling_date)}}<br>
                 <b>Lugar: </b> {{$event->place->name}} <br>
                 <b>Direccion:</b> {{$event->place->address}} <br>
             </p>

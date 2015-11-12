@@ -25,10 +25,6 @@ class AddFkToTicketsTable extends Migration
                 ->references('id')
                 ->on('presentations');
 
-            $table->foreign('seat_id')
-                ->references('id')
-                ->on('slots');
-
             $table->foreign('zone_id')
                 ->references('id')
                 ->on('zones');
@@ -37,6 +33,10 @@ class AddFkToTicketsTable extends Migration
                 ->references('id')
                 ->on('users');
             
+            $table->foreign('promo_id')
+                ->references('id')
+                ->on('promotions');
+
         });
     }
 
@@ -51,9 +51,10 @@ class AddFkToTicketsTable extends Migration
             $table->dropForeign('tickets_owner_id_foreign');
             $table->dropForeign('tickets_event_id_foreign');
             $table->dropForeign('tickets_presentation_id_foreign');
-            $table->dropForeign('tickets_seat_id_foreign');
+            //$table->dropForeign('tickets_seat_id_foreign');
             $table->dropForeign('tickets_zone_id_foreign');
             $table->dropForeign('tickets_salesman_id_foreign');
+            $table->dropForeign('tickets_promo_id_foreign');
         });
     }
 }

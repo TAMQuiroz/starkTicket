@@ -31,5 +31,7 @@ class Event extends Model
         return $this->hasMany('App\Models\Presentation');
     }
 
-    
+    public function highlights() {
+        return $this->hasMany('App\Models\Highlight');
+    }
 }

@@ -14,6 +14,7 @@ use App\Models\Presentation;
 use App\Models\Zone;
 use App\Http\Requests\Booking\StoreBookingRequest;
 use Carbon\Carbon;
+use Mail;
 use DateTime; use Date;
 
 class BookingController extends Controller
@@ -110,7 +111,7 @@ class BookingController extends Controller
                 }
 
                 if($request['dni_recojo']!=''||$request['dni_recojo']!=null)
-                    $id['dni'] = $request['dni_recojo'];
+                    DB::table('tickets')->where('id',$id)->update(['designee' => $request['dni_recojo']]);
                 
                 if ($event->place->rows != null){
                     //Asignar id en caso sea numerado
@@ -150,6 +151,16 @@ class BookingController extends Controller
 		return view('internal.salesman.payBooking');
 	}
 
+    public function payReserveStore($reserve_id){
+        $tickets = Ticket::where('reserve', $reserve_id);
+        if($tickets->isEmpty())
+            return redirect()->back()->withErrors(['error' => 'no hay reservas para el codigo especificado']);
+        foreach ($tickets as $ticket) {
+            $ticket->reserve = null;
+            $ticket->payment_date = Carbon::now();
+        }
+    }
+
 	public function getSelectedSlots($seats, $zone_id)
     {
         $seats = json_decode($seats);
@@ -161,4 +172,13 @@ class BookingController extends Controller
         return $seats;
     }
 
+    public function sendConfirmationMail($reserve_code){
+        $tickets = Ticket::where('reserve', $reserve_code)->get();
+        $mail =  $tickets->first()->owner->email;
+        Mail::send('internal.client.reserveMail', array('tickets' => $tickets), function($message)use($mail){
+            $message->to($mail);
+        });
+        $events = Event::all();
+        return view('external.events',compact('events'));
+    }
 }
