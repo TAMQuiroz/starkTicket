@@ -9,6 +9,14 @@
 @stop
 
 @section('content')
+    <!--Se esta pasando la variable $event_data que es una matriz de forma 
+        event_data[0]=[
+                        "event"             =>  $event,
+                        "ticket_sum"        =>  $ticket_sum,
+                        "ticket_quantity"   =>  $ticket_quantity,
+                      ];
+        Cada llave es un evento, para acceder, debes entrar a $event_data[indice]['event'] o $event_data[indice]['ticket_sum']
+    -->
     <table class="table table-bordered table-striped" id="events">
       <thead>
         <tr>

@@ -315,12 +315,12 @@ public function store(StoreEventRequest $request)
     public function showPromoterRecord()
     {
         $events = Event::all();
-        $ev = [];
+        $event_data = [];
         foreach ($events as $key => $event) {
             $ticket_sum = Ticket::where('event_id',$event->id)->sum('total_price');
             $ticket_quantity = Ticket::where('event_id',$event->id)->sum('quantity');
 
-            $ev[$key]=
+            $event_data[$key]=
                     [
                         "event"             =>  $event,
                         "ticket_sum"        =>  $ticket_sum,
@@ -328,8 +328,8 @@ public function store(StoreEventRequest $request)
                     ];
             
         }
-        dd($ev);
-        return view('internal.promoter.record',compact('ev'));
+        
+        return view('internal.promoter.record',compact('event_data'));
     }
     /**
      * Show the form for editing the specified resource.
