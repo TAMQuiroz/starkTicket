@@ -92,6 +92,11 @@
 
     </table>
 </div>
+<div class="row-sm-2">
+        <br>
+            <!--<a type="button" href="{{url('admin/report/sales/download')}}" class="btn btn-info" >Descargar Archivo Excel</a>-->  
+        <button type="submit" class="btn btn-info">Descargar Archivo Excel</button>
+</div>
  {!!Form::close()!!}
 @stop
 
