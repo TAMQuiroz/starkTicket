@@ -16,6 +16,7 @@ use App\Http\Requests\Giveaway\StoreGiveawayRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Mail;
 
 class TicketController extends Controller
 {
@@ -204,7 +205,7 @@ class TicketController extends Controller
                 	$pt = $pu * $quantity;
                 	$discTickets = $quantity / $promo->carry;
                 	$discTickets = floor($discTickets);
-                	$pd = $pt - $discTickets*$pu;
+                	$pd = $pt - $discTickets*$pu*($promo->carry - $promo->pay);
                 	$desc = 100 - ($pd/$pt)*100;
                 	DB::table('tickets')->where('id',$id)->update(['discount' => $desc]);
                     DB::table('tickets')->where('id',$id)->update(['total_price' => $pd]);
@@ -280,6 +281,24 @@ class TicketController extends Controller
         }
 
         return view('internal.client.successBuy',compact('ticket','seats'));
+    }
+
+    public function mailSuccess(request $request)
+    {
+        $mail = $request['email'];
+        $ticket = Ticket::find($request['ticket_id']);
+        
+        Mail::send('internal.client.successMail',['ticket'=>$ticket,'mail'=>$mail], function($message)use($mail){
+            $message->to($mail)->subject('Pruebita');
+        });
+
+        $user = \Auth::user();
+
+        if($user->role_id == config('constants.client')){
+          return redirect()->route('client.home');
+        }else{
+          return redirect()->route('salesman.home');
+        }
     }
 
     /**

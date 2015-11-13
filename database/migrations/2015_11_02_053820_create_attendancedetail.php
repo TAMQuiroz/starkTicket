@@ -16,7 +16,7 @@ class CreateAttendancedetail extends Migration
            Schema::create('attendancedetail', function (Blueprint $table) {
             $table->increments('id');
             $table->string('tipo');
-            $table->timestamp('datetime');
+            $table->timestamp('datetime')->nullable();
             $table->integer('attendance_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
