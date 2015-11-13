@@ -113,28 +113,20 @@
                       <h4 class="modal-title" id="exampleModalLabel">Cancelación de Evento: {{$event['event']->name}}</h4>
                     </div>
                     <div class="modal-body">
-                      <form>
                         <div class="form-group">
-                          <h4>Funciones:</h4>
+                          <h4>Elegir función:</h4>
                           <ul>
                             @foreach ($event['event']->presentations as $present)
                               <li>
-                                  Funcion: {{date("d/m/Y",$present->starts_at)}} {{date('h:i:s',$present->starts_at)}}   {!! Form::checkbox("$present->id", 'yes') !!}
-
+                                  Funcion: {{date("d/m/Y",$present->starts_at)}} {{date('h:i:s',$present->starts_at)}} <a href="{{ url ('promoter/presentation/'.$present->id.'/cancel') }}">Cancelar</a>
                               </li>
                             @endforeach
                           </ul>
                         </div>
 
-                      </form>
-
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#cancelModal{{$event['event']->id}}" >Guardar</button>
-
-
-
-
+                      <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" >Salir</button>
                     </div>
                   </div>
                 </div>

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkToCancelEventUser extends Migration
+class AddFkToCancelPresentationUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFkToCancelEventUser extends Migration
     public function up()
     {
 
-        Schema::table('cancel_events', function (Blueprint $table) {
+        Schema::table('cancel_presentation', function (Blueprint $table) {
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users')->onDelete('cascade');
@@ -27,8 +27,8 @@ class AddFkToCancelEventUser extends Migration
      */
     public function down()
     {
-        Schema::table('cancel_events', function (Blueprint $table) {
-            $table->dropForeign('cancel_events_user_id_foreign');
+        Schema::table('cancel_presentation', function (Blueprint $table) {
+            $table->dropForeign('cancel_presentation_user_id_foreign');
         });
     }
 }

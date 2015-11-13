@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCancelEventTable extends Migration
+class CreateCancelPresentationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateCancelEventTable extends Migration
      */
     public function up()
     {
-        Schema::create('cancel_events', function (Blueprint $table) {
+        Schema::create('cancel_presentation', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->integer('presentation_id');
             $table->integer('user_id')->unsigned();
@@ -32,6 +32,6 @@ class CreateCancelEventTable extends Migration
      */
     public function down()
     {
-        Schema::drop('cancel_events');
+        Schema::drop('cancel_presentation');
     }
 }
