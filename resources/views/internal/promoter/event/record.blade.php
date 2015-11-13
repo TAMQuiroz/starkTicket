@@ -41,8 +41,8 @@
           <td>{{$event['event']->name}}</td>
           <td>{{date("d/m/Y",$event['event']->publication_date)}}</td>
           <td>{{date("d/m/Y",$event['event']->selling_date)}}</td>
-          <td>Vigente</td> <!--falta la logica de vigente -->
-          <td>{{$event['ticket_quantity']}}</td> <!--no hay -->
+          <td>@if($event['event']->cancelled)Cancelado @else Vigente @endif</td> <!--falta la logica de vigente -->
+          <td>{{$event['event']->numberTickets()}}</td>
           <td>{{$event['ticket_sum']}}</td> <!--no hay -->
           <td><a href="{{ url ('promoter/transfer_payments/'.$event['event']->id.'/create') }}" class="btn btn-info">$</a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info{{$event['event']->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button>
