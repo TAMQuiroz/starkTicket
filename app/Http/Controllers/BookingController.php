@@ -51,7 +51,7 @@ class BookingController extends Controller
             foreach($seats as $seat_id){
 
                 $slot = DB::table('slot_presentation')->where('slot_id',$seat_id)->where('presentation_id', $request['presentation_id'])->first();
-
+                array_push($seats_array, $slot);
                 if($slot->status != config('constants.seat_available')){
                     return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
                 }
@@ -141,9 +141,9 @@ class BookingController extends Controller
                 'eventDate' => gmdate("d-m-Y H:i:s",$presentation->starts_at),
                 'codigo'  => $codigo_reserva,
                 'seats'   => ''];
-/*        if($event->place->rows != null){
+        if($event->place->rows != null){
             $array['seats'] = $seats_array;
-        } */
+        }
 		return view('external.booking.results', $array);
 	
         //return  $array['seats'][0]->row ;
@@ -177,6 +177,7 @@ class BookingController extends Controller
         $ticket->salesman_id = \Auth::user()->id;
         $ticket->picked_up = true;
         $ticket->updated_at = new Carbon();
+        $ticket->reserve = null;
         $id = $ticket->id;
         $ticket->save();
         if($request['promotion_id']!=""){
@@ -199,6 +200,7 @@ class BookingController extends Controller
             }
         DB::table('users')->where('id', $request['user_id'])->increment('points', $nTickets);
         DB::table('slot_presentation')->where('sale_id',$ticket->id)->update(['status' => config('constants.seat_taken')]);
+        session(['tickets'=>$id]);
         return redirect()->route('ticket.success.salesman');
     }
 
