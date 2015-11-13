@@ -21,8 +21,8 @@
   </tr>
     @foreach($presentationCancelled as $cancelled)
   <tr>
-    <td>{{$cancelled->user->name}} {{$cancelled->user->lastname}}</td>
-    <td>{{date('d/m/Y h:i',$cancelled->presentation->start_at)}}</td>
+    <td>{{$cancelled->user_id}}</td>
+    <td>{{$cancelled->presentation_id}}</td>
     <td>{{$cancelled->reason}}</td>
     <td>{{$cancelled->duration}}</td>
     <td>{{$cancelled->authorized}}</td>

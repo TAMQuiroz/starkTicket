@@ -14,8 +14,8 @@ class CreateModulePresentationAuthorizedTable extends Migration
     {
         Schema::create('module_presentation_authorized', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->integer('module_id');
             $table->integer('cancelled_presentation_id');
+            $table->integer('module_id');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
         });

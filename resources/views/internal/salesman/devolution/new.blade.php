@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('layout.salesman')
 
 @section('style')
 
@@ -42,14 +42,16 @@
     </div>
     <div class="col-sm-6">
       <legend>Ticket</legend>
-      <p><b>ID</b>: <span id="ticket_code"></span></p>
-      <p><b>Price</b>: S/ <span id="ticket_price"></span></p>
-      <legend>Evento</legend>
-      <p><b>ID</b>: <span id="event_id"></span></p>
-      <p><b>Name</b>: <span id="event_name"></span></p>
-      <p><b>Cancelado</b>: <span id="event_cancelled"></span></p>
+      <p><b>Id:</b>: <span id="ticket_code"></span></p>
+      <p><b>Precio total:</b>: S/ <span id="ticket_total_price"></span></p>
+      <p><b>Descuento:</b>: S/ <span id="ticket_discount"></span></p>
+      <p><b>Cantidad:</b>: <span id="ticket_quantity"></span></p>
+      <p><b>Canceled:</b>: <span id="ticket_cancelled"></span></p>
+      <legend>Presentación</legend>
+      <p><b>Fecha</b>: <span id="presentation_date"></span></p>
+      <p><b>Cancelado</b>: <span id="presentation_cancelled"></span></p>
+      <p><b>Evento</b>: <span id="presentation_event"></span></p>
       <legend>Cliente</legend>
-      <p><b>ID</b>: <span id="client_id"></span></p>
       <p><b>Full Name</b>: <span id="client_name"></span></p>
       <p><b>DI</b>: <span id="client_di"></span></p>
     </div>
@@ -63,22 +65,20 @@ $(document).ready(function(){
     $("#ticket_id").change(function(){
         ticket_id = $("#ticket_id").val();
         ticket_detail = "<b>Detalles de ticket</b>";
-        $.getJSON(url_base+"/admin/ticket/"+ticket_id+"/tojson", function(data)
+        $.getJSON(url_base+"/salesman/ticket/"+ticket_id+"/tojson", function(data)
         {
           if (data.cancelled == "1")
             alert("El ticket ya fue devuelto");
           $("#ticket_code").text(data.ticket_id);
-          $("#ticket_price").text(data.price);
+          $("#ticket_total_price").text(data.total_price);
+          $("#ticket_discount").text(data.discount);
+          $("#ticket_quantity").text(data.quantity);
+          $("#ticket_cancelled").text(data.cancelled);
 
-          $("#event_id").text(data.event_id);
-          $("#event_name").text(data.event_name);
-          if (data.event_cancelled)
-            $("#event_cancelled").text("Evento cancelado");
-          else
-            $("#event_cancelled").text("Evento vigente");
+          $("#presentation_date").text(data.presentation_date);
+          $("#presentation_cancelled").text(data.presentation_cancelled);
+          $("#presentation_event").text(data.presentation_event);
 
-
-          $("#client_id").text(data.client_id);
           $("#client_name").text(data.client_name);
           $("#client_di").text(data.client_di);
 
