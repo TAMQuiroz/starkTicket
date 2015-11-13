@@ -12,7 +12,6 @@ use Auth;
 use App\User;
 use Carbon\Carbon;
 
-
 class PagesController extends Controller
 {
     public function home()
@@ -43,11 +42,6 @@ class PagesController extends Controller
 
     public function salesmanHome()
     {
-
-
-
-   
-
         return view('internal.salesman.home');
     }
 
