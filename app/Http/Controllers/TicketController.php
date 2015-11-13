@@ -50,7 +50,7 @@ class TicketController extends Controller
     {
         //Buscar y enviar info de evento con $id
         $event = Event::find($id);
-        $presentations = Presentation::where('event_id', $id)->get();
+        $presentations = Presentation::where('event_id', $id)->where('cancelled',0)->get();
 
         $slots_array = array();
         foreach ($presentations as $pres) {
@@ -78,7 +78,7 @@ class TicketController extends Controller
     {
         //Buscar y enviar info de evento con $id
         $event = Event::find($id);
-        $presentations = Presentation::where('event_id', $id)->get();
+        $presentations = Presentation::where('event_id', $id)->where('cancelled',0)->get();
 
         $slots_array = array();
         foreach ($presentations as $pres) {
