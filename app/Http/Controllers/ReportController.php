@@ -35,6 +35,9 @@ class ReportController extends Controller
     {
         //
     }
+    public function assigmentExcel(Request $request){
+
+    }
 
     public function actionExcel(Request $request){
         

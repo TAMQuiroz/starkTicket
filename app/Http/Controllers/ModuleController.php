@@ -204,8 +204,8 @@ class ModuleController extends Controller
 
         if ($moduleAssiPass->count()==0){
             $salesman = User::find($request['salesman_id']);
-            if ($salesman==null){
-                 return back()->withErrors(['Ese modulo de trabajo ya ha sido asignado']);    
+            if ($salesman->module_id!=null){
+                 return back()->withErrors(['Este vendedor ya ha sido asignado']);    
             }
             $salesman->module_id   = $request['module_id'];
             $salesman->save();
