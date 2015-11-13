@@ -37,14 +37,14 @@ class AuthController extends Controller
        if(Auth::user()->role_id == 2 ){ // solo lo hago si soy vendedor
 
 
-            $dateToday  =   new Carbon() ; 
-            $dateToday =  $dateToday->toDateString(); 
-            $dateTimeToday  =   new Carbon() ; 
+            $dateToday  =   new Carbon() ;
+            $dateToday =  $dateToday->toDateString();
+            $dateTimeToday  =   new Carbon() ;
             $id = Auth::user()->id;
 
           //  sleep(0.1);
 
-            $Attendance = Attendance::where('datetime',$dateToday  )->where('salesman_id',$id)->get(); 
+            $Attendance = Attendance::where('datetime',$dateToday  )->where('salesman_id',$id)->get();
             $assitancedetail  =   new AttendanceDetail() ;
             $assitancedetail->datetime  =         $dateTimeToday ;
             $assitancedetail->tipo =   Config::get('constants.out')     ; // ya que se trata de una salida
@@ -54,16 +54,16 @@ class AuthController extends Controller
 //Busco la fecha y actualizo lafecha de salida .
 
             $updateAttendance = Attendance::find( $Attendance[0]->id );
-            $updateAttendance->datetimeend = $dateTimeToday; 
+            $updateAttendance->datetimeend = $dateTimeToday;
             $updateAttendance->save();
          //   sleep(0.1);
 
-        }   
+        }
         Auth::logout();
 
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
-    protected $redirectAfterLogout = '/auth/login'; 
+    protected $redirectAfterLogout = '/auth/login';
 
     protected $loginPath = '/auth/login';
     /**
@@ -109,11 +109,6 @@ class AuthController extends Controller
             'role_id' => $role
             ]);
     }
-    public function worker()
-    {
-
-        return view('external.workerLogin');
-    }
     /**
      * Get the post register / login redirect path.
      *
@@ -131,29 +126,29 @@ class AuthController extends Controller
             break;
             case '2':
 
-//aqui agregamos una entrada a la asistencia 
+//aqui agregamos una entrada a la asistencia
 
-            $dateToday  =   new Carbon() ; 
-            $dateToday =  $dateToday->toDateString(); 
+            $dateToday  =   new Carbon() ;
+            $dateToday =  $dateToday->toDateString();
 
-            $dateTimeToday  =   new Carbon() ; 
+            $dateTimeToday  =   new Carbon() ;
             $id = Auth::user()->id;
-            $Attendance = Attendance::where('datetime', $dateToday  )->where('salesman_id',$id)->get(); 
+            $Attendance = Attendance::where('datetime', $dateToday  )->where('salesman_id',$id)->get();
 
-     if($Attendance->count() == 0 ) { // si no lo encuentro creo la fecha 
+     if($Attendance->count() == 0 ) { // si no lo encuentro creo la fecha
        $assitance  =   new Attendance() ;
        $assitance->datetime = $dateToday ;
        $assitance->salesman_id  =  $id  ;
        $assitance->datetimestart  =     $dateTimeToday ;
-       $assitance->save(); 
+       $assitance->save();
 
       // sleep(0.1);
    }
-     else {              // si lo encuentro actualizo la fecha de finalizacion de sesion a null 
+     else {              // si lo encuentro actualizo la fecha de finalizacion de sesion a null
 
        $assitance = Attendance::find($Attendance[0]->id);
        $assitance->datetimeend = NULL ;
-       $assitance->save(); 
+       $assitance->save();
    }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
       //ahora creo el detalle de la asistencia. esto es si o si
@@ -166,7 +161,7 @@ class AuthController extends Controller
     $id = Auth::user()->id;
 
 
-    $Attendance = Attendance::where('datetime',$dateToday  )->where('salesman_id',$id)->get(); 
+    $Attendance = Attendance::where('datetime',$dateToday  )->where('salesman_id',$id)->get();
 
     $assitancedetail->attendance_id =  $Attendance[0]->id;
     $assitancedetail->save();
