@@ -128,20 +128,31 @@ class PresentationController extends Controller
 
         return redirect('/promoter/presentation/cancelled');
     }
-    public function modules($id)
+    public function modules($presentationId)
     {
-        $cancelled = CancelPresentation::findOrFail($id);
+        $cancelled = CancelPresentation::findOrFail($presentationId);
         $modules = Module::all();
-        return view('internal.promoter.presentation.authorized', ['cancelled' => $cancelled,"modules"=>$modules]);
+        $authorized = ModulePresentationAuthorized::where("cancelled_presentation_id",$presentationId)->get();
+        return view('internal.promoter.presentation.authorized', ['cancelled' => $cancelled,"modules"=>$modules,"authorized"=>$authorized]);
     }
-    public function modulesStorage(Request $request, $id)
+    public function modulesStorage(Request $request, $presentationCancelledID)
     {
 
         $input = $request->all();
         if (is_array($input["modules"]))
         {
-            // Buscar e insertar a la bd
+            foreach ($input["modules"] as $module)
+            {
+                $mpa = ModulePresentationAuthorized::where(["cancelled_presentation_id" => $presentationCancelledID, "module_id" => $module])->get();
 
+                if($mpa->isEmpty())
+                {
+                    $moduleAuthorized = new ModulePresentationAuthorized();
+                    $moduleAuthorized->cancelled_presentation_id = $presentationCancelledID;
+                    $moduleAuthorized->module_id = $module;
+                    $moduleAuthorized->save();
+                }
+            }
             Session::flash('message', 'Modulos autorizados para devolución!');
             Session::flash('alert-class','alert-success');
 

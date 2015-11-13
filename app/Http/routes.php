@@ -76,6 +76,12 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
     Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
 
+    Route::get('salesman/devolutions/', 'DevolutionController@index');
+    Route::get('salesman/devolutions/new', 'DevolutionController@create');
+    Route::post('salesman/devolutions/new', 'DevolutionController@store');
+    Route::get('salesman/devolutions/{devolution_id}', 'DevolutionController@show');
+    Route::get('salesman/ticket/{devolution_id}/tojson', 'TicketController@getTicketToJson');
+
 });
 
 //Rutas generales para peticiones ajax, pueden ser usadas por varios usuarios, por eso lo saque
@@ -202,6 +208,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/report/sales','ReportController@actionExcel');
     //Route::get('admin/report/sales/download','ReportController@actionExcel');
     Route::get('admin/report/assignment', 'ReportController@showAssigment');
+    Route::post('admin/report/assignment', 'ReportController@assigmentExcel');
 
     Route::get('admin/modules', 'ModuleController@index');
     Route::get('admin/modules/new', 'ModuleController@create');
