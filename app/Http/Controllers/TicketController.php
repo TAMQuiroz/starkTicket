@@ -587,13 +587,15 @@ class TicketController extends Controller
         $ticket =Ticket::findOrFail($id);
         $ticketDetail = array(
             "ticket_id"=>$ticket->id,
-            "price"=>$ticket->price,
             "cancelled"=>$ticket->cancelled,
-            "event_id"=>$ticket->event["id"],
-            "event_name"=>$ticket->event["name"],
-            "event_cancelled"=>$ticket->event["cancelled"],
+            "quantity"=>$ticket->quantity,
+            "discount"=>$ticket->discount,
+            "total_price"=>$ticket->total_price,
 
-            "client_id"=>$ticket->owner["id"],
+            "presentation_date"=>$ticket->presentation["starts_at"],
+            "presentation_cancelled"=>$ticket->presentation["cancelled"],
+            "presentation_event"=>$ticket->event["name"],
+
             "client_name"=>$ticket->owner["name"]." ".$ticket->owner["lastname"],
             "client_di"=>$ticket->owner["di"]
             );

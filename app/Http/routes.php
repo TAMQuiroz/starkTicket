@@ -74,6 +74,13 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
     Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
     Route::post('salesman/event/successMail', ['uses'=>'TicketController@mailSuccess','as'=>'ticket.success.salesman.mail']);
+
+    Route::get('salesman/devolutions/', 'DevolutionController@index');
+    Route::get('salesman/devolutions/new', 'DevolutionController@create');
+    Route::post('salesman/devolutions/new', 'DevolutionController@store');
+    Route::get('salesman/devolutions/{devolution_id}', 'DevolutionController@show');
+    Route::get('salesman/ticket/{devolution_id}/tojson', 'TicketController@getTicketToJson');
+
 });
 
 //Rutas generales para peticiones ajax, pueden ser usadas por varios usuarios, por eso lo saque
@@ -176,14 +183,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/{id}/attendanceSubmit', 'BusinessController@attendanceSubmit');
 
     Route::get('admin/attendance/{id}/detail', 'BusinessController@attendanceDetail');
-
-    Route::get('admin/devolutions/', 'DevolutionController@index');
-    Route::get('admin/devolutions/new', 'DevolutionController@create');
-    Route::post('admin/devolutions/new', 'DevolutionController@store');
-    Route::get('admin/devolutions/{devolution_id}', 'DevolutionController@show');
-
-    Route::get('admin/ticket/{devolution_id}/tojson', 'TicketController@getTicketToJson');
-
     Route::get('admin/attendance', 'BusinessController@attendance');
 
     Route::get('admin/config/exchange_rate', 'BusinessController@exchangeRate');
@@ -196,6 +195,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/report/sales','ReportController@actionExcel');
     //Route::get('admin/report/sales/download','ReportController@actionExcel');
     Route::get('admin/report/assignment', 'ReportController@showAssigment');
+    Route::post('admin/report/assignment', 'ReportController@assigmentExcel');
 
     Route::get('admin/modules', 'ModuleController@index');
     Route::get('admin/modules/new', 'ModuleController@create');

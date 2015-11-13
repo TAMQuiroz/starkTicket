@@ -21,8 +21,8 @@
   </tr>
     @foreach($presentationCancelled as $cancelled)
   <tr>
-    <td>{{$cancelled->user}}</td>
-    <td>{{$cancelled->presentation}}</td>
+    <td>{{$cancelled->user_id}}</td>
+    <td>{{$cancelled->presentation_id}}</td>
     <td>{{$cancelled->reason}}</td>
     <td>{{$cancelled->duration}}</td>
     <td>{{$cancelled->authorized}}</td>
