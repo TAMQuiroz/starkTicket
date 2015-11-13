@@ -140,10 +140,11 @@ class PresentationController extends Controller
         $input = $request->all();
         if (is_array($input["modules"]))
         {
-            // Verificar duplicados
             foreach ($input["modules"] as $module)
             {
-                if(!ModulePresentationAuthorized::where(["cancelled_presentation_id" => $presentationCancelledID, "module_id" => $module]))
+                $mpa = ModulePresentationAuthorized::where(["cancelled_presentation_id" => $presentationCancelledID, "module_id" => $module])->get();
+
+                if($mpa->isEmpty())
                 {
                     $moduleAuthorized = new ModulePresentationAuthorized();
                     $moduleAuthorized->cancelled_presentation_id = $presentationCancelledID;
@@ -151,7 +152,6 @@ class PresentationController extends Controller
                     $moduleAuthorized->save();
                 }
             }
-
             Session::flash('message', 'Modulos autorizados para devolución!');
             Session::flash('alert-class','alert-success');
 
