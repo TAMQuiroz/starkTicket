@@ -38,7 +38,7 @@ Route::get('event/{id}', 'EventController@showExternal');
 Route::post('event/{id}', 'EventController@showExternalPost');
 
 Route::group(['middleware' => ['auth', 'client']], function () {
-    Route::get('client/', 'ClientController@profile');
+    Route::get('client/', ['uses'=>'ClientController@profile','as'=>'client.home']);
     Route::get('client/edit', 'ClientController@edit');
     Route::post('client/update', 'ClientController@update');
     Route::get('client/password', 'ClientController@password');
@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth', 'client']], function () {
     Route::get('client/event/{id}/buy', 'TicketController@createClient');
     Route::post('client/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store.client']);
     Route::get('client/event/successBuy', ['uses'=>'TicketController@showSuccess','as'=>'ticket.success.client']);
+    Route::post('client/event/successMail', ['uses'=>'TicketController@mailSuccess','as'=>'ticket.success.client.mail']);
     Route::get('client/{id}/reservanueva', ['as' => 'booking.create' , 'uses' => 'BookingController@create']);
     //Fin
     Route::get('client/reservaexitosa', 'BookingController@store');
@@ -77,6 +78,7 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman/event/{id}/buy', 'TicketController@createSalesman');
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
     Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
+    Route::post('salesman/event/successMail', ['uses'=>'TicketController@mailSuccess','as'=>'ticket.success.salesman.mail']);
 
     Route::get('salesman/devolutions/', 'DevolutionController@index');
     Route::get('salesman/devolutions/new', 'DevolutionController@create');
