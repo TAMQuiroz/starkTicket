@@ -10,6 +10,7 @@ use App\Http\Requests\User\UpdateAdminRequest;
 use App\user;
 use Carbon\Carbon;
 use App\Services\FileService;
+use App\Models\ModuleAssigment;
 
 
 class AdminController extends Controller
@@ -25,7 +26,7 @@ class AdminController extends Controller
     public function salesman()
     {
 
-        $vendedores = User::where('role_id',2)->paginate(2);
+        $vendedores = User::where('role_id',2)->paginate(5);
         $vendedores->setPath('salesman');
 
         return view('internal.admin.salesman',compact('vendedores'));
@@ -126,7 +127,7 @@ class AdminController extends Controller
 
     public function admin()
     {
-        $users = User::where('role_id',4)->paginate(2);
+        $users = User::where('role_id',4)->paginate(5);
         $users->setPath('admin');
         return view('internal.admin.admin', compact('users'));
     }
@@ -239,8 +240,16 @@ class AdminController extends Controller
 
     public function destroySalesman($id)
     {
-        $user = User::find($id);
-        $user->delete();
+        $moduleassigment = ModuleAssigment::where('salesman_id',$id)->where('status',1)->get();
+
+        if ($moduleassigment->count()==0){
+            $user = User::find($id);
+            $user->delete();
+
+        }else{
+            return back()->withErrors(['Debe primero desasociar el vendedor del punto de venta']);
+        }
+
         return redirect('admin/salesman');
     }
 

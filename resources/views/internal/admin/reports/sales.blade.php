@@ -20,7 +20,7 @@
             <!-- 
             <input type="text" class="form-control" placeholder="Nombre del evento...">
             -->
-            {!!Form::text('nameEvent', null ,['class'=>'form-control', 'id'=>'search','placeholder' => 'Nombre del evento'])!!}
+            {!!Form::text('name', null ,['class'=>'form-control', 'id'=>'search','placeholder' => 'Nombre del evento'])!!}
             <span class="input-group-btn">
             <!--
             <button class="btn btn-info" type="button" id = 'botoncito' >Buscar</button>
@@ -31,13 +31,15 @@
     <br><br><br><br>
     <div class="col-sm-2">
         <label>Desde</label>
-        
-        <input id="fecha-ini" type="date" class="form-control" >
+        {!!Form::input('date','firstDate', null ,['class'=>'form-control','id'=>'fecha-ini'])!!}
+
+
         
     </div>
     <div class="col-sm-2">
         <label>Hasta</label>
-        <input id="fecha-fin" type="date" class="form-control">
+        {!!Form::input('date','lastDate', null ,['class'=>'form-control','id'=>'fecha-fin'])!!}
+
     </div>
 
 </div>

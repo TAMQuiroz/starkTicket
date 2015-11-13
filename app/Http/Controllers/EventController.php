@@ -6,9 +6,11 @@ use App\Http\Requests;
 use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Requests\Event\StoreHighlightRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
+use App\Http\Requests\Event\CancelEventRequest;
 use App\Http\Requests\Comment\StoreCommentPostRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Ticket;
 use App\Models\Zone;
 use App\Models\Presentation;
 use App\Models\Slot;
@@ -17,10 +19,13 @@ use App\Models\Highlight;
 use App\Models\Organizer;
 use App\Models\Local;
 use App\Models\Comment;
+use App\Models\CancelEvent;
 use App\Services\FileService;
 use Carbon\Carbon;
 use App\User;
 use Auth;
+use Session;
+use DB;
 
 use DateTime;
 class EventController extends Controller
@@ -103,7 +108,7 @@ class EventController extends Controller
 
 
    public function attendanceDetail()
-   {      
+   {
 
        return view('internal.admin.attendanceDetail '  );
 
@@ -189,13 +194,13 @@ public function validateFreeLocal($starts_at, $local_id, $time_length){
                 foreach ($presentations as $presentation) {
                     $date = intval($presentation->starts_at);
                     $end_date = $date + (3600*$event->time_length);
-                    if(($date<=$max_date && $date>=$min_date)|| ($end_date<=$max_date && $end_date>=$min_date)) 
+                    if(($date<=$max_date && $date>=$min_date)|| ($end_date<=$max_date && $end_date>=$min_date))
                         return ['error' => 'Este local tiene programadas presentaciones en las fechas y horas especificadas'];
 
                 }
             }
         }
-    }   
+    }
     else return null;
 }
 
@@ -215,7 +220,7 @@ public function store(StoreEventRequest $request)
         if($result['error'] != '')
             return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
             //return response()->json(['message' => $result['error']]);
-        
+
         $data = [
         'name'          => $request->input('name'),
         'description'   => $request->input('description'),
@@ -267,9 +272,9 @@ public function store(StoreEventRequest $request)
     {
         $user = \Auth::user();
         $event = Event::findOrFail($id);
-        $users = User::all(); 
-        $Comments = Comment::where('event_id',$id  ) ->get(); 
-       
+        $users = User::all();
+        $Comments = Comment::where('event_id',$id  ) ->get();
+
        return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments , 'users' => $users]);
     }
 
@@ -278,22 +283,22 @@ public function store(StoreEventRequest $request)
 
         $user = \Auth::user();
         $event = Event::findOrFail($id);
-        $users = User::all(); 
+        $users = User::all();
         $input = $request->all();
 
     //Agrego el nuevo comentario
 
         $Comment    =   new Comment ;
         $Comment->description  =   $input['comment'];
-        $Comment->time =   new Carbon() ; 
-        $Comment->event_id = $id; 
+        $Comment->time =   new Carbon() ;
+        $Comment->event_id = $id;
 
         $idUser = Auth::user()->id;
-        $Comment->user_id = $idUser; 
+        $Comment->user_id = $idUser;
 
-        $Comment->save(); 
+        $Comment->save();
 
-        $Comments = Comment::where('event_id',$id  ) ->get(); 
+        $Comments = Comment::where('event_id',$id  ) ->get();
         return view('external.event', ['event' => $event, 'user'=>$user , 'Comments'=> $Comments,'users' => $users  ] );
     }
 
@@ -313,9 +318,22 @@ public function store(StoreEventRequest $request)
      */
     public function showPromoterRecord()
     {
-        $objs = Event::all();
+        $events = Event::all();
+        $event_data = [];
+        foreach ($events as $key => $event) {
+            $ticket_sum = Ticket::where('event_id',$event->id)->sum('total_price');
+            $ticket_quantity = Ticket::where('event_id',$event->id)->sum('quantity');
 
-        return view('internal.promoter.record',["events"=>$objs]);
+            $event_data[$key]=
+                    [
+                        "event"             =>  $event,
+                        "ticket_sum"        =>  $ticket_sum,
+                        "ticket_quantity"   =>  $ticket_quantity,
+                    ];
+
+        }
+
+        return view('internal.promoter.event.record',compact('event_data'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -641,9 +659,43 @@ public function update(UpdateEventRequest $request, $id)
         $local = Local::find($id);
         return $local;
     }
+    public function cancel($id)
+    {
+        $event = Event::findOrFail($id);
+        if ($event->cancelled == 1)
+        {
+            Session::flash('message', 'El evento ya fue cancelado!');
+            Session::flash('alert-class','alert-danger');
 
+            return redirect('/promoter/event/record');
+        }
+        return view('internal.promoter.event.cancel', ['event' => $event]);
+    }
+    public function cancelStorage(CancelEventRequest $request, $event_id)
+    {
+        $user_id = Auth::user()->id;
+
+        $input = $request->all();
+
+        $event = Event::findOrFail($event_id);
+        $event->cancelled = "1";
+        $event->save();
+
+        $cancel = new CancelEvent;
+        $cancel->event_id = $event_id;
+        $cancel->user_id = $user_id;
+        $cancel->reason = $input['reason'];
+        $cancel->duration = $input['duration'];
+        $cancel->date_refund = $input['date_refund'];
+        $cancel->save();
+
+        Session::flash('message', 'El evento se a cancelado!');
+        Session::flash('alert-class','alert-success');
+
+        return redirect('/promoter/event/record');
+    }
     public function getHighlights(){
-        $destacados = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->with('event')->get();    
+        $destacados = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->with('event')->get();
         return view('internal.promoter.highlights.index', array('destacados'=>$destacados));
     }
 
@@ -661,7 +713,7 @@ public function update(UpdateEventRequest $request, $id)
             } else{
                 foreach ($no_activos as $no_activo) {
                     $fecha = $no_activo->start_date->addDays($no_activo->days_active +1);
-                    if($fecha<$min_date || $min_date==null) 
+                    if($fecha<$min_date || $min_date==null)
                         $min_date = $fecha;
                 }
             }

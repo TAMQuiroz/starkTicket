@@ -126,18 +126,31 @@ $('#quantity').change(function(){
 });
 
 function getPromo(){
-    console.log("promo");
+    //console.log("promo");
     $.ajax({
         url: config.routes[6].promo,
         type: 'get',
         data: 
         { 
+            quantity: $('#quantity').val(),
             event_id: $('#event_id').val(),
             zone_id: $('#zone_id').val(),
             type_id: $('input[name="payMode"]:checked').val(),
         },
         success: function( response ){
-            console.log(response);
+            //console.log(response);
+
+            if (response != ""){
+                $('#promotion_id').val(response.id);
+                $('#total2').val(response.amount);
+                
+            }else{
+                getPrice();
+                $('#promotion_id').val("");
+                $('#total2').val($('#quantity').val()*price);
+            }
+            
+            /*
             if (response.desc != null){
                 $('#promotion_id').val(response.id);
                 discount = response.desc/100;
@@ -148,8 +161,11 @@ function getPromo(){
             }
             getPrice();
             price = price * (1 - discount);
-            //console.log(price);
-            $('#total2').val(price*$('#quantity').val());
+            price = price.toFixed(2);
+            totalPrice = price * $('#quantity').val();
+            totalPrice = totalPrice.toFixed(2);
+            $('#total2').val(totalPrice);
+            */
         },
         error: function( response ){
             console.log(response);

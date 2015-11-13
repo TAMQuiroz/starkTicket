@@ -102,6 +102,11 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
     Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
+    Route::get('promoter/presentation/cancelled', 'PresentationController@index');
+    Route::get('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modules');
+    Route::post('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modulesStorage');
+    Route::get('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancel');
+    Route::post('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancelStorage');
     Route::post('promoter/event/{event_id}/delete', ['as' => 'events.delete', 'uses' =>'EventController@destroy']);
 
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
@@ -200,6 +205,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/modules/{id}/edit', 'ModuleController@edit');
     Route::post('admin/modules/{id}/edit', 'ModuleController@update');
     Route::get('admin/modules/{id}/delete', 'ModuleController@destroy');
+    Route::get('admin/modules/assigment', 'ModuleController@showAssigment');
+    Route::post('admin/modules/assigment', 'ModuleController@newAssigment');
+    Route::get('admin/modules/assigment/{id}/delete', 'ModuleController@destroyAssigment');
 
     Route::get('admin/client', 'ClientController@index');
     Route::post('admin/client/desactive', 'ClientController@desactive');

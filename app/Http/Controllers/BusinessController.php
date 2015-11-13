@@ -28,7 +28,7 @@ class BusinessController extends Controller
     public function cashCount()
     {
         //$user = Auth::user();
-
+                
         $sales = DB::table('tickets')
                     ->select(DB::raw('payment_date, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, zones.price as zonePrice, presentations.starts_at as funtionTime, count(*) as totalTicket, Sum(tickets.price) as subtotal'))
                     ->where('payment_date','<',new Carbon())->where('payment_date','>=',Carbon::today())->where('salesman_id',\Auth::user()->id)
@@ -73,10 +73,10 @@ class BusinessController extends Controller
 
     public function exchangeRate()
     {
-        $exchangeRates = ExchangeRate::paginate(4);
+       
+        $exchangeRates = ExchangeRate::orderBy('id','desc')->paginate(4);
         $exchangeRates->setPath('exchange_rate');
         return view('internal.admin.exchangeRate',compact('exchangeRates'));
-
         /* return view('internal.admin.exchangeRate'); */
     }
     public function storeExchangeRate(StoreExchangeRateRequest $request)
@@ -110,6 +110,9 @@ class BusinessController extends Controller
     {
         
        // $modules = Module::where('id',\Auth::user()->id_module)->get();
+         if (Auth::user()->module_id == null){
+            return back()->withErrors(['El vendedor no tiene una caja asignada']);
+        }
          $module = Module::find(\Auth::user()->module_id);
          $module->cash    = $request['cash'];
          $module->save();
