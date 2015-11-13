@@ -104,4 +104,11 @@
 
 @section('javascript')
     {!!Html::script('js/main.js')!!}
+    <script type="text/javascript">
+    var config = {
+        routes: [
+            { promo: "{{URL::route('ajax.getPromo')}}"}
+        ]
+    };
+    </script>
 @stop
