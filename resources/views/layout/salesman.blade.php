@@ -27,6 +27,7 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
                 <ul class="nav navbar-nav navbar-left">
                     <li>
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Ventas <b class="caret"></b></a>
@@ -39,7 +40,6 @@
                         </ul>
                     </li>
                 </ul>
-
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="">{{ Auth::user()->name }}</a></li>
                     <li><a href="{{url('auth/logout')}}">Salir</a></li>
