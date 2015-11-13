@@ -47,11 +47,6 @@ Promociones
 
 
 							<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info{{$promotion->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
-
-
-
-
-
 							<div class="modal fade" id="info{{$promotion->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
@@ -63,7 +58,6 @@ Promociones
 											<form>
 												<div class="form-group">
 													<h3>{{$promotion->name}}</h3>
-													<p>Código = {{$promotion->id}} </p>
 													<p>Creada por el usuario =  {{$users[($promotion->user_id)-1]['name']}}    </p>
 													<p>FECHA INICIO {{$promotion->startday}}    </p>
 													<p>FECHA FIN {{$promotion->endday}} horas   </p>
@@ -72,9 +66,7 @@ Promociones
 													<p> Promoción de descuento del  {{$promotion->desc}}%  </p>
 													<p> Válido para  </p>	<ul>
 													<li> {{$accessPromotions[($promotion->access_id)-1]['description'] }}
-
 													</li>
-
 												</ul>
 												@else
 												<p> OFERTA   {{$promotion->carry}} x {{$promotion->pay}}  </p>
@@ -82,9 +74,6 @@ Promociones
 												<p>   Valido únicamente para la zona     </p>
 												<ul>
 													<li>{{$zones[($promotion->zone_id)-1]['name'] }}   </li>
-
-
-
 												</ul>
 												@endif
 
