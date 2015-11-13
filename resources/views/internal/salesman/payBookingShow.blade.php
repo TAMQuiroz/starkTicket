@@ -11,6 +11,7 @@
 @section('content')
 {!!Form::open(array('url' => 'salesman/event/pay_booking/store','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}   
     <legend>Información del evento</legend>
+    {!!Form::hidden('reserve_id',$reserve)!!}
     <div class="select Type col-md-12"> 
         <label>
             <div class="col-md-4">
