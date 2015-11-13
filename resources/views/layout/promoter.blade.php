@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title') | StarkTicket</title>
- 
+
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/jquery.dataTables.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
@@ -35,6 +35,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{url('promoter/event/create')}}">Nuevo</a></li>
                             <li><a href="{{url('promoter/event/record')}}">Historial</a></li>
+                            <li><a href="{{url('promoter/presentation/cancelled')}}">Presentaciones cancelados</a></li>
                             <li class="divider"></li>
                             <li><a href="{{url('promoter/highlights')}}">Destacados</a></li>
                         </ul>
@@ -91,7 +92,7 @@
         <hr>
         <p><b>Desarrollado por Stark</b></p>
     </div>
-  
+
     {!!Html::script('js/jQuery-2.1.4.min.js')!!}
     {!!Html::script('js/bootstrap.min.js')!!}
     {!!Html::script('js/jquery.validate.min.js')!!}
@@ -114,11 +115,11 @@
             }
         });
         $('#yes').click(function(){
-            $('.modal').modal('hide');  
+            $('.modal').modal('hide');
         });
     });
 
-    </script>    
+    </script>
 
 
     @yield('javascript')

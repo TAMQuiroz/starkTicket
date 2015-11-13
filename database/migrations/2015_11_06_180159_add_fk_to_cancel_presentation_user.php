@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkClientToDevolution extends Migration
+class AddFkToCancelPresentationUser extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,9 @@ class AddFkClientToDevolution extends Migration
      */
     public function up()
     {
-        Schema::table('devolutions', function (Blueprint $table) {
-            $table->foreign('client_id')
+
+        Schema::table('cancel_presentation', function (Blueprint $table) {
+            $table->foreign('user_id')
                   ->references('id')
                   ->on('users')->onDelete('cascade');
         });
@@ -26,8 +27,8 @@ class AddFkClientToDevolution extends Migration
      */
     public function down()
     {
-        Schema::table('devolutions', function (Blueprint $table) {
-            $table->dropForeign('devolutions_client_id_foreign');
+        Schema::table('cancel_presentation', function (Blueprint $table) {
+            $table->dropForeign('cancel_presentation_user_id_foreign');
         });
     }
 }
