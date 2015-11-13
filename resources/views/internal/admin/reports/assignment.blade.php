@@ -20,14 +20,8 @@
           <option value="3">La Perla</option>
         </select>
         -->
-        {!!Form::select('select1', [
-           'op0' => 'Todos los puntos de venta',
-           'op1' => 'La Molina',
-           'op2' => 'San Borja',
-           'op3' => 'La Perla'],
-           null,
-           ['class' => 'form-control']
-        )!!}
+        
+        {!!Form::select('nameEvent', $modules_list->toArray(), null ,['class'=>'form-control', 'id'=>'search','placeholder' => 'Nombre del Punto'])!!}
         
     </div>
      <div class="col-sm-3">
@@ -42,10 +36,10 @@
         </select>
         -->
         {!!Form::select('select2', [
-           'op0' => 'Todos los empleados',
-           'op1' => 'Vendedores',
-           'op2' => 'Promotores de venta',
-           'op3' => 'Administradores'],
+           'op0' => 'Todos',
+           'op1' => 'Vendedor',
+           'op2' => 'Promotor',
+           'op3' => 'Administrador'],
            null,
            ['class' => 'form-control']
         )!!}
@@ -71,18 +65,19 @@
         <tr>
             <th>Punto de Venta</th>
             <th>Nombres y Apellidos</th>
+            <th>Fecha de Asignación</th>
+            <th>Fecha de Desasociación</th>
             <th>Tipo de Empleado</th>
         </tr>
+        @foreach($assiInformation as $assig)
         <tr>
-            <td>La Molina</td>
-            <td>Pepito Marquez</td>
-            <td>Vendedor</td>
+            <td>{{$assig[0]}}</td>
+            <td>{{$assig[1]}} {{$assig[2]}}</td>
+            <td>{{$assig[3]}}</td>
+            <td>{{$assig[4]}}</td>
+            <td>{{$assig[5]}}</td>
         </tr>
-        <tr>
-            <td>San Borja</td>
-            <td>Wendy Perez</td>
-            <td>Administrador</td>
-        </tr>
+        @endforeach
 
     </table>
 </div>

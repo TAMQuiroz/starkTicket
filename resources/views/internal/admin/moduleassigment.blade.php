@@ -63,21 +63,28 @@
           <div class="col-sm-8">
             {!!Form::open(array('url' => 'admin/modules/assigment','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
               <div class="form-group">
-                <label class="col-sm-2 control-label">Punto de Venta</label>
-                <div class="col-sm-10">
-                  {!! Form::select('module_id', $modules_list->toArray(),null,['class' => 'form-control','required','id'=>'module_id'])  !!}
-                </div>
-              </div>
-              <div class="form-group">
-                <label  class="col-sm-2 control-label">Vendedor</label>
+                  
+                <!--<label class="col-sm-2 control-label">Punto de Venta</label>-->
                 <div class="col-sm-6">
-                  {!! Form::select('salesman_id', $salesmans_list->toArray(),null,['class' => 'form-control','required','id'=>'salesman_id']) !!}
+                  <h4>Seleccione el Punto de Venta</h4>
+                    {!! Form::select('module_id', $modules_list->toArray() ,null,['class' => 'form-control','required','id'=>'module_id'])  !!}
                 </div>
               </div>
               <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <div class="col-md-6">
+                    <h4>Ingrese Usuario</h4>
+                        {!! Form::number('number', null, ['class' => 'form-control', 'placeholder' => 'Documento de Identidad...','id'=>'salesman_di','min'=>0,'max'=>99999999]) !!}
+                  </div>
+                <div class="col-md-6">
+                    <h4>Nombre de Cliente</h4>
+                    {!! Form::text('name', null, ['class' => 'form-control', 'disabled', 'id'=>'salesman_name']) !!}
+                    {!! Form::hidden('salesman_id', null, ['id'=>'salesman_id'])!!}
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-0 col-sm-10">
               
-                  <a class="btn btn-info" type="button" href=""  title="Create"  data-toggle="modal" data-target="#saveModalUser">Guardar</a>
+                  <a class="btn btn-info" type="button" href=""  title="Create"  data-toggle="modal" data-target="#saveModalUser">Asignar Módulo</a>
                   
                  
                 </div>
@@ -109,7 +116,6 @@
           </div>
         </div>
 
-
         <h3>Modulos ya relacionados</h3>
           <table class="table table-bordered table-striped">
                           
@@ -121,19 +127,20 @@
                   <th>Fecha de Asignación</th>
                   <th>Desasociar</th>
               </tr>
-                 
+
               @foreach($assigmentmodules as $assigmentmodule)
                 <tr>
                     <td>{{$assigmentmodule->idModule}}</td>
                     <td>{{$assigmentmodule->nameModule}}</td>
                         
                     <td>{{$assigmentmodule->idSalesman}}</td>
-                    <td>{{$assigmentmodule->nameSalesman}}</td>
+                    <td>{{$assigmentmodule->nameSalesman}} {{$assigmentmodule->lastnameSalesman}}</td>
                     <td>{{$assigmentmodule->dateAssigment}}</td>
                     <td>
                       <a class="btn btn-info" href=""  title="Eliminar" data-toggle="modal" data-target="#deleteModal{{$assigmentmodule->idAssigment}}" ><i class="glyphicon glyphicon-remove"></i></a>
                     </td>
                 </tr>
+                
                 <div class="modal fade"  id="deleteModal{{$assigmentmodule->idAssigment}}">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -158,10 +165,18 @@
 @stop
 
 @section('javascript')
+  {!!Html::script('js/main.js')!!}
   <script type="text/javascript">
-    var config = {
+  var config = {
         routes: [
-            { client: "{{ URL::route('ajax.getClient') }}" },
+            { salesman: "{{ URL::route('ajax.getClient') }}" },
+            { zone: "{{ URL::route('ajax.getClient') }}" },
+            { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
+            { event_available: "{{URL::route('ajax.getAvailable')}}"},
+            { slots: "{{URL::route('ajax.getSlots')}}"},
+            { makeArray: "{{URL::route('ajax.getZone')}}"},
+            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
+            { promo: "{{URL::route('ajax.getPromo')}}"}
         ]
     };
     $('#yes').click(function(){

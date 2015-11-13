@@ -146,7 +146,7 @@ class ModuleController extends Controller
     {
         //
         $assigmentmodules = DB::table('module_assigments')
-                    ->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, module_assigments.dateAssigments as dateAssigment'))
+                    ->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment'))
                     ->where('module_assigments.status','=',1)
                     ->leftJoin('modules', 'modules.id', '=', 'module_assigments.module_id')
                     ->leftJoin('users', 'users.id', '=', 'module_assigments.salesman_id')
@@ -171,15 +171,24 @@ class ModuleController extends Controller
                     ->get();
                     //->lists('users.name as name','users.id as id');*/
 
-        
-        $modules_list = Module::all()->lists('name','id');
-        $salesmans_list = User::all()->where('role_id',2)->where('module_id',null)->lists('di','id');
+        $modEx = DB::table('module_assigments')->where('status','=',1)->get();
+        $modules_list = Module::all()/*DB::table('modules')*//*->where('id',2'NOT IN',DB::raw(' ( select module_id from module_assigments where status = 1)' ))*/->lists('name','id');
+        $salesmans_list = User::all()->where('role_id',2)->where('module_id',null)->lists('di','id','name','lastname');
+        //$modules_list = [];
+        //$salesmans_list = [];
+        /*foreach ($modules as $module) {
+            array_push($modules_list,array($module->name, $module->id));
+        }
+        foreach ($salesmans as $salesman) {
+            array_push($salesmans_list,array($salesmans->name + ' ' + $salesmans->lastName, $salesman->id));
+        }*/
+
 
         $array = ['modules_list' =>$modules_list,
         'salesmans_list'   =>$salesmans_list];
 
         //$assigmentmodule->setPath('modules');
-        return view('internal.admin.moduleassigment', compact('assigmentmodules'),$array);
+        return view('internal.admin.moduleassigment', compact('assigmentmodules','modEx'/*,'modules_list','salesmans_list'*/),$array);
 
     }
     public function newAssigment(request $request)
@@ -195,6 +204,9 @@ class ModuleController extends Controller
 
         if ($moduleAssiPass->count()==0){
             $salesman = User::find($request['salesman_id']);
+            if ($salesman==null){
+                 return back()->withErrors(['Ese modulo de trabajo ya ha sido asignado']);    
+            }
             $salesman->module_id   = $request['module_id'];
             $salesman->save();
 

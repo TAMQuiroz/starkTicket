@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Ticket;
 use App\Models\Presentation;
+use App\Models\ModuleAssigment;
+use App\Models\Module;
+use App\User;
+use App\Role;
 use Excel;
 
 class ReportController extends Controller
@@ -290,9 +294,30 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showAssigment()
+     public function showAssigment()
     {
-        return view('internal.admin.reports.assignment');
+        
+
+        $moduleAssigments = ModuleAssigment::all();
+        
+        $assiInformation = [];
+                
+        foreach ($moduleAssigments as $moduleAssigment){
+
+            // pueden ser muchos eventos. Necesito información para llenar la tabla
+            $module = Module::find($moduleAssigment->module_id);
+            $salesman = User::find($moduleAssigment->salesman_id);
+            $role = Role::find($salesman->role_id);
+            array_push($assiInformation,array($module->name,$salesman->name,$salesman->lastname, $moduleAssigment->dateAssigments, $moduleAssigment->dateMoveAssigments,$role->description ));
+        }
+
+        //$array_module = [];
+        $modules_list = Module::all()->lists('name','id');
+         $array = ['modules_list' =>$modules_list];
+       
+
+
+        return view('internal.admin.reports.assignment',compact('assiInformation'),$array);
     }
 
     /**
