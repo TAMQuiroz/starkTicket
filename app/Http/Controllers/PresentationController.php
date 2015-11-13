@@ -132,7 +132,8 @@ class PresentationController extends Controller
     {
         $cancelled = CancelPresentation::findOrFail($presentationId);
         $modules = Module::all();
-        return view('internal.promoter.presentation.authorized', ['cancelled' => $cancelled,"modules"=>$modules]);
+        $authorized = ModulePresentationAuthorized::where("cancelled_presentation_id",$presentationId)->get();
+        return view('internal.promoter.presentation.authorized', ['cancelled' => $cancelled,"modules"=>$modules,"authorized"=>$authorized]);
     }
     public function modulesStorage(Request $request, $presentationCancelledID)
     {

@@ -12,6 +12,12 @@
     <div class="col-sm-6">
         Detalles de la
         <code>{{$cancelled->id}}</code>
+        <legend>Autorizados</legend>
+        <ul>
+            @foreach($authorized as $mod)
+            <li>{{$mod->module_id}}</li>
+            @endforeach
+        </ul>
     </div>
     <div class="col-sm-6">
         <form class="form-horizontal" method="post">
@@ -26,7 +32,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button  type="submit" class="btn btn-info" href="#" >Cancelar Evento</button>
+                  <button  type="submit" class="btn btn-info" href="#" >Autorizar modulos</button>
                 </div>
             </div>
         </form>
