@@ -33,14 +33,18 @@ class PaymentController extends Controller
     public function create($event_id)
     {
         $event = Event::findOrFail($event_id);
-        $fullAmount = $event->amountAccumulated();
+        $amountAccumulated = $event->amountAccumulated();
+        $benefit = 5;
+        $totalToPay = $amountAccumulated - $benefit;
         $paid = Payment::where("event_id",$event_id)->sum('paid');
         $debt = 0;
-        if ($fullAmount > $paid)
-            $debt = $fullAmount - $paid;
+        if ($totalToPay > $paid)
+            $debt = $totalToPay - $paid;
         $objs = array(
             "event"=>$event,
-            "fullAmount"=>$fullAmount,
+            "amountAccumulated"=>$amountAccumulated,
+            "benefit"=>$benefit,
+            "totalToPay"=>$totalToPay,
             "paid"=>$paid,
             "debt"=>$debt,
             );
