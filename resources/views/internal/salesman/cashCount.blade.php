@@ -87,7 +87,7 @@
         <th>Tipo de Zona</th>
         <th>Función</th>
         <th>Cantidad de Entradas</th>
-        <th>Precio Individual</th>
+        <th>Precio Individual Base</th>
         <th>Sub total</th>
       </tr>
       <!--
@@ -183,7 +183,7 @@
         <th>Tipo de Zona</th>
         <th>Función</th>
         <th>Cantidad de Entradas</th>
-        <th>Precio Individual</th>
+        <th>Precio Individual Base</th>
         <th>Sub total</th>
       </tr>
       @foreach($refunds as $refund)
