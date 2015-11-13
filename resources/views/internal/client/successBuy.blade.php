@@ -107,17 +107,18 @@
 	        <h4 class="modal-title" id="exampleModalLabel">Envío por Correo</h4>
 	      </div>
 	      <div class="modal-body">
-	        <form>
+	        {!!Form::open(['route'=>'ticket.success.client.mail'])!!}
 	          <div class="form-group">
             	<h4>Ingrese correo:</h4>
 				  <div class="form-group">
 				    <label for="exampleInputEmail2">Email</label>
+				    {!!Form::hidden('ticket_id',$ticket->id)!!}
 				    {!! Form::email('email', null, array('class' => 'form-control', 'placeholder' => 'E-mail', 'required')) !!}
 				  </div>
 				  <button type="submit" class="btn btn-info">Enviar</button>
 				  <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
 		          </div>
-	        </form>
+	        {!!Form::close()!!}
 	      </div>
 	      <div class="modal-footer">
 	        
