@@ -52,7 +52,7 @@ class BookingController extends Controller
 
                 $slot = DB::table('slot_presentation')->where('slot_id',$seat_id)->where('presentation_id', $request['presentation_id'])->first();
                 
-                array_push($seats_array, Slot::where('id', $seat_id)->get());
+                array_push($seats_array, Slot::where('id', $seat_id)->get()->first());
                 if($slot->status != config('constants.seat_available')){
                     return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
                 }
