@@ -162,13 +162,15 @@ class BookingController extends Controller
         $presentation = $tickets->first()->presentation;
         return view('internal.salesman.payBookingShow',
             array('tickets' => $tickets, 'event' => $event,
-                'zone' => $zone, 'presentation' => $presentation));
+                'zone' => $zone, 'presentation' => $presentation,
+                'reserve_id' => $codigo));
     }
 
     public function storePayBooking(Request $request){
         $reserve_id = $request->input('reserve_id');
         $ticket = Ticket::where('reserve', $reserve_id)->get();
         if($ticket->isEmpty())
+            var_dump($ticket);die();
             return redirect()->back()->withErrors(['error' => 'no hay reservas para el codigo especificado']);
         $nTickets= $ticket->quantity;
         $ticket->payment_date = new Carbon();
@@ -198,6 +200,7 @@ class BookingController extends Controller
             }
         DB::table('users')->where('id', $request['user_id'])->increment('points', $nTickets);
         DB::table('slot_presentation')->where('sale_id',$ticket->id)->update(['status' => config('constants.seat_taken')]);
+        var_dump("holi");die();
         return redirect()->route('ticket.success.salesman');
     }
 
