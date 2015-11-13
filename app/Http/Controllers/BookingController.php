@@ -157,7 +157,7 @@ class BookingController extends Controller
 
     public function showPayBooking(Request $request){
         $codigo = $request['reserve_code'];
-        $tickets = Ticket::where('reserve',$codigo)->get();
+        $tickets = Ticket::where('reserve',$codigo)->get()->first();
         $event = $tickets->first()->event;
         $zone = $tickets->first()->zone;
         $presentation = $tickets->first()->presentation;

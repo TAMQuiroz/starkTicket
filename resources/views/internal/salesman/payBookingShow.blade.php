@@ -33,11 +33,11 @@
             </div>
             <div class="col-md-6"> 
                 <h4 > Cantidad de entradas </h4>
-                {!! Form::text('quantity', $tickets->count(), ['class' => 'form-control', 'disabled']) !!}
+                {!! Form::text('quantity', $tickets->quantity, ['class' => 'form-control', 'disabled']) !!}
             </div>
             <div class="col-md-6"> 
                 <h4 > Total (S/.) </h4>
-                {!! Form::text('total', $tickets->sum('price'), ['class' => 'form-control', 'disabled']) !!}
+                {!! Form::text('total', $tickets->total_price, ['class' => 'form-control', 'disabled']) !!}
             </div>
 
         </label>
@@ -57,7 +57,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Monto a Pagar</label>
-                                {!!Form::number('',$tickets->sum('price'),['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
+                                {!!Form::number('',$tickets->total_price,['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
                                 <br>
                                 <div class="form-group checkbox pay" id="modpay">
                                     <label>
