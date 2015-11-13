@@ -20,8 +20,9 @@ class CreateEventsTable extends Migration
             $table->integer('organizer_id')->unsigned();
             $table->string('description');
             $table->string('image');
-            $table->timestamps();       
+            $table->timestamps();
             $table->softDeletes();
+            $table->boolean('cancelled')->default(false);
             $table->string('publication_date');
             $table->string('selling_date');
             $table->string('time_length');

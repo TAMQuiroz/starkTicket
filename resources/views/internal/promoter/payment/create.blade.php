@@ -31,8 +31,9 @@
 <div class="row">
     <div class="col-sm-6">
         <p><b>Total a pagar =</b> S/ {{ $fullAmount }}</p>
+        <p><b>Comisión =</b> S/ {{ $paid }}</p>
         <p><b>Pagos anteriores =</b> S/ {{ $paid }}</p>
-        <p><b>Deuda =</b> S/ 000</p>
+        <p><b>Deuda =</b> S/ {{ $debt }}</p>
     </div>
 <div class="col-sm-6">
         <legend>Transferir Pago</legend>
@@ -48,7 +49,7 @@
         <div class="form-group">
             <label  class="col-sm-2 control-label">Monto de deuda</label>
             <div class="col-sm-10">
-            <p class="form-control"  style="border:0">s/ <span class="monto_total">00</span></p>
+            <p class="form-control"  style="border:0">S/ <span id="monto_total">{{ $debt }}</span></p>
             </div>
         </div>
         <div class="form-group">
@@ -60,7 +61,7 @@
         <div class="form-group">
             <label  class="col-sm-2 control-label">Saldo</label>
             <div class="col-sm-10">
-                <p class="form-control" style="border:0">s/ <span class="saldo">00</span></p>
+                <p class="form-control" style="border:0">s/ <span id="saldo">00</span></p>
             </div>
         </div>
         <div class="form-group">
@@ -78,7 +79,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $("#monto_pagar").change(function(){
-        $("#saldo").val($("#monto_total").val() - $("#monto_pagar").val() );
+        $("#saldo").text($("#monto_total").text() - $("#monto_pagar").val() );
     });
 });
 </script>
