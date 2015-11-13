@@ -11,10 +11,12 @@
 <div class="row">
     <div class="col-sm-6">
         <p><b>Detalles de la presentacion</b></p>
-        {{$presentation}}
-
+        <h5>Fecha: {{date("d/m/Y h:i",$presentation->starts_at)}} </h5>          
+        <br>
         <p><b>Detalles del evento</b></p>
-        {{$presentation->event}}
+        <h5>Nombre: {{$presentation->event->name}} </h5>
+        <h5>Local: {{$presentation->event->place->name}} </h5>
+        
     </div>
     <div class="col-sm-6">
         <form class="form-horizontal" method="post">
@@ -33,7 +35,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label  class="col-sm-2 control-label">Reason</label>
+                <label  class="col-sm-2 control-label">Razón</label>
                 <div class="col-sm-10">
                     <textarea class="form-control" name="reason" required>
                     </textarea>

@@ -30,13 +30,14 @@ class BusinessController extends Controller
         //$user = Auth::user();
                 
         $sales = DB::table('tickets')
-                    ->select(DB::raw('payment_date, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, zones.price as zonePrice, presentations.starts_at as funtionTime, count(*) as totalTicket, Sum(tickets.price) as subtotal'))
+                    ->select(DB::raw('payment_date, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, (tickets.total_price) as subtotal'))
                     ->where('payment_date','<',new Carbon())->where('payment_date','>=',Carbon::today())->where('salesman_id',\Auth::user()->id)
-                    ->groupBy('payment_date')
+                    //->groupBy('payment_date')
                     ->leftJoin('users', 'users.id', '=', 'tickets.owner_id')
                     ->leftJoin('events', 'events.id', '=', 'tickets.event_id')
                     ->leftJoin('zones', 'zones.id', '=', 'tickets.zone_id')
                     ->leftJoin('presentations', 'presentations.id', '=', 'tickets.presentation_id')
+                    ->orderBy('payment_date','asc')
                     ->get();
         $sumSale = 0;
         foreach ($sales as $sale) {
@@ -53,10 +54,12 @@ class BusinessController extends Controller
         foreach ($cashStarts as $var) {
             $cashFirst += $var->cashMo; 
         }             
-        $refunds = DB::table('tickets')
-                    ->select(DB::raw('refund_date, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, zones.price as zonePrice, presentations.starts_at as funtionTime, count(*) as totalTicket, Sum(tickets.price) as subtotal'))
-                    ->where('refund_date','<',new Carbon())->where('refund_date','>=',Carbon::today())->where('salesman_id',\Auth::user()->id)
-                    ->groupBy('refund_date')
+        $refunds = DB::table('devolutions')
+                   // ->select(DB::raw('devolutions.created_at, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, presentations.starts_at as funtionTime, count(*) as totalTicket, Sum(devolutions.total_price) as subtotal'))
+                    ->select(DB::raw('devolutions.created_at, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, tickets.total_price as subtotal'))
+                    ->where('devolutions.created_at','<',new Carbon())->where('devolutions.created_at','>=',Carbon::today())->where('user_id',\Auth::user()->id)
+                    //->groupBy('devolutions.created_at')
+                    ->leftJoin('tickets','devolutions.ticket_id','=','tickets.id')
                     ->leftJoin('users', 'users.id', '=', 'tickets.owner_id')
                     ->leftJoin('events', 'events.id', '=', 'tickets.event_id')
                     ->leftJoin('zones', 'zones.id', '=', 'tickets.zone_id')
