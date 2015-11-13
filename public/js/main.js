@@ -312,3 +312,38 @@ $('#user_di').focusout( function() {
         }
     });
 });
+$('#salesman_di').focusout( function() {
+    $.ajax({
+        url: config.routes[0].salesman,
+        type: 'get',
+        data: 
+        { 
+            id: $('#salesman_di').val()
+        },
+        success: function( response ){
+            //console.log(response);
+            if(response != "")
+            {
+                if (response.role_id == 2){
+                   $('#salesman_name').val(response.name+" "+response.lastname);
+                    $('#salesman_id').val(response.id); 
+                }
+                else{
+                     $('#salesman_name').val('Este no es un vendedor');
+                    $('#salesman_di').val("");
+                    $('#salesman_id').val(0);
+                }
+                
+            }
+            else
+            {
+                $('#salesman_name').val('No existe ese cliente');
+                $('#salesman_di').val("");
+                $('#salesman_id').val(0);
+            }
+        },
+        error: function( response ){
+            
+        }
+    });
+});
