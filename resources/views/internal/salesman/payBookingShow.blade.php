@@ -1,7 +1,12 @@
 @extends('layout.salesman')
 
 @section('style')
-
+    <style type="text/css">
+    #modpay{
+        width: 100%;
+    margin-left: 0px;
+    }
+    </style>
 @stop
 
 @section('title')
@@ -54,7 +59,7 @@
                                 <label>Monto a Pagar</label>
                                 {!!Form::number('',$tickets->sum('price'),['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
                                 <br>
-                                <div class="form-group checkbox pay">
+                                <div class="form-group checkbox pay" id="modpay">
                                     <label>
                                         {!!Form::radio('payMode', config('constants.credit'), null,['id'=>'creditCardPay','onChange'=>'getPromo()'])!!}Pago con tarjeta
                                     </label>
@@ -67,7 +72,7 @@
                                     {!!Form::number('',null,['id'=>'securityCode','class'=>'form-control','placeholder'=>'123','disabled','min'=>0,'max'=>999,'required'])!!}
                                 </div>
                                 <br>  
-                                <div class="form-group checkbox pay">
+                                <div class="form-group checkbox pay" id="modpay">
                                     <label>
                                         {!!Form::radio('payMode', config('constants.cash'), null,['id'=>'cashPay','onChange'=>'getPromo()'])!!}Pago con efectivo
                                     </label>
@@ -79,7 +84,7 @@
                                     {!!Form::text('',null,['id'=>'change','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}
                                 </div>
                                 <br>  
-                                <div class="form-group checkbox pay">
+                                <div class="form-group checkbox pay" id="modpay">
                                     <label>
                                         {!!Form::radio('payMode', config('constants.mix'), null,['id'=>'mixPay', 'onChange'=>'getPromo()'])!!}Pago mixto
                                     </label>
