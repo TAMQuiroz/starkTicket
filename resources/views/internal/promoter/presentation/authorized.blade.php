@@ -20,7 +20,7 @@
                 <label  class="col-sm-2 control-label">Módulos</label>
                 <div class="col-sm-10">
                     @foreach($modules as $module)
-                    <input tabindex="1" type="checkbox" name="modules[]" id="{{$module->id}}">{{$module->name}}</input><br>
+                    <input tabindex="1" type="checkbox" name="modules[]" value="{{$module->id}}">{{$module->name}}</input><br>
                     @endforeach
                 </div>
             </div>
