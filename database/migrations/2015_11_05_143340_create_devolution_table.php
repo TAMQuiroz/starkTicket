@@ -16,7 +16,6 @@ class CreateDevolutionTable extends Migration
             $table->increments('id');
             $table->integer('ticket_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->double('price');
             $table->double('repayment');
             $table->string('observation');
             $table->timestamp('created_at');

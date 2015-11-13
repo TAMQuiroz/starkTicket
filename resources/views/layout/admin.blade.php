@@ -78,8 +78,6 @@
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Negocio <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{url('admin/devolutions/')}}">Devoluciones </a></li>
-                            <li><a href="{{url('admin/devolutions/new')}}">Nueva Devolucion </a></li>
                             <li class="divider"></li>
                             <li><a href="{{url('admin/politics')}}">Politicas </a></li>
                         </ul>
@@ -143,7 +141,7 @@
     {!!Html::script('js/bootstrap.min.js')!!}
     {!!Html::script('js/jquery.validate.min.js')!!}
     {!!Html::script('js/messages_es_PE.js')!!}
-    
+
     <script type="text/javascript">
     $(document).ready(function(){
         $('#form').validate({

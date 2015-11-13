@@ -32,6 +32,9 @@ Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@indexExternal');
 Route::get('event/successBuy', 'TicketController@showSuccess');
 Route::get('event/{id}', 'EventController@showExternal');
+
+ Route::get('event/delete/{id}/comment', 'EventController@destroyComment');
+
 Route::post('event/{id}', 'EventController@showExternalPost');
 
 Route::group(['middleware' => ['auth', 'client']], function () {
@@ -74,6 +77,12 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman/event/{id}/buy', 'TicketController@createSalesman');
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
     Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
+
+    Route::get('salesman/devolutions/', 'DevolutionController@index');
+    Route::get('salesman/devolutions/new', 'DevolutionController@create');
+    Route::post('salesman/devolutions/new', 'DevolutionController@store');
+    Route::get('salesman/devolutions/{devolution_id}', 'DevolutionController@show');
+    Route::get('salesman/ticket/{devolution_id}/tojson', 'TicketController@getTicketToJson');
 
 });
 
@@ -176,8 +185,12 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/ticket_return/new', 'TicketController@createReturn');
     Route::get('admin/{id}/attendance', 'BusinessController@attendance');
     Route::post('admin/{id}/attendanceSubmit', 'BusinessController@attendanceSubmit');
+  
 
     Route::get('admin/attendance/{id}/detail', 'BusinessController@attendanceDetail');
+  Route::post('admin/{id}/Update/attendanceSubmit', 'BusinessController@attendanceUpdate');  
+
+
 
     Route::get('admin/devolutions/', 'DevolutionController@index');
     Route::get('admin/devolutions/new', 'DevolutionController@create');
@@ -198,6 +211,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/report/sales','ReportController@actionExcel');
     //Route::get('admin/report/sales/download','ReportController@actionExcel');
     Route::get('admin/report/assignment', 'ReportController@showAssigment');
+    Route::post('admin/report/assignment', 'ReportController@assigmentExcel');
 
     Route::get('admin/modules', 'ModuleController@index');
     Route::get('admin/modules/new', 'ModuleController@create');

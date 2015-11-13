@@ -55,12 +55,12 @@ class PromoController extends Controller
 
         $promotions->name         =   $input['promotionName'];
         $promotions->description  =   $input['description'];
-        $promotions->startday  =   $input['dateIni'];
+        $promotions->startday  =   $input['fechaInicio'];
 
-        $aux = $input['dateIni']. ' '. $input['timeIni'];
+        $aux = $input['fechaInicio']. ' '. $input['timeIni'];
         $promotions->startday  =    $aux;
 
-        $aux =   $input['dateEnd']     .' '. $input['timeEnd'];
+        $aux =   $input['fechaFin']     .' '. $input['timeEnd'];
         $promotions->endday =   $aux  ; 
         
         $promotions->event_id  = $input['evento'] ;
