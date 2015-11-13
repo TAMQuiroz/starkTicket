@@ -61,7 +61,7 @@ Asistencia de   {{$salesman->name}}  {{$salesman->lastname}}
     @if (date( "l", strtotime(  $Attendance->datetime)) == 'Thursday') <td> Jueves  </td>  @endif
     @if (date( "l", strtotime(  $Attendance->datetime)) == 'Friday')  <td> Viernes  </td>  @endif
     @if (date( "l", strtotime(  $Attendance->datetime)) == 'Saturday') <td> Sábado  </td> @endif
-
+    @if (date( "l", strtotime(  $Attendance->datetime)) == 'Sunday') <td> Domingo  </td> @endif
 
     <td>{{  date( "d -m - Y", strtotime(  $Attendance->datetime))    }} </td>
     <td> {{  date( "g:ia", strtotime(  $Attendance->datetimestart))    }}   </td>
