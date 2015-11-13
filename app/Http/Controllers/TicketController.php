@@ -205,7 +205,7 @@ class TicketController extends Controller
                 	$pt = $pu * $quantity;
                 	$discTickets = $quantity / $promo->carry;
                 	$discTickets = floor($discTickets);
-                	$pd = $pt - $discTickets*$pu;
+                	$pd = $pt - $discTickets*$pu*($promo->carry - $promo->pay);
                 	$desc = 100 - ($pd/$pt)*100;
                 	DB::table('tickets')->where('id',$id)->update(['discount' => $desc]);
                     DB::table('tickets')->where('id',$id)->update(['total_price' => $pd]);
