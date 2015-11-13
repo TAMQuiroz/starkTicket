@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Presentation;
 use App\Models\CancelPresentation;
+use App\Models\Module;
+use App\Models\ModulePresentationAuthorized;
 use Auth;
 use Session;
 
@@ -100,7 +102,7 @@ class PresentationController extends Controller
 
             return redirect('/promoter/event/record');
         }
-        return view('internal.promoter.presentation.cancel', ['presentation' => $presentation]);
+        return view('internal.promoter.presentation.newCancel', ['presentation' => $presentation]);
     }
     public function cancelStorage(StorePresentationRequest $request, $presentation_id)
     {
@@ -125,5 +127,31 @@ class PresentationController extends Controller
         Session::flash('alert-class','alert-success');
 
         return redirect('/promoter/presentation/cancelled');
+    }
+    public function modules($id)
+    {
+        $cancelled = CancelPresentation::findOrFail($id);
+        $modules = Module::all();
+        return view('internal.promoter.presentation.authorized', ['cancelled' => $cancelled,"modules"=>$modules]);
+    }
+    public function modulesStorage(Request $request, $id)
+    {
+
+        $input = $request->all();
+        if (is_array($input["modules"]))
+        {
+            // Buscar e insertar a la bd
+
+            Session::flash('message', 'Modulos autorizados para devolución!');
+            Session::flash('alert-class','alert-success');
+
+            return redirect('/promoter/presentation/cancelled');
+        } else {
+            Session::flash('message', 'Elegir por lo menos un modulo');
+            Session::flash('alert-class','alert-success');
+
+            return redirect('/promoter/presentation/cancelled/'.$id.'/modules');
+
+        }
     }
 }

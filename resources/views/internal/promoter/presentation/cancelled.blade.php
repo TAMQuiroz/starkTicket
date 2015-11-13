@@ -17,6 +17,7 @@
     <th>Duración</th>
     <th>Authorizado</th>
     <th>Creado</th>
+    <th>Puntos de devolución</th>
   </tr>
     @foreach($presentationCancelled as $cancelled)
   <tr>
@@ -26,6 +27,7 @@
     <td>{{$cancelled->duration}}</td>
     <td>{{$cancelled->authorized}}</td>
     <td>{{$cancelled->created_at}}</td>
+    <th><a href="{{ url ('promoter/presentation/cancelled/'.$cancelled->id.'/modules')}}" class="btn btn-info">+</a></th>
   </tr>
   @endforeach
 
