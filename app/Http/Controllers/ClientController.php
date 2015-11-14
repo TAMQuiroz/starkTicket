@@ -136,6 +136,7 @@ class ClientController extends Controller
         $obj->lastname = $input['lastname'];
         $obj->address = $input['address'];
         $obj->phone = $input['phone'];
+        $obj->email = $input['email'];
         $obj->save();
 
         //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
