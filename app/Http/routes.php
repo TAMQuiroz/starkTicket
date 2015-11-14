@@ -117,6 +117,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modulesStorage');
     Route::get('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancel');
     Route::post('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancelStorage');
+    Route::post('promoter/presentation/cancelled/{id}/edit', 'PresentationController@cancelUpdate');
     Route::post('promoter/event/{event_id}/delete', ['as' => 'events.delete', 'uses' =>'EventController@destroy']);
 
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);

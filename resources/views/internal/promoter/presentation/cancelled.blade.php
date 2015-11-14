@@ -18,6 +18,7 @@
     <th>Authorizado</th>
     <th>Puntos de devolución autorizados</th>
     <th>Reason</th>
+    <th>Editar</th>
   </tr>
     @foreach($presentationCancelled as $cancelled)
   <tr>
@@ -35,6 +36,7 @@
       </ul>
     </td>
     <td>{{$cancelled->reason}}</td>
+    <td><a type="button" class="btn btn-info" href="{{url('promoter/presentation/'.$cancelled->presentation_id.'/cancel')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
   </tr>
   @endforeach
 
