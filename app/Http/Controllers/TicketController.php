@@ -287,7 +287,7 @@ class TicketController extends Controller
     {
         $mail = $request['email'];
         $ticket = Ticket::find($request['ticket_id']);
-        
+
         Mail::send('internal.client.successMail',['ticket'=>$ticket,'mail'=>$mail], function($message)use($mail){
             $message->to($mail)->subject('Pruebita');
         });
@@ -582,24 +582,12 @@ class TicketController extends Controller
         */
 
     }
-    public function getTicketToJson($id)
+    public function repay(Request $request)
     {
-        $ticket =Ticket::findOrFail($id);
-        $ticketDetail = array(
-            "ticket_id"=>$ticket->id,
-            "cancelled"=>$ticket->cancelled,
-            "quantity"=>$ticket->quantity,
-            "discount"=>$ticket->discount,
-            "total_price"=>$ticket->total_price,
+        $input = $request->all();
+        $ticketId = $input['ticket_id'];
 
-            "presentation_date"=>$ticket->presentation["starts_at"],
-            "presentation_cancelled"=>$ticket->presentation["cancelled"],
-            "presentation_event"=>$ticket->event["name"],
-
-            "client_name"=>$ticket->owner["name"]." ".$ticket->owner["lastname"],
-            "client_di"=>$ticket->owner["di"]
-            );
-        return json_encode($ticketDetail);
+        return redirect('salesman/devolutions/new/'.$ticketId);
     }
 }
 

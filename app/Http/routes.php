@@ -78,10 +78,10 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::post('salesman/event/successMail', ['uses'=>'TicketController@mailSuccess','as'=>'ticket.success.salesman.mail']);
 
     Route::get('salesman/devolutions/', 'DevolutionController@index');
-    Route::get('salesman/devolutions/new', 'DevolutionController@create');
-    Route::post('salesman/devolutions/new', 'DevolutionController@store');
+    Route::get('salesman/devolutions/new/{ticket_id}', 'DevolutionController@create');
+    Route::post('salesman/devolutions/new/{ticket_id}', 'DevolutionController@store');
     Route::get('salesman/devolutions/{devolution_id}', 'DevolutionController@show');
-    Route::get('salesman/ticket/{devolution_id}/tojson', 'TicketController@getTicketToJson');
+    Route::post('salesman/ticket/repay', 'TicketController@repay');
 
 });
 
@@ -183,10 +183,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/ticket_return/new', 'TicketController@createReturn');
     Route::get('admin/{id}/attendance', 'BusinessController@attendance');
     Route::post('admin/{id}/attendanceSubmit', 'BusinessController@attendanceSubmit');
-  
+
 
     Route::get('admin/attendance/{id}/detail', 'BusinessController@attendanceDetail');
-  Route::post('admin/{id}/Update/attendanceSubmit', 'BusinessController@attendanceUpdate');  
+  Route::post('admin/{id}/Update/attendanceSubmit', 'BusinessController@attendanceUpdate');
 
 
 

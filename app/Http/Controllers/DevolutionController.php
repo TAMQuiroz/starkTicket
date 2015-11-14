@@ -10,6 +10,8 @@ use App\Models\Ticket;
 use Session;
 use Auth;
 use App\Models\Devolution;
+use App\Models\CancelPresentation;
+use App\Models\ModuleAssigment;
 
 class DevolutionController extends Controller
 {
@@ -29,9 +31,20 @@ class DevolutionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($ticket_id)
     {
-        return view('internal.salesman.devolution.new');
+        $ticket = Ticket::findOrFail($ticket_id);
+        $presentation = CancelPresentation::find($ticket->presentation_id);
+        $authorized = $presentation->modules();
+
+        $userId = Auth::user()->id;
+        $modules = ModuleAssigment::where(["salesman_id"=>$userId,"status"=>1])->get();
+        $authorized = 1;
+
+        print_r($modules);
+        //Verificar si esta authorizado
+
+        //return view('internal.salesman.devolution.new',["ticket"=>$ticket,"authorized"=>$authorized]);
     }
 
     /**
