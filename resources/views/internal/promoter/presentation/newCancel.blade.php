@@ -11,12 +11,12 @@
 <div class="row">
     <div class="col-sm-6">
         <p><b>Detalles de la presentacion</b></p>
-        <h5>Fecha: {{date("d/m/Y h:i",$presentation->starts_at)}} </h5>          
+        <h5>Fecha: {{date("d/m/Y h:i",$presentation->starts_at)}} </h5>
         <br>
         <p><b>Detalles del evento</b></p>
         <h5>Nombre: {{$presentation->event->name}} </h5>
         <h5>Local: {{$presentation->event->place->name}} </h5>
-        
+
     </div>
     <div class="col-sm-6">
         <form class="form-horizontal" method="post">
@@ -31,7 +31,10 @@
             <div class="form-group">
                 <label  class="col-sm-2 control-label">Duración</label>
                 <div class="col-sm-10">
-                    <input type="numeric" class="form-control" name="duration" required>
+                    <div class="input-group">
+                        <input type="numeric" class="form-control" name="duration" required>
+                        <div class="input-group-addon">Días</div>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -48,7 +51,7 @@
                         <option value="1">Si</option>
                         <option value="0">No</option>
                     </select>
-                    <span class="help-block small">Autorizao para devolver entradas .</span>
+                    <span class="help-block small">Autorizao para devolver entradas?</span>
                 </div>
             </div>
             <div class="form-group">
