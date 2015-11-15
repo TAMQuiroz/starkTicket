@@ -113,6 +113,12 @@
     <script type="text/javascript">
     var config = {
         routes: [
+            { zone: "{{ URL::route('ajax.getClient') }}" },
+            { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
+            { event_available: "{{URL::route('ajax.getAvailable')}}"},
+            { slots: "{{URL::route('ajax.getSlots')}}"},
+            { makeArray: "{{URL::route('ajax.getZone')}}"},
+            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
             { promo: "{{URL::route('ajax.getPromo')}}"}
         ]
     };
