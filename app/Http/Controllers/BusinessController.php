@@ -58,7 +58,7 @@ class BusinessController extends Controller
         }             
         $refunds = DB::table('devolutions')
                    // ->select(DB::raw('devolutions.created_at, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, presentations.starts_at as funtionTime, count(*) as totalTicket, Sum(devolutions.total_price) as subtotal'))
-                    ->select(DB::raw('devolutions.created_at, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, tickets.total_price as subtotal'))
+                    ->select(DB::raw('devolutions.created_at, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, devolutions.repayment as subtotal'))
                     ->where('devolutions.created_at','<',new Carbon())->where('devolutions.created_at','>=',Carbon::today())->where('user_id',\Auth::user()->id)
                     //->groupBy('devolutions.created_at')
                     ->leftJoin('tickets','devolutions.ticket_id','=','tickets.id')
