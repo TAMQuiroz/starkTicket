@@ -248,7 +248,8 @@ class BookingController extends Controller
             $tickets= Ticket::where('reserve',$value)->get();
             $arreglo[$key] = ['codigo' => $value, 
             'nombre' => $tickets->first()->event->name,
-            'cantidad' => $tickets->count(),
+            //'cantidad' => $tickets->count(),
+            'cantidad' => $tickets->first()->quantity,
             'zona'    => $tickets->first()->zone->name,
             'funcion' => date('d-m-Y',$tickets->first()->presentation->starts_at)];
         }
