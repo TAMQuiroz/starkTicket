@@ -312,3 +312,73 @@ $('#user_di').focusout( function() {
         }
     });
 });
+
+
+function getReserves(){
+    $('#li-uno').remove();
+    $('#erroresp').hide();
+    dni = $('#dni_recojo').val();
+    $.ajax({
+        url: config.routes[0].reserve,
+        type: 'get',
+        data: 
+        { 
+            dni: dni
+        },
+        success: function( response ){
+            if(response != "")
+            {
+                var options = '';
+                $.each(response,function(key,value)
+                { 
+                    options += '<tr><td>'+value.codigo+'</td><td>'
+                    +value.nombre+'</td><td>'+value.funcion+'</td><td>'
+                    +value.zona+'</td><td>'+value.cantidad+'</td><td>'
+                    +'<input type="radio" class="radio pay" name="reserve_code" value="'+ value.codigo+'" required>'+"</td></tr>";
+                });
+                $('#tbody_reserve').html(options);
+            }else{
+                console.log('no respuesta reserva');  
+            }
+        },
+        error: function( response ){
+            $('#erroresp').append('<li id=li-uno>'+response.responseText+'</li>');
+            $('#erroresp').show();
+        }
+    });
+}
+$('#salesman_di').focusout( function() {
+    $.ajax({
+        url: config.routes[0].salesman,
+        type: 'get',
+        data: 
+        { 
+            id: $('#salesman_di').val()
+        },
+        success: function( response ){
+            //console.log(response);
+            if(response != "")
+            {
+                if (response.role_id == 2){
+                   $('#salesman_name').val(response.name+" "+response.lastname);
+                    $('#salesman_id').val(response.id); 
+                }
+                else{
+                     $('#salesman_name').val('Este no es un vendedor');
+                    $('#salesman_di').val("");
+                    $('#salesman_id').val(0);
+                }
+                
+            }
+            else
+            {
+                $('#salesman_name').val('No existe ese cliente');
+                $('#salesman_di').val("");
+                $('#salesman_id').val(0);
+            }
+        },
+        error: function( response ){
+            
+        }
+    });
+});

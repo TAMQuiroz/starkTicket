@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Ticket;
 use App\Models\Presentation;
+use App\Models\ModuleAssigment;
+use App\Models\Module;
+use App\User;
+use App\Role;
 use Excel;
 
 class ReportController extends Controller
@@ -30,6 +34,146 @@ class ReportController extends Controller
     public function create()
     {
         //
+    }
+    public function assigmentExcel(Request $request){
+       /*  $input = $request->all(); 
+        $flagBetweenDates = false;
+        $flagFilterAll = false;
+        //Condiciones que se pueden dar para filtrar la tabla
+        if (empty($input['name']) and empty($input['firstDate']) and empty($input['lastDate']))
+           $moduleAssigments = ModuleAssigment::all();  
+        else{
+            if ($input['name'] and empty($input['firstDate']) and empty($input['lastDate'])) {
+              // $events = ModuleAssigment::where('name', 'LIKE', '%'.$input['name'].'%')->get();
+                $moduleAssigments = DB::table('module_assigments')
+                    //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
+                    ->where('modules.name','LIKE','%'.$input['name'].'%')
+                    ->leftJoin('modules', 'modules.id', '=', 'module_assigments.module_id')
+                    ->get();
+            }
+            elseif (empty($input['name']) and $input['firstDate'] and $input['lastDate'] ){
+                $flagBetweenDates = true;
+            }
+            elseif ($input['name'] and $input['firstDate'] and $input['lastDate']){
+                $flagFilterAll = true;
+            }
+        }
+
+       // $tickets = Ticket::all();
+        $assigmentsInformation = [];
+                       
+        if ($flagBetweenDates){
+
+
+        }
+
+        elseif ($flagFilterAll){ 
+
+        }
+        else{
+            foreach ($moduleAssigments as $moduleAssigment){
+            // pueden ser muchos eventos. Necesito información para llenar la tabla
+            //filtro fechas si es necesario
+                 
+                $module = Module::find($moduleAssigment->module_id); 
+                $salesman = Module::find($moduleAssigment->salesman_id); 
+                
+
+                array_push($assigmentsInformation,array($module->name, $salesman->name, $salesman->lastname, date("d/m/Y",$moduleAssigment->dateAssigments) , date("d/m/Y",$moduleAssigment->dateMoveAssigments) ));
+            }  
+        }
+        
+    
+
+
+        Excel::create('Reporte de asistencia starkticket', function ($excel) use($assigmentsInformation,$flagBetweenDates,$input){
+          $excel->sheet('Reporte de Asistencia', function($sheet) use($assigmentsInformation,$flagBetweenDates,$input) {
+
+                $sheet->mergeCells('A1:G2');
+                $sheet->setCellValue('A1',"Reporte de ventas de Asistencia");
+                $sheet->cells('A1:G1',function($cells){
+
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+                    $cells->setFontSize(30);
+
+                });      
+
+            
+                $sheet->mergeCells('A3:G3');
+                if ($flagBetweenDates) $sheet->setCellValue('A3','Fecha desde '.$input['firstDate'].'  hasta '.$input['lastDate']);
+                else $sheet->setCellValue('A3',"No hay rango de fechas");
+                $sheet->cells('A3:G3',function($cells){
+
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+                    $cells->setFontSize(14);
+
+                });      
+            
+
+
+
+                $sheet->setBorder('A4:G500','thin');
+                $sheet->setCellValue('A4', "Nombre del modulo");
+                $sheet->setCellValue('B4', "Nombre del Vendedor");
+                $sheet->setCellValue('C4', "Fecha de Asignación");
+                $sheet->setCellValue('D4', "Fecha de Desasociación");
+                //$sheet->setCellValue('E4', "Entradas vendidas módulo");
+                //$sheet->setCellValue('F4', "Subtotal");
+                //$sheet->setCellValue('G4', "Total");
+                
+                //$cells->setAlignment('center');
+                //$sheet->cells('A4:G4',function($cells){
+                $sheet->cells('A4:D4',function($cells){
+
+                    $cells->setFontWeight('bold');
+                    $cells->setBackground('#008000');
+                    $cells->setFontColor('#FFFFFF');
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+
+                });
+
+              //  $sheet->cells('A4:G500',function($cells){
+                $sheet->cells('A4:D4',function($cells){
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+
+                });
+
+
+                $sheet->setWidth(
+                    array(
+                        'A' => '30',
+                        'B' => '20',
+                        'C' => '30',
+                        'D' => '15',
+                        //'E' => '30',
+                        //'F' => '15',
+                        //'G' => '15'                                               
+
+                    )
+
+                );
+
+                $sheet->setHeight(
+                    array(   
+                        '1' => '20'
+                    )
+
+                );
+
+                $data = $assigmentsInformation;
+                $sheet->fromArray($data, true, 'A5', true, false);
+
+          });
+
+
+
+
+        })->download('xlsx'); */
+        return redirect('admin/report/assignment');
     }
 
     public function actionExcel(Request $request){
@@ -300,9 +444,30 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showAssigment()
+     public function showAssigment()
     {
-        return view('internal.admin.reports.assignment');
+        
+
+        $moduleAssigments = ModuleAssigment::all();
+        
+        $assiInformation = [];
+                
+        foreach ($moduleAssigments as $moduleAssigment){
+
+            // pueden ser muchos eventos. Necesito información para llenar la tabla
+            $module = Module::find($moduleAssigment->module_id);
+            $salesman = User::find($moduleAssigment->salesman_id);
+            $role = Role::find($salesman->role_id);
+            array_push($assiInformation,array($module->name,$salesman->name,$salesman->lastname, $moduleAssigment->dateAssigments, $moduleAssigment->dateMoveAssigments,$role->description ));
+        }
+
+        //$array_module = [];
+        $modules_list = Module::all()->lists('name','id');
+         $array = ['modules_list' =>$modules_list];
+       
+
+
+        return view('internal.admin.reports.assignment',compact('assiInformation'),$array);
     }
 
     /**

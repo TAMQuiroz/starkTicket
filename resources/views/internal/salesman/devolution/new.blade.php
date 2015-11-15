@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('layout.salesman')
 
 @section('style')
 
@@ -41,8 +41,19 @@
         </form>
     </div>
     <div class="col-sm-6">
-        <div id="ticket">
-        </div>
+      <legend>Ticket</legend>
+      <p><b>Id:</b>: <span id="ticket_code"></span></p>
+      <p><b>Precio total:</b>: S/ <span id="ticket_total_price"></span></p>
+      <p><b>Descuento:</b>: S/ <span id="ticket_discount"></span></p>
+      <p><b>Cantidad:</b>: <span id="ticket_quantity"></span></p>
+      <p><b>Canceled:</b>: <span id="ticket_cancelled"></span></p>
+      <legend>Presentación</legend>
+      <p><b>Fecha</b>: <span id="presentation_date"></span></p>
+      <p><b>Cancelado</b>: <span id="presentation_cancelled"></span></p>
+      <p><b>Evento</b>: <span id="presentation_event"></span></p>
+      <legend>Cliente</legend>
+      <p><b>Full Name</b>: <span id="client_name"></span></p>
+      <p><b>DI</b>: <span id="client_di"></span></p>
     </div>
 </div>
 @stop
@@ -54,13 +65,23 @@ $(document).ready(function(){
     $("#ticket_id").change(function(){
         ticket_id = $("#ticket_id").val();
         ticket_detail = "<b>Detalles de ticket</b>";
-        $.getJSON(url_base+"/admin/ticket/"+ticket_id+"/tojson", function(data)
+        $.getJSON(url_base+"/salesman/ticket/"+ticket_id+"/tojson", function(data)
         {
-          ticket_detail += "<br>Id : " + data.id;
-          ticket_detail += "<br>Cliente id : " + data.owner_id;
-          ticket_detail += "<br>Evento id : " + data.event_id;
-          ticket_detail += "<br>Precio  : s/" + data.price;
-            $("#ticket").html(ticket_detail);
+          if (data.cancelled == "1")
+            alert("El ticket ya fue devuelto");
+          $("#ticket_code").text(data.ticket_id);
+          $("#ticket_total_price").text(data.total_price);
+          $("#ticket_discount").text(data.discount);
+          $("#ticket_quantity").text(data.quantity);
+          $("#ticket_cancelled").text(data.cancelled);
+
+          $("#presentation_date").text(data.presentation_date);
+          $("#presentation_cancelled").text(data.presentation_cancelled);
+          $("#presentation_event").text(data.presentation_event);
+
+          $("#client_name").text(data.client_name);
+          $("#client_di").text(data.client_di);
+
         }).fail(function(jqXHR) {
             if (jqXHR.status == 404) {
                 $("#ticket").html("<div class='alert alert-danger'>Ticket no encontrado</div>");

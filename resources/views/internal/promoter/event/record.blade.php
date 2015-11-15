@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-    <!--Se esta pasando la variable $event_data que es una matriz de forma 
+    <!--Se esta pasando la variable $event_data que es una matriz de forma
         event_data[0]=[
                         "event"             =>  $event,
                         "ticket_sum"        =>  $ticket_sum,
@@ -37,12 +37,12 @@
       <tbody>
         @foreach($event_data as $event)
         <tr>
-  
+
           <td>{{$event['event']->name}}</td>
           <td>{{date("d/m/Y",$event['event']->publication_date)}}</td>
           <td>{{date("d/m/Y",$event['event']->selling_date)}}</td>
-          <td>Vigente</td> <!--falta la logica de vigente -->
-          <td>{{$event['ticket_quantity']}}</td> <!--no hay -->
+          <td>@if($event['event']->cancelled)Cancelado @else Vigente @endif</td> <!--falta la logica de vigente -->
+          <td>{{$event['event']->numberTickets()}}</td>
           <td>{{$event['ticket_sum']}}</td> <!--no hay -->
           <td><a href="{{ url ('promoter/transfer_payments/'.$event['event']->id.'/create') }}" class="btn btn-info">$</a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info{{$event['event']->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button>
@@ -65,12 +65,12 @@
                   <p>Descripción:  {{$event['event']->description}} </p>
                   <p>Local: {{$event['event']->place->name}} </p>
                   <p>Categoria: {{$event['event']->category->name}} </p>
-                  
+
                   <p>Fecha Creación: {{date_format(date_create($event['event']->created_at),"d/m/Y")}}</p>
                   <p>Fecha Publicación: {{date("d/m/Y",$event['event']->publication_date)}}</p>
                   <p>Fecha Inicio ventas: {{date("d/m/Y",$event['event']->selling_date)}}</p>
                   <p>Duracion función: {{$event['event']->time_length}} hora(s) </p>
-                 
+
                   <h4>Entradas:</h4>
                   <ul>
                     @foreach ($event['event']->zones as $zone)
@@ -113,28 +113,20 @@
                       <h4 class="modal-title" id="exampleModalLabel">Cancelación de Evento: {{$event['event']->name}}</h4>
                     </div>
                     <div class="modal-body">
-                      <form>
                         <div class="form-group">
-                          <h4>Funciones:</h4>
+                          <h4>Elegir función:</h4>
                           <ul>
                             @foreach ($event['event']->presentations as $present)
                               <li>
-                                  Funcion: {{date("d/m/Y",$present->starts_at)}} {{date('h:i:s',$present->starts_at)}}   {!! Form::checkbox("$present->id", 'yes') !!}
-
+                                  Funcion: {{date("d/m/Y",$present->starts_at)}} {{date('h:i:s',$present->starts_at)}} <a href="{{ url ('promoter/presentation/'.$present->id.'/cancel') }}">Cancelar</a>
                               </li>
                             @endforeach
                           </ul>
                         </div>
 
-                      </form>
-                  
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#cancelModal{{$event['event']->id}}" >Guardar</button>
-
-
-
-
+                      <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" >Salir</button>
                     </div>
                   </div>
                 </div>
@@ -142,7 +134,7 @@
 
           <td>
             <a class="btn btn-info" href=""  title="Eliminar"    data-toggle="modal" data-target="#deleteModal{{$event['event']->id}}"><i class="glyphicon glyphicon-remove"></i></a>
-          </td> 
+          </td>
             <!-- MODAL Delete-->
             <div class="modal fade"  id="deleteModal{{$event['event']->id}}">
               <div class="modal-dialog">
@@ -158,7 +150,7 @@
                       {!!Form::open(array('route' =>array ('events.delete',$event['event']->id)))!!}
                           <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
                           <button type="submit" class="btn btn-info">Si</button>
-                      </form>  
+                      </form>
                   </div>
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
@@ -167,17 +159,5 @@
         </tr>
         @endforeach
         </tbody>
-      </table>     
-
-
-
-
-
-
-
-        
-
-
-
-
+      </table>
 @stop

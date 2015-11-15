@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDevolutionTable extends Migration
+class CreateCancelPresentationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,16 @@ class CreateDevolutionTable extends Migration
      */
     public function up()
     {
-        Schema::create('devolutions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('ticket_id')->unsigned();
+        Schema::create('cancel_presentation', function (Blueprint $table) {
+            $table->increments('id')->unique();
+            $table->integer('presentation_id');
             $table->integer('user_id')->unsigned();
-            $table->double('repayment');
-            $table->string('observation');
+            $table->string('reason');
+            $table->integer('duration');
+            $table->boolean('authorized');
+            $table->timestamp('date_refund');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +32,6 @@ class CreateDevolutionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('devolutions');
+        Schema::drop('cancel_presentation');
     }
 }

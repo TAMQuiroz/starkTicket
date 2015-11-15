@@ -13,12 +13,7 @@
         <legend>Detalles del evento :</legend>
         <p><b>Nombre</b>: {{$event->name}}</p>
         <p><b>Categoria</b>: {{$event->category["name"]}}</p>
-        <p><b>Presentacion(es)</b></p>
-        <ul>
-            @foreach ( $event->presentations as $presentation)
-            <li>{{date("d/m/Y",$presentation->starts_at)}}</li>
-            @endforeach
-        </ul>
+        <p>{{$event->description}}</p>
     </div>
     <div class="col-sm-6">
         <legend>Datos del organizador:</legend>
@@ -30,9 +25,11 @@
 <hr>
 <div class="row">
     <div class="col-sm-6">
-        <p><b>Total a pagar =</b> S/ {{ $fullAmount }}</p>
+        <p><b>Total recaudado =</b> S/ {{ $amountAccumulated }}</p>
+        <p><b>Beneficio =</b> S/ {{ $benefit }}</p>
+        <p><b>Total a pagar =</b> S/ {{ $totalToPay }}</p>
         <p><b>Pagos anteriores =</b> S/ {{ $paid }}</p>
-        <p><b>Deuda =</b> S/ 000</p>
+        <p><b>Deuda =</b> S/ {{ $debt }}</p>
     </div>
 <div class="col-sm-6">
         <legend>Transferir Pago</legend>
@@ -48,7 +45,7 @@
         <div class="form-group">
             <label  class="col-sm-2 control-label">Monto de deuda</label>
             <div class="col-sm-10">
-            <p class="form-control"  style="border:0">s/ <span class="monto_total">00</span></p>
+            <p class="form-control"  style="border:0">S/ <span id="monto_total">{{ $debt }}</span></p>
             </div>
         </div>
         <div class="form-group">
@@ -60,13 +57,13 @@
         <div class="form-group">
             <label  class="col-sm-2 control-label">Saldo</label>
             <div class="col-sm-10">
-                <p class="form-control" style="border:0">s/ <span class="saldo">00</span></p>
+                <p class="form-control" style="border:0">s/ <span id="saldo">00</span></p>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               <button  type="submit" class="btn btn-info" href="#" >Registrar pago</button>
-              <button  type="reset" class="btn btn-info">Cancelar</button>
+              <a  type="reset" class="btn btn-info" href="javascript:window.history.back();">Cancelar</a>
             </div>
         </div>
     </form>
@@ -77,8 +74,9 @@
 @section('javascript')
 <script type="text/javascript">
 $(document).ready(function(){
+    console.log(document.referrer);
     $("#monto_pagar").change(function(){
-        $("#saldo").val($("#monto_total").val() - $("#monto_pagar").val() );
+        $("#saldo").text($("#monto_total").text() - $("#monto_pagar").val() );
     });
 });
 </script>

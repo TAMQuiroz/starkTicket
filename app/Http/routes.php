@@ -32,10 +32,13 @@ Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@indexExternal');
 Route::get('event/successBuy', 'TicketController@showSuccess');
 Route::get('event/{id}', 'EventController@showExternal');
+
+ Route::get('event/delete/{id}/comment', 'EventController@destroyComment');
+
 Route::post('event/{id}', 'EventController@showExternalPost');
 
 Route::group(['middleware' => ['auth', 'client']], function () {
-    Route::get('client/', 'ClientController@profile');
+    Route::get('client/', ['uses'=>'ClientController@profile','as'=>'client.home']);
     Route::get('client/edit', 'ClientController@edit');
     Route::post('client/update', 'ClientController@update');
     Route::get('client/password', 'ClientController@password');
@@ -49,6 +52,7 @@ Route::group(['middleware' => ['auth', 'client']], function () {
     Route::get('client/event/{id}/buy', 'TicketController@createClient');
     Route::post('client/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store.client']);
     Route::get('client/event/successBuy', ['uses'=>'TicketController@showSuccess','as'=>'ticket.success.client']);
+    Route::post('client/event/successMail', ['uses'=>'TicketController@mailSuccess','as'=>'ticket.success.client.mail']);
     Route::get('client/{id}/reservanueva', ['as' => 'booking.create' , 'uses' => 'BookingController@create']);
     //Fin
     Route::get('client/reservaexitosa', 'BookingController@store');
@@ -62,7 +66,9 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     //Route::post('salesman/cash_count', 'BusinessController@updateCashCount');
 
     Route::get('salesman/exchange_gift', 'GiftController@createExchange');
-    Route::get('salesman/event/{id}/pay_booking', 'BookingController@pay');
+    Route::get('salesman/event/pay_booking', ['as' => 'booking.search', 'uses' =>'BookingController@searchBooking']);
+    Route::post('salesman/event/pay_booking/show', ['as' => 'booking.show', 'uses' =>'BookingController@showPayBooking']);
+    Route::post('salesman/event/pay_booking/store', ['as' => 'booking.store', 'uses' =>'BookingController@storePayBooking']);
 
     Route::get('salesman/giveaway', ['uses'=>'TicketController@giveaway','as'=>'ticket.giveaway']);
     Route::post('salesman/giveaway', ['uses'=>'TicketController@giveawayShow','as'=>'ticket.giveaway.show']);
@@ -72,6 +78,13 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::get('salesman/event/{id}/buy', 'TicketController@createSalesman');
     Route::post('salesman/event/store', ['uses'=>'TicketController@store','as'=>'ticket.store']);
     Route::get('salesman/event/successBuy', ['uses'=>'TicketController@showSuccessSalesman','as'=>'ticket.success.salesman']);
+    Route::post('salesman/event/successMail', ['uses'=>'TicketController@mailSuccess','as'=>'ticket.success.salesman.mail']);
+
+    Route::get('salesman/devolutions/', 'DevolutionController@index');
+    Route::get('salesman/devolutions/new', 'DevolutionController@create');
+    Route::post('salesman/devolutions/new', 'DevolutionController@store');
+    Route::get('salesman/devolutions/{devolution_id}', 'DevolutionController@show');
+    Route::get('salesman/ticket/{devolution_id}/tojson', 'TicketController@getTicketToJson');
 
 });
 
@@ -83,6 +96,7 @@ Route::get('getSlots', ['uses'=>'TicketController@getSlots','as'=>'ajax.getSlots
 Route::get('getZone', ['uses'=>'TicketController@getZone','as'=>'ajax.getZone']);
 Route::get('getTakenSlots', ['uses'=>'TicketController@getTakenSlots','as'=>'ajax.getTakenSlots']);
 Route::get('getPromo', ['uses'=>'TicketController@getPromo','as'=>'ajax.getPromo']);
+Route::get('getReserves', ['uses'=>'BookingController@getReservesByDni','as'=>'ajax.getReserves']);
 
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/', ['as'=>'promoter.home','uses'=>'PagesController@promoterHome']);
@@ -99,6 +113,11 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
     Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
+    Route::get('promoter/presentation/cancelled', 'PresentationController@index');
+    Route::get('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modules');
+    Route::post('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modulesStorage');
+    Route::get('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancel');
+    Route::post('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancelStorage');
     Route::post('promoter/event/{event_id}/delete', ['as' => 'events.delete', 'uses' =>'EventController@destroy']);
 
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
@@ -168,8 +187,12 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/ticket_return/new', 'TicketController@createReturn');
     Route::get('admin/{id}/attendance', 'BusinessController@attendance');
     Route::post('admin/{id}/attendanceSubmit', 'BusinessController@attendanceSubmit');
+  
 
     Route::get('admin/attendance/{id}/detail', 'BusinessController@attendanceDetail');
+  Route::post('admin/{id}/Update/attendanceSubmit', 'BusinessController@attendanceUpdate');  
+
+
 
     Route::get('admin/devolutions/', 'DevolutionController@index');
     Route::get('admin/devolutions/new', 'DevolutionController@create');
@@ -190,6 +213,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/report/sales','ReportController@actionExcel');
     //Route::get('admin/report/sales/download','ReportController@actionExcel');
     Route::get('admin/report/assignment', 'ReportController@showAssigment');
+    Route::post('admin/report/assignment', 'ReportController@assigmentExcel');
 
     Route::get('admin/modules', 'ModuleController@index');
     Route::get('admin/modules/new', 'ModuleController@create');

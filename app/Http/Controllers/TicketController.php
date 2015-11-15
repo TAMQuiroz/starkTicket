@@ -16,6 +16,7 @@ use App\Http\Requests\Giveaway\StoreGiveawayRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Mail;
 
 class TicketController extends Controller
 {
@@ -49,7 +50,7 @@ class TicketController extends Controller
     {
         //Buscar y enviar info de evento con $id
         $event = Event::find($id);
-        $presentations = Presentation::where('event_id', $id)->get();
+        $presentations = Presentation::where('event_id', $id)->where('cancelled',0)->get();
 
         $slots_array = array();
         foreach ($presentations as $pres) {
@@ -77,7 +78,7 @@ class TicketController extends Controller
     {
         //Buscar y enviar info de evento con $id
         $event = Event::find($id);
-        $presentations = Presentation::where('event_id', $id)->get();
+        $presentations = Presentation::where('event_id', $id)->where('cancelled',0)->get();
 
         $slots_array = array();
         foreach ($presentations as $pres) {
@@ -204,7 +205,7 @@ class TicketController extends Controller
                 	$pt = $pu * $quantity;
                 	$discTickets = $quantity / $promo->carry;
                 	$discTickets = floor($discTickets);
-                	$pd = $pt - $discTickets*$pu;
+                	$pd = $pt - $discTickets*$pu*($promo->carry - $promo->pay);
                 	$desc = 100 - ($pd/$pt)*100;
                 	DB::table('tickets')->where('id',$id)->update(['discount' => $desc]);
                     DB::table('tickets')->where('id',$id)->update(['total_price' => $pd]);
@@ -234,7 +235,7 @@ class TicketController extends Controller
 
             array_push($tickets,$id);
             //var_dump('llego');
-            
+
 
             DB::commit();
 
@@ -278,8 +279,26 @@ class TicketController extends Controller
         foreach ($seats as $key => $seat) {
             $seats[$key] = Slot::find($seat->slot_id);
         }
-                
+
         return view('internal.client.successBuy',compact('ticket','seats'));
+    }
+
+    public function mailSuccess(request $request)
+    {
+        $mail = $request['email'];
+        $ticket = Ticket::find($request['ticket_id']);
+        
+        Mail::send('internal.client.successMail',['ticket'=>$ticket,'mail'=>$mail], function($message)use($mail){
+            $message->to($mail)->subject('Pruebita');
+        });
+
+        $user = \Auth::user();
+
+        if($user->role_id == config('constants.client')){
+          return redirect()->route('client.home');
+        }else{
+          return redirect()->route('salesman.home');
+        }
     }
 
     /**
@@ -294,7 +313,7 @@ class TicketController extends Controller
         $seats = DB::table('slot_presentation')->where('sale_id',$ticket->id)->get();
         foreach ($seats as $key => $seat) {
             $seats[$key] = Slot::find($seat->slot_id);
-        }        
+        }
 
         return view('internal.salesman.successBuy',compact('ticket','seats'));
     }
@@ -335,7 +354,7 @@ class TicketController extends Controller
 
     public function giveaway()
     {
-        
+
         return view('internal.salesman.giveaway');
     }
 
@@ -347,12 +366,12 @@ class TicketController extends Controller
         }else if($ticket->picked_up == true){
             return back()->withInput()->withErrors(['Estos tickets ya fueron recogidos']);
         }else if($ticket->designee != $request['designee'])
-            return back()->withInput()->withErrors(['El usuario asignado no es el mismo que el ingresado']); 
+            return back()->withInput()->withErrors(['El usuario asignado no es el mismo que el ingresado']);
 
         $seats = DB::table('slot_presentation')->where('sale_id',$ticket->id)->get();
         foreach ($seats as $key => $seat) {
             $seats[$key] = Slot::find($seat->slot_id);
-        } 
+        }
 
         return view('internal.salesman.giveawayShow',compact('ticket','seats'));
     }
@@ -360,7 +379,7 @@ class TicketController extends Controller
     public function giveawayConfirm(request $request)
     {
         $ticket = Ticket::where('id',$request['sale_id'])->first();
-        
+
         if($ticket){
             $ticket->picked_up = true;
             $ticket->save();
@@ -477,12 +496,12 @@ class TicketController extends Controller
 
         $promos = Promotions::where('event_id',$request['event_id'])->where('typePromotion',2)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
         $promos = $promos->merge($promo_disc);
-        
+
         if($promos){
             foreach ($promos as $promo) {
                 if ($promo->typePromotion == config('constants.discount')){
                     if ($promo->desc > $maxDiscount){
-                        
+
                         $pu = Zone::find($request['zone_id'])->price;
                         $quantity = $request['quantity'];
                         $pt = $pu * $quantity;
@@ -529,7 +548,7 @@ class TicketController extends Controller
 
         $promos = Promotions::where('event_id',$request['event_id'])->where('typePromotion',2)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
         $promos = $promos->merge($promo_disc);
-        
+
         if($promos){
             foreach ($promos as $promo) {
                 if ($promo->typePromotion == config('constants.discount')){
@@ -561,12 +580,26 @@ class TicketController extends Controller
         }
         return $bestPromo;
         */
-       
+
     }
     public function getTicketToJson($id)
     {
         $ticket =Ticket::findOrFail($id);
-        return $ticket;
+        $ticketDetail = array(
+            "ticket_id"=>$ticket->id,
+            "cancelled"=>$ticket->cancelled,
+            "quantity"=>$ticket->quantity,
+            "discount"=>$ticket->discount,
+            "total_price"=>$ticket->total_price,
+
+            "presentation_date"=>$ticket->presentation["starts_at"],
+            "presentation_cancelled"=>$ticket->presentation["cancelled"],
+            "presentation_event"=>$ticket->event["name"],
+
+            "client_name"=>$ticket->owner["name"]." ".$ticket->owner["lastname"],
+            "client_di"=>$ticket->owner["di"]
+            );
+        return json_encode($ticketDetail);
     }
 }
 
