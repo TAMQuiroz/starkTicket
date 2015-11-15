@@ -56,7 +56,12 @@ class ReportController extends Controller
         $eventInformation = [];
                        
         if ($flagBetweenDates){
-            $eventsDate = Presentation::whereBetween('starts_at',[ strtotime($input['firstDate']), strtotime($input['lastDate']) ])->get();
+                
+            $fechaIni = strtotime($input['firstDate']) ;
+            $fechaFin = strtotime($input['lastDate']) + 86400 ;
+            //return $fechaFin;
+            
+            $eventsDate = Presentation::whereBetween('starts_at',[ $fechaIni,  $fechaFin ])->get();
             foreach($eventsDate as $eventDate){
 
                     $event= Event::where('id','=', $eventDate->event_id)->get(); 
@@ -82,7 +87,12 @@ class ReportController extends Controller
 
         elseif ($flagFilterAll){
 
-            $eventsDate = Presentation::whereBetween('starts_at',[ strtotime($input['firstDate']), strtotime($input['lastDate']) ])->get();
+            
+            $fechaIni = strtotime($input['firstDate']) ;
+            $fechaFin = strtotime($input['lastDate']) + 86400 ;
+            //return $fechaFin;
+            
+            $eventsDate = Presentation::whereBetween('starts_at',[ $fechaIni,  $fechaFin ])->get();
             foreach($eventsDate as $eventDate){
 
                     //return $eventsDate;
