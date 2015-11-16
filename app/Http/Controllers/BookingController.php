@@ -232,8 +232,7 @@ class BookingController extends Controller
         Mail::send('internal.client.reserveMail', array('tickets' => $tickets), function($message)use($mail){
             $message->to($mail);
         });
-        $events = Event::all();
-        return view('external.events',compact('events'));
+        return redirect()->route('event.external.show',array($tickets->first()->event_id));
     }
 
     public function getReservesByDni(Request $request){
