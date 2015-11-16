@@ -31,7 +31,7 @@ Route::get('category/{id}/subcategory', 'CategoryController@indexSub');
 Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@indexExternal');
 Route::get('event/successBuy', 'TicketController@showSuccess');
-Route::get('event/{id}', 'EventController@showExternal');
+Route::get('event/{id}', ['as' => 'event.external.show' , 'uses' =>'EventController@showExternal']);
 
  Route::get('event/delete/{id}/comment', 'EventController@destroyComment');
 

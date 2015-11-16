@@ -51,7 +51,7 @@ class Kernel extends ConsoleKernel
                     $reserva->delete();
                 }
             }
-        })->everyHour();
+        })->hourly();
         $schedule->call(function(){
             $destacados = Highlight::where('start_date','<=',Carbon::now())->get();
             if($destacados && !empty($destacados))
