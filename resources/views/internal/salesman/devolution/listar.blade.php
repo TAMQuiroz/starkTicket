@@ -9,6 +9,23 @@
 @stop
 
 @section('content')
+<div class="contaniner">
+  {!!Form::open(array('url' => 'salesman/ticket/repay','id'=>'form','class'=>'form-inline'))!!}
+  <div class="row">
+    <div class="col-sm-5 pull-right">
+      <div class="form-group">
+        <label class="sr-only" for="idTicket">ID TICKET</label>
+        <div class="input-group">
+          <div class="input-group-addon">TICKET</div>
+          <input type="text" class="form-control" id="idTicket" placeholder="ID TICKET" required name="ticket_id">
+        </div>
+      </div>
+      <input type="submit" value="Verificar Ticket" class="btn btn-info">
+    </div>
+  </div>
+</form>
+</div>
+<hr>
   <table class="table table-bordered table-striped">
     <tr>
       <th>Código Ticket</th>
