@@ -16,4 +16,8 @@ class CancelPresentation extends Model
     {
         return $this->belongsTo('App\User','user_id');
     }
+    public function modules()
+    {
+        return $this->belongsToMany('App\Models\Module','module_presentation_authorized','cancelled_presentation_id');
+    }
 }

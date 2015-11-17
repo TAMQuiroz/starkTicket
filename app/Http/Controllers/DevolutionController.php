@@ -10,6 +10,9 @@ use App\Models\Ticket;
 use Session;
 use Auth;
 use App\Models\Devolution;
+use App\Models\CancelPresentation;
+use App\Models\ModuleAssigment;
+use App\Models\Presentation;
 
 class DevolutionController extends Controller
 {
@@ -29,9 +32,46 @@ class DevolutionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($ticket_id)
     {
-        return view('internal.salesman.devolution.new');
+        $ticket = Ticket::findOrFail($ticket_id);
+        if ($ticket->cancelled)
+        {
+            Session::flash('message', 'El ticket fue cancelado');
+            Session::flash('alert-class','alert-danger');
+            return redirect('salesman/devolutions');
+        }
+        $presentation = $ticket->presentation()->first();
+
+        if (!$presentation->cancelled)
+        {
+            Session::flash('message', 'La presentación no fue cancelado');
+            Session::flash('alert-class','alert-danger');
+            return redirect('salesman/devolutions');
+        }
+        $cancelPresentation = CancelPresentation::find($ticket->presentation_id);
+
+        if (!$cancelPresentation->authorized)
+        {
+            Session::flash('message', 'El ticket no esta autorizado para ser devuelto');
+            Session::flash('alert-class','alert-danger');
+            return redirect('salesman/devolutions');
+        }
+        $modulesAuth = $cancelPresentation->modules;
+        $userId = Auth::user()->id;
+        $moduleUser = ModuleAssigment::where(["salesman_id"=>$userId,"status"=>1])->first();
+        //return $moduleUser;
+        $isAuthorized = 0;
+        foreach ($modulesAuth as $obj)
+        {
+            if($obj->id == $moduleUser->module_id)
+            {
+                $isAuthorized = 1;
+                break;
+            }
+
+        }
+        return view('internal.salesman.devolution.new',["ticket"=>$ticket,"authorizedModule"=>$modulesAuth,"isAuthorized"=>$isAuthorized]);
     }
 
     /**
@@ -40,11 +80,13 @@ class DevolutionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CancelledTicketRequest $request)
+    public function store(CancelledTicketRequest $request, $ticket_id)
     {
         $user_id = Auth::user()->id;
 
         $input = $request->all();
+        if( $input['ticket_id'] != $ticket_id )
+            return redirect('salesman/devolutions');
 
         $ticket = Ticket::findOrFail($input['ticket_id']);
         if ($ticket->cancelled == 1)
@@ -68,7 +110,8 @@ class DevolutionController extends Controller
         $devolution->ticket_id = $input['ticket_id'];
         $devolution->user_id = $user_id;
         $devolution->repayment = $input['repayment'];
-        $devolution->observation = $input['observation'];
+        if( isset($input['observation']))
+            $devolution->observation = $input['observation'];
         $devolution->save();
 
         Session::flash('message', 'Devolución realizado!');

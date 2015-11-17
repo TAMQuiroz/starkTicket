@@ -18,12 +18,13 @@ DNI
 @else
 Carnet de Extranjeria
 @endif
-<h4>Número de Documento</h4>
 {{$obj->di}}
 <h4>Dirección</h4>
 {{$obj->address}}
 <h4>Teléfono</h4>
 {{$obj->phone}}
+<h4>E-mail</h4>
+{{$obj->email}}
 <br><br>
 <!--<pre>
     {{$obj}}

@@ -28,7 +28,7 @@ class Event extends Model
     }
 
     public function presentations(){
-        return $this->hasMany('App\Models\Presentation');
+        return $this->hasMany('App\Models\Presentation')->where("cancelled","0");
     }
 
     public function highlights() {
