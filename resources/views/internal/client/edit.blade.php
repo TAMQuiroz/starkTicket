@@ -25,11 +25,15 @@ Cambia información
             {!! Form::text('address', null, ['class' => 'form-control','required']) !!}
         </div>
         <div class="form-group">
+            {!! Form::label('email', 'E-mail', ['class' => 'control-label']) !!}
+            {!! Form::text('email', null, ['class' => 'form-control','required']) !!}
+        </div>
+        <div class="form-group">
             {!! Form::label('phone', 'Telefono', ['class' => 'control-label']) !!}
             {!! Form::text('phone', null, ['class' => 'form-control','required']) !!}
         </div>
 
-        
+
 
         {!! Form::submit('Actualizar', ['class' => 'btn btn-info']) !!}
     </div>

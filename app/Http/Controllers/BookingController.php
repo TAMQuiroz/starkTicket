@@ -240,7 +240,7 @@ class BookingController extends Controller
         $dni = $request['dni'];
         if(strlen($dni)!=8 || !is_numeric($dni))
             return response()->json('El dni debe tener 8 digitos',400);
-        $reservas= Ticket::where('designee',$dni)->lists('reserve')->unique();
+        $reservas= Ticket::where('designee',$dni)->whereNotNull('reserve')->lists('reserve')->unique();
         if($reservas->isEmpty())
             return response()->json('No hay reservas con este dni',400);
         $arreglo = array();

@@ -19,20 +19,18 @@
 
     </div>
     <div class="col-sm-6">
-        <form class="form-horizontal" method="post">
-        {!!Form::open(array('id'=>'form','class'=>'form-horizontal'))!!}
-            <input name="event_id" value="{{$presentation->id}}" type="hidden" required>
+        {!! Form::model($cancelPresentation, [ 'method' => 'POST','url'=>'promoter/presentation/cancelled/'.$cancelPresentation->id.'/edit','id'=>'forms','class'=>'form-horizontal']) !!}
             <div class="form-group">
                 <label  class="col-sm-2 control-label">Devolución:</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="date_refund" required>
+                    {!! Form::date('date_refund', $cancelPresentation->date_refund, ['class' => 'form-control','required']) !!}
                 </div>
             </div>
             <div class="form-group">
                 <label  class="col-sm-2 control-label">Duración</label>
                 <div class="col-sm-10">
                     <div class="input-group">
-                        <input type="numeric" class="form-control" name="duration" required>
+                        {!! Form::text('duration', null, ['class' => 'form-control','required']) !!}
                         <div class="input-group-addon">Días</div>
                     </div>
                 </div>
@@ -40,16 +38,16 @@
             <div class="form-group">
                 <label  class="col-sm-2 control-label">Razón</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" name="reason" required>
-                    </textarea>
+                    {!! Form::textarea('reason', null, ['class' => 'form-control','required']) !!}
+
                 </div>
             </div>
             <div class="form-group">
                 <label  class="col-sm-2 control-label">Autorizado?</label>
                 <div class="col-sm-10">
                     <select name="authorized" class="form-control">
-                        <option value="1">Si</option>
-                        <option value="0">No</option>
+                        <option value="1" @if($cancelPresentation->authorized) selected @endif>Si</option>
+                        <option value="0" @if(!$cancelPresentation->authorized) selected @endif>No</option>
                     </select>
                     <span class="help-block small">Autorizao para devolver entradas?</span>
                 </div>
