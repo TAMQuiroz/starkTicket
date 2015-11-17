@@ -11,6 +11,9 @@ use App\Models\ExchangeRate;
 use App\Http\Requests\Attendance\AttendanceRequest;
 use App\Http\Requests\Attendance\AttendanceSubmitRequest;
 use App\Http\Requests\Attendance\AttendanceUpdate;
+use App\Http\Requests\About\UpdateAboutRequest;
+use App\Http\Requests\System\UpdateSystemRequest;
+use App\Services\FileService;
 
 use Auth;
 use App\User;
@@ -18,6 +21,8 @@ use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\AttendanceDetail;
 
+use App\Models\Business;
+use App\Models\About;
 use App\Models\Event;
 use App\Models\Ticket;
 use App\Models\Module;
@@ -27,6 +32,10 @@ use DB;
 
 class BusinessController extends Controller
 {
+    public function __construct(){
+        $this->file_service = new FileService();
+    }
+    
     public function cashCount()
     {
         //$user = Auth::user();
@@ -173,12 +182,47 @@ class BusinessController extends Controller
 
     public function about()
     {
-        return view('internal.admin.about');
+        $about = About::all()->first();
+        
+        return view('internal.admin.about',compact('about'));
+    }
+
+    public function aboutUpdate(UpdateAboutRequest $request){
+        $about = About::all()->first();
+        $about->description = $request['description'];
+        $about->mision      = $request['mision'];
+        $about->vision      = $request['vision'];
+        $about->history     = $request['history'];
+        $about->youtube_url = $request['youtube_url'];
+        $about->save();
+
+        return redirect()->back();
+
     }
 
     public function system()
     {
-        return view('internal.admin.system');
+        $system = Business::all()->first();
+
+        return view('internal.admin.system', compact('system'));
+    }
+
+    public function systemUpdate(UpdateSystemRequest $request)
+    {
+        $system = Business::all()->first();
+        $system->business_name  =   $request['business_name'];
+        $system->ruc            =   $request['ruc'];
+        $system->address        =   $request['address'];
+        $system->reserve_time   =   $request['reserve_time'];
+        if(isset($request['logo']))
+            $system->logo = $this->file_service->upload($request->file('logo'),'system');
+
+        if(isset($request['favicon']))
+            $system->favicon = $this->file_service->upload($request->file('favicon'),'system');
+
+        $system->save();
+
+        return redirect()->back();
     }
 
 
