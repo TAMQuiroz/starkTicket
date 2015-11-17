@@ -12,6 +12,7 @@ use Auth;
 use App\User;
 use App\Models\Preference;
 use App\Models\Event;
+use App\Models\About;
 use Carbon\Carbon;
 
 class PagesController extends Controller
@@ -24,7 +25,8 @@ class PagesController extends Controller
 
     public function about()
     {
-        return view('external.about');
+        $about = About::all()->first();
+        return view('external.about', compact('about'));
     }
 
     public function modules()

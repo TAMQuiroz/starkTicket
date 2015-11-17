@@ -289,7 +289,7 @@ class TicketController extends Controller
         $ticket = Ticket::find($request['ticket_id']);
 
         Mail::send('internal.client.successMail',['ticket'=>$ticket,'mail'=>$mail], function($message)use($mail){
-            $message->to($mail)->subject('Pruebita');
+            $message->to($mail)->subject('Datos de compra');
         });
 
         $user = \Auth::user();
