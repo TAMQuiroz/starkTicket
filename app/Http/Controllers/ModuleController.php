@@ -252,6 +252,28 @@ class ModuleController extends Controller
         //
         $moduleassigment = ModuleAssigment::find($id);
 
+        $salesman = User::find($moduleassigment->salesman_id);
+        $tickets = DB::table('tickets')
+                    ->where('salesman_id','=',$salesman->id)
+                    ->where('payment_date','<',new Carbon())->where('payment_date','>=',Carbon::today())
+                    ->whereNull('cashCount_register')
+                    ->get();
+
+        $devolutions = DB::table('devolutions')
+                    ->where('tickets.salesman_id','=',$salesman->id)
+                    ->where('devolutions.created_at','<',new Carbon())->where('devolutions.created_at','>=',Carbon::today())
+                    ->whereNull('devolutions.cashCount_register')
+                    ->leftJoin('tickets', 'tickets.id', '=', 'devolutions.ticket_id')
+                    ->get();
+
+        if ($tickets != null ){
+            if ($devolutions != null){
+               return back()->withErrors(['Antes de desasociar, primero debes hacer el arqueo de caja']); 
+            }
+            
+        }
+
+
         $moduleassigment->status = 2;
         $moduleassigment->dateMoveAssigments = new Carbon();
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Ticket;
+namespace App\Http\Requests\System;
 
 use App\Http\Requests\Request;
 
-class CancelledTicketRequest extends Request
+class UpdateSystemRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,12 @@ class CancelledTicketRequest extends Request
     public function rules()
     {
         return [
-            'ticket_id'          =>  'required|exists:tickets,id',
-            'repayment'          =>  'required|numeric',
+            'business_name'     =>  'required',
+            'ruc'               =>  'required|numeric|digits:11',
+            'address'           =>  'required',
+            'reserve_time'      =>  'required|numeric',
+            'logo'              =>  'image',
+            'favicon'           =>  'image',
         ];
     }
 }

@@ -18,16 +18,16 @@ Cambia información
     <div class="col-sm-12">
         <div class="form-group">
             {!! Form::label('password', 'Contraseña:', ['class' => 'control-label']) !!}
-            {!! Form::text('password', null, ['class' => 'form-control']) !!}
+            {!! Form::password('password', null, ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('password', 'Nueva Contraseña:', ['class' => 'control-label']) !!}
-            {!! Form::text('new_password', null, ['class' => 'form-control']) !!}
+            {!! Form::password('new_password', null, ['class' => 'form-control']) !!}
             <span class="help-block small">Ingrese mínimo 8 caracteres.</span>
         </div>
         <div class="form-group">
             {!! Form::label('password', 'Confirmar:', ['class' => 'control-label']) !!}
-            {!! Form::text('new_password_confirmation', null, ['class' => 'form-control']) !!}
+            {!! Form::password('new_password_confirmation', null, ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
         {!! Form::submit('Actualizar', ['class' => 'btn btn-info']) !!}

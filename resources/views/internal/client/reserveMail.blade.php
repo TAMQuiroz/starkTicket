@@ -1,7 +1,6 @@
 <h5>CONFIRMACIÓN DE RESERVA</h5>
 
 <div>A continuación te mostramos los datos.</div>
-
 <table class="table table-bordered" style="width:1px">
 	<thead>
 	    <tr>
@@ -31,3 +30,4 @@
 	    </tr>
 	</tbody>
 </table>
+

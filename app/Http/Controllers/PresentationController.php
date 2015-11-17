@@ -100,7 +100,9 @@ class PresentationController extends Controller
             Session::flash('message', 'La presentación ya fue cancelado!');
             Session::flash('alert-class','alert-danger');
 
-            return redirect('/promoter/event/record');
+            $cancelPresentation = CancelPresentation::where("presentation_id",$id)->first();
+
+            return view('internal.promoter.presentation.editCancel', ['presentation' => $presentation,'cancelPresentation'=>$cancelPresentation]);
         }
         return view('internal.promoter.presentation.newCancel', ['presentation' => $presentation]);
     }
@@ -124,6 +126,25 @@ class PresentationController extends Controller
         $cancel->save();
 
         Session::flash('message', 'La presentación se a cancelado!');
+        Session::flash('alert-class','alert-success');
+
+        return redirect('/promoter/presentation/cancelled');
+    }
+    public function cancelUpdate(StorePresentationRequest $request,$id)
+    {
+        $user_id = Auth::user()->id;
+
+        $input = $request->all();
+
+        $cancel = CancelPresentation::findOrFail($id);
+        $cancel->user_id = $user_id;
+        $cancel->reason = $input['reason'];
+        $cancel->duration = $input['duration'];
+        $cancel->authorized = $input['authorized'];
+        $cancel->date_refund = $input['date_refund'];
+        $cancel->save();
+
+        Session::flash('message', 'Información actualizada!');
         Session::flash('alert-class','alert-success');
 
         return redirect('/promoter/presentation/cancelled');

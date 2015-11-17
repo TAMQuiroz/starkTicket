@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title') | StarkTicket</title>
+    <link rel="shortcut icon" href="{{ $favicon }}">
+    <title>@yield('title') | {{$business_name}} - StarkTicket</title>
 
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
@@ -23,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{url('salesman')}}">Telecticke </a>
+                <a class="navbar-brand" href="{{url('salesman')}}">{{$business_name}} </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -35,7 +36,6 @@
                     <li><a href="{{url('event')}}">Venta Ticket</a></li>
                     <li><a href="{{url('salesman/giveaway')}}">Entrega Ticket</a></li>
                     <li><a href="{{url('salesman/devolutions/')}}">Devoluciones </a></li>
-                    <li><a href="{{url('salesman/devolutions/new')}}">Nueva Devolucion </a></li>
                     <li><a href="{{url('salesman/event/pay_booking')}}">Cobrar Reserva</a></li>
                     <li><a href="">{{ Auth::user()->name }}</a></li>
                     <li><a href="{{url('auth/logout')}}">Salir</a></li>

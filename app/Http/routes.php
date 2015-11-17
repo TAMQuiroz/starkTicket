@@ -14,7 +14,6 @@
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
-Route::get('login_worker', 'Auth\AuthController@worker');
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
@@ -81,10 +80,10 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::post('salesman/event/successMail', ['uses'=>'TicketController@mailSuccess','as'=>'ticket.success.salesman.mail']);
 
     Route::get('salesman/devolutions/', 'DevolutionController@index');
-    Route::get('salesman/devolutions/new', 'DevolutionController@create');
-    Route::post('salesman/devolutions/new', 'DevolutionController@store');
+    Route::get('salesman/devolutions/new/{ticket_id}', 'DevolutionController@create');
+    Route::post('salesman/devolutions/new/{ticket_id}', 'DevolutionController@store');
     Route::get('salesman/devolutions/{devolution_id}', 'DevolutionController@show');
-    Route::get('salesman/ticket/{devolution_id}/tojson', 'TicketController@getTicketToJson');
+    Route::post('salesman/ticket/repay', 'TicketController@repay');
 
 });
 
@@ -118,6 +117,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modulesStorage');
     Route::get('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancel');
     Route::post('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancelStorage');
+    Route::post('promoter/presentation/cancelled/{id}/edit', 'PresentationController@cancelUpdate');
     Route::post('promoter/event/{event_id}/delete', ['as' => 'events.delete', 'uses' =>'EventController@destroy']);
 
     Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
@@ -187,10 +187,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/ticket_return/new', 'TicketController@createReturn');
     Route::get('admin/{id}/attendance', 'BusinessController@attendance');
     Route::post('admin/{id}/attendanceSubmit', 'BusinessController@attendanceSubmit');
-  
+
 
     Route::get('admin/attendance/{id}/detail', 'BusinessController@attendanceDetail');
-  Route::post('admin/{id}/Update/attendanceSubmit', 'BusinessController@attendanceUpdate');  
+  Route::post('admin/{id}/Update/attendanceSubmit', 'BusinessController@attendanceUpdate');
 
 
 
@@ -206,7 +206,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/config/exchange_rate', 'BusinessController@exchangeRate');
     Route::post('admin/config/exchange_rate', 'BusinessController@storeExchangeRate');
     Route::get('admin/config/about', 'BusinessController@about');
+    Route::post('admin/config/about', ['uses'=>'BusinessController@aboutUpdate','as'=>'config.about.update']);
     Route::get('admin/config/system', 'BusinessController@system');
+    Route::post('admin/config/system', ['uses'=>'BusinessController@systemUpdate','as'=>'config.system.update']);
 
     Route::get('admin/report/assistance', 'ReportController@showAssistance');
     Route::get('admin/report/sales', 'ReportController@showSales');

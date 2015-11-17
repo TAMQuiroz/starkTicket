@@ -4,7 +4,7 @@ namespace App\Http\Requests\Ticket;
 
 use App\Http\Requests\Request;
 
-class CancelledTicketRequest extends Request
+class IdTicketRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class CancelledTicketRequest extends Request
     public function rules()
     {
         return [
-            'ticket_id'          =>  'required|exists:tickets,id',
-            'repayment'          =>  'required|numeric',
+            'ticket_id' => 'required|exists:tickets,id'
         ];
     }
 }
