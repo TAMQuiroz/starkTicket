@@ -16,8 +16,8 @@ class BusinessTableSeeder extends Seeder
             'ruc'			=>	12345678912,
             'address'		=>	'Monte del destino #423 Mordor Tierra Media',
             'reserve_time'  =>  24,
-            'logo'			=>	asset('images/logo.jpg'),
-            'favicon'		=>	asset('images/teletickeico.jpg'),
+            'logo'			=>	'images/logo.jpg',
+            'favicon'		=>	'images/teletickeico.jpg',
         ]);
     }
 }
