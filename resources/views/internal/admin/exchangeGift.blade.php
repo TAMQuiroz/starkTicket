@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Canjeo de premios
+    Canjeo de premios
 @stop
 
 @section('content')
@@ -32,6 +32,7 @@
                             <div class="carousel-caption">
                                 <h3>{{$gift->name}}</h3>
                                 <p>Puntos: {{$gift->points}}</p>
+                                <p>Stock: {{$gift->stock}}</p>
                             </div>
                         </div>
                         @endforeach
@@ -48,30 +49,35 @@
             </div>
 
             <div class="col-md-4">
-                <h2>Void 500 pts</h2><h4>Stock 50 unidades </h4>
-                <button type="button" class="btn btn-info">Buscar Cliente </button>
+                <!--<h2>Void 500 pts</h2><h4>Stock 50 unidades </h4>-->
+                <h5>Buscar Cliente</h5>
+                <div class="input-group" style="width:290px">
+                    {!! Form::text('client', null, array('class' => 'form-control', 'placeholder'=>'Cliente','id'=>'clientS')) !!} 
+                    <span class="input-group-btn" type="button">
+                        {!!Form::button('Buscar',array('id'=>'btnBuscar','class'=>'btn btn-info'))!!}
+                    </span>
+                </div><!-- /input-group -->
                 <br>
-                Nombre:  
-                <input disabled type="text" name="fname" style="
-                width: 174px;
-                padding-top: 3px;
-                margin-top: 40px;
-                 margin-left: 3px;
-                border-left-width: 2px;
-                border-right-width: 2px;
-                margin-bottom: 15px;
-               "><br>
-               Puntos:
-               <input disabled type="text" name="lname" style="
-                margin-bottom: 10‒;
-                margin-bottom: 0px;
-                border-left-width: 2px;
-                margin-left: 8px;">
-                <br>  <br>
-                <button type="button" class="btn btn-info">  Canjear puntos  </button>
+                <div class="col-md-8">
+                    <h4>Nombre de Cliente</h4>
+                    {!! Form::text('name', null, ['class' => 'form-control', 'disabled', 'id'=>'user_name']) !!}
+                </div><br>
+                <div class="col-md-8">
+                    <h4>Puntos Acumulados</h4>
+                    {!! Form::text('points', null, ['class' => 'form-control', 'disabled', 'id'=>'user_points']) !!}
+                </div>
+                <div class="col-md-8">
+                    <h4>Regalos</h4>
+                    {!! Form::select('gifts', ['regalo1', 'regalo2'], null, ['class' => 'form-control', 'required'])!!}
+                </div>
+                <div class="col-md-8" style="margin-top:20px">
+                    {!!Form::button('Canjear Puntos',array('id'=>'btnChange','class'=>'btn btn-info'))!!}
+                    
+                </div>    
             </div>
         </div>
         <!-- /.row -->
+
 
         <!-- Related Projects Row -->
         <div class="row">
@@ -94,6 +100,5 @@
 @stop
 
 @section('javascript')
-
 
 @stop
