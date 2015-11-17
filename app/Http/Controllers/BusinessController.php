@@ -11,6 +11,7 @@ use App\Models\ExchangeRate;
 use App\Http\Requests\Attendance\AttendanceRequest;
 use App\Http\Requests\Attendance\AttendanceSubmitRequest;
 use App\Http\Requests\Attendance\AttendanceUpdate;
+use App\Http\Requests\About\UpdateAboutRequest;
 
 use Auth;
 use App\User;
@@ -18,6 +19,7 @@ use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\AttendanceDetail;
 
+use App\Models\About;
 use App\Models\Event;
 use App\Models\Ticket;
 use App\Models\Module;
@@ -130,7 +132,22 @@ class BusinessController extends Controller
 
     public function about()
     {
-        return view('internal.admin.about');
+        $about = About::all()->first();
+        
+        return view('internal.admin.about',compact('about'));
+    }
+
+    public function aboutUpdate(UpdateAboutRequest $request){
+        $about = About::all()->first();
+        $about->description = $request['description'];
+        $about->mision = $request['mision'];
+        $about->vision = $request['vision'];
+        $about->history = $request['history'];
+        $about->youtube_url = $request['youtube_url'];
+        $about->save();
+
+        return redirect()->back();
+
     }
 
     public function system()
