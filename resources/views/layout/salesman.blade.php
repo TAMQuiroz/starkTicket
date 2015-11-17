@@ -35,7 +35,6 @@
                     <li><a href="{{url('event')}}">Venta Ticket</a></li>
                     <li><a href="{{url('salesman/giveaway')}}">Entrega Ticket</a></li>
                     <li><a href="{{url('salesman/devolutions/')}}">Devoluciones </a></li>
-                    <li><a href="{{url('salesman/devolutions/new')}}">Nueva Devolucion </a></li>
                     <li><a href="{{url('salesman/event/pay_booking')}}">Cobrar Reserva</a></li>
                     <li><a href="">{{ Auth::user()->name }}</a></li>
                     <li><a href="{{url('auth/logout')}}">Salir</a></li>
