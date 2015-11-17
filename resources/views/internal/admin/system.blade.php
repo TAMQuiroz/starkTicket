@@ -26,6 +26,12 @@
         </div>
       </div>
       <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">Tiempo de reserva</label>
+        <div class="col-sm-10">
+        {!!Form::text('reserve_time', $system->reserve_time,['class'=>'form-control', 'required'])!!}
+        </div>
+      </div>
+      <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Dirección</label>
         <div class="col-sm-10">
             {!!Form::text('address', $system->address,['class'=>'form-control', 'required'])!!}

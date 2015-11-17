@@ -15,6 +15,7 @@ class BusinessTableSeeder extends Seeder
             'business_name'	=>	'Teleticke',
             'ruc'			=>	12345678912,
             'address'		=>	'Monte del destino #423 Mordor Tierra Media',
+            'reserve_time'  =>  24,
             'logo'			=>	'images/logo.jpg',
             'favicon'		=>	'images/teletickeico.jpg',
         ]);

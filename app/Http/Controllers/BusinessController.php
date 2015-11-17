@@ -213,6 +213,7 @@ class BusinessController extends Controller
         $system->business_name  =   $request['business_name'];
         $system->ruc            =   $request['ruc'];
         $system->address        =   $request['address'];
+        $system->reserve_time   =   $request['reserve_time'];
         if(isset($request['logo']))
             $system->logo = $this->file_service->upload($request->file('logo'),'system');
 

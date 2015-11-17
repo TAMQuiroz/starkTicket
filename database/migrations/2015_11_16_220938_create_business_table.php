@@ -16,6 +16,7 @@ class CreateBusinessTable extends Migration
             $table->increments('id');
             $table->string('business_name');
             $table->bigInteger('ruc');
+            $table->string('reserve_time');
             $table->string('address');
             $table->string('logo');
             $table->string('favicon');

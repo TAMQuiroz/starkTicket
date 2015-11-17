@@ -27,6 +27,7 @@ class UpdateSystemRequest extends Request
             'business_name'     =>  'required',
             'ruc'               =>  'required|numeric|digits:11',
             'address'           =>  'required',
+            'reserve_time'      =>  'required|numeric',
             'logo'              =>  'image',
             'favicon'           =>  'image',
         ];
