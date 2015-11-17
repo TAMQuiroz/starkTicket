@@ -22,7 +22,7 @@
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">RUC:</label>
         <div class="col-sm-10">
-            {!!Form::text('ruc', $system->ruc,['class'=>'form-control', 'required'])!!}
+            {!!Form::number('ruc', $system->ruc,['class'=>'form-control', 'required'])!!}
         </div>
       </div>
       <div class="form-group">
