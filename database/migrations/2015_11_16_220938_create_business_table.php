@@ -15,7 +15,7 @@ class CreateBusinessTable extends Migration
         Schema::create('business', function (Blueprint $table) {
             $table->increments('id');
             $table->string('business_name');
-            $table->integer('ruc');
+            $table->bigInteger('ruc');
             $table->string('address');
             $table->string('logo');
             $table->string('favicon');

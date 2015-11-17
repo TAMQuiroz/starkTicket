@@ -4,7 +4,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login de Cliente</title>
+    <title>Login | {{$business_name}} - StarkTicket</title>
+    <link rel="shortcut icon" href="{{ $favicon }}">
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/designLogin.css')!!}
