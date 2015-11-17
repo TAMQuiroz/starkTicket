@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Business;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $system = Business::all()->first();
+        view()->share('business_name',$system->business_name);
+        view()->share('favicon', $system->favicon);
     }
 
     /**

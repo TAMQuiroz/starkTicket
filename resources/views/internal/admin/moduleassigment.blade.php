@@ -76,7 +76,7 @@
                         {!! Form::number('number', null, ['class' => 'form-control', 'required', 'placeholder' => 'Documento de Identidad...','id'=>'salesman_di','min'=>0,'max'=>99999999]) !!}
                   </div>
                 <div class="col-md-6">
-                    <h4>Nombre de Cliente</h4>
+                    <h4>Nombre de Vendedor</h4>
                     {!! Form::text('name', null, ['class' => 'form-control', 'disabled', 'id'=>'salesman_name']) !!}
                     {!! Form::hidden('salesman_id', null, ['id'=>'salesman_id'])!!}
                 </div>
