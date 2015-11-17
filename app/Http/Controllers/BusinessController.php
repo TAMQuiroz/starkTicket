@@ -35,6 +35,7 @@ class BusinessController extends Controller
                     ->select(DB::raw('payment_date, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, (tickets.total_price) as subtotal'))
                     ->where('payment_date','<',new Carbon())->where('payment_date','>=',Carbon::today())->where('salesman_id',\Auth::user()->id)
                     //->groupBy('payment_date')
+                    ->whereNull('tickets.cashCount_register')
                     ->leftJoin('users', 'users.id', '=', 'tickets.owner_id')
                     ->leftJoin('events', 'events.id', '=', 'tickets.event_id')
                     ->leftJoin('zones', 'zones.id', '=', 'tickets.zone_id')
@@ -61,6 +62,7 @@ class BusinessController extends Controller
                     ->select(DB::raw('devolutions.created_at, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, devolutions.repayment as subtotal'))
                     ->where('devolutions.created_at','<',new Carbon())->where('devolutions.created_at','>=',Carbon::today())->where('user_id',\Auth::user()->id)
                     //->groupBy('devolutions.created_at')
+                    ->whereNull('devolutions.cashCount_register')
                     ->leftJoin('tickets','devolutions.ticket_id','=','tickets.id')
                     ->leftJoin('users', 'users.id', '=', 'tickets.owner_id')
                     ->leftJoin('events', 'events.id', '=', 'tickets.event_id')
@@ -121,9 +123,50 @@ class BusinessController extends Controller
          if (Auth::user()->module_id == null){
             return back()->withErrors(['El vendedor no tiene una caja asignada']);
         }
-         $module = Module::find(\Auth::user()->module_id);
-         $module->cash    = $request['cash'];
-         $module->save();
+
+        if ($request['type']==1){
+            $module = Module::find(\Auth::user()->module_id);
+            $module->cash    = $request['cash'];
+            $module->save();
+        }
+        elseif ($request['type']==2){
+            $module = Module::find(\Auth::user()->module_id);
+            $module->cash    = $request['cash'];
+            $module->save();
+
+             $tickets = DB::table('tickets')
+                    ->where('salesman_id','=',\Auth::user()->id)
+                    ->where('payment_date','<',new Carbon())->where('payment_date','>=',Carbon::today())
+                    ->whereNull('cashCount_register')
+                    ->get();
+            $timeNow = new Carbon();
+            
+
+            $devolutions = DB::table('devolutions')
+                    ->where('tickets.salesman_id','=',\Auth::user()->id)
+                    ->where('devolutions.created_at','<',new Carbon())->where('devolutions.created_at','>=',Carbon::today())
+                    ->whereNull('devolutions.cashCount_register')
+                    ->leftJoin('tickets', 'tickets.id', '=', 'devolutions.ticket_id')
+                    ->get();
+            foreach ($devolutions as $devolution) {
+                 $devolution->cashCount_register = $timeNow;
+                 DB::table('devolutions')
+                        ->where('id', $devolution->id)
+                        ->update(['cashCount_register' => $timeNow]);
+
+                 //$devolution->save();
+            }
+            foreach ($tickets as $ticket) {
+                $ticket->cashCount_register = $timeNow;
+                DB::table('tickets')
+                        ->where('id', $ticket->id)
+                        ->update(['cashCount_register' => $timeNow]);
+               // $ticket->save();
+            }
+        }
+
+         
+
              
          return redirect('salesman/cash_count');
     }

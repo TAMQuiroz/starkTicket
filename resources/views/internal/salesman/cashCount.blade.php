@@ -35,6 +35,7 @@
         <div class="col-sm-3">
           {!!Form::number('cash', $cashFirst ,['class'=>'form-control','id'=>'cash', 'min'>=0])!!}
           {!! Form::hidden('cash_val', null, ['cash'=>'cash_val'])!!}
+          {!! Form::hidden('type', '1', ['id'=>'type'])!!}
         </div>
         <div class="col-sm-2">
           <a  class="btn btn-info" href="" title="submit" data-toggle="modal" data-target="#submitModal" >Modificar Monto</a>
@@ -248,6 +249,7 @@
           <div class="col-sm-3">
             {!!Form::input('number','cash', $sumTotal,['class'=>'form-control','id'=>'total','readonly'])!!}
             {!! Form::hidden('cash_val', null, ['cash'=>'cash_val'])!!}
+             {!! Form::hidden('type', '2', ['id'=>'type'])!!}
           </div>
           <div class="col-sm-6">
             <a  class="btn btn-info" href="" title="submit" data-toggle="modal" data-target="#info" >Arquear Caja</a>
