@@ -74,7 +74,7 @@
           {!! Form::hidden ('column_'.$capacity->id, $capacity->columns, array('id' =>'column_'.$capacity->id)) !!}
           {!! Form::hidden('invisible', 'secret', array('id' => 'invisible_id')) !!}
         @endforeach
-
+        {!! Form::hidden('counter', '0', array('id' => 'seat_counter')) !!}
 
 
         <div class="row">
@@ -708,12 +708,60 @@
               return column;
             }
           },
+          click : function(){
+                  if(this.status()=='available' && this.status()!='selected'){
+                      var cant = $('#seat_counter').val();
+                      var num_cant = parseInt(cant);
+                      if(num_cant<2){
+                        num_cant = num_cant +1;
+                        cant = '' + num_cant;
+                        $('#seat_counter').val(cant);
+                        if(num_cant == 2){
+                          var id_selec1 = $('.seatCharts-cell.selected').first().attr('id');
+                          var id_selec2 = this.node().attr('id');
+                          var res = id_selec1.split("_");
+                          var fil_ini = parseInt(res[0]);
+                          var col_ini = parseInt(res[1]);
+                          var res = id_selec2.split("_");
+                          var fil_ini2 = parseInt(res[0]);
+                          var col_ini2 = parseInt(res[1]);
+                          if(col_ini > col_ini2)
+                            $('#input-colIni').val(''+col_ini2);
+                          else $('#input-colIni').val(''+col_ini);
+                          if(fil_ini > fil_ini2)
+                            $('#input-rowIni').val(''+fil_ini2);
+                          else $('#input-rowIni').val(''+fil_ini);
+                          $('#input-column').val(''+(Math.abs(col_ini - col_ini2)+1));
+                          $('#input-row').val(''+(Math.abs(fil_ini - fil_ini2)+1));
+                        }
+                        this.status('selected');
+                        return 'selected';
+                      } else{
+                        alert('ya hay dos asientos seleccionados :v');
+                        this.status() = 'available';
+                        return 'available';
+                      }
+                    }
+                    if(this.status()=='selected'){
+                      $('#input-colIni').val('');
+                      $('#input-rowIni').val('');
+                      $('#input-column').val('');
+                      $('#input-row').val('');
+                      var cant = $('#seat_counter').val();
+                      var num_cant = parseInt(cant);
+                      num_cant = num_cant -1;
+                      cant = ''+num_cant;
+                      $('#seat_counter').val(cant);
+                      this.status('available');
+                      return 'available';
+                    }
+          },
           legend : { //Definition legend
             node : $('#legend'),
             items : [
               [ 'a', 'available',   'Libre' ],
-              [ 'a', 'unavailable', 'Ocupado'],
-              [ 'a', 'reserved', 'Reservado']
+              [ 'b', 'unavailable', 'Ocupado'],
+              [ 'c', 'reserved', 'Reservado']
             ]
           } });
           $('#seat-map-'+index).show();
