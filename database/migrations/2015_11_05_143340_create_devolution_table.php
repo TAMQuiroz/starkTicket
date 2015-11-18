@@ -18,6 +18,7 @@ class CreateDevolutionTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->double('repayment');
             $table->string('observation');
+            $table->timestamp('cashCount_register')->nullable();
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->softDeletes();

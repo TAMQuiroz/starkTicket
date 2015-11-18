@@ -4,8 +4,8 @@
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<title>@yield('title') | StarkTicket</title>
+    <link rel="shortcut icon" href="{{ asset($favicon) }}">
+	<title>@yield('title') | {{$business_name}} - StarkTicket</title>
 
     {!!Html::script('js/jquery-1.11.3.min.js')!!}
 	{!!Html::style('css/bootstrap.min.css')!!}
@@ -18,36 +18,14 @@
 
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{url('/')}}">Telecticke </a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{url('auth/login')}}">Login</a></li>
-                    <li><a href="{{url('auth/register')}}">Sign Up</a></li>
-              </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+    @extends('layout.topbar')
 
 	<div id="header">
 		<div class="container">
 			<!-- Logo -->
 
 			<div id="logo">
-				<h1 id="portada"><a href="{{url('/')}}">Teleticke</a></h1>
+				<h1 id="portada"><a href="{{url('/')}}">{{$business_name}}</a></h1>
 			</div>
 			<!-- Nav -->
 			<nav id="nav">

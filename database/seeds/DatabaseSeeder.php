@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call(AccessPromotionSeeder::class);
         $this->call(ExchangeRateTableSeeder::class);
         $this->call(ModuleAssigmentTableSeeder::class);
-
-
+        $this->call(AboutTableSeeder::class);
+        $this->call(BusinessTableSeeder::class);
 
         Model::reguard();
     }
