@@ -5,6 +5,11 @@
   <!-- {!!Html::style('css/estilos.css')!!} -->
   {!!Html::style('css/jquery.seat-charts.css')!!}
   {!!Html::style('css/seats.css')!!}
+  <style>
+  div.seatCharts-seat.selected {
+    background-color: green;
+  }
+  </style>
 @stop
 
 @section('title')
@@ -30,6 +35,7 @@
     var e = document.getElementsByName('local_id')[0];
     var index= e.options[e.selectedIndex].value;
     document.getElementById('capacity-display').value = document.getElementsByName('capacity_'+index)[0].value;
+    document.getElementById("input-capacity").max=document.getElementById("capacity-display").value;
   }
 
   function changeCapacity(){
@@ -83,7 +89,7 @@
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                  {!! Form::text('name','', array('class' => 'form-control','required','maxlength' => 50)) !!}
+                  {!! Form::text('name','', array('class' => 'form-control','required','maxlength' => 30)) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -141,7 +147,7 @@
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Imagen evento</label>
                 <div class="col-sm-10">
-                  {!! Form::file('image', array('class' => 'form-control')) !!}
+                  {!! Form::file('image', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
               <br>
@@ -152,7 +158,7 @@
                   <div class="form-group">
                       <label  class="col-md-4 control-label">Nombre</label>
                       <div class="col-md-8">
-                          {!! Form::text('zoneName1','', array('class' => 'form-control','id' => 'input-zone','maxlength' => 50)) !!}
+                          {!! Form::text('zoneName1','', array('class' => 'form-control','id' => 'input-zone','maxlength' => 20)) !!}
                       </div>
                   </div>
                   <div class="form-group">
@@ -219,8 +225,8 @@
 
                         var capacity = document.getElementById('input-capacity').value;
 
-
-
+                        if(price<0) return;
+                        if(capacity<0) return;
                         if( new_capacity-capacity<0) return;
                         if(zone.length==0 || price.length==0) return;
                         if( document.getElementById('input-capacity').disabled==true){
@@ -373,22 +379,12 @@
                         // document.getElementById('input-colIni').value = '';
                         // document.getElementById('input-rowIni').value = '';
                         if( document.getElementById('input-capacity').disabled==true){
-                          var col_ini = parseInt($('#input-colIni').val());
-                          var fil_ini = parseInt($('#input-rowIni').val());
-                          var cant_fil = parseInt($('#input-row').val());
-                          var cant_col = parseInt($('#input-column').val());
-                          /*for(i = col_ini; i<col_ini+cant_col;i++){
-                            for(j=fil_ini; j<fil_ini + cant_fil; j++){
-                              var id = ''+j+'_'+i;
-                              
-                                  $('#'+id).removeClass("reserved");
-                                  $('#'+id).removeClass("selected");
-                                  $('#'+id).addClass('unavailable');
-                                
-                            }
-                          }*/
                           $('.reserved').removeClass('reserved').addClass('unavailable');
                           $('.selected').removeClass('selected').addClass('unavailable');
+                          document.getElementById('input-column').value = '';
+                          document.getElementById('input-row').value = '';
+                          document.getElementById('input-colIni').value = '';
+                          document.getElementById('input-rowIni').value = '';
                         }
                         new_capacity = new_capacity - capacity;
                         document.getElementById('capacity-display').value = new_capacity;
@@ -399,6 +395,19 @@
                     function deleteZone(btn){
                         var row=btn.parentNode.parentNode.rowIndex;
                         var row2 = row-1;
+                        if( document.getElementById('input-capacity').disabled==true){
+                              var col_ini = parseInt($('[name="start_column[]"]')[row2].value);
+                              var fil_ini = parseInt($('[name="start_row[]"]')[row2].value);
+                              var cant_fil = parseInt($('[name="zone_rows[]"]')[row2].value);
+                              var cant_col = parseInt($('[name="zone_columns[]"]')[row2].value);
+                              for(i = col_ini; i<col_ini+cant_col;i++){
+                                for(j=fil_ini; j<fil_ini + cant_fil; j++){
+                                  var id = ''+j+'_'+i;
+                                  $('#'+id).removeClass("unavailable");
+                                  $('#'+id).addClass('available');
+                                }
+                              }
+                        }
                         var act_val = parseInt(document.getElementById('capacity-display').value);
                         act_val += parseInt(document.getElementsByName('zone_capacity[]')[row2].value);
                         document.getElementById('capacity-display').value = act_val;
@@ -692,9 +701,9 @@
           document.getElementById("input-colIni").max=columns;
           document.getElementById("input-rowIni").max=rows;
 
-          console.log("columnas "+columns);
+          //console.log("columnas "+columns);
 
-          console.log("filas "+rows);
+          //console.log("filas "+rows);
 
           var arreglo = new Array();
 
@@ -706,10 +715,10 @@
             //console.log(texto);
             arreglo.push(texto);
           }
-          console.log(arreglo);
+          //console.log(arreglo);
           //console.log(arreglo);
           var seatid="seat-map-"+index;
-          console.log(seatid);
+          //console.log(seatid);
 
           var tam= $('[id=invisible_id]').size();
           for(i=1;i<=tam;i++){

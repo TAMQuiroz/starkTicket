@@ -1,7 +1,6 @@
 <h5>CONFIRMACIÓN DE RESERVA</h5>
 
 <div>A continuación te mostramos los datos.</div>
-
 <table class="table table-bordered" style="width:1px">
 	<thead>
 	    <tr>
@@ -30,6 +29,4 @@
 	        <td>S/. {{$tickets->first()->total_price}}</td>
 	    </tr>
 	</tbody>
-
 </table>
-
