@@ -11,6 +11,9 @@ use App\Models\ExchangeRate;
 use App\Http\Requests\Attendance\AttendanceRequest;
 use App\Http\Requests\Attendance\AttendanceSubmitRequest;
 use App\Http\Requests\Attendance\AttendanceUpdate;
+use App\Http\Requests\About\UpdateAboutRequest;
+use App\Http\Requests\System\UpdateSystemRequest;
+use App\Services\FileService;
 
 use Auth;
 use App\User;
@@ -18,6 +21,8 @@ use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\AttendanceDetail;
 
+use App\Models\Business;
+use App\Models\About;
 use App\Models\Event;
 use App\Models\Ticket;
 use App\Models\Module;
@@ -27,6 +32,10 @@ use DB;
 
 class BusinessController extends Controller
 {
+    public function __construct(){
+        $this->file_service = new FileService();
+    }
+    
     public function cashCount()
     {
         //$user = Auth::user();
@@ -35,6 +44,7 @@ class BusinessController extends Controller
                     ->select(DB::raw('payment_date, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, (tickets.total_price) as subtotal'))
                     ->where('payment_date','<',new Carbon())->where('payment_date','>=',Carbon::today())->where('salesman_id',\Auth::user()->id)
                     //->groupBy('payment_date')
+                    ->whereNull('tickets.cashCount_register')
                     ->leftJoin('users', 'users.id', '=', 'tickets.owner_id')
                     ->leftJoin('events', 'events.id', '=', 'tickets.event_id')
                     ->leftJoin('zones', 'zones.id', '=', 'tickets.zone_id')
@@ -61,6 +71,7 @@ class BusinessController extends Controller
                     ->select(DB::raw('devolutions.created_at, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, devolutions.repayment as subtotal'))
                     ->where('devolutions.created_at','<',new Carbon())->where('devolutions.created_at','>=',Carbon::today())->where('user_id',\Auth::user()->id)
                     //->groupBy('devolutions.created_at')
+                    ->whereNull('devolutions.cashCount_register')
                     ->leftJoin('tickets','devolutions.ticket_id','=','tickets.id')
                     ->leftJoin('users', 'users.id', '=', 'tickets.owner_id')
                     ->leftJoin('events', 'events.id', '=', 'tickets.event_id')
@@ -121,21 +132,97 @@ class BusinessController extends Controller
          if (Auth::user()->module_id == null){
             return back()->withErrors(['El vendedor no tiene una caja asignada']);
         }
-         $module = Module::find(\Auth::user()->module_id);
-         $module->cash    = $request['cash'];
-         $module->save();
+
+        if ($request['type']==1){
+            $module = Module::find(\Auth::user()->module_id);
+            $module->cash    = $request['cash'];
+            $module->save();
+        }
+        elseif ($request['type']==2){
+            $module = Module::find(\Auth::user()->module_id);
+            $module->cash    = $request['cash'];
+            $module->save();
+
+             $tickets = DB::table('tickets')
+                    ->where('salesman_id','=',\Auth::user()->id)
+                    ->where('payment_date','<',new Carbon())->where('payment_date','>=',Carbon::today())
+                    ->whereNull('cashCount_register')
+                    ->get();
+            $timeNow = new Carbon();
+            
+
+            $devolutions = DB::table('devolutions')
+                    ->where('tickets.salesman_id','=',\Auth::user()->id)
+                    ->where('devolutions.created_at','<',new Carbon())->where('devolutions.created_at','>=',Carbon::today())
+                    ->whereNull('devolutions.cashCount_register')
+                    ->leftJoin('tickets', 'tickets.id', '=', 'devolutions.ticket_id')
+                    ->get();
+            foreach ($devolutions as $devolution) {
+                 $devolution->cashCount_register = $timeNow;
+                 DB::table('devolutions')
+                        ->where('id', $devolution->id)
+                        ->update(['cashCount_register' => $timeNow]);
+
+                 //$devolution->save();
+            }
+            foreach ($tickets as $ticket) {
+                $ticket->cashCount_register = $timeNow;
+                DB::table('tickets')
+                        ->where('id', $ticket->id)
+                        ->update(['cashCount_register' => $timeNow]);
+               // $ticket->save();
+            }
+        }
+
+         
+
              
          return redirect('salesman/cash_count');
     }
 
     public function about()
     {
-        return view('internal.admin.about');
+        $about = About::all()->first();
+        
+        return view('internal.admin.about',compact('about'));
+    }
+
+    public function aboutUpdate(UpdateAboutRequest $request){
+        $about = About::all()->first();
+        $about->description = $request['description'];
+        $about->mision      = $request['mision'];
+        $about->vision      = $request['vision'];
+        $about->history     = $request['history'];
+        $about->youtube_url = $request['youtube_url'];
+        $about->save();
+
+        return redirect()->back();
+
     }
 
     public function system()
     {
-        return view('internal.admin.system');
+        $system = Business::all()->first();
+
+        return view('internal.admin.system', compact('system'));
+    }
+
+    public function systemUpdate(UpdateSystemRequest $request)
+    {
+        $system = Business::all()->first();
+        $system->business_name  =   $request['business_name'];
+        $system->ruc            =   $request['ruc'];
+        $system->address        =   $request['address'];
+        $system->reserve_time   =   $request['reserve_time'];
+        if(isset($request['logo']))
+            $system->logo = $this->file_service->upload($request->file('logo'),'system');
+
+        if(isset($request['favicon']))
+            $system->favicon = $this->file_service->upload($request->file('favicon'),'system');
+
+        $system->save();
+
+        return redirect()->back();
     }
 
 
