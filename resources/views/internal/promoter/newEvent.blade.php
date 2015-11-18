@@ -373,22 +373,12 @@
                         // document.getElementById('input-colIni').value = '';
                         // document.getElementById('input-rowIni').value = '';
                         if( document.getElementById('input-capacity').disabled==true){
-                          var col_ini = parseInt($('#input-colIni').val());
-                          var fil_ini = parseInt($('#input-rowIni').val());
-                          var cant_fil = parseInt($('#input-row').val());
-                          var cant_col = parseInt($('#input-column').val());
-                          /*for(i = col_ini; i<col_ini+cant_col;i++){
-                            for(j=fil_ini; j<fil_ini + cant_fil; j++){
-                              var id = ''+j+'_'+i;
-                              
-                                  $('#'+id).removeClass("reserved");
-                                  $('#'+id).removeClass("selected");
-                                  $('#'+id).addClass('unavailable');
-                                
-                            }
-                          }*/
                           $('.reserved').removeClass('reserved').addClass('unavailable');
                           $('.selected').removeClass('selected').addClass('unavailable');
+                          document.getElementById('input-column').value = '';
+                          document.getElementById('input-row').value = '';
+                          document.getElementById('input-colIni').value = '';
+                          document.getElementById('input-rowIni').value = '';
                         }
                         new_capacity = new_capacity - capacity;
                         document.getElementById('capacity-display').value = new_capacity;
@@ -399,6 +389,20 @@
                     function deleteZone(btn){
                         var row=btn.parentNode.parentNode.rowIndex;
                         var row2 = row-1;
+                        if( document.getElementById('input-capacity').disabled==true){
+                              var col_ini = parseInt($('[name="start_column[]"]')[row2].value);
+                              var fil_ini = parseInt($('[name="start_row[]"]')[row2].value);
+                              var cant_fil = parseInt($('[name="zone_rows[]"]')[row2].value);
+                              var cant_col = parseInt($('[name="zone_columns[]"]')[row2].value);
+                              console.log("col ini "+col_ini+" fil_ini "+fil_ini+" cant_fil "+cant_fil+ "cant col "+ cant_col);
+                              for(i = col_ini; i<col_ini+cant_col;i++){
+                                for(j=fil_ini; j<fil_ini + cant_fil; j++){
+                                  var id = ''+j+'_'+i;
+                                  $('#'+id).removeClass("unavailable");
+                                  $('#'+id).addClass('available');
+                                }
+                              }
+                        }
                         var act_val = parseInt(document.getElementById('capacity-display').value);
                         act_val += parseInt(document.getElementsByName('zone_capacity[]')[row2].value);
                         document.getElementById('capacity-display').value = act_val;
