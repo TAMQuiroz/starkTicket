@@ -10,6 +10,7 @@ use App\Models\Event;
 use App\Models\Presentation;
 use App\Models\Promotions;
 use App\Models\Zone;
+use App\Models\ExchangeRate;
 use Illuminate\Http\Request;
 use App\Http\Requests\Ticket\StoreTicketRequest;
 use App\Http\Requests\Giveaway\StoreGiveawayRequest;
@@ -93,7 +94,9 @@ class TicketController extends Controller
         $presentations = $presentations->toArray();
         $zones = Zone::where('event_id', $id)->lists('name','id');
 
-        return view('internal.salesman.buy',compact('event','presentations','zones','slots_array'));
+        $exchangeRate = ExchangeRate::where('status',1)->first();
+
+        return view('internal.salesman.buy',compact('event','presentations','zones','slots_array','exchangeRate'));
     }
 
     public function getSelectedSlots($seats, $zone_id)
