@@ -84,7 +84,7 @@
                   <button type="submit" href="" class="btn btn-info" data-toggle="modal" data-target="#editModal{{$organizador->id}}">Guardar</button>
                   -->
                   <a class="btn btn-info" href=""  title="Edit"  data-toggle="modal" data-target="#editModal">Guardar</a>
-                  <a href="{{route('promoter.home')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
+                  <a href="{{url('promoter/organizers')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
                 </div>
               </div>
 
