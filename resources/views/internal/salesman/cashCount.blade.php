@@ -33,7 +33,7 @@
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-3 control-label">Nuevo Monto Inicial</label>
         <div class="col-sm-3">
-          {!!Form::number('cash', $cashFirst ,['class'=>'form-control','id'=>'cash', 'min'>=0])!!}
+          {!!Form::number('cash', $cashFirst ,['class'=>'form-control','id'=>'cash', 'min'=>0,'requiered'])!!}
           {!! Form::hidden('cash_val', null, ['cash'=>'cash_val'])!!}
           {!! Form::hidden('type', '1', ['id'=>'type'])!!}
         </div>
