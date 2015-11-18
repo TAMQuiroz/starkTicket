@@ -260,7 +260,8 @@ public function store(StoreEventRequest $request)
      */
     public function show($id)
     {
-        //
+        $event = Event::findOrFail($id);
+        return view('internal.promoter.event.show',["event"=>$event]);
     }
     /**
      * Display the specified resource.

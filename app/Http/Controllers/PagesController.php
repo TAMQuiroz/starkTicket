@@ -11,6 +11,7 @@ use App\Models\AttendanceDetail;
 use Auth;
 use App\User;
 use App\Models\About;
+use App\Models\Event;
 use Carbon\Carbon;
 
 class PagesController extends Controller
@@ -49,7 +50,9 @@ class PagesController extends Controller
 
     public function promoterHome()
     {
-        return view('internal.promoter.home');
+        $userId = Auth::user()->id;
+        $events = Event::where("cancelled","0")->paginate(10);
+        return view('internal.promoter.home',["events"=>$events]);
     }
 
     public function adminHome()

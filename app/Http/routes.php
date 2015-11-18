@@ -107,6 +107,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/transfer_payments/{payment_id}', 'PaymentController@show');
     Route::get('promoter/transfer_payments/{event_id}/create', 'PaymentController@create');
     Route::post('promoter/transfer_payments/{event_id}/create', 'PaymentController@store');
+    Route::get('promoter/event/{event_id}', 'EventController@show');
     Route::get('promoter/event/record', ['as'=>'promoter.record','uses'=>'EventController@showPromoterRecord']);
     Route::get('promoter/event/create', 'EventController@create');
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
