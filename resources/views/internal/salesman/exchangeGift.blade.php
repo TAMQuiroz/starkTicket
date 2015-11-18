@@ -8,7 +8,7 @@
     }
     h5{
         display: inline-block;
-        width: 18%;
+        
     }
     </style>
 @stop
@@ -31,7 +31,7 @@
                     </ol>
 
                     <!-- Wrapper for jose slides -->
-             <div class="carousel-inner">
+                    <div class="carousel-inner">
                         <div class="item active">
                         {!! Html::image('images/voidInterno.png', null, array()) !!}
                         </div>
@@ -53,19 +53,31 @@
             </div>
 
             <div class="col-md-4">
-                 <h2>Void 500 pts</h2><h4>Stock 50 unidades </h4>
-        <br>  <br>
-        <button type="button" class="btn btn-info">Buscar Cliente </button>
-        <br><br>
-        <h5>Nombre</h5>
-        {!! Form::text('name', null, array('class' => 'form-control', 'disabled')) !!}
-        <br><br>
-        <h5>Puntos </h5>
-        {!! Form::text('points', null, array('class' => 'form-control', 'disabled')) !!}
-        <br><br>
-
-<button type="button" class="btn btn-info">  Canjear puntos  </button>
-
+                <!--<h2>Void 500 pts</h2><h4>Stock 50 unidades </h4>-->
+                <h5>Buscar Cliente</h5>
+                <div class="input-group" style="width:290px">
+                    {!! Form::text('client', null, array('class' => 'form-control', 'placeholder'=>'Cliente','id'=>'clientS')) !!} 
+                    <span class="input-group-btn" type="button">
+                        {!!Form::button('Buscar',array('id'=>'btnBuscar','class'=>'btn btn-info'))!!}
+                    </span>
+                </div><!-- /input-group -->
+                <br>
+                <div class="col-md-8">
+                    <h4>Nombre de Cliente</h4>
+                    {!! Form::text('name', null, ['class' => 'form-control', 'disabled', 'id'=>'user_name']) !!}
+                </div><br>
+                <div class="col-md-8">
+                    <h4>Puntos Acumulados</h4>
+                    {!! Form::text('points', null, ['class' => 'form-control', 'disabled', 'id'=>'user_points']) !!}
+                </div>
+                <div class="col-md-8">
+                    <h4>Regalos</h4>
+                    {!! Form::select('gifts', ['regalo1', 'regalo2'], null, ['class' => 'form-control', 'required'])!!}
+                </div>
+                <div class="col-md-8" style="margin-top:20px">
+                    {!!Form::button('Canjear Puntos',array('id'=>'btnChange','class'=>'btn btn-info'))!!}
+                    
+                </div>    
             </div>
 
         </div>
