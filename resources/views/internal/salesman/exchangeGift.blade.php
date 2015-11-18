@@ -14,7 +14,7 @@
 @stop
 
 @section('title')
-	Canjeo de premios <small>Muñeco void</small>
+	Canjeo de premios
 @stop
 
 @section('content')
