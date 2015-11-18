@@ -309,7 +309,9 @@ public function store(StoreEventRequest $request)
      */
     public function showClientRecord()
     {
-        return view('internal.client.record');
+        $userId = Auth::user()->id;
+        $tickets = Ticket::where("owner_id",$userId)->paginate(10);
+        return view('internal.client.record',["tickets"=>$tickets]);
     }
     /**
      * Display the specified resource.
