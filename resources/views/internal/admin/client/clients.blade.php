@@ -23,10 +23,12 @@
             @foreach($clients as $client)
             <tr>
                 <td>{{$client->lastname}}, {{$client->name}}</td>
-                <td>@if($client->di_type == 1)
+                <td>@if($client->di_type == config('constants.national'))
                     DNI
-                    @else
+                    @elseif ($client->di_type == config('constants.international'))
                     Carnet de Extranjeria
+                    @else
+                    Pasaporte
                     @endif</td>
                 <td>{{$client->di}}</td>
                 <td>{{$client->phone}}</td>
@@ -42,10 +44,12 @@
                             <h4>Nombre</h4>
                             {{$client->lastname}}, {{$client->name}}
                             <h4>Documento Identidad</h4>
-                            @if($client->di_type == 1)
+                            @if($client->di_type == config('constants.national'))
                             DNI
-                            @else
+                            @elseif ($client->di_type == config('constants.international'))
                             Carnet de Extranjeria
+                            @else
+                            Pasaporte
                             @endif
                             <h4>Número de Documento</h4>
                             {{$client->di}}

@@ -96,7 +96,7 @@ Fin de comentario-->
                 <td>{{$vendedor->di}}</td>
                 <td>
                    
-                @if($vendedor->di_type == '1')
+                @if($vendedor->di_type == config('constants.national'))
                     DNI
                 @else
                    Carne de Extranjeria
@@ -124,7 +124,7 @@ Fin de comentario-->
                             {{$vendedor->name.' '.$vendedor->lastname}}
                             <!-- <h4>Sexo</h4> -->
                             <h4>Documento Identidad</h4>
-                            @if($vendedor->di_type == 1)
+                            @if($vendedor->di_type == config('constants.national'))
                             DNI
                             @else
                             Carnet de Extranjeria
