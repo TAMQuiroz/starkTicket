@@ -46,4 +46,7 @@ return [
 	//Cantidad de eventos destacados
 	'maxDestacados' => 5,
 
+	//Tipo de cambio activo
+	'active'		=> 1,
+
 ];
