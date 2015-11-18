@@ -16,6 +16,7 @@ use App\Http\Requests\Booking\StoreBookingRequest;
 use Carbon\Carbon;
 use Mail;
 use DateTime; use Date;
+use Session;
 
 class BookingController extends Controller
 {
@@ -232,6 +233,7 @@ class BookingController extends Controller
         Mail::send('internal.client.reserveMail', array('tickets' => $tickets), function($message)use($mail){
             $message->to($mail);
         });
+        Session::flash('bookingmailmessage', 'Correo de confirmación de reserva enviado con éxito.');
         return redirect()->route('event.external.show',array($tickets->first()->event_id));
     }
 

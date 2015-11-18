@@ -22,18 +22,21 @@
             <div class="col-md-4">
                 <h4 > Nombre del Evento </h4>
                 {!! Form::text('event_name', $event->name, ['class' => 'form-control', 'disabled']) !!}
+                {!!Form::hidden('event_id',$event->id,['id'=>'event_id'])!!}
             </div>
             <div class="col-md-4">
                 <h4 class="boxy"> Función del evento </h4>
                 {!! Form::text('presentation_id', date('d-m-Y',$presentation->starts_at), ['class' => 'form-control boxy', 'disabled']) !!}
+                {!!Form::hidden('presentation_id',$presentation->id,['id'=>'pres_selection'])!!}
             </div>
             <div class="col-md-4"> 
                 <h4 > Zona del Evento </h4>
                 {!! Form::text('zone_id', $zone->name, ['class' => 'form-control', 'disabled']) !!}
+                {!!Form::hidden('zone_id',$zone->id, ['id'=>'zone_id'])!!}
             </div>
             <div class="col-md-6"> 
                 <h4 > Cantidad de entradas </h4>
-                {!! Form::text('quantity', $tickets->quantity, ['class' => 'form-control', 'disabled']) !!}
+                {!! Form::text('quantity', $tickets->quantity, ['class' => 'form-control', 'disabled','id'=>'quantity']) !!}
             </div>
             <div class="col-md-6"> 
                 <h4 > Total (S/.) </h4>
