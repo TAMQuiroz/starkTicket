@@ -30,6 +30,7 @@ class CreateTicketsTable extends Migration
             $table->boolean('picked_up');
             $table->float('price');
             $table->float('total_price');
+            $table->timestamp('cashCount_register')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

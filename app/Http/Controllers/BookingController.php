@@ -230,7 +230,7 @@ class BookingController extends Controller
         $tickets = Ticket::where('reserve', $reserve_code)->get();
         $mail =  $tickets->first()->owner->email;
         Mail::send('internal.client.reserveMail', array('tickets' => $tickets), function($message)use($mail){
-            $message->to($mail);
+            $message->to($mail)->subject('Reserva');
         });
         return redirect()->route('event.external.show',array($tickets->first()->event_id));
     }

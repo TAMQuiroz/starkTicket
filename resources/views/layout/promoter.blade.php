@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title') | StarkTicket</title>
+    <link rel="shortcut icon" href="{{ asset($favicon) }}">
+    <title>@yield('title') | {{$business_name}} - StarkTicket</title>
 
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/jquery.dataTables.min.css')!!}
@@ -25,7 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="{{url('promoter/')}}" class="navbar-brand" >Telecticke </a>
+                <a href="{{url('promoter/')}}" class="navbar-brand" >{{$business_name}} </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

@@ -4,8 +4,8 @@
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<title>@yield('title') | StarkTicket</title>
+    <link rel="shortcut icon" href="{{ asset($favicon) }}">
+	<title>@yield('title') | {{$business_name}} - StarkTicket</title>
 
     {!!Html::script('js/jquery-1.11.3.min.js')!!}
 	{!!Html::style('css/bootstrap.min.css')!!}
@@ -28,7 +28,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{url('/')}}">Telecticke </a>
+                <a class="navbar-brand" href="{{url('/')}}">{{$business_name}} </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -47,7 +47,7 @@
 			<!-- Logo -->
 
 			<div id="logo">
-				<h1 id="portada"><a href="{{url('/')}}">Teleticke</a></h1>
+				<h1 id="portada"><a href="{{url('/')}}">{{$business_name}}</a></h1>
 			</div>
 			<!-- Nav -->
 			<nav id="nav">
