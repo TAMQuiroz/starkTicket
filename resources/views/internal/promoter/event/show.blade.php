@@ -10,6 +10,7 @@
 @section('content')
 <div class="row">
     <div class="col-sm-6">
+        @if($event->cancelled) <span class="label label-danger">Cancelado</span> @else <span class="label label-success">Vigente</span> @endif
         <p><b>Código:</b>  {{$event->id}} </p>
         <p><b>Organizado por:</b> {{$event->organization->organizerName}} {{$event->organization->organizerLastName}}</p>
         <p><b>Descripción:</b>  {{$event->description}} </p>
@@ -20,7 +21,10 @@
         <p><b>Fecha Publicación:</b> {{date("d/m/Y",$event->publication_date)}}</p>
         <p><b>Fecha Inicio ventas:</b> {{date("d/m/Y",$event->selling_date)}}</p>
         <p><b>Duracion función:</b> {{$event->time_length}} hora(s) </p>
-        {!! Html::image($event->image, null, array('class'=>'img-thumbnail')) !!}
+        <hr>
+
+        <p><b>Tickets vendidos: </b> {{$event->numberTickets()}}</p>
+        <p><b>Total ventas: </b> s/ {{$event->amountAccumulated()}}</p>
     </div>
     <div class="col-sm-6">
         <legend>Entradas</legend>
@@ -39,6 +43,8 @@
             </li>
         @endforeach
         </ul>
+        <hr>
+        {!! Html::image($event->image, null, array('class'=>'img-thumbnail')) !!}
     </div>
 </div>
 @stop
