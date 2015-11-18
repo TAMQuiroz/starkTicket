@@ -44,6 +44,6 @@ return [
 	'out'	=> 2,
 
 	//Cantidad de eventos destacados
-	'maxDestacados' => 2,
+	'maxDestacados' => 5,
 
 ];

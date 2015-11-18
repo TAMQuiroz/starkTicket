@@ -16,6 +16,7 @@ use App\Http\Requests\Booking\StoreBookingRequest;
 use Carbon\Carbon;
 use Mail;
 use DateTime; use Date;
+use Session;
 
 class BookingController extends Controller
 {
@@ -232,8 +233,8 @@ class BookingController extends Controller
         Mail::send('internal.client.reserveMail', array('tickets' => $tickets), function($message)use($mail){
             $message->to($mail);
         });
-        $events = Event::all();
-        return view('external.events',compact('events'));
+        Session::flash('bookingmailmessage', 'Correo de confirmación de reserva enviado con éxito.');
+        return redirect()->route('event.external.show',array($tickets->first()->event_id));
     }
 
     public function getReservesByDni(Request $request){
@@ -248,7 +249,8 @@ class BookingController extends Controller
             $tickets= Ticket::where('reserve',$value)->get();
             $arreglo[$key] = ['codigo' => $value, 
             'nombre' => $tickets->first()->event->name,
-            'cantidad' => $tickets->count(),
+            //'cantidad' => $tickets->count(),
+            'cantidad' => $tickets->first()->quantity,
             'zona'    => $tickets->first()->zone->name,
             'funcion' => date('d-m-Y',$tickets->first()->presentation->starts_at)];
         }
