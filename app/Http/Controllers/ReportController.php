@@ -309,7 +309,7 @@ class ReportController extends Controller
             
                 $sheet->mergeCells('A3:G3');
                 if ($flagBetweenDates) $sheet->setCellValue('A3','Fecha desde '.$input['firstDate'].'  hasta '.$input['lastDate']);
-                else $sheet->setCellValue('A3',"No hay rango de fechas");
+                else $sheet->setCellValue('A3',"");
                 $sheet->cells('A3:G3',function($cells){
 
                     $cells->setAlignment('center');
