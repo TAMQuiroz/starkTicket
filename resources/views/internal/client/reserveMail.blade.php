@@ -30,4 +30,6 @@
 	        <td>S/. {{$tickets->first()->total_price}}</td>
 	    </tr>
 	</tbody>
+
 </table>
+
