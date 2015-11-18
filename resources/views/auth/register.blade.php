@@ -88,6 +88,7 @@
                  <br>
                   <div class="row preferences-div">
 
+                    <!--
                     <label  class="control-label">Rock</label>
                     <div class="col-sm-1 preferences-chbox">
                      {!! Form::checkbox('rock', 7, null, ['class' => 'form-control']) !!}
@@ -102,13 +103,29 @@
                    <div class="col-sm-1 preferences-chbox">
                      {!! Form::checkbox('ballet', 13, null, ['class' => 'form-control']) !!}
                    </div>
+                    -->
 
-
+                    <label  class="control-label">Rock</label>
+                    <div class="preferences-chbox">
+                      {!! Form::checkbox('rock', 7, null, ['class' => 'checkbox']) !!}
+                    </div>
+                      
+                    
+                    <label  class="control-label">Electrónica</label>
+                    <div class="preferences-chbox">
+                      {!! Form::checkbox('electronica', 8, null, ['class' => 'checkbox']) !!}                      
+                    </div>
+                      
+                    <label  class="control-label">Ballet</label>
+                    <div class="preferences-chbox">
+                      {!! Form::checkbox('ballet', 13, null, ['class' => 'checkbox']) !!}
+                    </div>
+                      
                  </div>
 
                  <div class="row preferences-div">
 
-
+                    <!--
                     <label  class="control-label">Deporte</label>
                     <div class="col-sm-1 preferences-chbox">
                      {!! Form::checkbox('deporte', 4  , null, ['class' => 'form-control']) !!}
@@ -123,8 +140,22 @@
                    <div class="col-sm-1 preferences-chbox">
                      {!! Form::checkbox('reggae', 9, null, ['class' => 'form-control']) !!}
                    </div>
+                    -->
 
+                    <label  class="control-label">Deporte</label>
+                    <div class="preferences-chbox">
+                     {!! Form::checkbox('deporte', 4  , null, ['class' => 'checkbox']) !!}
+                    </div>
 
+                    <label  class="control-label">Teatro</label>
+                    <div class="preferences-chbox">
+                       {!! Form::checkbox('teatro', 2, null, ['class' => 'checkbox']) !!}
+                    </div>
+
+                    <label  class="control-label">Reggae</label>
+                    <div class="col-sm-1 preferences-chbox">
+                       {!! Form::checkbox('reggae', 9, null, ['class' => 'checkbox']) !!}
+                    </div>
                  </div>
 
 
@@ -142,6 +173,7 @@
             </form>
         </div>
     </div>
+    
     <style type="text/css">
       .preferences-div label{
           width: 100px;
@@ -150,7 +182,7 @@
           margin-left: 30px;
       }
       .preferences-chbox{
-          margin-right: 75px; 
+          margin-right: 40px; 
       }
 
     </style>
