@@ -22,7 +22,7 @@
             <tr>
                 <td>{{$category->name}}</td>
                 <td>{{$category->description}}</td>
-                <td>3</td>
+                <td>{{$category->events->count()}}</td>
                 <td class="button-center"><a class="btn btn-info" href={{route('categories.edit', $category->id)}} title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
                 </td> 
                 <td class="button-center"><a id="delete {{$category->id}}"class="btn btn-info" data-toggle="modal" data-target="#deleteModal{{$category->id}}" href=""><i class="glyphicon glyphicon-remove"></i></a></td>
