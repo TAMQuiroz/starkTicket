@@ -86,40 +86,41 @@
               
                  <H3>Seleccione su preferencia de eventos</H2>
                  <br>
-                  <div class="row">
+                  <div class="row preferences-div">
 
-                    <label  class="col-sm-2 control-label">Rock</label>
-                    <div class="col-sm-1">
+                    <label  class="control-label">Rock</label>
+                    <div class="col-sm-1 preferences-chbox">
                      {!! Form::checkbox('rock', 7, null, ['class' => 'form-control']) !!}
                     </div>
 
-                   <label  class="col-sm-2 control-label">Electrónica</label>
-                   <div class="col-sm-1">
+                   <label  class="control-label">Electrónica</label>
+                   <div class="col-sm-1 preferences-chbox">
                      {!! Form::checkbox('electronica', 8, null, ['class' => 'form-control']) !!}
                    </div>
 
-                   <label  class="col-sm-2 control-label">Ballet</label>
-                   <div class="col-sm-1">
+                   <label  class="control-label">Ballet</label>
+                   <div class="col-sm-1 preferences-chbox">
                      {!! Form::checkbox('ballet', 13, null, ['class' => 'form-control']) !!}
                    </div>
 
 
                  </div>
 
-                     <div class="row">
+                 <div class="row preferences-div">
 
-                    <label  class="col-sm-2 control-label">Deporte</label>
-                    <div class="col-sm-1">
+
+                    <label  class="control-label">Deporte</label>
+                    <div class="col-sm-1 preferences-chbox">
                      {!! Form::checkbox('deporte', 4  , null, ['class' => 'form-control']) !!}
                     </div>
 
-                   <label  class="col-sm-2 control-label">Teatro</label>
-                   <div class="col-sm-1">
+                   <label  class="control-label">Teatro</label>
+                   <div class="col-sm-1 preferences-chbox">
                      {!! Form::checkbox('teatro', 2, null, ['class' => 'form-control']) !!}
                    </div>
 
-                   <label  class="col-sm-2 control-label">Reggae</label>
-                   <div class="col-sm-1">
+                   <label  class="control-label">Reggae</label>
+                   <div class="col-sm-1 preferences-chbox">
                      {!! Form::checkbox('reggae', 9, null, ['class' => 'form-control']) !!}
                    </div>
 
@@ -128,17 +129,31 @@
 
 
                 <br>
+                <br>
               <div class="form-group col-md-12">
                 <div class="col-sm-12">
                   <button type="submit" class="btn btn-info">Aceptar</button>
                   <button type="reset" class="btn btn-info">Cancelar</button>
                 </div>
               </div>
-
+              <br>
+              <br>
               <br>
             </form>
         </div>
     </div>
+    <style type="text/css">
+      .preferences-div label{
+          width: 100px;
+      }
+      .preferences-div label:first-child{
+          margin-left: 30px;
+      }
+      .preferences-chbox{
+          margin-right: 75px; 
+      }
+
+    </style>
 
 {!!Form::close()!!}
 
