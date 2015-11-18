@@ -394,7 +394,6 @@
                               var fil_ini = parseInt($('[name="start_row[]"]')[row2].value);
                               var cant_fil = parseInt($('[name="zone_rows[]"]')[row2].value);
                               var cant_col = parseInt($('[name="zone_columns[]"]')[row2].value);
-                              console.log("col ini "+col_ini+" fil_ini "+fil_ini+" cant_fil "+cant_fil+ "cant col "+ cant_col);
                               for(i = col_ini; i<col_ini+cant_col;i++){
                                 for(j=fil_ini; j<fil_ini + cant_fil; j++){
                                   var id = ''+j+'_'+i;
@@ -696,9 +695,9 @@
           document.getElementById("input-colIni").max=columns;
           document.getElementById("input-rowIni").max=rows;
 
-          console.log("columnas "+columns);
+          //console.log("columnas "+columns);
 
-          console.log("filas "+rows);
+          //console.log("filas "+rows);
 
           var arreglo = new Array();
 
@@ -710,10 +709,10 @@
             //console.log(texto);
             arreglo.push(texto);
           }
-          console.log(arreglo);
+          //console.log(arreglo);
           //console.log(arreglo);
           var seatid="seat-map-"+index;
-          console.log(seatid);
+          //console.log(seatid);
 
           var tam= $('[id=invisible_id]').size();
           for(i=1;i<=tam;i++){
