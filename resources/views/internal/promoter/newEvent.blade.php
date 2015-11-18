@@ -733,6 +733,19 @@
                           else $('#input-rowIni').val(''+fil_ini);
                           $('#input-column').val(''+(Math.abs(col_ini - col_ini2)+1));
                           $('#input-row').val(''+(Math.abs(fil_ini - fil_ini2)+1));
+                          var col_ini = parseInt($('#input-colIni').val());
+                          var fil_ini = parseInt($('#input-rowIni').val());
+                          var cant_fil = parseInt($('#input-row').val());
+                          var cant_col = parseInt($('#input-column').val());
+                          for(i = col_ini; i<col_ini+cant_col;i++){
+                            for(j=fil_ini; j<fil_ini + cant_fil; j++){
+                              var id = ''+j+'_'+i;
+                              if(id!= id_selec2 && id!= id_selec1){
+                                  $('#'+id).removeClass("available");
+                                  $('#'+id).addClass('reserved');
+                                }
+                            }
+                          }
                         }
                         this.status('selected');
                         return 'selected';
@@ -747,6 +760,7 @@
                       $('#input-rowIni').val('');
                       $('#input-column').val('');
                       $('#input-row').val('');
+                      $('.seatCharts-cell.reserved').removeClass("reserved").addClass("available");
                       var cant = $('#seat_counter').val();
                       var num_cant = parseInt(cant);
                       num_cant = num_cant -1;
