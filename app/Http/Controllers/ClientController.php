@@ -116,9 +116,9 @@ class ClientController extends Controller
         }
 
         $preference4 = new Preference;
-        if (!empty($input['deporte'])){
+        if (!empty($input['comedia'])){
             $preference4->idUser = $user->id;  
-            $preference4->idCategories = $input['deporte'];
+            $preference4->idCategories = $input['comedia'];
             $preference4->save();
 
         }
@@ -127,9 +127,9 @@ class ClientController extends Controller
 
 
         $preference5 = new Preference;
-        if (!empty($input['teatro'])){
+        if (!empty($input['drama'])){
             $preference5->idUser = $user->id;  
-            $preference5->idCategories = $input['teatro'];
+            $preference5->idCategories = $input['drama'];
             $preference5->save();
 
         }
@@ -141,6 +141,87 @@ class ClientController extends Controller
             $preference6->save();
 
         }    
+
+        $preference7 = new Preference;
+        if (!empty($input['pena'])){
+            $preference7->idUser = $user->id;  
+            $preference7->idCategories = $input['pena'];
+            $preference7->save();
+
+        }    
+
+        $preference8 = new Preference;
+        if (!empty($input['opera'])){
+            $preference8->idUser = $user->id;  
+            $preference8->idCategories = $input['opera'];
+            $preference8->save();
+
+        }    
+
+        $preference9 = new Preference;
+        if (!empty($input['adultos'])){
+            $preference9->idUser = $user->id;  
+            $preference9->idCategories = $input['adultos'];
+            $preference9->save();
+
+        }    
+
+        $preference10 = new Preference;
+        if (!empty($input['sociales'])){
+            $preference10->idUser = $user->id;  
+            $preference10->idCategories = $input['sociales'];
+            $preference10->save();
+
+        }    
+
+        $preference11 = new Preference;
+        if (!empty($input['fiestas'])){
+            $preference11->idUser = $user->id;  
+            $preference11->idCategories = $input['fiestas'];
+            $preference11->save();
+
+        }    
+
+        $preference12 = new Preference;
+        if (!empty($input['tours'])){
+            $preference12->idUser = $user->id;  
+            $preference12->idCategories = $input['tours'];
+            $preference12->save();
+
+        }    
+
+        $preference13 = new Preference;
+        if (!empty($input['futbol'])){
+            $preference13->idUser = $user->id;  
+            $preference13->idCategories = $input['futbol'];
+            $preference13->save();
+
+        }    
+
+        $preference14 = new Preference;
+        if (!empty($input['automovilismo'])){
+            $preference14->idUser = $user->id;  
+            $preference14->idCategories = $input['automovilismo'];
+            $preference14->save();
+
+        }    
+
+        $preference15 = new Preference;
+        if (!empty($input['maraton'])){
+            $preference15->idUser = $user->id;  
+            $preference15->idCategories = $input['maraton'];
+            $preference15->save();
+
+        }    
+
+        $preference16 = new Preference;
+        if (!empty($input['musical'])){
+            $preference16->idUser = $user->id;  
+            $preference16->idCategories = $input['musical'];
+            $preference16->save();
+
+        }    
+
 
 
         //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM

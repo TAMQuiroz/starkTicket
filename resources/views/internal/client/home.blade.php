@@ -14,6 +14,14 @@
         .row h3, .row p{
         	text-align: center;
         }
+        section .caption{
+        	float:left;
+        }
+
+        .caption h3, .caption p{
+        	text-align: left;
+        }
+
 	</style>
 @stop
 
@@ -29,7 +37,9 @@
 
 	@foreach($clientPreferences as $clientPreference)
   	<div class="col-sm-6 col-md-4">
-	    <div class="thumbnail">
+	    <div >
+	       <section>
+
 	      {!! Html::image($clientPreference->image,  null, array('class'=>'image cat_img')) !!}
 	      <div class="caption">
 	        <h3>{{$clientPreference->name}}</h3>
@@ -42,8 +52,8 @@
 
 	        </p>
 	        <p><a href="{{url('event/'.$clientPreference->id.'')}}" class="btn btn-primary" role="button">Detalle</a></p>'
-
-	      </div>
+		   </div>
+	      </section>
 	    </div>
   	</div>
   	@endforeach
