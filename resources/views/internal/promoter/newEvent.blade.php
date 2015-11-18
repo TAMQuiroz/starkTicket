@@ -5,6 +5,11 @@
   <!-- {!!Html::style('css/estilos.css')!!} -->
   {!!Html::style('css/jquery.seat-charts.css')!!}
   {!!Html::style('css/seats.css')!!}
+  <style>
+  div.seatCharts-seat.selected {
+    background-color: green;
+  }
+  </style>
 @stop
 
 @section('title')
