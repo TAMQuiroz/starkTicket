@@ -94,7 +94,7 @@ class TicketController extends Controller
         $presentations = $presentations->toArray();
         $zones = Zone::where('event_id', $id)->lists('name','id');
 
-        $exchangeRate = ExchangeRate::where('status',1)->first();
+        $exchangeRate = ExchangeRate::where('status',config('constants.active'))->first();
 
         return view('internal.salesman.buy',compact('event','presentations','zones','slots_array','exchangeRate'));
     }
