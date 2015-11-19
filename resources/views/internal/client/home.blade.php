@@ -14,6 +14,14 @@
         .row h3, .row p{
         	text-align: center;
         }
+        section .caption{
+        	float:left;
+        }
+
+        .caption h3, .caption p{
+        	text-align: left;
+        }
+
 	</style>
 @stop
 
@@ -26,39 +34,46 @@
 <div><h4>Eventos Recomendados</h4></div>
 
 <div class="row">
+
+	@foreach($clientPreferences as $clientPreference)
   	<div class="col-sm-6 col-md-4">
-	    <div class="thumbnail">
-	      {!! Html::image('images/pics13.jpg', null, array('class'=>'image')) !!}
+	    <div >
+	       <section>
+
+	      {!! Html::image($clientPreference->image,  null, array('class'=>'image cat_img')) !!}
 	      <div class="caption">
-	        <h3>Evento 1</h3>
-	        <p>Descripcion de evento 1</p>
-	        <p><a href="{{url('event/1')}}" class="btn btn-primary" role="button">Detalle</a></p>
-	      </div>
+	        <h3>{{$clientPreference->name}}</h3>
+
+	        <p>
+	        	<!--<b>{{$clientPreference->description}}</b>-->
+	        	<b>Fecha de venta: </b> {{date('Y-m-d',$clientPreference->selling_date)}}<br>
+                <b>Lugar: </b> {{$clientPreference->place->name}} <br>
+                <b>Direccion:</b> {{$clientPreference->place->address}} <br>
+
+	        </p>
+	        <p><a href="{{url('event/'.$clientPreference->id.'')}}" class="btn btn-primary" role="button">Detalle</a></p>'
+		   </div>
+	      </section>
 	    </div>
   	</div>
-  	<div class="col-sm-6 col-md-4">
-	    <div class="thumbnail">
-	      {!! Html::image('images/pics13.jpg', null, array('class'=>'image')) !!}
-	      <div class="caption">
-	        <h3>Evento 1</h3>
-	        <p>Descripcion de evento 1</p>
-	        <p><a href="event/1" class="btn btn-primary" role="button">Detalle</a></p>
-	      </div>
-	    </div>
-  	</div>
-  	<div class="col-sm-6 col-md-4">
-	    <div class="thumbnail">
-	      {!! Html::image('images/pics13.jpg', null, array('class'=>'image')) !!}
-	      <div class="caption">
-	        <h3>Evento 1</h3>
-	        <p>Descripcion de evento 1</p>
-	        <p><a href="event/1" class="btn btn-primary" role="button">Detalle</a></p>
-	      </div>
-	    </div>
-  	</div>
+  	@endforeach
+
+
 </div>
 @stop
+
 
 @section('javascript')
 
 @stop
+
+
+
+
+
+
+
+
+
+
+

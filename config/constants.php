@@ -12,7 +12,8 @@ return [
  
 	'national'		    	=>1,
 	'international'   		=>2,
-
+	'passport'		   		=>3,
+	
 	//Tipo de usuario
 
 	'client'          		=> 1,

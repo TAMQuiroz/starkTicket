@@ -267,10 +267,11 @@ class ModuleController extends Controller
                     ->get();
 
         if ($tickets != null ){
-            if ($devolutions != null){
-               return back()->withErrors(['Antes de desasociar, primero debes hacer el arqueo de caja']); 
-            }
+            return back()->withErrors(['Antes de desasociar, primero debes hacer el arqueo de caja']); 
             
+        }
+        if ($devolutions != null){
+            return back()->withErrors(['Antes de desasociar, primero debes hacer el arqueo de caja']); 
         }
 
 

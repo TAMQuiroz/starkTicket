@@ -25,7 +25,7 @@
                 <td>{{$promoter->lastname}} {{$promoter->name}}</td>
                 <td>
                    
-                @if($promoter->di_type == '1')
+                @if($promoter->di_type == config('constants.national'))
                     DNI
                 @else
                    Carne de Extranjeria
@@ -49,7 +49,7 @@
                             {{$promoter->name.' '.$promoter->lastname}}
                             <!-- <h4>Sexo</h4> -->
                             <h4>Documento Identidad</h4>
-                            @if($promoter->di_type == 1)
+                            @if($promoter->di_type == config('constants.national'))
                             DNI
                             @else
                             Carnet de Extranjeria
