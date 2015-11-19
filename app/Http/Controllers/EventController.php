@@ -86,9 +86,14 @@ class EventController extends Controller
         $event->time_length  = $data['time_length'];
         $event->publication_date = strtotime($data['publication_date']);
         $event->selling_date = strtotime($data['selling_date']);
+        $event->promoter_id  = Auth::user()->id; 
         $event->image        = $this->file_service->upload($data['image'],'event');
         if($data['distribution_image'])
             $event->distribution_image = $this->file_service->upload($data['distribution_image'],'event');
+        if($data['percentage_comission']!='')
+            $event->percentage_comission = $data['percentage_comission'];
+        if($data['amount_comission']!='')
+            $event->amount_comission = $data['amount_comission'];
         $event->save();
         return $event;
     }
@@ -229,11 +234,13 @@ public function store(StoreEventRequest $request)
         'category_id'    => $request->input('category_id'),
         'organizer_id'   => $request->input('organizer_id'),
         'local_id'       => $request->input('local_id'),
-        'publication_date' => $request->input('publication_date'),
+        'time_length'    => $request->input('time_length'),
         'selling_date'   => $request->input('selling_date'),
         'image'          => $request->file('image'),
-        'distribution_image' => $request->file('distribution_image'),
-        'time_length'    => $request->input('time_length')
+        'distribution_image'   => $request->file('distribution_image'),
+        'publication_date'     => $request->input('publication_date'),
+        'percentage_comission' => $request->input('percentage_comission',''),
+        'amount_comission'     => $request->input('amount_comission',''),
         ];
         $event = $this->storeEvent($data);
         $zone_data = [
@@ -524,7 +531,9 @@ public function update(UpdateEventRequest $request, $id)
                 'selling_date'  => $request->input('selling_date'),
                 'time_length'   => $request->input('time_length'),
                 'image'         => $request->file('image'),
-                'dstribution_image' => $request->file('distribution_image'),
+                'distribution_image' => $request->file('distribution_image'),
+                'percentage_comission' => $request->input('percentage_comission',''),
+                'amount_comission'     => $request->input('amount_comission',''),
             ];
         if($now->getTimestamp() < strtotime($request->input('selling_date'))){
             //antes del sellingdate en general
