@@ -26,6 +26,7 @@ use App\User;
 use Auth;
 use Session;
 use DB;
+use File;
 
 use DateTime;
 class EventController extends Controller
@@ -669,6 +670,9 @@ public function update(UpdateEventRequest $request, $id)
         }
         $this->deletePresentations($id);
         $this->deleteZones($id);
+        File::delete($event->image);
+        if($event->distribution_image != null)
+            File::delete($event->distribution_image);
         $event->delete();
         return redirect()->route('promoter.record');
     }
