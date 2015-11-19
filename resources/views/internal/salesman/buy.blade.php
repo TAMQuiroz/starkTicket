@@ -127,44 +127,44 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Monto a Pagar</label>
-                                {!!Form::number('',null,['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
+                                <div class="form-group checkbox pay">
+                                    <b>Monto a Pagar</b>
+                                    {!!Form::number('',null,['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
+                                </div>
                                 <br>
                                 <div class="form-group checkbox pay">
-                                    <label>
-                                        {!!Form::radio('payMode', config('constants.credit'), null,['id'=>'creditCardPay','onChange'=>'getPromo()'])!!}Pago con tarjeta
-                                    </label>
+                                    {!!Form::radio('payMode', config('constants.credit'), null,['id'=>'creditCardPay','onChange'=>'getPromo()'])!!}
+                                    <b>Pago con tarjeta</b>
                                     <hr>
-                                    <label for="exampleInputEmail2">Número de Tarjeta</label>
+                                    <b>Número de Tarjeta</b>
                                     {!!Form::number('',null,['id'=>'creditCardNumber','class'=>'form-control','placeholder'=>'1234 5678 9012 3456','disabled','min'=>1, 'max'=>9999999999999999,'required'])!!}
-                                    <label for="exampleInputEmail2">Fecha de expiración</label>
+                                    <b>Fecha de expiración</b>
                                     <input type="date" id="expirationDate" class="form-control" disabled="true" min="{{date("Y-m-j")}}" required>
-                                    <label for="exampleInputEmail2">Código de Seguridad</label>
+                                    <b>Código de Seguridad</b>
                                     {!!Form::number('',null,['id'=>'securityCode','class'=>'form-control','placeholder'=>'123','disabled','min'=>0,'max'=>999,'required'])!!}
                                 </div>
                                 <br>  
                                 <div class="form-group checkbox pay">
-                                    <label>
-                                        {!!Form::radio('payMode', config('constants.cash'), null,['id'=>'cashPay','onChange'=>'getPromo()'])!!}Pago con efectivo
-                                    </label>
-                                    <h5>Tipo de Cambio: S/.2.90</h5>
+                                    {!!Form::radio('payMode', config('constants.cash'), null,['id'=>'cashPay','onChange'=>'getPromo()'])!!}
+                                    <b>Pago con efectivo</b>
+
+                                    <h5 class="text-center">Tipo de Cambio: Compra - S/. {{$exchangeRate->buyingRate}} | Venta - S/. {{$exchangeRate->sellingRate}}</h5>
                                     <hr>
-                                    <label for="exampleInputEmail2">Monto Ingresado</label>
+                                    <b>Monto Ingresado</b>
                                     {!!Form::number('',null,['id'=>'amountIn','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
-                                    <label for="exampleInputEmail2">Vuelto</label>
+                                    <b>Vuelto</b>
                                     {!!Form::text('',null,['id'=>'change','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}
                                 </div>
                                 <br>  
                                 <div class="form-group checkbox pay">
-                                    <label>
-                                        {!!Form::radio('payMode', config('constants.mix'), null,['id'=>'mixPay', 'onChange'=>'getPromo()'])!!}Pago mixto
-                                    </label>
+                                    {!!Form::radio('payMode', config('constants.mix'), null,['id'=>'mixPay', 'onChange'=>'getPromo()'])!!}
+                                    <b>Pago mixto</b>
                                     <hr>
-                                    <label for="exampleInputEmail2">Cantidad a pagar en efectivo</label>
+                                    <b>Cantidad a pagar en efectivo</b>
                                     {!!Form::number('paymentMix',null,['id'=>'paymentMix','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
-                                    <label for="exampleInputEmail2">Monto Ingresado</label>
+                                    <b>Monto Ingresado</b>
                                     {!!Form::number('paymentMix',null,['id'=>'amountMix','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
-                                    <label for="exampleInputEmail2">Vuelto</label>
+                                    <b>Vuelto</b>
                                     {!!Form::text('',null,['id'=>'changeMix','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}
                                     <br>
                                     {!!Form::submit('Pagar Entrada',array('id'=>'pay','class'=>'btn btn-info', 'disabled'))!!}

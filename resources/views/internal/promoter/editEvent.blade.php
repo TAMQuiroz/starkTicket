@@ -70,7 +70,7 @@
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                  {!! Form::text('name',$event->name, array('class' => 'form-control','required')) !!}
+                  {!! Form::text('name',$event->name, array('class' => 'form-control','required','maxlength' => 30)) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -138,7 +138,7 @@
                   <div class="form-group">
                       <label  class="col-md-4 control-label">Nombre</label>
                       <div class="col-md-8">
-                          {!! Form::text('zoneName1','', array('class' => 'form-control','id' => 'input-zone','maxlength' => 50)) !!}
+                          {!! Form::text('zoneName1','', array('class' => 'form-control','id' => 'input-zone','maxlength' => 20)) !!}
                       </div>
                   </div>
                   <div class="form-group">
@@ -206,8 +206,8 @@
 
                         var capacity = document.getElementById('input-capacity').value;
 
-
-
+                        if(price<0) return;
+                        if(capacity<0) return;
                         if( new_capacity-capacity<0) return;
                         if(zone.length==0 || price.length==0) return;
                         if( document.getElementById('input-capacity').disabled==true){
