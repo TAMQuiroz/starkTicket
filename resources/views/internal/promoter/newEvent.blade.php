@@ -150,6 +150,12 @@
                   {!! Form::file('image', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Imagen distirbución evento</label>
+                <div class="col-sm-10">
+                  {!! Form::file('distribution_image', array('class' => 'form-control','required')) !!}
+                </div>
+              </div>              
               <br>
 
               <!-- ZONA -->

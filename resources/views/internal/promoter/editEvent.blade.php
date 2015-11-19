@@ -774,17 +774,23 @@
           var rowsSeat=document.getElementsByName("zone_rows[]");
           var startRowSeat=document.getElementsByName("start_row[]");
           var startColumnSeat=document.getElementsByName("start_column[]");
-          for(var i=0;i<numZones;i++){
-                var col_ini = startColumnSeat[i].value;
-                var fil_ini = startRowSeat[i].value;
-                var cant_fil = rowsSeat[i].value;
-                var cant_col = columnsSeat[i].value;
+          for(var n=0;n<numZones;n++){
+                var col_ini = parseInt(startColumnSeat[n].value);
+                var fil_ini = parseInt(startRowSeat[n].value);
+                var cant_fil = parseInt(rowsSeat[n].value);
+                var cant_col = parseInt(columnsSeat[n].value);
+
+                console.log("col Ini: " + col_ini);
+                console.log("fil ini : " + fil_ini);
+                console.log("cant fil: " + cant_fil);
+                console.log("cant col: " + cant_col);
                 for(i = col_ini; i<col_ini+cant_col;i++){
                   for(j=fil_ini; j<fil_ini + cant_fil; j++){
                     var id = ''+j+'_'+i;
                     $('#'+id).addClass('unavailable');
                   }
                 }
+                console.log("iteracion "+n);
           }
 
 
