@@ -7,7 +7,7 @@
   {!!Html::style('css/seats.css')!!}
   <style>
   div.seatCharts-seat.selected {
-    background-color: green;
+    background-color: red;
   }
   </style>
 @stop
@@ -150,6 +150,12 @@
                   {!! Form::file('image', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Imagen distirbución evento</label>
+                <div class="col-sm-10">
+                  {!! Form::file('distribution_image', array('class' => 'form-control','required')) !!}
+                </div>
+              </div>              
               <br>
 
               <!-- ZONA -->
@@ -170,25 +176,25 @@
                   <div class="form-group" id="label_col">
                       <label  class="col-md-4 control-label" >Columnas</label>
                       <div class="col-md-8">
-                          {!! Form::number('zone_columns1','', array('class' => 'form-control','id' => 'input-column','min' => '1')) !!}
+                          {!! Form::number('zone_columns1','', array('class' => 'form-control','id' => 'input-column','min' => '1','disabled')) !!}
                       </div>
                   </div>
                   <div class="form-group" id="label_fil">
                       <label  class="col-md-4 control-label" >Filas</label>
                       <div class="col-md-8">
-                          {!! Form::number('zone_rows1','', array('class' => 'form-control','id' => 'input-row','min' => '1')) !!}
+                          {!! Form::number('zone_rows1','', array('class' => 'form-control','id' => 'input-row','min' => '1','disabled')) !!}
                       </div>
                   </div>
                   <div class="form-group" id="label_fini">
                       <label  class="col-md-4 control-label" >Columna inicial</label>
                       <div class="col-md-8">
-                          {!! Form::number('start_column1',1, array('class' => 'form-control','id' => 'input-colIni','min' => '1')) !!}
+                          {!! Form::number('start_column1',1, array('class' => 'form-control','id' => 'input-colIni','min' => '1','disabled')) !!}
                       </div>
                   </div>     
                   <div class="form-group" id="label_cini">
                       <label  class="col-md-4 control-label" >Fila inicial</label>
                       <div class="col-md-8">
-                          {!! Form::number('start_row1',1, array('class' => 'form-control','id' => 'input-rowIni','min' => '1')) !!}
+                          {!! Form::number('start_row1',1, array('class' => 'form-control','id' => 'input-rowIni','min' => '1','disabled')) !!}
                       </div>
                   </div>                                                     
                   <div class="form-group">
@@ -625,6 +631,78 @@
             getLabel : function (character, row, column) {
               return column;
             }
+          },
+          click : function(){
+                  if(this.status()=='available' && this.status()!='selected'){
+                      var num_cant = $('.seatCharts-cell.selected').length;
+                      var unavailable = false;
+                      if(num_cant<2){
+                        if(num_cant == 1){
+                          var id_selec1 = $('.seatCharts-cell.selected').first().attr('id');
+                          var id_selec2 = this.node().attr('id');
+                          var res = id_selec1.split("_");
+                          var fil_ini = parseInt(res[0]);
+                          var col_ini = parseInt(res[1]);
+                          var res = id_selec2.split("_");
+                          var fil_ini2 = parseInt(res[0]);
+                          var col_ini2 = parseInt(res[1]);
+                          if(col_ini > col_ini2)
+                            $('#input-colIni').val(''+col_ini2);
+                          else $('#input-colIni').val(''+col_ini);
+                          if(fil_ini > fil_ini2)
+                            $('#input-rowIni').val(''+fil_ini2);
+                          else $('#input-rowIni').val(''+fil_ini);
+                          $('#input-column').val(''+(Math.abs(col_ini - col_ini2)+1));
+                          $('#input-row').val(''+(Math.abs(fil_ini - fil_ini2)+1));
+                          var col_ini = parseInt($('#input-colIni').val());
+                          var fil_ini = parseInt($('#input-rowIni').val());
+                          var cant_fil = parseInt($('#input-row').val());
+                          var cant_col = parseInt($('#input-column').val());
+                          unavailable = false;
+                          for(i = col_ini; i<col_ini+cant_col;i++){
+                            for(j=fil_ini; j<fil_ini + cant_fil; j++){
+                              var id = ''+j+'_'+i;
+                              if(id!= id_selec2 && id!= id_selec1){
+                                  if($('#'+id).hasClass('unavailable')){
+                                    $('#input-colIni').val('');
+                                    $('#input-rowIni').val('');
+                                    $('#input-column').val('');
+                                    $('#input-row').val('');
+                                    $('.reserved').removeClass('reserved').addClass('available');
+                                    $('.selected').removeClass('selected').addClass('available');
+                                    alert('No se puede seleccionar estos asientos porque ya están ocupados por otra zona');
+                                    unavailable = true;
+                                    break;
+                                  }
+                                  $('#'+id).removeClass("available");
+                                  $('#'+id).addClass('reserved');
+                              }
+                            }
+                            if(unavailable) break;
+                          }
+                        }
+                        if(!unavailable){
+                          this.status('selected');
+                          return 'selected';
+                        } else {
+                          this.status('available');
+                          return 'available';
+                        }
+                      } else{
+                        alert('Ya hay dos asientos seleccionados');
+                        this.status('available');
+                        return 'available';
+                      }
+                    }
+                    if(this.status()=='selected'){
+                      $('#input-colIni').val('');
+                      $('#input-rowIni').val('');
+                      $('#input-column').val('');
+                      $('#input-row').val('');
+                      $('.seatCharts-cell.reserved').removeClass("reserved").addClass("available");
+                      this.status('available');
+                      return 'available';
+                    }
           },
           legend : { //Definition legend
             node : $('#legend'),
