@@ -87,7 +87,8 @@ class EventController extends Controller
         $event->publication_date = strtotime($data['publication_date']);
         $event->selling_date = strtotime($data['selling_date']);
         $event->image        = $this->file_service->upload($data['image'],'event');
-        $event->distribution_image = $this->file_service->upload($data['distribution_image'],'event');
+        if($data['distribution_image'])
+            $event->distribution_image = $this->file_service->upload($data['distribution_image'],'event');
         $event->save();
         return $event;
     }
