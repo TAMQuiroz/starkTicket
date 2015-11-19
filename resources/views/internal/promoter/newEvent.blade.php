@@ -900,7 +900,6 @@
                   return 'focused';
               
               } else  {
-                console.log('focus regresa el estilo');
                   return this.style();
               }
           },

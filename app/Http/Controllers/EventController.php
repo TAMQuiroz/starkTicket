@@ -434,12 +434,15 @@ public function store(StoreEventRequest $request)
         if($local->rows >=1 && !$data['zone_columns'])
             return ['error' => 'se debe especificar filas y columnas para este local numerado'];
         if($data['zone_columns']){ // esta entrando a pesar de no ser numerado el local :S :S
+           $seats_ids = array();
            for($i = 0; $i < count($data['zone_names']); $i++){
-               $temp[$i] = [$data['start_column'][$i], $data['start_row'][$i]];
-               for($j = $i -1; $j >=0; $j--){
-                   if($temp[$j][0] == $data['start_column'][$i] && $temp[$j][1] == $data['start_row'][$i])
-                       return ['error' => 'Hay zonas ubicadas en la misma fila y columna'];
-               }
+               for($j = $data['start_column'][$i]; $j<= $data['start_column'][$i] + $data['zone_columns'][$i];$j++)
+                    for($k= $data['start_row'][$i]; $k<=$data['start_row'][$i] + $data['zone_rows'][$i];$k++){
+                        $id = ''.$k.'_'.$j;
+                        if(in_array($id, $seats_ids))
+                            return ['error' => 'Hay zonas con asientos cruzados. Por favor configurar bien las zonas'];
+                        array_push($seats_ids, $id);
+                    }
            }
            for ($i = 0; $i < count($data['zone_columns']); $i++) {
                $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
