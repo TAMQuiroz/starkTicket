@@ -200,7 +200,12 @@ class ReportController extends Controller
         $eventInformation = [];
                        
         if ($flagBetweenDates){
-            $eventsDate = Presentation::whereBetween('starts_at',[ strtotime($input['firstDate']), strtotime($input['lastDate']) ])->get();
+                
+            $fechaIni = strtotime($input['firstDate']) ;
+            $fechaFin = strtotime($input['lastDate']) + 86400 ;
+            //return $fechaFin;
+            
+            $eventsDate = Presentation::whereBetween('starts_at',[ $fechaIni,  $fechaFin ])->get();
             foreach($eventsDate as $eventDate){
 
                     $event= Event::where('id','=', $eventDate->event_id)->get(); 
@@ -208,13 +213,15 @@ class ReportController extends Controller
                     $onlineTickets = 0;  $presentialTicket = 0;
                     $subTotalOnline = 0; $subTotalPresential = 0;
                     foreach ($tickets as $ticket){
-                        if (empty($ticket->salesman_id)) {
-                            $onlineTickets = $onlineTickets + $ticket->quantity;
-                            $subTotalPresential = $subTotalPresential + $ticket->total_price;
-                        }
-                        else {
-                            $presentialTicket = $presentialTicket + $ticket->quantity;
-                            $subTotalOnline = $subTotalOnline + $ticket->total_price;
+                        if ( $ticket->cancelled != 1){
+                            if (empty($ticket->salesman_id)) {
+                                $onlineTickets = $onlineTickets + $ticket->quantity;
+                                $subTotalPresential = $subTotalPresential + $ticket->total_price;
+                            }
+                            else {
+                                $presentialTicket = $presentialTicket + $ticket->quantity;
+                                $subTotalOnline = $subTotalOnline + $ticket->total_price;
+                            }
                         }
                     }
                     array_push($eventInformation,array($event[0]->name, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
@@ -226,7 +233,12 @@ class ReportController extends Controller
 
         elseif ($flagFilterAll){
 
-            $eventsDate = Presentation::whereBetween('starts_at',[ strtotime($input['firstDate']), strtotime($input['lastDate']) ])->get();
+            
+            $fechaIni = strtotime($input['firstDate']) ;
+            $fechaFin = strtotime($input['lastDate']) + 86400 ;
+            //return $fechaFin;
+            
+            $eventsDate = Presentation::whereBetween('starts_at',[ $fechaIni,  $fechaFin ])->get();
             foreach($eventsDate as $eventDate){
 
                     //return $eventsDate;
@@ -237,6 +249,7 @@ class ReportController extends Controller
                         $onlineTickets = 0;  $presentialTicket = 0;
                         $subTotalOnline = 0; $subTotalPresential = 0;
                         foreach ($tickets as $ticket){
+                           if ( $ticket->cancelled != 1){
                             if (empty($ticket->salesman_id)) {
                                 $onlineTickets = $onlineTickets + $ticket->quantity;
                                 $subTotalPresential = $subTotalPresential + $ticket->total_price;
@@ -246,6 +259,7 @@ class ReportController extends Controller
                                 $subTotalOnline = $subTotalOnline + $ticket->total_price;
                             }
                         }
+                    }
                         array_push($eventInformation,array($event[0]->name, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
                     }
             }
@@ -295,7 +309,7 @@ class ReportController extends Controller
             
                 $sheet->mergeCells('A3:G3');
                 if ($flagBetweenDates) $sheet->setCellValue('A3','Fecha desde '.$input['firstDate'].'  hasta '.$input['lastDate']);
-                else $sheet->setCellValue('A3',"No hay rango de fechas");
+                else $sheet->setCellValue('A3',"");
                 $sheet->cells('A3:G3',function($cells){
 
                     $cells->setAlignment('center');
@@ -400,14 +414,16 @@ class ReportController extends Controller
                 $onlineTickets = 0;  $presentialTicket = 0;
                 $subTotalOnline = 0; $subTotalPresential = 0;
                 foreach ($tickets as $ticket){
-                        if (empty($ticket->salesman_id)) {
-                            $onlineTickets = $onlineTickets + $ticket->quantity;
-                            $subTotalPresential = $subTotalPresential + $ticket->total_price;
-                        }
-                        else {
-                            $presentialTicket = $presentialTicket + $ticket->quantity;
-                            $subTotalOnline = $subTotalOnline + $ticket->total_price;
-                        }
+                   if ( $ticket->cancelled != 1){
+                            if (empty($ticket->salesman_id)) {
+                                $onlineTickets = $onlineTickets + $ticket->quantity;
+                                $subTotalPresential = $subTotalPresential + $ticket->total_price;
+                            }
+                            else {
+                                $presentialTicket = $presentialTicket + $ticket->quantity;
+                                $subTotalOnline = $subTotalOnline + $ticket->total_price;
+                            }
+                    }
                 }
                 array_push($eventInformation,array($event->name,$eventDate->id, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
             }

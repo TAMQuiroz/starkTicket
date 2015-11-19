@@ -270,7 +270,8 @@ public function store(StoreEventRequest $request)
      */
     public function show($id)
     {
-        //
+        $event = Event::findOrFail($id);
+        return view('internal.promoter.event.show',["event"=>$event]);
     }
     /**
      * Display the specified resource.
@@ -319,7 +320,9 @@ public function store(StoreEventRequest $request)
      */
     public function showClientRecord()
     {
-        return view('internal.client.record');
+        $userId = Auth::user()->id;
+        $tickets = Ticket::where("owner_id",$userId)->paginate(10);
+        return view('internal.client.record',["tickets"=>$tickets]);
     }
     /**
      * Display the specified resource.
