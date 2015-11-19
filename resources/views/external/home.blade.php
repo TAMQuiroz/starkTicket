@@ -46,8 +46,9 @@
                     <div class="carousel-inner">
                         @foreach ($destacados as $key=>$destacado)
                         <div class="item @if($key==0)active @endif">
+                            <a href="event/{{$destacado->event_id}}">
                             <img class="img-responsive" src="{{$destacado->event->image}}" alt="">
-
+                            </a>
                         </div>
                         @endforeach
                     </div>

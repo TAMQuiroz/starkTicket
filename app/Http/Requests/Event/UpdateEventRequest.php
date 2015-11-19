@@ -15,6 +15,7 @@ class UpdateEventRequest extends Request
             'yesterday'     => 'date',
             'name'          => 'required|max:30',
             'image'         => 'image',
+            'distribution_image' => 'image',
             'description'   => 'required|max:100',
             'time_length'   => 'required|numeric|min:1',
             'category_id'   => 'required|exists:categories,id',

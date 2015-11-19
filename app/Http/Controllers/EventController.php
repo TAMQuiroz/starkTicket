@@ -87,6 +87,7 @@ class EventController extends Controller
         $event->publication_date = strtotime($data['publication_date']);
         $event->selling_date = strtotime($data['selling_date']);
         $event->image        = $this->file_service->upload($data['image'],'event');
+        $event->distribution_image = $this->file_service->upload($data['distribution_image'],'event');
         $event->save();
         return $event;
     }
@@ -222,15 +223,16 @@ public function store(StoreEventRequest $request)
             //return response()->json(['message' => $result['error']]);
 
         $data = [
-        'name'          => $request->input('name'),
-        'description'   => $request->input('description'),
-        'category_id'   => $request->input('category_id'),
-        'organizer_id'  => $request->input('organizer_id'),
-        'local_id'      => $request->input('local_id'),
+        'name'           => $request->input('name'),
+        'description'    => $request->input('description'),
+        'category_id'    => $request->input('category_id'),
+        'organizer_id'   => $request->input('organizer_id'),
+        'local_id'       => $request->input('local_id'),
         'publication_date' => $request->input('publication_date'),
-        'selling_date'  => $request->input('selling_date'),
-        'image'        => $request->file('image'),
-        'time_length'   => $request->input('time_length')
+        'selling_date'   => $request->input('selling_date'),
+        'image'          => $request->file('image'),
+        'distribution_image' => $request->file('distribution_image'),
+        'time_length'    => $request->input('time_length')
         ];
         $event = $this->storeEvent($data);
         $zone_data = [
@@ -378,11 +380,15 @@ public function store(StoreEventRequest $request)
         $old_event->publication_date = strtotime($data['publication_date']);
         $old_event->selling_date = strtotime($data['selling_date']);
         $image_url = $old_event->image;
+        $dist_url = $old_event->distribution_image;
         if($data['image'] != null)
             $old_event->image        = $this->file_service->upload($data['image'],'event');
-
         else
             $old_event->image = $image_url;
+        if($data['distribution_image'] != null)
+            $old_event->distribution_image = $this->file_service->upload($data['distribution_image'],'event');
+        else
+            $old_event->distribution_image = $dist_url;
         $old_event->save();
         return $old_event;
     }
@@ -518,8 +524,9 @@ public function update(UpdateEventRequest $request, $id)
                 'local_id'      => $request->input('local_id'),
                 'publication_date' => $request->input('publication_date'),
                 'selling_date'  => $request->input('selling_date'),
-                'time_length'  => $request->input('time_length'),
-                'image'        => $request->file('image')
+                'time_length'   => $request->input('time_length'),
+                'image'         => $request->file('image'),
+                'dstribution_image' => $request->file('distribution_image'),
             ];
         if($now->getTimestamp() < strtotime($request->input('selling_date'))){
             //antes del sellingdate en general
@@ -735,7 +742,7 @@ public function update(UpdateEventRequest $request, $id)
         $eventos = Event::with(['presentations' => function($query){
             $query->where('starts_at', '<', time());
         }])->whereNotIn('id', $destacados)->get();
-        return view('internal.promoter.highlights.create', array('fecha_min' => $min_date, 'events' => $eventos));
+        return view('internal.promoter.highlights.create', array('fecha_min' => Carbon::today()->addDay(), 'events' => $eventos));
     }
 
     public function storeHighlight(StoreHighlightRequest $request){

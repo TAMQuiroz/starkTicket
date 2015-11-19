@@ -13,6 +13,7 @@ class CreateHighlightedEventsTable extends Migration
     public function up()
     {
         Schema::create('highlightedEvents', function (Blueprint $table) {
+            $table->increments('id');
             $table->boolean('active');
             $table->integer('days_active');
             $table->timestamp('start_date');
