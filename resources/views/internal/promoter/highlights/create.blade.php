@@ -43,7 +43,7 @@
       <label>
           <div class="col-md-6">
               <h4 > Fecha inicio </h4>
-              {!! Form::date('start_date', $fecha_min, ['class' => 'form-control', 'required','min' => $fecha_min]) !!}
+              {!! Form::date('start_date', $fecha_min, ['class' => 'form-control', 'required','min' => $fecha_min->subDay()]) !!}
           </div>
           <div class="col-md-6">
               <h4 > Duración (días)</h4>
