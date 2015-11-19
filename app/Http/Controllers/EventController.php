@@ -436,11 +436,12 @@ public function store(StoreEventRequest $request)
         if($data['zone_columns']){ // esta entrando a pesar de no ser numerado el local :S :S
            $seats_ids = array();
            for($i = 0; $i < count($data['zone_names']); $i++){
-               for($j = $data['start_column'][$i]; $j<= $data['start_column'][$i] + $data['zone_columns'][$i];$j++)
-                    for($k= $data['start_row'][$i]; $k<=$data['start_row'][$i] + $data['zone_rows'][$i];$k++){
+               for($j = $data['start_column'][$i]; $j<= $data['start_column'][$i] + $data['zone_columns'][$i]-1;$j++)
+                    for($k= $data['start_row'][$i]; $k<=$data['start_row'][$i] + $data['zone_rows'][$i]-1;$k++){
                         $id = ''.$k.'_'.$j;
-                        if(in_array($id, $seats_ids))
+                        if(in_array($id, $seats_ids)){
                             return ['error' => 'Hay zonas con asientos cruzados. Por favor configurar bien las zonas'];
+                        }
                         array_push($seats_ids, $id);
                     }
            }
