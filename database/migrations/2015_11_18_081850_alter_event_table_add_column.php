@@ -14,6 +14,9 @@ class AlterEventTableAddColumn extends Migration
     {
         Schema::table('events', function (Blueprint $table) {
             $table->string('distribution_image')->nullable();
+            $table->integer('promoter_id')->nullable()->unsigned();
+            $table->integer('percentage_comission')->nullable();
+            $table->integer('amount_comission')->nullable();
         });
     }
 
@@ -26,6 +29,9 @@ class AlterEventTableAddColumn extends Migration
     {
         Schema::table('events', function (Blueprint $table) {
             $table->dropColumn('distribution_image');
+            $table->dropColumn('promoter_id');
+            $table->dropColumn('percentage_comission');
+            $table->dropColumn('amount_comission');
         });
     }
 }
