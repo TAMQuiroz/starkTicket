@@ -33,7 +33,10 @@
                 <div class="form-group col-md-6">
                   <label for="inputEmail3" class="col-sm-2 control-label">Doc. Id.</label>
                   <div class="col-sm-10">
-                    {!! Form::select('di_type', ['DNI', 'Carnet de Extranjería', 'Pasaporte'], null, ['class' => 'form-control', 'required']) !!}
+                    {!! Form::select('di_type', [
+                     '1' => 'DNI',
+                     '2' => 'Carnet de Extranjeria',
+                     '3' => 'Pasaporte'], null, ['class' => 'form-control', 'required']) !!}
                   </div>
                 </div>
                 <div class="form-group col-md-6">

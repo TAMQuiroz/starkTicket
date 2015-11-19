@@ -57,7 +57,7 @@
                     <h4>Direccion</h4>
                     {{$user->address}}
                     <h4>Documento Identidad</h4>
-                    @if($user->di_type == 1)
+                    @if($user->di_type == config('constants.national'))
                     DNI
                     @else
                     Carnet de Extranjeria
