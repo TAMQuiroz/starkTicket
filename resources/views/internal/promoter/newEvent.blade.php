@@ -385,6 +385,7 @@
                         // document.getElementById('input-colIni').value = '';
                         // document.getElementById('input-rowIni').value = '';
                         if( document.getElementById('input-capacity').disabled==true){
+                          if($('.reserved').hasClass('available')) $('.reserved').removeClass('available');
                           $('.reserved').removeClass('reserved').addClass('unavailable');
                           $('.selected').removeClass('selected').addClass('unavailable');
                           document.getElementById('input-column').value = '';
@@ -703,6 +704,11 @@
                       this.status('available');
                       return 'available';
                     }
+                    if(this.status()=='unavailable'){
+                      alert('No se puede seleccionar este asiento. Ya pertenece a otra zona');
+                      this.status('unavailable');
+                      return 'unavailable';
+                    }
           },
           legend : { //Definition legend
             node : $('#legend'),
@@ -812,6 +818,12 @@
             }
           },
           click : function(){
+                  if(this.node().hasClass('unavailable')){
+                    alert("No se puede seleccionar un asiento no disponible!");
+                    this.status('unavailable');
+                    return 'unavailable';
+                  }
+
                   if(this.status()=='available' && this.status()!='selected'){
                       var num_cant = $('.seatCharts-cell.selected').length;
                       var unavailable = false;
@@ -853,8 +865,8 @@
                                     unavailable = true;
                                     break;
                                   }
-                                  $('#'+id).removeClass("available");
-                                  $('#'+id).addClass('reserved');
+                                  $('#'+id).addClass('reserved'); //<---- este es el que funciona
+                    
                               }
                             }
                             if(unavailable) break;
@@ -882,6 +894,15 @@
                       this.status('available');
                       return 'available';
                     }
+          },
+          focus  : function() {
+              if (!this.node().hasClass('unavailable')) {
+                  return 'focused';
+              
+              } else  {
+                console.log('focus regresa el estilo');
+                  return this.style();
+              }
           },
           legend : { //Definition legend
             node : $('#legend'),
