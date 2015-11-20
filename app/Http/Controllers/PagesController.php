@@ -36,7 +36,18 @@ class PagesController extends Controller
 
     public function calendar()
     {
-        return view('external.calendar');
+        $date_at = strtotime(date("Y-m-d"));
+        $events = Event::where("publication_date",$date_at)->get();
+        return view('external.calendar',["events"=>$events,"date_at"=>$date_at]);
+    }
+
+    public function eventsForDate(Request $request)
+    {
+
+        $input = $request->all();
+        $date_at = strtotime($input['date_at']);
+        $events = Event::where("publication_date",$date_at)->get();
+        return view('external.calendar',["events"=>$events,"date_at"=>$date_at]);
     }
 
     public function clientHome()
