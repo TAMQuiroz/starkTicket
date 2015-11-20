@@ -36,7 +36,7 @@ class AuthController extends Controller
     {
        if(Auth::user()->role_id == 2 ){ // solo lo hago si soy vendedor
 
-
+            
             $dateToday  =   new Carbon() ;
             $dateToday =  $dateToday->toDateString();
             $dateTimeToday  =   new Carbon() ;
@@ -71,8 +71,8 @@ class AuthController extends Controller
 
 
          //   sleep(0.1);
-
-        }
+        
+        } 
         Auth::logout();
 
 

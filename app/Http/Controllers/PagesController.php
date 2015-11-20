@@ -14,6 +14,8 @@ use App\Models\Preference;
 use App\Models\Event;
 use App\Models\About;
 use Carbon\Carbon;
+use App\Models\Presentation;
+use DB;
 
 class PagesController extends Controller
 {
@@ -35,10 +37,40 @@ class PagesController extends Controller
         return view('external.modules');
     }
 
-    public function calendar()
+    public function calendar(request $request)
     {
-        return view('external.calendar');
+         $events = Event::where('cancelled','=',0)->get();
+        $eventInformation = [];
+                
+        foreach ($events as $event){
+           
+            $eventsDates = Presentation::where('event_id','=', $event->id)->where('cancelled','=',0)->get();
+            $count = 0;
+            foreach ($eventsDates as $eventDate){
+                $date =   date("Y-m-d H:d:s",$eventDate->starts_at);
+               
+
+                    if ($date >= Carbon::now() && $date < Carbon::tomorrow()){
+                            $count += 1;
+                     }
+                
+            }
+            if ($count != 0){
+                
+                array_push($eventInformation,array($event->image, $event->name,$event->place->name, $event->place->address , $event->category->name,$event->id));
+            }  
+            
+
+        }
+        
+        return view('external.calendar',compact('eventInformation'));
     }
+    public function findcalendar(request $request){
+
+        $infoDate = $request['firstDate'];
+        return rediret('calendar',compact('infoDate'));
+    }
+    
 
     public function clientHome()
     {
