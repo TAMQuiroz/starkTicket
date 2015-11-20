@@ -49,7 +49,7 @@
                         <option value="1" @if($cancelPresentation->authorized) selected @endif>Si</option>
                         <option value="0" @if(!$cancelPresentation->authorized) selected @endif>No</option>
                     </select>
-                    <span class="help-block small">Autorizao para devolver entradas?</span>
+                    <span class="help-block small">Autorizado para devolver entradas?</span>
                 </div>
             </div>
             <div class="form-group">
