@@ -39,21 +39,21 @@
    <br><br>
     <div class="col-sm-2">
         <label>Desde</label>
-        {!!Form::input('date','firstDate', null ,['class'=>'form-control','id'=>'fecha-ini','max'=>'fecha-fin'])!!} 
+        {!!Form::input('date','firstDate', null ,['class'=>'form-control','id'=>'fecha-ini'])!!} 
     </div>
     <div class="col-sm-2">
         <label>Hasta</label>
-        {!!Form::input('date','lastDate', null ,['class'=>'form-control','id'=>'fecha-fin','min'=>'fecha-ini'])!!}
+        {!!Form::input('date','lastDate', null ,['class'=>'form-control','id'=>'fecha-fin'])!!}
     </div>
     <div class="col-sm-2">
     </div>
     <div class="col-sm-2">
         <label>Desde</label>
-        {!!Form::input('date','firstDateP', null ,['class'=>'form-control','id'=>'fecha-ini-des','max'=>'fecha-fin-des'])!!} 
+        {!!Form::input('date','firstDateP', null ,['class'=>'form-control','id'=>'fecha-ini-des'])!!} 
     </div>
     <div class="col-sm-2">
         <label>Hasta</label>
-        {!!Form::input('date','lastDateP', null ,['class'=>'form-control','id'=>'fecha-fin-des','min'=>'fecha-ini-des'])!!}
+        {!!Form::input('date','lastDateP', null ,['class'=>'form-control','id'=>'fecha-fin-des'])!!}
     </div>
   </div> 
     <br>
@@ -119,14 +119,16 @@ $("#botoncito").click(function () {
     var dateS4 = date4.value.toString();
     var d1 = new Date(dateS1);
     var d2 = new Date(dateS2);
+    d2.setDate(d2.getDate()+1)
     var d3 = new Date(dateS3);
     var d4 = new Date(dateS4);
+    d4.setDate(d4.getDate()+1)
 
     if(search==null || search == ''){ 
         //alert('23/11/1993'.split("/").reverse().join("-"));
         if(dateS1=='' && dateS2=='' && dateS3 =='' && dateS4==''){
             rows.show(); 
-            alert('vacio D:'); 
+           // alert('vacio D:'); 
         }
         if(dateS1!='' && dateS2=='' && dateS3 == '' && dateS4 == ''){
             $rows = rows;
