@@ -39,38 +39,20 @@ class PagesController extends Controller
 
     public function calendar(request $request)
     {
-         $events = Event::where('cancelled','=',0)->get();
-        $eventInformation = [];
-                
-        foreach ($events as $event){
-           
-            $eventsDates = Presentation::where('event_id','=', $event->id)->where('cancelled','=',0)->get();
-            $count = 0;
-            foreach ($eventsDates as $eventDate){
-                $date =   date("Y-m-d H:d:s",$eventDate->starts_at);
-               
-
-                    if ($date >= Carbon::now() && $date < Carbon::tomorrow()){
-                            $count += 1;
-                     }
-                
-            }
-            if ($count != 0){
-                
-                array_push($eventInformation,array($event->image, $event->name,$event->place->name, $event->place->address , $event->category->name,$event->id));
-            }  
-            
-
-        }
-        
-        return view('external.calendar',compact('eventInformation'));
+        $date_at = strtotime(date("Y-m-d"));
+        $events = Event::where(["publication_date"=>$date_at,"cancelled"=>"0"])->get();
+        return view('external.calendar',["events"=>$events,"date_at"=>$date_at]);
     }
-    public function findcalendar(request $request){
 
-        $infoDate = $request['firstDate'];
-        return rediret('calendar',compact('infoDate'));
+    public function eventsForDate(Request $request)
+    {
+
+        $input = $request->all();
+        $date_at = strtotime($input['date_at']);
+        $events = Event::where(["publication_date"=>$date_at,"cancelled"=>"0"])->get();
+        return view('external.calendar',["events"=>$events,"date_at"=>$date_at]);
     }
-    
+
 
     public function clientHome()
     {
