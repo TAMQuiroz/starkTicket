@@ -23,10 +23,36 @@
 	</div>
 </div>
 <hr>
-@if(count($events)===0)
-<div class="alert alert-warning"> Eventos no encontrados en esta fecha</div>
+@if(count($presentations)===0)
+<div class="alert alert-warning"> Presentaciones no encontrados en esta fecha</div>
 @else
 	<div class="row">
+		<div class="col-sm-12">
+		<p>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</p>
+		<table class="table table-bordered">
+			<tr>
+				<th>Fecha de presentación</th>
+				<th>Evento</th>
+				<th>Detalles</th>
+			</tr>
+	    @foreach($presentations as $presentation)
+	    	<tr>
+	    		<td>{{date('Y-m-d',$presentation->starts_at)}}</td>
+	    		<td>{{$presentation->event["name"]}}</td>
+	    		<td><p><a href="event/{{$presentation->event['id']}}"  class="btn btn-primary" role="button" >Detalle</a></p></td>
+	    	</tr>
+	    @endforeach
+		</table>
+		</div>
+	</div>
+@endif
+<hr>
+@if(count($events)===0)
+<div class="alert alert-warning"> Eventos publicados no encontrados en esta fecha</div>
+@else
+	<div class="row">
+		<p>Eventos de {{date('Y-m-d',$date_at)}}</p>
+		<div class="col-sm-12">
 	    @foreach($events as $event)
 	    <div class="3u">
 	        <section>
@@ -41,6 +67,7 @@
 	        </section>
 	    </div>
 	    @endforeach
+	</div>
 	</div>
 @endif
 
