@@ -12,7 +12,7 @@
     <div class="col-sm-6">
         <p><b>Detalles de la presentacion</b></p>
         <h5>Fecha: {{date("d/m/Y h:i",$presentation->starts_at)}} </h5>
-        <p>@if ($presentation->cancelled) <span class="label label-danger">Cancelado</span> @else <span class="label label-success">No esta cancelado</span> @endif</p>
+        <p>@if <p><b>Estado: Cancelado</b></p> @else <p><b>Estado: No esta cancelado</b></p> @endif</p>
         <p><b>Detalles del evento</b></p>
         <h5>Nombre: {{$presentation->event->name}} </h5>
         <h5>Local: {{$presentation->event->place->name}} </h5>
