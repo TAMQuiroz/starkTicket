@@ -90,7 +90,7 @@
                   <!-- <a class="btn btn-info"  data-toggle="modal" data-target="#agregado">Guardar</a> -->
                   <a class="btn btn-info" type="button" href=""  title="Create"  data-toggle="modal" data-target="#editModalSalesman">Guardar</a>
                   <!-- <button type="submit" class="btn btn-info">Guardar</button> -->
-                  <a href="{{route('admin.home')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
+                  <a href="{{url('admin/salesman')}}"><button type="button" class="btn btn-info">Cancelar</button></a>
                 </div>
               </div>
 

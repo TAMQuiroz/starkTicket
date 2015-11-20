@@ -10,8 +10,9 @@ use App\Models\Highlight;
 use App\Models\AttendanceDetail;
 use Auth;
 use App\User;
-use App\Models\About;
+use App\Models\Preference;
 use App\Models\Event;
+use App\Models\About;
 use Carbon\Carbon;
 
 class PagesController extends Controller
@@ -40,7 +41,31 @@ class PagesController extends Controller
 
     public function clientHome()
     {
-        return view('internal.client.home');
+
+        // Hago el query para obtener las preferencias del usuario
+        $clientes = Preference::where('idUser', '=' , Auth::user()->id)->get();
+
+        $clientPreferences = [];
+
+        foreach($clientes as $cliente){
+                $preferencias = Event::where('category_id', '=', $cliente->idCategories)->get(); // puede haber varios eventos del mismo tipo
+                foreach($preferencias as $preference){
+                    array_push($clientPreferences, $preference);
+                }
+        }
+
+
+        //return $clientPreferences;
+
+        //return $cliente;
+        // iteracion
+        /*
+
+        */
+        //aca estan las páginas que le gustan al cliente
+
+
+        return view('internal.client.home',compact('clientPreferences'));
     }
 
     public function salesmanHome()
@@ -51,7 +76,7 @@ class PagesController extends Controller
     public function promoterHome()
     {
         $userId = Auth::user()->id;
-        $events = Event::where("cancelled","0")->paginate(10);
+        $events = Event::where("promoter_id",$userId)->paginate(10);
         return view('internal.promoter.home',["events"=>$events]);
     }
 

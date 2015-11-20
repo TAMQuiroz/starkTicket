@@ -16,6 +16,7 @@ use App\Http\Requests\Booking\StoreBookingRequest;
 use Carbon\Carbon;
 use Mail;
 use DateTime; use Date;
+use Session;
 
 class BookingController extends Controller
 {
@@ -157,12 +158,12 @@ class BookingController extends Controller
 
     public function showPayBooking(Request $request){
         $codigo = $request['reserve_code'];
-        $tickets = Ticket::where('reserve',$codigo)->get()->first();
+        $tickets = Ticket::where('reserve',$codigo)->get();
         $event = $tickets->first()->event;
         $zone = $tickets->first()->zone;
         $presentation = $tickets->first()->presentation;
         return view('internal.salesman.payBookingShow',
-            array('tickets' => $tickets, 'event' => $event,
+            array('tickets' => $tickets->first(), 'event' => $event,
                 'zone' => $zone, 'presentation' => $presentation,
                 'reserve' => $codigo));
     }
@@ -230,10 +231,10 @@ class BookingController extends Controller
         $tickets = Ticket::where('reserve', $reserve_code)->get();
         $mail =  $tickets->first()->owner->email;
         Mail::send('internal.client.reserveMail', array('tickets' => $tickets), function($message)use($mail){
-            $message->to($mail);
+            $message->to($mail)->subject('Reserva');
         });
-        $events = Event::all();
-        return view('external.events',compact('events'));
+        Session::flash('bookingmailmessage', 'Correo de confirmación de reserva enviado con éxito.');
+        return redirect()->route('event.external.show',array($tickets->first()->event_id));
     }
 
     public function getReservesByDni(Request $request){
@@ -248,7 +249,8 @@ class BookingController extends Controller
             $tickets= Ticket::where('reserve',$value)->get();
             $arreglo[$key] = ['codigo' => $value, 
             'nombre' => $tickets->first()->event->name,
-            'cantidad' => $tickets->count(),
+            //'cantidad' => $tickets->count(),
+            'cantidad' => $tickets->first()->quantity,
             'zona'    => $tickets->first()->zone->name,
             'funcion' => date('d-m-Y',$tickets->first()->presentation->starts_at)];
         }
