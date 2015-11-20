@@ -310,7 +310,8 @@ public function store(StoreEventRequest $request)
         $Comment->save();
 
         $Comments = Comment::where('event_id',$id  ) ->get();
-        return view('external.event', ['event' => $event, 'user'=>$user , 'Comments'=> $Comments,'users' => $users  ] );
+        return redirect()->back();
+        //return view('external.event', ['event' => $event, 'user'=>$user , 'Comments'=> $Comments,'users' => $users  ] );
     }
 
     /**
@@ -673,10 +674,10 @@ public function update(UpdateEventRequest $request, $id)
         return redirect()->route('promoter.record');
     }
 
-       public function destroyComment($idComment)
+    public function destroyComment($idComment)
     {
         $comment = Comment::find($idComment);
-      $comment->delete();
+        $comment->delete();
 
         return redirect()->back();
     }
