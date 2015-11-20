@@ -3,7 +3,16 @@
 @extends('layoutExternal')
 
 @section('style')
-
+<style type="text/css">
+  input[type="date"]
+{
+    display:block;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    min-height: 1.2em;
+}
+  
+</style>
 @stop
 
 @section('title')
