@@ -1,141 +1,53 @@
 @extends('layoutExternal')
 
 @section('style')
-	{!!Html::style('css/datepicker.css')
-	<style type="text/css">
-		.full img{
-            width: 100%;
-        }
-	</style>
+	{!!Html::style('css/datepicker.css')!!}
 @stop
-
-@section('title')
-	Calendario
-@stop
-
 @section('content')
+<div class="container">
+<div class="row">
+	<div class="col-sm-6">Fecha de hoy</div>
+	<div class="col-sm-5 pull-right">
+		{!!Form::open(array('url' => 'salesman/ticket/repay','id'=>'form','class'=>'form-inline'))!!}
+		  <div class="form-group">
+		  	<input type="text" class="form-control" id="datepicker" placeholder="Fecha" required name="date_at">
+		  </div>
+		  <input type="submit" value="Buscar eventos" class="btn btn-info">
+		</form>
+    </div>
+</div>
+<hr>
 
-	<div id="main">
-			<div class="container">
-				<div class="row">
+</div>
 
-					<!-- Content -->
-						<div id="content" class="8u skel-cell-important">
-							<section>
-								<header>
-									<h2>Eventos de 15/09/2015</h2>
-									<span class="byline">Donec vivamus fermentum nibh in augue praesent</span>
-								</header>
-								<div class="row">
-									<div class="4u">
-										<section style="text-align:center;">
-											<a href="#" class="image full"><img src="images/pics13.jpg" alt="" /></a>
-											<h2>Titulo del Evento 1</h2>
-											<p><b>Precio: </b> S/. 20.00 <br>
-												<b>Fecha: </b> 20/12/2015<br>
-												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
-										</section>
-									</div>
-									<div class="4u">
-										<section style="text-align:center;">
-											<a href="#" class="image full"><img src="images/pics13.jpg" alt="" /></a>
-											<h2>Titulo del Evento 1</h2>
-											<p><b>Precio: </b> S/. 20.00 <br>
-												<b>Fecha: </b> 20/12/2015<br>
-												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
-										</section >
-									</div>
-									<div class="4u">
-										<section style="text-align:center;">
-											<a href="#" class="image full"><img src="images/pics13.jpg" alt="" /></a>
-											<h2>Titulo del Evento 1</h2>
-											<p><b>Precio: </b> S/. 20.00 <br>
-												<b>Date: </b> 20/12/2015<br>
-												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
-										</section>
-									</div>
-								</div>
-								<div class="row">
-									<div class="4u">
-										<section style="text-align:center;">
-											<a href="#" class="image full"><img src="images/pics13.jpg" alt="" /></a>
-											<h2>Titulo del Evento 1</h2>
-											<p><b>Precio: </b> S/. 20.00 <br>
-												<b>Date: </b> 20/12/2015<br>
-												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
-										</section>
-									</div>
-									<div class="4u">
-										<section style="text-align:center;">
-											<a href="#" class="image full"><img src="images/pics13.jpg" alt="" /></a>
-											<h2>Titulo del Evento 1</h2>
-											<p><b>Precio: </b> S/. 20.00 <br>
-												<b>Date: </b> 20/12/2015<br>
-												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
-										</section style="text-align:center;">
-									</div>
-									<div class="4u">
-										<section style="text-align:center;">
-											<a href="#" class="image full"><img src="images/pics13.jpg" alt="" /></a>
-											<h2>Titulo del Evento 1</h2>
-											<p><b>Precio: </b> S/. 20.00 <br>
-												<b>Date: </b> 20/12/2015<br>
-												Av. venezuela Nro 255 </p>
-											<p><a href="event/1"  class="btn btn-info" role="button" >Detalle</a></p>
-										</section>
-									</div>
-								</div>
-								<div class="divider">&nbsp;</div>
-							</section>
-						</div>
-					<!-- /Content -->
-
-					<!-- Sidebar -->
-						<div id="sidebar" class="4u">
-							<section class="ui-state-default">
-								<header>
-									<h3>Calendario de eventos</h3>
-								</header>
-
-								<script>
-
-								$(function(){
-
-								    $("#datepicker").datepicker();
-								});
-								  </script>
-								  <div class="ll-skin-latoja">
-								<div id="datepicker"></div>
-								  </div>
-
-
-								<header>
-									<h3>Categorias</h3>
-								</header>
-								<p><a href="event" class="category">Categoria 1</a> </p>
-								<p><a href="event" class="category">Categoria 2</a> </p>
-								<p><a href="event" class="category">Categoria 3</a> </p>
-								<p><a href="event" class="category">Categoria 4</a> </p>
-								<p><a href="event" class="category">Categoria 5</a> </p>
-								<p><a href="event" class="category">Categoria 6</a> </p>
-								<p><a href="event" class="category">Categoria 7</a> </p>
-								<p><a href="event" class="category">Categoria 8</a> </p>
-							<!--	<p><a href="#">Categoria 9.</a> </p>
-								<p><a href="#">Categoria 10.</a> </p> -->
-							</section>
-						</div>
-					<!-- Sidebar -->
-
-				</div>
-
-			</div>
-		</div>
 @stop
 
 @section('javascript')
+  {!!Html::script('js/jquery-ui.min.js')!!}
+<script>
+  (function() {
+    $( "#datepicker" ).datepicker({
+            dateFormat: "yy-mm-dd" ,
+            minDate: 0 ,
+            maxDate: "+2Y",
+            beforeShow: function() {
+                setTimeout(function(){
+                    $('.ui-datepicker').css('z-index', 9999);
+                }, 0);
+            }
+        }).on("change", function(e) {
+            var curDate = $(this).datepicker("getDate");
+            var maxDate = new Date();
+            maxDate.setDate(maxDate.getDate() + 720);
+            maxDate.setHours(0, 0, 0, 0);
+            if (curDate > maxDate)
+            {
+                $(this).val("");
+                $(this).addClass("red");
+            } else {
+                $(this).removeClass("green");
+            }
+        });
+    })();
+  </script>
 @stop
