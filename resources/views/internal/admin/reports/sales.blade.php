@@ -39,7 +39,6 @@
     <div class="col-sm-2">
         <label>Hasta</label>
         {!!Form::input('date','lastDate', null ,['class'=>'form-control','id'=>'fecha-fin'])!!}
-
     </div>
 
 </div>
@@ -47,7 +46,13 @@
     <!--
     BOTONES
     -->
+    <div class="col-sm-6" style="display: block; height:20px;">
+        <p id="error-msg" style="display: none; color:#a94442;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;">Rango de fechas incorrecto</p><br>
+    </div>
+    <br>
     <div class="row-sm-2">
+
         <br>
             <!--<a type="button" href="{{url('admin/report/sales/download')}}" class="btn btn-info" >Descargar Archivo Excel</a>-->  
             <button class="btn btn-info" type="button" id = 'botoncito' >Buscar</button>  
@@ -195,7 +200,7 @@ $("#botoncito").click(function () {
                     }
                 }); 
             }
-            else alert('Rango de fechas no válido');
+            else $("#error-msg").show();
         }
     }
     else{
@@ -253,7 +258,7 @@ $("#botoncito").click(function () {
                     }
                 });
             }
-            else alert('Rango de fechas no válido');
+            else $("#error-msg").show();
         }
         
     }
