@@ -12,7 +12,7 @@
     <div class="col-sm-6">
         <p><b>Detalles de la presentacion</b></p>
         <h5>Fecha: {{date("d/m/Y h:i",$presentation->starts_at)}} </h5>
-        <p>@if ($presentation->cancelled) <span class="label label-danger">Cancelado</span> @else <span class="label label-success">No esta cancelado</span> @endif</p>
+        <p>@if ($presentation->cancelled) Estado: Cancelado @else Estado: No esta cancelado @endif</p>
         <p><b>Detalles del evento</b></p>
         <h5>Nombre: {{$presentation->event->name}} </h5>
         <h5>Local: {{$presentation->event->place->name}} </h5>
@@ -52,7 +52,7 @@
                         <option value="1">Si</option>
                         <option value="0">No</option>
                     </select>
-                    <span class="help-block small">Autorizao para devolver entradas?</span>
+                    <span class="help-block small">Autorizado para devolver entradas?</span>
                 </div>
             </div>
             <div class="form-group">
