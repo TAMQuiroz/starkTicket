@@ -762,7 +762,7 @@ public function update(UpdateEventRequest $request, $id)
         $eventos = Event::with(['presentations' => function($query){
             $query->where('starts_at', '<', time());
         }])->whereNotIn('id', $destacados)->get();
-        return view('internal.promoter.highlights.create', array('fecha_min' => Carbon::today()->addDay(), 'events' => $eventos));
+        return view('internal.promoter.highlights.create', array('fecha_min_init' => Carbon::today()->addDay(), 'fecha_min' => Carbon::today(), 'events' => $eventos));
     }
 
     public function storeHighlight(StoreHighlightRequest $request){
