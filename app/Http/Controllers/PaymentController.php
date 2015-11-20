@@ -34,8 +34,9 @@ class PaymentController extends Controller
     {
         $event = Event::findOrFail($event_id);
         $amountAccumulated = $event->amountAccumulated();
-        $benefit = 5;
-        $totalToPay = $amountAccumulated - $benefit;
+
+        $amountComission = $event->amount_comission + $amountAccumulated*$event->percentage_comission/100;
+        $totalToPay = $amountAccumulated - $amountComission;
         $paid = Payment::where("event_id",$event_id)->sum('paid');
         $debt = 0;
         if ($totalToPay > $paid)
@@ -43,7 +44,7 @@ class PaymentController extends Controller
         $objs = array(
             "event"=>$event,
             "amountAccumulated"=>$amountAccumulated,
-            "benefit"=>$benefit,
+            "benefit"=>$amountComission,
             "totalToPay"=>$totalToPay,
             "paid"=>$paid,
             "debt"=>$debt,

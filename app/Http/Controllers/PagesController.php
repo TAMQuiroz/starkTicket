@@ -22,7 +22,8 @@ class PagesController extends Controller
     public function home()
     {
         $destacados = Highlight::where('active','1')->get();
-        return view('external.home',array('destacados'=>$destacados));
+        $upcoming   = Event::where('selling_date','>',strtotime(Carbon::now()))->where('publication_date','<',strtotime(Carbon::now()))->get();
+        return view('external.home',array('destacados'=>$destacados,'upcoming'=>$upcoming));
     }
 
     public function about()
@@ -108,7 +109,7 @@ class PagesController extends Controller
     public function promoterHome()
     {
         $userId = Auth::user()->id;
-        $events = Event::where("cancelled","0")->paginate(10);
+        $events = Event::where("promoter_id",$userId)->paginate(10);
         return view('internal.promoter.home',["events"=>$events]);
     }
 
