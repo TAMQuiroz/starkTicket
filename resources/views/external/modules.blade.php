@@ -102,7 +102,7 @@
 			</div>
 		</div> -->
     <header>
-    <h1>Ubica nuestros Módulos de Venta </h1>
+    <h3>Ubica nuestros Módulos de Venta </h3>
 
   </header>
     <table class="table table-bordered table-striped">
