@@ -29,7 +29,8 @@ function getTakenSlots(){
             event_id: evento,
         },
         success: function( response ){
-            console.log(response);
+            console.log("hola");
+            $('#quantity').val(0);
             if(response != -1 )
             {
                 taken = response[0];

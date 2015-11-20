@@ -18,7 +18,6 @@ class CreateEventsTable extends Migration
             $table->integer('category_id')->unsigned();
             $table->integer('local_id')->unsigned();
             $table->integer('organizer_id')->unsigned();
-            $table->integer('promoter_id')->unsigned();
             $table->string('description');
             $table->string('image');
             $table->timestamps();
