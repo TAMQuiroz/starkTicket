@@ -290,8 +290,12 @@ class TicketController extends Controller
     {
         $mail = $request['email'];
         $ticket = Ticket::find($request['ticket_id']);
+        $seats = DB::table('slot_presentation')->where('sale_id',$ticket->id)->get();
+        foreach ($seats as $key => $seat) {
+            $seats[$key] = Slot::find($seat->slot_id);
+        }
 
-        Mail::send('internal.client.successMail',['ticket'=>$ticket,'mail'=>$mail], function($message)use($mail){
+        Mail::send('internal.client.successMail',['ticket'=>$ticket,'mail'=>$mail, 'seats'=>$seats], function($message)use($mail){
             $message->to($mail)->subject('Datos de compra');
         });
 
