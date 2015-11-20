@@ -49,19 +49,10 @@ class PagesController extends Controller
                 $date =   date("Y-m-d H:d:s",$eventDate->starts_at);
                
 
-               /*if ($infoDate!=null){
-                    
-                    $thatDay =  $infoDate;
-                    if ($date >= $thatDay && ($date->month == $thatDay->month && $date->year == $thatDay->year && ($date->day == $thatDay->day) ) ){
-                        $count+=1; 
-
-                    }
-                }
-                else {*/
                     if ($date >= Carbon::now() && $date < Carbon::tomorrow()){
                             $count += 1;
                      }
-                //}
+                
             }
             if ($count != 0){
                 
