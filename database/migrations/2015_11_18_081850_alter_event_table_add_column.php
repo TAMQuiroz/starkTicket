@@ -15,8 +15,8 @@ class AlterEventTableAddColumn extends Migration
         Schema::table('events', function (Blueprint $table) {
             $table->string('distribution_image')->nullable();
             $table->integer('promoter_id')->unsigned();
-            $table->integer('percentage_comission')->nullable();
-            $table->integer('amount_comission')->nullable();
+            $table->integer('percentage_comission')->default(0);
+            $table->integer('amount_comission')->default(0);
         });
     }
 
