@@ -19,7 +19,7 @@ Bienvenido promotor de ventas
     </tr>
     @foreach($events as $event)
     <tr>
-       <td>{{date("d/m/Y", $event->presentation["starts_at"])}} </td>
+       <td>{{date("d/m/Y",$event->publication_date)}} </td>
        <td>{{$event->name}}</td>
        <td><a href="{{ url ('promoter/event/'.$event->id) }}"><button  class="btn btn-info" title="Mostrar mas detalles">Detalles</button></a></td>
     </tr>
