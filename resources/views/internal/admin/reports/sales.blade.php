@@ -183,16 +183,19 @@ $("#botoncito").click(function () {
         }
 
         if(dateS1!='' && dateS2!=''){
-            //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST= $this.find(':nth-child(2)').text();
-                var dtabl = new Date(dateST.split("/").reverse().join("-"));
-                if(dtabl>=d1 && dtabl<=d2){
-                    $this.show(); 
-                }
-            });
+            if(dateS2>=dateS1){
+               //rows.show();
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST= $this.find(':nth-child(2)').text();
+                    var dtabl = new Date(dateST.split("/").reverse().join("-"));
+                    if(dtabl>=d1 && dtabl<=d2){
+                        $this.show(); 
+                    }
+                }); 
+            }
+            else alert('Rango de fechas no válido');
         }
     }
     else{
@@ -238,16 +241,19 @@ $("#botoncito").click(function () {
             });
         }
         if(dateS1!='' && dateS2!=''){
-            //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST= $this.find(':nth-child(2)').text();
-                var dtabl = new Date(dateST.split("/").reverse().join("-"));
-                if(dtabl>=d1 && dtabl<=d2){
-                    $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show(); 
-                }
-            });
+            if(dateS2>=dateS1){
+                //rows.show();
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST= $this.find(':nth-child(2)').text();
+                    var dtabl = new Date(dateST.split("/").reverse().join("-"));
+                    if(dtabl>=d1 && dtabl<=d2){
+                        $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show(); 
+                    }
+                });
+            }
+            else alert('Rango de fechas no válido');
         }
         
     }
