@@ -23,6 +23,7 @@ Route::get('/', 'PagesController@home');
 Route::get('about', 'PagesController@about');
 Route::get('modules', 'ModuleController@indexExternal');
 Route::get('calendar', 'PagesController@calendar');
+Route::post('calendar', 'PagesController@eventsForDate');
 //Route::post('calendar', 'PagesController@findcalendar');
 Route::get('gifts', 'GiftController@indexExternal');
 Route::get('category', 'CategoryController@indexExternal');
@@ -102,7 +103,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/', ['as'=>'promoter.home','uses'=>'PagesController@promoterHome']);
     Route::get('promoter/politics', 'PoliticController@index');
     Route::get('promoter/politics', 'PoliticController@politicsPromotor');
-    
+
     Route::get('promoter/transfer_payments/', 'PaymentController@index');
     Route::get('promoter/transfer_payments/{payment_id}', 'PaymentController@show');
     Route::get('promoter/transfer_payments/{event_id}/create', 'PaymentController@create');
@@ -116,14 +117,14 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
     Route::post('promoter/event/{event_id}/delete', ['as' => 'events.delete', 'uses' =>'EventController@destroy']);
-    
+
     Route::get('promoter/presentation/cancelled', 'PresentationController@index');
     Route::get('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modules');
     Route::post('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modulesStorage');
     Route::get('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancel');
     Route::post('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancelStorage');
     Route::post('promoter/presentation/cancelled/{id}/edit', 'PresentationController@cancelUpdate');
-    
+
     Route::get('promoter/{category_id}/subcategories', 'EventController@subcategoriesToAjax');
     Route::get('getLocal/{id}',['as'=>'ajax.getLocal','uses'=>'EventController@getLocal']);
 
