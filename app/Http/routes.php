@@ -147,6 +147,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/highlights', ['as'=>'promoter.highlights.index','uses'=>'EventController@getHighlights']);
     Route::get('promoter/highlights/create', 'EventController@createHighlight');
     Route::post('promoter/highlights/create', 'EventController@storeHighlight');
+    Route::post('promoter/highlights/{id}/editDate', 'EventController@editDate');
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
