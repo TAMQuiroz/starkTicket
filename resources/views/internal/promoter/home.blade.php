@@ -10,6 +10,7 @@ Bienvenido promotor de ventas
 
 @section('content')
 <legend>Eventos creados</legend>
+<div class="table-responsive">
 <table class="table table-bordered table-striped">
     <tr>
         <th>Fecha del Evento</th>
@@ -20,10 +21,11 @@ Bienvenido promotor de ventas
     <tr>
        <td>{{date("d/m/Y", $event->presentation["starts_at"])}} </td>
        <td>{{$event->name}}</td>
-       <td><a href="{{ url ('promoter/event/'.$event->id) }}" class="label label-info" title="Mostrar mas detalles">Detalles</a></td>
+       <td><a href="{{ url ('promoter/event/'.$event->id) }}"><button  class="btn btn-info" title="Mostrar mas detalles">Detalles</button></a></td>
     </tr>
     @endforeach
 </table>
+</div>
 {!!$events->render()!!}
 @stop
 
