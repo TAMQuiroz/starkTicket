@@ -24,6 +24,7 @@ Route::get('about', 'PagesController@about');
 Route::get('modules', 'ModuleController@indexExternal');
 Route::get('calendar', 'PagesController@calendar');
 Route::post('calendar', 'PagesController@eventsForDate');
+//Route::post('calendar', 'PagesController@findcalendar');
 Route::get('gifts', 'GiftController@indexExternal');
 Route::get('category', 'CategoryController@indexExternal');
 Route::get('category/{id}', 'CategoryController@showExternal');

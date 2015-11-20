@@ -8,6 +8,7 @@
 {{date('Y-M-d',$date_at)}}
 @stop
 @section('content')
+
 <div class="container">
 	<div class="row">
 		<div class="col-sm-6">Eventos de {{date('Y-m-d',$date_at)}}</div>
@@ -42,6 +43,7 @@
 	    @endforeach
 	</div>
 @endif
+
 @stop
 
 @section('javascript')
