@@ -49,7 +49,7 @@
                 <div class="form-group col-md-6">
                   <label for="input4" class="col-sm-2 control-label">Dirección</label>
                   <div class="col-sm-10">
-                    {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'input4', 'required','max'=>'100')) !!}
+                    {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'input4', 'required')) !!}
                   </div>
                 </div>
                 <div class="form-group col-md-6">
