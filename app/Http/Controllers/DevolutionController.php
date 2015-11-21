@@ -49,7 +49,8 @@ class DevolutionController extends Controller
             Session::flash('alert-class','alert-danger');
             return redirect('salesman/devolutions');
         }
-        $cancelPresentation = CancelPresentation::find($ticket->presentation_id);
+
+        $cancelPresentation = CancelPresentation::where("presentation_id",$ticket->presentation_id)->first();
 
         if (!$cancelPresentation->authorized)
         {
@@ -60,7 +61,14 @@ class DevolutionController extends Controller
         $modulesAuth = $cancelPresentation->modules;
         $userId = Auth::user()->id;
         $moduleUser = ModuleAssigment::where(["salesman_id"=>$userId,"status"=>1])->first();
-        //return $moduleUser;
+
+        if (!is_object($moduleUser))
+        {
+            Session::flash('message', 'Usted no tiene modulo asignado, por lo tanto no puede devolver');
+            Session::flash('alert-class','alert-danger');
+            return redirect('salesman/devolutions');
+        }
+
         $isAuthorized = 0;
         foreach ($modulesAuth as $obj)
         {
