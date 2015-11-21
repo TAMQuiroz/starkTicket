@@ -50,7 +50,7 @@ class EventController extends Controller
      */
     public function indexExternal()
     {
-        $events = Event::all();
+        $events = Event::where("cancelled","=","0")->get();
         return view('external.events',compact('events'));
     }
     /**
