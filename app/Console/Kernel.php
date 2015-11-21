@@ -34,8 +34,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
+        /*$schedule->command('inspire')
+                 ->everyMinute();*/
         $schedule->call(function(){
             $reservas = Ticket::whereNotNull('reserve')->get();
             foreach ($reservas as $reserva) {
@@ -51,23 +51,26 @@ class Kernel extends ConsoleKernel
                     $reserva->delete();
                 }
             }
-        })->hourly();
+        })->everyMinute();
         $schedule->call(function(){
             $destacados = Highlight::where('start_date','<=',Carbon::now())->get();
             if($destacados && !empty($destacados))
                 foreach($destacados as $destacado){
-                    $destacado->active = true;
-                    $destacado->save();
+                    $tiempo = strtotime($destacado->start_date)+($destacado->days_active*3600*24);                    
+                    if($tiempo>time()){
+                        $destacado->active = 1;
+                        $destacado->save();
+                    }
                 }
             $noDestacados = Highlight::where('active','1')->get();
             if($noDestacados && !empty($noDestacados))
                 foreach ($noDestacados as $noDestacado) {
-                    $tiempo = strtotime($noDestacado->start_date)+$noDestacado->active_days;
+                    $tiempo = strtotime($noDestacado->start_date)+($noDestacado->days_active*3600*24);
                     if($tiempo <= time()){
-                        $noDestacado->active = false;
+                        $noDestacado->active = 0;
                         $noDestacado->save();
                     }
                 }
-        })->daily();
+        })->everyMinute();
     }
 }
