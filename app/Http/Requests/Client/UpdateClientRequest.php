@@ -28,7 +28,7 @@ class UpdateClientRequest extends Request
             'lastname' => 'required|min:3|max:16',
             'address' => 'required|min:3|max:32',
             'phone' => 'required|min:6|max:9',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
         ];
     }
 
