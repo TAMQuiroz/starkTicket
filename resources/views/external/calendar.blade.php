@@ -11,7 +11,7 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-sm-6">Eventos de {{date('Y-m-d',$date_at)}}</div>
+		<div class="col-sm-6">Busqueda del día {{date('Y-m-d',$date_at)}}</div>
 		<div class="col-sm-5 pull-right">
 			{!!Form::open(array('id'=>'form','class'=>'form-inline'))!!}
 			  <div class="form-group">
@@ -50,7 +50,7 @@
 @if(count($events)===0)
 <div class="alert alert-warning"> Eventos publicados no encontrados en esta fecha</div>
 @else
-		<p>Eventos de {{date('Y-m-d',$date_at)}}</p>
+		<p>Eventos publicados el {{date('Y-m-d',$date_at)}}</p>
 	<div class="row">
 	    @foreach($events as $event)
 	    <div class="3u">

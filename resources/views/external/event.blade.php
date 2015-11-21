@@ -126,7 +126,7 @@
                             {!! Html::image($event->place->image,null, ['class'=>'carousel_img']) !!}
 
                             <h3 class="dates">Distribución de Zonas</h3>
-                            <p>{!! Html::image('images/asientos.jpg') !!}</p>
+                            <p>{!! Html::image($event->distribution_image,null, ['class'=>'carousel_img']) !!}</p>
                         </section>
                     </div>
                     <!-- Sidebar -->
