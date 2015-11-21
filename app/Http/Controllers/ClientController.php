@@ -73,6 +73,11 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
+        
+        $users = User::where('email',$request['email'])->get();
+        if (count($users)!=0){
+            return back()->withErrors(['Ya Registro este email']);  
+        }
         $input = $request->all();
 
         $user = new User ;
