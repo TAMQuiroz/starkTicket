@@ -22,6 +22,9 @@
         <div class="row">
 
             <div class="col-md-7">
+
+             {!!Form::open(array('url' => 'admin/politics/new','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
+    
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="0">
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
@@ -33,6 +36,11 @@
                     <!-- Wrapper for jose slides -->
                     <div class="carousel-inner">
                         <div class="item active">
+
+
+    <p><a href="#" class="image full">{!! Html::image( $gifts->toArray(0)->image, null,['class'=>'carousel_img']) !!}</a></p>
+
+
                         {!! Html::image('images/voidInterno.png', null, array()) !!}
                         </div>
                         <div class="item">
@@ -58,8 +66,9 @@
                 <div class="input-group" style="width:290px">
                     {!! Form::text('client', null, array('class' => 'form-control', 'placeholder'=>'Cliente','id'=>'clientS')) !!} 
                     <span class="input-group-btn" type="button">
-                        {!!Form::button('Buscar',array('id'=>'btnBuscar','class'=>'btn btn-info'))!!}
+                                   <button type="submit" class="btn btn-info">Buscar</button>
                     </span>
+            
                 </div><!-- /input-group -->
                 <br>
                 <div class="col-md-8">
@@ -72,7 +81,8 @@
                 </div>
                 <div class="col-md-8">
                     <h4>Regalos</h4>
-                    {!! Form::select('gifts', ['regalo1', 'regalo2'], null, ['class' => 'form-control', 'required'])!!}
+                    {!! Form::select('gifts',  $gifts->toArray()  , null, ['class' => 'form-control', 'required'])!!}
+
                 </div>
                 <div class="col-md-8" style="margin-top:20px">
                     {!!Form::button('Canjear Puntos',array('id'=>'btnChange','class'=>'btn btn-info'))!!}

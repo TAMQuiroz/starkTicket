@@ -110,7 +110,8 @@ class PromoController extends Controller
         $accessPromotion = accessPromotion::orderBy('id')->get()->lists('description','id') ;
 
         return view('internal.promoter.newPromotion',  ['events' => $events , 'accessPromotion'=> $accessPromotion   ]    );  
-    }
+ 
+   }
 
 
 

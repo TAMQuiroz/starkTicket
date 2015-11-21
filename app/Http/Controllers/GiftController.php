@@ -69,7 +69,15 @@ class GiftController extends Controller
      */
     public function createExchange()
     {
-        return view('internal.salesman.exchangeGift');
+
+
+
+
+    $gifts = Gift::orderBy('id')->get()->lists('name','id','stock','status','points','image') ;
+
+    return view('internal.salesman.exchangeGift', ['gifts' => $gifts ]  );
+
+
     }
 
     /**
