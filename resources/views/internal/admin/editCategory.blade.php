@@ -42,7 +42,7 @@
               <div id="subcategoryForm" class="collapse form-group @if ($category->type == 2) in @endif">
                 <label class="col-sm-2" for="subcategory">Elija Categoria</label>
                 <div class="col-sm-10">
-                  {!! Form::select('father_id', +$categories_list->toArray(), $category->father_id, array('class' => 'form-control','id' => 'subcategory')) !!}
+                  {!! Form::select('father_id', $categories_list->toArray(), $category->father_id, array('class' => 'form-control','id' => 'subcategory')) !!}
                 </div>
               </div>
               <div class="form-group">
