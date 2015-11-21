@@ -9,15 +9,7 @@
         .input-group{
             width:600px;
         }
-        .btn-primary{
-            background-color: #83D3C9;
-            border-color: #83D3C9;
-            margin-left: 50px;
-        }
-        .btn-primary:hover{
-            background-color: #329DB7;
-            border-color: #329DB7;
-        }
+        
     </style>
 @stop
 
@@ -30,7 +22,7 @@
 <div class="input-group">
     {!! Form::text('search', '', array('class' => 'form-control')) !!}
     <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">Buscar</button>
+        <button class="btn btn-info" type="button">Buscar</button>
     </span>
 </div>
 <br><br>
@@ -45,7 +37,7 @@
                 <b>Lugar: </b> {{$event->place->name}} <br>
                 <b>Direccion:</b> {{$event->place->address}} <br>
             </p>
-            <p><a href="event/{{$event->id}}"  class="btn btn-primary" role="button" >Detalle</a></p>
+            <p><a href="event/{{$event->id}}"  class="btn btn-info" role="button" >Detalle</a></p>
         </section>
     </div>
     @endforeach
@@ -55,3 +47,4 @@
 @section('javascript')
 
 @stop
+

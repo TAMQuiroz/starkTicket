@@ -46,8 +46,9 @@
                     <div class="carousel-inner">
                         @foreach ($destacados as $key=>$destacado)
                         <div class="item @if($key==0)active @endif">
+                            <a href="event/{{$destacado->event_id}}">
                             <img class="img-responsive" src="{{$destacado->event->image}}" alt="">
-
+                            </a>
                         </div>
                         @endforeach
                     </div>
@@ -71,28 +72,21 @@
             <div class="col-lg-12">
                 <h3 class="page-header">Eventos próximos</h3>
             </div>
+            
+            @foreach($upcoming as $event)
 
             <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive img-hover img-related" src="images/bruta.jpg"  alt="">
+                <a href="event/{{$event->id}}">
+                    {!! Html::image($event->image, null, array('class'=>'img-responsive img-hover img-related')) !!}
                     <br><br>
-                    Fuerza Bruta
                 </a>
+                <div class="text-center">
+                    {{$event->name}}
+                </div>                
+                
             </div>
 
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive img-hover img-related" src="images/peppa.jpg" alt="">
-                    El circo de Doña Peppa
-                </a>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive img-hover img-related" src="images/arctic.jpg" alt="">
-                     El concierto de los Arctic Monkeys
-                </a>
-            </div>
+            @endforeach
 
         </div>
         <br>

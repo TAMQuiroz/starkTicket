@@ -5,11 +5,28 @@
 @stop
 
 @section('title')
-  Bienvenido promotor de ventas
+Bienvenido promotor de ventas
 @stop
 
 @section('content')
-<p>Ten un buen dia</p>
+<legend>Eventos creados</legend>
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Fecha del Evento</th>
+        <th>Nombre del Evento</th>
+        <th>Detalles</th>
+    </tr>
+    @foreach($events as $event)
+    <tr>
+       <td>{{date("d/m/Y",$event->publication_date)}} </td>
+       <td>{{$event->name}}</td>
+       <td><a href="{{ url ('promoter/event/'.$event->id) }}"><button  class="btn btn-info" title="Mostrar mas detalles">Detalles</button></a></td>
+    </tr>
+    @endforeach
+</table>
+</div>
+{!!$events->render()!!}
 @stop
 
 @section('javascript')

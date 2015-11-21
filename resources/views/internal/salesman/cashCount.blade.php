@@ -33,7 +33,7 @@
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-3 control-label">Nuevo Monto Inicial</label>
         <div class="col-sm-3">
-          {!!Form::number('cash', $cashFirst ,['class'=>'form-control','id'=>'cash', 'min'>=0])!!}
+          {!!Form::number('cash', $cashFirst ,['class'=>'form-control','id'=>'cash', 'min'=>0,'requiered'])!!}
           {!! Form::hidden('cash_val', null, ['cash'=>'cash_val'])!!}
           {!! Form::hidden('type', '1', ['id'=>'type'])!!}
         </div>
@@ -250,6 +250,9 @@
             {!!Form::input('number','cash', $sumTotal,['class'=>'form-control','id'=>'total','readonly'])!!}
             {!! Form::hidden('cash_val', null, ['cash'=>'cash_val'])!!}
              {!! Form::hidden('type', '2', ['id'=>'type'])!!}
+             {!! Form::hidden('sumeRefound', $sumRefound, ['id'=>'sumeRefound'])!!}
+             {!! Form::hidden('sumeSale', $sumSale, ['id'=>'sumeSale'])!!}
+             {!! Form::hidden('cashFirst', $cashFirst, ['id'=>'cashFirst'])!!}
           </div>
           <div class="col-sm-6">
             <a  class="btn btn-info" href="" title="submit" data-toggle="modal" data-target="#info" >Arquear Caja</a>

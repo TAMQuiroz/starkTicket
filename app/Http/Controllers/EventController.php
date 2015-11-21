@@ -26,6 +26,7 @@ use App\User;
 use Auth;
 use Session;
 use DB;
+use File;
 
 use DateTime;
 class EventController extends Controller
@@ -86,7 +87,14 @@ class EventController extends Controller
         $event->time_length  = $data['time_length'];
         $event->publication_date = strtotime($data['publication_date']);
         $event->selling_date = strtotime($data['selling_date']);
+        $event->promoter_id  = Auth::user()->id; 
         $event->image        = $this->file_service->upload($data['image'],'event');
+        if($data['distribution_image'])
+            $event->distribution_image = $this->file_service->upload($data['distribution_image'],'event');
+        if($data['percentage_comission']!='')
+            $event->percentage_comission = $data['percentage_comission'];
+        if($data['amount_comission']!='')
+            $event->amount_comission = $data['amount_comission'];
         $event->save();
         return $event;
     }
@@ -222,15 +230,18 @@ public function store(StoreEventRequest $request)
             //return response()->json(['message' => $result['error']]);
 
         $data = [
-        'name'          => $request->input('name'),
-        'description'   => $request->input('description'),
-        'category_id'   => $request->input('category_id'),
-        'organizer_id'  => $request->input('organizer_id'),
-        'local_id'      => $request->input('local_id'),
-        'publication_date' => $request->input('publication_date'),
-        'selling_date'  => $request->input('selling_date'),
-        'image'        => $request->file('image'),
-        'time_length'   => $request->input('time_length')
+        'name'           => $request->input('name'),
+        'description'    => $request->input('description'),
+        'category_id'    => $request->input('category_id'),
+        'organizer_id'   => $request->input('organizer_id'),
+        'local_id'       => $request->input('local_id'),
+        'time_length'    => $request->input('time_length'),
+        'selling_date'   => $request->input('selling_date'),
+        'image'          => $request->file('image'),
+        'distribution_image'   => $request->file('distribution_image'),
+        'publication_date'     => $request->input('publication_date'),
+        'percentage_comission' => $request->input('percentage_comission',''),
+        'amount_comission'     => $request->input('amount_comission',''),
         ];
         $event = $this->storeEvent($data);
         $zone_data = [
@@ -260,7 +271,8 @@ public function store(StoreEventRequest $request)
      */
     public function show($id)
     {
-        //
+        $event = Event::findOrFail($id);
+        return view('internal.promoter.event.show',["event"=>$event]);
     }
     /**
      * Display the specified resource.
@@ -299,7 +311,8 @@ public function store(StoreEventRequest $request)
         $Comment->save();
 
         $Comments = Comment::where('event_id',$id  ) ->get();
-        return view('external.event', ['event' => $event, 'user'=>$user , 'Comments'=> $Comments,'users' => $users  ] );
+        return redirect()->back();
+        //return view('external.event', ['event' => $event, 'user'=>$user , 'Comments'=> $Comments,'users' => $users  ] );
     }
 
     /**
@@ -309,7 +322,9 @@ public function store(StoreEventRequest $request)
      */
     public function showClientRecord()
     {
-        return view('internal.client.record');
+        $userId = Auth::user()->id;
+        $tickets = Ticket::where("owner_id",$userId)->paginate(10);
+        return view('internal.client.record',["tickets"=>$tickets]);
     }
     /**
      * Display the specified resource.
@@ -375,11 +390,15 @@ public function store(StoreEventRequest $request)
         $old_event->publication_date = strtotime($data['publication_date']);
         $old_event->selling_date = strtotime($data['selling_date']);
         $image_url = $old_event->image;
+        $dist_url = $old_event->distribution_image;
         if($data['image'] != null)
             $old_event->image        = $this->file_service->upload($data['image'],'event');
-
         else
             $old_event->image = $image_url;
+        if($data['distribution_image'] != null)
+            $old_event->distribution_image = $this->file_service->upload($data['distribution_image'],'event');
+        else
+            $old_event->distribution_image = $dist_url;
         $old_event->save();
         return $old_event;
     }
@@ -417,12 +436,16 @@ public function store(StoreEventRequest $request)
         if($local->rows >=1 && !$data['zone_columns'])
             return ['error' => 'se debe especificar filas y columnas para este local numerado'];
         if($data['zone_columns']){ // esta entrando a pesar de no ser numerado el local :S :S
+           $seats_ids = array();
            for($i = 0; $i < count($data['zone_names']); $i++){
-               $temp[$i] = [$data['start_column'][$i], $data['start_row'][$i]];
-               for($j = $i -1; $j >=0; $j--){
-                   if($temp[$j][0] == $data['start_column'][$i] && $temp[$j][1] == $data['start_row'][$i])
-                       return ['error' => 'Hay zonas ubicadas en la misma fila y columna'];
-               }
+               for($j = $data['start_column'][$i]; $j<= $data['start_column'][$i] + $data['zone_columns'][$i]-1;$j++)
+                    for($k= $data['start_row'][$i]; $k<=$data['start_row'][$i] + $data['zone_rows'][$i]-1;$k++){
+                        $id = ''.$k.'_'.$j;
+                        if(in_array($id, $seats_ids)){
+                            return ['error' => 'Hay zonas con asientos cruzados. Por favor configurar bien las zonas'];
+                        }
+                        array_push($seats_ids, $id);
+                    }
            }
            for ($i = 0; $i < count($data['zone_columns']); $i++) {
                $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
@@ -515,8 +538,11 @@ public function update(UpdateEventRequest $request, $id)
                 'local_id'      => $request->input('local_id'),
                 'publication_date' => $request->input('publication_date'),
                 'selling_date'  => $request->input('selling_date'),
-                'time_length'  => $request->input('time_length'),
-                'image'        => $request->file('image')
+                'time_length'   => $request->input('time_length'),
+                'image'         => $request->file('image'),
+                'distribution_image' => $request->file('distribution_image'),
+                'percentage_comission' => $request->input('percentage_comission',''),
+                'amount_comission'     => $request->input('amount_comission',''),
             ];
         if($now->getTimestamp() < strtotime($request->input('selling_date'))){
             //antes del sellingdate en general
@@ -645,14 +671,17 @@ public function update(UpdateEventRequest $request, $id)
         }
         $this->deletePresentations($id);
         $this->deleteZones($id);
+        File::delete($event->image);
+        if($event->distribution_image != null)
+            File::delete($event->distribution_image);
         $event->delete();
         return redirect()->route('promoter.record');
     }
 
-       public function destroyComment($idComment)
+    public function destroyComment($idComment)
     {
         $comment = Comment::find($idComment);
-      $comment->delete();
+        $comment->delete();
 
         return redirect()->back();
     }
@@ -705,7 +734,8 @@ public function update(UpdateEventRequest $request, $id)
         return redirect('/promoter/event/record');
     }
     public function getHighlights(){
-        $destacados = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->with('event')->get();
+        //$destacados = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->with('event')->get();
+        $destacados = Highlight::all();
         return view('internal.promoter.highlights.index', array('destacados'=>$destacados));
     }
 
@@ -732,7 +762,7 @@ public function update(UpdateEventRequest $request, $id)
         $eventos = Event::with(['presentations' => function($query){
             $query->where('starts_at', '<', time());
         }])->whereNotIn('id', $destacados)->get();
-        return view('internal.promoter.highlights.create', array('fecha_min' => $min_date, 'events' => $eventos));
+        return view('internal.promoter.highlights.create', array('fecha_min_init' => Carbon::today()->addDay(), 'fecha_min' => Carbon::today(), 'events' => $eventos));
     }
 
     public function storeHighlight(StoreHighlightRequest $request){
@@ -761,6 +791,12 @@ public function update(UpdateEventRequest $request, $id)
         $event = Event::find($request->input('event_id'));
         $highlight->event()->associate($event);
         $highlight->save();
+        return redirect()->route('promoter.highlights.index');
+    }
+
+    public function editDate($id, Request $request){
+        Highlight::where('id', $id)->update(['start_date' => $request['start_date']]);
+
         return redirect()->route('promoter.highlights.index');
     }
 }

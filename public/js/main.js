@@ -139,7 +139,7 @@ function getPromo(){
         },
         success: function( response ){
             //console.log(response);
-
+            console.log("exito");
             if (response != ""){
                 $('#promotion_id').val(response.id);
                 $('#total2').val(response.amount);
@@ -168,6 +168,7 @@ function getPromo(){
             */
         },
         error: function( response ){
+            console.log("failure :c");
             console.log(response);
         }
     });
@@ -372,7 +373,7 @@ $('#salesman_di').focusout( function() {
             }
             else
             {
-                $('#salesman_name').val('No existe ese cliente');
+                $('#salesman_name').val('No existe ese vendedor');
                 $('#salesman_di').val("");
                 $('#salesman_id').val(0);
             }

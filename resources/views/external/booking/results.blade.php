@@ -41,7 +41,7 @@
 	<!--<h5> Su código de Reserva es 2134415674 y ha sido enviado a su correo electrónico </h5>	-->
 	<br><br>
 	 
-<form action="{{action('BookingController@sendConfirmationMail',$codigo)}}" enctype="multipart/form-data">		
+<form action="{{action('BookingController@sendConfirmationMail',$codigo)}}" enctype="multipart/form-data" style="display: inline-block;">		
 	<td><button type="submit" class="btn btn-info">Enviar información al Correo</button></td>
 </form>
 	<td><a href={{url('event/'.$event->id)}}><button type="button" class="btn btn-info">Finalizar</button></a></td>
