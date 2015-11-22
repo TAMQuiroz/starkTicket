@@ -31,7 +31,7 @@ class StoreClientRequest extends Request
             'phone' => 'required|min:7|max:9',
             'di_type' => 'required|digits_between:0,2',
             'di' => 'required|min:8|max:16',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'birthday' => 'required|date',
             'password_confirmation' => 'required|same:password'
         ];
