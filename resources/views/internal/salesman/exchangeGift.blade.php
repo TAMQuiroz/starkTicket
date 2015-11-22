@@ -30,9 +30,9 @@
                     <ol class="carousel-indicators">
                         <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                        
-@for ($i = 0; $i <  $giftArray->count(); $i++)
-    <li data-target="#carousel-example-generic" data-slide-to= {{$i}}></li>
-@endfor
+                        @for ($i = 0; $i <  $giftArray->count(); $i++)
+                            <li data-target="#carousel-example-generic" data-slide-to= {{$i}}></li>
+                        @endfor
 
                   
                     </ol>
@@ -43,16 +43,14 @@
                         {!! Html::image('images/imagen-canjea.jpg', null, array()) !!}
                         </div>
 
-          @foreach($giftArray as $gift)
-              <div class="item">
-                        {!! Html::image( $gift->image , null, array()) !!}
-                        </div>
-             @endforeach
-
-
-                       
+                        @foreach($giftArray as $gift)
+                            <div class="item">
+                                {!! Html::image( $gift->image , null, array()) !!}
+                            </div>
+                        @endforeach
                   
                     </div>
+
                     <!-- Controls -->
                     <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
                         <span class="glyphicon glyphicon-chevron-left"></span>
@@ -91,7 +89,7 @@
     </div>
                 <div class="col-md-8">
                     <h4>Regalos</h4>
-                    {!! Form::select('gifts',  $giftsList->toArray()  , null, ['class' => 'form-control', 'required'])!!}
+                    {!! Form::select('gifts',  $giftsList->toArray()  , null, ['class' => 'form-control','id' => 'dd-list' ,'required'])!!}
  
                 </div>
 
@@ -156,5 +154,18 @@
     $('#yes').click(function(){
         $('#submitModal').modal('hide');  
     });
+
+
+    $('#dd-list').change(function(){
+        //alert('gg');
+        var list = document.getElementById("dd-list");
+        var idgift = list.options[list.selectedIndex].value;
+        var id = parseInt(idgift);
+        $('#carousel-example-generic').carousel(id);
+        //alert(id);
+
+
+    });
+
     </script>
 @stop
