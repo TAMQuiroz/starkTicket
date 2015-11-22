@@ -9,7 +9,7 @@ use App\Http\Requests\Gift\StoreGiftRequest;
 use App\Http\Requests\Gift\UpdateGiftRequest;
 use App\Models\Gift;
 use App\Services\FileService;
-
+use App\User;
 
 
 class GiftController extends Controller
@@ -71,14 +71,45 @@ class GiftController extends Controller
     {
 
 
+    $giftsArr = Gift::all();
+    $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
 
-
-    $gifts = Gift::orderBy('id')->get()->lists('name','id','stock','status','points','image') ;
-
-    return view('internal.salesman.exchangeGift', ['gifts' => $gifts ]  );
+    return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr]  );
 
 
     }
+
+    public function createExchangePost(Request $request)
+    {
+            $input = $request->all();
+        $idGift               =  $input['gifts'];
+        $idClient  =  $input['user_id'];
+
+
+
+
+        $gift = Gift::find($idGift);
+  $gift->stock        =    $gift->stock -1 ; 
+  $gift->save();
+
+     $user = User::find($idClient);
+  $user->points =   $user->points  - $gift->points      ;  
+  $user->save();
+
+    $giftsArr = Gift::all();
+    $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
+
+
+
+
+   // return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr]  );
+
+      return redirect('salesman');
+
+
+
+    }
+
 
     /**
      * Store a newly created resource in storage.
