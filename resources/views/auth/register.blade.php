@@ -3,7 +3,16 @@
 @extends('layoutExternal')
 
 @section('style')
-
+<style type="text/css">
+  input[type="date"]
+{
+    display:block;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    min-height: 1.2em;
+}
+  
+</style>
 @stop
 
 @section('title')
@@ -49,7 +58,7 @@
                 <div class="form-group col-md-6">
                   <label for="input4" class="col-sm-2 control-label">Dirección</label>
                   <div class="col-sm-10">
-                    {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'input4', 'required')) !!}
+                    {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'input4', 'required','maxlength'=>'100')) !!}
                   </div>
                 </div>
                 <div class="form-group col-md-6">

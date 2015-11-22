@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Client;
+namespace App\Http\Requests\Gift;
 
 use App\Http\Requests\Request;
-
-class UpdateClientRequest extends Request
+use App\Models\Gift;
+use App\User;
+class exchangeGift extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +24,15 @@ class UpdateClientRequest extends Request
      */
     public function rules()
     {
-        return [
-            'name' => 'required|min:3|max:16',
-            'lastname' => 'required|min:3|max:30',
-            'address' => 'required|min:3|max:100',
-            'phone' => 'required|min:6|max:9',
-            'email' => 'required|email|unique:users',
-        ];
-    }
+       $rules = [
 
+            'nombre_de_usuario'          =>  'required|exists:users,id',
+ 'gifts'          =>  'required|exists:gifts,id',
+
+        ];
+     
+
+
+    return $rules ;
+    }
 }

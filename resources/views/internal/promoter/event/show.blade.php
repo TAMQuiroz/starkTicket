@@ -10,7 +10,7 @@
 @section('content')
 <div class="row">
     <div class="col-sm-6">
-        @if($event->cancelled) <span class="label label-danger">Cancelado</span> @else <span class="label label-success">Vigente</span> @endif
+        @if($event->cancelled)<p><b>Estado: Cancelado</b></p> @else <p><b>Estado: Vigente</b></p> @endif
         <p><b>Código:</b>  {{$event->id}} </p>
         <p><b>Organizado por:</b> {{$event->organization->organizerName}} {{$event->organization->organizerLastName}}</p>
         <p><b>Descripción:</b>  {{$event->description}} </p>
@@ -44,7 +44,13 @@
         @endforeach
         </ul>
         <hr>
+<<<<<<< HEAD
         {!! Html::image($event->image, null, array('class'=>'img-thumbnail')) !!}
+=======
+     
+        {!! Html::image($event->image, null, array('class'=>'img-thumbnail')) !!}
+       
+>>>>>>> 31945c92d6bb8e3d34f04a487e87edcd9a20b085
     </div>
 </div>
 @stop

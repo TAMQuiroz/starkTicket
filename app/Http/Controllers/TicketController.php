@@ -169,7 +169,7 @@ class TicketController extends Controller
             //Crear ticket
             $id = DB::table('tickets')->insertGetId(
             ['payment_date'         => new Carbon(),
-             'reserve'              => 0,
+             'reserve'              => null,
              'cancelled'            => 0,
              'owner_id'             => null,
              'event_id'             => $request['event_id'],

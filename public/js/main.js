@@ -300,12 +300,15 @@ $('#user_di').focusout( function() {
             {
                 $('#user_name').val(response.name+" "+response.lastname);
                 $('#user_id').val(response.id);
+                $('#user_points').val(response.points);
+
             }
             else
             {
                 $('#user_name').val('No existe ese cliente');
                 $('#user_di').val("");
                 $('#user_id').val(0);
+                $('#user_points').val('No existe ese cliente');
             }
         },
         error: function( response ){
@@ -373,7 +376,7 @@ $('#salesman_di').focusout( function() {
             }
             else
             {
-                $('#salesman_name').val('No existe ese cliente');
+                $('#salesman_name').val('No existe ese vendedor');
                 $('#salesman_di').val("");
                 $('#salesman_id').val(0);
             }
