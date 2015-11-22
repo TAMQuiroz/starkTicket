@@ -144,10 +144,9 @@ class TicketController extends Controller
                 return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
         }
 
-
-        DB::beginTransaction();
-
         try{
+            DB::beginTransaction();
+
             $tickets = array();
 
             for($i = 0; $i < $nTickets; $i++){
@@ -157,11 +156,13 @@ class TicketController extends Controller
                     DB::table('slot_presentation')
                         ->where('slot_id', $seats[$i])
                         ->where('presentation_id', $request['presentation_id'])
+                        ->lockForUpdate()
                         ->update(['status' => config('constants.seat_taken')]);
                 }else{
                     //Disminuir capacidad en la zona de esa presentacion
                     DB::table('zone_presentation')->where('zone_id', $request['zone_id'])
                                                   ->where('presentation_id',$request['presentation_id'])
+                                                  ->lockForUpdate()
                                                   ->decrement('slots_availables');;
                 }
             }
@@ -243,7 +244,7 @@ class TicketController extends Controller
             DB::commit();
 
         }catch (\Exception $e){
-            var_dump($e);
+            //var_dump($e);
             //dd('rollback');
             DB::rollback();
             return back()->withInput($request->except('seats'))->withErrors(['Por favor intentelo nuevamente']);
