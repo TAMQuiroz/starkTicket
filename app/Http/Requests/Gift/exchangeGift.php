@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Gift;
 
 use App\Http\Requests\Request;
-
+use App\Models\Gift;
+use App\User;
 class exchangeGift extends Request
 {
     /**
@@ -23,14 +24,15 @@ class exchangeGift extends Request
      */
     public function rules()
     {
-       return [
+       $rules = [
 
-            'points'          =>  '> ',
-           
-
+            'nombre_de_usuario'          =>  'required|exists:users,id',
+ 'gifts'          =>  'required|exists:gifts,id',
 
         ];
+     
 
 
+    return $rules ;
     }
 }

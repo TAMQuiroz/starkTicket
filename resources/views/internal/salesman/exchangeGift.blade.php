@@ -32,14 +32,39 @@
                                                   </ol>
                             <!-- Wrapper for jose slides -->
                             <div class="carousel-inner">
-                                <div class="item active">
-                                {!! Html::image('images/imagen-canjea.jpg', null, array()) !!}
-                                </div>
+                        
+                            
+                            @if( $giftArray->count() == 0 ) 
+
+<div class="item active">
+ {!! Html::image('images/imagen-canjea.jpg', null, array()) !!}
+            </div>
+
+   @else
+
+
                                 @foreach($giftArray as $gift)
-                                    <div class="item">
+                     
+
+
+                @if($gift->id == 1)
+                 <div class="item active">
+                    @else
+           <div class="item">
+
+                @endif         
+                            
                                         {!! Html::image( $gift->image , null,  array() ) !!}
                                     </div>
                                 @endforeach
+
+   @endif 
+
+
+
+
+
+
                             </div>
                            <!-- Controls -->
                             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
@@ -59,7 +84,7 @@
                   <h4>Nombre Usuario</h4>
                     <div class="input-group" style="width:290px">
                         {!! Form::text('name', null, ['class' => 'form-control', 'disabled', 'id'=>'user_name']) !!}
-                        {!! Form::hidden('user_id', null, ['id'=>'user_id'])!!}
+                        {!! Form::hidden('nombre_de_usuario', null, ['id'=>'user_id'])!!}
                         <br><br>
                         <h4>Puntos Acumulados</h4>
                         {!! Form::text('points', null, ['class' => 'form-control', 'disabled', 'id'=>'user_points']) !!}
@@ -116,7 +141,7 @@
                 //alert('gg');
                 var list = document.getElementById("dd-list");
                 var idgift = list.options[list.selectedIndex].value;
-                var id = parseInt(idgift);
+                var id = parseInt(idgift-1);
                 $('#carousel-example-generic').carousel(id);
                 //alert(id);
 

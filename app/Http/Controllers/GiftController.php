@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Gift\StoreGiftRequest;
 use App\Http\Requests\Gift\UpdateGiftRequest;
+use App\Http\Requests\Gift\exchangeGift;
 use App\Models\Gift;
 use App\Services\FileService;
 use App\User;
@@ -79,11 +80,11 @@ class GiftController extends Controller
 
     }
 
-    public function createExchangePost(Request $request)
+    public function createExchangePost(exchangeGift $request)
     {
             $input = $request->all();
         $idGift               =  $input['gifts'];
-        $idClient  =  $input['user_id'];
+        $idClient  =  $input['nombre_de_usuario'];
 
 
 
@@ -102,9 +103,9 @@ class GiftController extends Controller
 
 
 
-   // return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr]  );
+    return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr]  );
 
-      return redirect('salesman');
+    //  return redirect('salesman');
 
 
 
