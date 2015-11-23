@@ -78,10 +78,17 @@
             <div class="col-sm-3 col-xs-6">
                 <a href="event/{{$event->id}}">
                     {!! Html::image($event->image, null, array('class'=>'img-responsive img-hover img-related')) !!}
-                    <br><br>
+                    <br>
                 </a>
                 <div class="text-center">
-                    {{$event->name}}
+                    <h3>{{$event->name}}</h3>
+                    <b>Fecha de venta: </b> {{date('Y-m-d',$event->selling_date)}}<br>
+                    <b>Categoria: </b> {{$event->category->name}} <br>
+                    @if($event->place->row)
+                        <b>Evento Numerado </b>
+                    @else
+                        <b>Evento No Numerado </b>
+                    @endif
                 </div>                
                 
             </div>
