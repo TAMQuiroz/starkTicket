@@ -35,9 +35,9 @@ class Event extends Model
         return $this->hasMany('App\Models\Highlight');
     }
     public function numberTickets() {
-        return $this->hasMany('App\Models\Ticket')->where(['event_id'=>$this->id,'cancelled'=>'0'])->sum('quantity');
+        return $this->hasMany('App\Models\Ticket')->where(['event_id'=>$this->id,'cancelled'=>'0'])->whereNotNull('payment_date')->sum('quantity');
     }
     public function amountAccumulated() {
-        return $this->hasMany('App\Models\Ticket')->where(['event_id'=>$this->id,'cancelled'=>'0'])->sum('total_price');
+        return $this->hasMany('App\Models\Ticket')->where(['event_id'=>$this->id,'cancelled'=>'0'])->whereNotNull('payment_date')->sum('total_price');
     }
 }
