@@ -149,26 +149,20 @@
                                     <b>Pago con efectivo</b>
 
                                     <h5 class="text-center">Tipo de Cambio: Compra - S/. {{$exchangeRate->buyingRate}} | Venta - S/. {{$exchangeRate->sellingRate}}</h5>
+                                        {!!Form::hidden('',$exchangeRate->buyingRate,['id'=>'exchangeRate'])!!}
                                     <hr>
                                     <div class="col-md-6">
-                                        <div>
-                                            {!!Form::radio('currency', null, null, ['id'=>'soles','disabled'])!!}
-                                            <b>Soles</b>
-                                        </div>
                                         <b>Monto Ingresado en soles</b>
-                                        {!!Form::number('',null,['id'=>'amountIn','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
-                                        <b>Vuelto</b>
-                                        {!!Form::text('',null,['id'=>'change','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}
+                                        {!!Form::number('',null,['id'=>'amountIn','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0, 'onChange'=>'getChange()'])!!}
                                     </div>
                                     <div class="col-md-6">
-                                        <div>
-                                            {!!Form::radio('currency', null, null, ['id'=>'dolares','disabled'])!!}
-                                            <b>Dolares</b>
-                                        </div>
                                         <b>Monto Ingresado en dolares</b>
-                                        {!!Form::number('',null,['id'=>'amountInDollars','class'=>'form-control','placeholder'=>'$. ','disabled','min'=>0])!!}
+                                        {!!Form::number('',null,['id'=>'amountInDollars','class'=>'form-control','placeholder'=>'$ ','disabled','min'=>0, 'onChange'=>'getChange()'])!!}
+                                        
+                                    </div>
+                                    <div class="col-md-12">
                                         <b>Vuelto</b>
-                                        {!!Form::text('',null,['id'=>'changeDollars','class'=>'form-control','placeholder'=>'$. ','readonly'])!!}
+                                        {!!Form::text('',null,['id'=>'change','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}
                                     </div>
                                 </div>
                                 <div class="col-md-12"><hr></div>
