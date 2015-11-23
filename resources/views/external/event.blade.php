@@ -52,10 +52,14 @@
 
                             </div>
                             @if(isset($user) && $user->role_id == config('constants.salesman'))
-                            <a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
+                                @if($event->selling_date <= strtotime(date("Y-m-d")) )
+                                    <a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
+                                @endif
                             @else
-                            <a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
-                            <a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
+                                @if($event->selling_date <= strtotime(date("Y-m-d")) )
+                                    <a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
+                                    <a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
+                                @endif
                             @endif
                             
                             <br>
