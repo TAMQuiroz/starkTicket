@@ -29,7 +29,7 @@ function getTakenSlots(){
             event_id: evento,
         },
         success: function( response ){
-            console.log("hola");
+            //console.log("hola");
             $('#quantity').val(0);
             if(response != -1 )
             {
