@@ -126,13 +126,13 @@
                             <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
-                                <div class="form-group checkbox pay">
+                            <div class="row form-group">
+                                <div class="col-md-12 form-group checkbox pay">
                                     <b>Monto a Pagar</b>
                                     {!!Form::number('',null,['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
                                 </div>
                                 <br>
-                                <div class="form-group checkbox pay">
+                                <div class="col-md-12 form-group checkbox pay">
                                     {!!Form::radio('payMode', config('constants.credit'), null,['id'=>'creditCardPay','onChange'=>'getPromo()'])!!}
                                     <b>Pago con tarjeta</b>
                                     <hr>
@@ -144,19 +144,36 @@
                                     {!!Form::number('',null,['id'=>'securityCode','class'=>'form-control','placeholder'=>'123','disabled','min'=>0,'max'=>999,'required'])!!}
                                 </div>
                                 <br>  
-                                <div class="form-group checkbox pay">
+                                <div class="col-md-12 form-group checkbox pay">
                                     {!!Form::radio('payMode', config('constants.cash'), null,['id'=>'cashPay','onChange'=>'getPromo()'])!!}
                                     <b>Pago con efectivo</b>
 
                                     <h5 class="text-center">Tipo de Cambio: Compra - S/. {{$exchangeRate->buyingRate}} | Venta - S/. {{$exchangeRate->sellingRate}}</h5>
                                     <hr>
-                                    <b>Monto Ingresado</b>
-                                    {!!Form::number('',null,['id'=>'amountIn','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
-                                    <b>Vuelto</b>
-                                    {!!Form::text('',null,['id'=>'change','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}
+                                    <div class="col-md-6">
+                                        <div>
+                                            {!!Form::radio('currency', null, null, ['id'=>'soles','disabled'])!!}
+                                            <b>Soles</b>
+                                        </div>
+                                        <b>Monto Ingresado en soles</b>
+                                        {!!Form::number('',null,['id'=>'amountIn','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
+                                        <b>Vuelto</b>
+                                        {!!Form::text('',null,['id'=>'change','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div>
+                                            {!!Form::radio('currency', null, null, ['id'=>'dolares','disabled'])!!}
+                                            <b>Dolares</b>
+                                        </div>
+                                        <b>Monto Ingresado en dolares</b>
+                                        {!!Form::number('',null,['id'=>'amountInDollars','class'=>'form-control','placeholder'=>'$. ','disabled','min'=>0])!!}
+                                        <b>Vuelto</b>
+                                        {!!Form::text('',null,['id'=>'changeDollars','class'=>'form-control','placeholder'=>'$. ','readonly'])!!}
+                                    </div>
                                 </div>
+                                <div class="col-md-12"><hr></div>
                                 <br>  
-                                <div class="form-group checkbox pay">
+                                <div class="col-md-12 form-group checkbox pay">
                                     {!!Form::radio('payMode', config('constants.mix'), null,['id'=>'mixPay', 'onChange'=>'getPromo()'])!!}
                                     <b>Pago mixto</b>
                                     <hr>

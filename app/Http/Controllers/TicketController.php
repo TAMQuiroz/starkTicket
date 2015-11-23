@@ -156,13 +156,13 @@ class TicketController extends Controller
                     DB::table('slot_presentation')
                         ->where('slot_id', $seats[$i])
                         ->where('presentation_id', $request['presentation_id'])
-                        ->lockForUpdate()
+                        ->sharedLock()
                         ->update(['status' => config('constants.seat_taken')]);
                 }else{
                     //Disminuir capacidad en la zona de esa presentacion
                     DB::table('zone_presentation')->where('zone_id', $request['zone_id'])
                                                   ->where('presentation_id',$request['presentation_id'])
-                                                  ->lockForUpdate()
+                                                  ->sharedLock()
                                                   ->decrement('slots_availables');;
                 }
             }
@@ -500,6 +500,7 @@ class TicketController extends Controller
             $promo_disc = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
         }else{
             $promos = null;
+            return null;
         }
 
         $promos = Promotions::where('event_id',$request['event_id'])->where('typePromotion',2)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
