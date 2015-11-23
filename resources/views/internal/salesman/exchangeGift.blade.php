@@ -10,6 +10,21 @@
                 display: inline-block;
                 
             }
+            .carousel-inner > .item > img{
+                width: 440px;
+                height: 360px;
+                margin: auto;
+             }
+
+            h2 span {
+                padding: 10px;
+                color: red;
+                text-shadow: 2px 2px black;
+            }
+            h3{
+                text-shadow: 2px 2px black;
+                color: white;
+            }
             </style>
         @stop
 
@@ -46,11 +61,13 @@
                                 @endif         
                                         {!! Html::image( $gift->image , null,  array() ) !!}
                                         <div class="carousel-caption" style="color:black">
-                                            <h3>{{$gift->name}}</h3>
-                                            <p>Puntos: {{$gift->points}}</p>
-                                            <p>Stock: {{$gift->stock}}</p>
+                                            <h3><strong>{{$gift->name}}</strong></h3>
+                                            <h3>Puntos: {{$gift->points}}</h3>
+                                            <h3>Stock: {{$gift->stock}}</h3>
                                             @if($gift->stock<=0)
-                                            <p style="color:red">Agotado!!!</p>
+                                            <h2>
+                                                <span><strong>AGOTADO</strong></span>
+                                            </h2>
                                             @endif
                                         </div>
                                     </div>
@@ -127,6 +144,7 @@
                     @endfor
                 </div>
                 <!-- /.row -->
+                {!!Form::close()!!}
 @stop
 
 @section('javascript')
@@ -136,20 +154,22 @@
     var config = {
         routes: [
             { zone: "{{ URL::route('ajax.getClient') }}" },
-       
         ]
     };
     $('#yes').click(function(){
         $('#submitModal').modal('hide');  
     });
 
-    $('#dd-list').change(function(){
+    /*$('#dd-list').change(function(){
         var list = document.getElementById("dd-list");
         var idgift = list.options[list.selectedIndex].value;
         var id = parseInt(idgift-1);
         $('#carousel-example-generic').carousel(id);
 
-    });
+        var user_points = parseInt(document.getElementById("user_points").value);
+        var e = parseInt(document.getElementById("dd-list").value);
+        //var giftArray = "<?php echo $gift->points ?>";
+    });*/
 
     $('#botonModal').click(function(){
         $("#saveModal").modal('toggle');
