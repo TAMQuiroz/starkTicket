@@ -28,7 +28,7 @@
             {!!Form::open(array('url' => 'event/'.$event->id.'/' ,'files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
 
             <section>
-                <p><a href="#" class="image full">{!! Html::image($event->image, null,['class'=>'carousel_img']) !!}</a></p>
+                <p><a  class="image full">{!! Html::image($event->image, null,['class'=>'carousel_img']) !!}</a></p>
                 <p>{{ $event->description }}</p>
                 <br>
                 <div class="table-responsive">
