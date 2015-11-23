@@ -70,11 +70,10 @@ class DevolutionController extends Controller
         }
         if ($today > $date_refund_last)
         {
-            Session::flash('message', 'Ya no se puede devolver, el tiempo para devolución se a terminado');
+            Session::flash('message', 'El ticket no puede ser devuelto, tiempo de devolución agotado');
             Session::flash('alert-class','alert-danger');
             return redirect('salesman/devolutions');
         }
-        // return $date_refund . " - hoy - ".$today;
         $modulesAuth = $cancelPresentation->modules;
         $userId = Auth::user()->id;
         $moduleUser = ModuleAssigment::where(["salesman_id"=>$userId,"status"=>1])->first();
@@ -94,7 +93,6 @@ class DevolutionController extends Controller
                 $isAuthorized = 1;
                 break;
             }
-
         }
         return view('internal.salesman.devolution.new',["ticket"=>$ticket,"authorizedModule"=>$modulesAuth,"isAuthorized"=>$isAuthorized]);
     }
