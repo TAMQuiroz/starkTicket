@@ -11,8 +11,8 @@
                 
             }
             .carousel-inner > .item > img{
-                width: 440px;
-                height: 360px;
+                width: 652px;
+                height: 490px;
                 margin: auto;
              }
 

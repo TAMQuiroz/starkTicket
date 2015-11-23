@@ -90,15 +90,34 @@ class GiftController extends Controller
 
 
         $gift = Gift::find($idGift);
+        $user = User::find($idClient);
+
+
+   if(  $gift->points >  $user->points )
+
+            //return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
+            return back()->withErrors(['El usuario no posee puntos suficientes.']);
+    elseif(    $gift->stock   ==  0  )
+
+            //return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
+            return back()->withErrors(['El juguete seleccionado se encuentra agotado.']);
+    
+  
+
+
+
+
   $gift->stock        =    $gift->stock -1 ; 
   $gift->save();
 
-     $user = User::find($idClient);
   $user->points =   $user->points  - $gift->points      ;  
   $user->save();
 
     $giftsArr = Gift::all();
     $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
+
+
+
 
 
 
