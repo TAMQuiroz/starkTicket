@@ -19,5 +19,9 @@ class Organizer extends Model
 
     protected $fillable = ['organizerName', 'organizerLastName', 'businessName', 'ruc', 'countNumber', 'telephone','dni', 'email', 'address'];
     
+    public function eventos()
+    {
+        return $this->hasMany('App\Models\Event');
+    }
 }
       
