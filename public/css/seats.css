@@ -33,3 +33,7 @@ span.seatCharts-legendDescription {margin-left: 5px;line-height: 30px;}
 	width: 800px;
 	margin: auto;
 }
+
+.seatCharts-cell.seatCharts-space {
+    visibility: hidden;
+}

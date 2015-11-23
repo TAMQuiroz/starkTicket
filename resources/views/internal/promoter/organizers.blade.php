@@ -36,7 +36,7 @@
             <td>{{$organizer->telephone}}</td>
             <td>{{$organizer->email}}</td>
             <td>{{$organizer->ruc}}</td>
-            <td>{{$organizer->events}}</td>
+            <td>{{$organizer->eventos->count()}}</td>
             <td>
                 <a class="btn btn-info" href="{{url('promoter/organizer/'.$organizer->id.'/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
             </td>    
