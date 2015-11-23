@@ -10,7 +10,6 @@
 @stop
 
 @section('content')
-<div class="table-responsive">
   <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -24,7 +23,6 @@
         </tr>
     </thead>
      <tbody>
-
      @foreach($organizador as $organizer)
         <tr>
             <td>{{$organizer->organizerName}}</td>
@@ -38,8 +36,6 @@
             <td>
                 <a class="btn btn-info" href=""  title="Eliminar"    data-toggle="modal" data-target="#deleteModal{{$organizer->id}}"><i class="glyphicon glyphicon-remove"></i></a></td>
         </tr>
-
-
         <!-- MODAL -->
         <div class="modal fade"  id="deleteModal{{$organizer->id}}">
           <div class="modal-dialog">
@@ -59,12 +55,8 @@
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     @endforeach
-
-
     </tbody>
   </table>
-</div>
-
 {!!$organizador->render()!!}
 @stop
 
