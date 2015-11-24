@@ -701,17 +701,9 @@ public function update(UpdateEventRequest $request, $id)
     public function cancel($id)
     {
         $event = Event::findOrFail($id);
-        $presentations = $event->presentations();
-        $eventCancelled = 1;
-        foreach ($presentations as $presentation)
-        {
-            if($presentation->cancelled == "0")
-            {
-                $eventCancelled = 0;
-                break;
-            }
-        }
-        if ($eventCancelled)
+        $presentations = $event->presentations;
+
+        if(count($presentations) < 1)
         {
             $event->cancelled = 1;
             $event->save();
