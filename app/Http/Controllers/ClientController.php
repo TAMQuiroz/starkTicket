@@ -10,6 +10,7 @@ use App\Http\Requests\Client\UpdateClientRequest;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Models\Preference;
+use App\Models\Category;
 use Auth;
 use Session;
 use Carbon\Carbon;
@@ -88,141 +89,6 @@ class ClientController extends Controller
         $user->role_id = 1;
         $user->save();
 
-        //Lo siento, no se como hacerlo de una manera mas optima :v
-
-        $preference = new Preference;
-        if (!empty($input['rock'])){
-            $preference->idUser = $user->id;
-            $preference->idCategories = $input['rock'];
-            $preference->save();
-
-        }
-        
-        $preference2 = new Preference;
-
-        if (!empty($input['electronica'])){
-            $preference2->idUser = $user->id;
-            $preference2->idCategories = $input['electronica'];
-            $preference2->save();
-
-        }
-
-        $preference3 = new Preference;
-        if (!empty($input['ballet'])){
-            $preference3->idUser = $user->id;  
-            $preference3->idCategories = $input['ballet'];
-            $preference3->save();
-
-        }
-
-        $preference4 = new Preference;
-        if (!empty($input['comedia'])){
-            $preference4->idUser = $user->id;  
-            $preference4->idCategories = $input['comedia'];
-            $preference4->save();
-
-        }
-
-
-
-
-        $preference5 = new Preference;
-        if (!empty($input['drama'])){
-            $preference5->idUser = $user->id;  
-            $preference5->idCategories = $input['drama'];
-            $preference5->save();
-
-        }
-
-        $preference6 = new Preference;
-        if (!empty($input['reggae'])){
-            $preference6->idUser = $user->id;  
-            $preference6->idCategories = $input['reggae'];
-            $preference6->save();
-
-        }    
-
-        $preference7 = new Preference;
-        if (!empty($input['pena'])){
-            $preference7->idUser = $user->id;  
-            $preference7->idCategories = $input['pena'];
-            $preference7->save();
-
-        }    
-
-        $preference8 = new Preference;
-        if (!empty($input['opera'])){
-            $preference8->idUser = $user->id;  
-            $preference8->idCategories = $input['opera'];
-            $preference8->save();
-
-        }    
-
-        $preference9 = new Preference;
-        if (!empty($input['adultos'])){
-            $preference9->idUser = $user->id;  
-            $preference9->idCategories = $input['adultos'];
-            $preference9->save();
-
-        }    
-
-        $preference10 = new Preference;
-        if (!empty($input['sociales'])){
-            $preference10->idUser = $user->id;  
-            $preference10->idCategories = $input['sociales'];
-            $preference10->save();
-
-        }    
-
-        $preference11 = new Preference;
-        if (!empty($input['fiestas'])){
-            $preference11->idUser = $user->id;  
-            $preference11->idCategories = $input['fiestas'];
-            $preference11->save();
-
-        }    
-
-        $preference12 = new Preference;
-        if (!empty($input['tours'])){
-            $preference12->idUser = $user->id;  
-            $preference12->idCategories = $input['tours'];
-            $preference12->save();
-
-        }    
-
-        $preference13 = new Preference;
-        if (!empty($input['futbol'])){
-            $preference13->idUser = $user->id;  
-            $preference13->idCategories = $input['futbol'];
-            $preference13->save();
-
-        }    
-
-        $preference14 = new Preference;
-        if (!empty($input['automovilismo'])){
-            $preference14->idUser = $user->id;  
-            $preference14->idCategories = $input['automovilismo'];
-            $preference14->save();
-
-        }    
-
-        $preference15 = new Preference;
-        if (!empty($input['maraton'])){
-            $preference15->idUser = $user->id;  
-            $preference15->idCategories = $input['maraton'];
-            $preference15->save();
-
-        }    
-
-        $preference16 = new Preference;
-        if (!empty($input['musical'])){
-            $preference16->idUser = $user->id;  
-            $preference16->idCategories = $input['musical'];
-            $preference16->save();
-
-        }    
-
-
 
         //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
         Session::flash('message', 'Cliente Creado!');
@@ -252,7 +118,10 @@ class ClientController extends Controller
     {
         $id = Auth::user()->id;
         $obj = User::findOrFail($id);
-        return view('internal.client.edit', ['obj' => $obj]);
+        $categories = Category::all();
+        //return view('internal.client.edit', ['obj' => $obj]);
+        //return $categories;
+        return view('internal.client.edit', compact('obj','categories'));
     }
 
     /**
@@ -266,15 +135,34 @@ class ClientController extends Controller
     {
         $id = Auth::user()->id;
         $obj = User::findOrFail($id);
+
         //dd($request->all());
         $input = $request->all();
-
+        //return $input; 
         $obj->name = $input['name'];
         $obj->lastname = $input['lastname'];
         $obj->address = $input['address'];
         $obj->phone = $input['phone'];
         $obj->email = $input['email'];
         $obj->save();
+
+        //$prueba = Preference::all();   
+
+        //$khe = Preference::withTrashed()->where('idUser', $obj->id)->get();
+        //$khe->save();
+
+        Preference::where('idUser','=',$obj->id)->delete(); // rip tabla preferences
+
+        $values = array_values($input);
+        $i = 6;
+        while (!empty($values[$i])){
+           $preference = new Preference;
+           $preference->idUser = $obj->id;  
+           $preference->idCategories = $values[$i];
+           $preference->save();
+           $i = $i + 1;
+        }
+
 
         //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
         Session::flash('message', 'Informacion de perfil correctamente actualizada!');

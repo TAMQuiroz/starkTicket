@@ -208,7 +208,7 @@ class ReportController extends Controller
             $eventsDate = Presentation::whereBetween('starts_at',[ $fechaIni,  $fechaFin ])->get();
             foreach($eventsDate as $eventDate){
 
-                    $event= Event::where('id','=', $eventDate->event_id)->get(); 
+                    $event= Event::where('id','=', $eventDate->event_id)->where('cancelled','=',0)->get(); 
                     $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
                     $onlineTickets = 0;  $presentialTicket = 0;
                     $subTotalOnline = 0; $subTotalPresential = 0;
@@ -242,7 +242,7 @@ class ReportController extends Controller
             foreach($eventsDate as $eventDate){
 
                     //return $eventsDate;
-                    $event =  Event::where('name', 'LIKE', '%'.$input['name'].'%')->where('id','=', $eventDate->event_id)->get(); 
+                    $event =  Event::where('name', 'LIKE', '%'.$input['name'].'%')->where('cancelled','=',0)->where('id','=', $eventDate->event_id)->get(); 
                     
                     if ($event->count() != 0) {
                         $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
@@ -270,7 +270,7 @@ class ReportController extends Controller
             // pueden ser muchos eventos. Necesito información para llenar la tabla
             //filtro fechas si es necesario
                  
-                $eventsDate = Presentation::where('event_id','=', $event->id)->get(); 
+                $eventsDate = Presentation::where('event_id','=', $event->id)->where('cancelled','=',0)->get(); 
                 foreach ($eventsDate as $eventDate){
                     $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
                     $onlineTickets = 0;  $presentialTicket = 0;
@@ -408,7 +408,7 @@ class ReportController extends Controller
         foreach ($events as $event){
 
             // pueden ser muchos eventos. Necesito información para llenar la tabla
-            $eventsDate = Presentation::where('event_id','=', $event->id)->get();
+            $eventsDate = Presentation::where('event_id','=', $event->id)->where('cancelled','=',0)->get();
             foreach ($eventsDate as $eventDate){
                 $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
                 $onlineTickets = 0;  $presentialTicket = 0;
