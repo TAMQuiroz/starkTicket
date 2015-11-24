@@ -57,20 +57,20 @@
                                 @if($gift->id == 1)
                                 <div class="item active">
                                 @else
-                                    <div class="item">
+                                <div class="item">
                                 @endif         
-                                        {!! Html::image( $gift->image , null,  array() ) !!}
-                                        <div class="carousel-caption" style="color:black">
-                                            <h3><strong>{{$gift->name}}</strong></h3>
-                                            <h3>Puntos: {{$gift->points}}</h3>
-                                            <h3>Stock: {{$gift->stock}}</h3>
-                                            @if($gift->stock<=0)
-                                            <h2>
-                                                <span><strong>AGOTADO</strong></span>
-                                            </h2>
-                                            @endif
-                                        </div>
+                                    {!! Html::image( $gift->image , null,  array() ) !!}
+                                    <div class="carousel-caption" style="color:black">
+                                        <h3><strong>{{$gift->name}}</strong></h3>
+                                        <h3>Puntos: {{$gift->points}}</h3>
+                                        <h3>Stock: {{$gift->stock}}</h3>
+                                        @if($gift->stock<=0)
+                                        <h2>
+                                            <span><strong>AGOTADO</strong></span>
+                                        </h2>
+                                        @endif
                                     </div>
+                                </div>
                                 @endforeach
                             @endif 
                             </div>
@@ -105,7 +105,7 @@
                             {!! Form::select('gifts',  $giftsList->toArray()  , null, ['class' => 'form-control','id' => 'dd-list' ,'required'])!!}
                         </div>
                         <div class="col-md-8" style="margin-top:20px">
-                            <button id="exchange" class="btn btn-info" title="Create"  data-toggle="modal" data-target="#saveModal">Canjear puntos</button>
+                            <a class="btn btn-info" id="exchange" href="" title="Create" data-toggle="modal" data-target="#saveModal" >Canjear puntos</a>
                         </div>    
                         <!-- MODAL -->
                           <div class="modal fade"  id="saveModal">
