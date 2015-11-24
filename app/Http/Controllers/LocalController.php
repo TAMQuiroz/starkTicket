@@ -10,6 +10,8 @@ use App\Http\Requests\Local\UpdateLocalRequest;
 use App\Models\Local;
 use App\Services\FileService;
 use App\Models\Event;
+use App\Models\Distribution;
+use DB;
 
 class LocalController extends Controller
 {
@@ -67,8 +69,23 @@ class LocalController extends Controller
         
         //Control de subida de imagen
         $local->image        =   $this->file_service->upload($request->file('image'),'local');
-
+        //var_dump($seats);die();
         $local->save();
+        //sitios
+        $seats = $input['seats'];
+        
+        foreach ($seats as $key => $value) {
+            $column = floor($key/$local->rows)+1;
+            $row = ($key - (($column-1)*$local->rows))+1;
+            
+            $id = DB::table('distribution')->insertGetId(
+            ['row'         => $row,
+             'column'      => $column,
+             'local_id'    => $local->id,
+             'seat'        => $value,
+            ]);
+        }
+        
         return redirect('admin/local');
     }
 
@@ -76,7 +93,7 @@ class LocalController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
     public function show($id)
     {
@@ -151,5 +168,25 @@ class LocalController extends Controller
         }
         
         return redirect('admin/local');
+    }
+
+    public function getLocalSeatArray(Request $request){
+        $local_id = $request['local_id'];
+        $local = Local::find($local_id);
+        $distribution = $local->distribution;
+        $arreglo = array();
+        for($i = 1; $i <= $local->rows; $i++){
+            $texto = '';
+            for($j = 1; $j<= $local->columns;$j++){
+                $dist = Distribution::where('row', $i)->where('column', $j)
+                ->where('local_id', $local_id)->get()->first();
+                
+                if($dist->seat)
+                    $texto = $texto.'a';
+                else $texto = $texto.'_';
+            }
+            array_push($arreglo, $texto);
+        }
+        return $arreglo;
     }
 }

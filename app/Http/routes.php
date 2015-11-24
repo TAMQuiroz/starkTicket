@@ -98,6 +98,7 @@ Route::get('getZone', ['uses'=>'TicketController@getZone','as'=>'ajax.getZone'])
 Route::get('getTakenSlots', ['uses'=>'TicketController@getTakenSlots','as'=>'ajax.getTakenSlots']);
 Route::get('getPromo', ['uses'=>'TicketController@getPromo','as'=>'ajax.getPromo']);
 Route::get('getReserves', ['uses'=>'BookingController@getReservesByDni','as'=>'ajax.getReserves']);
+Route::get('localSeats', ['uses'=>'LocalController@getLocalSeatArray','as'=>'ajax.getSeatsArray']);
 
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/', ['as'=>'promoter.home','uses'=>'PagesController@promoterHome']);

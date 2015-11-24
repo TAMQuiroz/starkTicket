@@ -566,6 +566,7 @@
 @section('javascript')
   {!!Html::script('js/jquery.seat-charts.js')!!}
   <script>
+
     $(document).ready(function() {
 
        holi();
@@ -607,6 +608,9 @@
 
           var arreglo = new Array();
 
+          
+          arreglo = getSeatsArray($('[name=local_id]')[0]);//haremos el arreglo del local
+          alert("arreglo? c:");
           for(i=0; i<rows;i++){
             var texto = 'a';
             for(j=1; j<columns; j++){
@@ -791,6 +795,8 @@
 
           var arreglo = new Array();
 
+          arreglo = getSeatsArray($('[name=local_id]')[0]);//haremos el arreglo del local 2222
+
           for(i=0; i<rows;i++){
             var texto = 'a';
             for(j=1; j<columns; j++){
@@ -952,6 +958,41 @@
         }
       });
     });
+
+function getSeatsArray(idLocal){
+  $.ajax({
+        url: 'localSeats',
+        type: 'get',
+        data: 
+        { 
+            local_id: idLocal,
+        },
+        success: function( response ){
+            if(response != "")
+            {
+              map = [];
+              
+              console.log(response.arreglo);
+              return response.arreglo;
+              for(var i = 0; i < rows; i++){
+                var texto = '';
+                for(var j = 0; j < columns; j++){
+                  texto += 'a';
+                }
+                //console.log(texto);
+                map.push(texto);
+              }
+            }
+            else
+            {
+              console.log('no respuesta');  
+            }
+        },
+        error: function( response ){
+            
+        }
+    });
+}
   </script>
   <script>
 
