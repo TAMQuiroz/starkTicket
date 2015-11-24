@@ -14,13 +14,16 @@ use App\Models\Preference;
 use App\Models\Event;
 use App\Models\About;
 use Carbon\Carbon;
+use App\Models\Presentation;
+use DB;
 
 class PagesController extends Controller
 {
     public function home()
     {
         $destacados = Highlight::where('active','1')->get();
-        return view('external.home',array('destacados'=>$destacados));
+        $upcoming   = Event::where('selling_date','>',strtotime(Carbon::now()))->where('publication_date','<',strtotime(Carbon::now()))->get();
+        return view('external.home',array('destacados'=>$destacados,'upcoming'=>$upcoming));
     }
 
     public function about()
@@ -34,10 +37,22 @@ class PagesController extends Controller
         return view('external.modules');
     }
 
-    public function calendar()
+    public function calendar(request $request)
     {
-        return view('external.calendar');
+        $date_at = strtotime(date("Y-m-d"));
+        $events = Event::where(["publication_date"=>$date_at,"cancelled"=>"0"])->get();
+        return view('external.calendar',["events"=>$events,"date_at"=>$date_at]);
     }
+
+    public function eventsForDate(Request $request)
+    {
+
+        $input = $request->all();
+        $date_at = strtotime($input['date_at']);
+        $events = Event::where(["publication_date"=>$date_at,"cancelled"=>"0"])->get();
+        return view('external.calendar',["events"=>$events,"date_at"=>$date_at]);
+    }
+
 
     public function clientHome()
     {
@@ -76,7 +91,7 @@ class PagesController extends Controller
     public function promoterHome()
     {
         $userId = Auth::user()->id;
-        $events = Event::where("cancelled","0")->paginate(10);
+        $events = Event::where("promoter_id",$userId)->paginate(10);
         return view('internal.promoter.home',["events"=>$events]);
     }
 

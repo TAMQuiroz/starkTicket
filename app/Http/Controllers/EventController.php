@@ -734,7 +734,8 @@ public function update(UpdateEventRequest $request, $id)
         return redirect('/promoter/event/record');
     }
     public function getHighlights(){
-        $destacados = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->with('event')->get();
+        //$destacados = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->with('event')->get();
+        $destacados = Highlight::all();
         return view('internal.promoter.highlights.index', array('destacados'=>$destacados));
     }
 
@@ -761,7 +762,7 @@ public function update(UpdateEventRequest $request, $id)
         $eventos = Event::with(['presentations' => function($query){
             $query->where('starts_at', '<', time());
         }])->whereNotIn('id', $destacados)->get();
-        return view('internal.promoter.highlights.create', array('fecha_min' => Carbon::today()->addDay(), 'events' => $eventos));
+        return view('internal.promoter.highlights.create', array('fecha_min_init' => Carbon::today()->addDay(), 'fecha_min' => Carbon::today(), 'events' => $eventos));
     }
 
     public function storeHighlight(StoreHighlightRequest $request){
@@ -790,6 +791,12 @@ public function update(UpdateEventRequest $request, $id)
         $event = Event::find($request->input('event_id'));
         $highlight->event()->associate($event);
         $highlight->save();
+        return redirect()->route('promoter.highlights.index');
+    }
+
+    public function editDate($id, Request $request){
+        Highlight::where('id', $id)->update(['start_date' => $request['start_date']]);
+
         return redirect()->route('promoter.highlights.index');
     }
 }

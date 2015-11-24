@@ -26,6 +26,7 @@ use App\Models\About;
 use App\Models\Event;
 use App\Models\Ticket;
 use App\Models\Module;
+use App\Models\CashcountHistorial;
 use DB;
 
 /*use App\Services\FileService;*/
@@ -172,6 +173,17 @@ class BusinessController extends Controller
                         ->update(['cashCount_register' => $timeNow]);
                // $ticket->save();
             }
+
+            $cashCount                          =   new CashcountHistorial;
+            $cashCount->module_id               =   \Auth::user()->module_id;
+            $cashCount->salesman_id             =   \Auth::user()->id;
+            $cashCount->initial_cash            =   $request['cashFirst'];
+            $cashCount->sales_cash              =   $request['sumeSale'];
+            $cashCount->devolutions_cash        =   $request['sumeRefound'];
+            $cashCount->total_cash              =   $request['cash'];
+            $cashCount->dateCashCount           =   new Carbon($request['dateCashCount']);       
+  
+            $cashCount->save();
         }
 
          
