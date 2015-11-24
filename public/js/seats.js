@@ -29,7 +29,8 @@ function getTakenSlots(){
             event_id: evento,
         },
         success: function( response ){
-            console.log(response);
+            //console.log("hola");
+            $('#quantity').val(0);
             if(response != -1 )
             {
                 taken = response[0];
@@ -128,7 +129,7 @@ function renderSeats() {
 					.appendTo($cart);
 				
 				$counter.text(sc.find('selected').length+1);
-				$total.text(recalculateTotal(sc)+price);
+				$total.text(recalculateTotal(sc)+parseFloat(price));
 				$total2.val(recalculateTotal(sc)+price);
 				
 				selected.push(this.settings.id);
@@ -196,7 +197,7 @@ function renderSeats() {
 function recalculateTotal(sc) {
 	var total = 0;
 	sc.find('selected').each(function () {
-		total += price;
+		total += parseFloat(price);
 	});
 			
 	return total;

@@ -34,7 +34,7 @@
 	<div class="row">
         @foreach ($subcategories as $subcategory)
         <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
+            {!! Html::image($subcategory->image, null, array('class'=>'image cat_img')) !!}
             <h3>{{$subcategory->name}}</h3>
             <p><a href="subcategory/{{$subcategory->id}}" class="btn btn-primary" role="button" data-target="#info" data-whatever="@mdo">Ver más</a></p>
         </div>
@@ -43,30 +43,6 @@
     @else
     <div class="alert alert-info">No tiene sub categorias</div>
     @endif
-    <hr>
-    <p><b>Recomendados</b></p>
-    <div class="row">
-        <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Subcategoria 5</h3>
-            <p><a href="{{url('event')}}" class="btn btn-primary" role="button" data-target="#info" data-whatever="@mdo">Ver más</a></p>
-        </div>
-        <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Subcategoria 6</h3>
-            <p><a href="{{url('event')}}" class="btn btn-primary" role="button"  data-target="#info" data-whatever="@mdo">Ver más</a></p>
-        </div>
-        <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Subcategoria 7</h3>
-            <p><a href="{{url('event')}}" class="btn btn-primary" role="button"  data-target="#info" data-whatever="@mdo">Ver más</a> </p>
-        </div>
-        <div class="col-sm-3">
-            {!! Html::image('images/pics13.jpg', null, array('class'=>'image cat_img')) !!}
-            <h3>Subcategoria 8</h3>
-            <p><a href="{{url('event')}}" class="btn btn-primary" role="button"  data-target="#info" data-whatever="@mdo">Ver más</a></p>
-        </div>
-    </div>
 @stop
 
 @section('javascript')

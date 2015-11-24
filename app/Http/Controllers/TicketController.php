@@ -144,24 +144,36 @@ class TicketController extends Controller
                 return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
         }
 
-
-        DB::beginTransaction();
-
         try{
+            DB::beginTransaction();
+
             $tickets = array();
 
             for($i = 0; $i < $nTickets; $i++){
 
                 if ($event->place->rows != null){
                     //Cambiar estado de asiento
-                    DB::table('slot_presentation')
+                    $seat = DB::table('slot_presentation')
                         ->where('slot_id', $seats[$i])
                         ->where('presentation_id', $request['presentation_id'])
-                        ->update(['status' => config('constants.seat_taken')]);
+                        ->sharedLock();
+
+                    //Revisa de nuevo 
+
+                    $seat = DB::table('slot_presentation')->where('slot_id', $seats[$i])->where('presentation_id', $request['presentation_id'])->first();
+                    if($seat->status != config('constants.seat_available')){
+                        return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
+                    }
+
+
+                    DB::table('slot_presentation')->where('slot_id', $seats[$i])->where('presentation_id', $request['presentation_id'])->update(['status' => config('constants.seat_taken')]);
+                        
+
                 }else{
                     //Disminuir capacidad en la zona de esa presentacion
                     DB::table('zone_presentation')->where('zone_id', $request['zone_id'])
                                                   ->where('presentation_id',$request['presentation_id'])
+                                                  ->sharedLock()
                                                   ->decrement('slots_availables');;
                 }
             }
@@ -169,7 +181,7 @@ class TicketController extends Controller
             //Crear ticket
             $id = DB::table('tickets')->insertGetId(
             ['payment_date'         => new Carbon(),
-             'reserve'              => 0,
+             'reserve'              => null,
              'cancelled'            => 0,
              'owner_id'             => null,
              'event_id'             => $request['event_id'],
@@ -243,7 +255,7 @@ class TicketController extends Controller
             DB::commit();
 
         }catch (\Exception $e){
-            var_dump($e);
+            //var_dump($e);
             //dd('rollback');
             DB::rollback();
             return back()->withInput($request->except('seats'))->withErrors(['Por favor intentelo nuevamente']);
@@ -290,8 +302,12 @@ class TicketController extends Controller
     {
         $mail = $request['email'];
         $ticket = Ticket::find($request['ticket_id']);
+        $seats = DB::table('slot_presentation')->where('sale_id',$ticket->id)->get();
+        foreach ($seats as $key => $seat) {
+            $seats[$key] = Slot::find($seat->slot_id);
+        }
 
-        Mail::send('internal.client.successMail',['ticket'=>$ticket,'mail'=>$mail], function($message)use($mail){
+        Mail::send('internal.client.successMail',['ticket'=>$ticket,'mail'=>$mail, 'seats'=>$seats], function($message)use($mail){
             $message->to($mail)->subject('Datos de compra');
         });
 
@@ -495,6 +511,7 @@ class TicketController extends Controller
             $promo_disc = Promotions::where('event_id',$request['event_id'])->where('access_id',1)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();
         }else{
             $promos = null;
+            return null;
         }
 
         $promos = Promotions::where('event_id',$request['event_id'])->where('typePromotion',2)->where('startday','<',Carbon::now())->where('endday','>',Carbon::now())->get();

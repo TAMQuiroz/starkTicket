@@ -3,7 +3,16 @@
 @extends('layoutExternal')
 
 @section('style')
-
+<style type="text/css">
+  input[type="date"]
+{
+    display:block;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    min-height: 1.2em;
+}
+  
+</style>
 @stop
 
 @section('title')
@@ -33,7 +42,10 @@
                 <div class="form-group col-md-6">
                   <label for="inputEmail3" class="col-sm-2 control-label">Doc. Id.</label>
                   <div class="col-sm-10">
-                    {!! Form::select('di_type', ['DNI', 'Carnet de Extranjería', 'Pasaporte'], null, ['class' => 'form-control', 'required']) !!}
+                    {!! Form::select('di_type', [
+                     '1' => 'DNI',
+                     '2' => 'Carnet de Extranjeria',
+                     '3' => 'Pasaporte'], null, ['class' => 'form-control', 'required']) !!}
                   </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -46,7 +58,7 @@
                 <div class="form-group col-md-6">
                   <label for="input4" class="col-sm-2 control-label">Dirección</label>
                   <div class="col-sm-10">
-                    {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'input4', 'required')) !!}
+                    {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'input4', 'required','maxlength'=>'100')) !!}
                   </div>
                 </div>
                 <div class="form-group col-md-6">

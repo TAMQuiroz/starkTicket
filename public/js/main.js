@@ -13,6 +13,7 @@ function cleanForm() {
     $('#payment').val(0);
     $('#amount').val(0);
     $('#amountIn').val(0);
+    $('#amountInDollars').val(0);
     $('#amountMix').val(0);
     $('#paymentMix').val(0);
     $('#change').val(0);
@@ -25,7 +26,10 @@ $('#creditCardPay').change(function() {
 		$('#expirationDate').prop('disabled',false);
 		$('#securityCode').prop('disabled',false);
         $('#amountIn').prop('disabled',true);
+        $('#amountInDollars').prop('disabled',true);
         $('#pay').prop('disabled',false);
+        $('#dolares').prop('disabled',true);
+        $('#soles').prop('disabled',true);
         $('#amountCredit').prop('disabled',true);
         $('#paymentMix').prop('disabled',true);
         $('#amountMix').prop('disabled',true);
@@ -35,10 +39,12 @@ $('#creditCardPay').change(function() {
 
 $('#cashPay').change(function(){
 	if ($('#cashPay').is(":checked")) {
+        $('#amountIn').prop('disabled',false);
+        $('#amountInDollars').prop('disabled',false);
+        
         $('#creditCardNumber').prop('disabled',true);
         $('#expirationDate').prop('disabled',true);
         $('#securityCode').prop('disabled',true);
-        $('#amountIn').prop('disabled',false);
         $('#pay').prop('disabled',true);
         $('#amountCredit').prop('disabled',true);
         $('#payment').prop('disabled',true);
@@ -51,6 +57,7 @@ $('#cashPay').change(function(){
 $('#mixPay').change(function(){
     if ($('#mixPay').is(":checked")) {
         $('#amountIn').prop('disabled',true);
+        $('#amountInDollars').prop('disabled',true);
         $('#creditCardNumber').prop('disabled',false);
         $('#expirationDate').prop('disabled',false);
         $('#securityCode').prop('disabled',false);
@@ -97,15 +104,48 @@ $('#amountCredit').change(function(){
     }
 });
 
+function getChange(){
+    total= parseFloat($('#total2').val());
+    soles = $('#amountIn').val();
+    if (soles != ""){
+        soles = parseFloat(soles);
+    }else{
+        soles = 0;
+    }
+
+    dolares = $('#amountInDollars').val();
+    if (dolares != ""){
+        dolares = parseFloat(dolares);
+    }else{
+        dolares = 0;
+    }
+
+    tipoDeCambio = parseFloat($('#exchangeRate').val());
+    suma = soles + dolares*tipoDeCambio;
+
+    if(suma != 0){
+        if(suma < total){
+            $('#change').val('Falta dinero');
+            $('#pay').prop('disabled',true);
+        }else{
+            $('#change').val(suma - total);
+            $('#pay').prop('disabled',false);
+        }
+    }else{
+        $('#change').val('Ingresar un valor a pagar');
+        $('#pay').prop('disabled',true);
+    }
+}
+/*
 $('#amountIn').change(function(){
     var total= $('#total2').val();
     var amount = $(this).val();
     if($(this).val() != "" && $(this).val() != 0){
-        if(parseInt(amount,10) < parseInt(total,10)){
+        if(parseFloat(amount,10) < parseFloat(total,10)){
             $('#change').val('Falta dinero');
             $('#pay').prop('disabled',true);
         }else{
-            $('#change').val(parseInt(amount,10) - parseInt(total,10));
+            $('#change').val(parseFloat(amount,10) - parseFloat(total,10));
             $('#pay').prop('disabled',false);
         }
     }else{
@@ -114,6 +154,23 @@ $('#amountIn').change(function(){
     }
 });
 
+$('#amountInDollars').change(function(){
+    var total= $('#total2').val();
+    var amount = $(this).val();
+    if($(this).val() != "" && $(this).val() != 0){
+        if(parseFloat(amount,10) < parseFloat(total,10)){
+            $('#changeDollars').val('Falta dinero');
+            $('#pay').prop('disabled',true);
+        }else{
+            $('#changeDollars').val(parseFloat(amount,10) - parseFloat(total,10));
+            $('#pay').prop('disabled',false);
+        }
+    }else{
+        $('#changeDollars').val('Ingresar un valor a pagar');
+        $('#pay').prop('disabled',true);
+    }
+});
+*/
 $('#quantity').change(function(){
     count = $(this).val();
     if($(this).val() > 0){
@@ -139,7 +196,7 @@ function getPromo(){
         },
         success: function( response ){
             //console.log(response);
-
+            //console.log("exito");
             if (response != ""){
                 $('#promotion_id').val(response.id);
                 $('#total2').val(response.amount);
@@ -149,25 +206,9 @@ function getPromo(){
                 $('#promotion_id').val("");
                 $('#total2').val($('#quantity').val()*price);
             }
-            
-            /*
-            if (response.desc != null){
-                $('#promotion_id').val(response.id);
-                discount = response.desc/100;
-                
-            }else{
-                discount = 0;
-                $('#promotion_id').val("");
-            }
-            getPrice();
-            price = price * (1 - discount);
-            price = price.toFixed(2);
-            totalPrice = price * $('#quantity').val();
-            totalPrice = totalPrice.toFixed(2);
-            $('#total2').val(totalPrice);
-            */
         },
         error: function( response ){
+            console.log("failure :c");
             console.log(response);
         }
     });
@@ -347,6 +388,7 @@ function getReserves(){
         }
     });
 }
+
 $('#salesman_di').focusout( function() {
     $.ajax({
         url: config.routes[0].salesman,
@@ -372,7 +414,7 @@ $('#salesman_di').focusout( function() {
             }
             else
             {
-                $('#salesman_name').val('No existe ese cliente');
+                $('#salesman_name').val('No existe ese vendedor');
                 $('#salesman_di').val("");
                 $('#salesman_id').val(0);
             }

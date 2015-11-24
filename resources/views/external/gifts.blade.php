@@ -17,22 +17,26 @@
 
 @section('content')
 	<header>
-		<h1>Canjea tu Premio </h1>
+		<h3>Canjea tu Premio </h3>
 
 	</header>
-	<div class="row">
-		@foreach($gifts as $gift)
-		<div class="4u">
-			<section style="text-align:center">
-				<font size="6">{{$gift->points}} Puntos</font>
-				<a href="#" class="image full">
-					{!! Html::image($gift->image, null, array('class'=>'gift-external')) !!}
-					{{$gift->name}}
-				</a>
-			</section>
+	@if (count($gifts)>0)
+		<div class="row">
+			@foreach($gifts as $gift)
+			<div class="4u">
+				<section style="text-align:center">
+					<font size="6">{{$gift->points}} Puntos</font>
+					<a href="#" class="image full">
+						{!! Html::image($gift->image, null, array('class'=>'gift-external')) !!}
+						{{$gift->name}}
+					</a>
+				</section>
+			</div>
+			@endforeach
 		</div>
-		@endforeach
-	</div>
+	@else
+        <div class="alert alert-danger">No hay Regalos Disponibles</div>
+    @endif
 @stop
 
 @section('javascript')

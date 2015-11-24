@@ -13,7 +13,8 @@
         <legend>Detalles del evento :</legend>
         <p><b>Nombre</b>: {{$event->name}}</p>
         <p><b>Categoria</b>: {{$event->category["name"]}}</p>
-        <p>{{$event->description}}</p>
+        <p><b>Efectivo =</b> S/ {{ $event->amount_comission }}</p>
+        <p><b>Porcentaje de ventas =</b> {{ $event->percentage_comission }}  % </p>
     </div>
     <div class="col-sm-6">
         <legend>Datos del organizador:</legend>
@@ -33,7 +34,7 @@
     </div>
 <div class="col-sm-6">
         <legend>Transferir Pago</legend>
-    <form class="form-horizontal" method="post">
+    <form class="form-horizontal" method="post" id="form">
     {!!Form::open(array('id'=>'form','class'=>'form-horizontal'))!!}
         <input name="event_id" value="{{$event->id}}" type="hidden">
         <div class="form-group">
@@ -62,10 +63,25 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button  type="submit" class="btn btn-info" href="#" >Registrar pago</button>
+              <a class="btn btn-info" data-toggle="modal" data-target="#submitModal">Registrar pago</a>
               <a  type="reset" class="btn btn-info" href="javascript:window.history.back();">Cancelar</a>
             </div>
         </div>
+
+      <div class="modal fade"  id="submitModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">¿Estas seguro que desea transferir pago?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                <button id="yes" type="submit" class="btn btn-info">Si</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
     </form>
 </div>
 </div>

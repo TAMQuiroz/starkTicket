@@ -23,6 +23,8 @@ Route::get('/', 'PagesController@home');
 Route::get('about', 'PagesController@about');
 Route::get('modules', 'ModuleController@indexExternal');
 Route::get('calendar', 'PagesController@calendar');
+Route::post('calendar', 'PagesController@eventsForDate');
+//Route::post('calendar', 'PagesController@findcalendar');
 Route::get('gifts', 'GiftController@indexExternal');
 Route::get('category', 'CategoryController@indexExternal');
 Route::get('category/{id}', 'CategoryController@showExternal');
@@ -30,7 +32,7 @@ Route::get('category/{id}/subcategory', 'CategoryController@indexSub');
 Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@indexExternal');
 Route::get('event/successBuy', 'TicketController@showSuccess');
-Route::get('event/{id}', 'EventController@showExternal');
+Route::get('event/{id}', ['as' => 'event.external.show' , 'uses' =>'EventController@showExternal']);
 
  Route::get('event/delete/{id}/comment', 'EventController@destroyComment');
 
@@ -102,32 +104,32 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/politics', 'PoliticController@index');
     Route::get('promoter/politics', 'PoliticController@politicsPromotor');
 
-    Route::get('promoter/event/recordPayment', 'PaymentController@index');
     Route::get('promoter/transfer_payments/', 'PaymentController@index');
     Route::get('promoter/transfer_payments/{payment_id}', 'PaymentController@show');
     Route::get('promoter/transfer_payments/{event_id}/create', 'PaymentController@create');
     Route::post('promoter/transfer_payments/{event_id}/create', 'PaymentController@store');
+
     Route::get('promoter/event/record', ['as'=>'promoter.record','uses'=>'EventController@showPromoterRecord']);
+    Route::get('promoter/event/recordPayment', 'PaymentController@index');
     Route::get('promoter/event/create', 'EventController@create');
     Route::post('promoter/event/create', ['as' => 'events.store', 'uses' =>'EventController@store']);
+    Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
     Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
+    Route::post('promoter/event/{event_id}/delete', ['as' => 'events.delete', 'uses' =>'EventController@destroy']);
+
     Route::get('promoter/presentation/cancelled', 'PresentationController@index');
     Route::get('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modules');
     Route::post('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modulesStorage');
     Route::get('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancel');
     Route::post('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancelStorage');
     Route::post('promoter/presentation/cancelled/{id}/edit', 'PresentationController@cancelUpdate');
-    Route::post('promoter/event/{event_id}/delete', ['as' => 'events.delete', 'uses' =>'EventController@destroy']);
 
-    Route::get('promoter/event/{event_id}', ['as' => 'events.show', 'uses' =>'EventController@show']);
     Route::get('promoter/{category_id}/subcategories', 'EventController@subcategoriesToAjax');
     Route::get('getLocal/{id}',['as'=>'ajax.getLocal','uses'=>'EventController@getLocal']);
 
-
     Route::get('promoter/promotion', 'PromoController@index');
     Route::get('promoter/promotion', 'PromoController@promotion');
-
     Route::get('promoter/promotion/new', ['as'=>'promo.create','uses'=>'PromoController@create']);
     Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);
     Route::get('promoter/promotion/new/{event_id}', 'PromoController@ajax');
@@ -135,10 +137,8 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/promotion/{id}/edit',  'PromoController@update');
     Route::get('promoter/promotion/{id}/delete',  'PromoController@destroy');
 
-    //Aca se inicia el CRUD de promotor
     Route::get('promoter/organizers', 'OrganizerController@index');
     Route::get('promoter/organizer/create', 'OrganizerController@create');
-
     Route::post('promoter/organizer/create', 'OrganizerController@store');
     Route::get('promoter/organizer/{id}/edit', 'OrganizerController@edit');
     Route::post('promoter/organizer/{id}/edit', 'OrganizerController@update'); // faltan
@@ -147,6 +147,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/highlights', ['as'=>'promoter.highlights.index','uses'=>'EventController@getHighlights']);
     Route::get('promoter/highlights/create', 'EventController@createHighlight');
     Route::post('promoter/highlights/create', 'EventController@storeHighlight');
+    Route::post('promoter/highlights/{id}/editDate', 'EventController@editDate');
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {

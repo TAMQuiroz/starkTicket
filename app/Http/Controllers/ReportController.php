@@ -13,6 +13,7 @@ use App\Models\Module;
 use App\User;
 use App\Role;
 use Excel;
+use DB;
 
 class ReportController extends Controller
 {
@@ -36,9 +37,11 @@ class ReportController extends Controller
         //
     }
     public function assigmentExcel(Request $request){
-       /*  $input = $request->all(); 
+        $input = $request->all(); 
         $flagBetweenDates = false;
         $flagFilterAll = false;
+        $flagFirstDate = false;
+        $flagLastDate  = false;
         //Condiciones que se pueden dar para filtrar la tabla
         if (empty($input['name']) and empty($input['firstDate']) and empty($input['lastDate']))
            $moduleAssigments = ModuleAssigment::all();  
@@ -48,8 +51,42 @@ class ReportController extends Controller
                 $moduleAssigments = DB::table('module_assigments')
                     //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
                     ->where('modules.name','LIKE','%'.$input['name'].'%')
-                    ->leftJoin('modules', 'modules.id', '=', 'module_assigments.module_id')
+                    ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
                     ->get();
+            }
+            elseif ($input['name'] and $input['firstDate'] and empty($input['lastDate'])){
+                $moduleAssigments = DB::table('module_assigments')
+                    //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
+                    ->where('modules.name','LIKE','%'.$input['name'].'%')
+                    ->where('dateAssigments','>',$input['firstDate'])
+                    ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
+                    ->get();
+                $flagFirstDate = true;
+            }
+            elseif ($input['name'] and empty($input['firstDate']) and $input['lastDate']){
+                $moduleAssigments = DB::table('module_assigments')
+                    //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
+                    ->where('modules.name','LIKE','%'.$input['name'].'%')
+                    ->where('dateAssigments','<',$input['lastDate'])
+                    ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
+                    ->get();
+                $flagLastDate = true;
+            }
+            elseif (empty($input['name']) and $input['firstDate'] and empty($input['lastDate'])){
+                $moduleAssigments = DB::table('module_assigments')
+                    //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
+                    ->where('dateAssigments','>',$input['firstDate'])
+                    ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
+                    ->get();
+                $flagFirstDate = true;
+            }
+            elseif (empty($input['name']) and empty($input['firstDate']) and $input['lastDate']){
+                $moduleAssigments = DB::table('module_assigments')
+                    //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
+                    ->where('dateAssigments','<',$input['lastDate'])
+                    ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
+                    ->get();
+                $flagLastDate = true;
             }
             elseif (empty($input['name']) and $input['firstDate'] and $input['lastDate'] ){
                 $flagBetweenDates = true;
@@ -63,11 +100,50 @@ class ReportController extends Controller
         $assigmentsInformation = [];
                        
         if ($flagBetweenDates){
-
+            $fechaIni = $input['firstDate'];
+            $fechaFin = $input['lastDate'];
+            $moduleAssigments =  DB::table('module_assigments')
+                                ->whereBetween('dateAssigments',[ $fechaIni,  $fechaFin ])
+                                ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
+                                ->get();
+            foreach ($moduleAssigments as $moduleAssigment){
+            // pueden ser muchos eventos. Necesito información para llenar la tabla
+            //filtro fechas si es necesario
+                 
+                $module = Module::find($moduleAssigment->module_id); 
+                $salesman = User::find($moduleAssigment->salesman_id); 
+            
+                if ($moduleAssigment->dateMoveAssigments !=null ){
+                    $moveAss = $moduleAssigment->dateMoveAssigments;
+                }
+                else {
+                    $moveAss = "Vigente";
+                }
+                array_push($assigmentsInformation,array($module->name, $salesman->name, $salesman->lastname, $moduleAssigment->dateAssigments , $moveAss ));
+            }  
 
         }
 
         elseif ($flagFilterAll){ 
+            $fechaIni = $input['firstDate'];
+            $fechaFin = $input['lastDate'];
+            $moduleAssigments =  DB::table('module_assigments')
+                                ->whereBetween('dateAssigments',[ $fechaIni,  $fechaFin ])
+                                ->where('modules.name','LIKE','%'.$input['name'].'%')
+                                ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
+                                ->get();
+            foreach ($moduleAssigments as $moduleAssigment){
+                $module = Module::find($moduleAssigment->module_id); 
+                $salesman = User::find($moduleAssigment->salesman_id); 
+            
+                if ($moduleAssigment->dateMoveAssigments !=null ){
+                    $moveAss = $moduleAssigment->dateMoveAssigments;
+                }
+                else {
+                    $moveAss = "Vigente";
+                }
+                array_push($assigmentsInformation,array($module->name, $salesman->name, $salesman->lastname, $moduleAssigment->dateAssigments , $moveAss ));
+            }
 
         }
         else{
@@ -76,21 +152,26 @@ class ReportController extends Controller
             //filtro fechas si es necesario
                  
                 $module = Module::find($moduleAssigment->module_id); 
-                $salesman = Module::find($moduleAssigment->salesman_id); 
-                
-
-                array_push($assigmentsInformation,array($module->name, $salesman->name, $salesman->lastname, date("d/m/Y",$moduleAssigment->dateAssigments) , date("d/m/Y",$moduleAssigment->dateMoveAssigments) ));
+                $salesman = User::find($moduleAssigment->salesman_id); 
+            
+                if ($moduleAssigment->dateMoveAssigments !=null ){
+                    $moveAss = $moduleAssigment->dateMoveAssigments;
+                }
+                else {
+                    $moveAss = "Vigente";
+                }
+                array_push($assigmentsInformation,array($module->name, $salesman->name, $salesman->lastname, $moduleAssigment->dateAssigments , $moveAss ));
             }  
         }
         
     
 
 
-        Excel::create('Reporte de asistencia starkticket', function ($excel) use($assigmentsInformation,$flagBetweenDates,$input){
-          $excel->sheet('Reporte de Asistencia', function($sheet) use($assigmentsInformation,$flagBetweenDates,$input) {
+        Excel::create('Reporte de asignacion starkticket', function ($excel) use($assigmentsInformation,$flagBetweenDates,$flagFilterAll,$flagFirstDate,$flagLastDate,$input){
+          $excel->sheet('Reporte de Asignacion', function($sheet) use($assigmentsInformation,$flagBetweenDates,$flagFilterAll,$flagFirstDate,$flagLastDate,$input) {
 
                 $sheet->mergeCells('A1:G2');
-                $sheet->setCellValue('A1',"Reporte de ventas de Asistencia");
+                $sheet->setCellValue('A1',"Reporte de Asignacion de Puntos de Venta");
                 $sheet->cells('A1:G1',function($cells){
 
                     $cells->setAlignment('center');
@@ -101,8 +182,12 @@ class ReportController extends Controller
 
             
                 $sheet->mergeCells('A3:G3');
-                if ($flagBetweenDates) $sheet->setCellValue('A3','Fecha desde '.$input['firstDate'].'  hasta '.$input['lastDate']);
-                else $sheet->setCellValue('A3',"No hay rango de fechas");
+                if ($flagBetweenDates or $flagFilterAll) $sheet->setCellValue('A3','Fecha Asignacion desde '.$input['firstDate'].'  hasta '.$input['lastDate']);
+                elseif ($flagFirstDate or $flagLastDate ) {
+                    if ($flagFirstDate) $sheet->setCellValue('A3','Fecha Asignacion desde '.$input['firstDate']);
+                    elseif ($flagLastDate) $sheet->setCellValue('A3','Fecha Asignacion hasta '.$input['lastDate']);
+                }
+                else $sheet->setCellValue('A3',"No hay rango de fechas de Asignacion");
                 $sheet->cells('A3:G3',function($cells){
 
                     $cells->setAlignment('center');
@@ -114,18 +199,19 @@ class ReportController extends Controller
 
 
 
-                $sheet->setBorder('A4:G500','thin');
-                $sheet->setCellValue('A4', "Nombre del modulo");
-                $sheet->setCellValue('B4', "Nombre del Vendedor");
-                $sheet->setCellValue('C4', "Fecha de Asignación");
-                $sheet->setCellValue('D4', "Fecha de Desasociación");
+                $sheet->setBorder('B4:F200','thin');
+                $sheet->setCellValue('B4', "Nombre del modulo");
+                $sheet->setCellValue('C4', "Nombres del Vendedor");
+                $sheet->setCellValue('D4', "Apellidos del Vendedor");
+                $sheet->setCellValue('E4', "Fecha de Asignación");
+                $sheet->setCellValue('F4', "Fecha de Desasociación");
                 //$sheet->setCellValue('E4', "Entradas vendidas módulo");
                 //$sheet->setCellValue('F4', "Subtotal");
                 //$sheet->setCellValue('G4', "Total");
                 
                 //$cells->setAlignment('center');
                 //$sheet->cells('A4:G4',function($cells){
-                $sheet->cells('A4:D4',function($cells){
+                $sheet->cells('B4:F4',function($cells){
 
                     $cells->setFontWeight('bold');
                     $cells->setBackground('#008000');
@@ -136,7 +222,7 @@ class ReportController extends Controller
                 });
 
               //  $sheet->cells('A4:G500',function($cells){
-                $sheet->cells('A4:D4',function($cells){
+                $sheet->cells('B4:F4',function($cells){
                     $cells->setAlignment('center');
                     $cells->setValignment('center');
 
@@ -145,10 +231,11 @@ class ReportController extends Controller
 
                 $sheet->setWidth(
                     array(
-                        'A' => '30',
-                        'B' => '20',
+                        'B' => '30',
                         'C' => '30',
-                        'D' => '15',
+                        'D' => '30',
+                        'E' => '30',
+                        'F' => '30'
                         //'E' => '30',
                         //'F' => '15',
                         //'G' => '15'                                               
@@ -165,14 +252,14 @@ class ReportController extends Controller
                 );
 
                 $data = $assigmentsInformation;
-                $sheet->fromArray($data, true, 'A5', true, false);
+                $sheet->fromArray($data, true, 'B5', true, false);
 
           });
 
 
 
 
-        })->download('xlsx'); */
+        })->download('xlsx'); 
         return redirect('admin/report/assignment');
     }
 
