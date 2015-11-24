@@ -635,15 +635,14 @@ $('document').ready(function () {
     });
   });
   </script>
-
-
-
   {!!Html::script('js/moment.js')!!}
   {!!Html::script('js/rangepicker.js')!!}
-
-
-
   <script type="text/javascript">
+    var config = {
+      routes: [
+        {getSeatsArray: "{{ URL::route('ajax.getSeatsArray') }}"},
+      ]
+    };
     $('#yes').click(function(){
       $('#submitModal').modal('hide');  
     });

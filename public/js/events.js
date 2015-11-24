@@ -285,7 +285,7 @@ function showSeatMap(index){
 function getSeatsArray(idLocal){
   var map = new Array;
   $.ajax({
-        url: '/localSeats',
+        url: config.routes[0].getSeatsArray,
         type: 'get',
         async: false,
         data: 
