@@ -1,9 +1,10 @@
 $('document').ready(function () {
 
   $('#column').on('change', function() { 
-    var columnas = $('#row').val();
-    if(columnas!=''){
-      generarSeats(columnas, $(this).val());
+    var filas = $('#row').val();
+
+    if(filas.trim()){
+      generarSeats($(this).val(),filas);
       $('#multiple-mode-on').show();
       $('#single-mode-on').show();
     }
@@ -99,10 +100,6 @@ function generarSeats(columnas, filas){
                               var id = ''+j+'_'+i;
                               if(id!= id_selec2 && id!= id_selec1){
                                   if($('#'+id).hasClass('unavailable')){
-                                    /*$('#input-colIni').val('');
-                                    $('#input-rowIni').val('');
-                                    $('#input-column').val('');
-                                    $('#input-row').val('');*/
                                     $('.reserved').removeClass('reserved').addClass('available');
                                     $('.selected').removeClass('selected').addClass('available');
                                     alert('No se puede seleccionar estos asientos porque ya están ocupados por otra zona');
@@ -130,10 +127,6 @@ function generarSeats(columnas, filas){
                       }
                     }
                     if(this.status()=='selected'){
-                      /*$('#input-colIni').val('');
-                      $('#input-rowIni').val('');
-                      $('#input-column').val('');
-                      $('#input-row').val('');*/
                       $('.seatCharts-cell.reserved').removeClass("reserved").addClass("available");
                       this.status('available');
                       return 'available';

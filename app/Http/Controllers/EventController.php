@@ -161,16 +161,14 @@ public function storeRestOfEvent($zone_data, $data, $event){
         'start_row'    => $zone_data['start_row'][$key]
         ];
         $zone = $this->storeZone($zone_data2, $event);
+        $sitios_zona = $zone_data['seats_ids'][$key];
         if($zone_data['zone_columns'][$key] != '' || $zone_data['zone_columns'][$key] != null){
-            for($i=1; $i <= $zone->rows;$i++){
-                for($j=1; $j <= $zone->columns;$j++){
-                    $seat = new Slot();
-                    $seat->row = $i;
-                    $seat->column = $j;
-                    $seat->zone()->associate($zone);
-                    $seat->save();
-                    $seat->presentation()->attach($functions_ids);
-                }
+            foreach ($sitios_zona as $key => $value) {
+                $slot = new Slot();
+                $slot->row = substr($value,0,1);
+                $slot->column = substr($value,2,1);
+                $slot->zone_id = $zone->id;
+                $slot->save();
             }
         }
         else{
@@ -224,9 +222,9 @@ public function store(StoreEventRequest $request)
     if(count($temp) < count($result_dates))
         return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
             //return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
-        $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
-        if($result['error'] != '')
-            return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
+        //$result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
+        //if($result['error'] != '')
+            //return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
             //return response()->json(['message' => $result['error']]);
 
         $data = [
@@ -244,14 +242,17 @@ public function store(StoreEventRequest $request)
         'amount_comission'     => $request->input('amount_comission',''),
         ];
         $event = $this->storeEvent($data);
+        $seats_ids = $request->input('seats_ids');
+
         $zone_data = [
-        'zone_names'      => $request->input('zone_names'),
+        'zone_names'     => $request->input('zone_names'),
         'zone_capacity'  => $request->input('zone_capacity'),
-        'price'     => $request->input('price'),
+        'price'          => $request->input('price'),
         'zone_columns'   => $request->input('zone_columns'),
         'zone_rows'      => $request->input('zone_rows'),
-        'start_column' => $request->input('start_column'),
-        'start_row'    => $request->input('start_row')
+        'start_column'   => $request->input('start_column'),
+        'start_row'      => $request->input('start_row'),
+        'seats_ids'          => $request->input('seats_ids'),
         ];
         $data2 = [
             //'start_date'    => $request->input('start_date'),

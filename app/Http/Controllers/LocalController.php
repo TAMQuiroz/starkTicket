@@ -11,6 +11,7 @@ use App\Models\Local;
 use App\Services\FileService;
 use App\Models\Event;
 use App\Models\Distribution;
+use App\Models\Zone;
 use DB;
 
 class LocalController extends Controller
@@ -185,6 +186,23 @@ class LocalController extends Controller
                 if($dist->seat)
                     $texto = $texto.'a';
                 else $texto = $texto.'_';
+            }
+            array_push($arreglo, $texto);
+        }
+        return $arreglo;
+    }
+
+    public function getZoneSeatArray(Request $request){
+        $zona = Zone::find($request['zone_id']);
+        $arreglo = array();
+        $slots = $zona->slots;
+        for($j=$zona->start_row; $j<$zona->start_row +$zona->rows; $j++){
+            $texto = '';
+            for($i=$zona->start_column; $i<$zona->start_column +$zona->columns; $i++){
+                $res = $slots->where('column', $i)->where('row', $j);
+                if($res->isEmpty())
+                    $texto = $texto.'_';
+                else $texto = $texto.'a';
             }
             array_push($arreglo, $texto);
         }
