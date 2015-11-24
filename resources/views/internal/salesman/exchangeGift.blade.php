@@ -1,5 +1,5 @@
-        @extends('layout.salesman')
-
+ @extends('layout.salesman')
+​
         @section('style')
             <style type="text/css">
             .form-control{
@@ -11,11 +11,11 @@
                 
             }
             .carousel-inner > .item > img{
-                width: 952px;
-                height: 690px;
+                width: 652px;
+                height: 490px;
                 margin: auto;
              }
-
+​
             h2 span {
                 padding: 10px;
                 color: red;
@@ -27,11 +27,11 @@
             }
             </style>
         @stop
-
+​
         @section('title')
-        	Canjeo de premios
+            Canjeo de premios
         @stop
-
+​
         @section('content')
                 <!-- Portfolio Item Made by JosE  Row -->
                 <div class="row">
@@ -48,7 +48,7 @@
                             <!-- Wrapper for jose slides -->
                             <div class="carousel-inner">
                             @if( $giftArray->count() == 0 ) 
-
+​
                                 <div class="item active">
                                  {!! Html::image('images/imagen-canjea.jpg', null, array()) !!}
                                 </div>
@@ -128,7 +128,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+​
                 <!-- Related Projects Row -->
                 <div class="row">
                     <div class="col-lg-12">
@@ -146,10 +146,10 @@
                 <!-- /.row -->
                 {!!Form::close()!!}
 @stop
-
+​
 @section('javascript')
     {!!Html::script('js/main.js')!!}
-
+​
     <script type="text/javascript">
     var config = {
         routes: [
@@ -159,23 +159,21 @@
     $('#yes').click(function(){
         $('#submitModal').modal('hide');  
     });
-
+​
     $('#dd-list').change(function(){
-
-
-
         var list = document.getElementById("dd-list");
-           var idgift = list.options[list.selectedIndex].value;
+        var idgift = list.options[list.selectedIndex].value;
         var id = parseInt(idgift-1);
         $('#carousel-example-generic').carousel(id);
-
-
+​
+        var user_points = parseInt(document.getElementById("user_points").value);
+        var e = parseInt(document.getElementById("dd-list").value);
        
     });
-
+​
     $('#botonModal').click(function(){
         $("#saveModal").modal('toggle');
     });
-
+​
     </script>
 @stop
