@@ -44,13 +44,11 @@
         @endforeach
         </ul>
         <hr>
-<<<<<<< HEAD
-        {!! Html::image($event->image, null, array('class'=>'img-thumbnail')) !!}
-=======
-     
+
+
         {!! Html::image($event->image, null, array('class'=>'img-thumbnail')) !!}
        
->>>>>>> 31945c92d6bb8e3d34f04a487e87edcd9a20b085
+
     </div>
 </div>
 @stop
