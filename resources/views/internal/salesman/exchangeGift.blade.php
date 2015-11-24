@@ -11,8 +11,8 @@
                 
             }
             .carousel-inner > .item > img{
-                width: 652px;
-                height: 490px;
+                width: 952px;
+                height: 690px;
                 margin: auto;
              }
 
@@ -161,14 +161,16 @@
     });
 
     $('#dd-list').change(function(){
+
+
+
         var list = document.getElementById("dd-list");
-        var idgift = list.options[list.selectedIndex].value;
+           var idgift = list.options[list.selectedIndex].value;
         var id = parseInt(idgift-1);
         $('#carousel-example-generic').carousel(id);
 
-        var user_points = parseInt(document.getElementById("user_points").value);
-        var e = parseInt(document.getElementById("dd-list").value);
-        //var giftArray = "<?php echo $gift->points ?>";
+
+       
     });
 
     $('#botonModal').click(function(){
