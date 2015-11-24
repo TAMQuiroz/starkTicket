@@ -169,6 +169,7 @@ public function storeRestOfEvent($zone_data, $data, $event){
                 $slot->column = substr($value,2,1);
                 $slot->zone_id = $zone->id;
                 $slot->save();
+                $slot->presentation()->attach($functions_ids);
             }
         }
         else{
