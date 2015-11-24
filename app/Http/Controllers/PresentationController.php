@@ -97,8 +97,8 @@ class PresentationController extends Controller
         $presentation = Presentation::findOrFail($id);
         if ($presentation->cancelled == 1)
         {
-            Session::flash('message', 'La presentación ya fue cancelado!');
-            Session::flash('alert-class','alert-danger');
+            Session::flash('message', 'Editar presentación cancelado!');
+            Session::flash('alert-class','alert-info');
 
             $cancelPresentation = CancelPresentation::where("presentation_id",$id)->first();
 

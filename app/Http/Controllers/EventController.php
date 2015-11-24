@@ -87,7 +87,7 @@ class EventController extends Controller
         $event->time_length  = $data['time_length'];
         $event->publication_date = strtotime($data['publication_date']);
         $event->selling_date = strtotime($data['selling_date']);
-        $event->promoter_id  = Auth::user()->id; 
+        $event->promoter_id  = Auth::user()->id;
         $event->image        = $this->file_service->upload($data['image'],'event');
         if($data['distribution_image'])
             $event->distribution_image = $this->file_service->upload($data['distribution_image'],'event');
@@ -701,37 +701,26 @@ public function update(UpdateEventRequest $request, $id)
     public function cancel($id)
     {
         $event = Event::findOrFail($id);
-        if ($event->cancelled == 1)
+        $presentations = $event->presentations();
+        $eventCancelled = 1;
+        foreach ($presentations as $presentation)
         {
-            Session::flash('message', 'El evento ya fue cancelado!');
-            Session::flash('alert-class','alert-danger');
+            if($presentation->cancelled == "0")
+            {
+                $eventCancelled = 0;
+                break;
+            }
+        }
+        if ($eventCancelled)
+        {
+            $event->cancelled = 1;
+            $event->save();
 
+            Session::flash('message', 'Evento '.$event->id.' cancelado!');
+            Session::flash('alert-class','alert-info');
             return redirect('/promoter/event/record');
         }
-        return view('internal.promoter.event.cancel', ['event' => $event]);
-    }
-    public function cancelStorage(CancelEventRequest $request, $event_id)
-    {
-        $user_id = Auth::user()->id;
-
-        $input = $request->all();
-
-        $event = Event::findOrFail($event_id);
-        $event->cancelled = "1";
-        $event->save();
-
-        $cancel = new CancelEvent;
-        $cancel->event_id = $event_id;
-        $cancel->user_id = $user_id;
-        $cancel->reason = $input['reason'];
-        $cancel->duration = $input['duration'];
-        $cancel->date_refund = $input['date_refund'];
-        $cancel->save();
-
-        Session::flash('message', 'El evento se a cancelado!');
-        Session::flash('alert-class','alert-success');
-
-        return redirect('/promoter/event/record');
+        return redirect('/promoter/presentation/cancelled');
     }
     public function getHighlights(){
         //$destacados = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->with('event')->get();
