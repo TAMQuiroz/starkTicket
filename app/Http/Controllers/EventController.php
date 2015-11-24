@@ -50,7 +50,7 @@ class EventController extends Controller
      */
     public function indexExternal()
     {
-        $events = Event::where("cancelled","=","0")->get();
+        $events = Event::where("cancelled","=","0")->where('publication_date','<',strtotime(Carbon::now()))->get();
         return view('external.events',compact('events'));
     }
     /**

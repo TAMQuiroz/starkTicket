@@ -30,7 +30,7 @@
     @foreach($events as $event)
     <div class="3u">
         <section>
-            <a href="#" class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
+            <a  class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
             <h3>{{$event->name}}</h3>
             <p>
                 <b>Fecha de ventas: </b> {{date('Y-m-d',$event->selling_date)}}<br>

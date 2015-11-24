@@ -17,7 +17,6 @@ function cleanForm() {
     $('#amountMix').val(0);
     $('#paymentMix').val(0);
     $('#change').val(0);
-    $('#changeDollars').val(0);
     $('#changeMix').val(0);
 }
 
@@ -40,15 +39,12 @@ $('#creditCardPay').change(function() {
 
 $('#cashPay').change(function(){
 	if ($('#cashPay').is(":checked")) {
-        //$('#amountIn').prop('disabled',false);
-
-        $('#dolares').prop('disabled',false);
-        $('#soles').prop('disabled',false);
-
+        $('#amountIn').prop('disabled',false);
+        $('#amountInDollars').prop('disabled',false);
+        
         $('#creditCardNumber').prop('disabled',true);
         $('#expirationDate').prop('disabled',true);
         $('#securityCode').prop('disabled',true);
-        $('#amountInDollars').prop('disabled',true);
         $('#pay').prop('disabled',true);
         $('#amountCredit').prop('disabled',true);
         $('#payment').prop('disabled',true);
@@ -57,26 +53,11 @@ $('#cashPay').change(function(){
         cleanForm()
 	}
 });
-$('input[name="currency"]').change(function(){
-    if ($('#soles').is(":checked")) {
-        cleanForm();
-        $('#pay').prop('disabled',true);
-        $('#amountIn').prop('disabled',false);
-        $('#amountInDollars').prop('disabled',true);
-    }else if ($('#dolares').is(":checked")) {
-        cleanForm();
-        $('#pay').prop('disabled',true);
-        $('#amountInDollars').prop('disabled',false);
-        $('#amountIn').prop('disabled',true);
-    }
-});
 
 $('#mixPay').change(function(){
     if ($('#mixPay').is(":checked")) {
         $('#amountIn').prop('disabled',true);
         $('#amountInDollars').prop('disabled',true);
-        $('#dolares').prop('disabled',true);
-        $('#soles').prop('disabled',true);
         $('#creditCardNumber').prop('disabled',false);
         $('#expirationDate').prop('disabled',false);
         $('#securityCode').prop('disabled',false);
@@ -123,15 +104,48 @@ $('#amountCredit').change(function(){
     }
 });
 
+function getChange(){
+    total= parseFloat($('#total2').val());
+    soles = $('#amountIn').val();
+    if (soles != ""){
+        soles = parseFloat(soles);
+    }else{
+        soles = 0;
+    }
+
+    dolares = $('#amountInDollars').val();
+    if (dolares != ""){
+        dolares = parseFloat(dolares);
+    }else{
+        dolares = 0;
+    }
+
+    tipoDeCambio = parseFloat($('#exchangeRate').val());
+    suma = soles + dolares*tipoDeCambio;
+
+    if(suma != 0){
+        if(suma < total){
+            $('#change').val('Falta dinero');
+            $('#pay').prop('disabled',true);
+        }else{
+            $('#change').val(suma - total);
+            $('#pay').prop('disabled',false);
+        }
+    }else{
+        $('#change').val('Ingresar un valor a pagar');
+        $('#pay').prop('disabled',true);
+    }
+}
+/*
 $('#amountIn').change(function(){
     var total= $('#total2').val();
     var amount = $(this).val();
     if($(this).val() != "" && $(this).val() != 0){
-        if(parseInt(amount,10) < parseInt(total,10)){
+        if(parseFloat(amount,10) < parseFloat(total,10)){
             $('#change').val('Falta dinero');
             $('#pay').prop('disabled',true);
         }else{
-            $('#change').val(parseInt(amount,10) - parseInt(total,10));
+            $('#change').val(parseFloat(amount,10) - parseFloat(total,10));
             $('#pay').prop('disabled',false);
         }
     }else{
@@ -144,11 +158,11 @@ $('#amountInDollars').change(function(){
     var total= $('#total2').val();
     var amount = $(this).val();
     if($(this).val() != "" && $(this).val() != 0){
-        if(parseInt(amount,10) < parseInt(total,10)){
+        if(parseFloat(amount,10) < parseFloat(total,10)){
             $('#changeDollars').val('Falta dinero');
             $('#pay').prop('disabled',true);
         }else{
-            $('#changeDollars').val(parseInt(amount,10) - parseInt(total,10));
+            $('#changeDollars').val(parseFloat(amount,10) - parseFloat(total,10));
             $('#pay').prop('disabled',false);
         }
     }else{
@@ -156,7 +170,7 @@ $('#amountInDollars').change(function(){
         $('#pay').prop('disabled',true);
     }
 });
-
+*/
 $('#quantity').change(function(){
     count = $(this).val();
     if($(this).val() > 0){
