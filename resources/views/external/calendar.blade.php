@@ -5,13 +5,13 @@
 	{!!Html::style('css/images.css')!!}
 @stop
 @section('title')
-{{date('Y-M-d',$date_at)}}
+Calendario
 @stop
 @section('content')
 
 <div class="container">
 	<div class="row">
-		<div class="col-sm-6">Eventos de {{date('Y-m-d',$date_at)}}</div>
+		<div class="col-sm-6">Busqueda del día {{date('Y-m-d',$date_at)}}</div>
 		<div class="col-sm-5 pull-right">
 			{!!Form::open(array('id'=>'form','class'=>'form-inline'))!!}
 			  <div class="form-group">
@@ -23,21 +23,47 @@
 	</div>
 </div>
 <hr>
-@if(count($events)===0)
-<div class="alert alert-warning"> Eventos no encontrados en esta fecha</div>
+@if(count($presentations)===0)
+<div class="alert alert-warning"> Presentaciones no encontrados en esta fecha</div>
 @else
+	<div class="row">
+		<div class="col-sm-12">
+		<h3>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</h3>
+		<table class="table table-bordered">
+			<tr>
+				<th>Fecha de presentación</th>
+				<th>Evento</th>
+				<th>Detalles</th>
+			</tr>
+	    @foreach($presentations as $presentation)
+	    	<tr>
+	    		<td>{{date('H:i:s',$presentation->starts_at)}}</td>
+	    		<td>{{$presentation->event["name"]}}</td>
+	    		<td><p><a href="event/{{$presentation->event['id']}}"  class="btn btn-info" role="button" >Detalle</a></p></td>
+	    	</tr>
+	    @endforeach
+		</table>
+		</div>
+	</div>
+@endif
+<hr>
+@if(count($events)===0)
+<div class="alert alert-warning"> Eventos publicados no encontrados en esta fecha</div>
+@else
+	<h3>Eventos publicados el {{date('Y-m-d',$date_at)}}</h3>
+	<br>
 	<div class="row">
 	    @foreach($events as $event)
 	    <div class="3u">
 	        <section>
-	            <a href="#" class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
+	            <a  class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
 	            <h3>{{$event->name}}</h3>
 	            <p>
 	                <b>Fecha de venta: </b> {{date('Y-m-d',$event->selling_date)}}<br>
 	                <b>Lugar: </b> {{$event->place->name}} <br>
 	                <b>Direccion:</b> {{$event->place->address}} <br>
 	            </p>
-	            <p><a href="event/{{$event->id}}"  class="btn btn-primary" role="button" >Detalle</a></p>
+	            <p><a href="event/{{$event->id}}"  class="btn btn-info" role="button" >Detalle</a></p>
 	        </section>
 	    </div>
 	    @endforeach

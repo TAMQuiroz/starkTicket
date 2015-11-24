@@ -22,7 +22,7 @@ class PagesController extends Controller
     public function home()
     {
         $destacados = Highlight::where('active','1')->get();
-        $upcoming   = Event::where('selling_date','>',strtotime(Carbon::now()))->where('publication_date','<',strtotime(Carbon::now()))->get();
+        $upcoming   = Event::where('selling_date','>',strtotime(Carbon::now()))->where('publication_date','>',strtotime(Carbon::now()))->get();
         return view('external.home',array('destacados'=>$destacados,'upcoming'=>$upcoming));
     }
 
@@ -41,7 +41,13 @@ class PagesController extends Controller
     {
         $date_at = strtotime(date("Y-m-d"));
         $events = Event::where(["publication_date"=>$date_at,"cancelled"=>"0"])->get();
-        return view('external.calendar',["events"=>$events,"date_at"=>$date_at]);
+
+        $presentations = Presentation::where("cancelled","0")
+                                    ->whereBetween("starts_at",[$date_at,$date_at+86400])
+                                    ->get();
+
+        $events = Event::where(["publication_date"=>$date_at,"cancelled"=>"0"])->get();
+        return view('external.calendar',["events"=>$events,"date_at"=>$date_at,"presentations"=>$presentations]);
     }
 
     public function eventsForDate(Request $request)
@@ -49,8 +55,13 @@ class PagesController extends Controller
 
         $input = $request->all();
         $date_at = strtotime($input['date_at']);
+
+        $presentations = Presentation::where("cancelled","0")
+                                    ->whereBetween("starts_at",[$date_at,$date_at+86400])
+                                    ->get();
+
         $events = Event::where(["publication_date"=>$date_at,"cancelled"=>"0"])->get();
-        return view('external.calendar',["events"=>$events,"date_at"=>$date_at]);
+        return view('external.calendar',["events"=>$events,"date_at"=>$date_at,"presentations"=>$presentations]);
     }
 
 

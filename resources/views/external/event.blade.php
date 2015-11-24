@@ -28,7 +28,7 @@
             {!!Form::open(array('url' => 'event/'.$event->id.'/' ,'files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
 
             <section>
-                <p><a href="#" class="image full">{!! Html::image($event->image, null,['class'=>'carousel_img']) !!}</a></p>
+                <p><a  class="image full">{!! Html::image($event->image, null,['class'=>'carousel_img']) !!}</a></p>
                 <p>{{ $event->description }}</p>
                 <br>
                 <div class="table-responsive">
@@ -52,10 +52,14 @@
 
                             </div>
                             @if(isset($user) && $user->role_id == config('constants.salesman'))
-                            <a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
+                                @if($event->selling_date <= strtotime(date("Y-m-d")) )
+                                    <a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
+                                @endif
                             @else
-                            <a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
-                            <a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
+                                @if($event->selling_date <= strtotime(date("Y-m-d")) )
+                                    <a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
+                                    <a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>
+                                @endif
                             @endif
                             
                             <br>
@@ -126,7 +130,7 @@
                             {!! Html::image($event->place->image,null, ['class'=>'carousel_img']) !!}
 
                             <h3 class="dates">Distribución de Zonas</h3>
-                            <p>{!! Html::image('images/asientos.jpg') !!}</p>
+                            <p>{!! Html::image($event->distribution_image,null, ['class'=>'carousel_img']) !!}</p>
                         </section>
                     </div>
                     <!-- Sidebar -->

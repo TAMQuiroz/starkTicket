@@ -15,7 +15,6 @@
         <p><b>Categoria</b>: {{$event->category["name"]}}</p>
         <p><b>Efectivo =</b> S/ {{ $event->amount_comission }}</p>
         <p><b>Porcentaje de ventas =</b> {{ $event->percentage_comission }}  % </p>
-        <p>{{$event->description}}</p>
     </div>
     <div class="col-sm-6">
         <legend>Datos del organizador:</legend>

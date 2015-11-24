@@ -72,7 +72,7 @@
               </div>
               <div class="form-group">
                 <div class="col-md-6">
-                    <h4>Ingrese Usuario</h4>
+                    <h4>Ingrese Vendedor</h4>
                         {!! Form::number('number', null, ['class' => 'form-control', 'required', 'placeholder' => 'Documento de Identidad...','id'=>'salesman_di','min'=>0,'max'=>99999999]) !!}
                   </div>
                 <div class="col-md-6">

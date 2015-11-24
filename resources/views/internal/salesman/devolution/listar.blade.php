@@ -30,9 +30,9 @@
     <tr>
       <th>Código Ticket</th>
       <th>Administrador</th>
-      <th>Fecha</th>
-      <th>Precio total</th>
+      <th>Fecha devolución</th>
       <th>Cantidad</th>
+      <th>Precio total</th>
       <th>Monto Devuelto</th>
 
     </tr>
@@ -41,8 +41,8 @@
       <td>{{$devolution->ticket_id}}</td>
       <td>{{$devolution->administrator["name"]}}</td>
       <td>{{$devolution->created_at}}</td>
-      <td>s/ {{$devolution->ticket["total_price"]}}</td>
       <td>{{$devolution->ticket["quantity"]}}</td>
+      <td>s/ {{$devolution->ticket["total_price"]}}</td>
       <td>s/ {{$devolution->repayment}}</td>
     </tr>
     @endforeach
