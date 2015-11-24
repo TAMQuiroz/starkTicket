@@ -158,7 +158,15 @@ class TicketController extends Controller
                         ->where('presentation_id', $request['presentation_id'])
                         ->sharedLock();
 
-                    $seat->update(['status' => config('constants.seat_taken')]);
+                    //Revisa de nuevo 
+
+                    $seat = DB::table('slot_presentation')->where('slot_id', $seats[$i])->where('presentation_id', $request['presentation_id'])->first();
+                    if($seat->status != config('constants.seat_available')){
+                        return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
+                    }
+
+
+                    DB::table('slot_presentation')->where('slot_id', $seats[$i])->where('presentation_id', $request['presentation_id'])->update(['status' => config('constants.seat_taken')]);
                         
 
                 }else{

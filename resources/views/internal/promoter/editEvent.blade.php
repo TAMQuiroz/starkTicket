@@ -94,22 +94,28 @@
                 <label class="col-sm-2 control-label">Categoría</label>
                 <div class="col-sm-10">
 
-                    {!! Form::select('category_id', $categories_list->toArray(),$event->category_id,['class' => 'form-control','required','id'=>'category_id']) !!}
-                </div>
+                    {!! Form::select('parent_category_id', $categories_list->toArray(),null,['class' => 'form-control','required','id'=>'category_id']) !!}
+                </div> 
 
               </div>
-<!--               <div class="form-group">
+              <div class="form-group">
                 <label class="col-sm-2 control-label">Sub categoría</label>
                 <div class="col-sm-10">
-                    {!! Form::select('category_id', $categories_list->toArray(),$event->category_id,['class' => 'form-control','required','id'=>'category_id']) !!}
+                    {!! Form::select('category_id',$categories_list->toArray(),$event->category_id,['class' => 'form-control','required','id'=>'subcategory_id','onLoad'=>'getSubs()']) !!}
                 </div>
-              </div> -->
+              </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Organizador</label>
                 <div class="col-sm-10">
                     {!! Form::select('organizer_id', $organizers_list->toArray(),$event->organizer_id,['class' => 'form-control','required']) !!}
                 </div>
               </div>
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Comisión(%)</label>
+                <div class="col-sm-10">
+                  {!! Form::number('percentage_comission',$event->percentage_comission, array('class' => 'form-control','min' => '0','required','max' => '100')) !!}
+                </div>
+              </div>              
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Duración Aproximada</label>
                 <div class="col-sm-10">
@@ -173,13 +179,13 @@
                   <div class="form-group" id="label_fini">
                       <label  class="col-md-4 control-label" >Columna inicial</label>
                       <div class="col-md-8">
-                          {!! Form::number('start_column1',1, array('class' => 'form-control','id' => 'input-colIni','min' => '1','disabled')) !!}
+                          {!! Form::number('start_column1','', array('class' => 'form-control','id' => 'input-colIni','min' => '1','disabled')) !!}
                       </div>
                   </div>     
                   <div class="form-group" id="label_cini">
                       <label  class="col-md-4 control-label" >Fila inicial</label>
                       <div class="col-md-8">
-                          {!! Form::number('start_row1',1, array('class' => 'form-control','id' => 'input-rowIni','min' => '1','disabled')) !!}
+                          {!! Form::number('start_row1','', array('class' => 'form-control','id' => 'input-rowIni','min' => '1','disabled')) !!}
                       </div>
                   </div>                                                     
                   <div class="form-group">
@@ -1014,45 +1020,46 @@
       });
     });
   </script>
-  <script>
+   <script>
 
 
-// $('document').ready(function () {
-//   getSubs();
-// })
+$('document').ready(function () {
+  getSubs();
+})
 
-//   function getSubs(){
-//       category_id = $("#category_id").val();
-//       url_base = "{{ url('/') }}";
-//       // Peticion ajax
-//       $.getJSON(url_base+"/promoter/"+category_id+"/subcategories", function(data)
-//       {
-//         $("#subcategory_id").empty();
-//         $.each( data, function( id, name ) {
-//             $('#subcategory_id').append("<option value=\""+id+"\">"+name+"</option>");
-//       });
+  function getSubs(){
+      category_id = $("#category_id").val();
+      
+      url_base = "{{ url('/') }}";
+      // Peticion ajax
+      $.getJSON(url_base+"/promoter/"+category_id+"/subcategories", function(data)
+      {
+        $("#subcategory_id").empty();
+        $.each( data, function( id, name ) {
+            $('#subcategory_id').append("<option value=\""+id+"\">"+name+"</option>");
+      });
 
-//     });
-//   }
+    });
+  }
 
-//   $(document).ready(function(){
-//     // Poblar sub category
-//     $("#category_id").change(function(){
+  $(document).ready(function(){
+    // Poblar sub category
+    $("#category_id").change(function(){
 
-//       category_id = $("#category_id").val();
-//       url_base = "{{ url('/') }}";
-//       // Peticion ajax
-//       $.getJSON(url_base+"/promoter/"+category_id+"/subcategories", function(data)
-//       {
-//         $("#subcategory_id").empty();
-//         $.each( data, function( id, name ) {
-//             $('#subcategory_id').append("<option value=\""+id+"\">"+name+"</option>");
-//       });
+      category_id = $("#category_id").val();
+      url_base = "{{ url('/') }}";
+      // Peticion ajax
+      $.getJSON(url_base+"/promoter/"+category_id+"/subcategories", function(data)
+      {
+        $("#subcategory_id").empty();
+        $.each( data, function( id, name ) {
+            $('#subcategory_id').append("<option value=\""+id+"\">"+name+"</option>");
+      });
 
-//       })
-//     });
-//   });
-  </script>
+      })
+    });
+  });
+   </script>
 
 
 
