@@ -574,9 +574,10 @@
        function holi(){
        var tam= $('[id=invisible_id]').size();
        console.log("tamano "+tam);
-       for(var i=1;i<=tam;i++)
-       $('#dist').append("<div id=seat-map-"+i+" class=seatCharts-container  tabindex =0> </div>");
-
+       for(var i=1;i<=tam;i++){
+        var numeroId = $('[name=local_id]')[0].options[i-1].value;
+          $('#dist').append("<div id=seat-map-"+numeroId+" class=seatCharts-container  tabindex =0> </div>");
+      }
         var e = $('[name=local_id]')[0];
 
         var index= e.options[e.selectedIndex].value;
@@ -609,17 +610,7 @@
           var arreglo = new Array();
 
           
-          arreglo = getSeatsArray($('[name=local_id]')[0]);//haremos el arreglo del local
-          alert("arreglo? c:");
-          for(i=0; i<rows;i++){
-            var texto = 'a';
-            for(j=1; j<columns; j++){
-              texto += 'a';
-            }
-            //console.log(texto);
-            arreglo.push(texto);
-          }
-          console.log(arreglo);
+          arreglo = getSeatsArray(index);//haremos el arreglo del local
           //console.log(arreglo);
           var seatid="seat-map-"+index;
           console.log(seatid);
@@ -795,18 +786,8 @@
 
           var arreglo = new Array();
 
-          arreglo = getSeatsArray($('[name=local_id]')[0]);//haremos el arreglo del local 2222
-
-          for(i=0; i<rows;i++){
-            var texto = 'a';
-            for(j=1; j<columns; j++){
-              texto += 'a';
-            }
-            //console.log(texto);
-            arreglo.push(texto);
-          }
-          //console.log(arreglo);
-          //console.log(arreglo);
+          arreglo = getSeatsArray(index);//haremos el arreglo del local 2222
+          console.log(arreglo);
           var seatid="seat-map-"+index;
           //console.log(seatid);
 
@@ -960,9 +941,11 @@
     });
 
 function getSeatsArray(idLocal){
+  var map = new Array;
   $.ajax({
-        url: 'localSeats',
+        url: '/localSeats',
         type: 'get',
+        async: false,
         data: 
         { 
             local_id: idLocal,
@@ -970,18 +953,13 @@ function getSeatsArray(idLocal){
         success: function( response ){
             if(response != "")
             {
-              map = [];
-              
-              console.log(response.arreglo);
-              return response.arreglo;
-              for(var i = 0; i < rows; i++){
-                var texto = '';
-                for(var j = 0; j < columns; j++){
-                  texto += 'a';
-                }
-                //console.log(texto);
+              for(i=0; i<response.length;i++){
+                var texto ="";
+                for(j=0;j<response[i].length;j++)
+                  texto += response[i][j];
                 map.push(texto);
               }
+              //return map;
             }
             else
             {
@@ -989,9 +967,10 @@ function getSeatsArray(idLocal){
             }
         },
         error: function( response ){
-            
+            console.log(response);
         }
     });
+  return map;
 }
   </script>
   <script>

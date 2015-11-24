@@ -173,6 +173,7 @@ class LocalController extends Controller
     public function getLocalSeatArray(Request $request){
         $local_id = $request['local_id'];
         $local = Local::find($local_id);
+        if(empty($local)|| $local == null) return response()->json('invalid local id', 400); 
         $distribution = $local->distribution;
         $arreglo = array();
         for($i = 1; $i <= $local->rows; $i++){
