@@ -22,7 +22,7 @@ class PagesController extends Controller
     public function home()
     {
         $destacados = Highlight::where('active','1')->get();
-        $upcoming   = Event::where('selling_date','>',strtotime(Carbon::now()))->where('publication_date','<',strtotime(Carbon::now()))->get();
+        $upcoming   = Event::where('selling_date','>',strtotime(Carbon::now()))->where('publication_date','>',strtotime(Carbon::now()))->get();
         return view('external.home',array('destacados'=>$destacados,'upcoming'=>$upcoming));
     }
 

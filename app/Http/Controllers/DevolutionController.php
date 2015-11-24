@@ -41,6 +41,7 @@ class DevolutionController extends Controller
             Session::flash('alert-class','alert-danger');
             return redirect('salesman/devolutions');
         }
+
         $presentation = $ticket->presentation()->first();
 
         if (!$presentation->cancelled)
@@ -55,6 +56,21 @@ class DevolutionController extends Controller
         if (!$cancelPresentation->authorized)
         {
             Session::flash('message', 'El ticket no esta autorizado para ser devuelto');
+            Session::flash('alert-class','alert-danger');
+            return redirect('salesman/devolutions');
+        }
+        $today = strtotime(date("Y-m-d"));
+        $date_refund = strtotime($cancelPresentation->date_refund);
+        $date_refund_last = $date_refund + ($cancelPresentation->duration *  86400);
+        if ($today < $date_refund)
+        {
+            Session::flash('message', 'El ticket aun no se puede devolver. Autorizado para devolución a partir de '.$cancelPresentation->date_refund);
+            Session::flash('alert-class','alert-danger');
+            return redirect('salesman/devolutions');
+        }
+        if ($today > $date_refund_last)
+        {
+            Session::flash('message', 'El ticket no puede ser devuelto, tiempo de devolución agotado');
             Session::flash('alert-class','alert-danger');
             return redirect('salesman/devolutions');
         }
@@ -77,7 +93,6 @@ class DevolutionController extends Controller
                 $isAuthorized = 1;
                 break;
             }
-
         }
         return view('internal.salesman.devolution.new',["ticket"=>$ticket,"authorizedModule"=>$modulesAuth,"isAuthorized"=>$isAuthorized]);
     }

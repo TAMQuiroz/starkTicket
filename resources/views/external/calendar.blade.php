@@ -5,7 +5,7 @@
 	{!!Html::style('css/images.css')!!}
 @stop
 @section('title')
-{{date('Y-M-d',$date_at)}}
+Calendario
 @stop
 @section('content')
 
@@ -28,7 +28,7 @@
 @else
 	<div class="row">
 		<div class="col-sm-12">
-		<p>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</p>
+		<h3>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</h3>
 		<table class="table table-bordered">
 			<tr>
 				<th>Fecha de presentación</th>
@@ -37,7 +37,7 @@
 			</tr>
 	    @foreach($presentations as $presentation)
 	    	<tr>
-	    		<td>{{date('Y-m-d',$presentation->starts_at)}}</td>
+	    		<td>{{date('H:i:s',$presentation->starts_at)}}</td>
 	    		<td>{{$presentation->event["name"]}}</td>
 	    		<td><p><a href="event/{{$presentation->event['id']}}"  class="btn btn-info" role="button" >Detalle</a></p></td>
 	    	</tr>
@@ -50,12 +50,13 @@
 @if(count($events)===0)
 <div class="alert alert-warning"> Eventos publicados no encontrados en esta fecha</div>
 @else
-		<p>Eventos publicados el {{date('Y-m-d',$date_at)}}</p>
+	<h3>Eventos publicados el {{date('Y-m-d',$date_at)}}</h3>
+	<br>
 	<div class="row">
 	    @foreach($events as $event)
 	    <div class="3u">
 	        <section>
-	            <a href="#" class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
+	            <a  class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
 	            <h3>{{$event->name}}</h3>
 	            <p>
 	                <b>Fecha de venta: </b> {{date('Y-m-d',$event->selling_date)}}<br>
