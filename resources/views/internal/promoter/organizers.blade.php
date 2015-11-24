@@ -10,12 +10,6 @@
 @stop
 
 @section('content')
-
-{!! Form::text('eventPlace','', array('class' => 'form-control', 'style' => 'width:50%;')) !!} 
-<br>
-<button type="button" class="btn btn-info">Buscar</button>
-<br><br>
-<div class="table-responsive">
   <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -29,22 +23,19 @@
         </tr>
     </thead>
      <tbody>
-
      @foreach($organizador as $organizer)
         <tr>
             <td>{{$organizer->organizerName}}</td>
             <td>{{$organizer->telephone}}</td>
             <td>{{$organizer->email}}</td>
             <td>{{$organizer->ruc}}</td>
-            <td>{{$organizer->events}}</td>
+            <td>{{$organizer->eventos->count()}}</td>
             <td>
                 <a class="btn btn-info" href="{{url('promoter/organizer/'.$organizer->id.'/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-            </td>    
+            </td>
             <td>
                 <a class="btn btn-info" href=""  title="Eliminar"    data-toggle="modal" data-target="#deleteModal{{$organizer->id}}"><i class="glyphicon glyphicon-remove"></i></a></td>
         </tr>
-
-
         <!-- MODAL -->
         <div class="modal fade"  id="deleteModal{{$organizer->id}}">
           <div class="modal-dialog">
@@ -64,12 +55,8 @@
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     @endforeach
-
-    
     </tbody>
   </table>
-</div>
-
 {!!$organizador->render()!!}
 @stop
 
