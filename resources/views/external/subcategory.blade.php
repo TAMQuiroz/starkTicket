@@ -37,6 +37,9 @@
         <div class="col-sm-3">
             {!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}
             <h3>{{$event->name}}</h3>
+            <b>Fecha de venta: </b> {{date('Y-m-d',$event->selling_date)}}<br>
+            <b>Lugar: </b> {{$event->place->name}} <br>
+            <b>Direccion:</b> {{$event->place->address}} <br>
             <p><a href="{{ url('event/'.$event->id) }}"  class="btn btn-primary" >{{$event->name}}</a></p>
         </div>
 
