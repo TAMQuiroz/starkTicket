@@ -12,6 +12,7 @@ use App\Models\Slot;
 use App\Models\Event;
 use App\Models\Presentation;
 use App\Models\Zone;
+use App\Models\Business;
 use App\Http\Requests\Booking\StoreBookingRequest;
 use Carbon\Carbon;
 use Mail;
@@ -22,6 +23,7 @@ class BookingController extends Controller
 {
 	public function create($id)
 	{
+        $business = Business::all()->first();
 		$event = Event::find($id);
 		$presentations = $event->presentations;
 		foreach ($presentations as $presentation) {
@@ -31,7 +33,8 @@ class BookingController extends Controller
 		$zones = Zone::where('event_id', $id)->lists('name', 'id');
 		$array = ['event' => $event,
 				'presentations' => $presentations,
-				'zones'			=> $zones];
+				'zones'			=> $zones,
+                'business'=>$business];
 		return view('external.booking.create', $array);
 	}
 

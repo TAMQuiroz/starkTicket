@@ -98,7 +98,7 @@ class CategoryController extends Controller
             $category->$key = $value;
         }
         $father_id = $request->input('father_id', '');
-        if($request['isSub'] != 1){
+        if($request['isSub'] == null){
             $category->type = 1;
             $category->father_id = null;
         } else {
@@ -157,10 +157,9 @@ class CategoryController extends Controller
         if($request->file('image')!=null)
             $category->image = $this->file_service->upload($request->file('image'),'category');
         $father_id = $request->input('father_id', '');
-        if($father_id != ''){
+        if($category->father_id){
             $category->type = 2;
-            $parent = Category::find($father_id);
-            $category->parentCategory()->associate($parent);
+            $category->father_id = $father_id;
         }
         $category->save();
         return redirect()->route('admin.categories.index');
