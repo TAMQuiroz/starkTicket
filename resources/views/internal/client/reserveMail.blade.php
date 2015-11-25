@@ -17,7 +17,7 @@
 	<tbody>
 	    <tr>
 	    	<td>{{$tickets->first()->event->name}}</td>
-	    	<td>{{$tickets->first()->presentation->starts_at}}</td>
+	    	<td>{{date("Y-m-d h:i", $tickets->first()->presentation->starts_at)}}</td>
 	    	<td>{{$tickets->first()->zone->name}}</td>
 	    	<td>{{$tickets->first()->quantity}}</td>
 	        @if($tickets->first()->promo)
