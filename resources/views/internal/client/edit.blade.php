@@ -41,6 +41,7 @@ Cambia información
     <br>
     <div class="row preferences-div">
 
+
     @foreach($categories as $category)
     <!--
       <label  class="control-label">{{$category->name}}</label>
@@ -51,11 +52,14 @@ Cambia información
 
     -->
 
-      <label>{{$category->name}}</label>
-        <div >
-            {!! Form::checkbox($category->name, $category->id, null, ['class' => 'checkbox']) !!}
+        <div class="opt-div">
+          <label class="control-label">{{$category->name}}</label>
+          <div class="preferences-chbox">
+              {!! Form::checkbox($category->name, $category->id, null, ['class' => 'checkbox']) !!}
+          </div>
         </div>
-    
+        
+     
 
     @endforeach
           
@@ -69,11 +73,18 @@ Cambia información
       .preferences-div label{
           width: 125px;
       }
+      /*
       .preferences-div label:first-child{
-          margin-left: 30px;
+          margin-left: 0px;
       }
+      */      
       .preferences-chbox{
-          margin-right: 40px; 
+          width: 10px;
+          display: inline-block;
+      }
+      .opt-div{
+        width: 250px;
+        margin-bottom: 30px;
       }
 
     </style>
