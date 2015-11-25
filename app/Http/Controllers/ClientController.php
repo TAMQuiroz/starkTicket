@@ -74,6 +74,12 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
+
+        $users = User::where('email',$request['email'])->get();        
+        if (count($users)!=0){     
+            return back()->withErrors(['Ya Registro este email']);         
+        }      
+
         $input = $request->all();
 
         $user = new User ;
@@ -85,6 +91,7 @@ class ClientController extends Controller
         $user->address = $input['address'];
         $user->phone = $input['phone'];
         $user->email = $input['email'];
+        $user->point = 0;
         $user->birthday = new Carbon($input['birthday']);
         $user->role_id = 1;
         $user->save();
