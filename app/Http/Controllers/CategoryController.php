@@ -111,35 +111,13 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showExternal($id)
-    {
-        return view('external.category');
-    }
-
-    /**
-     * Display the specified resource.
-     *
      * @param  int  $id, int $id2
      * @return \Illuminate\Http\Response
      */
     public function showSub($id, $id2)
     {
         $category = Category::findOrFail($id2);
-        $events = Event::where('category_id',$id2)->paginate(10);
+        $events = Event::where(['cancelled'=>'0','category_id'=>$id2])->paginate(10);
         return view('external.subcategory',["events"=>$events,"category"=>$category]);
     }
 

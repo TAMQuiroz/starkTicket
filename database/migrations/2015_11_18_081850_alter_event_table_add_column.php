@@ -16,7 +16,6 @@ class AlterEventTableAddColumn extends Migration
             $table->string('distribution_image')->nullable();
             $table->integer('promoter_id')->unsigned();
             $table->integer('percentage_comission')->default(0);
-            $table->integer('amount_comission')->default(0);
         });
     }
 
@@ -31,7 +30,6 @@ class AlterEventTableAddColumn extends Migration
             $table->dropColumn('distribution_image');
             $table->dropColumn('promoter_id');
             $table->dropColumn('percentage_comission');
-            $table->dropColumn('amount_comission');
         });
     }
 }

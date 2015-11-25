@@ -27,9 +27,9 @@
     <td>{{$cancelled->date_refund}}</td>
     <td>{{$cancelled->duration}} Diás</td>
     <td>
-        <a class="btn btn-info" title="Mas Detalles"  data-toggle="modal" data-target="#detallesModal">+</a>
+        <a class="btn btn-info" title="Mas Detalles"  data-toggle="modal" data-target="#detallesModal{{$cancelled->id}}">+</a>
        <!-- MODAL -->
-        <div class="modal fade"  id="detallesModal">
+        <div class="modal fade"  id="detallesModal{{$cancelled->id}}">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">

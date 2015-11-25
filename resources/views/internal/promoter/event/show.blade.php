@@ -13,6 +13,7 @@
         @if($event->cancelled)<p><b>Estado: Cancelado</b></p> @else <p><b>Estado: Vigente</b></p> @endif
         <p><b>Código:</b>  {{$event->id}} </p>
         <p><b>Organizado por:</b> {{$event->organization->organizerName}} {{$event->organization->organizerLastName}}</p>
+        <p><b>Comisión:</b> {{$event->percentage_comission}} % </p>
         <p><b>Descripción:</b>  {{$event->description}} </p>
         <p><b>Local:</b> {{$event->place->name}} </p>
         <p><b>Categoria:</b> {{$event->category->name}} </p>
@@ -47,7 +48,7 @@
 
 
         {!! Html::image($event->image, null, array('class'=>'img-thumbnail')) !!}
-       
+
 
     </div>
 </div>

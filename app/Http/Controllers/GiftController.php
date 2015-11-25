@@ -134,7 +134,7 @@ class GiftController extends Controller
 
         $gift->save();
         
-        return redirect('admin/gifts');
+        return redirect()->route('admin.gifts');
 }
 
     /**
@@ -188,7 +188,7 @@ class GiftController extends Controller
 
         $gift->save();        
 
-        return redirect('admin/gifts');
+        return redirect()->route('admin.gifts');
     }
 
     /**
@@ -201,6 +201,6 @@ class GiftController extends Controller
     {
         $gift = Gift::find($id);
         $gift->delete();
-        return redirect('admin/gifts');
+        return redirect()->route('admin.gifts');
     }
 }
