@@ -40,7 +40,7 @@
                         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="0">
                             <!-- Indicators -->
                             <ol class="carousel-indicators">
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                               
                                     @for ($i = 0; $i <  $giftArray->count(); $i++)
                                     <li data-target="#carousel-example-generic" data-slide-to="{{$i}}"></li>
                                     @endfor
@@ -54,7 +54,7 @@
                                 </div>
                             @else
                                 @foreach($giftArray as $gift)
-                                @if($gift->id == 1)
+                                @if($gift->id == $min)
                                 <div class="item active">
                                 @else
                                 <div class="item">
@@ -163,9 +163,8 @@
     $('#dd-list').change(function(){
 
         var list = document.getElementById("dd-list");
-        var idgift = list.options[list.selectedIndex].value;
-        var id = parseInt(idgift-1);
-         alert(id);
+        var idgift = list.selectedIndex;
+        var id = parseInt(idgift);
         $('#carousel-example-generic').carousel(id);
 
         var user_points = parseInt(document.getElementById("user_points").value);

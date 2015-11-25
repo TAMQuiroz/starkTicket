@@ -74,8 +74,11 @@ class GiftController extends Controller
 
     $giftsArr = Gift::all();
     $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
+     $min = Gift::orderBy('id')->get()->lists('id')->first();
 
-    return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr]  );
+
+   
+    return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ]  );
 
 
     }
@@ -118,11 +121,9 @@ class GiftController extends Controller
 
 
 
+   
+ return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr]  );
 
-
-
-
-    return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr]  );
 
     //  return redirect('salesman');
 
