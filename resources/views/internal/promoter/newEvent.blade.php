@@ -165,6 +165,12 @@
               <legend>Agregar zona:</legend>
               <div class="col-md-6">
                   <div class="form-group">
+                multiple
+                {!! Form::radio('selection_mode', 'dos',true,['id'=>'multiple-mode-on'])!!} 
+                single
+                {!! Form::radio('selection_mode', 'uno',false,['id'=>'single-mode-on'])!!} 
+                </div>
+                  <div class="form-group">
                       <label  class="col-md-4 control-label">Nombre</label>
                       <div class="col-md-8">
                           {!! Form::text('zoneName1','', array('class' => 'form-control','id' => 'input-zone','maxlength' => 20)) !!}
@@ -224,8 +230,29 @@
                 <script>
 
                     function addZone(){
-
-
+                      if($('#input-capacity').attr('disabled')){
+                        $('.selected').removeClass('selected').addClass('reserved');
+                        var col_min=100000000;
+                        var fil_min=100000000;
+                        var col_max=0;
+                        var fil_max=0;
+                        $('.reserved').each(function(index, element){
+                          var id = $(this).attr('id');
+                          var col = parseInt(id.split("_")[1]);
+                          var fil = parseInt(id.split("_")[0]);
+                          console.log(col+" fil "+fil); 
+                          if(col<col_min) col_min = col;
+                          if(fil<fil_min) fil_min = fil;
+                          if(col>col_max) col_max = col;
+                          if(fil>fil_max) fil_max = fil;
+                        });
+                        console.log(col_min);
+                        console.log(fil_max);
+                        $('#input-column').val(''+(col_max-col_min+1));
+                        $('#input-row').val(''+(fil_max-fil_min+1));
+                        $('#input-rowIni').val(''+fil_min);
+                        $('#input-colIni').val(''+col_min);
+                      }
                         var new_capacity = document.getElementById('capacity-display').value;
 
                         var zone = document.getElementById('input-zone').value;
@@ -449,7 +476,7 @@
                 
                     }    
                 </script>
-
+                
                 <table id="table-zone" class="table table-bordered table-striped ">
                     <tr>
                         <th>Nombre</th>
@@ -644,6 +671,18 @@ $('document').ready(function () {
 
 
   <script type="text/javascript">
+
+  var config = {
+        routes: [
+            { getSeatsArray: "{{ URL::route('ajax.getSeatsArray') }}" },
+            { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
+            { event_available: "{{URL::route('ajax.getAvailable')}}"},
+            { slots: "{{URL::route('ajax.getSlots')}}"},
+            { makeArray: "{{URL::route('ajax.getZoneSeatArray')}}"},
+            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
+            { promo: "{{URL::route('ajax.getPromo')}}"}
+        ]
+    };
     $('#yes').click(function(){
       $('#submitModal').modal('hide');  
     });

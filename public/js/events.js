@@ -1,3 +1,16 @@
+$('document').ready(function () {
+
+  $('#multiple-mode-on').on('click', function(){
+    //alert("boolean val: "+$('#multiple-mode-on').is(":checked"));
+    $('.selected').removeClass('selected').addClass('reserved');
+  });
+  $('#single-mode-on').on('click', function(){
+    //alert("boolean val: "+$('#multiple-mode-on').is(":checked"));
+    $('.selected').removeClass('selected').addClass('reserved');
+  });
+
+});
+
 $(document).ready(function() {
 
        holi();
@@ -185,85 +198,96 @@ function showSeatMap(index){
               }
             },
             click : function(){
-                  if(this.node().hasClass('unavailable')){
-                    alert("No se puede seleccionar un asiento no disponible!");
-                    this.status('unavailable');
-                    return 'unavailable';
+              if(this.node().hasClass('unavailable'))
+                return 'unavailable';
+              if(this.node().hasClass('reserved')){
+                this.status('reserved');
+                return 'reserved';
+              }
+              if($('#multiple-mode-on').is(':checked')){
+                  if(this.status()=='selected'){
+                    console.log("clic en un selected");
+                    if($('.selected').length>=1){
+                      var selec1 = $('.selected')[0].id;
+                      var selec2 = this.node().attr('id');
+                      var col_ini1 = parseInt(selec1.split("_")[1]);
+                      var fil_ini1 = parseInt(selec1.split("_")[0]);
+                      var col_ini2 = parseInt(selec2.split("_")[1]);
+                      var fil_ini2 = parseInt(selec2.split("_")[0]);
+                      var col_ini = col_ini2;
+                      var fil_ini = fil_ini2;
+                      if(col_ini1 < col_ini2) col_ini = col_ini1;
+                      if(fil_ini1 < fil_ini2) fil_ini = fil_ini1;
+                      var dif1 = Math.abs(col_ini1 - col_ini2);
+                      var dif2 = Math.abs(fil_ini1 - fil_ini2);
+                      for(i=col_ini;i<= col_ini+dif1;i++) 
+                        for(j=fil_ini;j<= fil_ini+dif2;j++){
+                          var id = ""+j+"_"+i;
+                          if($('#'+id).length && id!=selec1 && id!=selec2){
+                            $('#'+id).removeClass('reserved').addClass('available');
+                          }
+                        } 
+                    }
+                    this.node().removeClass('selected').addClass('available');
+                    this.status('available');
+                    return 'available';
                   }
-
-                  if(this.status()=='available' && this.status()!='selected'){
-                      var num_cant = $('.seatCharts-cell.selected').length;
-                      var unavailable = false;
-                      if(num_cant<2){
-                        if(num_cant == 1){
-                          var id_selec1 = $('.seatCharts-cell.selected').first().attr('id');
-                          var id_selec2 = this.node().attr('id');
-                          var res = id_selec1.split("_");
-                          var fil_ini = parseInt(res[0]);
-                          var col_ini = parseInt(res[1]);
-                          var res = id_selec2.split("_");
-                          var fil_ini2 = parseInt(res[0]);
-                          var col_ini2 = parseInt(res[1]);
-                          if(col_ini > col_ini2)
-                            $('#input-colIni').val(''+col_ini2);
-                          else $('#input-colIni').val(''+col_ini);
-                          if(fil_ini > fil_ini2)
-                            $('#input-rowIni').val(''+fil_ini2);
-                          else $('#input-rowIni').val(''+fil_ini);
-                          $('#input-column').val(''+(Math.abs(col_ini - col_ini2)+1));
-                          $('#input-row').val(''+(Math.abs(fil_ini - fil_ini2)+1));
-                          var col_ini = parseInt($('#input-colIni').val());
-                          var fil_ini = parseInt($('#input-rowIni').val());
-                          var cant_fil = parseInt($('#input-row').val());
-                          var cant_col = parseInt($('#input-column').val());
-                          unavailable = false;
-                          for(i = col_ini; i<col_ini+cant_col;i++){
-                            for(j=fil_ini; j<fil_ini + cant_fil; j++){
-                              var id = ''+j+'_'+i;
-                              if(id!= id_selec2 && id!= id_selec1){
-                                  if($('#'+id).hasClass('unavailable')){
-                                    $('#input-colIni').val('');
-                                    $('#input-rowIni').val('');
-                                    $('#input-column').val('');
-                                    $('#input-row').val('');
-                                    $('.reserved').removeClass('reserved').addClass('available');
-                                    $('.selected').removeClass('selected').addClass('available');
-                                    alert('No se puede seleccionar estos asientos porque ya están ocupados por otra zona');
-                                    unavailable = true;
-                                    break;
-                                  } 
-                                  if($('#'+id).length) //check it exists
-                                    $('#'+id).addClass('reserved'); //<---- este es el que funciona
-                    
-                              }
+                  if(this.status()=='available'){
+                    console.log('tiene available');
+                    this.node().addClass('selected');
+                    if($('.selected').length >1){
+                      var selec1 = $('.selected')[0].id;
+                      var selec2 = $('.selected')[1].id;
+                      var col_ini1 = parseInt(selec1.split("_")[1]);
+                      var fil_ini1 = parseInt(selec1.split("_")[0]);
+                      var col_ini2 = parseInt(selec2.split("_")[1]);
+                      var fil_ini2 = parseInt(selec2.split("_")[0]);
+                      var col_ini = col_ini2;
+                      var fil_ini = fil_ini2;
+                      if(col_ini1 < col_ini2) col_ini = col_ini1;
+                      if(fil_ini1 < fil_ini2) fil_ini = fil_ini1;
+                        var dif1 = Math.abs(col_ini1 - col_ini2);
+                        var dif2 = Math.abs(fil_ini1 - fil_ini2);
+                      for(i=col_ini;i<= col_ini+dif1;i++) 
+                        for(j=fil_ini;j<= fil_ini+dif2;j++){
+                          var id = ""+j+"_"+i;
+                          if($('#'+id).length){
+                            if($('#'+id).hasClass('unavailable')){
+                              alert("hay asientos pertencientes a otras zonas en el area seleccionada");
+                              this.node().removeClass('selected').addClass('available');
+                              this.status('available');
+                              return 'available';
                             }
-                            if(unavailable) break;
                           }
                         }
-                        if(!unavailable){
-                          this.status('selected');
-                          return 'selected';
-                        } else {
-                          this.status('available');
-                          return 'available';
+                      for(i=col_ini;i<= col_ini+dif1;i++) 
+                        for(j=fil_ini;j<= fil_ini+dif2;j++){
+                          var id = ""+j+"_"+i;
+                          if($('#'+id).length && !$('#'+id).hasClass('selected')){
+                            $('#'+id).removeClass('available').addClass('reserved');
+                          }
                         }
-                      } else{
-                        alert('Ya hay dos asientos seleccionados');
-                        this.status('available');
-                        return 'available';
-                      }
                     }
-                    if(this.status()=='selected'){
-                      $('#input-colIni').val('');
-                      $('#input-rowIni').val('');
-                      $('#input-column').val('');
-                      $('#input-row').val('');
-                      $('.seatCharts-cell.reserved').removeClass("reserved").addClass("available");
-                      this.status('available');
-                      return 'available';
-                    }
+                    this.status('selected');
+                    return 'selected';
+                  }
+              }
+              if($('#single-mode-on').is(':checked')){
+                if(this.status()=='selected'){
+                  this.node().removeClass('selected').addClass('available');
+                  this.status('available');
+                  return 'available';
+                }
+                if(this.status()=='available'){
+                  this.node().removeClass('available').addClass('selected');
+                  this.status('selected');
+                  return 'selected';
+                }
+              }
             },
             focus  : function() {
+              if(this.node().hasClass('reserved'))
+                return this.style();
               if (!this.node().hasClass('unavailable')) {
                   return 'focused';
               
@@ -285,7 +309,7 @@ function showSeatMap(index){
 function getSeatsArray(idLocal){
   var map = new Array;
   $.ajax({
-        url: '/localSeats',
+        url: config.routes[0].getSeatsArray,
         type: 'get',
         async: false,
         data: 

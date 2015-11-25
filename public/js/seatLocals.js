@@ -14,7 +14,7 @@ $('document').ready(function () {
     if($('.reserved').length > 0){
       $('#multiple-mode-on').prop('checked', false);
       $('#single-mode-on').prop('checked', true);
-      alert("tiene que commitear sus cambios antes de pasar a otro modo!");
+      alert("tiene que guardar sus cambios en la distribución antes de pasar a otro modo!");
     }
   });
   $('#single-mode-on').on('click', function(){
@@ -22,7 +22,7 @@ $('document').ready(function () {
     if($('.reserved').length > 0){
       $('#multiple-mode-on').prop('checked', true);
       $('#single-mode-on').prop('checked', false);
-      alert("tiene que commitear sus cambios antes de pasar a otro modo!");
+      alert("tiene que guardar sus cambios en la distribución antes de pasar a otro modo!");
     }
   });
   $('#form').submit(function(){

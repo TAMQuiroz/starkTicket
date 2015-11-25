@@ -164,9 +164,10 @@ public function storeRestOfEvent($zone_data, $data, $event){
         $sitios_zona = $zone_data['seats_ids'][$key];
         if($zone_data['zone_columns'][$key] != '' || $zone_data['zone_columns'][$key] != null){
             foreach ($sitios_zona as $key => $value) {
+                $fil_cols = explode("_", $value);
                 $slot = new Slot();
-                $slot->row = substr($value,0,1);
-                $slot->column = substr($value,2,1);
+                $slot->row = $fil_cols[0];
+                $slot->column = $fil_cols[1];
                 $slot->zone_id = $zone->id;
                 $slot->save();
                 $slot->presentation()->attach($functions_ids);
