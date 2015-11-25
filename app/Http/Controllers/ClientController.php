@@ -74,11 +74,6 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        
-        $users = User::where('email',$request['email'])->get();
-        if (count($users)!=0){
-            return back()->withErrors(['Ya Registro este email']);  
-        }
         $input = $request->all();
 
         $user = new User ;
@@ -90,7 +85,6 @@ class ClientController extends Controller
         $user->address = $input['address'];
         $user->phone = $input['phone'];
         $user->email = $input['email'];
-        $user->points = 0;
         $user->birthday = new Carbon($input['birthday']);
         $user->role_id = 1;
         $user->save();
@@ -122,12 +116,27 @@ class ClientController extends Controller
      */
     public function edit()
     {
+
         $id = Auth::user()->id;
         $obj = User::findOrFail($id);
         $categories = Category::all();
+        $preference = Preference::where('idUser','=',$id)->get();
+        $datosUsar = [];
+        $contador = 0;
+        //return $preference; //idCategories
+        //return $preference[0]->idCategories;
+        foreach ($categories as $category) {
+            //return $category->id;
+            if ($preference[$contador]->idCategories == $category->id){
+                array_push($datosUsar, array($category->name,$category->id,true));
+                $contador = $contador + 1;
+            }
+            else
+                array_push($datosUsar, array($category->name,$category->id,false));
+        }
         //return view('internal.client.edit', ['obj' => $obj]);
         //return $categories;
-        return view('internal.client.edit', compact('obj','categories'));
+        return view('internal.client.edit', compact('obj','datosUsar','preference'));
     }
 
     /**
@@ -219,20 +228,18 @@ class ClientController extends Controller
      */
     public function passwordUpdate(PasswordClientRequest $request)
     {
+
         $id = Auth::user()->id;
         $obj = User::findOrFail($id);
-
         $auth = Auth::attempt( array(
             'email' => $obj->email,
             'password' => $request->input('password')
             ));
-
         if ($auth)
         {
             $newPassword = bcrypt($request->input('new_password'));
             $obj->password = $newPassword;
             $obj->save();
-
             //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
             Session::flash('message', 'Su contraseña fue actualizada!');
             Session::flash('alert-class','alert-success');
@@ -240,9 +247,15 @@ class ClientController extends Controller
             Session::flash('message', 'Contraseña!');
             Session::flash('alert-class','alert-danger');
         }
-
         return redirect('client');
     }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    
 
     /**
      * Show the form for editing the specified resource.

@@ -42,20 +42,17 @@ Cambia información
     <div class="row preferences-div">
 
 
-    @foreach($categories as $category)
-    <!--
-      <label  class="control-label">{{$category->name}}</label>
-          <div class="preferences-chbox">
-              {!! Form::checkbox($category->name, $category->id, null, ['class' => 'checkbox']) !!}
-          </div>
-      </div>
-
-    -->
+    @foreach($datosUsar as $datos)
 
         <div class="opt-div">
-          <label class="control-label">{{$category->name}}</label>
+          <label class="control-label">{{$datos[0]}} </label>
           <div class="preferences-chbox">
-              {!! Form::checkbox($category->name, $category->id, null, ['class' => 'checkbox']) !!}
+            @if($datos[2] == true)
+               {!! Form::checkbox($datos[0], $datos[1], true, ['class' => 'checkbox']) !!}
+            @else
+               {!! Form::checkbox($datos[0], $datos[1], null, ['class' => 'checkbox']) !!}
+            @endif
+
           </div>
         </div>
         
