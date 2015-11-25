@@ -127,23 +127,29 @@ class ClientController extends Controller
         $id = Auth::user()->id;
         $obj = User::findOrFail($id);
         $categories = Category::all();
-        $preference = Preference::where('idUser','=',$id)->get();
+        $preference = Preference::where('idUser',$id)->get();
         $datosUsar = [];
         $contador = 0;
+
         //return $preference; //idCategories
         //return $preference[0]->idCategories;
-        foreach ($categories as $category) {
-            //return $category->id;
-            if ($preference[$contador]->idCategories == $category->id){
-                array_push($datosUsar, array($category->name,$category->id,true));
-                $contador = $contador + 1;
+        if(!$preference || count($preference)!= 0){   
+            foreach ($categories as $category) {
+                //return $category->id;
+                
+                if ($contador != count($preference) && $preference[$contador]->idCategories == $category->id){
+                    array_push($datosUsar, array($category->name,$category->id,true));
+                    $contador = $contador + 1;
+                }
+                else
+                    array_push($datosUsar, array($category->name,$category->id,false));              
             }
-            else
-                array_push($datosUsar, array($category->name,$category->id,false));
+        }else{
+            $noPreference = $categories;
         }
         //return view('internal.client.edit', ['obj' => $obj]);
         //return $categories;
-        return view('internal.client.edit', compact('obj','datosUsar','preference'));
+        return view('internal.client.edit', compact('obj','datosUsar','preference','noPreference'));
     }
 
     /**
