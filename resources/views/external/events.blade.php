@@ -36,6 +36,7 @@
                 <b>Fecha de venta: </b> {{date('Y-m-d',$event->selling_date)}}<br>
                 <b>Lugar: </b> {{$event->place->name}} <br>
                 <b>Direccion:</b> {{$event->place->address}} <br>
+                <b>Categoria:</b> {{$event->category->name}} <br>
             </p>
             <p><a href="event/{{$event->id}}"  class="btn btn-info" role="button" >Detalle</a></p>
         </section>
