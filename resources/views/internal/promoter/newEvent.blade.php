@@ -433,8 +433,8 @@
                         }
 
                         new_capacity = new_capacity - capacity;
-                        document.getElementById('capacity-display').value = new_capacity;
-                        document.getElementById("input-capacity").max=new_capacity;
+                        //document.getElementById('capacity-display').value = new_capacity;
+                        //document.getElementById("input-capacity").max=new_capacity;
 
                     }
 
