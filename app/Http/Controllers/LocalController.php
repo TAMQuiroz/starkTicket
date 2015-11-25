@@ -194,11 +194,23 @@ class LocalController extends Controller
 
     public function getZoneSeatArray(Request $request){
         $zona = Zone::find($request['zone_id']);
+        $local = $zona->event->place;
         $arreglo = array();
         $slots = $zona->slots;
+        /*
         for($j=$zona->start_row; $j<$zona->start_row +$zona->rows; $j++){
             $texto = '';
             for($i=$zona->start_column; $i<$zona->start_column +$zona->columns; $i++){
+                $res = $slots->where('column', $i)->where('row', $j);
+                if($res->isEmpty())
+                    $texto = $texto.'_';
+                else $texto = $texto.'a';
+            }
+            array_push($arreglo, $texto);
+        }*/
+        for($j=1; $j<=$local->rows; $j++){
+            $texto = '';
+            for($i =1;$i<=$local->columns;$i++){
                 $res = $slots->where('column', $i)->where('row', $j);
                 if($res->isEmpty())
                     $texto = $texto.'_';
