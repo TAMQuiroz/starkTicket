@@ -43,7 +43,13 @@ Detalle de asistencia de {{$salesman->name}}  {{$salesman->lastname}}
           @else
           <th> {{  date( "g:i:s a", strtotime(  $detailsAttendances[$i]->datetime  ))    }}  </th>
           @endif
-          <th><a class="btn btn-info" title="Editar" data-toggle="modal" data-target="#editModal{{$i}}"><i class="glyphicon glyphicon-pencil"></i></a></th>      
+            @if ( ($i +1< $detailsAttendances->count() ) and ($detailsAttendances[$i+1]->datetime != NULL)  )   
+              <th><a class="btn btn-info" type="button" ><i class="glyphicon glyphicon-pencil"></i></a></th>      
+                          @else
+              <th><a class="btn btn-info" title="Editar" data-toggle="modal" data-target="#editModal{{$i}}"><i class="glyphicon glyphicon-pencil"></i></a></th>      
+
+
+  @endif
         </tr>     
 
         <!-- MODAL -->
