@@ -53,6 +53,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $subcategories = Category::where('father_id',$id)->paginate(10);
+        $subcategories->setPath('subcategories');
         return view('external.subcategories',['category'=>$category,"subcategories"=>$subcategories]);
     }
 
@@ -64,6 +65,7 @@ class CategoryController extends Controller
     public function indexSubAdmin($parent_category)
     {
         $categories = Category::where('father_id',$parent_category)->paginate(5);
+        $categories->setPath('subcategories');
         return view('internal.admin.subcategories', ['categories' => $categories]);
     }
 
@@ -96,7 +98,7 @@ class CategoryController extends Controller
             $category->$key = $value;
         }
         $father_id = $request->input('father_id', '');
-        if($father_id == ''){
+        if($request['isSub'] != 1){
             $category->type = 1;
             $category->father_id = null;
         } else {
@@ -143,7 +145,6 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, $id)
     {
-
         $data = [
             'name'          =>$request->input('name',''),
             'description'   =>$request->input('description',''),

@@ -36,7 +36,7 @@
               <div class="form-group @if ($category->type == 1) hidden @endif">
                 <label class="col-sm-2" for="isSub">Subcategoria?</label>
                 <div class="col-sm-10">
-                  <input id="isSub" type="checkbox" data-toggle="collapse" data-target="#subcategoryForm" checked disabled>  
+                  <input id="isSub" name="isSub" value="1" type="checkbox" data-toggle="collapse" data-target="#subcategoryForm" checked disabled>  
                 </div>
               </div>
               <div id="subcategoryForm" class="collapse form-group @if ($category->type == 2) in @endif">
