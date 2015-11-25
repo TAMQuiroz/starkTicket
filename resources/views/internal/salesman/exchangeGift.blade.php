@@ -33,6 +33,12 @@
         @stop
 
         @section('content')
+
+        @if (Session::has('bookingmailmessage'))
+   <div class="alert alert-success"> <strong>{{ Session::get('bookingmailmessage') }}</strong></div>
+@endif
+
+
                 <!-- Portfolio Item Made by JosE  Row -->
                 <div class="row">
                     <div class="col-md-7">
@@ -105,7 +111,7 @@
                             {!! Form::select('gifts',  $giftsList->toArray()  , null, ['class' => 'form-control','id' => 'dd-list' ,'required'])!!}
                         </div>
                         <div class="col-md-8" style="margin-top:20px">
-                            <a class="btn btn-info" id="exchange" href="" title="Create" data-toggle="modal" data-target="#saveModal" >Canjear puntos</a>
+                            <a class="btn btn-info" type="button" id="exchange" href="" title="Create" data-toggle="modal" data-target="#saveModal" >Canjear puntos</a>
                         </div>    
                         <!-- MODAL -->
                           <div class="modal fade"  id="saveModal">
