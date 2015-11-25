@@ -40,25 +40,34 @@ Cambia información
 
     <br>
     <div class="row preferences-div">
+    @if(count($preference) != 0)
+      @foreach($datosUsar as $datos)
 
+          <div class="opt-div">
+            <label class="control-label">{{$datos[0]}} </label>
+            <div class="preferences-chbox">
+              @if($datos[2] == true)
+                 {!! Form::checkbox($datos[0], $datos[1], true, ['class' => 'checkbox']) !!}
+              @else
+                 {!! Form::checkbox($datos[0], $datos[1], null, ['class' => 'checkbox']) !!}
+              @endif
 
-    @foreach($datosUsar as $datos)
-
-        <div class="opt-div">
-          <label class="control-label">{{$datos[0]}} </label>
-          <div class="preferences-chbox">
-            @if($datos[2] == true)
-               {!! Form::checkbox($datos[0], $datos[1], true, ['class' => 'checkbox']) !!}
-            @else
-               {!! Form::checkbox($datos[0], $datos[1], null, ['class' => 'checkbox']) !!}
-            @endif
-
+            </div>
           </div>
-        </div>
-        
-     
+          
+      
 
-    @endforeach
+      @endforeach
+    @elseif($noPreference)
+      @foreach($noPreference as $category)
+      <div class="opt-div">
+        <label class="control-label">{{$category->name}} </label>
+        <div class="preferences-chbox">
+          {!! Form::checkbox($category->name, $category->id, null, ['class' => 'checkbox']) !!}
+        </div>
+      </div>
+      @endforeach
+    @endif
           
     </div>
 
