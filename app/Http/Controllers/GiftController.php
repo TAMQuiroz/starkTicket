@@ -70,64 +70,41 @@ class GiftController extends Controller
      */
     public function createExchange()
     {
-
-
     $giftsArr = Gift::all();
     $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
-     $min = Gift::orderBy('id')->get()->lists('id')->first();
-
-
-   
+    $min = Gift::orderBy('id')->get()->lists('id')->first();
+ 
     return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ]  );
-
-
     }
 
     public function createExchangePost(exchangeGift $request)
     {
-            $input = $request->all();
-        $idGift               =  $input['gifts'];
+        $input = $request->all();
+        $idGift =  $input['gifts'];
         $idClient  =  $input['nombre_de_usuario'];
-
-
-
 
         $gift = Gift::find($idGift);
         $user = User::find($idClient);
 
-
    if(  $gift->points >  $user->points )
 
-            //return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
-            return back()->withErrors(['El usuario no posee puntos suficientes.']);
+        return back()->withErrors(['El usuario no posee puntos suficientes.']);
     elseif(    $gift->stock   ==  0  )
 
-            //return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
-            return back()->withErrors(['El juguete seleccionado se encuentra agotado.']);
+        return back()->withErrors(['El juguete seleccionado se encuentra agotado.']);
     
   
+    $gift->stock        =    $gift->stock -1 ; 
+    $gift->save();
 
-
-
-
-  $gift->stock        =    $gift->stock -1 ; 
-  $gift->save();
-
-  $user->points =   $user->points  - $gift->points      ;  
-  $user->save();
+    $user->points =   $user->points  - $gift->points      ;  
+    $user->save();
 
     $giftsArr = Gift::all();
     $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
+    $min = Gift::orderBy('id')->get()->lists('id')->first();
 
-
-
-   
- return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr]  );
-
-
-    //  return redirect('salesman');
-
-
+   return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ]  );
 
     }
 
