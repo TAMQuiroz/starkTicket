@@ -34,8 +34,8 @@
 
         @section('content')
 
-        @if (Session::has('bookingmailmessage'))
-   <div class="alert alert-success"> <strong>{{ Session::get('bookingmailmessage') }}</strong></div>
+        @if (Session::has('messageSucc'))
+   <div class="alert alert-success"> <strong>{{ Session::get('messageSucc') }}</strong></div>
 @endif
 
 

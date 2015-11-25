@@ -104,7 +104,7 @@ class GiftController extends Controller
     $giftsArr = Gift::all();
     $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
     $min = Gift::orderBy('id')->get()->lists('id')->first();
-   Session::flash('bookingmailmessage', ' Canjeo exitoso ');
+   Session::flash('messageSucc', ' Canjeo exitoso ');
    return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ]  );
 
     }
