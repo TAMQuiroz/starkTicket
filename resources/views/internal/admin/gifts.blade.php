@@ -39,7 +39,7 @@
         <a class="btn btn-info" href="{{url('admin/gifts/'.$gift->id.'/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
       </td> 
       <td>
-        <a class="btn btn-info" href="" title="Eliminar" data-toggle="modal" data-target="#deleteModal{{$gift->id}}" ><i class="glyphicon glyphicon-remove"></i></a>
+        <a class="btn btn-info" title="Eliminar" data-toggle="modal" data-target="#deleteModal{{$gift->id}}" ><i class="glyphicon glyphicon-remove"></i></a>
       </td>
     </tr>
 
@@ -56,7 +56,7 @@
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-              <a class="btn btn-info" href="{{url('promoter/organizer/'.$gift->id.'/delete')}}" title="Delete" >Sí</a>
+              <a class="btn btn-info" href="{{url('admin/gifts/'.$gift->id.'/delete')}}" title="Delete" >Sí</a>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

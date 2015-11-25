@@ -46,8 +46,26 @@ class PagesController extends Controller
                                     ->whereBetween("starts_at",[$date_at,$date_at+86400])
                                     ->get();
 
-        $events = Event::where(["publication_date"=>$date_at,"cancelled"=>"0"])->get();
-        return view('external.calendar',["events"=>$events,"date_at"=>$date_at,"presentations"=>$presentations]);
+        $eventsDate = Event::where("cancelled","0")->where("selling_date",'<=', $date_at)->get();
+        $eventInformation = [];
+        foreach($eventsDate as $eventDate){
+                    $presentationsDate = Presentation::where("cancelled","0")
+                                    ->whereBetween("starts_at",[$date_at,$date_at+86400])
+                                    ->where("event_id",$eventDate->id)
+                                    ->get();
+                    $presentationInformation = [];
+                    if (count($presentationsDate)!=0){
+                        foreach ($presentationsDate as $pre){
+                            array_push($presentationInformation, array($pre->starts_at));
+                        }
+                        array_push($eventInformation, array($eventDate->image, $eventDate->id, $eventDate->name, $eventDate->place->name, $eventDate->place->address, $eventDate->category->name, $presentationInformation));
+
+                    }
+                    
+            
+        }
+
+        return view('external.calendar',["events"=>$events,"date_at"=>$date_at,"presentations"=>$presentations],compact('eventInformation'));
     }
 
     public function eventsForDate(Request $request)
@@ -60,8 +78,27 @@ class PagesController extends Controller
                                     ->whereBetween("starts_at",[$date_at,$date_at+86400])
                                     ->get();
 
+        $eventsDate = Event::where("cancelled","0")->where("selling_date",'<=', $date_at)->get();
+        $eventInformation = [];
+        foreach($eventsDate as $eventDate){
+                    $presentationsDate = Presentation::where("cancelled","0")
+                                    ->whereBetween("starts_at",[$date_at,$date_at+86400])
+                                    ->where("event_id",$eventDate->id)
+                                    ->get();
+                    $presentationInformation = [];
+                    if (count($presentationsDate)!=0){
+                        foreach ($presentationsDate as $pre){
+                            array_push($presentationInformation, array($pre->starts_at));
+                        }
+                        array_push($eventInformation, array($eventDate->image, $eventDate->id, $eventDate->name, $eventDate->place->name, $eventDate->place->address, $eventDate->category->name, $presentationInformation));
+
+                    }
+                    
+            
+        }
+
         $events = Event::where(["publication_date"=>$date_at,"cancelled"=>"0"])->get();
-        return view('external.calendar',["events"=>$events,"date_at"=>$date_at,"presentations"=>$presentations]);
+        return view('external.calendar',["events"=>$events,"date_at"=>$date_at,"presentations"=>$presentations],compact('eventInformation'));
     }
 
 
