@@ -35,7 +35,7 @@ class PaymentController extends Controller
         $event = Event::findOrFail($event_id);
         $amountAccumulated = $event->amountAccumulated();
 
-        $amountComission = $event->amount_comission + $amountAccumulated*$event->percentage_comission/100;
+        $amountComission = $amountAccumulated*$event->percentage_comission/100;
         $totalToPay = $amountAccumulated - $amountComission;
         $paid = Payment::where("event_id",$event_id)->sum('paid');
         $debt = 0;

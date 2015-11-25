@@ -27,7 +27,6 @@ Route::post('calendar', 'PagesController@eventsForDate');
 //Route::post('calendar', 'PagesController@findcalendar');
 Route::get('gifts', 'GiftController@indexExternal');
 Route::get('category', 'CategoryController@indexExternal');
-Route::get('category/{id}', 'CategoryController@showExternal');
 Route::get('category/{id}/subcategory', 'CategoryController@indexSub');
 Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@indexExternal');
@@ -119,6 +118,8 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
     Route::post('promoter/event/{event_id}/delete', ['as' => 'events.delete', 'uses' =>'EventController@destroy']);
+    Route::get('promoter/event/{event_id}/cancel', 'EventController@cancel');
+    Route::post('promoter/event/{event_id}/cancel', 'EventController@cancelStorage');
 
     Route::get('promoter/presentation/cancelled', 'PresentationController@index');
     Route::get('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modules');

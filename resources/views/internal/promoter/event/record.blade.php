@@ -122,6 +122,7 @@
                               </li>
                             @endforeach
                           </ul>
+                          <p><a href="{{ url ('promoter/event/'.$event['event']->id.'/cancel') }}">Cancelar todos</a></p>
                         </div>
 
                     </div>
