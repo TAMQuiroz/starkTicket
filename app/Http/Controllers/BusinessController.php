@@ -232,6 +232,12 @@ class BusinessController extends Controller
         if(isset($request['favicon']))
             $system->favicon = $this->file_service->upload($request->file('favicon'),'system');
 
+        if($request['exchange_active'] == true){
+            $system->exchange_active = true;
+        }else if($request['exchange_active'] == false){
+            $system->exchange_active = false;
+        }
+
         $system->save();
 
         return redirect()->back();
