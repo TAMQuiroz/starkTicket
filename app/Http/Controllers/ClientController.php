@@ -91,7 +91,7 @@ class ClientController extends Controller
         $user->address = $input['address'];
         $user->phone = $input['phone'];
         $user->email = $input['email'];
-        $user->point = 0;
+        $user->points = 0;
         $user->birthday = new Carbon($input['birthday']);
         $user->role_id = 1;
         $user->save();
