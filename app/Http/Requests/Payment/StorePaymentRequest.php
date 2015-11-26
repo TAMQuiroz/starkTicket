@@ -25,9 +25,9 @@ class StorePaymentRequest extends Request
     {
         return [
             'event_id'     => 'required|exists:events,id',
-            'dateDelivery' => 'required|date',
-            'paid'         => 'required|min:1'
+            'paid'         => 'required|numeric|min:1'
         ];
+    }
     }
 
 }

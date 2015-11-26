@@ -14,16 +14,14 @@
           <th>Evento</th>
           <th>Organizdor</th>
           <th>Promotor</th>
-          <th>Fecha entrega</th>
           <th>Monto pagado</th>
-          <th>Fecha creado</th>
+          <th>Fecha de pago</th>
         </tr>
         @foreach($payments as $payment)
         <tr>
-          <td><a href="{{ url('event/'.$payment->event_id) }}" target="_blank">{{$payment->event["name"]}}</a></td>
+          <td><a href="{{ url('promoter/event/'.$payment->event_id) }}">{{$payment->event["name"]}}</a></td>
           <td>{{$payment->event->organization["organizerName"]}} {{$payment->event->organization["organizerLastName"]}}</td>
           <td><a href="#">{{$payment->promoter["name"]}} {{$payment->promoter["lastname"]}}</a></td>
-          <td>{{$payment->date_delivery}}</td>
           <td>S/ {{$payment->paid}}</td>
           <td>{{$payment->created_at}}</td>
         </tr>
