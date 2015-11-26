@@ -152,6 +152,8 @@ class ClientController extends Controller
         $obj->address = $input['address'];
         $obj->phone = $input['phone'];
         $obj->email = $input['email'];
+        $obj->di_type = $input['di_type'];
+        $obj->di = $input['di'];
         $obj->save();
         //$prueba = Preference::all();
         //$khe = Preference::withTrashed()->where('idUser', $obj->id)->get();

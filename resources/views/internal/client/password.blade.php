@@ -33,10 +33,10 @@ Cambiar contraseña
     </div>
     <div class="form-group">
         {!! Form::submit('Actualizar', ['class' => 'btn btn-info']) !!}
+        <a class="btn btn-info" href="{{ url ('client') }}">Cancelar</a>
     </div>
 {!! Form::close() !!}
 </div>
-
 @stop
 
 @section('javascript')
