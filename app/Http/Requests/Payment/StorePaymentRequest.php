@@ -28,6 +28,5 @@ class StorePaymentRequest extends Request
             'paid'         => 'required|numeric|min:1'
         ];
     }
-    }
 
 }

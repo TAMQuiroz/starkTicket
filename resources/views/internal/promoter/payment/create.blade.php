@@ -100,6 +100,7 @@
         rules: {
             paid: {
                 required: true,
+                min:1,
 
             }
         },

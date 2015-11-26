@@ -33,6 +33,13 @@ class PaymentController extends Controller
     public function create($event_id)
     {
         $event = Event::findOrFail($event_id);
+        if($event->cancelled)
+        {
+            Session::flash('message', 'Evento cancelado');
+            Session::flash('alert-class','alert-warning');
+
+            return redirect('promoter/event/record');
+        }
         $amountAccumulated = $event->amountAccumulated();
 
         $amountComission = $amountAccumulated*$event->percentage_comission/100;
@@ -41,6 +48,13 @@ class PaymentController extends Controller
         $debt = 0;
         if ($totalToPay > $paid)
             $debt = $totalToPay - $paid;
+        if($debt <= 0)
+        {
+            Session::flash('message', 'No se puede transferir, tiene deuda igual a cero');
+            Session::flash('alert-class','alert-warning');
+
+            return redirect('promoter/event/record');
+        }
         $objs = array(
             "event"=>$event,
             "amountAccumulated"=>$amountAccumulated,
