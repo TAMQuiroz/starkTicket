@@ -177,7 +177,7 @@ class CategoryController extends Controller
         $subcategories = $this->getSubcategories($id)->toArray();
         if(!empty($subcategories)){
             $errors = [
-                'The category has subcategories'
+                'La categoria tiene categorias'
             ];
             return redirect()->back()->withErrors($errors);
         }

@@ -26,15 +26,15 @@ class StoreAdminRequest extends Request
     {
         return [
         //   
-              'name' => 'required',
-              'lastname' => 'required',
+              'name' => 'required|max:100',
+              'lastname' => 'required|max:100',
               'password' => 'required',
               'di_type' =>'required',
-              'di' => 'required|numeric',
-              'address' => 'required',
-              'phone' => 'required|numeric',
+              'di' => 'required|numeric|integer|digits:8',
+              'address' => 'required|max:100',
+              'phone' => 'required|numeric|integer|digits_between:7,9',
               'email' => 'required|unique:users',
-              'birthday' => 'required',
+              'birthday' => 'date|required',
               'role_id' => 'required',
             
         ];

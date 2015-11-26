@@ -234,7 +234,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/client', 'ClientController@index');
     Route::post('admin/client/desactive', 'ClientController@desactive');
 
-    Route::get('admin/salesman', 'AdminController@salesman');
+    Route::get('admin/salesman', ['as'=>'admin.salesman','uses'=>'AdminController@salesman']);
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
     Route::post('admin/salesman/{id}/edit', 'AdminController@updateSalesman');
     Route::get('admin/salesman/{id}/delete', 'AdminController@destroySalesman');
