@@ -173,8 +173,16 @@ class TicketController extends Controller
                     //Disminuir capacidad en la zona de esa presentacion
                     DB::table('zone_presentation')->where('zone_id', $request['zone_id'])
                                                   ->where('presentation_id',$request['presentation_id'])
-                                                  ->sharedLock()
-                                                  ->decrement('slots_availables');;
+                                                  ->sharedLock();
+
+                    $zoneXpres = DB::table('zone_presentation')->where('zone_id',$request['zone_id'])->where('presentation_id', $request['presentation_id'])->first();
+                    
+                    if($zoneXpres->slots_availables - $nTickets < 0)
+                        return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
+
+                    DB::table('zone_presentation')->where('zone_id', $request['zone_id'])
+                                                  ->where('presentation_id',$request['presentation_id'])
+                                                  ->decrement('slots_availables');
                 }
             }
 
@@ -268,8 +276,8 @@ class TicketController extends Controller
             DB::commit();
 
         }catch (\Exception $e){
-            var_dump($e);
-            dd('rollback');
+            //var_dump($e);
+            //dd('rollback');
             DB::rollback();
             return back()->withInput($request->except('seats'))->withErrors(['Por favor intentelo nuevamente']);
         }
