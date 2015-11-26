@@ -24,12 +24,12 @@ class UpdateClientRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:16',
+            'name'     => 'required|min:3|max:16',
             'lastname' => 'required|min:3|max:30',
-            'address' => 'required|min:3|max:100',
-            'phone' => 'required|min:6|max:9',
+            'address'  => 'required|min:3|max:100',
+            'phone'    => 'required|integer|min:7|max:9',
             //'email' => 'required|email|unique:users',
-            'email' => 'required|email',
+            'email'    => 'required|email',
         ];
     }
 
