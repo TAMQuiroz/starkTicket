@@ -17,7 +17,6 @@ class CreatePaymentsTable extends Migration
             $table->integer('event_id')->unsigned();
             $table->integer('promoter_id')->unsigned();
             $table->double('paid');
-            $table->timestamp('date_delivery');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->softDeletes();

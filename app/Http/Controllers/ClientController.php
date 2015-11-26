@@ -76,10 +76,10 @@ class ClientController extends Controller
     public function store(StoreClientRequest $request)
     {
 
-        $users = User::where('email',$request['email'])->get();        
-        if (count($users)!=0){     
-            return back()->withErrors(['Ya Registro este email']);         
-        }      
+        $users = User::where('email',$request['email'])->get();
+        if (count($users)!=0){
+            return back()->withErrors(['Ya Registro este email']);
+        }
 
         $input = $request->all();
 
@@ -134,16 +134,16 @@ class ClientController extends Controller
 
         //return $preference; //idCategories
         //return $preference[0]->idCategories;
-        if(!$preference || count($preference)!= 0){   
+        if(!$preference || count($preference)!= 0){
             foreach ($categories as $category) {
                 //return $category->id;
-                
+
                 if ($contador != count($preference) && $preference[$contador]->idCategories == $category->id){
                     array_push($datosUsar, array($category->name,$category->id,true));
                     $contador = $contador + 1;
                 }
                 else
-                    array_push($datosUsar, array($category->name,$category->id,false));              
+                    array_push($datosUsar, array($category->name,$category->id,false));
             }
         }else{
             $noPreference = $categories;
@@ -167,7 +167,7 @@ class ClientController extends Controller
 
         //dd($request->all());
         $input = $request->all();
-        //return $input; 
+        //return $input;
         $obj->name = $input['name'];
         $obj->lastname = $input['lastname'];
         $obj->address = $input['address'];
@@ -175,7 +175,7 @@ class ClientController extends Controller
         $obj->email = $input['email'];
         $obj->save();
 
-        //$prueba = Preference::all();   
+        //$prueba = Preference::all();
 
         //$khe = Preference::withTrashed()->where('idUser', $obj->id)->get();
         //$khe->save();
@@ -186,7 +186,7 @@ class ClientController extends Controller
         $i = 6;
         while (!empty($values[$i])){
            $preference = new Preference;
-           $preference->idUser = $obj->id;  
+           $preference->idUser = $obj->id;
            $preference->idCategories = $values[$i];
            $preference->save();
            $i = $i + 1;
@@ -194,7 +194,7 @@ class ClientController extends Controller
 
 
         //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
-        Session::flash('message', 'Informacion de perfil correctamente actualizada!');
+        Session::flash('message', 'Informacion de perfil actualizada!');
         Session::flash('alert-class','alert-success');
         return redirect('client');
     }
@@ -269,7 +269,7 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
 
     /**
      * Show the form for editing the specified resource.
