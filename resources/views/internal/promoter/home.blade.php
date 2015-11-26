@@ -10,6 +10,10 @@ Bienvenido promotor de ventas
 
 @section('content')
 
+
+<a  class="btn btn-info" href="{{url('promoter/password')}}">Restaurar contraseña</a>
+<br> <br>
+
 <legend>Eventos vigentes</legend>
 
 <div class="table-responsive">

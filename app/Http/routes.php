@@ -65,6 +65,12 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::post('salesman/cash_count', 'BusinessController@updateCash');
     //Route::post('salesman/cash_count', 'BusinessController@updateCashCount');
 
+
+    Route::get('salesman/password', 'BusinessController@passwordSalesman');
+    Route::post('salesman/password', 'BusinessController@passwordUpdateSalesman');
+
+
+
     Route::get('salesman/exchange_gift', 'GiftController@createExchange');
     Route::post('salesman/exchange_gift', 'GiftController@createExchangePost');
 
@@ -109,7 +115,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/politics', 'PoliticController@politicsPromotor');
 
     Route::get('promoter/transfer_payments/', 'PaymentController@index');
-    Route::get('promoter/transfer_payments/{payment_id}', 'PaymentController@show');
+    //Route::get('promoter/transfer_payments/{payment_id}', 'PaymentController@show');
     Route::get('promoter/transfer_payments/{event_id}/create', 'PaymentController@create');
     Route::post('promoter/transfer_payments/{event_id}/create', 'PaymentController@store');
 
@@ -143,6 +149,10 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/promotion/{id}/edit',  'PromoController@update');
     Route::get('promoter/promotion/{id}/delete',  'PromoController@destroy');
 
+    Route::get('promoter/password', 'PromoController@passwordPromoter');
+    Route::post('promoter/password', 'PromoController@passwordUpdatePromoter');
+
+
     Route::get('promoter/organizers', 'OrganizerController@index');
     Route::get('promoter/organizer/create', 'OrganizerController@create');
     Route::post('promoter/organizer/create', 'OrganizerController@store');
@@ -159,6 +169,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
 Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('admin/', ['uses'=>'PagesController@adminHome','as'=>'admin.home']);
+
     Route::get('admin/politics', 'PoliticController@politics');
     Route::get('admin/politics/new', 'PoliticController@create');
     Route::post('admin/politics/new', 'PoliticController@store');
@@ -235,6 +246,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/modules/assigment', 'ModuleController@showAssigment');
     Route::post('admin/modules/assigment', 'ModuleController@newAssigment');
     Route::get('admin/modules/assigment/{id}/delete', 'ModuleController@destroyAssigment');
+
+    Route::get('admin/password', 'AdminController@passwordAdmin');
+    Route::post('admin/password', 'AdminController@passwordUpdateAdmin');
+
 
     Route::get('admin/client', 'ClientController@index');
     Route::post('admin/client/desactive', 'ClientController@desactive');
