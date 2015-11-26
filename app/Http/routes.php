@@ -112,7 +112,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/politics', 'PoliticController@politicsPromotor');
 
     Route::get('promoter/transfer_payments/', 'PaymentController@index');
-    Route::get('promoter/transfer_payments/{payment_id}', 'PaymentController@show');
+    //Route::get('promoter/transfer_payments/{payment_id}', 'PaymentController@show');
     Route::get('promoter/transfer_payments/{event_id}/create', 'PaymentController@create');
     Route::post('promoter/transfer_payments/{event_id}/create', 'PaymentController@store');
 
