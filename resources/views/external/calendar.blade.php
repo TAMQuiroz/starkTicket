@@ -47,10 +47,11 @@ Calendario
 		</div>
 	</div>
 @endif -->
+<h3>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</h3>
 @if(count($eventInformation)===0)
 <div class="alert alert-warning"> Presentaciones no encontrados en esta fecha</div>
 @else
-	<h3>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</h3>
+	
 	<br>
 	<div class="row">
 	    <div class="col-sm-12">
@@ -91,10 +92,11 @@ Calendario
 	</div>
 
 @endif
+<h3>Eventos publicados el {{date('Y-m-d',$date_at)}}</h3>
 @if(count($events)===0)
 <div class="alert alert-warning"> Eventos publicados no encontrados en esta fecha</div>
 @else
-	<h3>Eventos publicados el {{date('Y-m-d',$date_at)}}</h3>
+	
 	<br>
 	<div class="row">
 	    @foreach($events as $event)
