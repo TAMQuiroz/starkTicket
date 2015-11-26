@@ -41,10 +41,8 @@
             <div class="col-sm-10">
                 {!!Form::input('text','state', $local->state ,['class'=>'form-control','id'=>'state','required'])!!}
             </div>
-        </div>
-
-
-        
+        </div>     
+        @if(count($event)===0)  
         <div class="form-group">
             <label for="local_type" class="col-sm-2 control-label">Numerado</label>
             <div class="col-sm-10">
@@ -67,7 +65,6 @@
             {!!Form::input('number','column', $local->columns ,['class'=>'form-control','id'=>'column','required','min'=>0])!!}
           </div>
         </div>
-
         <div class="form-group">
             <label for="local_type" class="col-sm-2 control-label">No Numerado</label>
             <div class="col-sm-10">
@@ -85,7 +82,7 @@
             {!!Form::input('number','capacity', $local->capacity ,['class'=>'form-control','id'=>'capacity','required','min'=>0])!!}
           </div>
         </div>
-
+        @endif
         <div class="form-group">
           <label for="inputEmail3" class="col-sm-2 control-label">Imagen</label>
           <div class="col-sm-10">
