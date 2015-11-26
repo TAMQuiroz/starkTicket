@@ -21,7 +21,7 @@
         <tr>
           <td><a href="{{ url('promoter/event/'.$payment->event_id) }}">{{$payment->event["name"]}}</a></td>
           <td>{{$payment->event->organization["organizerName"]}} {{$payment->event->organization["organizerLastName"]}}</td>
-          <td><a href="#">{{$payment->promoter["name"]}} {{$payment->promoter["lastname"]}}</a></td>
+          <td>{{$payment->promoter["name"]}} {{$payment->promoter["lastname"]}}</td>
           <td>S/ {{$payment->paid}}</td>
           <td>{{$payment->created_at}}</td>
         </tr>
