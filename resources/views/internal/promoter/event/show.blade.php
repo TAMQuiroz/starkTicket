@@ -26,6 +26,7 @@
 
         <p><b>Tickets vendidos: </b> {{$event->numberTickets()}}</p>
         <p><b>Total ventas: </b> s/ {{$event->amountAccumulated()}}</p>
+        <p><a  type="reset" class="btn btn-info" href="javascript:window.history.back();">Volver</a></p>
     </div>
     <div class="col-sm-6">
         <legend>Entradas</legend>

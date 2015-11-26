@@ -9,3 +9,7 @@ span.error{
 legend {
     padding-top: 20px;
 }
+.error-small{
+    margin-bottom: 5px;
+    padding: 2px 15px;
+}
