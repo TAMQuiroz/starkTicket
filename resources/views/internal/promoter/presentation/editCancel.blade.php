@@ -14,7 +14,7 @@
         <h5>Fecha: {{date("d/m/Y h:i",$presentation->starts_at)}} </h5>
         <p><b>Estado: </b> @if($presentation->cancelled) Cancelado @else No esta cancelado @endif</p>
         <p><b>Detalles del evento</b></p>
-        <h5>Nombre: <a href="{{ url ('event/'.$presentation->event_id) }}">{{$presentation->event->name}}</a> </h5>
+        <h5>Nombre: <a href="{{ url ('promoter/event/'.$presentation->event_id) }}">{{$presentation->event->name}}</a> </h5>
         <h5>Local: {{$presentation->event->place->name}} </h5>
 
     </div>
