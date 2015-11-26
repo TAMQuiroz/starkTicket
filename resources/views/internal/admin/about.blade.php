@@ -13,6 +13,13 @@
           <div class="col-sm-8">
             {!!Form::open(['route'=>'config.about.update','files'=>true,'id'=>'form', 'class'=>'form-horizontal'])!!}
               <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Imagen About Us</label>
+                <div class="col-sm-10">
+                    <input type="file" name="image" class="form-control" id="inputEmail3" placeholder="">
+                    {{$about->image}}
+                </div>
+              </div>
+              <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Descripción</label>
                 <div class="col-sm-10">
                   {!!Form::textarea('description', $about->description ,['class'=>'form-control','size' => '6x6','required'])!!}
