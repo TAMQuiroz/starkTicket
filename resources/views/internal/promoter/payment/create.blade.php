@@ -91,9 +91,10 @@
                 $("#monto_pagar").val($("#monto_total").text());
                 $('#saldo').val("0");
             } else {
-                $('#saldo').val($("#monto_total").text() - $("#monto_pagar").val());
+                saldo = parseFloat($("#monto_total").text() - $("#monto_pagar").val());
+                $('#saldo').val(saldo.toFixed(2));
 
-                numero = $("#monto_pagar").val();
+                numero = parseFloat($("#monto_pagar").val());
                 $("#monto_pagar").val(numero.toFixed(2));
             }
         });
