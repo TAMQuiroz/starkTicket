@@ -10,6 +10,7 @@ use App\Http\Requests\Local\UpdateLocalRequest;
 use App\Models\Local;
 use App\Services\FileService;
 use App\Models\Event;
+use App\Models\Presentation;
 
 class LocalController extends Controller
 {
@@ -92,7 +93,8 @@ class LocalController extends Controller
     public function edit($id)
     {
         $local = Local::find($id);
-        return view('internal.admin.locals.editLocal',compact('local'));
+        $event = Event::where("local_id",$local->id)->withTrashed()->get();
+        return view('internal.admin.locals.editLocal',compact('local','event'));
     }
 
     /**
@@ -106,8 +108,15 @@ class LocalController extends Controller
     {
         //
         $input = $request->all();
+       /* $date_at = strtotime(date("Y-m-d H:i:s"));
 
-        $local = Local::find($id);
+        $events = Event::where("local_id",$id)->get();
+        foreach ($events as $event){
+            $prensentations = Presentation::where("event_id",$event->id)->where("cancelled",0)->where("starts_at",">",$date_at)->get();
+            if ($prensentations->count() != 0)
+                return back()->withErrors(['No se puede editar un local con eventos asociados']);
+        }
+        $local = Local::find($id);*/
 
         
         $local->name         =   $input['name'];

@@ -47,7 +47,9 @@
         </ul>
         <hr>
 
+
         {!! Html::image($event->image, null, array('class'=>'img-thumbnail')) !!}
+
 
     </div>
 </div>

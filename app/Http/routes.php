@@ -72,6 +72,9 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
 
 
     Route::get('salesman/exchange_gift', 'GiftController@createExchange');
+    Route::post('salesman/exchange_gift', 'GiftController@createExchangePost');
+
+
     Route::get('salesman/event/pay_booking', ['as' => 'booking.search', 'uses' =>'BookingController@searchBooking']);
     Route::post('salesman/event/pay_booking/show', ['as' => 'booking.show', 'uses' =>'BookingController@showPayBooking']);
     Route::post('salesman/event/pay_booking/store', ['as' => 'booking.store', 'uses' =>'BookingController@storePayBooking']);
@@ -181,6 +184,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/local/{id}/delete', 'LocalController@destroy');
 
     Route::get('admin/exchange_gift', 'GiftController@createExchangeAdmin');
+    Route::post('admin/exchange_gift', 'GiftController@createExchangeAdminPost');
+    
 
     Route::get('admin/gifts', ['uses'=>'GiftController@index','as'=>'admin.gifts']);
     Route::get('admin/gifts/new', 'GiftController@create');
