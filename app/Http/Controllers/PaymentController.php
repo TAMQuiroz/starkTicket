@@ -21,7 +21,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::all();
+        $payments = Payment::where('promoter_id', Auth::user()->id)->get();
         return view('internal.promoter.payment.payments',["payments"=>$payments]);
     }
 
