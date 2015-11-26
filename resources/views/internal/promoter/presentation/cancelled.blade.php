@@ -22,7 +22,7 @@
     @foreach($presentationCancelled as $cancelled)
   <tr>
     <td>{{date('Y-m-d',$cancelled->presentation["starts_at"])}}</td>
-    <td><a href="{{ url ('event/'.$cancelled->presentation['event']->id) }}">{{$cancelled->presentation["event"]->name}}</a></td>
+    <td><a href="{{ url ('promoter/event/'.$cancelled->presentation['event']->id) }}">{{$cancelled->presentation["event"]->name}}</a></td>
     <td>{{$cancelled->user["name"] ." ".$cancelled->user["lastname"]}}</td>
     <td>{{$cancelled->date_refund}}</td>
     <td>{{$cancelled->duration}} Diás</td>
