@@ -17,22 +17,12 @@
 </head>
 <body>
     @extends('layout.topbar')
-    
+
     <div id="header">
         <div class="container">
-            @if(Session::has('flash_message'))
-                <div class="alert alert-success">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{Session::get('flash_message')}}
-                </div>
-            @endif
-            <!-- Logo -->
-
             <div id="logo">
                 <h1 id="portada"><a href="{{url('client/home')}}">{{$business_name}}</a></h1>
             </div>
-
-
             <!-- Nav -->
             <nav id="nav">
                 <ul>
@@ -52,13 +42,7 @@
     <div class="container">
         <h1>@yield('title')</h1>
         <hr>
-        @if($errors->any())
-        <ul class="alert alert-danger">
-            @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </ul>
-        @endif
+
         @if(Session::has('message'))
         <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
         @endif
@@ -91,7 +75,7 @@
             }
         });
         $('#yes').click(function(){
-            $('.modal').modal('hide');  
+            $('.modal').modal('hide');
         });
     });
     </script>
