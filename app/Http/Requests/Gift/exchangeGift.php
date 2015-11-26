@@ -24,16 +24,14 @@ class exchangeGift extends Request
      */
     public function rules()
     {
-       $rules = [
+     $rules = [
 
-            'nombre_de_usuario'          =>  'required|exists:users,id',
- 'gifts'          =>  'required|exists:gifts,id',
- 'cantidad_de_regalos'  =>  'required|integer|max:100'
+     'nombre_de_usuario'          =>  'required|exists:users,id',
+     'gifts'          =>  'required|exists:gifts,id',
+     'cantidad_de_regalos'  =>  'required|integer|max:100'
 
-        ];
+     ];
      
-
-
-    return $rules ;
-    }
+     return $rules ;
+ }
 }
