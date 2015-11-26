@@ -27,9 +27,11 @@ class UpdateClientRequest extends Request
             'name'     => 'required|min:3|max:16',
             'lastname' => 'required|min:3|max:30',
             'address'  => 'required|min:3|max:100',
-            'phone'    => 'required|integer|min:7|max:9',
+            'phone'    => 'required|integer|digits_between: 7,9',
             //'email' => 'required|email|unique:users',
             'email'    => 'required|email',
+            'di_type'  => 'required|integer|digits_between:0,2',
+            'di'       => 'required|integer|digits:8',
         ];
     }
 

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Payment;
+namespace App\Http\Requests\Gift;
 
 use App\Http\Requests\Request;
-
-class StorePaymentRequest extends Request
+use App\Models\Gift;
+use App\User;
+class exchangeGift extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +24,14 @@ class StorePaymentRequest extends Request
      */
     public function rules()
     {
-        return [
-            'event_id'     => 'required|exists:events,id',
-            'paid'         => 'required|numeric|min:1'
-        ];
-    }
+     $rules = [
 
+     'nombre_de_usuario'          =>  'required|exists:users,id',
+     'gifts'          =>  'required|exists:gifts,id',
+     'cantidad_de_regalos'  =>  'required|integer|max:100'
+
+     ];
+     
+     return $rules ;
+ }
 }

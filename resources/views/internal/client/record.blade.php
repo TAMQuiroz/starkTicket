@@ -22,7 +22,11 @@
         <tr>
            <td>{{date("d/m/Y", $ticket->presentation["starts_at"])}} </td>
            <td>@if ($ticket->presentation["cancelled"]) Si @else No @endif</td>
+           @if($ticket->event["cancelled"])
+           <td>{{$ticket->event["name"]}}</td>
+           @else
            <td><a href="{{ url ('event/'.$ticket->event_id) }}">{{$ticket->event["name"]}}</a></td>
+           @endif
            <td>{{$ticket->quantity}}</td>
            <td>s/. {{$ticket->total_price}}</td>
            <td>{{$ticket->reserve}}</td>

@@ -60,7 +60,7 @@
                     {{date_format(date_create($module->endTime),"H:i:s")}}
                     <br>
                     <br>
-                    {!! Html::image($module->image, null, array('class'=>'carousel_img')) !!}
+                    {!! Html::image($module->image, null, array('class'=>'modal_img')) !!}
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
