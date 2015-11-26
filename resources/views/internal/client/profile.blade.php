@@ -9,25 +9,26 @@ Perfil
 
 @section('content')
 <div class="col-sm-3">
-    <img src="{{$obj->image}}" class="img-responsive user-photo" >
+    <img src="{{$client->image}}" class="img-responsive user-photo" >
     <p class="text-info text-center">Foto de perfil</p>
 </div>
 <div class="col-sm-4">
-    <p><b>Nombre</b>: {{$obj->lastname}}, {{$obj->name}}</p>
+    <p><b>Nombre</b>: {{$client->lastname}}, {{$client->name}}</p>
     <p><b>
-    @if($obj->di_type == 1)
+    @if($client->di_type == 1)
         DNI
     @else
-        @if($obj->di_type == 2)
+        @if($client->di_type == 2)
         Carnet de Extranjeria
         @else
         Pasaporte
         @endif
     @endif
-    </b> {{$obj->di}}</p>
-    <p><b>Dirección: </b>{{$obj->address}}</p>
-    <p><b>Teléfono:</b> {{$obj->phone}}</p>
-    <p><b>E-mail:</b> {{$obj->email}}</p>
+    </b> {{$client->di}}</p>
+    <p><b>Dirección: </b>{{$client->address}}</p>
+    <p><b>Teléfono:</b> {{$client->phone}}</p>
+    <p><b>E-mail:</b> {{$client->email}}</p>
+    <p><b>Fecha nacimiento:</b> {{ date("d-M-Y",$birthday) }}</p>
 </div>
 <div class="col-sm-4">
     <br>

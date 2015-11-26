@@ -189,8 +189,9 @@ class ClientController extends Controller
     public function profile()
     {
         $id = Auth::user()->id;
-        $obj = User::findOrFail($id);
-        return view('internal.client.profile', ['obj' => $obj]);
+        $client = User::findOrFail($id);
+        $birthday = strtotime($client->birthday);
+        return view('internal.client.profile', ['client' => $client,'birthday'=>$birthday]);
     }
     /**
      * Show the form for editing the specified resource.
