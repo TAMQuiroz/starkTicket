@@ -25,9 +25,9 @@ class UpdatePoliticRequest extends Request
     public function rules()
     {
         return [
-            'name'          =>  'required|max:70',
-            'description'       =>  'required|max:300',
-            'state'      =>  'required|max:20'
+            'name'         =>  'required|max:70',
+            'description'  =>  'required|max:300',
+            'state'        =>  'required|max:20'
 
         ];
 

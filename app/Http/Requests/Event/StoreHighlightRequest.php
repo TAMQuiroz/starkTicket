@@ -12,8 +12,8 @@ class StoreHighlightRequest extends Request
 
     public function rules() {
         $rules =  [
-            'event_id'     => 'required|exists:events,id',
-            'days'          => 'required|numeric|max:30',
+            'event_id'      => 'required|exists:events,id',
+            'days'          => 'required|integer|max:30',
             'start_date'	=> 'required|date',
             ];
         return $rules;

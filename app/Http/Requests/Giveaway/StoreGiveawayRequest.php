@@ -24,8 +24,8 @@ class StoreGiveawayRequest extends Request
     public function rules()
     {
         return [
-            'sale_id'          =>  'required',
-            'designee'          =>  'required|digits:8',
+            'sale_id'      => 'required|exists:sale,id',
+            'designee'     => 'required|integer|digits:8',
         ];
     }
 }
