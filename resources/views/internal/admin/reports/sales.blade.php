@@ -31,14 +31,14 @@
     <br><br><br><br>
     <div class="col-sm-2">
         <label>Desde</label>
-        {!!Form::input('date','firstDate', null ,['class'=>'form-control','id'=>'fecha-ini'])!!}
+        {!!Form::input('date','firstDate', null ,['class'=>'form-control','id'=>'fecha-ini', 'required'])!!}
 
 
         
     </div>
     <div class="col-sm-2">
         <label>Hasta</label>
-        {!!Form::input('date','lastDate', null ,['class'=>'form-control','id'=>'fecha-fin'])!!}
+        {!!Form::input('date','lastDate', null ,['class'=>'form-control','id'=>'fecha-fin','required'])!!}
     </div>
 
 </div>
