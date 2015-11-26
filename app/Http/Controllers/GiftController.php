@@ -73,22 +73,27 @@ class GiftController extends Controller
  $input = $request->all();
         $idGift =  $input['gifts'];
         $idClient  =  $input['nombre_de_usuario'];
-
+$quantGift = $input['cantidad_de_regalos'];
         $gift = Gift::find($idGift);
         $user = User::find($idClient);
 
-   if(  $gift->points >  $user->points )
+
+
+   if( ( $gift->points*$quantGift ) >  $user->points )
 
         return back()->withErrors(['El usuario no posee puntos suficientes.']);
     elseif(    $gift->stock   ==  0  )
 
         return back()->withErrors(['El juguete seleccionado se encuentra agotado.']);
+         elseif(    $gift->stock   < $quantGift  )
+
+        return back()->withErrors(['No se cuenta con suficiente stock']);
     
   
-    $gift->stock        =    $gift->stock -1 ; 
+    $gift->stock        =    $gift->stock - $quantGift ; 
     $gift->save();
 
-    $user->points =   $user->points  - $gift->points      ;  
+    $user->points =   $user->points  -($gift->points *$quantGift  )     ;  
     $user->save();
 
     $giftsArr = Gift::all();
@@ -137,29 +142,36 @@ if( $active== 0   ) {
         $input = $request->all();
         $idGift =  $input['gifts'];
         $idClient  =  $input['nombre_de_usuario'];
+ $quantGift = $input['cantidad_de_regalos'];
+
+
+
 
         $gift = Gift::find($idGift);
         $user = User::find($idClient);
 
-   if(  $gift->points >  $user->points )
+   if(  ( $gift->points*$quantGift ) >  $user->points )
 
         return back()->withErrors(['El usuario no posee puntos suficientes.']);
     elseif(    $gift->stock   ==  0  )
 
         return back()->withErrors(['El juguete seleccionado se encuentra agotado.']);
+     elseif(    $gift->stock   < $quantGift  )
+
+        return back()->withErrors(['No se cuenta con suficiente stock']);
     
   
-    $gift->stock        =    $gift->stock -1 ; 
+    $gift->stock        =    $gift->stock -$quantGift; 
     $gift->save();
 
-    $user->points =   $user->points  - $gift->points      ;  
+    $user->points =    $user->points    -  ($gift->points *$quantGift  )   ;  
     $user->save();
 
     $giftsArr = Gift::all();
     $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
     $min = Gift::orderBy('id')->get()->lists('id')->first();
    Session::flash('messageSucc', ' Canjeo exitoso ');
-   return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ]  );
+   return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min,'active' =>  $active ]  );
 
     }
 

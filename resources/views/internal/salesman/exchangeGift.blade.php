@@ -43,7 +43,7 @@
 @endif
 
 
-@if( $active == 1  ) {   
+@if( $active == 1  )  
 
   <!-- Portfolio Item Made by JosE  Row -->
                 <div class="row">
@@ -87,13 +87,13 @@
                             @endif 
                             </div>
                            
-                           <!-- Controls -->
+                           <!-- Controls
                             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                             <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
                                 <span class="glyphicon glyphicon-chevron-right"></span>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -106,6 +106,7 @@
                             <div class="input-group" style="width:290px">
                                 {!! Form::text('name', null, ['class' => 'form-control', 'disabled', 'id'=>'user_name']) !!}
                                 {!! Form::hidden('nombre_de_usuario', null, ['id'=>'user_id'])!!}
+
                                 <br><br>
                                 <h4>Puntos Acumulados</h4>
                                 {!! Form::text('points', null, ['class' => 'form-control', 'disabled', 'id'=>'user_points']) !!}
@@ -115,6 +116,10 @@
                         <div class="col-md-8">
                             <h4>Regalos</h4>
                             {!! Form::select('gifts',  $giftsList->toArray()  , null, ['class' => 'form-control','id' => 'dd-list' ,'required'])!!}
+
+                            <h4>Cantidad de regalos</h4>
+                             {!! Form::number('cantidad_de_regalos', null, ['class' => 'form-control']) !!}
+
                         </div>
                         <div class="col-md-8" style="margin-top:20px">
                             <a class="btn btn-info" type="button" id="exchange" href="" title="Create" data-toggle="modal" data-target="#saveModal" >Canjear puntos</a>
@@ -159,7 +164,7 @@
 
                 {!!Form::close()!!}
 
-                } @else Desactivado por el administrador
+                 @else Desactivado por el administrador
                            @endif 
               
 @stop

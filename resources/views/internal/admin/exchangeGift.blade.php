@@ -78,15 +78,15 @@
                                 </div>
                                 @endforeach
                             @endif 
-                            </div>
+                          </div>
+                             <!-- 
                            
-                           <!-- Controls -->
                             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </a>
                             <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
                                 <span class="glyphicon glyphicon-chevron-right"></span>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -108,6 +108,8 @@
                         <div class="col-md-8">
                             <h4>Regalos</h4>
                             {!! Form::select('gifts',  $giftsList->toArray()  , null, ['class' => 'form-control','id' => 'dd-list' ,'required'])!!}
+                              <h4>Cantidad de regalos</h4>
+                             {!! Form::number('cantidad_de_regalos', null, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-md-8" style="margin-top:20px">
                             <a class="btn btn-info" type="button" id="exchange" href="" title="Create" data-toggle="modal" data-target="#saveModal" >Canjear puntos</a>
