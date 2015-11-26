@@ -26,7 +26,7 @@
 @stop
 
 @section('title')
-	Bienvenido cliente
+	Bienvenido {{$client->name}}
 @stop
 
 @section('content')

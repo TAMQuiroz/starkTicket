@@ -81,6 +81,7 @@ class ClientController extends Controller
         $user->address = $input['address'];
         $user->phone = $input['phone'];
         $user->email = $input['email'];
+        $user->image = "images/avatar_2x.png";
         $user->points = 0;
         $user->birthday = new Carbon($input['birthday']);
         $user->role_id = Role::where('description','client')->get()->first()->id;
@@ -144,9 +145,9 @@ class ClientController extends Controller
     {
         $id = Auth::user()->id;
         $obj = User::findOrFail($id);
-        //dd($request->all());
+
         $input = $request->all();
-        //return $input;
+
         $obj->name = $input['name'];
         $obj->lastname = $input['lastname'];
         $obj->address = $input['address'];
@@ -155,12 +156,10 @@ class ClientController extends Controller
         $obj->di_type = $input['di_type'];
         $obj->di = $input['di'];
         $obj->save();
-        //$prueba = Preference::all();
-        //$khe = Preference::withTrashed()->where('idUser', $obj->id)->get();
-        //$khe->save();
+
         Preference::where('idUser','=',$obj->id)->delete(); // rip tabla preferences
         $values = array_values($input);
-        $i = 6;
+        $i = 8  ;
         while (!empty($values[$i])){
            $preference = new Preference;
            $preference->idUser = $obj->id;
@@ -168,8 +167,7 @@ class ClientController extends Controller
            $preference->save();
            $i = $i + 1;
         }
-        //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
-        Session::flash('message', 'Informacion de perfil actualizada!');
+        Session::flash('message', 'Información de perfil actualizada!');
         Session::flash('alert-class','alert-success');
         return redirect('client');
     }
