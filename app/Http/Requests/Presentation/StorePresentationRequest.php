@@ -12,11 +12,11 @@ class StorePresentationRequest extends Request
 
     public function rules() {
         return [
-            'duration' => 'required',
-            'reason' => 'required',
-            'date_refund'   => 'required|date',
-            'duration'   => 'required|numeric',
-            'authorized' => 'required|numeric'
+            'duration'    => 'required',
+            'reason'      => 'required',
+            'date_refund' => 'required|date',
+            'duration'    => 'required|numeric',
+            'authorized'  => 'required|numeric'
         ];
     }
 }

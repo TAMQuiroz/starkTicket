@@ -43,7 +43,8 @@
             <!-- Button trigger modal -->
             
             <button class="btn">Iniciar sesión</button>
-            <p><a href="{{url('/')}}" class="btn" role="button" data-target="#info" data-whatever="@mdo" style="width:100%">Regresar</a></p>
+            <a href="{{url('/auth/register')}}" class="btn" data-target="#info" data-whatever="@mdo" style="width:100%">Registrarse</a>
+            <a href="{{URL::previous()}}" class="btn" role="button" data-target="#info" data-whatever="@mdo" style="width:100%">Regresar</a>
         </div>
 
 

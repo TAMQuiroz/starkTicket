@@ -29,6 +29,13 @@ use App\Models\Module;
 use App\Models\CashcountHistorial;
 use DB;
 
+use App\Http\Requests\Client\PasswordClientRequest;
+use App\Http\Requests\Client\UpdateClientRequest;
+use Session;
+
+
+
+
 /*use App\Services\FileService;*/
 
 class BusinessController extends Controller
@@ -329,5 +336,35 @@ public function attendanceDetail(  $idAttendance )
     return view('internal.admin.attendanceDetail '  , compact('detailsAttendances' , 'index', 'salesman','Attendance')  );
 
       }
+
+public function passwordSalesman()
+{
+  return view('internal.admin.passwordSalesman');
+}
+
+
+public function passwordUpdateSalesman(PasswordClientRequest $request)
+{
+
+        $id = Auth::user()->id;
+        $obj = User::findOrFail($id);
+        $auth = Auth::attempt( array(
+            'email' => $obj->email,
+            'password' => $request->input('password')
+            ));
+        if ($auth)
+        {
+            $newPassword = bcrypt($request->input('new_password'));
+            $obj->password = $newPassword;
+            $obj->save();
+            //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+            Session::flash('message', 'Su contraseña fue actualizada!');
+            Session::flash('alert-class','alert-success');
+        } else {
+            Session::flash('message', 'Contraseña Incorrecta!');
+            Session::flash('alert-class','alert-danger');
+        }
+        return redirect('salesman');
+}      
 
 }

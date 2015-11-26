@@ -57,7 +57,7 @@
       <div class="form-group">
         <label for="inputStartTime" class="col-sm-2 control-label">Hora de Apertura</label>
         <div class="col-sm-10">
-          {!!Form::input('time','starTime', null ,['class'=>'form-control','id'=>'starTime','required'])!!}
+          {!!Form::input('time','starTime', null ,['class'=>'form-control','id'=>'starTime','required','onChange'=>'changeEndTime()'])!!}
         </div>
       </div>
       <div class="form-group">
@@ -99,6 +99,12 @@
 
 @section('javascript')
 <script type="text/javascript">
+  function changeEndTime(){
+    hora = $('#starTime').val();
+    $('#endTime').prop('min',hora);
+    $('#endTime').val(hora);
+  }
+  
   $('#yes').click(function(){
     $('#submitModal').modal('hide');  
   });

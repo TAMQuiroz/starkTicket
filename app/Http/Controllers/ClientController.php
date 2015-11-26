@@ -9,6 +9,7 @@ use App\Http\Requests\Client\PasswordClientRequest;
 use App\Http\Requests\Client\UpdateClientRequest;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Role;
 use App\Models\Preference;
 use App\Models\Category;
 use Auth;
@@ -93,7 +94,7 @@ class ClientController extends Controller
         $user->email = $input['email'];
         $user->points = 0;
         $user->birthday = new Carbon($input['birthday']);
-        $user->role_id = 1;
+        $user->role_id = Role::where('description','client')->get()->first()->id;
         $user->save();
 
 
@@ -257,7 +258,7 @@ class ClientController extends Controller
             Session::flash('message', 'Su contraseña fue actualizada!');
             Session::flash('alert-class','alert-success');
         } else {
-            Session::flash('message', 'Contraseña!');
+            Session::flash('message', 'Contraseña incorrecta!');
             Session::flash('alert-class','alert-danger');
         }
         return redirect('client');

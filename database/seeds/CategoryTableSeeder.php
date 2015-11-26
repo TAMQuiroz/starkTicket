@@ -15,137 +15,137 @@ class CategoryTableSeeder extends Seeder
         Category::insert([
                     'name' => 'Conciertos',
                     'description'=> 'Descripcion de Conciertos',
-                    'image' => 'images/examples/category.jpg',
+                    'image' => 'images/conciertos.png',
                     'type' => 1,
                     'father_id' => null]);
 
         Category::insert([
                     'name' => 'Teatro',
                     'description'=> 'Descripcion de Teatro',
-                    'image' => 'images/examples/category.jpg',
+                    'image' => 'images/teatro.png',
                     'type' => 1,
                     'father_id' => null]);
 
         Category::insert([
                     'name' => 'Entretenimiento',
                     'description'=> 'Descripcion de Entretenimiento',
-                    'image' => 'images/examples/category.jpg',
+                    'image' => 'images/entretenimiento.png',
                     'type' => 1,
                     'father_id' => null]);
 
         Category::insert([
                     'name' => 'Deporte',
                     'description'=> 'Descripcion de Deporte',
-                    'image' => 'images/examples/category.jpg',
+                    'image' => 'images/deporte.png',
                     'type' => 1,
                     'father_id' => null]);
 
         Category::insert([
                     'name' => 'Opera/zarzuela',
                     'description'=> 'Descripcion de Opera/zarzuela',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/opera.png',
                     'type' => 2,
                     'father_id' => 1]);
         Category::insert([
                     'name' => 'Música',
                     'description'=> 'Descripcion de Música',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/musica.png',
                     'type' => 2,
                     'father_id' => 1]);
         Category::insert([
                     'name' => 'Rock',
                     'description'=> 'Descripcion de Rock',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/rock.png',
                     'type' => 2,
                     'father_id' => 1]);
         Category::insert([
                     'name' => 'Electrónica',
                     'description'=> 'Descripcion de Electrónica',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/electronica.png',
                     'type' => 2,
                     'father_id' => 1]);
         Category::insert([
                     'name' => 'Reggae',
                     'description'=> 'Descripcion de Reggae',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/reggae.png',
                     'type' => 2,
                     'father_id' => 1]);
         Category::insert([
                     'name' => 'Drama',
                     'description'=> 'Descripcion de Drama',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/drama.png',
                     'type' => 2,
                     'father_id' => 2]);
         Category::insert([
                     'name' => 'Comedia',
                     'description'=> 'Descripcion de Comedia',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/comedia.png',
                     'type' => 2,
                     'father_id' => 2]);
         Category::insert([
                     'name' => 'Musical',
                     'description'=> 'Descripcion de Musical',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/musical.png',
                     'type' => 2,
                     'father_id' => 2]);
         Category::insert([
                     'name' => 'Ballet',
                     'description'=> 'Descripcion de Ballet',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/ballet.png',
                     'type' => 2,
                     'father_id' => 2]);
         Category::insert([
                     'name' => 'Adultos',
                     'description'=> 'Descripcion de Adultos',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/adultos.png',
                     'type' => 2,
                     'father_id' => 2]);
         Category::insert([
                     'name' => 'Sociales',
                     'description'=> 'Descripcion de Sociales',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/sociales.png',
                     'type' => 2,
                     'father_id' => 3]);
         Category::insert([
                     'name' => 'Fiestas',
                     'description'=> 'Descripcion de Fiestas',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/fiestas.png',
                     'type' => 2,
                     'father_id' => 3]);
         Category::insert([
                     'name' => 'Peñas',
                     'description'=> 'Descripcion de Peñas',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/peñas.png',
                     'type' => 2,
                     'father_id' => 3]);
         Category::insert([
                     'name' => 'Tours',
                     'description'=> 'Descripcion de Tours',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/tours.png',
                     'type' => 2,
                     'father_id' => 3]);
         Category::insert([
                     'name' => 'Ferias',
                     'description'=> 'Descripcion de Ferias',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/ferias.png',
                     'type' => 2,
                     'father_id' => 3]);
         Category::insert([
                     'name' => 'Futbol',
                     'description'=> 'Descripcion de Futbol',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/futbol.png',
                     'type' => 2,
                     'father_id' => 4]);
         Category::insert([
                     'name' => 'Automovilistmo',
-                    'description'=> 'Descripcion de Automovilistmo',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'description'=> 'Descripcion de Automovilismo',
+                    'image' => 'images/automovilismo.png',
                     'type' => 2,
                     'father_id' => 4]);
         Category::insert([
                     'name' => 'Maratón',
                     'description'=> 'Descripcion de Maratón',
-                    'image' => 'images/examples/subcategory.jpg',
+                    'image' => 'images/maraton.png',
                     'type' => 2,
                     'father_id' => 4]);
 
