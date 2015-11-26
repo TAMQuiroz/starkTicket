@@ -48,7 +48,8 @@ Calendario
 	</div>
 @endif -->
 @if(count($eventInformation)===0)
-<div class="alert alert-warning"> Presentaciones no encontrados en esta fecha</div>
+<h3>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</h3>
+<div class="alert alert-warning"> Presentaciones no encontradas en esta fecha</div>
 @else
 	<h3>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</h3>
 	<br>
@@ -92,6 +93,7 @@ Calendario
 
 @endif
 @if(count($events)===0)
+<h3>Eventos publicados el {{date('Y-m-d',$date_at)}}</h3>
 <div class="alert alert-warning"> Eventos publicados no encontrados en esta fecha</div>
 @else
 	<h3>Eventos publicados el {{date('Y-m-d',$date_at)}}</h3>

@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{url('salesman')}}">{{$business_name}} </a>
+            <a class="navbar-brand" href="{{url('/')}}">{{$business_name}} </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -49,7 +49,7 @@
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="">{{ Auth::user()->name }}</a></li>
+                <li><a href="{{url('/salesman')}}">{{ Auth::user()->name }}</a></li>
                 <li><a href="{{url('auth/logout')}}">Salir</a></li>
             </ul>
         </div>
@@ -68,7 +68,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{url('client/home')}}">{{$business_name}} </a>
+            <a class="navbar-brand" href="{{url('/')}}">{{$business_name}} </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -103,7 +103,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="{{url('promoter/')}}" class="navbar-brand" >{{$business_name}} </a>
+            <a href="{{url('/')}}" class="navbar-brand" >{{$business_name}} </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -143,7 +143,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="">{{ Auth::user()->name }}</a></li>
+                <li><a href="{{url('promoter')}}">{{ Auth::user()->name }}</a></li>
                 <li><a href="{{url('auth/logout')}}">Salir</a></li>
           </ul>
         </div>
@@ -162,7 +162,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{url('admin')}}">{{$business_name}} </a>
+            <a class="navbar-brand" href="{{url('/')}}">{{$business_name}} </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -246,7 +246,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="">{{ Auth::user()->name }}</a></li>
+                <li><a href="{{url('admin/')}}">{{ Auth::user()->name }}</a></li>
                 <li><a href="{{url('auth/logout')}}">Salir</a></li>
           </ul>
         </div>
