@@ -36,6 +36,7 @@
     <form class="form-horizontal" method="post" id="form">
     {!!Form::open(array('id'=>'form1','class'=>'form-horizontal'))!!}
         <input name="event_id" value="{{$event->id}}" type="hidden">
+        <input name="debt" value="{{$debt}}" type="hidden">
         <div class="form-group">
             <label  class="col-sm-2 control-label">Monto de deuda</label>
             <div class="col-sm-10">
@@ -91,6 +92,9 @@
                 $('#saldo').val("0");
             } else {
                 $('#saldo').val($("#monto_total").text() - $("#monto_pagar").val());
+
+                numero = $("#monto_pagar").val();
+                $("#monto_pagar").val(numero.toFixed(2));
             }
         });
 

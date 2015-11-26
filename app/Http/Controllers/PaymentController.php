@@ -75,8 +75,14 @@ class PaymentController extends Controller
     public function store(StorePaymentRequest $request,$event_id)
     {
         $user_id = Auth::user()->id;
-
         $input = $request->all();
+
+        if($input['paid']>$input['debt'])
+        {
+            Session::flash('message', 'El monto excede el monto de la deuda');
+            Session::flash('alert-class','alert-danger');
+            return redirect('promoter/transfer_payments/'.$event_id.'/create');
+        }
 
         $payment = new Payment;
         $payment->event_id = $event_id;
