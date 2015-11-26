@@ -26,7 +26,7 @@
 			<div class="col-md-4">
 				<div class="text-center">
 					<font size="6">{{$gift->points}} Puntos</font>
-					<div>{!! Html::image($gift->image, null, array('class'=>'gift-external')) !!}</div>
+					<div>{!! Html::image($gift->image, null, array('class'=>'gift-external img-thumbnail')) !!}</div>
 					<div>{{$gift->name}}</div>
 				</div>
 			</div>
