@@ -114,7 +114,6 @@
                         <li><a href="{{url('promoter/event/create')}}">Nuevo</a></li>
                         <li><a href="{{url('promoter/event/record')}}">Historial</a></li>
                         <li><a href="{{url('promoter/presentation/cancelled')}}">Presentaciones cancelados</a></li>
-                        <li class="divider"></li>
                         <li><a href="{{url('promoter/highlights')}}">Destacados</a></li>
                     </ul>
                 </li>

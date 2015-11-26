@@ -22,7 +22,7 @@ class StoreEventRequest extends Request
             'organizer_id'  => 'required|exists:organizers,id',
             'local_id'      => 'required|exists:locals,id',
             'zone_names'    => 'required',
-            'price'         => 'required|numeric',
+            'price'         => 'required',
             'start_date'    => 'required',
             'start_time'    => 'required',
             'publication_date'   => 'required|date|after:yesterday',
