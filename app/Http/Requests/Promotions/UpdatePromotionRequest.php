@@ -28,10 +28,10 @@ class UpdatePromotionRequest extends Request
        return [
               
 
-            'promotionName'          =>  'required|max:50',
-            'dateIni'       =>  'required|max:20',
-            'dateEnd'      =>  'required|max:20',
-            'description'      =>  'required|max:300',
+            'promotionName' =>  'required|max:50',
+            'dateIni'       =>  'required|date|max:20',
+            'dateEnd'       =>  'required|date|max:20|after:dateIni',
+            'description'   =>  'required|max:300',
             'discount'      =>  'numeric'
       
                

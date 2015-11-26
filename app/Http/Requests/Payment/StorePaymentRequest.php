@@ -24,9 +24,9 @@ class StorePaymentRequest extends Request
     public function rules()
     {
         return [
-            'event_id' => 'required|exists:events,id',
+            'event_id'     => 'required|exists:events,id',
             'dateDelivery' => 'required|date',
-            'paid' => 'required|min:1'
+            'paid'         => 'required|min:1'
         ];
     }
 

@@ -30,7 +30,7 @@ class UpdateLocalRequest extends Request
             'province'      =>  'required|max:20',
             'state'         =>  'required|max:20',
             'local_type'    =>  'required',
-            'capacity'      =>  'required_if:local_type,2|min:0',
+            'capacity'      =>  'integer|min:1|required_if:local_type,2|min:0',
             'row'           =>  'min:0|required_if:local_type,1|required_with:column',
             'column'        =>  'min:0|required_if:local_type,1|required_with:row',
             'image'         =>  'image'

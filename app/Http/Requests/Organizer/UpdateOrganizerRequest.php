@@ -24,15 +24,15 @@ class UpdateOrganizerRequest extends Request
     public function rules()
     {
         return [
-            'organizerName'          =>  'required|max:100',
-            'organizerLastName'   =>  'required|max:100',
-            'businessName'        =>  'required|max:100',
-            'ruc'         =>  'required|numeric|integer|digits:11',
-            'countNumber'          =>  'required|numeric|integer',
-            'telephone'   =>  'required|numeric|integer|digits_between:7,9',
-            'dni'        =>  'required|numeric|integer|digits:8',
-            'email'         =>  'required',
-            'address'         =>  'required|max:100',
+            'organizerName'     =>  'required|max:100',
+            'organizerLastName' =>  'required|max:100',
+            'businessName'      =>  'required|max:100',
+            'ruc'               =>  'required|integer|digits:11',
+            'countNumber'       =>  'required|integer',
+            'telephone'         =>  'required|integer|digits_between:7,9',
+            'dni'               =>  'required|integer|digits:8',
+            'email'             =>  'required|email',
+            'address'           =>  'required|max:100',
         ];
     }
 }

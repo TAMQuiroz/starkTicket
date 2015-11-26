@@ -9,7 +9,8 @@ Bienvenido promotor de ventas
 @stop
 
 @section('content')
-<legend>Eventos creados</legend>
+
+<legend>Eventos vigentes</legend>
 
 <div class="table-responsive">
 
