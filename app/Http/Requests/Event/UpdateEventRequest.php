@@ -56,8 +56,6 @@ class UpdateEventRequest extends Request
             'errors' => $errors
         ];
 
-        return response()->json($data, 400);
-
-        //return redirect()->back()->withInput()->withErrors($errors);
+        return redirect()->back()->withInput()->withErrors($errors);
     }
 }
