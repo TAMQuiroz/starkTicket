@@ -13,7 +13,8 @@
 @stop
 
 @section('content')
-    {!! Html::image('images/pics02.png', null, array('class'=>'image center-block img-thumbnail')) !!}
+    
+    {!! Html::image($about->image, null, array('class'=>'image center-block img-thumbnail')) !!}
     <div class="col-md-12">
 	   <h1>Nosotros</h1>
         <p>{{$about->description}}</p>

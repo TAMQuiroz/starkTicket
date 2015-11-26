@@ -30,7 +30,7 @@
 @stop
 
 @section('content')
-    @if($events)
+    @if($events->count() != 0)
         <div class="row">
         @foreach($events as $event)
 

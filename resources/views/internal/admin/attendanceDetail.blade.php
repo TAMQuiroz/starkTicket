@@ -93,6 +93,11 @@ Detalle de asistencia de {{$salesman->name}}  {{$salesman->lastname}}
 </div>
 </div>
 
+<div class="row">
+    <div class="col-md-12">
+        <a href="{{route('admin.salesman')}}" class="btn btn-info">Regresar</a>
+    </div>
+</div>
 @stop
 
 @section('javascript')

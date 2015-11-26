@@ -23,14 +23,12 @@
 	@if (count($gifts)>0)
 		<div class="row">
 			@foreach($gifts as $gift)
-			<div class="4u">
-				<section style="text-align:center">
+			<div class="col-md-4">
+				<div class="text-center">
 					<font size="6">{{$gift->points}} Puntos</font>
-					<a href="#" class="image full">
-						{!! Html::image($gift->image, null, array('class'=>'gift-external')) !!}
-						{{$gift->name}}
-					</a>
-				</section>
+					<div>{!! Html::image($gift->image, null, array('class'=>'gift-external img-thumbnail')) !!}</div>
+					<div>{{$gift->name}}</div>
+				</div>
 			</div>
 			@endforeach
 		</div>

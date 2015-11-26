@@ -53,6 +53,11 @@
             </div>
             @endforeach
         </table>
+        <div class="row">
+          <div class="col-md-12 text-right">
+            <a href="{{route('admin.categories.index')}}" class="btn btn-info">Regresar</a>
+          </div>
+        </div>
         {!!$categories->render()!!}
 @stop
 

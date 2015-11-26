@@ -25,15 +25,15 @@ class UpdateAdminRequest extends Request
     {
         return [
         //
-              'name' => 'required',
-              'lastname' => 'required',
-              'password' => 'required',
+              'name' => 'required|max:100',
+              'lastname' => 'required|max:100',
+              'password' => '',
               'di_type' =>'required',
-              'di' => 'required|numeric  ',
-              'address' => 'required', 
-              'phone' => 'required|numeric',
+              'di' => 'required|numeric|integer|digits:8',
+              'address' => 'required|max:100', 
+              'phone' => 'required|numeric|integer|digits_between:7,9',
               'email' => 'required|unique:users,email,'.$this->input('id'), 
-              'birthday' => 'required',
+              'birthday' => 'date|required',
               'role_id' => 'required',
             
         ];

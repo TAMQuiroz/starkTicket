@@ -206,6 +206,11 @@ class BusinessController extends Controller
         $about->vision      = $request['vision'];
         $about->history     = $request['history'];
         $about->youtube_url = $request['youtube_url'];
+
+        if(isset($request['image'])){
+            $about->image = $this->file_service->upload($request->file('image'),'about');
+        }
+
         $about->save();
 
         return redirect()->back();
@@ -231,6 +236,12 @@ class BusinessController extends Controller
 
         if(isset($request['favicon']))
             $system->favicon = $this->file_service->upload($request->file('favicon'),'system');
+
+        if($request['exchange_active'] == true){
+            $system->exchange_active = true;
+        }else if($request['exchange_active'] == false){
+            $system->exchange_active = false;
+        }
 
         $system->save();
 

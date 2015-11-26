@@ -106,7 +106,10 @@ class PagesController extends Controller
     {
 
         // Hago el query para obtener las preferencias del usuario
+        //return Auth::user()->id;
+
         $clientes = Preference::where('idUser', '=' , Auth::user()->id)->get();
+
 
         $clientPreferences = [];
 
@@ -116,6 +119,7 @@ class PagesController extends Controller
                     array_push($clientPreferences, $preference);
                 }
         }
+
 
 
         //return $clientPreferences;
