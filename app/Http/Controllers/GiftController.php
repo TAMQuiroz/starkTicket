@@ -13,6 +13,7 @@ use App\Services\FileService;
 use App\User;
 use App\Http\Requests\Booking\StoreBookingRequest;
 use Session;
+use App\Models\Business;
 
 class GiftController extends Controller
 {   
@@ -60,9 +61,43 @@ class GiftController extends Controller
      */
     public function createExchangeAdmin()
     {
-        $gifts = Gift::all();
-        return view('internal.admin.exchangeGift', compact('gifts'));
+     $giftsArr = Gift::all();
+    $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
+    $min = Gift::orderBy('id')->get()->lists('id')->first();
+ 
+    return view('internal.admin.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ]  );
     }
+
+      public function createExchangeAdminPost(exchangeGift $request)
+    {
+ $input = $request->all();
+        $idGift =  $input['gifts'];
+        $idClient  =  $input['nombre_de_usuario'];
+
+        $gift = Gift::find($idGift);
+        $user = User::find($idClient);
+
+   if(  $gift->points >  $user->points )
+
+        return back()->withErrors(['El usuario no posee puntos suficientes.']);
+    elseif(    $gift->stock   ==  0  )
+
+        return back()->withErrors(['El juguete seleccionado se encuentra agotado.']);
+    
+  
+    $gift->stock        =    $gift->stock -1 ; 
+    $gift->save();
+
+    $user->points =   $user->points  - $gift->points      ;  
+    $user->save();
+
+    $giftsArr = Gift::all();
+    $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
+    $min = Gift::orderBy('id')->get()->lists('id')->first();
+   Session::flash('messageSucc', ' Canjeo exitoso ');
+   return view('internal.admin.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ]  );
+
+         }
 
     /**
      * Show the form for creating a new resource.
@@ -71,15 +106,34 @@ class GiftController extends Controller
      */
     public function createExchange()
     {
+        $business = Business::all()->first();
+        $active = $business->exchange_active;
+
+
     $giftsArr = Gift::all();
     $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
     $min = Gift::orderBy('id')->get()->lists('id')->first();
  
-    return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ]  );
+    return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ,'active' =>  $active]  );
     }
 
     public function createExchangePost(exchangeGift $request)
     {
+        $business = Business::all()->first();
+        $active = $business->exchange_active;
+
+
+if( $active== 0   ) {
+
+        $giftsArr = Gift::all();
+    $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
+    $min = Gift::orderBy('id')->get()->lists('id')->first();
+ 
+    return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ,'active' =>  $active]  );
+   
+} 
+        
+
         $input = $request->all();
         $idGift =  $input['gifts'];
         $idClient  =  $input['nombre_de_usuario'];

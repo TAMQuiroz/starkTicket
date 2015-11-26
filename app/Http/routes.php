@@ -173,6 +173,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/local/{id}/delete', 'LocalController@destroy');
 
     Route::get('admin/exchange_gift', 'GiftController@createExchangeAdmin');
+    Route::post('admin/exchange_gift', 'GiftController@createExchangeAdminPost');
+    
 
     Route::get('admin/gifts', ['uses'=>'GiftController@index','as'=>'admin.gifts']);
     Route::get('admin/gifts/new', 'GiftController@create');

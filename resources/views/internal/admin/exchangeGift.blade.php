@@ -41,7 +41,7 @@
                 <!-- Portfolio Item Made by JosE  Row -->
                 <div class="row">
                     <div class="col-md-7">
-                     {!!Form::open(array('url' => 'salesman/exchange_gift','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
+                     {!!Form::open(array('url' => 'admin/exchange_gift','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
                         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="0">
                             <!-- Indicators -->
                             <ol class="carousel-indicators">

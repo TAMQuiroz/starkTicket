@@ -34,12 +34,18 @@
 
         @section('content')
 
+
+
+
+
         @if (Session::has('messageSucc'))
    <div class="alert alert-success"> <strong>{{ Session::get('messageSucc') }}</strong></div>
 @endif
 
 
-                <!-- Portfolio Item Made by JosE  Row -->
+@if( $active == 1  ) {   
+
+  <!-- Portfolio Item Made by JosE  Row -->
                 <div class="row">
                     <div class="col-md-7">
                      {!!Form::open(array('url' => 'salesman/exchange_gift','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
@@ -150,7 +156,12 @@
                     @endfor
                 </div>
                 <!-- /.row -->
+
                 {!!Form::close()!!}
+
+                } @else Desactivado por el administrador
+                           @endif 
+              
 @stop
 
 @section('javascript')
