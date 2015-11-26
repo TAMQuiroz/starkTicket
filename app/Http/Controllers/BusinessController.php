@@ -206,6 +206,11 @@ class BusinessController extends Controller
         $about->vision      = $request['vision'];
         $about->history     = $request['history'];
         $about->youtube_url = $request['youtube_url'];
+
+        if(isset($request['image'])){
+            $about->image = $this->file_service->upload($request->file('image'),'about');
+        }
+
         $about->save();
 
         return redirect()->back();

@@ -29,6 +29,7 @@ class UpdateAboutRequest extends Request
             'mision'        =>  'required|max:500',
             'history'       =>  'required|max:500',
             'youtube_url'   =>  'required|url',
+            'image'         =>  'image'
         ];
     }
 }
