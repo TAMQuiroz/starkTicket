@@ -8,33 +8,34 @@ Perfil
 @stop
 
 @section('content')
-<h4>Foto de perfil</h4>
-<img src="{{$obj->image}}" width=100px>
-<h4>Nombre</h4>
-{{$obj->lastname}}, {{$obj->name}}
-<h4>Documento Identidad</h4>
-@if($obj->di_type == 1)
-    DNI
-@else
-    @if($obj->di_type == 2)
-    Carnet de Extranjeria
+<div class="col-sm-3">
+    <img src="{{$obj->image}}" class="img-responsive user-photo" >
+    <p class="text-info text-center">Foto de perfil</p>
+</div>
+<div class="col-sm-4">
+    <p><b>Nombre</b>: {{$obj->lastname}}, {{$obj->name}}</p>
+    <p><b>
+    @if($obj->di_type == 1)
+        DNI
     @else
-    Pasaporte
+        @if($obj->di_type == 2)
+        Carnet de Extranjeria
+        @else
+        Pasaporte
+        @endif
     @endif
-@endif
-{{$obj->di}}
-<h4>Dirección</h4>
-{{$obj->address}}
-<h4>Teléfono</h4>
-{{$obj->phone}}
-<h4>E-mail</h4>
-{{$obj->email}}
-<br><br>
-<!--<pre>
-    {{$obj}}
-</pre>-->
-
-<p><a class="btn btn-info" href="{{url('client/edit')}}">Editar </a> | <a  class="btn btn-info" href="{{url('client/password')}}">Restaurar contraseña</a> | <a type="button" class="btn btn-info" href="{{url('client/photo')}}">Cambiar foto</a></p>
+    </b> {{$obj->di}}</p>
+    <p><b>Dirección: </b>{{$obj->address}}</p>
+    <p><b>Teléfono:</b> {{$obj->phone}}</p>
+    <p><b>E-mail:</b> {{$obj->email}}</p>
+</div>
+<div class="col-sm-4">
+    <br>
+</div>
+<div class="col-sm-12">
+    <hr>
+<p class="text-center"><a class="btn btn-info" href="{{url('client/edit')}}">Editar </a> <a  class="btn btn-info" href="{{url('client/password')}}">Restaurar contraseña</a> <a type="button" class="btn btn-info" href="{{url('client/photo')}}">Cambiar foto</a></p>
+</div>
 @stop
 
 @section('javascript')
