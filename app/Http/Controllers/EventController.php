@@ -335,22 +335,15 @@ public function store(StoreEventRequest $request)
      */
     public function showPromoterRecord()
     {
-        $events = Event::all();
+        $events = Event::where('promoter_id',Auth::user()->id)->paginate(5);
         $event_data = [];
-        foreach ($events as $key => $event) {
+        foreach ($events as $event) {
             $ticket_sum = Ticket::where('event_id',$event->id)->sum('total_price');
             $ticket_quantity = Ticket::where('event_id',$event->id)->sum('quantity');
-
-            $event_data[$key]=
-                    [
-                        "event"             =>  $event,
-                        "ticket_sum"        =>  $ticket_sum,
-                        "ticket_quantity"   =>  $ticket_quantity,
-                    ];
-
+            $event->ticket_sum = $ticket_sum;
+            $event->ticket_quantity = $ticket_quantity;
         }
-
-        return view('internal.promoter.event.record',compact('event_data'));
+        return view('internal.promoter.event.record',array('events' => $events));
     }
     /**
      * Show the form for editing the specified resource.
