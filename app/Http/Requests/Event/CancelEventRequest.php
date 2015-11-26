@@ -12,9 +12,9 @@ class CancelEventRequest extends Request
 
     public function rules() {
         return [
-            'duration' => 'required',
-            'reason' => 'required',
-            'date_refund'   => 'required|date'
+            'duration'    => 'required|integer|min:1',
+            'reason'      => 'required',
+            'date_refund' => 'required|date'
         ];
     }
 }

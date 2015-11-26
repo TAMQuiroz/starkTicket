@@ -82,7 +82,7 @@
                       {{$local->state}}
                       <br>
                       <br>
-                      {!! Html::image($local->image, null, array('class'=>'local_img')) !!}
+                      {!! Html::image($local->image, null, array('class'=>'modal_img')) !!}
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>

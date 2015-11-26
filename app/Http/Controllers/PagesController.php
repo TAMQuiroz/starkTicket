@@ -143,7 +143,10 @@ class PagesController extends Controller
     public function promoterHome()
     {
         $userId = Auth::user()->id;
-        $events = Event::where("promoter_id",$userId)->paginate(10);
+        $events = Event::where("promoter_id",$userId)
+        ->whereHas('presentations', function($query){
+            $query->where('starts_at','>=', time());
+        })->paginate(10);
         return view('internal.promoter.home',["events"=>$events]);
     }
 

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Giveaway;
+namespace App\Http\Requests\Gift;
 
 use App\Http\Requests\Request;
-
-class StoreGiveawayRequest extends Request
+use App\Models\Gift;
+use App\User;
+class exchangeGift extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +24,14 @@ class StoreGiveawayRequest extends Request
      */
     public function rules()
     {
-        return [
-            'sale_id'      => 'required|exists:sale,id',
-            'designee'     => 'required|integer|digits:8',
-        ];
-    }
+     $rules = [
+
+     'nombre_de_usuario'          =>  'required|exists:users,id',
+     'gifts'          =>  'required|exists:gifts,id',
+     'cantidad_de_regalos'  =>  'required|integer|max:100'
+
+     ];
+     
+     return $rules ;
+ }
 }

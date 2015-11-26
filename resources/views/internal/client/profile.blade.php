@@ -14,9 +14,13 @@ Perfil
 {{$obj->lastname}}, {{$obj->name}}
 <h4>Documento Identidad</h4>
 @if($obj->di_type == 1)
-DNI
+    DNI
 @else
-Carnet de Extranjeria
+    @if($obj->di_type == 2)
+    Carnet de Extranjeria
+    @else
+    Pasaporte
+    @endif
 @endif
 {{$obj->di}}
 <h4>Dirección</h4>

@@ -26,16 +26,16 @@ class StoreAdminRequest extends Request
     {
         return [
         //   
-              'name' => 'required|max:100',
+              'name'     => 'required|max:100',
               'lastname' => 'required|max:100',
               'password' => 'required',
-              'di_type' =>'required',
-              'di' => 'required|numeric|integer|digits:8',
-              'address' => 'required|max:100',
-              'phone' => 'required|numeric|integer|digits_between:7,9',
-              'email' => 'required|unique:users',
+              'di_type'  => 'required',
+              'di'       => 'required|integer|digits:8|unique:users,di,NULL,id,role_id,2|unique:users,di,NULL,id,role_id,3|unique:users,di,NULL,id,role_id,4',
+              'address'  => 'required|max:100',
+              'phone'    => 'required|integer|digits_between:7,9',
+              'email'    => 'required|unique:users',
               'birthday' => 'date|required',
-              'role_id' => 'required',
+              'role_id'  => 'required|exists:roles,id',
             
         ];
     }
