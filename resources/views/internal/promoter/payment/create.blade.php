@@ -34,35 +34,29 @@
 <div class="col-sm-6">
         <legend>Transferir Pago</legend>
     <form class="form-horizontal" method="post" id="form">
-    {!!Form::open(array('id'=>'form','class'=>'form-horizontal'))!!}
+    {!!Form::open(array('id'=>'form1','class'=>'form-horizontal'))!!}
         <input name="event_id" value="{{$event->id}}" type="hidden">
-        <div class="form-group">
-            <label  class="col-sm-2 control-label">Fecha entrega</label>
-            <div class="col-sm-10">
-                {!! Form::date('dateDelivery','', array('class' => 'form-control','required')) !!}
-            </div>
-        </div>
         <div class="form-group">
             <label  class="col-sm-2 control-label">Monto de deuda</label>
             <div class="col-sm-10">
             <p class="form-control"  style="border:0">S/ <span id="monto_total">{{ $debt }}</span></p>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" id="monto">
             <label class="col-sm-2 control-label">Monto a pagar</label>
             <div class="col-sm-10">
-              {!! Form::text('paid','0', array('class' => 'form-control',"id"=>"monto_pagar",'required')) !!}
+              {!! Form::input('number','paid',null ,array('class' => 'form-control',"id"=>"monto_pagar",'required')) !!}
             </div>
         </div>
         <div class="form-group">
             <label  class="col-sm-2 control-label">Saldo</label>
             <div class="col-sm-10">
-                <p class="form-control" style="border:0">s/ <span id="saldo">00</span></p>
+                <input type="number" class="form-control" style="border:0" id="saldo" required readonly>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <a class="btn btn-info" data-toggle="modal" data-target="#submitModal">Registrar pago</a>
+              <a class="btn btn-info" data-toggle="modal" data-target="#submitModal" >Registrar pago</a>
               <a  type="reset" class="btn btn-info" href="javascript:window.history.back();">Cancelar</a>
             </div>
         </div>
@@ -88,11 +82,42 @@
 
 @section('javascript')
 <script type="text/javascript">
-$(document).ready(function(){
-    console.log(document.referrer);
-    $("#monto_pagar").change(function(){
-        $("#saldo").text($("#monto_total").text() - $("#monto_pagar").val() );
+    $(document).ready(function(){
+        $("#monto_pagar").change(function()
+        {
+            if($("#monto_total").text() <= $("#monto_pagar").val())
+            {
+                $("#monto_pagar").val($("#monto_total").text());
+                $('#saldo').val("0");
+            } else {
+                $('#saldo').val($("#monto_total").text() - $("#monto_pagar").val());
+            }
+        });
+
+
+        $('#form1').validate({
+        errorElement: "span",
+        rules: {
+            paid: {
+                required: true,
+
+            }
+        },
+        highlight: function(element) {
+            $(element).closest('.form-group')
+            .removeClass('has-success').addClass('has-error');
+        },
+        success: function(element) {
+            $(element)
+            .addClass('help-inline')
+            .closest('.form-group')
+            .removeClass('has-error').addClass('has-success');
+            }
+        });
+        $('#yes').click(function(){
+            $('.modal').modal('hide');
+        });
     });
-});
-</script>
+
+    </script>
 @stop
