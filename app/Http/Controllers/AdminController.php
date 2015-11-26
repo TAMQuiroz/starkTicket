@@ -11,7 +11,10 @@ use App\user;
 use Carbon\Carbon;
 use App\Services\FileService;
 use App\Models\ModuleAssigment;
-
+use App\Http\Requests\Client\PasswordClientRequest;
+use App\Http\Requests\Client\UpdateClientRequest;
+use Auth;
+use Session;
 
 class AdminController extends Controller
 {
@@ -47,9 +50,9 @@ class AdminController extends Controller
         $user = User::find($id);
         $user->name         =   $input['name'];
         $user->lastName     =   $input['lastname'];
-
+        /*
         if ($input['password'] != null )
-            $user->password     =   bcrypt($input['password']);
+            $user->password     =   bcrypt($input['password']);*/
 
         $user->di_type      =   $input['di_type'];
         $user->di           =   $input['di'];
@@ -97,9 +100,9 @@ class AdminController extends Controller
         $user = User::find($id);
         $user->name         =   $input['name'];
         $user->lastName     =   $input['lastname'];
-
+        /*
         if ($input['password'] != null )
-            $user->password     =   bcrypt($input['password']);
+            $user->password     =   bcrypt($input['password']);*/
 
         $user->di_type      =   $input['di_type'];
         $user->di           =   $input['di'];
@@ -146,9 +149,10 @@ class AdminController extends Controller
         $user = User::find($id);
         $user->name         =   $input['name'];
         $user->lastName     =   $input['lastname'];
+        /*
 
         if ($input['password'] != null )
-            $user->password     =   bcrypt($input['password']);
+            $user->password     =   bcrypt($input['password']);*/
 
         $user->di_type      =   $input['di_type'];
         $user->di           =   $input['di'];
@@ -251,6 +255,37 @@ class AdminController extends Controller
         }
 
         return redirect('admin/salesman');
+    }
+
+
+    public function passwordAdmin()
+    {
+        return view('internal.admin.password');
+    }
+
+
+    public function passwordUpdateAdmin(PasswordClientRequest $request)
+    {
+
+        $id = Auth::user()->id;
+        $obj = User::findOrFail($id);
+        $auth = Auth::attempt( array(
+            'email' => $obj->email,
+            'password' => $request->input('password')
+            ));
+        if ($auth)
+        {
+            $newPassword = bcrypt($request->input('new_password'));
+            $obj->password = $newPassword;
+            $obj->save();
+            //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+            Session::flash('message', 'Su contraseña fue actualizada!');
+            Session::flash('alert-class','alert-success');
+        } else {
+            Session::flash('message', 'Contraseña Incorrecta!');
+            Session::flash('alert-class','alert-danger');
+        }
+        return redirect('admin');
     }
 
 }
