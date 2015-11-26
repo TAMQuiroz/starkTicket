@@ -258,7 +258,7 @@ class ClientController extends Controller
             Session::flash('message', 'Su contraseña fue actualizada!');
             Session::flash('alert-class','alert-success');
         } else {
-            Session::flash('message', 'Contraseña!');
+            Session::flash('message', 'Contraseña incorrecta!');
             Session::flash('alert-class','alert-danger');
         }
         return redirect('client');

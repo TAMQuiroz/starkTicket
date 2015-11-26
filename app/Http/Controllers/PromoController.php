@@ -10,13 +10,15 @@ use App\Models\Event;
 use App\Models\accessPromotion;
 use App\Models\Zone;
 use App\User;
-use Auth;
 use Carbon\Carbon;
 use App\Models\Category;
 use Config;
 use App\Http\Requests\Promotions\StorePromotionRequest;
 use App\Http\Requests\Promotions\UpdatePromotionRequest;
-
+use App\Http\Requests\Client\PasswordClientRequest;
+use App\Http\Requests\Client\UpdateClientRequest;
+use Auth;
+use Session;
 
 class PromoController extends Controller
 {
@@ -237,5 +239,36 @@ public function ajax($event_id)
 
     return  json_encode(  $zones);  
 }
+
+
+public function passwordPromoter()
+{
+  return view('internal.admin.passwordPromoter');
+}
+
+
+public function passwordUpdatePromoter(PasswordClientRequest $request)
+{
+
+        $id = Auth::user()->id;
+        $obj = User::findOrFail($id);
+        $auth = Auth::attempt( array(
+            'email' => $obj->email,
+            'password' => $request->input('password')
+            ));
+        if ($auth)
+        {
+            $newPassword = bcrypt($request->input('new_password'));
+            $obj->password = $newPassword;
+            $obj->save();
+            //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+            Session::flash('message', 'Su contraseña fue actualizada!');
+            Session::flash('alert-class','alert-success');
+        } else {
+            Session::flash('message', 'Contraseña Incorrecta!');
+            Session::flash('alert-class','alert-danger');
+        }
+        return redirect('promoter');
+    }
 
 }
