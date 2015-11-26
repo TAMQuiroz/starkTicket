@@ -68,7 +68,6 @@ class PaymentController extends Controller
         $payment->event_id = $event_id;
         $payment->promoter_id = $user_id;
         $payment->paid = $input['paid'];
-        $payment->date_delivery = $input['dateDelivery'];
         $payment->save();
 
         Session::flash('message', 'Pago a organizador realizado!');
