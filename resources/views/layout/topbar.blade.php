@@ -84,7 +84,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a>Puntos Acumulados: {{Auth::user()->points}}</a></li>
-                <li> {!! Html::image(Auth::user()->image,  null, array('class'=>'image cat_img', "width"=>45, 'height' => 45)) !!} </li>
+                <li> {!! Html::image(Auth::user()->image,  null, array( "width"=>45, 'height' => 45)) !!} </li>
                 <li><a href="{{url('client')}}">{{\Auth::user()->name}}</a></li>
                 <li><a href="{{url('auth/logout')}}">Salir</a></li>
           </ul>
