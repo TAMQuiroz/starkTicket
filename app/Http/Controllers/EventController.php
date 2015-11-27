@@ -216,11 +216,13 @@ public function validateFreeLocal($starts_at, $local_id, $time_length){
 
 public function seCruzanFunciones(array $presentations_time, $duracion){
     foreach ($presentations_time as $key => $value) {
-        for($i=$key+1;$i<count($presentations_time);$i++){
-            $start = strtotime($presentations_time[$i]);
-            $end = $start+($duracion*3600);
-            if(strtotime($value)<=$end && strtotime($value) >=$start){
-                return true;
+        for($i=0;$i<count($presentations_time);$i++){
+            if($i!= $key){
+                $start = strtotime($presentations_time[$i]);
+                $end = $start+($duracion*3600);
+                if(strtotime($value)<=$end && strtotime($value) >=$start){
+                    return true;
+                }
             }
         }
     }
@@ -239,7 +241,7 @@ public function store(StoreEventRequest $request)
     if(count($temp) < count($result_dates))
         return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
             //return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
-    if(seCruzanFunciones($result_dates, $request->input('time_length')))
+    if($this->seCruzanFunciones($result_dates, $request->input('time_length')))
         return redirect()->back()->withInput()->withErrors(['errors' => 'Verificar presentaciones. Algunas horas y fechas se cruzan']);
     $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
     if($result['error'] != '')
