@@ -170,6 +170,7 @@ $('#quantity').change(function(){
     if($(this).val() > 0){
         $('#payModal').prop('disabled',false);
         $('#total2').val(count*price);
+        $('#paymentMix').prop('max',count*price);
     }else{
         $('#payModal').prop('disabled',true);
         $('#total2').val("");
