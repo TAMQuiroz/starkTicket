@@ -57,13 +57,13 @@
 </body>
 
 <footer id="footer">
-	<ul class="icons">
-		<li><a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span>S</a></li>
-		<li><a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span>t</a></li>
-		<li><a href="#" class="icon circle fa-google-plus"><span class="label">Google+</span>a</a></li>
-		<li><a href="#" class="icon circle fa-github"><span class="label">Github</span>r</a></li>
-		<li><a href="#" class="icon circle fa-dribbble"><span class="label">Dribbble</span>k</a></li>
-	</ul>
+    <p>
+        <a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span></a>
+        <a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span></a>
+        <a href="#" class="icon circle fa-google-plus"><span class="label">Google+</span></a>
+        <a href="#" class="icon circle fa-github"><span class="label">Github</span></a>
+        <a href="#" class="icon circle fa-dribbble"><span class="label">Dribbble</span></a>
+    </p>
 </footer>
 	{!!Html::script('js/jQuery-2.1.4.min.js')!!}
 	{!!Html::script('js/bootstrap.min.js')!!}
