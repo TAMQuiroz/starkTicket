@@ -259,6 +259,8 @@ class TicketController extends Controller
                 }
             }
 
+            $user = \Auth::user();
+
             
             //Distincion de tarjeta o efectivo
             $price = Ticket::find($id)->total_price;
@@ -266,14 +268,20 @@ class TicketController extends Controller
                 DB::table('tickets')->where('id',$id)->update(['credit_amount' => $price]);
             }else if($request['payMode'] == config('constants.cash')){
                 DB::table('tickets')->where('id',$id)->update(['cash_amount' => $price]);
+                if($user->role_id == config('constants.salesman')){
+                    DB::table('modules')->where('id',$user->module_id)->increment('actual_cash', $price);
+                }
             }else if($request['payMode'] == config('constants.mix')){
                 DB::table('tickets')->where('id',$id)->update(['cash_amount' => $request['paymentMix']]);
                 DB::table('tickets')->where('id',$id)->update(['credit_amount' => $price - $request['paymentMix']]);
+                if($user->role_id == config('constants.salesman')){
+                    DB::table('modules')->where('id',$user->module_id)->increment('actual_cash', $request['paymentMix']);
+                }
             }
             
             array_push($tickets,$id);
             //var_dump('llego');
-
+            
             DB::commit();
 
         }catch (\Exception $e){
