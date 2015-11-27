@@ -43,7 +43,7 @@
               <div class="form-group">
                 <label for="inputDi" class="col-sm-2 control-label">Documento de Identidad</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','di', null ,['class'=>'form-control','id'=>'inputDi','required','maxlength' => 8, 'min'=>0,"onKeyDown" => "justNumbers()"])!!} 
+                  {!!Form::input('number','di', null ,['class'=>'form-control','id'=>'inputDi','required','maxlength' => 8])!!} 
                 </div>
               </div>
               <div class="form-group">
@@ -55,7 +55,7 @@
               <div class="form-group">
                 <label for="inputPhone" class="col-sm-2 control-label">Teléfono(s)</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','phone', null ,['class'=>'form-control','id'=>'inputPhone','required','maxlength' => 10,'min'=>0,"onKeyDown" => "justNumbers()"])!!}
+                  {!!Form::input('number','phone', null ,['class'=>'form-control','id'=>'inputPhone','required','maxlength' => 10,'min'=>0])!!}
                 </div>
               </div>
               <div class="form-group">

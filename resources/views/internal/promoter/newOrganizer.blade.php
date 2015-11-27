@@ -39,26 +39,26 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Ruc</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','ruc', null ,['class'=>'form-control','maxlength' => 11,'required', "onKeyDown" => "justNumbers()" ])!!}
+                  {!!Form::input('number','ruc', null ,['class'=>'form-control','maxlength' => 11,'required' ])!!}
                 </div>
               </div>      
               <div class="form-group">
                 <label class="col-sm-2 control-label">Número de cuenta</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','countNumber', null ,['class'=>'form-control','maxlength' => 20,'required',"onKeyDown" => "justNumbers()"])!!}
+                  {!!Form::input('number','countNumber', null ,['class'=>'form-control','maxlength' => 20,'required'])!!}
                  </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Teléfono</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','telephone', null ,['class'=>'form-control','maxlength' => 10,'required',"onKeyDown" => "justNumbers()"])!!}
+                  {!!Form::input('number','telephone', null ,['class'=>'form-control','maxlength' => 10,'required'])!!}
  
                  </div>
               </div>                                                          
               <div class="form-group">
                 <label class="col-sm-2 control-label">DNI</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','dni', null ,['class'=>'form-control','maxlength' => 8,'required',"onKeyDown" => "justNumbers()"])!!}
+                  {!!Form::input('number','dni', null ,['class'=>'form-control','maxlength' => 8,'required'])!!}
                 </div>
               </div>
               <div class="form-group">
