@@ -35,7 +35,7 @@
             <div class="col-sm-9">
               <div class="form-control" style="border:0px">{{$ticket->total_price}}</div>
             </div>
-            <input type="hidden" class="form-control" id="ticket_id" placeholder="" name="repayment" required>
+            <input type="hidden" class="form-control" id="ticket_id" value="{{$ticket->total_price}}" name="repayment" required>
           </div>
           <div class="form-group">
             <label for="ticket_id" class="col-sm-3 control-label">Observaciòn:</label>

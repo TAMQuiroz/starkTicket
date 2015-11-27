@@ -163,10 +163,9 @@ class BusinessController extends Controller
             
 
             $devolutions = DB::table('devolutions')
-                    ->where('tickets.salesman_id','=',\Auth::user()->id)
+                    ->where('devolutions.user_id','=',\Auth::user()->id)
                     ->where('devolutions.created_at','<',new Carbon())->where('devolutions.created_at','>=',Carbon::today())
                     ->whereNull('devolutions.cashCount_register')
-                    ->join('tickets', 'tickets.id', '=', 'devolutions.ticket_id')
                     ->get();
             foreach ($devolutions as $devolution) {
                  $devolution->cashCount_register = $timeNow;
