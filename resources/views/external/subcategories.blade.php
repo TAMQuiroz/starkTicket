@@ -12,12 +12,21 @@
 	<p>{{$category->description}}</p>
     @if (count($subcategories)>0)
 	<div class="row">
+        <?php $i = 0; ?>
         @foreach ($subcategories as $subcategory)
         <div class="col-sm-3">
             {!! Html::image($subcategory->image, null, array('class'=>'image cat_img')) !!}
             <h3>{{$subcategory->name}}</h3>
             <p><a href="subcategory/{{$subcategory->id}}" class="btn btn-info" role="button" data-target="#info" data-whatever="@mdo">Ver más</a></p>
         </div>
+        <?php
+            $i++;
+            $mod = $i % 4;
+         ?>
+         @if ($mod==0)
+         </div>
+         <div class="row">
+         @endif
         @endforeach
     </div>
     @else
