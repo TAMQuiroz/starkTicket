@@ -32,8 +32,8 @@ class PaymentController extends Controller
      */
     public function create($event_id)
     {
-        $event = Event::findOrFail($event_id);
-        if($event->cancelled)
+        $event = Event::find($event_id);
+        if($event->cancelled||empty($event))
         {
             Session::flash('message', 'Evento cancelado');
             Session::flash('alert-class','alert-warning');
