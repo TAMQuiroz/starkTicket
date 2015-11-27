@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Highlight extends Model
 {
     use SoftDeletes;
-    protected $table = 'highlightedEvents';
+    protected $table = 'highlightedevents';
     protected $dates = ['deleted_at'];
 
     public function event(){
