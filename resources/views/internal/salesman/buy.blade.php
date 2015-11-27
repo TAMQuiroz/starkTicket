@@ -171,15 +171,26 @@
                                     {!!Form::radio('payMode', config('constants.mix'), null,['id'=>'mixPay', 'onChange'=>'getPromo()'])!!}
                                     <b>Pago mixto</b>
                                     <hr>
-                                    <b>Cantidad a pagar en efectivo</b>
-                                    {!!Form::number('paymentMix',null,['id'=>'paymentMix','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
-                                    <b>Monto Ingresado</b>
-                                    {!!Form::number('paymentMix',null,['id'=>'amountMix','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
-                                    <b>Vuelto</b>
-                                    {!!Form::text('',null,['id'=>'changeMix','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}
-                                    <br>
-                                    {!!Form::submit('Pagar Entrada',array('id'=>'pay','class'=>'btn btn-info', 'disabled'))!!}
-                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                                    <div class="col-md-12">
+                                        <b>Cantidad a pagar en efectivo</b>
+                                        {!!Form::number('paymentMix',null,['id'=>'paymentMix','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <b>Monto Ingresado en soles</b>
+                                        {!!Form::number('amountMix',null,['id'=>'amountMix','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0,'onChange'=>'getChangeMix()'])!!}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <b>Monto Ingresado en dolares</b>
+                                        {!!Form::number('amountMix',null,['id'=>'amountMixDollars','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0,'onChange'=>'getChangeMix()'])!!}
+                                    </div>
+                                    <div class="col-md-12">
+                                        <b>Vuelto</b>
+                                        <p>{!!Form::text('',null,['id'=>'changeMix','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}</p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        {!!Form::submit('Pagar Entrada',array('id'=>'pay','class'=>'btn btn-info', 'disabled'))!!}
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
