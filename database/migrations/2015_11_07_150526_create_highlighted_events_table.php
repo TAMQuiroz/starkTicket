@@ -12,7 +12,7 @@ class CreateHighlightedEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('highlightedEvents', function (Blueprint $table) {
+        Schema::create('highlightedevents', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('active');
             $table->integer('days_active');
@@ -31,6 +31,6 @@ class CreateHighlightedEventsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('highlightedEvents');
+        Schema::drop('highlightedevents');
     }
 }
