@@ -75,6 +75,7 @@ Calendario
 	<h3>Eventos publicados el {{date('Y-m-d',$date_at)}}</h3>
 	<br>
 	<div class="row">
+        <?php $i = 0; ?>
 	    @foreach($events as $event)
 	    <div class="3u col-sm-3">
 	        <section>
@@ -89,6 +90,14 @@ Calendario
 	            <p><a href="event/{{$event->id}}"  class="btn btn-info" role="button" >Detalle</a></p>
 	        </section>
 	    </div>
+        <?php
+            $i++;
+            $mod = $i % 4;
+         ?>
+         @if ($mod==0)
+         </div>
+         <div class="row">
+         @endif
 	    @endforeach
 	</div>
 @endif
