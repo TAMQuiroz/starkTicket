@@ -20,9 +20,9 @@
 @section('content')
 <h5>Búsqueda</h5>
 <div class="input-group">
-    {!! Form::text('search', '', array('class' => 'form-control')) !!}
+    {!! Form::text('search', '', array('class' => 'form-control', 'id' => 'textSearch')) !!}
     <span class="input-group-btn">
-        <button class="btn btn-info" type="button">Buscar</button>
+        <a href="#" class="btn btn-info" id="searchButton">Buscar</a>
     </span>
 </div>
 <div class="container">
@@ -48,6 +48,14 @@
 @stop
 
 @section('javascript')
+<script type="text/javascript">
+    $( document ).ready(function() {
+        $('#searchButton').on('click',function(){
+            var titulo = $('#textSearch').val();
+            $('#searchButton').attr('href', '?title='+titulo);
+        });
+    });
+</script>
 
 @stop
 
