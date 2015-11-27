@@ -35,6 +35,11 @@ class DevolutionController extends Controller
     public function create($ticket_id)
     {
         $ticket = Ticket::findOrFail($ticket_id);
+        if ($ticket==null) {
+
+            Session::flash('message', 'Este ticket no existe');
+            return redirect('salesman/devolutions');
+        }
         if ($ticket->cancelled)
         {
             Session::flash('message', 'El ticket fue cancelado');
