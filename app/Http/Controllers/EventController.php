@@ -7,6 +7,7 @@ use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Requests\Event\StoreHighlightRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
 use App\Http\Requests\Event\CancelEventRequest;
+use App\Http\Requests\Presentation\StorePresentationRequest;
 use App\Http\Requests\Comment\StoreCommentPostRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
@@ -20,6 +21,7 @@ use App\Models\Organizer;
 use App\Models\Local;
 use App\Models\Comment;
 use App\Models\CancelEvent;
+use App\Models\CancelPresentation;
 use App\Services\FileService;
 use Carbon\Carbon;
 use App\User;
@@ -48,9 +50,18 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexExternal()
+    public function indexExternal(Request $request)
     {
-        $events = Event::where("cancelled","=","0")->get();
+        var_dump($request['title']);
+        $nombres = explode(" ",$request['title']);
+        $events = Event::where("cancelled","=","0")->where('publication_date','<',strtotime(Carbon::now()));
+        foreach ($nombres as $nombre) {
+
+            if($nombre!='')
+                $events = $events->where('name','like','%'.$nombre.'%');
+            # code...
+        }
+        $events = $events->get();
         return view('external.events',compact('events'));
     }
     /**
@@ -87,7 +98,7 @@ class EventController extends Controller
         $event->time_length  = $data['time_length'];
         $event->publication_date = strtotime($data['publication_date']);
         $event->selling_date = strtotime($data['selling_date']);
-        $event->promoter_id  = Auth::user()->id; 
+        $event->promoter_id  = Auth::user()->id;
         $event->image        = $this->file_service->upload($data['image'],'event');
         if($data['distribution_image'])
             $event->distribution_image = $this->file_service->upload($data['distribution_image'],'event');
@@ -110,21 +121,21 @@ class EventController extends Controller
 
     public function feedback(){
 
-       return view('internal.client.event_feedback' );
-   }
+     return view('internal.client.event_feedback' );
+ }
 
 
 
-   public function attendanceDetail()
-   {
+ public function attendanceDetail()
+ {
 
-       return view('internal.admin.attendanceDetail '  );
+     return view('internal.admin.attendanceDetail '  );
 
         //return $datePar ;
-   }
+ }
 
 
-   public function storeZone($data, $event){
+ public function storeZone($data, $event){
     $zone = new Zone();
     $zone->name         = $data['name'];
     $zone->price        = $data['price'];
@@ -212,6 +223,21 @@ public function validateFreeLocal($starts_at, $local_id, $time_length){
     else return null;
 }
 
+public function seCruzanFunciones(array $presentations_time, $duracion){
+    foreach ($presentations_time as $key => $value) {
+        for($i=0;$i<count($presentations_time);$i++){
+            if($i!= $key){
+                $start = strtotime($presentations_time[$i]);
+                $end = $start+($duracion*3600);
+                if(strtotime($value)<=$end && strtotime($value) >=$start){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 public function store(StoreEventRequest $request)
 {
 
@@ -224,48 +250,51 @@ public function store(StoreEventRequest $request)
     if(count($temp) < count($result_dates))
         return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
             //return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
-        //$result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
-        //if($result['error'] != '')
-            //return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
+
+    if($this->seCruzanFunciones($result_dates, $request->input('time_length')))
+        return redirect()->back()->withInput()->withErrors(['errors' => 'Verificar presentaciones. Algunas horas y fechas se cruzan']);
+    $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
+    if($result['error'] != '')
+        return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
             //return response()->json(['message' => $result['error']]);
 
-        $data = [
-        'name'           => $request->input('name'),
-        'description'    => $request->input('description'),
-        'category_id'    => $request->input('category_id'),
-        'organizer_id'   => $request->input('organizer_id'),
-        'local_id'       => $request->input('local_id'),
-        'time_length'    => $request->input('time_length'),
-        'selling_date'   => $request->input('selling_date'),
-        'image'          => $request->file('image'),
-        'distribution_image'   => $request->file('distribution_image'),
-        'publication_date'     => $request->input('publication_date'),
-        'percentage_comission' => $request->input('percentage_comission',''),
-        'amount_comission'     => $request->input('amount_comission',''),
-        ];
-        $event = $this->storeEvent($data);
-        $seats_ids = $request->input('seats_ids');
+    $data = [
+    'name'           => $request->input('name'),
+    'description'    => $request->input('description'),
+    'category_id'    => $request->input('category_id'),
+    'organizer_id'   => $request->input('organizer_id'),
+    'local_id'       => $request->input('local_id'),
+    'time_length'    => $request->input('time_length'),
+    'selling_date'   => $request->input('selling_date'),
+    'image'          => $request->file('image'),
+    'distribution_image'   => $request->file('distribution_image'),
+    'publication_date'     => $request->input('publication_date'),
+    'percentage_comission' => $request->input('percentage_comission',''),
+    'amount_comission'     => $request->input('amount_comission',''),
+    ];
+    $event = $this->storeEvent($data);
+    $seats_ids = $request->input('seats_ids');
 
-        $zone_data = [
-        'zone_names'     => $request->input('zone_names'),
-        'zone_capacity'  => $request->input('zone_capacity'),
-        'price'          => $request->input('price'),
-        'zone_columns'   => $request->input('zone_columns'),
-        'zone_rows'      => $request->input('zone_rows'),
-        'start_column'   => $request->input('start_column'),
-        'start_row'      => $request->input('start_row'),
-        'seats_ids'          => $request->input('seats_ids'),
-        ];
-        $data2 = [
+    $zone_data = [
+    'zone_names'     => $request->input('zone_names'),
+    'zone_capacity'  => $request->input('zone_capacity'),
+    'price'          => $request->input('price'),
+    'zone_columns'   => $request->input('zone_columns'),
+    'zone_rows'      => $request->input('zone_rows'),
+    'start_column'   => $request->input('start_column'),
+    'start_row'      => $request->input('start_row'),
+    'seats_ids'          => $request->input('seats_ids'),
+    ];
+    $data2 = [
             //'start_date'    => $request->input('start_date'),
             //'start_time'    => $request->input('start_time'),
-        'function_starts_at' => $result_dates
-        ];
-        $this->storeRestOfEvent($zone_data, $data2, $event);
-        return redirect()->route('promoter.record');
+    'function_starts_at' => $result_dates
+    ];
+    $this->storeRestOfEvent($zone_data, $data2, $event);
+    return redirect()->route('promoter.record');
         //return redirect()->route('events.edit', $event->id);
         //return response()->json(['message' => 'Event added']);
-    }
+}
     /**
      * Display the specified resource.
      *
@@ -286,11 +315,11 @@ public function store(StoreEventRequest $request)
     public function showExternal($id)
     {
         $user = \Auth::user();
-        $event = Event::findOrFail($id);
-        $users = User::all();
+        $event = Event::find($id);
         $Comments = Comment::where('event_id',$id  ) ->get();
-
-       return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments , 'users' => $users]);
+        if(empty($event)||$event->cancelled)
+            return redirect()->back();
+        return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments]);
     }
 
     public function showExternalPost(StoreCommentPostRequest $request , $id)
@@ -336,22 +365,15 @@ public function store(StoreEventRequest $request)
      */
     public function showPromoterRecord()
     {
-        $events = Event::all();
+        $events = Event::where('promoter_id',Auth::user()->id)->paginate(5);
         $event_data = [];
-        foreach ($events as $key => $event) {
+        foreach ($events as $event) {
             $ticket_sum = Ticket::where('event_id',$event->id)->sum('total_price');
             $ticket_quantity = Ticket::where('event_id',$event->id)->sum('quantity');
-
-            $event_data[$key]=
-                    [
-                        "event"             =>  $event,
-                        "ticket_sum"        =>  $ticket_sum,
-                        "ticket_quantity"   =>  $ticket_quantity,
-                    ];
-
+            $event->ticket_sum = $ticket_sum;
+            $event->ticket_quantity = $ticket_quantity;
         }
-
-        return view('internal.promoter.event.record',compact('event_data'));
+        return view('internal.promoter.event.record',array('events' => $events));
     }
     /**
      * Show the form for editing the specified resource.
@@ -439,30 +461,30 @@ public function store(StoreEventRequest $request)
         if($local->rows >=1 && !$data['zone_columns'])
             return ['error' => 'se debe especificar filas y columnas para este local numerado'];
         if($data['zone_columns']){ // esta entrando a pesar de no ser numerado el local :S :S
-           $seats_ids = array();
-           for($i = 0; $i < count($data['zone_names']); $i++){
-               for($j = $data['start_column'][$i]; $j<= $data['start_column'][$i] + $data['zone_columns'][$i]-1;$j++)
-                    for($k= $data['start_row'][$i]; $k<=$data['start_row'][$i] + $data['zone_rows'][$i]-1;$k++){
-                        $id = ''.$k.'_'.$j;
-                        if(in_array($id, $seats_ids)){
-                            return ['error' => 'Hay zonas con asientos cruzados. Por favor configurar bien las zonas'];
-                        }
-                        array_push($seats_ids, $id);
+         $seats_ids = array();
+         for($i = 0; $i < count($data['zone_names']); $i++){
+             for($j = $data['start_column'][$i]; $j<= $data['start_column'][$i] + $data['zone_columns'][$i]-1;$j++)
+                for($k= $data['start_row'][$i]; $k<=$data['start_row'][$i] + $data['zone_rows'][$i]-1;$k++){
+                    $id = ''.$k.'_'.$j;
+                    if(in_array($id, $seats_ids)){
+                        return ['error' => 'Hay zonas con asientos cruzados. Por favor configurar bien las zonas'];
                     }
-           }
-           for ($i = 0; $i < count($data['zone_columns']); $i++) {
-               $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
-               $total_capacity = $total_capacity + $capacity;
-               if($data['start_row'][$i] > $local->rows || $data['start_column'][$i] > $local->columns||
-                   $data['start_row'][$i]+$data['zone_rows'][$i] -1> $local->rows ||
-                   $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
-                   return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
-           }
-       } else {
-           for($i= 0; $i < count($data['zone_names']);$i++)
-               $total_capacity = $total_capacity + $data['zone_capacity'][$i];
-       }
-       if($total_capacity > $local->capacity)
+                    array_push($seats_ids, $id);
+                }
+            }
+            for ($i = 0; $i < count($data['zone_columns']); $i++) {
+             $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
+             $total_capacity = $total_capacity + $capacity;
+             if($data['start_row'][$i] > $local->rows || $data['start_column'][$i] > $local->columns||
+                 $data['start_row'][$i]+$data['zone_rows'][$i] -1> $local->rows ||
+                 $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
+                 return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
+         }
+     } else {
+         for($i= 0; $i < count($data['zone_names']);$i++)
+             $total_capacity = $total_capacity + $data['zone_capacity'][$i];
+     }
+     if($total_capacity > $local->capacity)
         return ['error' => 'la capacidad del evento excede a la del local'];
     $result = [
     'error' => '',
@@ -534,19 +556,19 @@ public function update(UpdateEventRequest $request, $id)
         }
         $data = [
 
-                'name'          => $request->input('name'),
-                'description'   => $request->input('description'),
-                'category_id'   => $request->input('category_id'),
-                'organizer_id'  => $request->input('organizer_id'),
-                'local_id'      => $request->input('local_id'),
-                'publication_date' => $request->input('publication_date'),
-                'selling_date'  => $request->input('selling_date'),
-                'time_length'   => $request->input('time_length'),
-                'image'         => $request->file('image'),
-                'distribution_image' => $request->file('distribution_image'),
-                'percentage_comission' => $request->input('percentage_comission',''),
-                'amount_comission'     => $request->input('amount_comission',''),
-            ];
+        'name'          => $request->input('name'),
+        'description'   => $request->input('description'),
+        'category_id'   => $request->input('category_id'),
+        'organizer_id'  => $request->input('organizer_id'),
+        'local_id'      => $request->input('local_id'),
+        'publication_date' => $request->input('publication_date'),
+        'selling_date'  => $request->input('selling_date'),
+        'time_length'   => $request->input('time_length'),
+        'image'         => $request->file('image'),
+        'distribution_image' => $request->file('distribution_image'),
+        'percentage_comission' => $request->input('percentage_comission',''),
+        'amount_comission'     => $request->input('amount_comission',''),
+        ];
         if($now->getTimestamp() < strtotime($request->input('selling_date'))){
             //antes del sellingdate en general
 
@@ -704,37 +726,46 @@ public function update(UpdateEventRequest $request, $id)
     public function cancel($id)
     {
         $event = Event::findOrFail($id);
-        if ($event->cancelled == 1)
-        {
-            Session::flash('message', 'El evento ya fue cancelado!');
-            Session::flash('alert-class','alert-danger');
 
+
+        if($event->cancelled)
+        {
+            Session::flash('message', 'El evento ya fue cancelado');
+            Session::flash('alert-class','alert-warning');
             return redirect('/promoter/event/record');
         }
-        return view('internal.promoter.event.cancel', ['event' => $event]);
+        return view('internal.promoter.event.cancel', array('event'=>$event));
     }
-    public function cancelStorage(CancelEventRequest $request, $event_id)
+    public function cancelStorage(StorePresentationRequest $request, $event_id)
     {
+
+        $event = Event::findOrFail($event_id);
+        $presentations = $event->presentations;
+
         $user_id = Auth::user()->id;
 
         $input = $request->all();
 
-        $event = Event::findOrFail($event_id);
-        $event->cancelled = "1";
+        foreach ($presentations as $presentation)
+        {
+            $presentation->cancelled = "1";
+            $presentation->save();
+
+            $cancel = new CancelPresentation;
+            $cancel->presentation_id = $presentation->id;
+            $cancel->user_id = $user_id;
+            $cancel->reason = $input['reason'];
+            $cancel->duration = $input['duration'];
+            $cancel->authorized = $input['authorized'];
+            $cancel->date_refund = $input['date_refund'];
+            $cancel->save();
+        }
+        $event->cancelled = 1;
         $event->save();
 
-        $cancel = new CancelEvent;
-        $cancel->event_id = $event_id;
-        $cancel->user_id = $user_id;
-        $cancel->reason = $input['reason'];
-        $cancel->duration = $input['duration'];
-        $cancel->date_refund = $input['date_refund'];
-        $cancel->save();
-
-        Session::flash('message', 'El evento se a cancelado!');
+        Session::flash('message', 'Evento cancelado!');
         Session::flash('alert-class','alert-success');
-
-        return redirect('/promoter/event/record');
+        return redirect('promoter/event/record');
     }
     public function getHighlights(){
         //$destacados = Highlight::where('active','1')->orWhere('start_date','>',Carbon::now())->with('event')->get();

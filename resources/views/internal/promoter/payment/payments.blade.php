@@ -12,20 +12,18 @@
      <table class="table table-bordered table-striped">
         <tr>
           <th>Evento</th>
-          <th>Organizdor</th>
+          <th>Organizador</th>
           <th>Promotor</th>
-          <th>Fecha</th>
           <th>Monto pagado</th>
-          <th>Detalles</th>
+          <th>Fecha de pago</th>
         </tr>
         @foreach($payments as $payment)
         <tr>
-          <td>{{$payment->event["name"]}}</td>
+          <td><a href="{{ route('events.show', $payment->event['id']) }}" target="_self">{{$payment->event["name"]}}</a></td>
           <td>{{$payment->event->organization["organizerName"]}} {{$payment->event->organization["organizerLastName"]}}</td>
-          <td><a href="#">{{$payment->promoter["name"]}} {{$payment->promoter["lastname"]}}</a></td>
-          <td>{{$payment->date_delivery}}</td>
+          <td>{{$payment->promoter["name"]}} {{$payment->promoter["lastname"]}}</td>
           <td>S/ {{$payment->paid}}</td>
-          <td><a href="{{ url ('promoter/transfer_payments/'.$payment->id  )}}" class="btn btn-primary">+</a></td>
+          <td>{{$payment->created_at}}</td>
         </tr>
         @endforeach
       </table>

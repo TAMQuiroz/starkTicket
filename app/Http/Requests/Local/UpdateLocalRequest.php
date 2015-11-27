@@ -25,13 +25,14 @@ class UpdateLocalRequest extends Request
     {
         return [
             'name'          =>  'required|max:30',
-            'capacity'      =>  'required|min:0',
             'address'       =>  'required|max:50',
             'district'      =>  'required|max:20',
             'province'      =>  'required|max:20',
             'state'         =>  'required|max:20',
-            'row'           =>  'min:0|required_with:column',
-            'column'        =>  'min:0|required_with:row',
+            'local_type'    =>  'required',
+            'capacity'      =>  'integer|min:1|required_if:local_type,2|min:0',
+            'row'           =>  'min:0|required_if:local_type,1|required_with:column',
+            'column'        =>  'min:0|required_if:local_type,1|required_with:row',
             'image'         =>  'image'
         ];
     }

@@ -14,7 +14,12 @@ class Module extends Model
      *
      * @var array
      */
+	protected $table = 'modules';
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['name', 'address', 'district', 'province', 'state', 'phone','email','cash','starTime','endTime','image'];
+    protected $fillable = ['name', 'address', 'district', 'province', 'state', 'phone','email','initial_cash',  'actual_cash', 'starTime','endTime','image'];
+
+    public function users() {
+        return $this->hasMany('App\User');
+    }
 }

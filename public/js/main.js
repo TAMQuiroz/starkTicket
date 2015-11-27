@@ -16,6 +16,7 @@ function cleanForm() {
     $('#amountInDollars').val(0);
     $('#amountMix').val(0);
     $('#paymentMix').val(0);
+    $('#amountMixDollars').val(0);
     $('#change').val(0);
     $('#changeMix').val(0);
 }
@@ -33,6 +34,7 @@ $('#creditCardPay').change(function() {
         $('#amountCredit').prop('disabled',true);
         $('#paymentMix').prop('disabled',true);
         $('#amountMix').prop('disabled',true);
+        $('#amountMixDollars').prop('disabled',true);
         cleanForm()
     }
 });
@@ -50,6 +52,8 @@ $('#cashPay').change(function(){
         $('#payment').prop('disabled',true);
         $('#paymentMix').prop('disabled',true);
         $('#amountMix').prop('disabled',true);
+        $('#amountMixDollars').prop('disabled',true);
+        
         cleanForm()
 	}
 });
@@ -68,32 +72,54 @@ $('#mixPay').change(function(){
     }
 });
 
-$('#amountMix').change(function(){
-    var total= $('#paymentMix').val();
-    var amount = $(this).val();
-    if($(this).val() != "" && $(this).val() != 0){
-        if(parseInt(amount,10) < parseInt(total,10)){
-            $('#changeMix').val('Falta dinero');
-            $('#pay').prop('disabled',true);
-        }else{
-            $('#changeMix').val($(this).val() - $('#paymentMix').val());
-            $('#pay').prop('disabled',false);
-        }
-    }else{
-        $('#changeMix').val('Ingresar un valor a pagar');
-        $('#pay').prop('disabled',true);
-    }
-});
+
 
 $('#paymentMix').change(function(){
     if($(this).val() != "" && $(this).val() != 0){
        $('#amountMix').prop('disabled',false);
+       $('#amountMixDollars').prop('disabled',false);
     }else{
         $('#changeMix').val('Ingresar un valor a pagar');
         $('#pay').prop('disabled',true);
         $('#amountMix').prop('disabled',true);
     }
 });
+
+function getChangeMix(){
+    total= parseFloat($('#paymentMix').val());
+    soles = $('#amountMix').val();
+    if (soles != ""){
+        soles = parseFloat(soles);
+    }else{
+        soles = 0;
+    }
+
+    dolares = $('#amountMixDollars').val();
+    if (dolares != ""){
+        dolares = parseFloat(dolares);
+    }else{
+        dolares = 0;
+    }
+
+    tipoDeCambio = parseFloat($('#exchangeRate').val());
+    suma = soles + dolares*tipoDeCambio;
+    
+    if(suma != 0){
+        if(suma < total){
+            $('#changeMix').val('Falta dinero');
+            $('#pay').prop('disabled',true);
+        }else{
+            vuelto = suma - total;
+            vuelto = round(vuelto,2);
+            $('#changeMix').val(vuelto);
+            $('#pay').prop('disabled',false);
+        }
+    }else{
+        $('#changeMix').val('Ingresar un valor a pagar');
+        $('#pay').prop('disabled',true);
+    }
+}
+
 
 $('#amountCredit').change(function(){
     if($(this).val() != "" && $(this).val() != 0){
@@ -128,7 +154,9 @@ function getChange(){
             $('#change').val('Falta dinero');
             $('#pay').prop('disabled',true);
         }else{
-            $('#change').val(suma - total);
+            vuelto = suma - total;
+            vuelto = round(vuelto,2);
+            $('#change').val(vuelto);
             $('#pay').prop('disabled',false);
         }
     }else{
@@ -136,46 +164,13 @@ function getChange(){
         $('#pay').prop('disabled',true);
     }
 }
-/*
-$('#amountIn').change(function(){
-    var total= $('#total2').val();
-    var amount = $(this).val();
-    if($(this).val() != "" && $(this).val() != 0){
-        if(parseFloat(amount,10) < parseFloat(total,10)){
-            $('#change').val('Falta dinero');
-            $('#pay').prop('disabled',true);
-        }else{
-            $('#change').val(parseFloat(amount,10) - parseFloat(total,10));
-            $('#pay').prop('disabled',false);
-        }
-    }else{
-        $('#change').val('Ingresar un valor a pagar');
-        $('#pay').prop('disabled',true);
-    }
-});
 
-$('#amountInDollars').change(function(){
-    var total= $('#total2').val();
-    var amount = $(this).val();
-    if($(this).val() != "" && $(this).val() != 0){
-        if(parseFloat(amount,10) < parseFloat(total,10)){
-            $('#changeDollars').val('Falta dinero');
-            $('#pay').prop('disabled',true);
-        }else{
-            $('#changeDollars').val(parseFloat(amount,10) - parseFloat(total,10));
-            $('#pay').prop('disabled',false);
-        }
-    }else{
-        $('#changeDollars').val('Ingresar un valor a pagar');
-        $('#pay').prop('disabled',true);
-    }
-});
-*/
 $('#quantity').change(function(){
     count = $(this).val();
     if($(this).val() > 0){
         $('#payModal').prop('disabled',false);
         $('#total2').val(count*price);
+        $('#paymentMix').prop('max',count*price);
     }else{
         $('#payModal').prop('disabled',true);
         $('#total2').val("");
@@ -340,12 +335,15 @@ $('#user_di').focusout( function() {
             {
                 $('#user_name').val(response.name+" "+response.lastname);
                 $('#user_id').val(response.id);
+                $('#user_points').val(response.points);
+
             }
             else
             {
                 $('#user_name').val('No existe ese cliente');
                 $('#user_di').val("");
                 $('#user_id').val(0);
+                $('#user_points').val('No existe ese cliente');
             }
         },
         error: function( response ){
@@ -424,3 +422,7 @@ $('#salesman_di').focusout( function() {
         }
     });
 });
+
+function round(value, decimals) {
+    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+}

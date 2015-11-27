@@ -12,9 +12,9 @@
     <div class="col-sm-6">
         <p><b>Detalles de la presentacion</b></p>
         <h5>Fecha: {{date("d/m/Y h:i",$presentation->starts_at)}} </h5>
-        <p>@if <b>Estado: Cancelado</b> @else <b>Estado: No esta cancelado</b> @endif</p>
+        <p><b>Estado: </b> @if($presentation->cancelled) Cancelado @else No esta cancelado @endif</p>
         <p><b>Detalles del evento</b></p>
-        <h5>Nombre: {{$presentation->event->name}} </h5>
+        <h5>Nombre: <a href="{{ url ('promoter/event/'.$presentation->event_id) }}">{{$presentation->event->name}}</a> </h5>
         <h5>Local: {{$presentation->event->place->name}} </h5>
 
     </div>

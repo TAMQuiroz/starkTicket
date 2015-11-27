@@ -26,12 +26,14 @@
                   {!!Form::input('text','lastname', $user->lastname ,['class'=>'form-control','id'=>'inputLast','required'])!!}
                 </div>
               </div>
+              <!--
               <div class="form-group">
                 <label for="inputPass" class="col-sm-2 control-label">Contraseña</label>
                 <div class="col-sm-10">
                     {!!Form::input('password','password', null ,['class'=>'form-control','id'=>'inputPass'])!!}
                 </div>
               </div>
+              -->
               <div class="form-group">
                 <label for="inputType" class="col-sm-2 control-label">Tipo de documento</label>
                 <div class="col-sm-10">
@@ -44,7 +46,7 @@
               <div class="form-group">
                 <label for="inputDi" class="col-sm-2 control-label">Documento de Identidad</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','di', $user->di ,['class'=>'form-control','id'=>'inputDi','required','min'=>0,"onKeyDown" => "justNumbers()"])!!} 
+                  {!!Form::input('number','di', $user->di ,['class'=>'form-control','id'=>'inputDi','required','min'=>0])!!} 
                 </div>
               </div>
               <div class="form-group">
@@ -56,7 +58,7 @@
               <div class="form-group">
                 <label for="inputPhone" class="col-sm-2 control-label">Teléfono(s)</label>
                 <div class="col-sm-10">
-                  {!!Form::input('number','phone', $user->phone ,['class'=>'form-control','id'=>'inputPhone','required','min'=>0,"onKeyDown" => "justNumbers()"])!!}
+                  {!!Form::input('number','phone', $user->phone ,['class'=>'form-control','id'=>'inputPhone','required','min'=>0])!!}
                 </div>
               </div>
               <div class="form-group">

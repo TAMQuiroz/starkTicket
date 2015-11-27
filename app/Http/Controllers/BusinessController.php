@@ -29,6 +29,13 @@ use App\Models\Module;
 use App\Models\CashcountHistorial;
 use DB;
 
+use App\Http\Requests\Client\PasswordClientRequest;
+use App\Http\Requests\Client\UpdateClientRequest;
+use Session;
+
+
+
+
 /*use App\Services\FileService;*/
 
 class BusinessController extends Controller
@@ -42,8 +49,9 @@ class BusinessController extends Controller
         //$user = Auth::user();
                 
         $sales = DB::table('tickets')
-                    ->select(DB::raw('payment_date, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, (tickets.total_price) as subtotal'))
+                    ->select(DB::raw('payment_date, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, (tickets.cash_amount) as subtotal'))
                     ->where('payment_date','<',new Carbon())->where('payment_date','>=',Carbon::today())->where('salesman_id',\Auth::user()->id)
+                    ->where('tickets.cash_amount','>',0)
                     //->groupBy('payment_date')
                     ->whereNull('tickets.cashCount_register')
                     ->leftJoin('users', 'users.id', '=', 'tickets.owner_id')
@@ -58,7 +66,7 @@ class BusinessController extends Controller
         }
         $cashStarts = DB::table('users')
                     ->where('users.id',\Auth::user()->id)
-                    ->select(DB::raw('modules.cash as cashMo'))
+                    ->select(DB::raw('modules.initial_cash as cashMo'))
                     ->leftJoin('modules','modules.id', '=','users.module_id')
                    // ->where('users.id',\Auth::user()->id) -> where('modules.id','users.module_id')
                     ->get();
@@ -136,12 +144,14 @@ class BusinessController extends Controller
 
         if ($request['type']==1){
             $module = Module::find(\Auth::user()->module_id);
-            $module->cash    = $request['cash'];
+            $module->initial_cash    = $request['cash'];
+            $module->actual_cash    = $request['cash'];
             $module->save();
         }
         elseif ($request['type']==2){
             $module = Module::find(\Auth::user()->module_id);
-            $module->cash    = $request['cash'];
+            $module->initial_cash    = $request['cash'];
+            //$module->actual_cash    = 0;
             $module->save();
 
              $tickets = DB::table('tickets')
@@ -153,10 +163,9 @@ class BusinessController extends Controller
             
 
             $devolutions = DB::table('devolutions')
-                    ->where('tickets.salesman_id','=',\Auth::user()->id)
+                    ->where('devolutions.user_id','=',\Auth::user()->id)
                     ->where('devolutions.created_at','<',new Carbon())->where('devolutions.created_at','>=',Carbon::today())
                     ->whereNull('devolutions.cashCount_register')
-                    ->leftJoin('tickets', 'tickets.id', '=', 'devolutions.ticket_id')
                     ->get();
             foreach ($devolutions as $devolution) {
                  $devolution->cashCount_register = $timeNow;
@@ -206,6 +215,11 @@ class BusinessController extends Controller
         $about->vision      = $request['vision'];
         $about->history     = $request['history'];
         $about->youtube_url = $request['youtube_url'];
+
+        if(isset($request['image'])){
+            $about->image = $this->file_service->upload($request->file('image'),'about');
+        }
+
         $about->save();
 
         return redirect()->back();
@@ -215,8 +229,13 @@ class BusinessController extends Controller
     public function system()
     {
         $system = Business::all()->first();
+        $modules = Module::all()->lists('name','id');
+        
+        if($modules->count() == 0){
+            $modules = [0 => 'Sin canjeo'];
+        }
 
-        return view('internal.admin.system', compact('system'));
+        return view('internal.admin.system', compact('system','modules'));
     }
 
     public function systemUpdate(UpdateSystemRequest $request)
@@ -226,11 +245,24 @@ class BusinessController extends Controller
         $system->ruc            =   $request['ruc'];
         $system->address        =   $request['address'];
         $system->reserve_time   =   $request['reserve_time'];
+
+        if($request['gift_module_id'] == 0){
+            $system->gift_module_id =   null;    
+        }else{
+            $system->gift_module_id =   $request['gift_module_id'];
+        }
+        
         if(isset($request['logo']))
             $system->logo = $this->file_service->upload($request->file('logo'),'system');
 
         if(isset($request['favicon']))
             $system->favicon = $this->file_service->upload($request->file('favicon'),'system');
+
+        if($request['exchange_active'] == true){
+            $system->exchange_active = true;
+        }else if($request['exchange_active'] == false){
+            $system->exchange_active = false;
+        }
 
         $system->save();
 
@@ -318,5 +350,35 @@ public function attendanceDetail(  $idAttendance )
     return view('internal.admin.attendanceDetail '  , compact('detailsAttendances' , 'index', 'salesman','Attendance')  );
 
       }
+
+public function passwordSalesman()
+{
+  return view('internal.admin.passwordSalesman');
+}
+
+
+public function passwordUpdateSalesman(PasswordClientRequest $request)
+{
+
+        $id = Auth::user()->id;
+        $obj = User::findOrFail($id);
+        $auth = Auth::attempt( array(
+            'email' => $obj->email,
+            'password' => $request->input('password')
+            ));
+        if ($auth)
+        {
+            $newPassword = bcrypt($request->input('new_password'));
+            $obj->password = $newPassword;
+            $obj->save();
+            //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
+            Session::flash('message', 'Su contraseña fue actualizada!');
+            Session::flash('alert-class','alert-success');
+        } else {
+            Session::flash('message', 'Contraseña Incorrecta!');
+            Session::flash('alert-class','alert-danger');
+        }
+        return redirect('salesman');
+}      
 
 }

@@ -15,19 +15,19 @@
         <div class="form-group">
           <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
           <div class="col-sm-10">
-            {!!Form::input('text','name', $gift->name ,['class'=>'form-control','id'=>'inputEmai3', 'maxlength'=>'15','required'])!!}
+            {!!Form::input('text','name', $gift->name ,['class'=>'form-control','id'=>'inputEmai3', 'maxlength'=>'40','required'])!!}
           </div>
         </div>
         <div class="form-group">
           <label for="inputEmail3" class="col-sm-2 control-label">Stock</label>
           <div class="col-sm-10">
-            {!!Form::input('number','stock', $gift->stock ,['class'=>'form-control','id'=>'stock','required','min'=>0])!!}
+            {!!Form::input('number','stock', $gift->stock ,['class'=>'form-control','id'=>'stock','required','min'=>0,'max'=>1000])!!}
           </div>
         </div>
         <div class="form-group">
           <label for="inputEmail3" class="col-sm-2 control-label">Numero de puntos</label>
           <div class="col-sm-10">
-            {!!Form::input('number','points', $gift->points ,['class'=>'form-control','id'=>'points','required','min'=>1])!!}
+            {!!Form::input('number','points', $gift->points ,['class'=>'form-control','id'=>'points','required','min'=>1,'max'=>1000])!!}
           </div>
         </div>
         <div class="form-group">
@@ -40,7 +40,7 @@
         <div class="form-group">
           <label for="inputEmail3" class="col-sm-2 control-label">Descripción</label>
           <div class="col-sm-10">
-            {!!Form::textarea('description', $gift->description, ['class'=>'form-control','size' => '30x5', 'maxlength'=>'40','required']) !!}
+            {!!Form::textarea('description', $gift->description, ['class'=>'form-control','size' => '30x5', 'maxlength'=>'100','required']) !!}
           </div>
         </div>
         <div class="form-group">

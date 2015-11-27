@@ -15,7 +15,7 @@ class OrganizerTableSeeder extends Seeder
         Organizer::insert([ 'organizerName' 		=> 'Organizador 1', 
         					'organizerLastName'		=> 'Apellido 1', 
         					'businessName'		 	=> 'Locuron S.A.C',
-        					'ruc'				 	=> '12341235',
+        					'ruc'				 	=> '12345678912',
         					'countNumber'			=> 939494319,
         					'telephone'				=> 977299156,
         					'dni'					=> '46898966',

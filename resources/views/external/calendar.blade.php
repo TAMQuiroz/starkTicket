@@ -5,7 +5,7 @@
 	{!!Html::style('css/images.css')!!}
 @stop
 @section('title')
-{{date('Y-M-d',$date_at)}}
+Calendario
 @stop
 @section('content')
 
@@ -23,48 +23,81 @@
 	</div>
 </div>
 <hr>
-@if(count($presentations)===0)
-<div class="alert alert-warning"> Presentaciones no encontrados en esta fecha</div>
+@if(count($eventInformation)===0)
+<h3>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</h3>
+<div class="alert alert-warning"> Presentaciones no encontradas en esta fecha</div>
 @else
+	<h3>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</h3>
+	<br>
 	<div class="row">
-		<div class="col-sm-12">
-		<p>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</p>
-		<table class="table table-bordered">
+	    <div class="col-sm-12">
+	    <table class="table table-bordered table-striped">
 			<tr>
-				<th>Fecha de presentación</th>
-				<th>Evento</th>
+				<th>Nombre Evento</th>
+				<th>Imagen del Evento</th>
+				<th>Informacion</th>
+				<th>Presentaciones</th>
 				<th>Detalles</th>
 			</tr>
-	    @foreach($presentations as $presentation)
+			@foreach($eventInformation as $event)
 	    	<tr>
-	    		<td>{{date('Y-m-d',$presentation->starts_at)}}</td>
-	    		<td>{{$presentation->event["name"]}}</td>
-	    		<td><p><a href="event/{{$presentation->event['id']}}"  class="btn btn-info" role="button" >Detalle</a></p></td>
+	    		<td>
+	    			<h4>{{$event[2]}}</h4>
+	    		</td>
+	    		<td>
+					{!! Html::image($event[0], null, array('class'=>'image gift_img')) !!}
+	    		</td>
+	    		<td>
+	    			<p>
+					    <b>Lugar: </b> {{$event[3]}} <br>
+					    <b>Direccion:</b> {{$event[4]}} <br>
+					    <b>Categoria:</b> {{$event[5]}} <br>
+					</p>
+	    		</td>
+	    		<td>
+	    			@foreach ($event[6] as $pre)
+	    				<p>{{date('H:i:s',$pre[0])}}</p>
+	    			@endforeach
+	    		</td>
+	    		<td><p><a href="event/{{$event[1]}}"  class="btn btn-info" role="button" >Detalle</a></p></td>
 	    	</tr>
-	    @endforeach
+	    	@endforeach
 		</table>
 		</div>
+
 	</div>
+
 @endif
-<hr>
 @if(count($events)===0)
+<h3>Eventos publicados el {{date('Y-m-d',$date_at)}}</h3>
 <div class="alert alert-warning"> Eventos publicados no encontrados en esta fecha</div>
 @else
-		<p>Eventos publicados el {{date('Y-m-d',$date_at)}}</p>
+	<h3>Eventos publicados el {{date('Y-m-d',$date_at)}}</h3>
+	<br>
 	<div class="row">
+        <?php $i = 0; ?>
 	    @foreach($events as $event)
-	    <div class="3u">
+	    <div class="3u col-sm-3">
 	        <section>
-	            <a href="#" class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
+	            <a  class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
 	            <h3>{{$event->name}}</h3>
 	            <p>
 	                <b>Fecha de venta: </b> {{date('Y-m-d',$event->selling_date)}}<br>
 	                <b>Lugar: </b> {{$event->place->name}} <br>
 	                <b>Direccion:</b> {{$event->place->address}} <br>
+	                <b>Categoria:</b> {{$event->category->name}} <br>
 	            </p>
 	            <p><a href="event/{{$event->id}}"  class="btn btn-info" role="button" >Detalle</a></p>
 	        </section>
 	    </div>
+        <?php
+            $i++;
+            $mod = $i % 4;
+         ?>
+         @if ($mod==0)
+         </div>
+         <div class="row">
+         @endif
 	    @endforeach
 	</div>
 @endif

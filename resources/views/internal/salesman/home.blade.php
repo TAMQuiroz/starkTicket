@@ -12,6 +12,8 @@
 
 
 <p>Ten un buen dia</p>
+<br>
+<a  class="btn btn-info" href="{{url('salesman/password')}}">Restaurar contraseña</a>
 
 
 @stop

@@ -21,7 +21,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::all();
+        $payments = Payment::where('promoter_id', Auth::user()->id)->get();
         return view('internal.promoter.payment.payments',["payments"=>$payments]);
     }
 
@@ -32,15 +32,29 @@ class PaymentController extends Controller
      */
     public function create($event_id)
     {
-        $event = Event::findOrFail($event_id);
+        $event = Event::find($event_id);
+        if($event->cancelled||empty($event))
+        {
+            Session::flash('message', 'Evento cancelado');
+            Session::flash('alert-class','alert-warning');
+
+            return redirect('promoter/event/record');
+        }
         $amountAccumulated = $event->amountAccumulated();
 
-        $amountComission = $event->amount_comission + $amountAccumulated*$event->percentage_comission/100;
+        $amountComission = $amountAccumulated*$event->percentage_comission/100;
         $totalToPay = $amountAccumulated - $amountComission;
         $paid = Payment::where("event_id",$event_id)->sum('paid');
         $debt = 0;
         if ($totalToPay > $paid)
             $debt = $totalToPay - $paid;
+        if($debt <= 0)
+        {
+            Session::flash('message', 'No se puede transferir, tiene deuda igual a cero');
+            Session::flash('alert-class','alert-warning');
+
+            return redirect('promoter/event/record');
+        }
         $objs = array(
             "event"=>$event,
             "amountAccumulated"=>$amountAccumulated,
@@ -61,14 +75,19 @@ class PaymentController extends Controller
     public function store(StorePaymentRequest $request,$event_id)
     {
         $user_id = Auth::user()->id;
-
         $input = $request->all();
+
+        if($input['paid']>$input['debt'])
+        {
+            Session::flash('message', 'El monto excede el monto de la deuda');
+            Session::flash('alert-class','alert-danger');
+            return redirect('promoter/transfer_payments/'.$event_id.'/create');
+        }
 
         $payment = new Payment;
         $payment->event_id = $event_id;
         $payment->promoter_id = $user_id;
         $payment->paid = $input['paid'];
-        $payment->date_delivery = $input['dateDelivery'];
         $payment->save();
 
         Session::flash('message', 'Pago a organizador realizado!');

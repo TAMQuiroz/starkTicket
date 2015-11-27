@@ -25,15 +25,15 @@ class StoreOrganizerRequest extends Request
     {
         
         return [
-            'organizerName'          =>  'required',
-            'organizerLastName'   =>  'required',
-            'businessName'        =>  'required',
-            'ruc'         =>  'required|numeric',
-            'countNumber'          =>  'required|numeric',
-            'telephone'   =>  'required|numeric',
-            'dni'        =>  'required|numeric',
-            'email'         =>  'required',
-            'address'         =>  'required',
+            'organizerName'      =>  'required|max:100',
+            'organizerLastName'  =>  'required|max:100',
+            'businessName'       =>  'required|max:100',
+            'ruc'                =>  'required|integer|digits:11',
+            'countNumber'        =>  'required|integer',
+            'telephone'          =>  'required|integer|digits_between:7,9',
+            'dni'                =>  'required|integer|digits:8',
+            'email'              =>  'required|email',
+            'address'            =>  'required|max:100',
         ];
 
     }

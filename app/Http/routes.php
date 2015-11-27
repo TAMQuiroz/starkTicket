@@ -27,7 +27,6 @@ Route::post('calendar', 'PagesController@eventsForDate');
 //Route::post('calendar', 'PagesController@findcalendar');
 Route::get('gifts', 'GiftController@indexExternal');
 Route::get('category', 'CategoryController@indexExternal');
-Route::get('category/{id}', 'CategoryController@showExternal');
 Route::get('category/{id}/subcategory', 'CategoryController@indexSub');
 Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@indexExternal');
@@ -66,7 +65,16 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
     Route::post('salesman/cash_count', 'BusinessController@updateCash');
     //Route::post('salesman/cash_count', 'BusinessController@updateCashCount');
 
+
+    Route::get('salesman/password', 'BusinessController@passwordSalesman');
+    Route::post('salesman/password', 'BusinessController@passwordUpdateSalesman');
+
+
+
     Route::get('salesman/exchange_gift', 'GiftController@createExchange');
+    Route::post('salesman/exchange_gift', 'GiftController@createExchangePost');
+
+
     Route::get('salesman/event/pay_booking', ['as' => 'booking.search', 'uses' =>'BookingController@searchBooking']);
     Route::post('salesman/event/pay_booking/show', ['as' => 'booking.show', 'uses' =>'BookingController@showPayBooking']);
     Route::post('salesman/event/pay_booking/store', ['as' => 'booking.store', 'uses' =>'BookingController@storePayBooking']);
@@ -107,7 +115,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/politics', 'PoliticController@politicsPromotor');
 
     Route::get('promoter/transfer_payments/', 'PaymentController@index');
-    Route::get('promoter/transfer_payments/{payment_id}', 'PaymentController@show');
+    //Route::get('promoter/transfer_payments/{payment_id}', 'PaymentController@show');
     Route::get('promoter/transfer_payments/{event_id}/create', 'PaymentController@create');
     Route::post('promoter/transfer_payments/{event_id}/create', 'PaymentController@store');
 
@@ -119,6 +127,8 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/event/{event_id}/edit', ['as' => 'events.update', 'uses' =>'EventController@update']);
     Route::get('promoter/event/{event_id}/edit', ['as' => 'events.edit', 'uses' =>'EventController@edit']);
     Route::post('promoter/event/{event_id}/delete', ['as' => 'events.delete', 'uses' =>'EventController@destroy']);
+    Route::get('promoter/event/{event_id}/cancel', 'EventController@cancel');
+    Route::post('promoter/event/{event_id}/cancel', 'EventController@cancelStorage');
 
     Route::get('promoter/presentation/cancelled', 'PresentationController@index');
     Route::get('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modules');
@@ -139,6 +149,10 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/promotion/{id}/edit',  'PromoController@update');
     Route::get('promoter/promotion/{id}/delete',  'PromoController@destroy');
 
+    Route::get('promoter/password', 'PromoController@passwordPromoter');
+    Route::post('promoter/password', 'PromoController@passwordUpdatePromoter');
+
+
     Route::get('promoter/organizers', 'OrganizerController@index');
     Route::get('promoter/organizer/create', 'OrganizerController@create');
     Route::post('promoter/organizer/create', 'OrganizerController@store');
@@ -155,6 +169,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
 Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('admin/', ['uses'=>'PagesController@adminHome','as'=>'admin.home']);
+
     Route::get('admin/politics', 'PoliticController@politics');
     Route::get('admin/politics/new', 'PoliticController@create');
     Route::post('admin/politics/new', 'PoliticController@store');
@@ -169,8 +184,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/local/{id}/delete', 'LocalController@destroy');
 
     Route::get('admin/exchange_gift', 'GiftController@createExchangeAdmin');
+    Route::post('admin/exchange_gift', 'GiftController@createExchangeAdminPost');
+    
 
-    Route::get('admin/gifts', 'GiftController@index');
+    Route::get('admin/gifts', ['uses'=>'GiftController@index','as'=>'admin.gifts']);
     Route::get('admin/gifts/new', 'GiftController@create');
     Route::post('admin/gifts/new', 'GiftController@store');
     Route::get('admin/gifts/{id}/edit', 'GiftController@edit');
@@ -230,10 +247,14 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/modules/assigment', 'ModuleController@newAssigment');
     Route::get('admin/modules/assigment/{id}/delete', 'ModuleController@destroyAssigment');
 
+    Route::get('admin/password', 'AdminController@passwordAdmin');
+    Route::post('admin/password', 'AdminController@passwordUpdateAdmin');
+
+
     Route::get('admin/client', 'ClientController@index');
     Route::post('admin/client/desactive', 'ClientController@desactive');
 
-    Route::get('admin/salesman', 'AdminController@salesman');
+    Route::get('admin/salesman', ['as'=>'admin.salesman','uses'=>'AdminController@salesman']);
     Route::get('admin/salesman/{id}/edit', 'AdminController@editSalesman');
     Route::post('admin/salesman/{id}/edit', 'AdminController@updateSalesman');
     Route::get('admin/salesman/{id}/delete', 'AdminController@destroySalesman');

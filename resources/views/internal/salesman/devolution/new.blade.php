@@ -14,7 +14,9 @@
       <legend>Ticket</legend>
       <p><b>Id:</b>: {{$ticket->id}}</p>
       <p><b>Precio total:</b>: S/ {{$ticket->total_price}}</p>
+      @if($ticket->discount)
       <p><b>Descuento:</b>: S/ {{$ticket->discount}}</p>
+      @endif
       <p><b>Cantidad:</b>: {{$ticket->quantity}}</p>
       <legend>Presentación</legend>
       <p><b>Fecha</b>: {{date('Y-m-d',$ticket->presentation["starts_at"])}}</p>
@@ -29,10 +31,11 @@
           {!!Form::open(array('id'=>'form','class'=>'form-horizontal'))!!}
           <input type="hidden" name="ticket_id" value="{{$ticket->id}}" required>
           <div class="form-group">
-            <label for="ticket_id" class="col-sm-3 control-label">Devolver s/ :</label>
+            <label for="ticket_id" class="col-sm-3 control-label">Monto a devolver s/ :</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="ticket_id" placeholder="" name="repayment" required>
+              <div class="form-control" style="border:0px">{{$ticket->total_price}}</div>
             </div>
+            <input type="hidden" class="form-control" id="ticket_id" value="{{$ticket->total_price}}" name="repayment" required>
           </div>
           <div class="form-group">
             <label for="ticket_id" class="col-sm-3 control-label">Observaciòn:</label>

@@ -108,7 +108,7 @@
                   <div class="form-group">
                     <div class="form-group">
                       <label>Fecha de expiración</label>
-                      {!! Form::text('expiration', \Carbon\Carbon::now('America/Lima')->addHours(12), ['class' => 'form-control', 'disabled']) !!}
+                      {!! Form::text('expiration', \Carbon\Carbon::now('America/Lima')->addHours($business->reserve_time), ['class' => 'form-control', 'disabled']) !!}
                       <label for="exampleInputEmail2">DNI de Persona Autorizada</label>
                       <!--{!! Form::text('autorized', '', ['class' => 'form-control', 'placeholder' => 'Juan Pérez']) !!}-->
                       {!!Form::input('number','dni_recojo', '' ,['class'=>'form-control','id'=>'inputDi','min'=>0,'maxlength' => 8,'size'=>8])!!}

@@ -13,6 +13,7 @@ use App\Models\Event;
 use App\Models\Distribution;
 use App\Models\Zone;
 use DB;
+use App\Models\Presentation;
 
 class LocalController extends Controller
 {
@@ -110,7 +111,8 @@ class LocalController extends Controller
     public function edit($id)
     {
         $local = Local::find($id);
-        return view('internal.admin.locals.editLocal',compact('local'));
+        $event = Event::where("local_id",$local->id)->withTrashed()->get();
+        return view('internal.admin.locals.editLocal',compact('local','event'));
     }
 
     /**
@@ -124,8 +126,15 @@ class LocalController extends Controller
     {
         //
         $input = $request->all();
+       /* $date_at = strtotime(date("Y-m-d H:i:s"));
 
-        $local = Local::find($id);
+        $events = Event::where("local_id",$id)->get();
+        foreach ($events as $event){
+            $prensentations = Presentation::where("event_id",$event->id)->where("cancelled",0)->where("starts_at",">",$date_at)->get();
+            if ($prensentations->count() != 0)
+                return back()->withErrors(['No se puede editar un local con eventos asociados']);
+        }
+        $local = Local::find($id);*/
 
         
         $local->name         =   $input['name'];
@@ -134,12 +143,13 @@ class LocalController extends Controller
         $local->district     =   $input['district'];
         $local->province     =   $input['province']; 
         $local->state        =   $input['state'];
-        $local->rows          =   $input['row'];     
-        $local->columns       =   $input['column'];   
-        if($local->rows == 0 ||  $local->columns == 0)
+        if($input['local_type'] == config('constants.numbered')){
+            $local->rows          =   $input['row'];
+            $local->columns       =   $input['column'];
+            $local->capacity     =   $local->rows * $local->columns;
+        }else{
             $local->capacity     =   $input['capacity'];
-        else
-            $local->capacity     =   $local->rows * $local->columns;         
+        }        
         
         //Control de subida de imagen
         if($request->file('image')!=null)

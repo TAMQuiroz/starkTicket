@@ -128,7 +128,12 @@
                     {!! Form::select('organizer_id', $organizers_list->toArray(),null,['class' => 'form-control','required','maxlength' => 50]) !!}
                 </div>
               </div>
-
+              <div class="form-group">
+                <label  class="col-sm-2 control-label">Comisión(%)</label>
+                <div class="col-sm-10">
+                  {!! Form::number('percentage_comission','', array('class' => 'form-control','min' => '0','required','max' => '100')) !!}
+                </div>
+              </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Duración Aproximada (horas) </label>
                 <div class="col-sm-10">

@@ -40,6 +40,8 @@ class ReportController extends Controller
         $input = $request->all(); 
         $flagBetweenDates = false;
         $flagFilterAll = false;
+        $flagFirstDate = false;
+        $flagLastDate  = false;
         //Condiciones que se pueden dar para filtrar la tabla
         if (empty($input['name']) and empty($input['firstDate']) and empty($input['lastDate']))
            $moduleAssigments = ModuleAssigment::all();  
@@ -51,6 +53,40 @@ class ReportController extends Controller
                     ->where('modules.name','LIKE','%'.$input['name'].'%')
                     ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
                     ->get();
+            }
+            elseif ($input['name'] and $input['firstDate'] and empty($input['lastDate'])){
+                $moduleAssigments = DB::table('module_assigments')
+                    //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
+                    ->where('modules.name','LIKE','%'.$input['name'].'%')
+                    ->where('dateAssigments','>',$input['firstDate'])
+                    ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
+                    ->get();
+                $flagFirstDate = true;
+            }
+            elseif ($input['name'] and empty($input['firstDate']) and $input['lastDate']){
+                $moduleAssigments = DB::table('module_assigments')
+                    //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
+                    ->where('modules.name','LIKE','%'.$input['name'].'%')
+                    ->where('dateAssigments','<',$input['lastDate'])
+                    ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
+                    ->get();
+                $flagLastDate = true;
+            }
+            elseif (empty($input['name']) and $input['firstDate'] and empty($input['lastDate'])){
+                $moduleAssigments = DB::table('module_assigments')
+                    //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
+                    ->where('dateAssigments','>',$input['firstDate'])
+                    ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
+                    ->get();
+                $flagFirstDate = true;
+            }
+            elseif (empty($input['name']) and empty($input['firstDate']) and $input['lastDate']){
+                $moduleAssigments = DB::table('module_assigments')
+                    //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
+                    ->where('dateAssigments','<',$input['lastDate'])
+                    ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
+                    ->get();
+                $flagLastDate = true;
             }
             elseif (empty($input['name']) and $input['firstDate'] and $input['lastDate'] ){
                 $flagBetweenDates = true;
@@ -131,8 +167,8 @@ class ReportController extends Controller
     
 
 
-        Excel::create('Reporte de asignacion starkticket', function ($excel) use($assigmentsInformation,$flagBetweenDates,$flagFilterAll,$input){
-          $excel->sheet('Reporte de Asignacion', function($sheet) use($assigmentsInformation,$flagBetweenDates,$flagFilterAll,$input) {
+        Excel::create('Reporte de asignacion starkticket', function ($excel) use($assigmentsInformation,$flagBetweenDates,$flagFilterAll,$flagFirstDate,$flagLastDate,$input){
+          $excel->sheet('Reporte de Asignacion', function($sheet) use($assigmentsInformation,$flagBetweenDates,$flagFilterAll,$flagFirstDate,$flagLastDate,$input) {
 
                 $sheet->mergeCells('A1:G2');
                 $sheet->setCellValue('A1',"Reporte de Asignacion de Puntos de Venta");
@@ -147,6 +183,10 @@ class ReportController extends Controller
             
                 $sheet->mergeCells('A3:G3');
                 if ($flagBetweenDates or $flagFilterAll) $sheet->setCellValue('A3','Fecha Asignacion desde '.$input['firstDate'].'  hasta '.$input['lastDate']);
+                elseif ($flagFirstDate or $flagLastDate ) {
+                    if ($flagFirstDate) $sheet->setCellValue('A3','Fecha Asignacion desde '.$input['firstDate']);
+                    elseif ($flagLastDate) $sheet->setCellValue('A3','Fecha Asignacion hasta '.$input['lastDate']);
+                }
                 else $sheet->setCellValue('A3',"No hay rango de fechas de Asignacion");
                 $sheet->cells('A3:G3',function($cells){
 
@@ -255,7 +295,7 @@ class ReportController extends Controller
             $eventsDate = Presentation::whereBetween('starts_at',[ $fechaIni,  $fechaFin ])->get();
             foreach($eventsDate as $eventDate){
 
-                    $event= Event::where('id','=', $eventDate->event_id)->get(); 
+                    $event= Event::where('id','=', $eventDate->event_id)->where('cancelled','=',0)->get(); 
                     $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
                     $onlineTickets = 0;  $presentialTicket = 0;
                     $subTotalOnline = 0; $subTotalPresential = 0;
@@ -289,7 +329,7 @@ class ReportController extends Controller
             foreach($eventsDate as $eventDate){
 
                     //return $eventsDate;
-                    $event =  Event::where('name', 'LIKE', '%'.$input['name'].'%')->where('id','=', $eventDate->event_id)->get(); 
+                    $event =  Event::where('name', 'LIKE', '%'.$input['name'].'%')->where('cancelled','=',0)->where('id','=', $eventDate->event_id)->get(); 
                     
                     if ($event->count() != 0) {
                         $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
@@ -317,7 +357,7 @@ class ReportController extends Controller
             // pueden ser muchos eventos. Necesito información para llenar la tabla
             //filtro fechas si es necesario
                  
-                $eventsDate = Presentation::where('event_id','=', $event->id)->get(); 
+                $eventsDate = Presentation::where('event_id','=', $event->id)->where('cancelled','=',0)->get(); 
                 foreach ($eventsDate as $eventDate){
                     $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
                     $onlineTickets = 0;  $presentialTicket = 0;
@@ -455,7 +495,7 @@ class ReportController extends Controller
         foreach ($events as $event){
 
             // pueden ser muchos eventos. Necesito información para llenar la tabla
-            $eventsDate = Presentation::where('event_id','=', $event->id)->get();
+            $eventsDate = Presentation::where('event_id','=', $event->id)->where('cancelled','=',0)->get();
             foreach ($eventsDate as $eventDate){
                 $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
                 $onlineTickets = 0;  $presentialTicket = 0;

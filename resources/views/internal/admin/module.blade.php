@@ -31,7 +31,7 @@
           <td>{{$module->state}}</td>
           <td>{{$module->phone}}</td>
           <td>
-            <a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#edit{{$module->id}}"><i class="glyphicon glyphicon-plus"></i></a> 
+            <a class="btn btn-info" href="detalles" title="Detalles" data-toggle="modal" data-target="#edit{{$module->id}}"><i class="glyphicon glyphicon-plus"></i></a>
             <div class="modal fade" id="edit{{$module->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -43,13 +43,7 @@
                     <h4>Nombre: </h4>
                     {{$module->name}}
                     <h4>Direccion: </h4>
-                    {{$module->address}}
-                    <h4>Ciudad: </h4>
-                    {{$module->district}}
-                    <h4>Provincia: </h4>
-                    {{$module->province}}
-                    <h4>Departamento: </h4>
-                    {{$module->state}}
+                    {{$module->address}}, {{$module->district}}, {{$module->province}}, {{$module->state}}
                     <h4>Teléfono: </h4>
                     {{$module->phone}}
                     <h4>Correo: </h4>
@@ -58,9 +52,8 @@
                     {{date_format(date_create($module->starTime),"H:i:s")}}
                     <h4>Cierre: </h4>
                     {{date_format(date_create($module->endTime),"H:i:s")}}
-                    <br>
-                    <br>
-                    {!! Html::image($module->image, null, array('class'=>'module_img')) !!}
+                    <hr>
+                    <p>{!! Html::image($module->image, null, array('class'=>'modal_img')) !!}</p>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
@@ -72,7 +65,7 @@
 
           <td>
             <a class="btn btn-info" href="{{url('admin/modules/'.$module->id.'/edit')}}" title="Editar" ><i class="glyphicon glyphicon-pencil"></i></a>
-          </td> 
+          </td>
           <td>
             <a class="btn btn-info" href=""  title="Eliminar" data-toggle="modal" data-target="#deleteModal{{$module->id}}" ><i class="glyphicon glyphicon-remove"></i></a>
           </td>
@@ -99,7 +92,7 @@
 
 
     </table>
-   {!!$modules->render()!!} 
+   {!!$modules->render()!!}
     <!--
     <nav>
         <ul class="pagination">

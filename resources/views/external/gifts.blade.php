@@ -1,14 +1,7 @@
 @extends('layoutExternal')
 
 @section('style')
-	{!!Html::style('css/skeletoGift.css')!!}
-	{!!Html::style('css/estiloGift.css')!!}
 	{!!Html::style('css/images.css')!!}
-	<style type="text/css">
-		#nav .seventh{
-            color: white;
-        }
-    </style>    
 @stop
 
 @section('title')
@@ -16,21 +9,17 @@
 @stop
 
 @section('content')
-	<header>
-		<h3>Canjea tu Premio </h3>
-
-	</header>
+	<h3>Canjea tu Premio </h3>
 	@if (count($gifts)>0)
 		<div class="row">
 			@foreach($gifts as $gift)
-			<div class="4u">
-				<section style="text-align:center">
+			<div class="col-md-4">
+				<div class="text-center">
 					<font size="6">{{$gift->points}} Puntos</font>
-					<a href="#" class="image full">
-						{!! Html::image($gift->image, null, array('class'=>'gift-external')) !!}
-						{{$gift->name}}
-					</a>
-				</section>
+					<div>{!! Html::image($gift->image, null, array('class'=>'gift-external img-thumbnail')) !!}</div>
+					<p>{{$gift->name}}</p>
+					<hr>
+				</div>
 			</div>
 			@endforeach
 		</div>

@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{url('salesman')}}">{{$business_name}} </a>
+            <a class="navbar-brand" href="{{url('/')}}">{{$business_name}} </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -49,7 +49,7 @@
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="">{{ Auth::user()->name }}</a></li>
+                <li><a href="{{url('/salesman')}}">{{ Auth::user()->name }}</a></li>
                 <li><a href="{{url('auth/logout')}}">Salir</a></li>
             </ul>
         </div>
@@ -68,7 +68,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{url('client/home')}}">{{$business_name}} </a>
+            <a class="navbar-brand" href="{{url('/')}}">{{$business_name}} </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -84,6 +84,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a>Puntos Acumulados: {{Auth::user()->points}}</a></li>
+                <li> {!! Html::image(Auth::user()->image,  null, array( "width"=>45, 'height' => 45)) !!} </li>
                 <li><a href="{{url('client')}}">{{\Auth::user()->name}}</a></li>
                 <li><a href="{{url('auth/logout')}}">Salir</a></li>
           </ul>
@@ -93,7 +94,7 @@
     <!-- /.container -->
 </nav>
 @elseif(Auth::user()->role_id == config('constants.promoter'))
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -103,7 +104,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="{{url('promoter/')}}" class="navbar-brand" >{{$business_name}} </a>
+            <a href="{{url('/')}}" class="navbar-brand" >{{$business_name}} </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -114,7 +115,6 @@
                         <li><a href="{{url('promoter/event/create')}}">Nuevo</a></li>
                         <li><a href="{{url('promoter/event/record')}}">Historial</a></li>
                         <li><a href="{{url('promoter/presentation/cancelled')}}">Presentaciones cancelados</a></li>
-                        <li class="divider"></li>
                         <li><a href="{{url('promoter/highlights')}}">Destacados</a></li>
                     </ul>
                 </li>
@@ -143,7 +143,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="">{{ Auth::user()->name }}</a></li>
+                <li><a href="{{url('promoter')}}">{{ Auth::user()->name }}</a></li>
                 <li><a href="{{url('auth/logout')}}">Salir</a></li>
           </ul>
         </div>
@@ -162,7 +162,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{url('admin')}}">{{$business_name}} </a>
+            <a class="navbar-brand" href="{{url('/')}}">{{$business_name}} </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -246,7 +246,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="">{{ Auth::user()->name }}</a></li>
+                <li><a href="{{url('admin/')}}">{{ Auth::user()->name }}</a></li>
                 <li><a href="{{url('auth/logout')}}">Salir</a></li>
           </ul>
         </div>
