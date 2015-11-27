@@ -49,7 +49,7 @@ class BusinessController extends Controller
         //$user = Auth::user();
                 
         $sales = DB::table('tickets')
-                    ->select(DB::raw('payment_date, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, (tickets.total_price) as subtotal'))
+                    ->select(DB::raw('payment_date, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, (tickets.cash_amount) as subtotal'))
                     ->where('payment_date','<',new Carbon())->where('payment_date','>=',Carbon::today())->where('salesman_id',\Auth::user()->id)
                     //->groupBy('payment_date')
                     ->whereNull('tickets.cashCount_register')
@@ -65,7 +65,7 @@ class BusinessController extends Controller
         }
         $cashStarts = DB::table('users')
                     ->where('users.id',\Auth::user()->id)
-                    ->select(DB::raw('modules.cash as cashMo'))
+                    ->select(DB::raw('modules.initial_cash as cashMo'))
                     ->leftJoin('modules','modules.id', '=','users.module_id')
                    // ->where('users.id',\Auth::user()->id) -> where('modules.id','users.module_id')
                     ->get();
@@ -143,12 +143,14 @@ class BusinessController extends Controller
 
         if ($request['type']==1){
             $module = Module::find(\Auth::user()->module_id);
-            $module->cash    = $request['cash'];
+            $module->initial_cash    = $request['cash'];
+            $module->actual_cash    = $request['cash'];
             $module->save();
         }
         elseif ($request['type']==2){
             $module = Module::find(\Auth::user()->module_id);
-            $module->cash    = $request['cash'];
+            $module->initial_cash    = $request['cash'];
+            //$module->actual_cash    = 0;
             $module->save();
 
              $tickets = DB::table('tickets')
@@ -163,7 +165,7 @@ class BusinessController extends Controller
                     ->where('tickets.salesman_id','=',\Auth::user()->id)
                     ->where('devolutions.created_at','<',new Carbon())->where('devolutions.created_at','>=',Carbon::today())
                     ->whereNull('devolutions.cashCount_register')
-                    ->Join('tickets', 'tickets.id', '=', 'devolutions.ticket_id')
+                    ->join('tickets', 'tickets.id', '=', 'devolutions.ticket_id')
                     ->get();
             foreach ($devolutions as $devolution) {
                  $devolution->cashCount_register = $timeNow;

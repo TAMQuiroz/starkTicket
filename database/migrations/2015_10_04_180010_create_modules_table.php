@@ -21,7 +21,8 @@ class CreateModulesTable extends Migration
             $table->string('state');
             $table->string('phone');
             $table->string('email');
-            $table->double('cash');
+            $table->double('initial_cash');
+            $table->double('actual_cash');
             $table->timestamp('starTime');
             $table->timestamp('endTime');
             //$table->integer('salesman_id')->unsigned()->unique()->nullable();
