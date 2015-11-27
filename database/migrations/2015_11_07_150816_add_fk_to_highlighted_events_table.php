@@ -12,7 +12,7 @@ class AddFkToHighlightedEventsTable extends Migration
      */
     public function up()
     {
-        Schema::table('highlightedEvents', function (Blueprint $table) {
+        Schema::table('highlightedevents', function (Blueprint $table) {
             $table->foreign('event_id')
                   ->references('id')
                   ->on('events')->onDelete('cascade');
@@ -27,7 +27,7 @@ class AddFkToHighlightedEventsTable extends Migration
     public function down()
     {
         Schema::table('highlightedEvents', function (Blueprint $table) {
-            $table->dropForeign('highlightedEvents_event_id_foreign');
+            $table->dropForeign('highlightedevents_event_id_foreign');
         });
     }
 }
