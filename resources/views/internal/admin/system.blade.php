@@ -61,6 +61,11 @@
         <label for="inputEmail3" class="col-sm-2 control-label">Local de canje</label>
         <div class="col-sm-10">
           {!!Form::select('gift_module_id', $modules,$system->gift_module_id,['class'=>'form-control'])!!}
+          @if($system->module)
+            <p class="bg-info">Modulo Elegido</p>
+          @else
+            <p class="bg-danger">Modulo No elegido</p>
+          @endif
         </div>
       </div>
       <div class="form-group">
