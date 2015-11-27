@@ -13,7 +13,7 @@ class AlterConfigTableAddColumn extends Migration
     public function up()
     {
         Schema::table('business', function (Blueprint $table) {
-            $table->integer('gift_module_id')->unsigned()->nullable();
+            $table->integer('gift_module_id')->unsigned()->nullable()->after('exchange_active');
             $table->foreign('gift_module_id')->references('id')->on('modules');
         });
     }

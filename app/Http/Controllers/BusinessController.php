@@ -230,8 +230,13 @@ class BusinessController extends Controller
     public function system()
     {
         $system = Business::all()->first();
+        $modules = Module::all()->lists('name','id');
+        
+        if($modules->count() == 0){
+            $modules = [0 => 'Sin canjeo'];
+        }
 
-        return view('internal.admin.system', compact('system'));
+        return view('internal.admin.system', compact('system','modules'));
     }
 
     public function systemUpdate(UpdateSystemRequest $request)
@@ -241,6 +246,13 @@ class BusinessController extends Controller
         $system->ruc            =   $request['ruc'];
         $system->address        =   $request['address'];
         $system->reserve_time   =   $request['reserve_time'];
+
+        if($request['gift_module_id'] == 0){
+            $system->gift_module_id =   null;    
+        }else{
+            $system->gift_module_id =   $request['gift_module_id'];
+        }
+        
         if(isset($request['logo']))
             $system->logo = $this->file_service->upload($request->file('logo'),'system');
 
