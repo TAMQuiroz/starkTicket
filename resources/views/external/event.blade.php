@@ -117,7 +117,6 @@
 				@endif
 				<header>
 					<h2 class="detail">Detalle de evento</h2>
-					<!--<span class="byline">Praesent lacus congue rutrum</span>-->
 				</header>
 				@if (count($event->presentations) < 1 )
 				<div class="alert alert-info">No se han econtrado fechas de presentación</div>
@@ -130,7 +129,8 @@
 				<h3 class="dates">Ubicación</h3>
 				<p>{{$event->place->address}}, {{$event->place->district}}</p>
 				{!! Html::image($event->place->image,null, ['class'=>'carousel_img']) !!}
-
+				<h3>Categoria</h3>
+				{{$event->category->name}}
 				<h3 class="dates">Distribución de Zonas</h3>
 				<p>{!! Html::image($event->distribution_image,null, ['class'=>'carousel_img']) !!}</p>
 			</section>
