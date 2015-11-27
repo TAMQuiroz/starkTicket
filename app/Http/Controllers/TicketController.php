@@ -17,6 +17,7 @@ use App\Http\Requests\Giveaway\StoreGiveawayRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Session;
 use Mail;
 
 class TicketController extends Controller
@@ -627,7 +628,11 @@ class TicketController extends Controller
     {
         $input = $request->all();
         $ticketId = $input['ticket_id'];
-
+        $ticket = Ticket::find($ticketId);
+        if($ticket == null){
+            Session::flash('message', 'Este ticket no existe');
+            return redirect('salesman/devolutions');
+        }
         return redirect('salesman/devolutions/new/'.$ticketId);
     }
 }

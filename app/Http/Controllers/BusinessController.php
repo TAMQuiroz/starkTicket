@@ -51,6 +51,7 @@ class BusinessController extends Controller
         $sales = DB::table('tickets')
                     ->select(DB::raw('payment_date, users.name as clientName, users.lastname as clientLast, events.name as eventName, zones.name as zoneName, tickets.price as zonePrice, tickets.discount as tiDiscount, presentations.starts_at as funtionTime, tickets.quantity as totalTicket, (tickets.cash_amount) as subtotal'))
                     ->where('payment_date','<',new Carbon())->where('payment_date','>=',Carbon::today())->where('salesman_id',\Auth::user()->id)
+                    ->where('tickets.cash_amount','>',0)
                     //->groupBy('payment_date')
                     ->whereNull('tickets.cashCount_register')
                     ->leftJoin('users', 'users.id', '=', 'tickets.owner_id')
