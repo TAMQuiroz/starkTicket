@@ -50,9 +50,18 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexExternal()
+    public function indexExternal(Request $request)
     {
-        $events = Event::where("cancelled","=","0")->where('publication_date','<',strtotime(Carbon::now()))->get();
+        var_dump($request['title']);
+        $nombres = explode(" ",$request['title']);
+        $events = Event::where("cancelled","=","0")->where('publication_date','<',strtotime(Carbon::now()));
+        foreach ($nombres as $nombre) {
+
+            if($nombre!='')
+                $events = $events->where('name','like','%'.$nombre.'%');
+            # code...
+        }
+        $events = $events->get();
         return view('external.events',compact('events'));
     }
     /**
