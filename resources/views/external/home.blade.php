@@ -31,8 +31,8 @@
             <button class="btn btn-info" type="button">Buscar</button>
         </span>
     </div>
-    
-    <br><br>
+    @if (count($destacados)>0)
+    <div class="container">
          <div class="row">
             <div class="col-md-7" style="left:300px">
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="0">
@@ -62,17 +62,16 @@
                     </a>
                 </div>
             </div>
-
         </div>
-        <!-- /.row -->
-
+    </div>
+    @endif
         <!-- Related Projects Row -->
         <div class="row">
 
             <div class="col-lg-12">
                 <h3 class="page-header">Eventos próximos</h3>
             </div>
-            
+
             @foreach($upcoming as $event)
 
             <div class="col-sm-3 col-xs-6">
@@ -89,8 +88,8 @@
                     @else
                         <b>Evento No Numerado </b>
                     @endif
-                </div>                
-                
+                </div>
+
             </div>
 
             @endforeach

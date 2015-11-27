@@ -173,8 +173,16 @@ class TicketController extends Controller
                     //Disminuir capacidad en la zona de esa presentacion
                     DB::table('zone_presentation')->where('zone_id', $request['zone_id'])
                                                   ->where('presentation_id',$request['presentation_id'])
-                                                  ->sharedLock()
-                                                  ->decrement('slots_availables');;
+                                                  ->sharedLock();
+
+                    $zoneXpres = DB::table('zone_presentation')->where('zone_id',$request['zone_id'])->where('presentation_id', $request['presentation_id'])->first();
+                    
+                    if($zoneXpres->slots_availables - $nTickets < 0)
+                        return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
+
+                    DB::table('zone_presentation')->where('zone_id', $request['zone_id'])
+                                                  ->where('presentation_id',$request['presentation_id'])
+                                                  ->decrement('slots_availables');
                 }
             }
 
@@ -185,7 +193,7 @@ class TicketController extends Controller
              'cancelled'            => 0,
              'owner_id'             => null,
              'event_id'             => $request['event_id'],
-             'price'                => $zone->price, //Falta reducir el porcentaje de promocion
+             'price'                => $zone->price,
              'presentation_id'      => $request['presentation_id'],
              'zone_id'              => $request['zone_id'],
              'promo_id'             => null,
@@ -194,6 +202,8 @@ class TicketController extends Controller
              'picked_up'            => false,
              'discount'             => null,
              'designee'             => null,
+             'cash_amount'          => null,
+             'credit_amount'        => null,
              'total_price'          => $zone->price * $nTickets,
              'created_at'           => new Carbon(),
              'updated_at'           => new Carbon(),
@@ -248,9 +258,20 @@ class TicketController extends Controller
                 }
             }
 
+            
+            //Distincion de tarjeta o efectivo
+            $price = Ticket::find($id)->total_price;
+            if($request['payMode'] == config('constants.credit')){
+                DB::table('tickets')->where('id',$id)->update(['credit_amount' => $price]);
+            }else if($request['payMode'] == config('constants.cash')){
+                DB::table('tickets')->where('id',$id)->update(['cash_amount' => $price]);
+            }else if($request['payMode'] == config('constants.mix')){
+                DB::table('tickets')->where('id',$id)->update(['cash_amount' => $request['paymentMix']]);
+                DB::table('tickets')->where('id',$id)->update(['credit_amount' => $price - $request['paymentMix']]);
+            }
+            
             array_push($tickets,$id);
             //var_dump('llego');
-
 
             DB::commit();
 

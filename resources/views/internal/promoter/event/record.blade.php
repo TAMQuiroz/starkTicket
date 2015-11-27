@@ -19,8 +19,8 @@
           <th>Estado</th>
           <th>Entradas Vendidas</th>
           <th>Monto Acumulado</th>
-          <th>Pagar</th>
           <th>Ver</th>
+          <th>Pagar</th>
           <th>Editar</th>
           <th>Cancelar</th>
           <th>Eliminar</th>
@@ -36,8 +36,14 @@
           <td>@if($event->cancelled)Cancelado @else Vigente @endif</td> <!--falta la logica de vigente -->
           <td>{{$event->numberTickets()}}</td>
           <td>{{$event->ticket_sum}}</td> <!--no hay -->
+          <td><a href="{{ url ('promoter/event/'.$event->id) }}" class="btn btn-info">+</a></td>
+          @if($event->cancelled)
+          <td><a class="btn btn-default" title="Deshabilitado" disabled>$</a></td>
+          <td><a class="btn btn-default" title="Deshabilitado" disabled><i class="glyphicon glyphicon-pencil"></i></a></td>
+          <td><a class="btn btn-default" title="Deshabilitado" disabled><i class="glyphicon glyphicon-remove"></i></a></td>
+          <td><a class="btn btn-default" title="Deshabilitado" disabled><i class="glyphicon glyphicon-remove"></i></a></td>
+          @else
           <td><a href="{{ url ('promoter/transfer_payments/'.$event->id.'/create') }}" class="btn btn-info">$</a></td>
-          <td><a href="{{ url ('promoter/event/'.$event->id) }}" class="btn btn-info">$</a></td>
           <td><a type="button" class="btn btn-info" href="{{url('promoter/event/'.$event->id.'/edit')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
           <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#cancelEvent{{$event->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-remove"></i></button></td>
             <!-- MODAL Cancel-->
@@ -92,7 +98,7 @@
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-
+            @endif
         </tr>
         @endforeach
         </tbody>

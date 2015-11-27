@@ -9,57 +9,35 @@
 @stop
 
 @section('content')
-
-
+@include('errors.list')
+<div class="col-sm-6">
 {!!Form::open(array('url' => 'salesman/password','id'=>'form','class'=>'form-horizontal'))!!}
-
-    <div class="col-sm-12">
-        <div class="form-group">
-          <div class="col-sm-2"
-                {!! Form::label('password', 'Contraseña:', ['class' => 'control-label']) !!}
-          </div>
-           <div class="col-sm-4">
-                {!! Form::password('password', null, ['class' => 'form-control']) !!}
-          </div>
-
-        </div>
-        <div class="form-group">
-        <br>
-
-          <div class="col-sm-2">
-              {!! Form::label('password', 'Nueva Contraseña:', ['class' => 'control-label']) !!}
-          </div>
-          <div class="col-sm-4">
-              {!! Form::password('new_password', null, ['class' => 'form-control']) !!}
-              <span class="help-block small">Ingrese mínimo 8 caracteres.</span>
-
-          </div>
- 
-        </div>
-        <div class="form-group">
-          <div class="col-sm-2">
-            {!! Form::label('password', 'Confirmar:', ['class' => 'control-label']) !!}
-          </div>
-           
-          <div class="col-sm-4">
-            {!! Form::password('new_password_confirmation', null, ['class' => 'form-control']) !!}
-          </div>
-        </div>
-        <div class="form-group">
-        <br><br>
-        <div class="col-sm-2">
-            {!! Form::submit('Actualizar', ['class' => 'btn btn-info']) !!}
-         </div>
-           
+    <div class="form-group">
+        <label for="password" class="col-sm-2 control-label">Contraseña</label>
+        <div class="col-sm-10">
+        {!! Form::password('password',  array('class' => 'form-control', 'required')) !!}
         </div>
     </div>
-
+    <div class="form-group">
+        <label for="new_password" class="col-sm-2 control-label">Nueva Contraseña:</label>
+        <div class="col-sm-10">
+        {!! Form::password('new_password',  array('class' => 'form-control', 'required')) !!}
+        <span class="help-block small">Ingrese mínimo 8 caracteres.</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="new_password_confirmation" class="col-sm-2 control-label">Confirme contraseña</label>
+        <div class="col-sm-10">
+        {!! Form::password('new_password_confirmation',  array('class' => 'form-control', 'required')) !!}
+        </div>
+    </div>
+    <div class="form-group">
+        {!! Form::submit('Actualizar', ['class' => 'btn btn-info']) !!}
+        <a class="btn btn-info" href="{{ url ('client') }}">Cancelar</a>
+    </div>
 {!! Form::close() !!}
-
+</div>
 @stop
 
 @section('javascript')
-
-
-
 @stop

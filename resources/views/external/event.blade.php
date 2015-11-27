@@ -49,8 +49,8 @@
 
                         </tbody>
                     </table>
+                </div>
 
-                            </div>
                             @if(isset($user) && $user->role_id == config('constants.salesman'))
                                 @if($event->selling_date <= strtotime(date("Y-m-d")) )
                                     <a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
@@ -80,9 +80,27 @@
                                 <label for="comment">Comentarios:</label>
 
                                 @foreach ($Comments as $Comment)
-                                <br>
-                                <h6>{{$users[($Comment->user_id)-1]['name'] }} {{ date ( "d-m-Y H:ia" , strtotime( $Comment->time )) }}</h6>
-                                {!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> $Comment->description, 'readonly']) !!}
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="thumbnail">
+                <img class="img-responsive user-photo" src="{{ url($Comment->user->image) }}">
+            </div><!-- /thumbnail -->
+        </div><!-- /col-sm-1 -->
+
+        <div class="col-sm-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                <strong>{{$Comment->user->name}}</strong> <span class="text-muted">{{ date ( "d-m-Y H:ia" , strtotime( $Comment->time )) }}</span>
+                </div>
+                <div class="panel-body">
+                {{$Comment->description}}
+                </div><!-- /panel-body -->
+            </div><!-- /panel panel-default -->
+        </div><!-- /col-sm-5 -->
+
+    </div>
+</div>
                                 @if(isset($user) && $user->role_id == config('constants.admin'))
                                 <button type="button" class="btn btn-info" style="float:right" data-toggle="modal" data-target="#deleteModal">Eliminar</button>
                                 <!-- MODAL -->
@@ -118,20 +136,20 @@
                         @if ($event->cancelled)
                         <div class="alert alert-danger">Evento cancelado</div>
                         @endif
-                            <header>
-                                <h2 class="detail">Detalle de evento</h2>
-                                <!--<span class="byline">Praesent lacus congue rutrum</span>-->
-                            </header>
+                            <h2 class="detail">Detalle de evento</h2>
                         @if (count($event->presentations) < 1 )
                         <div class="alert alert-info">No se han econtrado fechas de presentación</div>
                         @else
-                            <h3 class="dates">Fechas del evento</h3>
+                            <h3>Fechas del evento</h3>
                             <p>Del {{date("d/m/Y", $event->presentations->first()->starts_at)}} Al {{date("d/m/Y", $event->presentations->last()->starts_at)}}</p>
-                            <h3 class="dates">Horario</h3>
+                            <h3>Duración</h3>
+                            <p>{{$event->time_length}} @if($event->time_length>1) Horas @else Hora @endif </p>
+                            <h3>Horario</h3>
                             <p>Función a las {{date("H:i", $event->presentations->first()->starts_at)}}</p>
                         @endif
                             <h3 class="dates">Ubicación</h3>
-                            <p>{{$event->place->address}}, {{$event->place->district}}</p>
+                            <p>{{$event->place->name}}</p>
+                            <p><b>Dirección:</b> {{$event->place->address}}, {{$event->place->district}}</p>
                             {!! Html::image($event->place->image,null, ['class'=>'carousel_img']) !!}
 
                             <h3 class="dates">Distribución de Zonas</h3>

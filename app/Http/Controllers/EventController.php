@@ -214,6 +214,19 @@ public function validateFreeLocal($starts_at, $local_id, $time_length){
     else return null;
 }
 
+public function seCruzanFunciones(array $presentations_time, $duracion){
+    foreach ($presentations_time as $key => $value) {
+        for($i=$key+1;$i<count($presentations_time);$i++){
+            $start = strtotime($presentations_time[$i]);
+            $end = $start+($duracion*3600);
+            if(strtotime($value)<=$end && strtotime($value) >=$start){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 public function store(StoreEventRequest $request)
 {
 
@@ -226,9 +239,11 @@ public function store(StoreEventRequest $request)
     if(count($temp) < count($result_dates))
         return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
             //return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
-        $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
-        if($result['error'] != '')
-            return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
+    if(seCruzanFunciones($result_dates, $request->input('time_length')))
+        return redirect()->back()->withInput()->withErrors(['errors' => 'Verificar presentaciones. Algunas horas y fechas se cruzan']);
+    $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
+    if($result['error'] != '')
+        return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
             //return response()->json(['message' => $result['error']]);
 
         $data = [
@@ -286,10 +301,9 @@ public function store(StoreEventRequest $request)
     {
         $user = \Auth::user();
         $event = Event::findOrFail($id);
-        $users = User::all();
         $Comments = Comment::where('event_id',$id  ) ->get();
 
-       return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments , 'users' => $users]);
+       return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments]);
     }
 
     public function showExternalPost(StoreCommentPostRequest $request , $id)
