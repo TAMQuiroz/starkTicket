@@ -27,7 +27,8 @@ class BookingController extends Controller
 		$event = Event::find($id);
 		$presentations = $event->presentations;
 		foreach ($presentations as $presentation) {
-			$presentation->starts_at = gmdate("d-m-Y H:i:s ", $presentation->starts_at);
+            if(!$presentation->cancelled)
+			     $presentation->starts_at = gmdate("d-m-Y H:i:s ", $presentation->starts_at);
 		}
 		$presentations = $presentations->lists('starts_at', 'id');
 		$zones = Zone::where('event_id', $id)->lists('name', 'id');

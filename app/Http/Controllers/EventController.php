@@ -311,9 +311,10 @@ public function store(StoreEventRequest $request)
     public function showExternal($id)
     {
         $user = \Auth::user();
-        $event = Event::findOrFail($id);
+        $event = Event::find($id);
         $Comments = Comment::where('event_id',$id  ) ->get();
-
+        if(empty($event)||$event->cancelled)
+            return redirect()->back();
        return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments]);
     }
 
