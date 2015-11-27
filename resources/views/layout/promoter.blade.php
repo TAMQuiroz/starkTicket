@@ -9,7 +9,6 @@
     <title>@yield('title') | {{$business_name}} - StarkTicket</title>
 
     {!!Html::style('css/bootstrap.min.css')!!}
-    {!!Html::style('css/jquery.dataTables.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/admin.css')!!}
 

@@ -61,8 +61,8 @@ class PagesController extends Controller
                         array_push($eventInformation, array($eventDate->image, $eventDate->id, $eventDate->name, $eventDate->place->name, $eventDate->place->address, $eventDate->category->name, $presentationInformation));
 
                     }
-                    
-            
+
+
         }
 
         return view('external.calendar',["events"=>$events,"date_at"=>$date_at,"presentations"=>$presentations],compact('eventInformation'));
@@ -93,8 +93,8 @@ class PagesController extends Controller
                         array_push($eventInformation, array($eventDate->image, $eventDate->id, $eventDate->name, $eventDate->place->name, $eventDate->place->address, $eventDate->category->name, $presentationInformation));
 
                     }
-                    
-            
+
+
         }
 
         $events = Event::where(["publication_date"=>$date_at,"cancelled"=>"0"])->get();
@@ -105,34 +105,19 @@ class PagesController extends Controller
     public function clientHome()
     {
 
-        // Hago el query para obtener las preferencias del usuario
-        //return Auth::user()->id;
-
+        $client = User::find(Auth::user()->id);
         $clientes = Preference::where('idUser', '=' , Auth::user()->id)->get();
 
 
         $clientPreferences = [];
 
         foreach($clientes as $cliente){
-                $preferencias = Event::where('category_id', '=', $cliente->idCategories)->get(); // puede haber varios eventos del mismo tipo
-                foreach($preferencias as $preference){
-                    array_push($clientPreferences, $preference);
-                }
+            $preferencias = Event::where(['category_id'=>$cliente->idCategories,"cancelled"=>"0"])->get(); // puede haber varios eventos del mismo tipo
+            foreach($preferencias as $preference){
+                array_push($clientPreferences, $preference);
+            }
         }
-
-
-
-        //return $clientPreferences;
-
-        //return $cliente;
-        // iteracion
-        /*
-
-        */
-        //aca estan las páginas que le gustan al cliente
-
-
-        return view('internal.client.home',compact('clientPreferences'));
+        return view('internal.client.home',compact('clientPreferences','client'));
     }
 
     public function salesmanHome()

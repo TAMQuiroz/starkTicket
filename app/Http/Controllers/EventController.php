@@ -301,10 +301,9 @@ public function store(StoreEventRequest $request)
     {
         $user = \Auth::user();
         $event = Event::findOrFail($id);
-        $users = User::all();
         $Comments = Comment::where('event_id',$id  ) ->get();
 
-       return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments , 'users' => $users]);
+       return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments]);
     }
 
     public function showExternalPost(StoreCommentPostRequest $request , $id)

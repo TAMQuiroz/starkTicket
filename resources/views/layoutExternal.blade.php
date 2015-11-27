@@ -5,14 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ asset($favicon) }}">
-	<title>@yield('title') | {{$business_name}} - StarkTicket</title>
-
-    {!!Html::script('js/jquery-1.11.3.min.js')!!}
-	{!!Html::style('css/bootstrap.min.css')!!}
+	<title>@yield('title') | {{$business_name}}</title>
+    {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
-	{!!Html::style('css/style.css')!!}
-	{!!Html::style('css/style-desktop.css')!!}
-	{!!Html::style('css/skel-noscript.css')!!}
+    {!!Html::style('css/style.css')!!}
+    {!!Html::style('css/style-desktop.css')!!}
+    {!!Html::script('js/jQuery-2.1.4.min.js')!!}
 
 	@yield('style')
 
@@ -57,15 +55,14 @@
 </body>
 
 <footer id="footer">
-	<ul class="icons">
-		<li><a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span>S</a></li>
-		<li><a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span>t</a></li>
-		<li><a href="#" class="icon circle fa-google-plus"><span class="label">Google+</span>a</a></li>
-		<li><a href="#" class="icon circle fa-github"><span class="label">Github</span>r</a></li>
-		<li><a href="#" class="icon circle fa-dribbble"><span class="label">Dribbble</span>k</a></li>
-	</ul>
+    <p>
+        <a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span></a>
+        <a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span></a>
+        <a href="#" class="icon circle fa-google-plus"><span class="label">Google+</span></a>
+        <a href="#" class="icon circle fa-github"><span class="label">Github</span></a>
+        <a href="#" class="icon circle fa-dribbble"><span class="label">Dribbble</span></a>
+    </p>
 </footer>
-	{!!Html::script('js/jQuery-2.1.4.min.js')!!}
 	{!!Html::script('js/bootstrap.min.js')!!}
     {!!Html::script('js/jquery.validate.min.js')!!}
     {!!Html::script('js/messages_es_PE.js')!!}

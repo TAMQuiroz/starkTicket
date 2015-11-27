@@ -23,30 +23,6 @@ Calendario
 	</div>
 </div>
 <hr>
-<!--
-@if(count($presentations)===0)
-<div class="alert alert-warning"> Presentaciones no encontrados en esta fecha</div>
-@else
-	<div class="row">
-		<div class="col-sm-12">
-		<h3>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</h3>
-		<table class="table table-bordered">
-			<tr>
-				<th>Fecha de presentación</th>
-				<th>Evento</th>
-				<th>Detalles</th>
-			</tr>
-	    @foreach($presentations as $presentation)
-	    	<tr>
-	    		<td>{{date('H:i:s',$presentation->starts_at)}}</td>
-	    		<td>{{$presentation->event["name"]}}</td>
-	    		<td><p><a href="event/{{$presentation->event['id']}}"  class="btn btn-info" role="button" >Detalle</a></p></td>
-	    	</tr>
-	    @endforeach
-		</table>
-		</div>
-	</div>
-@endif -->
 @if(count($eventInformation)===0)
 <h3>Presentaciones encontrados en {{date('Y-m-d',$date_at)}}</h3>
 <div class="alert alert-warning"> Presentaciones no encontradas en esta fecha</div>
@@ -64,19 +40,19 @@ Calendario
 				<th>Detalles</th>
 			</tr>
 			@foreach($eventInformation as $event)
-	    	<tr>    		
-	    		<td>	
-	    			<h4>{{$event[2]}}</h4>    					  			
+	    	<tr>
+	    		<td>
+	    			<h4>{{$event[2]}}</h4>
 	    		</td>
-	    		<td>	  			
-					{!! Html::image($event[0], null, array('class'=>'image gift_img')) !!}			  			
+	    		<td>
+					{!! Html::image($event[0], null, array('class'=>'image gift_img')) !!}
 	    		</td>
-	    		<td> 
+	    		<td>
 	    			<p>
 					    <b>Lugar: </b> {{$event[3]}} <br>
 					    <b>Direccion:</b> {{$event[4]}} <br>
 					    <b>Categoria:</b> {{$event[5]}} <br>
-					</p>  
+					</p>
 	    		</td>
 	    		<td>
 	    			@foreach ($event[6] as $pre)
@@ -88,7 +64,7 @@ Calendario
 	    	@endforeach
 		</table>
 		</div>
-		
+
 	</div>
 
 @endif
@@ -100,7 +76,7 @@ Calendario
 	<br>
 	<div class="row">
 	    @foreach($events as $event)
-	    <div class="3u">
+	    <div class="3u col-sm-3">
 	        <section>
 	            <a  class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
 	            <h3>{{$event->name}}</h3>
