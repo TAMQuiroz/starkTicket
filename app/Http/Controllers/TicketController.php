@@ -285,8 +285,8 @@ class TicketController extends Controller
             DB::commit();
 
         }catch (\Exception $e){
-            var_dump($e);
-            dd('rollback');
+            //var_dump($e);
+            //dd('rollback');
             DB::rollback();
             return back()->withInput($request->except('seats'))->withErrors(['Por favor intentelo nuevamente']);
         }
