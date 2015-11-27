@@ -5,12 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ asset($favicon) }}">
-    <title>@yield('title') | {{$business_name}} - StarkTicket</title>
-
+    <title>@yield('title') | {{$business_name}}</title>
     {!!Html::style('css/bootstrap.min.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
     {!!Html::style('css/admin.css')!!}
-    {!!Html::style('css/skel-noscript.css')!!}
     {!!Html::style('css/style.css')!!}
     {!!Html::style('css/style-desktop.css')!!}
     @yield('style')

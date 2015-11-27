@@ -12,7 +12,6 @@
     {!!Html::style('css/font-awesome.min.css')!!}
 	{!!Html::style('css/style.css')!!}
 	{!!Html::style('css/style-desktop.css')!!}
-	{!!Html::style('css/skel-noscript.css')!!}
 
 	@yield('style')
 
@@ -65,7 +64,6 @@
         <a href="#" class="icon circle fa-dribbble"><span class="label">Dribbble</span></a>
     </p>
 </footer>
-	{!!Html::script('js/jQuery-2.1.4.min.js')!!}
 	{!!Html::script('js/bootstrap.min.js')!!}
     {!!Html::script('js/jquery.validate.min.js')!!}
     {!!Html::script('js/messages_es_PE.js')!!}

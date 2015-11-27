@@ -12,7 +12,7 @@
 <h4>Eventos Recomendados</h4>
 <div class="row">
 	@foreach($clientPreferences as $clientPreference)
-  	<div class="col-sm-6 col-md-4">
+  	<div class="col-sm-3 col-md-4">
 	    <div >
 	       <section>
 
