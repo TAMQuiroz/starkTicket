@@ -92,7 +92,7 @@
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-6">
-                  {!! Form::text('name','', array('class' => 'form-control','required','maxlength' => 30)) !!}
+                  {!! Form::text('name','', array('class' => 'form-control','required','maxlength' => 100)) !!}
                 </div>
               </div>
               <div class="form-group">

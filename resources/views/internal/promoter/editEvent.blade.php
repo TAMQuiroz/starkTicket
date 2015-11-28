@@ -70,12 +70,12 @@
 
 
         <div class="row">
-          <div class="col-sm-8">
+          <div class="col-sm-12">
             {!!Form::open(array('url' => 'promoter/event/'.$event->id.'/edit','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                  {!! Form::text('name',$event->name, array('class' => 'form-control','required','maxlength' => 30)) !!}
+                  {!! Form::text('name',$event->name, array('class' => 'form-control','required','maxlength' => 100)) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -151,7 +151,7 @@
               <!-- ZONA -->
               <legend>Agregar zona:</legend>
 
-              <div class="col-md-6">
+              <div class="col-md-3">
                   <div class="form-group">
                       <label  class="col-md-4 control-label">Nombre</label>
                       <div class="col-md-8">
@@ -205,10 +205,10 @@
                             <a class="btn btn-info" onclick="addZone()">Agregar</a>
                         </div>
                   </div>   
-                </div>   
-                  <div  id="dist" class="col-md-6">
-                    <label  id="labelDist">Distribución evento</label>
-                  </div>
+              </div>   
+              <div  id="dist" class="col-md-9">
+                <label  id="labelDist">Distribución evento</label>
+              </div>
                   
                 <script>
 
