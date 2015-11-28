@@ -320,8 +320,10 @@ public function store(StoreEventRequest $request)
         $user = \Auth::user();
         $event = Event::find($id);
         $Comments = Comment::where('event_id',$id  ) ->get();
+
         if(empty($event)||$event->cancelled)
             return redirect()->back();
+        
        return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments]);
     }
 
@@ -333,19 +335,18 @@ public function store(StoreEventRequest $request)
         $users = User::all();
         $input = $request->all();
 
-    //Agrego el nuevo comentario
+        //Agrego el nuevo comentario
 
-        $Comment    =   new Comment ;
-        $Comment->description  =   $input['comment'];
-        $Comment->time =   new Carbon() ;
-        $Comment->event_id = $id;
+        $Comment = new Comment ;
+        $Comment->description   =   $input['comment'];
+        $Comment->time          =   new Carbon();
+        $Comment->event_id      = $id;
 
-        $idUser = Auth::user()->id;
-        $Comment->user_id = $idUser;
+        $idUser                 = Auth::user()->id;
+        $Comment->user_id       = $idUser;
 
         $Comment->save();
 
-        $Comments = Comment::where('event_id',$id  ) ->get();
         return redirect()->back();
         //return view('external.event', ['event' => $event, 'user'=>$user , 'Comments'=> $Comments,'users' => $users  ] );
     }

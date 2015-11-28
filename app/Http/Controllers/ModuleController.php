@@ -28,7 +28,7 @@ class ModuleController extends Controller
 
     {
         
-        $modules = Module::paginate(5);
+        $modules = Module::paginate(10);
         $modules->setPath('modules');
         return view('internal.admin.module', compact('modules'));
     }

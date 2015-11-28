@@ -23,8 +23,7 @@
 	<div class="row">
 		<!-- Content -->
 		<div class="col-md-8">
-			{!!Form::open(array('url' => 'event/'.$event->id.'/' ,'files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
-
+			{!!Form::open(array('url' => 'event/'.$event->id.'/' ,'id'=>'form','class'=>'form-horizontal'))!!}
 			<section>
 				<p><a  class="image full">{!! Html::image($event->image, null,['class'=>'carousel_img']) !!}</a></p>
 				<p>{{ $event->description }}</p>
@@ -47,7 +46,6 @@
 
 						</tbody>
 					</table>
-
 				</div>
 				@if(isset($user) && $user->role_id == config('constants.salesman'))
 					@if($event->selling_date <= strtotime(date("Y-m-d")) )
@@ -74,40 +72,36 @@
 						<button type="submit" class="btn btn-info">Aceptar</button>
 						<br>
 					</div>
-				@else
-					<div class="form-group">
-						@endif
+				@endif
+				<div class="form-group">
+					<br>
+					<label for="comment">Comentarios:</label>
+					@foreach ($Comments as $Comment)
 						<br>
-						<label for="comment">Comentarios:</label>
-
-						@foreach ($Comments as $Comment)
-							<br>
-							<h6>{{$users[($Comment->user_id)-1]['name'] }} {{ date ( "d-m-Y H:ia" , strtotime( $Comment->time )) }}</h6>
-							{!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> $Comment->description, 'readonly']) !!}
-							@if(isset($user) && $user->role_id == config('constants.admin'))
-								<button type="button" class="btn btn-info" style="float:right" data-toggle="modal" data-target="#deleteModal">Eliminar</button>
-								<div class="modal fade"  id="deleteModal">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-												<h4 class="modal-title">¿Estas seguro que desea eliminar el comentario?</h4>
-											</div>
-											<div class="modal-body">
-												<h5 class="modal-title">Los cambios serán permanentes</h5>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-												<a class="btn btn-info" href="{{url('event/delete/'.$Comment->id.'/comment')}}" title="Delete" >Sí</a>
-											</div>
-
-										</div><!-- /.modal-content -->
-									</div><!-- /.modal-dialog -->
-								</div><!-- /.modal -->
-							@endif
-						@endforeach
-
-					</div>
+						<h6>{{$Comment->user->name}} {{$Comment->user->lastname}} {{ date ( "d-m-Y H:ia" , strtotime( $Comment->time )) }}</h6>
+						<p>{!! Form::textarea('pastComment1', null, ['class' => 'form-control', 'rows' => '3', 'placeholder'=> $Comment->description, 'readonly']) !!}</p>
+						@if(isset($user) && $user->role_id == config('constants.admin'))
+							<a class="btn btn-info" style="float:right" data-toggle="modal" data-target="#deleteModal{{$Comment->id}}">Eliminar</a>
+							<div class="modal fade"  id="deleteModal{{$Comment->id}}">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+											<h4 class="modal-title">¿Estas seguro que desea eliminar el comentario?</h4>
+										</div>
+										<div class="modal-body">
+											<h5 class="modal-title">Los cambios serán permanentes</h5>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+											<a class="btn btn-info" href="{{url('event/delete/'.$Comment->id.'/comment')}}" title="Delete" >Sí</a>
+										</div>
+									</div><!-- /.modal-content -->
+								</div><!-- /.modal-dialog -->
+							</div><!-- /.modal -->
+						@endif
+					@endforeach
+				</div>
 				
 			</section>
 		</div>

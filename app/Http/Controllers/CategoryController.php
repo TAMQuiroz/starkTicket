@@ -24,7 +24,7 @@ class CategoryController extends Controller
     }
     public function index()
     {
-        $categories = Category::where('type',1)->paginate(5);
+        $categories = Category::where('type',1)->paginate(10);
         $subcat_list = [];
         foreach ($categories as $category) {
             $subcat_list[$category->name] = $this->getSubcategories($category->id);
