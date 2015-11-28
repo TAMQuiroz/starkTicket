@@ -19,7 +19,7 @@
                 {!!Form::button('Buscar',array('id'=>'buscareserva','class'=>'btn btn-info', 'onclick' => 'getReserves()'))!!}
             </span>
         </div><!-- /input-group -->
-        {!!Form::open(array('route' => 'booking.show','id'=>'form','class'=>'form-horizontal'))!!}
+        {!!Form::open(array('id'=>'form','class'=>'form-horizontal'))!!}
         <div id="detail" >
             <br>
             <h5>Reservas:</h5>
@@ -42,6 +42,7 @@
             <input type="submit" class="btn btn-info">
             <a href="{{url('salesman')}}"><button class="btn btn-info">Cancelar</button></a>
         </div>
+        {!!Form::close()!!}
     </div>
 
 

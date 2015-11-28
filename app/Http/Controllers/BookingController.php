@@ -14,6 +14,7 @@ use App\Models\Presentation;
 use App\Models\Zone;
 use App\Models\Business;
 use App\Http\Requests\Booking\StoreBookingRequest;
+use App\Http\Requests\Booking\BookingRequest;
 use Carbon\Carbon;
 use Mail;
 use DateTime; use Date;
@@ -161,6 +162,7 @@ class BookingController extends Controller
 	}
 
     public function showPayBooking(Request $request){
+
         $codigo = $request['reserve_code'];
         $tickets = Ticket::where('reserve',$codigo)->get();
         $event = $tickets->first()->event;
@@ -170,9 +172,10 @@ class BookingController extends Controller
             array('tickets' => $tickets->first(), 'event' => $event,
                 'zone' => $zone, 'presentation' => $presentation,
                 'reserve' => $codigo));
+        
     }
 
-    public function storePayBooking(Request $request){
+    public function storePayBooking(BookingRequest $request){
         $reserve_id = $request->input('reserve_id');
         $ticket = Ticket::where('reserve', $reserve_id)->get()->first();
         if(empty($ticket))
@@ -192,8 +195,8 @@ class BookingController extends Controller
                     DB::table('tickets')->where('id',$id)->update(['discount' => $promo->desc]);
                     DB::table('tickets')->where('id',$id)->decrement('total_price', ($promo->desc/100)*($nTickets*$zone->price));
                 }else{
-                    $pu = Zone::find($request['zone_id'])->price;
-                    $quantity = $request['quantity'];
+                    $pu = Zone::find($ticket->zone_id)->price;
+                    $quantity = $ticket->quantity;
                     $pt = $pu * $quantity;
                     $discTickets = $quantity / $promo->carry;
                     $discTickets = floor($discTickets);
@@ -204,10 +207,11 @@ class BookingController extends Controller
                 }
                 DB::table('tickets')->where('id',$id)->update(['promo_id' => $promo->id]);
             }
-        DB::table('users')->where('id', $request['user_id'])->increment('points', $nTickets);
+        DB::table('users')->where('id', $ticket->owner_id)->increment('points', $nTickets);
         DB::table('slot_presentation')->where('sale_id',$ticket->id)->update(['status' => config('constants.seat_taken')]);
         session(['tickets'=>$id]);
         return redirect()->route('ticket.success.salesman');
+        
     }
 
     public function payReserveStore($reserve_id){
