@@ -58,8 +58,20 @@
         </tbody>
     </table>
 
+<br>
+
+<h5>Seleccione el tipo de formato de su reporte</h5>  
 <div class="col-sm-2">
-        <button type="submit" class="btn btn-info">Descargar Archivo Excel</button>
+        {!!Form::select('type', [
+           '1' => 'Excel',
+           '2' => 'PDF'],
+           null,
+           ['class' => 'form-control']
+        )!!}
+</div>
+
+<div class="col-sm-2">
+    <button type="submit" class="btn btn-info">Descargar Archivo</button>
 </div>
 {!!Form::close()!!}
 
