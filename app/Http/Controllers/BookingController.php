@@ -11,6 +11,7 @@ use App\Models\Ticket;
 use App\Models\Slot;
 use App\Models\Event;
 use App\Models\Presentation;
+use App\Models\ExchangeRate;
 use App\Models\Zone;
 use App\Models\Business;
 use App\Http\Requests\Booking\StoreBookingRequest;
@@ -168,10 +169,12 @@ class BookingController extends Controller
         $event = $tickets->first()->event;
         $zone = $tickets->first()->zone;
         $presentation = $tickets->first()->presentation;
+        $exchangeRate = ExchangeRate::where('status',config('constants.active'))->first();
         return view('internal.salesman.payBookingShow',
             array('tickets' => $tickets->first(), 'event' => $event,
                 'zone' => $zone, 'presentation' => $presentation,
-                'reserve' => $codigo));
+                'reserve' => $codigo,
+                'exchangeRate' => $exchangeRate));
         
     }
 

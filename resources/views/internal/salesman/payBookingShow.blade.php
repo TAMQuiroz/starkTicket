@@ -14,7 +14,7 @@
 @stop
 
 @section('content')
-{!!Form::open(array('url' => 'salesman/event/pay_booking/store','files'=>true,'id'=>'form','class'=>'form-horizontal','method' => 'post'))!!}   
+{!!Form::open(array('url' => 'salesman/event/pay_booking/store','files'=>true,'id'=>'form','method' => 'post'))!!}   
     <legend>Información del evento</legend>
     {!!Form::hidden('reserve_id',$reserve)!!}
     <div class="select Type col-md-12"> 
@@ -46,59 +46,82 @@
         </label>
     </div>
     <div class= "button-final col-md-12">
-            <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#mix2" data-whatever="@mdo">Realizar Pago</button>
-            <a href="{{url('salesman/')}}"><button type="button" class="btn btn-info">Cancelar Venta</button></a>
-            <button type="button" class="btn btn-info" data-dismiss="modal" data-target="#visualizarVenta"><i class="glyphicon glyphicon-print"></i></button>
+        <button type="button" id="payModal" class="btn btn-info" data-toggle="modal" data-target="#mix2" data-whatever="@mdo">Realizar Pago</button>
+        <a href="{{url('salesman/')}}"><button type="button" class="btn btn-info">Cancelar Venta</button></a>
+        <button type="button" class="btn btn-info" data-dismiss="modal" data-target="#visualizarVenta"><i class="glyphicon glyphicon-print"></i></button>
 
-            <div class="modal fade" id="mix2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>Monto a Pagar</label>
-                                {!!Form::number('',$tickets->total_price,['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
-                                <br>
-                                <div class="form-group checkbox pay" id="modpay">
-                                    <label>
-                                        {!!Form::radio('payMode', config('constants.credit'), null,['id'=>'creditCardPay','onChange'=>'getPromo()'])!!}Pago con tarjeta
-                                    </label>
-                                    <hr>
-                                    <label for="exampleInputEmail2">Número de Tarjeta</label>
-                                    {!!Form::number('',null,['id'=>'creditCardNumber','class'=>'form-control','placeholder'=>'1234 5678 9012 3456','disabled','min'=>1, 'max'=>9999999999999999,'required'])!!}
-                                    <label for="exampleInputEmail2">Fecha de expiración</label>
-                                    <input type="date" id="expirationDate" class="form-control" disabled="true" min="{{date("Y-m-j")}}" required>
-                                    <label for="exampleInputEmail2">Código de Seguridad</label>
-                                    {!!Form::number('',null,['id'=>'securityCode','class'=>'form-control','placeholder'=>'123','disabled','min'=>0,'max'=>999,'required'])!!}
+
+
+        <div class="modal fade" id="mix2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Detalle de Pago:</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row form-group">
+                            <div class="col-md-12 form-group checkbox pay">
+                                <b>Monto a Pagar</b>
+                                {!!Form::number('',null,['id'=>'total2','class'=>'form-control','readonly','placeholder'=>'S/.'])!!}
+                            </div>
+                            <br>
+                            <div class="col-md-12 form-group checkbox pay">
+                                {!!Form::radio('payMode', config('constants.credit'), null,['id'=>'creditCardPay','onChange'=>'getPromo()'])!!}
+                                <b>Pago con tarjeta</b>
+                                <hr>
+                                <b>Número de Tarjeta</b>
+                                {!!Form::number('',null,['id'=>'creditCardNumber','class'=>'form-control','placeholder'=>'1234 5678 9012 3456','disabled','min'=>1, 'max'=>9999999999999999,'required'])!!}
+                                <b>Fecha de expiración</b>
+                                <input type="date" id="expirationDate" class="form-control" disabled="true" min="{{date("Y-m-j")}}" required>
+                                <b>Código de Seguridad</b>
+                                {!!Form::number('',null,['id'=>'securityCode','class'=>'form-control','placeholder'=>'123','disabled','min'=>0,'max'=>999,'required'])!!}
+                            </div>
+                            <br>  
+                            <div class="col-md-12 form-group checkbox pay">
+                                {!!Form::radio('payMode', config('constants.cash'), null,['id'=>'cashPay','onChange'=>'getPromo()'])!!}
+                                <b>Pago con efectivo</b>
+
+                                <h5 class="text-center">Tipo de Cambio: Compra - S/. {{$exchangeRate->buyingRate}} | Venta - S/. {{$exchangeRate->sellingRate}}</h5>
+                                    {!!Form::hidden('',$exchangeRate->buyingRate,['id'=>'exchangeRate'])!!}
+                                <hr>
+                                <div class="col-md-6">
+                                    <b>Monto Ingresado en soles</b>
+                                    {!!Form::number('',null,['id'=>'amountIn','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0, 'onChange'=>'getChange()'])!!}
                                 </div>
-                                <br>  
-                                <div class="form-group checkbox pay" id="modpay">
-                                    <label>
-                                        {!!Form::radio('payMode', config('constants.cash'), null,['id'=>'cashPay','onChange'=>'getPromo()'])!!}Pago con efectivo
-                                    </label>
-                                    <h5>Tipo de Cambio: S/.2.90</h5>
-                                    <hr>
-                                    <label for="exampleInputEmail2">Monto Ingresado</label>
-                                    {!!Form::number('',null,['id'=>'amountIn','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
-                                    <label for="exampleInputEmail2">Vuelto</label>
+                                <div class="col-md-6">
+                                    <b>Monto Ingresado en dolares</b>
+                                    {!!Form::number('',null,['id'=>'amountInDollars','class'=>'form-control','placeholder'=>'$ ','disabled','min'=>0, 'onChange'=>'getChange()'])!!}
+                                    
+                                </div>
+                                <div class="col-md-12">
+                                    <b>Vuelto</b>
                                     {!!Form::text('',null,['id'=>'change','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}
                                 </div>
-                                <br>  
-                                <div class="form-group checkbox pay" id="modpay">
-                                    <label>
-                                        {!!Form::radio('payMode', config('constants.mix'), null,['id'=>'mixPay', 'onChange'=>'getPromo()'])!!}Pago mixto
-                                    </label>
-                                    <hr>
-                                    <label for="exampleInputEmail2">Cantidad a pagar en efectivo</label>
+                            </div>
+                            <div class="col-md-12"><hr></div>
+                            <br>  
+                            <div class="col-md-12 form-group checkbox pay">
+                                {!!Form::radio('payMode', config('constants.mix'), null,['id'=>'mixPay', 'onChange'=>'getPromo()'])!!}
+                                <b>Pago mixto</b>
+                                <hr>
+                                <div class="col-md-12">
+                                    <b>Cantidad a pagar en efectivo</b>
                                     {!!Form::number('paymentMix',null,['id'=>'paymentMix','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
-                                    <label for="exampleInputEmail2">Monto Ingresado</label>
-                                    {!!Form::number('paymentMix',null,['id'=>'amountMix','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0])!!}
-                                    <label for="exampleInputEmail2">Vuelto</label>
-                                    {!!Form::text('',null,['id'=>'changeMix','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}
-                                    <br>
+                                </div>
+                                <div class="col-md-6">
+                                    <b>Monto Ingresado en soles</b>
+                                    {!!Form::number('amountMix',null,['id'=>'amountMix','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0,'onChange'=>'getChangeMix()'])!!}
+                                </div>
+                                <div class="col-md-6">
+                                    <b>Monto Ingresado en dolares</b>
+                                    {!!Form::number('amountMix',null,['id'=>'amountMixDollars','class'=>'form-control','placeholder'=>'S/. ','disabled','min'=>0,'onChange'=>'getChangeMix()'])!!}
+                                </div>
+                                <div class="col-md-12">
+                                    <b>Vuelto</b>
+                                    <p>{!!Form::text('',null,['id'=>'changeMix','class'=>'form-control','placeholder'=>'S/. ','readonly'])!!}</p>
+                                </div>
+                                <div class="col-md-12">
                                     {!!Form::submit('Pagar Entrada',array('id'=>'pay','class'=>'btn btn-info', 'disabled'))!!}
                                     <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                                 </div>
@@ -106,8 +129,9 @@
                         </div>
                     </div>
                 </div>
-            </div> 
-        </div>
+            </div>
+        </div> 
+    </div>
 {!!Form::close()!!}        
 @stop
 
