@@ -1,7 +1,7 @@
 @extends('layout.promoter')
 
 @section('style')
-
+{!!Html::style('css/bootstrap-datatable.min.css')!!}
 @stop
 
 @section('title')
@@ -9,16 +9,9 @@
 @stop
 
 @section('content')
- <!-- @foreach($events as $event)
-    {{$event->name}}
-    <br>
-  @endforeach 
-
-  {{$fecha_min}}-->
-
 {!!Form::open(array('url' => 'promoter/highlights/create','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
   <h4>Seleccionar evento a agregar</h4><br>
-  <table id="example" class="display" cellspacing="2" width="90%"   align="center">
+  <table id="example" class="table table-striped table-bordered">
       <thead>
           <tr>
             <th>Nombre</th>
@@ -31,7 +24,7 @@
         <tr>
           <td>{{$event->name}}</td>
           <td> {{$event->description}}</td>
-          <td> {!!Form::radio('event_id', $event->id , '', array('id'=>'true', 'class'=>'radio  evento_id','required'))!!} </td>  
+          <td> {!!Form::radio('event_id', $event->id , '', array('id'=>'true', 'class'=>'radio  evento_id','required'))!!} </td>
         </tr>
       @endforeach
     </tbody>
@@ -39,7 +32,7 @@
 
   <hr>
   <h4>Seleccionar duración</h4>
-  <div class="select Type col-md-12"> 
+  <div class="select Type col-md-12">
       <label>
           <div class="col-md-6">
               <h4 > Fecha inicio </h4>
@@ -70,7 +63,7 @@
           <h5 class="modal-title">Los cambios serán permanentes</h5>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>                        
+            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
             <button id = "botonModal" type="submit" class="btn btn-info" id="yes">Sí</button>
         </div>
       </div><!-- /.modal-content -->
@@ -81,13 +74,13 @@
 
 @section('javascript')
   {!!Html::script('js/jquery.dataTables.min.js')!!}
-  <script>  
+  <script>
     $(document).ready(function() {
        $('#example').DataTable( {
            "language": {
                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
            }
-        });  
+        });
     });
   </script>
 @stop
