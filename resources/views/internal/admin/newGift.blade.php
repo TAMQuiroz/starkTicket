@@ -21,13 +21,13 @@
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Stock</label>
         <div class="col-sm-10">
-          {!!Form::input('number','stock', null ,['class'=>'form-control','id'=>'stock','required','min'=>0,'max'=>1000])!!}
+          {!!Form::input('number','stock', null ,['class'=>'form-control','id'=>'stock','required','min'=>0,'max'=>5000])!!}
         </div>
       </div>
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Numero de puntos</label>
         <div class="col-sm-10">
-          {!!Form::input('number','points', null ,['class'=>'form-control','id'=>'points','required','min'=>1,'max'=>1000])!!}
+          {!!Form::input('number','points', null ,['class'=>'form-control','id'=>'points','required','min'=>1,'max'=>5000])!!}
         </div>
       </div>
       <div class="form-group">
