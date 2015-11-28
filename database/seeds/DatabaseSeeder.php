@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ModuleTableSeeder::class);
         $this->call(TestUserTableSeeder::class);
         $this->call(CategoryTableSeeder::class);
-        $this->call(LocalTableSeeder::class);
+        //this->call(LocalTableSeeder::class);
         $this->call(OrganizerTableSeeder::class);
         $this->call(politicsSeeder::class);
         $this->call(AccessPromotionSeeder::class);
