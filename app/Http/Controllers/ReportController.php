@@ -167,7 +167,8 @@ class ReportController extends Controller
             }  
         }
         
-    
+
+    if ($input['type'] == 1){
 
 
         Excel::create('Reporte de asignacion starkticket', function ($excel) use($assigmentsInformation,$flagBetweenDates,$flagFilterAll,$flagFirstDate,$flagLastDate,$input){
@@ -190,7 +191,7 @@ class ReportController extends Controller
                     if ($flagFirstDate) $sheet->setCellValue('A3','Fecha Asignacion desde '.$input['firstDate']);
                     elseif ($flagLastDate) $sheet->setCellValue('A3','Fecha Asignacion hasta '.$input['lastDate']);
                 }
-                else $sheet->setCellValue('A3',"No hay rango de fechas de Asignacion");
+                else $sheet->setCellValue('A3',"");
                 $sheet->cells('A3:G3',function($cells){
 
                     $cells->setAlignment('center');
@@ -200,9 +201,11 @@ class ReportController extends Controller
                 });      
             
 
+                $cantidad = count($assigmentsInformation)+4;
+                //sacamos el total 
 
 
-                $sheet->setBorder('B4:F200','thin');
+                $sheet->setBorder('B4:F' . $cantidad ,'thin');
                 $sheet->setCellValue('B4', "Nombre del modulo");
                 $sheet->setCellValue('C4', "Nombres del Vendedor");
                 $sheet->setCellValue('D4', "Apellidos del Vendedor");
@@ -263,10 +266,108 @@ class ReportController extends Controller
 
 
         })->download('xlsx'); 
-        return redirect('admin/report/assignment');
+    }
+    else{
+        Excel::create('Reporte de asignacion starkticket', function ($excel) use($assigmentsInformation,$flagBetweenDates,$flagFilterAll,$flagFirstDate,$flagLastDate,$input){
+          $excel->sheet('Reporte de Asignacion', function($sheet) use($assigmentsInformation,$flagBetweenDates,$flagFilterAll,$flagFirstDate,$flagLastDate,$input) {
+
+                $sheet->mergeCells('A1:E2');
+                $sheet->setCellValue('A1',"Reporte de Asignacion de Puntos de Venta");
+                $sheet->cells('A1:E1',function($cells){
+
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+                    $cells->setFontSize(30);
+
+                });      
+
+            
+                $sheet->mergeCells('A3:E3');
+                if ($flagBetweenDates or $flagFilterAll) $sheet->setCellValue('A3','Fecha Asignacion desde '.$input['firstDate'].'  hasta '.$input['lastDate']);
+                elseif ($flagFirstDate or $flagLastDate ) {
+                    if ($flagFirstDate) $sheet->setCellValue('A3','Fecha Asignacion desde '.$input['firstDate']);
+                    elseif ($flagLastDate) $sheet->setCellValue('A3','Fecha Asignacion hasta '.$input['lastDate']);
+                }
+                else $sheet->setCellValue('A3',"");
+                $sheet->cells('A3:E3',function($cells){
+
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+                    $cells->setFontSize(14);
+
+                });      
+            
+
+                $cantidad = count($assigmentsInformation)+4;
+
+
+                $sheet->setBorder('A4:E' . $cantidad ,'thin');
+                $sheet->setCellValue('A4', "Nombre del modulo");
+                $sheet->setCellValue('B4', "Nombres del Vendedor");
+                $sheet->setCellValue('C4', "Apellidos del Vendedor");
+                $sheet->setCellValue('D4', "Fecha de Asignación");
+                $sheet->setCellValue('E4', "Fecha de Desasociación");
+                //$sheet->setCellValue('E4', "Entradas vendidas módulo");
+                //$sheet->setCellValue('F4', "Subtotal");
+                //$sheet->setCellValue('G4', "Total");
+                
+                //$cells->setAlignment('center');
+                //$sheet->cells('A4:G4',function($cells){
+                $sheet->cells('A4:E4',function($cells){
+
+                    $cells->setFontWeight('bold');
+                    $cells->setBackground('#008000');
+                    $cells->setFontColor('#FFFFFF');
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+
+                });
+
+              //  $sheet->cells('A4:G500',function($cells){
+                $sheet->cells('A4:E4',function($cells){
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+
+                });
+
+
+                $sheet->setWidth(
+                    array(
+                        'A' => '30',
+                        'B' => '30',
+                        'C' => '30',
+                        'D' => '30',
+                        'E' => '30'
+                        //'E' => '30',
+                        //'F' => '15',
+                        //'G' => '15'                                               
+
+                    )
+
+                );
+
+                $sheet->setHeight(
+                    array(   
+                        '1' => '20'
+                    )
+
+                );
+
+                $data = $assigmentsInformation;
+                $sheet->fromArray($data, true, 'A5', true, false);
+
+          });
+
+
+
+
+        })->export('pdf');   
     }
 
+}
+
     public function actionExcel(Request $request){
+      
         
         $input = $request->all(); 
         $flagBetweenDates = false;
@@ -379,12 +480,13 @@ class ReportController extends Controller
                 }
             }  
         }
-        
-    
 
 
-        Excel::create('Reporte de ventas starkticket', function ($excel) use($eventInformation,$flagBetweenDates,$input){
-          $excel->sheet('Reporte de ventas', function($sheet) use($eventInformation,$flagBetweenDates,$input) {
+
+        if ($input['type'] == 1){
+            Excel::create('Reporte de ventas starkticket', function ($excel) use($eventInformation,$flagBetweenDates,$input){
+              $excel->sheet('Reporte de ventas', function($sheet) use($eventInformation,$flagBetweenDates,$input) {
+
 
                 $sheet->mergeCells('A1:G2');
                 $sheet->setCellValue('A1',"Reporte de ventas de tickets");
@@ -396,7 +498,7 @@ class ReportController extends Controller
 
                 });      
 
-            
+
                 $sheet->mergeCells('A3:G3');
                 if ($flagBetweenDates) $sheet->setCellValue('A3','Fecha desde '.$input['firstDate'].'  hasta '.$input['lastDate']);
                 else $sheet->setCellValue('A3',"");
@@ -407,11 +509,44 @@ class ReportController extends Controller
                     $cells->setFontSize(14);
 
                 });      
-            
 
 
+                $cantidad = count($eventInformation)+4;
+                $cellTotal = $cantidad + 1;
+                // comentarios no informativos
+                $ticketsOnline = 0; //indica entradas vendidas online
+                $subTicketsOnline = 0; // indica el subtotal de tickets ONLINE (precio)
+                $ticketsModulo = 0;  // indica entradas vendidas modulo
+                $subTicketsModulo = 0; // indica el subtotal de tickets modulo (precio)
+                $totalPrice = 0; // indica el total de ventas
 
-                $sheet->setBorder('A4:G500','thin');
+                foreach($eventInformation as $eventInfo){
+                    $ticketsOnline = $ticketsOnline + $eventInfo[2];
+                    $subTicketsOnline = $subTicketsOnline + $eventInfo[3];
+                    $ticketsModulo = $ticketsModulo + $eventInfo[4];
+                    $subTicketsModulo = $subTicketsModulo + $eventInfo[5];
+                    $totalPrice = $totalPrice +$eventInfo[6];
+                }
+
+
+                $sheet->setBorder('B'.$cellTotal.':G'. $cellTotal ,'thin');
+                $sheet->cells('B'.$cellTotal.':F'. $cellTotal,function($cells){
+
+                    $cells->setFontWeight('bold');
+                    //$cells->setBackground('#008000');
+                    $cells->setFontColor('#000000');
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+
+                });
+                $sheet->setCellValue('B'. $cellTotal, "TOTAL");
+                $sheet->setCellValue('C'. $cellTotal, $ticketsOnline);
+                $sheet->setCellValue('D'. $cellTotal, $subTicketsOnline);
+                $sheet->setCellValue('E' . $cellTotal, $ticketsModulo);
+                $sheet->setCellValue('F'. $cellTotal, $subTicketsModulo);
+                $sheet->setCellValue('G' . $cellTotal, $totalPrice);
+
+                $sheet->setBorder('A4:G' . $cantidad ,'thin');
                 $sheet->setCellValue('A4', "Nombre del evento");
                 $sheet->setCellValue('B4', "Fecha del evento");
                 $sheet->setCellValue('C4', "Entradas vendidas online");
@@ -431,7 +566,7 @@ class ReportController extends Controller
 
                 });
 
-                $sheet->cells('A4:G500',function($cells){
+                $sheet->cells('A4:G500'  ,function($cells){
 
                     $cells->setAlignment('center');
                     $cells->setValignment('center');
@@ -449,27 +584,142 @@ class ReportController extends Controller
                         'F' => '15',
                         'G' => '15'                                               
 
-                    )
+                        )
 
-                );
+                    );
 
                 $sheet->setHeight(
                     array(   
                         '1' => '20'
-                    )
+                        )
 
-                );
+                    );
 
                 $data = $eventInformation;
                 $sheet->fromArray($data, true, 'A5', true, false);
 
-          });
+              });
+            })->download('xlsx');
+        }
+        else{
+             Excel::create('Reporte de ventas starkticket', function ($excel) use($eventInformation,$flagBetweenDates,$input){
+              $excel->sheet('Reporte de ventas', function($sheet) use($eventInformation,$flagBetweenDates,$input) {
 
 
+                $sheet->mergeCells('A1:G2');
+                $sheet->setCellValue('A1',"Reporte de ventas de tickets");
+                $sheet->cells('A1:G1',function($cells){
+
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+                    $cells->setFontSize(30);
+
+                });      
 
 
-        })->download('xlsx');
-        
+                $sheet->mergeCells('A3:G3');
+                if ($flagBetweenDates) $sheet->setCellValue('A3','Fecha desde '.$input['firstDate'].'  hasta '.$input['lastDate']);
+                else $sheet->setCellValue('A3',"");
+                $sheet->cells('A3:G3',function($cells){
+
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+                    $cells->setFontSize(14);
+
+                });      
+
+
+                $cantidad = count($eventInformation)+4;
+                $cellTotal = $cantidad + 1;
+                // comentarios no informativos
+                $ticketsOnline = 0; //indica entradas vendidas online
+                $subTicketsOnline = 0; // indica el subtotal de tickets ONLINE (precio)
+                $ticketsModulo = 0;  // indica entradas vendidas modulo
+                $subTicketsModulo = 0; // indica el subtotal de tickets modulo (precio)
+                $totalPrice = 0; // indica el total de ventas
+
+                foreach($eventInformation as $eventInfo){
+                    $ticketsOnline = $ticketsOnline + $eventInfo[2];
+                    $subTicketsOnline = $subTicketsOnline + $eventInfo[3];
+                    $ticketsModulo = $ticketsModulo + $eventInfo[4];
+                    $subTicketsModulo = $subTicketsModulo + $eventInfo[5];
+                    $totalPrice = $totalPrice +$eventInfo[6];
+                }
+
+
+                $sheet->setBorder('B'.$cellTotal.':G'. $cellTotal ,'thin');
+                $sheet->cells('B'.$cellTotal.':F'. $cellTotal,function($cells){
+
+                    $cells->setFontWeight('bold');
+                    //$cells->setBackground('#008000');
+                    $cells->setFontColor('#000000');
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+
+                });
+                $sheet->setCellValue('B'. $cellTotal, "TOTAL");
+                $sheet->setCellValue('C'. $cellTotal, $ticketsOnline);
+                $sheet->setCellValue('D'. $cellTotal, $subTicketsOnline);
+                $sheet->setCellValue('E' . $cellTotal, $ticketsModulo);
+                $sheet->setCellValue('F'. $cellTotal, $subTicketsModulo);
+                $sheet->setCellValue('G' . $cellTotal, $totalPrice);
+
+                $sheet->setBorder('A4:G' . $cantidad ,'thin');
+                $sheet->setCellValue('A4', "Nombre del evento");
+                $sheet->setCellValue('B4', "Fecha del evento");
+                $sheet->setCellValue('C4', "Entradas vendidas online");
+                $sheet->setCellValue('D4', "Subtotal");
+                $sheet->setCellValue('E4', "Entradas vendidas módulo");
+                $sheet->setCellValue('F4', "Subtotal");
+                $sheet->setCellValue('G4', "Total");
+                
+                //$cells->setAlignment('center');
+                $sheet->cells('A4:G4',function($cells){
+
+                    $cells->setFontWeight('bold');
+                    $cells->setBackground('#008000');
+                    $cells->setFontColor('#FFFFFF');
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+
+                });
+
+                $sheet->cells('A4:G500'  ,function($cells){
+
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+
+                });
+
+
+                $sheet->setWidth(
+                    array(
+                        'A' => '30',
+                        'B' => '20',
+                        'C' => '30',
+                        'D' => '15',
+                        'E' => '30',
+                        'F' => '15',
+                        'G' => '15'                                               
+
+                        )
+
+                    );
+
+                $sheet->setHeight(
+                    array(   
+                        '1' => '20'
+                        )
+
+                    );
+
+                $data = $eventInformation;
+                $sheet->fromArray($data, true, 'A5', true, false);
+
+              });
+            })->export('pdf');      
+        }
+
     }
 
     /**
