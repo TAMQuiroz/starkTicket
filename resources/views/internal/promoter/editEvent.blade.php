@@ -542,7 +542,7 @@
                     @foreach($event->presentations as $function)
                     <tr>
                         <td><input name="start_date[]" type="date" value="{{date('Y-m-d',$function->starts_at)}}" style = "border:none"></td>
-                        <td><input type="time" name="start_time[]" value="{{date('h:i:s',$function->starts_at)}}" style = "border:none"></td>
+                        <td><input type="time" name="start_time[]" value='{{date("H:i",$function->starts_at)}}' style = "border:none"></td>
                         <td>
                           <a class="btn btn-info"   title="Eliminar"    onclick="deleteFunction(this)"><i class="glyphicon glyphicon-remove"></i></a>
                           <!-- <a class="btn btn-info" href=""  title="Eliminar"    data-toggle="modal" data-target="#deleteModal{{$function->id}}"><i class="glyphicon glyphicon-remove"></i></a> -->
