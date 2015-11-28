@@ -81,13 +81,12 @@
             
         
         <legend>Selección de Ubicación</legend>
-        <div class="seats">
+        <div class="col-md-12">
             <div class="demo">
-                <div id="parent-map">
+                <div id="parent-map" class="col-md-8">
                     <div id="seat-map"></div>
                 </div>
-                <br>
-                <div class="booking-details">
+                <div class="booking-details col-md-4">
                     <h4 style="text-decoration:underline;text-align: center;">Resumen</h4>
                     <p>Evento: <span> {{$event->name}}</span></p>
                     <p>Asiento(s): </p>

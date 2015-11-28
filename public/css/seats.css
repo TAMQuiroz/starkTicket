@@ -1,6 +1,6 @@
 
-.front{width: 300px;margin: 5px 32px 45px 32px;background-color: #f0f0f0; color: #666;text-align: center;padding: 3px;border-radius: 5px;} 
-.booking-details {float: right;position: relative;width:200px;height: 100%; } 
+.front{width: 300px;margin: auto;background-color: #f0f0f0; color: #666;text-align: center;padding: 3px;border-radius: 5px;} 
+.booking-details {float: left;position: relative;width:200px;height: 100%; } 
 .booking-details h3 {margin: 5px 5px 0 0;font-size: 16px;} 
 .booking-details p{line-height:26px; font-size:16px; color:#999} 
 .booking-details p span{color:#666} 
@@ -36,4 +36,8 @@ span.seatCharts-legendDescription {margin-left: 5px;line-height: 30px;}
 
 .seatCharts-cell.seatCharts-space {
     visibility: hidden;
+}
+
+.demo{
+	padding-bottom: 3em;
 }
