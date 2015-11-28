@@ -12,7 +12,7 @@ div.seatCharts-seat.focused {background-color: #329DB7;border: none;}
 div.seatCharts-seat.selected {background-color: #E6CAC4;} 
 div.seatCharts-seat.unavailable {background-color: #472B34;cursor: not-allowed;}
 div.seatCharts-seat.reserved {background-color: pink;cursor: not-allowed;} 
-div.seatCharts-container {border-right: 1px dotted #adadad;width: 400px;padding: 20px;float: left;} 
+div.seatCharts-container {border-right: 1px dotted #adadad;padding: 20px;float: left;} 
 div.seatCharts-legend {padding-left: 0px;bottom: 16px;} 
 ul.seatCharts-legendList {padding-left: 0px;} 
 .seatCharts-legendItem{float:left; width:140px;margin-top: 10px;line-height: 2;} 
