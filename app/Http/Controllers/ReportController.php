@@ -723,29 +723,42 @@ class ReportController extends Controller
         $assiInformation = [];
         foreach ($salesmans as $salesman) {
             
-           
+             $date_at = date_format(date_create(new Carbon()),"Y-m-d");
              $assistances = Attendance::where('salesman_id',$salesman->id)
                             ->where('datetimestart','LIKE', '%'.date_format(date_create(new Carbon()),"Y-m-d").'%')
                             ->get();
 
                     if (count($assistances)==0){
-                        array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No asistio"));
+                        array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No asistió","No asistió"));
                     }else {
                         foreach ($assistances as $assistance){
                             
                             if ($salesman->module_id == null ){
-                                array_push($assiInformation, array($salesman->name,$salesman->lastname,$assistance->datetimestart,$assistance->datetimeend,"No Tiene Modulo"));
+                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"No Tiene Módulo","No Tiene Módulo"));
                             }
                             else {
                                 $module = Module::find($salesman->module_id);
                                 $openHour = date_format(date_create($module->starTime),"H:i:s");
 
-                                if ($openHour >= date_format(date_create($assistance->datetimestart),"H:i:s")){
-                                        array_push($assiInformation, array($salesman->name,$salesman->lastname,$assistance->datetimestart,$assistance->datetimeend,"Puntual"));
-                                }                  
-                                else{
-                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,$assistance->datetimestart,$assistance->datetimeend,"Tardón"));
-                                } 
+                                $endHour = date_format(date_create($module->endTime),"H:i:s");
+                                    if ($openHour >= date_format(date_create($assistance->datetimestart),"H:i:s")){
+                                        if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Puntual","Salio Puntual"));
+                                        }
+                                        else {
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llego Puntual","Salió Temprano"));
+                                        }
+                                            
+                                    }                  
+                                    else{
+                                        if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Puntual"));
+                                        }
+                                        else {
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Temprano"));
+                                        }
+                                        
+                                    } 
                             }
                             
                         }
@@ -765,37 +778,50 @@ class ReportController extends Controller
 
 
 
-        return view('internal.admin.reports.assistance',compact('assiInformation'));
+        return view('internal.admin.reports.assistance',compact('assiInformation','date_at'));
     }
     public function assistanceExcel(Request $request){
-        if ($request['type']==1){
+        if ($request['ty_report']==1){
             $salesmans = User::where('role_id',2)->get();
-
+            $date_at = $request['date_at'];
             $assiInformation = [];
             foreach ($salesmans as $salesman) {
                 
                
                  $assistances = Attendance::where('salesman_id',$salesman->id)
-                                ->where('datetimestart','LIKE', '%'.date_format(date_create($request['date_at']),"Y-m-d").'%')
+                                ->where('datetimestart','LIKE', '%'.date_format(date_create($date_at),"Y-m-d").'%')
                                 ->get();
 
                         if (count($assistances)==0){
-                            array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No asistio"));
+                            array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió"));
                         }else {
                             foreach ($assistances as $assistance){
                                 
                                 if ($salesman->module_id == null ){
-                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,$assistance->datetimestart,$assistance->datetimeend,"No Tiene Modulo"));
+                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"No Tiene Módulo","No tiene Módulo"));
                                 }
                                 else {
                                     $module = Module::find($salesman->module_id);
                                     $openHour = date_format(date_create($module->starTime),"H:i:s");
 
+                                    $endHour = date_format(date_create($module->endTime),"H:i:s");
                                     if ($openHour >= date_format(date_create($assistance->datetimestart),"H:i:s")){
-                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,$assistance->datetimestart,$assistance->datetimeend,"Puntual"));
+                                        if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Puntual","Salio Puntual"));
+                                        }
+                                        else {
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llego Puntual","Salió Temprano"));
+                                        }
+                                            
                                     }                  
                                     else{
-                                        array_push($assiInformation, array($salesman->name,$salesman->lastname,$assistance->datetimestart,$assistance->datetimeend,"Tardón"));
+                                        if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Puntual"));
+                                        }
+                                        else {
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Temprano"));
+                                        }
+                                        
                                     } 
                                 }
                                 
@@ -808,10 +834,237 @@ class ReportController extends Controller
 
                  
              } 
-             return view('internal.admin.reports.assistance',compact('assiInformation'));
+             return view('internal.admin.reports.assistance',compact('assiInformation','date_at'));
 
         }
-        elseif  ($request['type']==2){
+        elseif  ($request['ty_report']==2){
+            $input = $request->all(); 
+             $salesmans = User::where('role_id',2)->get();
+            $date_at = $request['date_at'];
+            $assiInformation = [];
+            foreach ($salesmans as $salesman) {
+                
+               
+                 $assistances = Attendance::where('salesman_id',$salesman->id)
+                                ->where('datetimestart','LIKE', '%'.date_format(date_create($date_at),"Y-m-d").'%')
+                                ->get();
+
+                        if (count($assistances)==0){
+                            array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió"));
+                        }else {
+                            foreach ($assistances as $assistance){
+                                
+                                if ($salesman->module_id == null ){
+                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"No Tiene Módulo","No tiene Módulo"));
+                                }
+                                else {
+                                    $module = Module::find($salesman->module_id);
+                                    $openHour = date_format(date_create($module->starTime),"H:i:s");
+                                    $endHour = date_format(date_create($module->endTime),"H:i:s");
+                                    if ($openHour >= date_format(date_create($assistance->datetimestart),"H:i:s")){
+                                        if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Puntual","Salio Puntual"));
+                                        }
+                                        else {
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llego Puntual","Salió Temprano"));
+                                        }
+                                            
+                                    }                  
+                                    else{
+                                        if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Puntual"));
+                                        }
+                                        else {
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Temprano"));
+                                        }
+                                        
+                                    } 
+                                }
+                                
+                            }
+                        }
+                        
+
+
+                 //}
+
+                 
+             } 
+            
+
+            if ($input['type'] == 1){
+                Excel::create('Reporte de asistencia de vendedores starkticket', function ($excel) use($assiInformation,$input){
+                  $excel->sheet('Reporte de ventas', function($sheet) use($assiInformation,$input) {
+
+
+                    $sheet->mergeCells('A1:G2');
+                    $sheet->setCellValue('A1',"Reporte de asistencia de vendedores");
+                    $sheet->cells('A1:G1',function($cells){
+
+                        $cells->setAlignment('center');
+                        $cells->setValignment('center');
+                        $cells->setFontSize(30);
+
+                    });      
+
+
+                    $sheet->mergeCells('A3:G3');
+                    $sheet->setCellValue('A3','Fecha del '.$input['date_at']);
+                    
+                    $sheet->cells('A3:G3',function($cells){
+
+                        $cells->setAlignment('center');
+                        $cells->setValignment('center');
+                        $cells->setFontSize(14);
+
+                    });      
+
+
+                    $cantidad = count($assiInformation)+4;
+
+
+                    $sheet->setBorder('A4:G' . $cantidad ,'thin');
+                    $sheet->setCellValue('A4', "Nombres del Vendedor");
+                    $sheet->setCellValue('B4', "Apellidos del Vendedor");
+                    $sheet->setCellValue('C4', "Hora de Entrada");
+                    $sheet->setCellValue('D4', "Hora de Salida");
+                    $sheet->setCellValue('E4', "Status");
+                    $sheet->setCellValue('F4', "Subtotal");
+                    $sheet->setCellValue('G4', "Total");
+                    
+                    //$cells->setAlignment('center');
+                    $sheet->cells('A4:G4',function($cells){
+
+                        $cells->setFontWeight('bold');
+                        $cells->setBackground('#008000');
+                        $cells->setFontColor('#FFFFFF');
+                        $cells->setAlignment('center');
+                        $cells->setValignment('center');
+
+                    });
+
+                    $sheet->cells('A4:G500'  ,function($cells){
+
+                        $cells->setAlignment('center');
+                        $cells->setValignment('center');
+
+                    });
+
+
+                    $sheet->setWidth(
+                        array(
+                            'A' => '30',
+                            'B' => '30',
+                            'C' => '30',
+                            'D' => '30',
+                            'E' => '30',
+                            'F' => '15',
+                            'G' => '15'                                               
+
+                            )
+
+                        );
+
+                    $sheet->setHeight(
+                        array(   
+                            '1' => '20'
+                            )
+
+                        );
+
+                    $data = $assiInformation;
+                    $sheet->fromArray($data, true, 'A5', true, false);
+
+                  });
+                })->download('xlsx');
+            }
+            else{
+            Excel::create('Reporte de ventas starkticket', function ($excel) use($assiInformation,$input){
+                  $excel->sheet('Reporte de ventas', function($sheet) use($assiInformation,$input) {
+
+
+                    $sheet->mergeCells('A1:G2');
+                    $sheet->setCellValue('A1',"Reporte de asistencia de vendedores");
+                    $sheet->cells('A1:G1',function($cells){
+
+                        $cells->setAlignment('center');
+                        $cells->setValignment('center');
+                        $cells->setFontSize(30);
+
+                    });      
+
+
+                    $sheet->mergeCells('A3:G3');
+                    $sheet->setCellValue('A3','Fecha del '.$input['date_at']);
+                    
+                    $sheet->cells('A3:G3',function($cells){
+
+                        $cells->setAlignment('center');
+                        $cells->setValignment('center');
+                        $cells->setFontSize(14);
+
+                    });      
+
+
+                    $cantidad = count($assiInformation)+4;
+
+
+                    $sheet->setBorder('A4:G' . $cantidad ,'thin');
+                    $sheet->setCellValue('A4', "Nombres del Vendedor");
+                    $sheet->setCellValue('B4', "Apellidos del Vendedor");
+                    $sheet->setCellValue('C4', "Hora de Entrada");
+                    $sheet->setCellValue('D4', "Hora de Salida");
+                    $sheet->setCellValue('E4', "Status");
+                    $sheet->setCellValue('F4', "Subtotal");
+                    $sheet->setCellValue('G4', "Total");
+                    
+                    //$cells->setAlignment('center');
+                    $sheet->cells('A4:G4',function($cells){
+
+                        $cells->setFontWeight('bold');
+                        $cells->setBackground('#008000');
+                        $cells->setFontColor('#FFFFFF');
+                        $cells->setAlignment('center');
+                        $cells->setValignment('center');
+
+                    });
+
+                    $sheet->cells('A4:G500'  ,function($cells){
+
+                        $cells->setAlignment('center');
+                        $cells->setValignment('center');
+
+                    });
+
+
+                    $sheet->setWidth(
+                        array(
+                            'A' => '30',
+                            'B' => '30',
+                            'C' => '30',
+                            'D' => '30',
+                            'E' => '30',
+                            'F' => '15',
+                            'G' => '15'                                               
+
+                            )
+
+                        );
+
+                    $sheet->setHeight(
+                        array(   
+                            '1' => '20'
+                            )
+
+                        );
+
+                    $data = $assiInformation;
+                    $sheet->fromArray($data, true, 'A5', true, false);
+
+                  });
+                })->export('pdf');
+
+            }
 
         }
         

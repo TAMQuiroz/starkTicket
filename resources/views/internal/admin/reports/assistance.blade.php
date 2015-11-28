@@ -30,7 +30,7 @@
     <div class="col-sm-6"> </div>
     <div class="col-sm-5 pull-right">
       {!!Form::open(array('id'=>'form','class'=>'form-inline'))!!}
-      {!! Form::hidden('type', 1,['id'=>'type'])!!}
+      {!! Form::hidden('ty_report', 1,['id'=>'type'])!!}
         <div class="form-group">
           <input type="text" class="form-control" id="datepicker" placeholder="Fecha" required name="date_at">
         </div>
@@ -43,17 +43,18 @@
 {!!Form::open(array('url' => 'admin/report/assistance', 'id'=>'form','class'=>'form-horizontal'))!!}
 <div class="col-sm-12">
 <hr>
-  {!! Form::hidden('type', 2,['id'=>'type'])!!}
-<hr>
-
-
+  {!! Form::hidden('ty_report', 2,['id'=>'type'])!!}
+   {!! Form::hidden('date_at', $date_at,['id'=>'date_at'])!!}
+  <h3>Reporte del {{$date_at}}</h3>
+  <hr>
     <table class="table table-bordered table-striped" id="example">
           <tr>
               <th>Nombres y Apellidos</th>
             <!--  <th>Modulo</th> -->
               <th>Hora de Ingreso</th>
               <th>Hora de Salida</th>
-              <th>Situación</th>
+              <th>Situación Temprano</th>
+              <th>Situación Salida</th>
 
           </tr>
           <tbody id="fbody">
@@ -61,15 +62,34 @@
           <tr>
               <td>{{$assi[0]}} {{$assi[1]}}</td>
              <!-- <td>{{$assi[2]}}</td> -->
-              <td>{{$assi[2]}}</td>
-              <td>{{$assi[3]}}</td>
+              @if (strcmp($assi[2], "-") != 0 )
+                <td>{{date_format(date_create($assi[2]),"H:i:s")}}</td>
+              @else
+                <td>{{$assi[2]}}</td>
+              @endif  
+              @if (strcmp($assi[3], "-") != 0 )
+                <td>{{date_format(date_create($assi[3]),"H:i:s")}}</td>
+              @else
+                <td>{{$assi[3]}}</td>
+              @endif   
               <td>{{$assi[4]}}</td>
+              <td>{{$assi[5]}}</td>
           </tr>
           @endforeach
         </tbody>
       </table>
+  <h5>Seleccione el tipo de formato de su reporte</h5>  
   <div class="col-sm-2">
-        <button type="submit" class="btn btn-info">Descargar Archivo Excel</button>
+          {!!Form::select('type', [
+             '1' => 'Excel',
+             '2' => 'PDF'],
+             null,
+             ['class' => 'form-control']
+          )!!}
+  </div>
+
+  <div class="col-sm-2">
+      <button type="submit" class="btn btn-info">Descargar Archivo</button>
   </div>
 </div>
 {!!Form::close()!!}
