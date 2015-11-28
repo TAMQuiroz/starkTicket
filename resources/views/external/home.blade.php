@@ -1,22 +1,6 @@
 @extends('layoutExternal')
 
 @section('style')
-    <style type="text/css">
-        #nav .first{
-            color: white;
-        }
-        .input-group{
-            width:600px;
-        }
-        .btn-info{
-            background-color: #83D3C9;
-            border-color: #83D3C9;
-        }
-        .btn-info:hover{
-            background-color: #329DB7;
-            border-color: #329DB7;
-        }
-    </style>
 @stop
 
 @section('title')
