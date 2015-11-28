@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Presentation extends Model
 {
     protected $table = 'presentations';
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
+
 
     public function event(){
         return $this->belongsTo('App\Models\Event');

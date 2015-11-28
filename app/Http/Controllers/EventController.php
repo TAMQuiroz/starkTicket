@@ -82,6 +82,9 @@ class EventController extends Controller
         $organizers_list = Organizer::all()->lists('businessName','id');
 
         $locals_list = Local::all()->lists('name','id');
+        if(count($locals_list) == 0){
+            return back()->withErrors(['No se tienen locales para crear eventos']);
+        }
         $capacity_list = Local::all();
         $array = ['categories_list' =>$categories_list,
         'organizers_list'   =>$organizers_list,
@@ -695,8 +698,9 @@ public function update(UpdateEventRequest $request, $id)
             return redirect()->back()->withErrors(['error' => 'Seleccione un evento válido']);
         //verificar que el evento ya terminó completamente o está antes del publication date
         if($event->publication_date < time()){
-            if($event->presentations->last()->starts_at > time())
-                return redirect()->back()->withErrors(['error' => 'No se puede eliminar este evento ya que aun tiene presentaciones vigentes']);
+            if(!$event->presentations->isEmpty())
+                if($event->presentations->last()->starts_at > time())
+                    return redirect()->back()->withErrors(['error' => 'No se puede eliminar este evento ya que aun tiene presentaciones vigentes']);
         }
         $this->deletePresentations($id);
         $this->deleteZones($id);
