@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
 @section('style')
-
+{!!Html::style('css/datepicker.css')!!}
 @stop
 
 @section('title')
@@ -9,91 +9,98 @@
 @stop
 
 @section('content')
-<div class="row">
-    <div class="col-sm-3">
-        <label>Seleccione al vendedor</label>
-        <!--
-        <select class="form-control">
-          <option value="volvo">Todos los vendedores</option>
-          <option value="saab">Juan Perez</option>
-          <option value="opel">Ana García</option>
-          <option value="audi">Miguel Guanira</option>
-        </select>
-        -->
-        {!!Form::select('select1', [
-           'op0' => 'Todos los vendedores',
-           'op1' => 'Juan Perez',
-           'op2' => 'Ana García',
-           'op3' => 'Miguel Guanira'],
-           null,
-           ['class' => 'form-control']
-        )!!}
-    </div>
-    <div class="col-sm-2">
-        <label>Desde</label>
-        <input type="date" class="form-control">
-    </div>
-    <div class="col-sm-2">
-        <label>Hasta</label>
-        <input type="date" class="form-control">
-    </div>
-    <div class="col-sm-2">
-        <label>Tipo</label>
-        <!--
-        <select class="form-control">
-          <option value="opel">Tabla</option>
-          <option value="volvo">Excel</option>
-          <option value="saab">PDF</option>
-        </select>
-        -->
-        {!!Form::select('select2', [
-           'op0' => 'Tabla',
-           'op1' => 'Excel',
-           'op2' => 'PDF'],
-           null,
-           ['class' => 'form-control']
-        )!!}
-    </div>
-    <div class="col-sm-3">
-        <br>
-        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo2">Mostrar Reporte</button>
-    </div>
+{!!Form::open(array('url' => 'admin/report/assistance', 'id'=>'form','class'=>'form-horizontal'))!!}
+<!--<div class="col-sm-3">
+    <label>Ingrese nombre del evento</label>
+    {!!Form::text('name', null ,['class'=>'form-control', 'id'=>'search','placeholder' => 'Nombre del evento'])!!}
 </div>
+<div class="col-sm-9">
+    <div class="col-sm-4">
+        <label>Desde</label>
+        {!!Form::input('date','firstDate', null ,['class'=>'form-control','id'=>'fecha-ini', 'required'])!!}
+    </div>
+    <div class="col-sm-4">
+        <label>Hasta</label>
+        {!!Form::input('date','lastDate', null ,['class'=>'form-control','id'=>'fecha-fin','required'])!!}
+    </div>
+    <div class="col-sm-4"><br><button class="btn btn-info" type="button" id = 'botoncito' >Buscar</button></div>
+</div> -->
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6"> </div>
+    <div class="col-sm-5 pull-right">
+      {!!Form::open(array('id'=>'form','class'=>'form-inline'))!!}
+      {!! Form::hidden('type', 1,['id'=>'type'])!!}
+        <div class="form-group">
+          <input type="text" class="form-control" id="datepicker" placeholder="Fecha" required name="date_at">
+        </div>
+        <input type="submit" value="Buscar eventos" class="btn btn-info">
+      </form>
+      </div>
+  </div>
+</div>
+{!!Form::close()!!}
+{!!Form::open(array('url' => 'admin/report/assistance', 'id'=>'form','class'=>'form-horizontal'))!!}
+<div class="col-sm-12">
+<hr>
+  {!! Form::hidden('type', 2,['id'=>'type'])!!}
 <hr>
 
 
-<div id="demo2" class="collapse">
-    <table class="table table-bordered table-striped">
-        <tr>
-            <th>Apellidos y Nombres</th>
-            <th>Zona</th>
-            <th>Telefonos(s)</th>
-        </tr>
-        <tr>
-            <td>Contenido 1</td>
-            <td>Contenido 2</td>
-            <td>Contenido 3</td>
-        </tr>
-        <tr>
-            <td>Contenido 1</td>
-            <td>Contenido 2</td>
-            <td>Contenido 3</td>
-        </tr>
-        <tr>
-            <td>Contenido 1</td>
-            <td>Contenido 2</td>
-            <td>Contenido 3</td>
-        </tr>
-        <tr>
-            <td>Contenido 1</td>
-            <td>Contenido 2</td>
-            <td>Contenido 3</td>
-        </tr>
-    </table>
-</div>
+    <table class="table table-bordered table-striped" id="example">
+          <tr>
+              <th>Nombres y Apellidos</th>
+            <!--  <th>Modulo</th> -->
+              <th>Hora de Ingreso</th>
+              <th>Hora de Salida</th>
+              <th>Situación</th>
 
+          </tr>
+          <tbody id="fbody">
+          @foreach($assiInformation as $assi)
+          <tr>
+              <td>{{$assi[0]}} {{$assi[1]}}</td>
+             <!-- <td>{{$assi[2]}}</td> -->
+              <td>{{$assi[2]}}</td>
+              <td>{{$assi[3]}}</td>
+              <td>{{$assi[4]}}</td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+  <div class="col-sm-2">
+        <button type="submit" class="btn btn-info">Descargar Archivo Excel</button>
+  </div>
+</div>
+{!!Form::close()!!}
 @stop
 
 @section('javascript')
-
+  {!!Html::script('js/jquery-ui.min.js')!!}
+<script>
+  (function() {
+    $( "#datepicker" ).datepicker({
+            dateFormat: "yy-mm-dd" ,
+            minDate: "-2y" ,
+            maxDate: 0,
+            beforeShow: function() {
+                setTimeout(function(){
+                    $('.ui-datepicker').css('z-index', 9999);
+                }, 0);
+            }
+        }).on("change", function(e) {
+            var curDate = $(this).datepicker("getDate");
+            var maxDate = new Date();
+            maxDate.setDate(maxDate.getDate() + 720);
+            maxDate.setHours(0, 0, 0, 0);
+            if (curDate > maxDate)
+            {
+                $(this).val("");
+                $(this).addClass("red");
+            } else {
+                $(this).removeClass("green");
+            }
+        });
+    })();
+  </script>
 @stop

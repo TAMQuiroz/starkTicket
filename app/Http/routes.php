@@ -231,6 +231,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/config/system', ['uses'=>'BusinessController@systemUpdate','as'=>'config.system.update']);
 
     Route::get('admin/report/assistance', 'ReportController@showAssistance');
+    Route::post('admin/report/assistance', 'ReportController@assistanceExcel');
     Route::get('admin/report/sales', 'ReportController@showSales');
     Route::post('admin/report/sales','ReportController@actionExcel');
     //Route::get('admin/report/sales/download','ReportController@actionExcel');

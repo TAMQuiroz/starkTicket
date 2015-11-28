@@ -10,9 +10,11 @@ use App\Models\Ticket;
 use App\Models\Presentation;
 use App\Models\ModuleAssigment;
 use App\Models\Module;
+use App\Models\Attendance;
 use App\User;
 use App\Role;
 use Excel;
+use Carbon\Carbon;
 use DB;
 
 class ReportController extends Controller
@@ -534,7 +536,105 @@ class ReportController extends Controller
      */
     public function showAssistance()
     {
-        return view('internal.admin.reports.assistance');
+        
+        $salesmans = User::where('role_id',2)->get();
+
+        $assiInformation = [];
+        foreach ($salesmans as $salesman) {
+            
+           
+             $assistances = Attendance::where('salesman_id',$salesman->id)
+                            ->where('datetimestart','LIKE', '%'.date_format(date_create(new Carbon()),"Y-m-d").'%')
+                            ->get();
+
+                    if (count($assistances)==0){
+                        array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No asistio"));
+                    }else {
+                        foreach ($assistances as $assistance){
+                            
+                            if ($salesman->module_id == null ){
+                                array_push($assiInformation, array($salesman->name,$salesman->lastname,$assistance->datetimestart,$assistance->datetimeend,"No Tiene Modulo"));
+                            }
+                            else {
+                                $module = Module::find($salesman->module_id);
+                                $openHour = date_format(date_create($module->starTime),"H:i:s");
+
+                                if ($openHour >= date_format(date_create($assistance->datetimestart),"H:i:s")){
+                                        array_push($assiInformation, array($salesman->name,$salesman->lastname,$assistance->datetimestart,$assistance->datetimeend,"Puntual"));
+                                }                  
+                                else{
+                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,$assistance->datetimestart,$assistance->datetimeend,"Tardón"));
+                                } 
+                            }
+                            
+                        }
+                    }
+                    
+
+
+             //}
+
+             
+             
+
+         } 
+        //return $assiInformation;
+                
+    
+
+
+
+        return view('internal.admin.reports.assistance',compact('assiInformation'));
+    }
+    public function assistanceExcel(Request $request){
+        if ($request['type']==1){
+            $salesmans = User::where('role_id',2)->get();
+
+            $assiInformation = [];
+            foreach ($salesmans as $salesman) {
+                
+               
+                 $assistances = Attendance::where('salesman_id',$salesman->id)
+                                ->where('datetimestart','LIKE', '%'.date_format(date_create($request['date_at']),"Y-m-d").'%')
+                                ->get();
+
+                        if (count($assistances)==0){
+                            array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No asistio"));
+                        }else {
+                            foreach ($assistances as $assistance){
+                                
+                                if ($salesman->module_id == null ){
+                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,$assistance->datetimestart,$assistance->datetimeend,"No Tiene Modulo"));
+                                }
+                                else {
+                                    $module = Module::find($salesman->module_id);
+                                    $openHour = date_format(date_create($module->starTime),"H:i:s");
+
+                                    if ($openHour >= date_format(date_create($assistance->datetimestart),"H:i:s")){
+                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,$assistance->datetimestart,$assistance->datetimeend,"Puntual"));
+                                    }                  
+                                    else{
+                                        array_push($assiInformation, array($salesman->name,$salesman->lastname,$assistance->datetimestart,$assistance->datetimeend,"Tardón"));
+                                    } 
+                                }
+                                
+                            }
+                        }
+                        
+
+
+                 //}
+
+                 
+             } 
+             return view('internal.admin.reports.assistance',compact('assiInformation'));
+
+        }
+        elseif  ($request['type']==2){
+
+        }
+        
+
     }
 
     /**
