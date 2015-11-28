@@ -16,7 +16,7 @@
 <body>
     @extends('layout.topbar')
 
-    <div id="header">
+    <div id="header" class="noprint">
         <div class="container">
             <div id="logo">
                 <h1 id="portada"><a href="{{url('client/home')}}">{{$business_name}}</a></h1>
