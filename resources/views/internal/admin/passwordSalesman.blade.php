@@ -9,7 +9,6 @@
 @stop
 
 @section('content')
-@include('errors.list')
 <div class="col-sm-6">
 {!!Form::open(array('url' => 'salesman/password','id'=>'form','class'=>'form-horizontal'))!!}
     <div class="form-group">

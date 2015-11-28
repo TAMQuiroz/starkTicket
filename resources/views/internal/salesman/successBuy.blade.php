@@ -10,6 +10,11 @@
             background-color: #329DB7;
             border-color: #329DB7;
         }
+        @media print{
+			.noprint {
+				display:none;
+			}
+		}
     </style>
 @stop
 
@@ -98,8 +103,9 @@
 		</div>
 	</div>
 	<div class="col-md-12">
-		<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#correo" data-whatever="@mdo">Enviar por Correo</button></td>
-		<td><a href="{{url('salesman')}}"><button type="button" class="btn btn-info">Finalizar</button></a></td>
+		<td><button type="button" class="btn btn-info noprint" data-toggle="modal" data-target="#correo" data-whatever="@mdo">Enviar por Correo</button></td>
+		<td><a href="{{url('salesman')}}"><button type="button" class="btn btn-info noprint">Finalizar</button></a></td>
+		<button onclick="imprimir()" type="button" class="btn btn-info noprint" data-dismiss="modal" data-target="#visualizarVenta"><i class="glyphicon glyphicon-print"></i></button>
 	</div>
 	<div class="modal fade" id="correo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 	  <div class="modal-dialog" role="document">
@@ -131,5 +137,11 @@
 @stop
 
 @section('javascript')
+
+<script type="text/javascript">
+function imprimir() {
+    window.print();
+}
+</script>
 
 @stop
