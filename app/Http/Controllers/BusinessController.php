@@ -144,14 +144,23 @@ class BusinessController extends Controller
 
         if ($request['type']==1){
             $module = Module::find(\Auth::user()->module_id);
-            $module->initial_cash    = $request['cash'];
+            if ($module->openModule == true) {
+                return back()->withErrors(['La caja ya está abierta. Ya colocó dinero en la caja']);
+            }
+
+            $module->openModule     = true;
+            $module->initial_cash   = $request['cash'];
             $module->actual_cash    = $request['cash'];
             $module->save();
         }
         elseif ($request['type']==2){
             $module = Module::find(\Auth::user()->module_id);
-            $module->initial_cash    = $request['cash'];
-            //$module->actual_cash    = 0;
+            if ($module->openModule == false) {
+                return back()->withErrors(['La caja ya está cerrada. Abrá la caja primero']);
+            }
+            $module->openModule     = false;
+            $module->initial_cash    = 0;
+            $module->actual_cash     = 0;
             $module->save();
 
              $tickets = DB::table('tickets')

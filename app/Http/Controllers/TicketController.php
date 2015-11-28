@@ -19,6 +19,8 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Session;
 use Mail;
+use Auth;
+use App\Models\ModuleAssigment;
 
 class TicketController extends Controller
 {
@@ -78,6 +80,14 @@ class TicketController extends Controller
      */
     public function createSalesman($id)
     {
+        $userId = Auth::user()->id;
+        $moduleUser = ModuleAssigment::where(["salesman_id"=>$userId,"status"=>1])->first();
+
+        if (!is_object($moduleUser))
+        {
+            return back()->withErrors(['Usted no tiene modulo asignado, por lo tanto no puede vender']);
+        }
+
         //Buscar y enviar info de evento con $id
         $event = Event::find($id);
         $presentations = Presentation::where('event_id', $id)->where('cancelled',0)->where('starts_at','>',strtotime(Carbon::now()))->get();
