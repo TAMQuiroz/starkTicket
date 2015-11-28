@@ -66,7 +66,7 @@ class EventController extends Controller
         foreach ($events as $event) {
              if (count($event->presentations)>0)
                 array_push($auxEvent,$event);
-         } 
+         }
          $events = $auxEvent;
 
         return view('external.events',compact('events'));
@@ -323,7 +323,7 @@ public function store(StoreEventRequest $request)
 
         if(empty($event)||$event->cancelled)
             return redirect()->back();
-        
+
        return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments]);
     }
 
@@ -332,23 +332,19 @@ public function store(StoreEventRequest $request)
 
         $user = \Auth::user();
         $event = Event::findOrFail($id);
-        $users = User::all();
         $input = $request->all();
 
         //Agrego el nuevo comentario
-
         $Comment = new Comment ;
         $Comment->description   =   $input['comment'];
         $Comment->time          =   new Carbon();
         $Comment->event_id      = $id;
-
-        $idUser                 = Auth::user()->id;
-        $Comment->user_id       = $idUser;
-
+        $Comment->user_id       = Auth::user()->id;
         $Comment->save();
 
+        Session::flash('message', 'Comentario publicado');
+        Session::flash('alert-class','alert-success');
         return redirect()->back();
-        //return view('external.event', ['event' => $event, 'user'=>$user , 'Comments'=> $Comments,'users' => $users  ] );
     }
 
     /**
