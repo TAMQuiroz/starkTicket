@@ -1,7 +1,8 @@
 @extends('layout.admin')
 
 @section('style')
-
+  {!!Html::style('css/jquery.seat-charts.css')!!}
+  {!!Html::style('css/seats.css')!!}
 @stop
 
 @section('title')
@@ -64,7 +65,19 @@
           {!!Form::input('number','column', null ,['class'=>'form-control','id'=>'column','required','min'=>0])!!}
         </div>
       </div>
-
+      <div class="form-group">
+            <div class="col-sm-offset-10 col-sm-6">
+                <a class="btn btn-info" onclick="commitSeats()">Commit</a>
+            </div>
+      </div>   
+      <div class="form-group" id="distribution_id">
+        multiple
+        {!!Form::radio('selection_mode', 'dos',true,['id'=>'multiple-mode-on', 'hidden'])!!} 
+        single
+        {!!Form::radio('selection_mode', 'uno',false,['id'=>'single-mode-on','hidden'])!!} 
+        <div id="seat-map" class="seatCharts-container"  tabindex ="0"> 
+        </div>
+      </div>
       <div class="form-group">
         <label for="local_type" class="col-sm-2 control-label">No Numerado</label>
         <div class="col-sm-10">
@@ -114,6 +127,8 @@
 
 @section('javascript')
 {!!Html::script('js/local.js')!!}
+{!!Html::script('js/jquery.seat-charts.js')!!}
+{!!Html::script('js/seatLocals.js')!!}
 <script type="text/javascript">
   $('#yes').click(function(){
     $('#submitModal').modal('hide');  
