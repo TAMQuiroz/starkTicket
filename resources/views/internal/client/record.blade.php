@@ -10,6 +10,7 @@
 @section('content')
     <table class="table table-bordered table-striped">
         <tr>
+            <th>Nro. Ticket</th>
             <th>Fecha de presentación</th>
             <th>Cancelado?</th>
             <th>Nombre del Evento</th>
@@ -20,6 +21,7 @@
         </tr>
         @foreach($tickets as $ticket)
         <tr>
+           <td>{{$ticket->id}}</td>
            <td>{{date("d/m/Y", $ticket->presentation["starts_at"])}} </td>
            <td>@if ($ticket->presentation["cancelled"]) Si @else No @endif</td>
            @if($ticket->event["cancelled"])

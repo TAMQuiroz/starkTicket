@@ -9,6 +9,9 @@
   div.seatCharts-seat.selected {
     background-color: red;
   }
+  div.seatCharts-cell.seatCharts-space{
+    visibility: visible;
+  }
   </style>
 @stop
 
@@ -84,29 +87,29 @@
 
 
         <div class="row">
-          <div class="col-sm-8">
+          <div class="col-sm-12">
             {!!Form::open(array('route' => 'events.store','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Nombre</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::text('name','', array('class' => 'form-control','required','maxlength' => 30)) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Lugar</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::select('local_id', $locals_list->toArray(), null, ['class' => 'form-control','required', 'onclick' => 'changeCapacity()','maxlength' => 50]) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Descripción</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::textarea('description', null, ['class' => 'form-control','style' => 'resize:none','rows' => '3','maxlength' => 100]) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Categoría</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
 
                     {!! Form::select('parent_category_id', $categories_list->toArray(),null,['class' => 'form-control','required','id'=>'category_id']) !!}
                 </div>
@@ -114,50 +117,50 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Sub categoría</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                     {!! Form::select('category_id',$categories_list->toArray(),null,['class' => 'form-control','required','id'=>'subcategory_id','onLoad'=>'getSubs()']) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Organizador</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
 
                     {!! Form::select('organizer_id', $organizers_list->toArray(),null,['class' => 'form-control','required','maxlength' => 50]) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Comisión(%)</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::number('percentage_comission','', array('class' => 'form-control','min' => '0','required','max' => '100')) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Duración Aproximada (horas) </label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::number('time_length',1, array('class' => 'form-control','min' => '1','required')) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Fecha de publicación del evento</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                     {!! Form::date('publication_date',\Carbon\Carbon::now(), array('class' => 'form-control','required', 'oninput' => 'incrementSellingDate()', 'min'=>\Carbon\Carbon::now()->toDateString())) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Fecha de inicio de ventas</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                     {!! Form::date('selling_date',\Carbon\Carbon::now()->addDay(), array('class' => 'form-control','required', 'oninput' => 'incrementPresentationDate()')) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Imagen evento</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::file('image', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Imagen distirbución evento</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::file('distribution_image', array('class' => 'form-control','required')) !!}
                 </div>
               </div>              
@@ -165,7 +168,13 @@
 
               <!-- ZONA -->
               <legend>Agregar zona:</legend>
-              <div class="col-md-6">
+              <div class="col-md-3">
+                  <div class="form-group">
+                multiple
+                {!! Form::radio('selection_mode', 'dos',true,['id'=>'multiple-mode-on'])!!} 
+                single
+                {!! Form::radio('selection_mode', 'uno',false,['id'=>'single-mode-on'])!!} 
+                </div>
                   <div class="form-group">
                       <label  class="col-md-4 control-label">Nombre</label>
                       <div class="col-md-8">
@@ -220,14 +229,35 @@
                         </div>
                   </div>   
                 </div>   
-                  <div  id="dist" class="col-md-6">
+                  <div  id="dist" class="col-md-9">
                     <label  id="labelDist">Distribución evento</label>
                   </div>                                                
                 <script>
 
                     function addZone(){
-
-
+                      if($('#input-capacity').attr('disabled')){
+                        $('.selected').removeClass('selected').addClass('reserved');
+                        var col_min=100000000;
+                        var fil_min=100000000;
+                        var col_max=0;
+                        var fil_max=0;
+                        $('.reserved').each(function(index, element){
+                          var id = $(this).attr('id');
+                          var col = parseInt(id.split("_")[1]);
+                          var fil = parseInt(id.split("_")[0]);
+                          console.log(col+" fil "+fil); 
+                          if(col<col_min) col_min = col;
+                          if(fil<fil_min) fil_min = fil;
+                          if(col>col_max) col_max = col;
+                          if(fil>fil_max) fil_max = fil;
+                        });
+                        console.log(col_min);
+                        console.log(fil_max);
+                        $('#input-column').val(''+(col_max-col_min+1));
+                        $('#input-row').val(''+(fil_max-fil_min+1));
+                        $('#input-rowIni').val(''+fil_min);
+                        $('#input-colIni').val(''+col_min);
+                      }
                         var new_capacity = document.getElementById('capacity-display').value;
 
                         var zone = document.getElementById('input-zone').value;
@@ -390,6 +420,14 @@
                         // document.getElementById('input-colIni').value = '';
                         // document.getElementById('input-rowIni').value = '';
                         if( document.getElementById('input-capacity').disabled==true){
+                          var elementos = $('.reserved');
+                          var index_table = $('#table-zone').find('tr').length-2;
+                          $('.reserved').each(function(){
+                            $('#table-zone').append('<input type="hidden" name="seats_ids['+index_table+'][]" value="'+this.id+'" id="seats_id_'+index_table+'" >');
+                          });
+                          $('.selected').each(function(){
+                            $('#table-zone').append('<input type="hidden" name="seats_ids['+index_table+'][]" value="'+this.id+'" id="seats_id_'+index_table+'" >');
+                          });
                           if($('.reserved').hasClass('available')) $('.reserved').removeClass('available');
                           $('.reserved').removeClass('reserved').addClass('unavailable');
                           $('.selected').removeClass('selected').addClass('unavailable');
@@ -398,16 +436,29 @@
                           document.getElementById('input-colIni').value = '';
                           document.getElementById('input-rowIni').value = '';
                         }
+
                         new_capacity = new_capacity - capacity;
-                        document.getElementById('capacity-display').value = new_capacity;
-                        document.getElementById("input-capacity").max=new_capacity;
+                        //document.getElementById('capacity-display').value = new_capacity;
+                        //document.getElementById("input-capacity").max=new_capacity;
 
                     }
 
                     function deleteZone(btn){
                         var row=btn.parentNode.parentNode.rowIndex;
                         var row2 = row-1;
+                        var cant_filas_total = $('#table-zone').find('tr').length-2;
                         if( document.getElementById('input-capacity').disabled==true){
+                              console.log($("[name='seats_ids[0][]']").length);
+                              $("[name='seats_ids["+row2+"][]']").each(function(index,element){
+                                $(this).remove();
+                                //element.remove();
+                              });
+                              for(i = row2+1 ; i<= cant_filas_total; i++){
+                                $("[name='seats_ids["+i+"][]']").each(function(index,element){
+                                $(this).attr('name', 'seats_ids['+(i-1)+'][]');
+                                //element.remove();
+                              });
+                              }
                               var col_ini = parseInt($('[name="start_column[]"]')[row2].value);
                               var fil_ini = parseInt($('[name="start_row[]"]')[row2].value);
                               var cant_fil = parseInt($('[name="zone_rows[]"]')[row2].value);
@@ -415,8 +466,10 @@
                               for(i = col_ini; i<col_ini+cant_col;i++){
                                 for(j=fil_ini; j<fil_ini + cant_fil; j++){
                                   var id = ''+j+'_'+i;
-                                  $('#'+id).removeClass("unavailable");
-                                  $('#'+id).addClass('available');
+                                  if($('#'+id).length){
+                                    $('#'+id).removeClass("unavailable");
+                                    $('#'+id).addClass('available');
+                                  }
                                 }
                               }
                         }
@@ -447,19 +500,19 @@
               <legend>Agregar función:</legend>
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Fecha</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-6">
                       {!! Form::date('input_start_date',\Carbon\Carbon::now()->addDay(2), array('class' => 'form-control', 'id' =>'input-function-date')) !!}
                   </div>
               </div>
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Hora de inicio</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-6">
                       {!! Form::time('input_start_time',null, array('class' => 'form-control', 'id' => 'input-function-time')) !!}
                   </div>
               </div>
 
               <div class="form-group">
-                    <div class="col-sm-offset-10 col-sm-10">
+                    <div class="col-sm-offset-6 col-sm-6">
                         <a class="btn btn-info" onclick="addFunction()">Agregar</a>
                         <!--
                         <button  type="reset" class="btn btn-info">Cancelar</button>
@@ -570,393 +623,10 @@
 
 @section('javascript')
   {!!Html::script('js/jquery.seat-charts.js')!!}
+   {!!Html::script('js/events.js')!!}
   <script>
-    $(document).ready(function() {
 
-       holi();
 
-       function holi(){
-       var tam= $('[id=invisible_id]').size();
-       console.log("tamano "+tam);
-       for(var i=1;i<=tam;i++)
-       $('#dist').append("<div id=seat-map-"+i+" class=seatCharts-container  tabindex =0> </div>");
-
-        var e = $('[name=local_id]')[0];
-
-        var index= e.options[e.selectedIndex].value;
-        console.log(index);
-        var algo = $('#row_' + index).val();
-        //console.log("algo "+algo);
-        var table = document.getElementById("table-zone");
-
-        for(var i = table.rows.length - 1; i > 0; i--)
-        {
-            table.deleteRow(i);
-        }
-
-        if(algo !== undefined && algo >=1){
-          //si el local tiene asientos y filas numeradas Do this 
-          //console.log("index "+index);
-          var rows = $('#row_'+index).val();
-          var columns = $('#column_'+index).val();
-
-          // setear maximo filas maxima col
-          document.getElementById("input-column").max=columns;
-          document.getElementById("input-row").max=rows;
-          document.getElementById("input-colIni").max=columns;
-          document.getElementById("input-rowIni").max=rows;
-
-          console.log("columnas "+columns);
-
-          console.log("filas "+rows);
-
-          var arreglo = new Array();
-
-          for(i=0; i<rows;i++){
-            var texto = 'a';
-            for(j=1; j<columns; j++){
-              texto += 'a';
-            }
-            //console.log(texto);
-            arreglo.push(texto);
-          }
-          console.log(arreglo);
-          //console.log(arreglo);
-          var seatid="seat-map-"+index;
-          console.log(seatid);
-
-          var tam= $('[id=invisible_id]').size();
-          for(i=1;i<=tam;i++){
-            $('#seat-map-'+i).hide();
-          }          
-          
-          var sc = $('#seat-map-'+index).seatCharts({
-            map: arreglo,
-          naming : {
-            top : false,
-            getLabel : function (character, row, column) {
-              return column;
-            }
-          },
-          click : function(){
-                  if(this.status()=='available' && this.status()!='selected'){
-                      var num_cant = $('.seatCharts-cell.selected').length;
-                      var unavailable = false;
-                      if(num_cant<2){
-                        if(num_cant == 1){
-                          var id_selec1 = $('.seatCharts-cell.selected').first().attr('id');
-                          var id_selec2 = this.node().attr('id');
-                          var res = id_selec1.split("_");
-                          var fil_ini = parseInt(res[0]);
-                          var col_ini = parseInt(res[1]);
-                          var res = id_selec2.split("_");
-                          var fil_ini2 = parseInt(res[0]);
-                          var col_ini2 = parseInt(res[1]);
-                          if(col_ini > col_ini2)
-                            $('#input-colIni').val(''+col_ini2);
-                          else $('#input-colIni').val(''+col_ini);
-                          if(fil_ini > fil_ini2)
-                            $('#input-rowIni').val(''+fil_ini2);
-                          else $('#input-rowIni').val(''+fil_ini);
-                          $('#input-column').val(''+(Math.abs(col_ini - col_ini2)+1));
-                          $('#input-row').val(''+(Math.abs(fil_ini - fil_ini2)+1));
-                          var col_ini = parseInt($('#input-colIni').val());
-                          var fil_ini = parseInt($('#input-rowIni').val());
-                          var cant_fil = parseInt($('#input-row').val());
-                          var cant_col = parseInt($('#input-column').val());
-                          unavailable = false;
-                          for(i = col_ini; i<col_ini+cant_col;i++){
-                            for(j=fil_ini; j<fil_ini + cant_fil; j++){
-                              var id = ''+j+'_'+i;
-                              if(id!= id_selec2 && id!= id_selec1){
-                                  if($('#'+id).hasClass('unavailable')){
-                                    $('#input-colIni').val('');
-                                    $('#input-rowIni').val('');
-                                    $('#input-column').val('');
-                                    $('#input-row').val('');
-                                    $('.reserved').removeClass('reserved').addClass('available');
-                                    $('.selected').removeClass('selected').addClass('available');
-                                    alert('No se puede seleccionar estos asientos porque ya están ocupados por otra zona');
-                                    unavailable = true;
-                                    break;
-                                  }
-                                  $('#'+id).removeClass("available");
-                                  $('#'+id).addClass('reserved');
-                              }
-                            }
-                            if(unavailable) break;
-                          }
-                        }
-                        if(!unavailable){
-                          this.status('selected');
-                          return 'selected';
-                        } else {
-                          this.status('available');
-                          return 'available';
-                        }
-                      } else{
-                        alert('Ya hay dos asientos seleccionados');
-                        this.status('available');
-                        return 'available';
-                      }
-                    }
-                    if(this.status()=='selected'){
-                      $('#input-colIni').val('');
-                      $('#input-rowIni').val('');
-                      $('#input-column').val('');
-                      $('#input-row').val('');
-                      $('.seatCharts-cell.reserved').removeClass("reserved").addClass("available");
-                      this.status('available');
-                      return 'available';
-                    }
-                    if(this.status()=='unavailable'){
-                      alert('No se puede seleccionar este asiento. Ya pertenece a otra zona');
-                      this.status('unavailable');
-                      return 'unavailable';
-                    }
-          },
-          legend : { //Definition legend
-            node : $('#legend'),
-            items : [
-              [ 'a', 'available',   'Libre' ],
-              [ 'a', 'unavailable', 'Ocupado'],
-              [ 'a', 'reserved', 'Reservado']
-            ]
-          } });
-          $('#seat-map-'+index).show();
-
-          
-          $('#input-column').show();
-          $('#input-row').show();
-          $('#input-colIni').show();
-          $('#input-rowIni').show();
-          $('#label_col').show();
-          $('#label_fil').show();
-          $('#label_fini').show();
-          $('#label_cini').show();
-          $('#dist').show();
-          $('#label_capacity').hide();
-          $('#input-capacity').hide();
-
-          document.getElementById('input-capacity').disabled=true;
-        }else{
-          //si el local no tiene asientos numerados Do this 
-          //$('#seat-map').empty();
-
-          document.getElementById('input-capacity').disabled=false;
-          var tam= $('[id=invisible_id]').size();
-          for(i=1;i<=tam;i++){
-            $('#seat-map-'+i).hide();
-          }
-          //$('#seat-map').hide();
-          
-          $('#input-column').hide();
-          $('#input-row').hide();
-          $('#input-colIni').hide();
-          $('#input-rowIni').hide();
-          $('#label_col').hide();
-          $('#label_fil').hide();
-          $('#label_fini').hide();
-          $('#label_cini').hide();
-          $('#dist').hide();
-          $('#label_capacity').show();
-          $('#input-capacity').show();
-        }
-      }
-
-      $('[name=local_id]').click(function(){
-        var e = $('[name=local_id]')[0];
-
-        var index= e.options[e.selectedIndex].value;
-        console.log(index);
-        var algo = $('#row_' + index).val();
-        //console.log("algo "+algo);
-        var table = document.getElementById("table-zone");
-
-        for(var i = table.rows.length - 1; i > 0; i--)
-        {
-            table.deleteRow(i);
-        }
-
-        if(algo !== undefined && algo >=1){
-          //si el local tiene asientos y filas numeradas Do this 
-          //console.log("index "+index);
-          var rows = $('#row_'+index).val();
-          var columns = $('#column_'+index).val();
-
-          // setear maximo filas maxima col
-          document.getElementById("input-column").max=columns;
-          document.getElementById("input-row").max=rows;
-          document.getElementById("input-colIni").max=columns;
-          document.getElementById("input-rowIni").max=rows;
-
-          //console.log("columnas "+columns);
-
-          //console.log("filas "+rows);
-
-          var arreglo = new Array();
-
-          for(i=0; i<rows;i++){
-            var texto = 'a';
-            for(j=1; j<columns; j++){
-              texto += 'a';
-            }
-            //console.log(texto);
-            arreglo.push(texto);
-          }
-          //console.log(arreglo);
-          //console.log(arreglo);
-          var seatid="seat-map-"+index;
-          //console.log(seatid);
-
-          var tam= $('[id=invisible_id]').size();
-          for(i=1;i<=tam;i++){
-            $('#seat-map-'+i).hide();
-          }          
-          
-          var sc = $('#seat-map-'+index).seatCharts({
-            map: arreglo,
-          naming : {
-            top : false,
-            getLabel : function (character, row, column) {
-              return column;
-            }
-          },
-          click : function(){
-                  if(this.node().hasClass('unavailable')){
-                    alert("No se puede seleccionar un asiento no disponible!");
-                    this.status('unavailable');
-                    return 'unavailable';
-                  }
-
-                  if(this.status()=='available' && this.status()!='selected'){
-                      var num_cant = $('.seatCharts-cell.selected').length;
-                      var unavailable = false;
-                      if(num_cant<2){
-                        if(num_cant == 1){
-                          var id_selec1 = $('.seatCharts-cell.selected').first().attr('id');
-                          var id_selec2 = this.node().attr('id');
-                          var res = id_selec1.split("_");
-                          var fil_ini = parseInt(res[0]);
-                          var col_ini = parseInt(res[1]);
-                          var res = id_selec2.split("_");
-                          var fil_ini2 = parseInt(res[0]);
-                          var col_ini2 = parseInt(res[1]);
-                          if(col_ini > col_ini2)
-                            $('#input-colIni').val(''+col_ini2);
-                          else $('#input-colIni').val(''+col_ini);
-                          if(fil_ini > fil_ini2)
-                            $('#input-rowIni').val(''+fil_ini2);
-                          else $('#input-rowIni').val(''+fil_ini);
-                          $('#input-column').val(''+(Math.abs(col_ini - col_ini2)+1));
-                          $('#input-row').val(''+(Math.abs(fil_ini - fil_ini2)+1));
-                          var col_ini = parseInt($('#input-colIni').val());
-                          var fil_ini = parseInt($('#input-rowIni').val());
-                          var cant_fil = parseInt($('#input-row').val());
-                          var cant_col = parseInt($('#input-column').val());
-                          unavailable = false;
-                          for(i = col_ini; i<col_ini+cant_col;i++){
-                            for(j=fil_ini; j<fil_ini + cant_fil; j++){
-                              var id = ''+j+'_'+i;
-                              if(id!= id_selec2 && id!= id_selec1){
-                                  if($('#'+id).hasClass('unavailable')){
-                                    $('#input-colIni').val('');
-                                    $('#input-rowIni').val('');
-                                    $('#input-column').val('');
-                                    $('#input-row').val('');
-                                    $('.reserved').removeClass('reserved').addClass('available');
-                                    $('.selected').removeClass('selected').addClass('available');
-                                    alert('No se puede seleccionar estos asientos porque ya están ocupados por otra zona');
-                                    unavailable = true;
-                                    break;
-                                  }
-                                  $('#'+id).addClass('reserved'); //<---- este es el que funciona
-                    
-                              }
-                            }
-                            if(unavailable) break;
-                          }
-                        }
-                        if(!unavailable){
-                          this.status('selected');
-                          return 'selected';
-                        } else {
-                          this.status('available');
-                          return 'available';
-                        }
-                      } else{
-                        alert('Ya hay dos asientos seleccionados');
-                        this.status('available');
-                        return 'available';
-                      }
-                    }
-                    if(this.status()=='selected'){
-                      $('#input-colIni').val('');
-                      $('#input-rowIni').val('');
-                      $('#input-column').val('');
-                      $('#input-row').val('');
-                      $('.seatCharts-cell.reserved').removeClass("reserved").addClass("available");
-                      this.status('available');
-                      return 'available';
-                    }
-          },
-          focus  : function() {
-              if (!this.node().hasClass('unavailable')) {
-                  return 'focused';
-              
-              } else  {
-                  return this.style();
-              }
-          },
-          legend : { //Definition legend
-            node : $('#legend'),
-            items : [
-              [ 'a', 'available',   'Libre' ],
-              [ 'b', 'unavailable', 'Ocupado'],
-              [ 'c', 'reserved', 'Reservado']
-            ]
-          } });
-          $('#seat-map-'+index).show();
-
-          
-          $('#input-column').show();
-          $('#input-row').show();
-          $('#input-colIni').show();
-          $('#input-rowIni').show();
-          $('#label_col').show();
-          $('#label_fil').show();
-          $('#label_fini').show();
-          $('#label_cini').show();
-          $('#dist').show();
-          $('#label_capacity').hide();
-          $('#input-capacity').hide();
-
-          document.getElementById('input-capacity').disabled=true;
-        }else{
-          //si el local no tiene asientos numerados Do this 
-          //$('#seat-map').empty();
-
-          document.getElementById('input-capacity').disabled=false;
-          var tam= $('[id=invisible_id]').size();
-          for(i=1;i<=tam;i++){
-            $('#seat-map-'+i).hide();
-          }
-          //$('#seat-map').hide();
-          
-          $('#input-column').hide();
-          $('#input-row').hide();
-          $('#input-colIni').hide();
-          $('#input-rowIni').hide();
-          $('#label_col').hide();
-          $('#label_fil').hide();
-          $('#label_fini').hide();
-          $('#label_cini').hide();
-          $('#dist').hide();
-          $('#label_capacity').show();
-          $('#input-capacity').show();
-        }
-      });
-    });
   </script>
   <script>
 
@@ -997,15 +667,21 @@ $('document').ready(function () {
     });
   });
   </script>
-
-
-
   {!!Html::script('js/moment.js')!!}
   {!!Html::script('js/rangepicker.js')!!}
-
-
-
   <script type="text/javascript">
+
+  var config = {
+        routes: [
+            { getSeatsArray: "{{ URL::route('ajax.getSeatsArray') }}" },
+            { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
+            { event_available: "{{URL::route('ajax.getAvailable')}}"},
+            { slots: "{{URL::route('ajax.getSlots')}}"},
+            { makeArray: "{{URL::route('ajax.getZoneSeatArray')}}"},
+            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
+            { promo: "{{URL::route('ajax.getPromo')}}"}
+        ]
+    };
     $('#yes').click(function(){
       $('#submitModal').modal('hide');  
     });

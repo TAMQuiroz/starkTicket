@@ -23,6 +23,7 @@ class CreateModulesTable extends Migration
             $table->string('email');
             $table->double('initial_cash');
             $table->double('actual_cash');
+            $table->boolean('openModule');
             $table->timestamp('starTime');
             $table->timestamp('endTime');
             //$table->integer('salesman_id')->unsigned()->unique()->nullable();

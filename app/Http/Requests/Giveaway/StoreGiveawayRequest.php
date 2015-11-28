@@ -24,7 +24,7 @@ class StoreGiveawayRequest extends Request
     public function rules()
     {
         return [
-            'sale_id'      => 'required|exists:sale,id',
+            'sale_id'      => 'required|exists:tickets,id',
             'designee'     => 'required|integer|digits:8',
         ];
     }

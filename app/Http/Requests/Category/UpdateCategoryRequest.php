@@ -12,7 +12,7 @@ class UpdateCategoryRequest extends FormRequest
 
     public function rules() {
         return [
-            'name'          => 'max:20|unique:categories,name,'.$this->input('id'),
+            'name'          => 'max:100|unique:categories,name,'.$this->input('id'),
             'image'         => 'image',
             'description'   => '',
             'father_id'     => 'exists:categories,id'
