@@ -13,6 +13,7 @@ use App\Models\Devolution;
 use App\Models\CancelPresentation;
 use App\Models\ModuleAssigment;
 use App\Models\Presentation;
+use App\Models\Module;
 
 class DevolutionController extends Controller
 {
@@ -23,7 +24,9 @@ class DevolutionController extends Controller
      */
     public function index()
     {
-        $devolutions = Devolution::all();
+
+        $user_id = Auth::user()->id;
+        $devolutions = Devolution::where('user_id',$user_id)->get();
         return view('internal.salesman.devolution.listar', ['devolutions' => $devolutions]);
     }
 
@@ -116,7 +119,7 @@ class DevolutionController extends Controller
         $input = $request->all();
         if( $input['ticket_id'] != $ticket_id )
             return redirect('salesman/devolutions');
-        
+
         $ticket = Ticket::findOrFail($input['ticket_id']);
         if ($ticket->cancelled == 1)
         {
