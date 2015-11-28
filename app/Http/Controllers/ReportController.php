@@ -264,6 +264,7 @@ class ReportController extends Controller
     }
 
     public function actionExcel(Request $request){
+      
         
         $input = $request->all(); 
         $flagBetweenDates = false;
@@ -377,11 +378,10 @@ class ReportController extends Controller
             }  
         }
         
-    
 
-
-        Excel::create('Reporte de ventas starkticket', function ($excel) use($eventInformation,$flagBetweenDates,$input){
+        $objPHPExcel = Excel::create('Reporte de ventas starkticket', function ($excel) use($eventInformation,$flagBetweenDates,$input){
           $excel->sheet('Reporte de ventas', function($sheet) use($eventInformation,$flagBetweenDates,$input) {
+
 
                 $sheet->mergeCells('A1:G2');
                 $sheet->setCellValue('A1',"Reporte de ventas de tickets");
@@ -406,9 +406,10 @@ class ReportController extends Controller
                 });      
             
 
+                $cantidad = count($eventInformation)+4;
 
-
-                $sheet->setBorder('A4:G500','thin');
+          
+                $sheet->setBorder('A4:G' . $cantidad ,'thin');
                 $sheet->setCellValue('A4', "Nombre del evento");
                 $sheet->setCellValue('B4', "Fecha del evento");
                 $sheet->setCellValue('C4', "Entradas vendidas online");
@@ -428,7 +429,7 @@ class ReportController extends Controller
 
                 });
 
-                $sheet->cells('A4:G500',function($cells){
+                $sheet->cells('A4:G500'  ,function($cells){
 
                     $cells->setAlignment('center');
                     $cells->setValignment('center');
@@ -465,8 +466,9 @@ class ReportController extends Controller
 
 
 
-        })->download('xlsx');
-        
+        })->export('pdf');
+    
+
     }
 
     /**
