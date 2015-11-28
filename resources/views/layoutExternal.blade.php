@@ -44,6 +44,13 @@
 	<div class="container">
         <h1>@yield('title')</h1>
         <hr>
+        @if($errors->any())
+        <ul class="alert alert-danger">
+            @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+        @endif
         @if(Session::has('flash_message'))
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

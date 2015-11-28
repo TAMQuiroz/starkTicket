@@ -75,7 +75,8 @@ class ModuleController extends Controller
         $module->phone        =   $input['phone'];
         $module->email        =   $input['email'];
         $module->initial_cash =   0;   
-        $module->actual_cash   =   0;   
+        $module->actual_cash  =   0; 
+        $module->openModule   =   false;  
         $module->starTime     =   new Carbon($input['starTime']); 
         $module->endTime      =   new Carbon($input['endTime']);       
         

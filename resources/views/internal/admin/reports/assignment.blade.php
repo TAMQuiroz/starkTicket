@@ -10,38 +10,45 @@
 
 @section('content')
 {!!Form::open(array('url' => 'admin/report/assignment', 'id'=>'form','class'=>'form-horizontal'))!!}
-    <div class="col-sm-2">
-        <label>Punto de venta</label>
-        <hr style="margin:5px;">
-        <p>{!!Form::text('name', null ,['class'=>'form-control', 'id'=>'search','placeholder' => 'Nombre del punto'])!!}</p>
-    </div>
-    <div class="col-sm-4">
-        <label>Rango de Fechas de Asignación</label>
-        <hr style="margin:5px;">
-        <div class="col-sm-6">
-            <label>Desde</label>
-            {!!Form::input('date','firstDate', null ,['class'=>'form-control','id'=>'fecha-ini'])!!}
+    <div class="row">
+        <div class="col-sm-3">
+            <label>Punto de venta</label>
+            <hr style="margin:5px;">
+            <p>{!!Form::text('name', null ,['class'=>'form-control', 'id'=>'search','placeholder' => 'Nombre del punto'])!!}</p>
         </div>
-        <div class="col-sm-6">
-            <label>Hasta</label>
-            {!!Form::input('date','lastDate', null ,['class'=>'form-control','id'=>'fecha-fin'])!!}
-        </div>
+        <div class="col-sm-9"></div>
     </div>
-    <div class="col-sm-4">
-        <label>Rango de Fechas de Desasociación</label>
-        <hr style="margin:5px;">
-        <div class="col-sm-6">
-            <label>Desde</label>
-            {!!Form::input('date','firstDateP', null ,['class'=>'form-control','id'=>'fecha-ini-des'])!!}
+    <br>
+    <div class="row">
+        <div class="col-sm-5">
+            <label>Rango de Fechas de Asignación</label>
+            <hr style="margin:5px;">
+            <div class="col-sm-6">
+                <label>Desde</label>
+                {!!Form::input('date','firstDate', null ,['class'=>'form-control','id'=>'fecha-ini'])!!}
+            </div>
+            <div class="col-sm-6">
+                <label>Hasta</label>
+                {!!Form::input('date','lastDate', null ,['class'=>'form-control','id'=>'fecha-fin'])!!}
+            </div>
         </div>
-        <div class="col-sm-6">
-            <label>Hasta</label>
-            {!!Form::input('date','lastDateP', null ,['class'=>'form-control','id'=>'fecha-fin-des'])!!}
+        <div class="col-sm-5">
+            <label>Rango de Fechas de Desasociación</label>
+            <hr style="margin:5px;">
+            <div class="col-sm-6">
+                <label>Desde</label>
+                {!!Form::input('date','firstDateP', null ,['class'=>'form-control','id'=>'fecha-ini-des'])!!}
+            </div>
+            <div class="col-sm-6">
+                <label>Hasta</label>
+                {!!Form::input('date','lastDateP', null ,['class'=>'form-control','id'=>'fecha-fin-des'])!!}
+            </div>
         </div>
-    </div>
-    <div class="col-sm-2">
-        <p><button class="btn btn-info" type="button" id = 'botoncito' >Buscar</button></p>
-    </div>
+        <div class="col-sm-2">
+            <br>
+            <p><button class="btn btn-info" type="button" id = 'botoncito' >Buscar</button></p>
+        </div>
+    </div>  
     <div class="col-sm-12">
 
     <hr>
@@ -95,7 +102,7 @@ $("#botoncito").click(function () {
     d2.setDate(d2.getDate()+1)
     var d3 = new Date(dateS3);
     var d4 = new Date(dateS4);
-    d4.setDate(d4.getDate()+1)
+    d4.setDate(d4.getDate()+1);
 
     if(search==null || search == ''){
         //alert('23/11/1993'.split("/").reverse().join("-"));
