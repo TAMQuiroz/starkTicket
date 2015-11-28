@@ -234,4 +234,16 @@ class LocalController extends Controller
         }
         return $arreglo;
     }
+
+    public function getZoneSeatsIds(Request $request){
+        $zona = Zone::find($request['zone_id']);
+        $local = $zona->event->place;
+        $arreglo = array();
+        $slots = $zona->slots;
+        foreach ($slots as $slot) {
+            $id = $slot->row."_".$slot->column;
+            array_push($arreglo, $id);
+        }
+        return $arreglo;
+    }
 }

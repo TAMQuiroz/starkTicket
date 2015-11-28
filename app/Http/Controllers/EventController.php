@@ -293,7 +293,7 @@ public function store(StoreEventRequest $request)
     'zone_rows'      => $request->input('zone_rows'),
     'start_column'   => $request->input('start_column'),
     'start_row'      => $request->input('start_row'),
-    'seats_ids'          => $request->input('seats_ids'),
+    'seats_ids'      => $request->input('seats_ids'),
     ];
     $data2 = [
             //'start_date'    => $request->input('start_date'),
@@ -590,7 +590,8 @@ public function update(UpdateEventRequest $request, $id)
             'zone_columns'   => $request->input('zone_columns'),
             'zone_rows'      => $request->input('zone_rows'),
             'start_column' => $request->input('start_column'),
-            'start_row'    => $request->input('start_row')
+            'start_row'    => $request->input('start_row'),
+            'seats_ids'      => $request->input('seats_ids'),
             ];
             $data2 = [
             //'start_date'    => $request->input('start_date'),
