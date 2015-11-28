@@ -17,4 +17,8 @@ class Local extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['name', 'capacity', 'address', 'district', 'province', 'state', 'rows', 'columns', 'image'];
+
+    public function distribution(){
+        return $this->hasMany('App\Models\Distribution');
+    }
 }

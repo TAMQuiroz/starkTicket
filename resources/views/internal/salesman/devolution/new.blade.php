@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-sm-6">
       <legend>Ticket</legend>
-      <p><b>Id:</b>: {{$ticket->id}}</p>
+      <p><b>Código de ticket:</b>: {{$ticket->id}}</p>
       <p><b>Precio total:</b>: S/ {{$ticket->total_price}}</p>
       @if($ticket->discount)
       <p><b>Descuento:</b>: S/ {{$ticket->discount}}</p>
