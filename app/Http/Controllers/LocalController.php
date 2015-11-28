@@ -74,18 +74,20 @@ class LocalController extends Controller
         //var_dump($seats);die();
         $local->save();
         //sitios
-        $seats = $input['seats'];
-        
-        foreach ($seats as $key => $value) {
-            $column = floor($key/$local->rows)+1;
-            $row = ($key - (($column-1)*$local->rows))+1;
+        if($input['local_type'] == config('constants.numbered')){
+            $seats = $input['seats'];
             
-            $id = DB::table('distribution')->insertGetId(
-            ['row'         => $row,
-             'column'      => $column,
-             'local_id'    => $local->id,
-             'seat'        => $value,
-            ]);
+            foreach ($seats as $key => $value) {
+                $column = floor($key/$local->rows)+1;
+                $row = ($key - (($column-1)*$local->rows))+1;
+                
+                $id = DB::table('distribution')->insertGetId(
+                ['row'         => $row,
+                 'column'      => $column,
+                 'local_id'    => $local->id,
+                 'seat'        => $value,
+                ]);
+            }
         }
         
         return redirect('admin/local');
