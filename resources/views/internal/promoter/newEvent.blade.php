@@ -84,29 +84,29 @@
 
 
         <div class="row">
-          <div class="col-sm-8">
+          <div class="col-sm-12">
             {!!Form::open(array('route' => 'events.store','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Nombre</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::text('name','', array('class' => 'form-control','required','maxlength' => 30)) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Lugar</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::select('local_id', $locals_list->toArray(), null, ['class' => 'form-control','required', 'onclick' => 'changeCapacity()','maxlength' => 50]) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Descripción</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::textarea('description', null, ['class' => 'form-control','style' => 'resize:none','rows' => '3','maxlength' => 100]) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Categoría</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
 
                     {!! Form::select('parent_category_id', $categories_list->toArray(),null,['class' => 'form-control','required','id'=>'category_id']) !!}
                 </div>
@@ -114,50 +114,50 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Sub categoría</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                     {!! Form::select('category_id',$categories_list->toArray(),null,['class' => 'form-control','required','id'=>'subcategory_id','onLoad'=>'getSubs()']) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Organizador</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
 
                     {!! Form::select('organizer_id', $organizers_list->toArray(),null,['class' => 'form-control','required','maxlength' => 50]) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Comisión(%)</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::number('percentage_comission','', array('class' => 'form-control','min' => '0','required','max' => '100')) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Duración Aproximada (horas) </label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::number('time_length',1, array('class' => 'form-control','min' => '1','required')) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Fecha de publicación del evento</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                     {!! Form::date('publication_date',\Carbon\Carbon::now(), array('class' => 'form-control','required', 'oninput' => 'incrementSellingDate()', 'min'=>\Carbon\Carbon::now()->toDateString())) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Fecha de inicio de ventas</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                     {!! Form::date('selling_date',\Carbon\Carbon::now()->addDay(), array('class' => 'form-control','required', 'oninput' => 'incrementPresentationDate()')) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Imagen evento</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::file('image', array('class' => 'form-control','required')) !!}
                 </div>
               </div>
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Imagen distirbución evento</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                   {!! Form::file('distribution_image', array('class' => 'form-control','required')) !!}
                 </div>
               </div>              
@@ -165,7 +165,7 @@
 
               <!-- ZONA -->
               <legend>Agregar zona:</legend>
-              <div class="col-md-6">
+              <div class="col-md-3">
                   <div class="form-group">
                       <label  class="col-md-4 control-label">Nombre</label>
                       <div class="col-md-8">
@@ -220,7 +220,7 @@
                         </div>
                   </div>   
                 </div>   
-                  <div  id="dist" class="col-md-6">
+                  <div  id="dist" class="col-md-9">
                     <label  id="labelDist">Distribución evento</label>
                   </div>                                                
                 <script>
@@ -428,7 +428,7 @@
                 
                     }    
                 </script>
-
+  
                 <table id="table-zone" class="table table-bordered table-striped ">
                     <tr>
                         <th>Nombre</th>
@@ -447,19 +447,19 @@
               <legend>Agregar función:</legend>
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Fecha</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-6">
                       {!! Form::date('input_start_date',\Carbon\Carbon::now()->addDay(2), array('class' => 'form-control', 'id' =>'input-function-date')) !!}
                   </div>
               </div>
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Hora de inicio</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-6">
                       {!! Form::time('input_start_time',null, array('class' => 'form-control', 'id' => 'input-function-time')) !!}
                   </div>
               </div>
 
               <div class="form-group">
-                    <div class="col-sm-offset-10 col-sm-10">
+                    <div class="col-sm-offset-6 col-sm-6">
                         <a class="btn btn-info" onclick="addFunction()">Agregar</a>
                         <!--
                         <button  type="reset" class="btn btn-info">Cancelar</button>
