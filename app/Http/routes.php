@@ -76,7 +76,7 @@ Route::group(['middleware' => ['auth', 'salesman']], function () {
 
 
     Route::get('salesman/event/pay_booking', ['as' => 'booking.search', 'uses' =>'BookingController@searchBooking']);
-    Route::post('salesman/event/pay_booking/show', ['as' => 'booking.show', 'uses' =>'BookingController@showPayBooking']);
+    Route::post('salesman/event/pay_booking', ['as' => 'booking.show', 'uses' =>'BookingController@showPayBooking']);
     Route::post('salesman/event/pay_booking/store', ['as' => 'booking.store', 'uses' =>'BookingController@storePayBooking']);
 
     Route::get('salesman/giveaway', ['uses'=>'TicketController@giveaway','as'=>'ticket.giveaway']);

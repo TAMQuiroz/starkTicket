@@ -41,7 +41,7 @@
         <ul>
         @foreach ($event->presentations as $present)
             <li>
-                Función: {{date("d/m/Y",$present->starts_at)}} {{date('h:i:s',$present->starts_at)}}
+                Función: {{date("d/m/Y",$present->starts_at)}} {{date('h:i a',$present->starts_at)}}
             </li>
         @endforeach
         </ul>
