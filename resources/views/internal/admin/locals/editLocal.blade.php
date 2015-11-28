@@ -82,6 +82,8 @@
             {!!Form::input('number','capacity', $local->capacity ,['class'=>'form-control','id'=>'capacity','required','min'=>0])!!}
           </div>
         </div>
+        @else
+            {!! Form::hidden('local_type', config('constants.notEditable'),['id'=>'local_type'])!!}
         @endif
         <div class="form-group">
           <label for="inputEmail3" class="col-sm-2 control-label">Imagen</label>

@@ -137,7 +137,7 @@ class DevolutionController extends Controller
         $devolution = new Devolution;
         $devolution->ticket_id = $input['ticket_id'];
         $devolution->user_id = $user_id;
-        $devolution->repayment = $input['repayment'];
+        $devolution->repayment = $ticket->total_price;
         if( isset($input['observation']))
             $devolution->observation = $input['observation'];
         $devolution->save();

@@ -163,10 +163,9 @@ class BusinessController extends Controller
             
 
             $devolutions = DB::table('devolutions')
-                    ->where('tickets.salesman_id','=',\Auth::user()->id)
+                    ->where('devolutions.user_id','=',\Auth::user()->id)
                     ->where('devolutions.created_at','<',new Carbon())->where('devolutions.created_at','>=',Carbon::today())
                     ->whereNull('devolutions.cashCount_register')
-                    ->join('tickets', 'tickets.id', '=', 'devolutions.ticket_id')
                     ->get();
             foreach ($devolutions as $devolution) {
                  $devolution->cashCount_register = $timeNow;
@@ -230,8 +229,13 @@ class BusinessController extends Controller
     public function system()
     {
         $system = Business::all()->first();
+        $modules = Module::all()->lists('name','id');
+        
+        if($modules->count() == 0){
+            $modules = [0 => 'Sin canjeo'];
+        }
 
-        return view('internal.admin.system', compact('system'));
+        return view('internal.admin.system', compact('system','modules'));
     }
 
     public function systemUpdate(UpdateSystemRequest $request)
@@ -241,6 +245,13 @@ class BusinessController extends Controller
         $system->ruc            =   $request['ruc'];
         $system->address        =   $request['address'];
         $system->reserve_time   =   $request['reserve_time'];
+
+        if($request['gift_module_id'] == 0){
+            $system->gift_module_id =   null;    
+        }else{
+            $system->gift_module_id =   $request['gift_module_id'];
+        }
+        
         if(isset($request['logo']))
             $system->logo = $this->file_service->upload($request->file('logo'),'system');
 

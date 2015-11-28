@@ -28,20 +28,27 @@
 <div class="container">
     <hr>
     <div class="row">
+        <?php $i = 0;  ?>
         @foreach($events as $event)
         <div class="3u col-sm-3">
-            <section>
-                <a  class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
-                <h3>{{$event->name}}</h3>
-                <p>
-                    <b>Fecha de ventas: </b> {{date('Y-m-d',$event->selling_date)}}<br>
-                    <b>Lugar: </b> {{$event->place->name}} <br>
-                    <b>Direccion:</b> {{$event->place->address}} <br>
-                    <b>Categoria:</b> {{$event->category->name}} <br>
-                </p>
-                <p><a href="event/{{$event->id}}"  class="btn btn-info" role="button" >Detalle</a></p>
-            </section>
+            <a  class="image full">{!! Html::image($event->image, null, array('class'=>'image cat_img')) !!}</a>
+            <h3>{{$event->name}}</h3>
+            <p>
+                <b>Fecha de ventas: </b> {{date('Y-m-d',$event->selling_date)}}<br>
+                <b>Lugar: </b> {{$event->place->name}} <br>
+                <b>Direccion:</b> {{$event->place->address}} <br>
+                <b>Categoria:</b> {{$event->category->name}} <br>
+            </p>
+            <p><a href="event/{{$event->id}}"  class="btn btn-info" role="button" >Detalle</a></p>
         </div>
+        <?php
+            $i++;
+            $mod = $i % 4;
+         ?>
+         @if ($mod==0)
+         </div>
+         <div class="row">
+         @endif
         @endforeach
     </div>
 </div>

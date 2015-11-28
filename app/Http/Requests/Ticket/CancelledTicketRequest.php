@@ -25,7 +25,6 @@ class CancelledTicketRequest extends Request
     {
         return [
             'ticket_id'          =>  'required|exists:tickets,id',
-            'repayment'          =>  'required|numeric',
         ];
     }
 }

@@ -62,6 +62,13 @@ class EventController extends Controller
             # code...
         }
         $events = $events->get();
+        $auxEvent = [];
+        foreach ($events as $event) {
+             if (count($event->presentations)>0)
+                array_push($auxEvent,$event);
+         } 
+         $events = $auxEvent;
+
         return view('external.events',compact('events'));
     }
     /**

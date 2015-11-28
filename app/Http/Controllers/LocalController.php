@@ -115,8 +115,8 @@ class LocalController extends Controller
             $prensentations = Presentation::where("event_id",$event->id)->where("cancelled",0)->where("starts_at",">",$date_at)->get();
             if ($prensentations->count() != 0)
                 return back()->withErrors(['No se puede editar un local con eventos asociados']);
-        }
-        $local = Local::find($id);*/
+        }*/
+        $local = Local::find($id);
 
         
         $local->name         =   $input['name'];
@@ -129,7 +129,9 @@ class LocalController extends Controller
             $local->rows          =   $input['row'];
             $local->columns       =   $input['column'];
             $local->capacity     =   $local->rows * $local->columns;
-        }else{
+        }else if  ($input['local_type'] == config('constants.notNumbered')) {
+            $local->rows          =   null;
+            $local->columns       =   null;
             $local->capacity     =   $input['capacity'];
         }        
         
