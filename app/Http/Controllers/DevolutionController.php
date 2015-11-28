@@ -38,6 +38,7 @@ class DevolutionController extends Controller
         if ($ticket==null) {
 
             Session::flash('message', 'Este ticket no existe');
+            Session::flash('alert-class','alert-danger');
             return redirect('salesman/devolutions');
         }
         if ($ticket->cancelled)
@@ -115,7 +116,7 @@ class DevolutionController extends Controller
         $input = $request->all();
         if( $input['ticket_id'] != $ticket_id )
             return redirect('salesman/devolutions');
-
+        
         $ticket = Ticket::findOrFail($input['ticket_id']);
         if ($ticket->cancelled == 1)
         {
@@ -131,6 +132,14 @@ class DevolutionController extends Controller
 
             return redirect('/salesman/devolutions');
         }
+        $module = Module::find(Auth::user()->module_id);
+        if($module->actual_cash < $ticket->total_price){
+            Session::flash('message', 'No tiene fondos en la caja para poder devolver');
+            Session::flash('alert-class','alert-danger');
+
+            return redirect('/salesman/devolutions');
+        }
+
         $ticket->cancelled = 1;
         $ticket->save();
 
