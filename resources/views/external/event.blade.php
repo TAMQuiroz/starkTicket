@@ -48,13 +48,13 @@
 					</table>
 				</div>
 				@if(isset($user) && $user->role_id == config('constants.salesman'))
-					@if($event->selling_date <= strtotime(date("Y-m-d")) )
+					@if($event->selling_date <= strtotime(Carbon\Carbon::now()) )
 						@if (count($event->presentations) > 0 )
 							<a href="{{url('salesman/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
 						@endif
 					@endif
 				@else
-					@if($event->selling_date <= strtotime(date("Y-m-d")) )
+					@if($event->selling_date <= strtotime(Carbon\Carbon::now()) )
 						@if (count($event->presentations) > 0 )
 							<a href="{{url('client/event/'.$event->id.'/buy')}}"><button type="button" class="btn btn-info">Comprar Entrada</button></a>
 							<a href="{{url('client/'.$event->id.'/reservanueva')}}"><button type="button" class="btn btn-info">Reservar Entrada</button></a>

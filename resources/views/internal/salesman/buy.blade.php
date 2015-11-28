@@ -204,7 +204,7 @@
 
 @section('javascript')
 	{!!Html::script('js/jquery.seat-charts.min.js')!!}
-	{!!Html::script('js/seats.js')!!}
+	{!!Html::script('js/seats2.js')!!}
     {!!Html::script('js/main.js')!!}
 
     <script type="text/javascript">
@@ -214,7 +214,7 @@
             { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
             { event_available: "{{URL::route('ajax.getAvailable')}}"},
             { slots: "{{URL::route('ajax.getSlots')}}"},
-            { makeArray: "{{URL::route('ajax.getZone')}}"},
+            { makeArray: "{{URL::route('ajax.getZoneSeatArray')}}"},
             { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
             { promo: "{{URL::route('ajax.getPromo')}}"}
         ]
