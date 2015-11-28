@@ -19,6 +19,7 @@ class CreateFunctionsTable extends Migration
             $table->boolean('cancelled');
             $table->boolean('sold_out');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
