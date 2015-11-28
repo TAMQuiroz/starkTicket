@@ -10,11 +10,11 @@
 @section('content')
     <table class="table table-bordered table-striped">
         <tr>
-            <th>Nro. Ticket</th>
+            <th>Código ticket</th>
             <th>Fecha de presentación</th>
             <th>Cancelado?</th>
             <th>Nombre del Evento</th>
-            <th>Número de Tickets</th>
+            <th>Número de entradas</th>
             <th>Costo Total</th>
             <th>Código de reserva</th>
             <th>Fecha de pago</th>
