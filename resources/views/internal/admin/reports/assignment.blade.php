@@ -99,7 +99,7 @@ $("#botoncito").click(function () {
     var dateS4 = date4.value.toString();
     var d1 = new Date(dateS1);
     var d2 = new Date(dateS2);
-    d2.setDate(d2.getDate()+1)
+    d2.setDate(d2.getDate()+1);
     var d3 = new Date(dateS3);
     var d4 = new Date(dateS4);
     d4.setDate(d4.getDate()+1);
