@@ -66,7 +66,7 @@ class EventController extends Controller
         foreach ($events as $event) {
              if (count($event->presentations)>0)
                 array_push($auxEvent,$event);
-         } 
+         }
          $events = $auxEvent;
 
         return view('external.events',compact('events'));
@@ -324,9 +324,11 @@ public function store(StoreEventRequest $request)
         $user = \Auth::user();
         $event = Event::find($id);
         $Comments = Comment::where('event_id',$id  ) ->get();
+
         if(empty($event)||$event->cancelled)
             return redirect()->back();
-        return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments]);
+
+       return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments]);
     }
 
     public function showExternalPost(StoreCommentPostRequest $request , $id)
@@ -334,24 +336,19 @@ public function store(StoreEventRequest $request)
 
         $user = \Auth::user();
         $event = Event::findOrFail($id);
-        $users = User::all();
         $input = $request->all();
 
-    //Agrego el nuevo comentario
-
-        $Comment    =   new Comment ;
-        $Comment->description  =   $input['comment'];
-        $Comment->time =   new Carbon() ;
-        $Comment->event_id = $id;
-
-        $idUser = Auth::user()->id;
-        $Comment->user_id = $idUser;
-
+        //Agrego el nuevo comentario
+        $Comment = new Comment ;
+        $Comment->description   =   $input['comment'];
+        $Comment->time          =   new Carbon();
+        $Comment->event_id      = $id;
+        $Comment->user_id       = Auth::user()->id;
         $Comment->save();
 
-        $Comments = Comment::where('event_id',$id  ) ->get();
+        Session::flash('message', 'Comentario publicado');
+        Session::flash('alert-class','alert-success');
         return redirect()->back();
-        //return view('external.event', ['event' => $event, 'user'=>$user , 'Comments'=> $Comments,'users' => $users  ] );
     }
 
     /**

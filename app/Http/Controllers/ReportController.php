@@ -46,6 +46,9 @@ class ReportController extends Controller
         if (empty($input['name']) and empty($input['firstDate']) and empty($input['lastDate']))
            $moduleAssigments = ModuleAssigment::all();  
         else{
+            $onedaymore = date("Y-m-d",strtotime($input['lastDate']) + 86400);
+            //return $holas;
+
             if ($input['name'] and empty($input['firstDate']) and empty($input['lastDate'])) {
               // $events = ModuleAssigment::where('name', 'LIKE', '%'.$input['name'].'%')->get();
                 $moduleAssigments = DB::table('module_assigments')
@@ -58,7 +61,7 @@ class ReportController extends Controller
                 $moduleAssigments = DB::table('module_assigments')
                     //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
                     ->where('modules.name','LIKE','%'.$input['name'].'%')
-                    ->where('dateAssigments','>',$input['firstDate'])
+                    ->where('dateAssigments','>=',$input['firstDate'])
                     ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
                     ->get();
                 $flagFirstDate = true;
@@ -67,7 +70,7 @@ class ReportController extends Controller
                 $moduleAssigments = DB::table('module_assigments')
                     //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
                     ->where('modules.name','LIKE','%'.$input['name'].'%')
-                    ->where('dateAssigments','<',$input['lastDate'])
+                    ->where('dateAssigments','<',$onedaymore)
                     ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
                     ->get();
                 $flagLastDate = true;
@@ -75,7 +78,7 @@ class ReportController extends Controller
             elseif (empty($input['name']) and $input['firstDate'] and empty($input['lastDate'])){
                 $moduleAssigments = DB::table('module_assigments')
                     //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
-                    ->where('dateAssigments','>',$input['firstDate'])
+                    ->where('dateAssigments','>=',$input['firstDate'])
                     ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
                     ->get();
                 $flagFirstDate = true;
@@ -83,7 +86,7 @@ class ReportController extends Controller
             elseif (empty($input['name']) and empty($input['firstDate']) and $input['lastDate']){
                 $moduleAssigments = DB::table('module_assigments')
                     //->select(DB::raw('module_assigments.id as idAssigment, module_assigments.module_id as idModule, modules.name as nameModule, module_assigments.salesman_id as idSalesman, users.name as nameSalesman, users.lastName as lastnameSalesman, module_assigments.dateAssigments as dateAssigment, module_assigments.dateMoveAssigments as dateMoveAssigment'))
-                    ->where('dateAssigments','<',$input['lastDate'])
+                    ->where('dateAssigments','<',$onedaymore)
                     ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
                     ->get();
                 $flagLastDate = true;
@@ -101,7 +104,7 @@ class ReportController extends Controller
                        
         if ($flagBetweenDates){
             $fechaIni = $input['firstDate'];
-            $fechaFin = $input['lastDate'];
+            $fechaFin =  date("Y-m-d",strtotime($input['lastDate'])+ 86400);
             $moduleAssigments =  DB::table('module_assigments')
                                 ->whereBetween('dateAssigments',[ $fechaIni,  $fechaFin ])
                                 ->Join('modules', 'modules.id', '=', 'module_assigments.module_id')
@@ -126,7 +129,7 @@ class ReportController extends Controller
 
         elseif ($flagFilterAll){ 
             $fechaIni = $input['firstDate'];
-            $fechaFin = $input['lastDate'];
+            $fechaFin =  date("Y-m-d",strtotime($input['lastDate'])+ 86400);
             $moduleAssigments =  DB::table('module_assigments')
                                 ->whereBetween('dateAssigments',[ $fechaIni,  $fechaFin ])
                                 ->where('modules.name','LIKE','%'.$input['name'].'%')

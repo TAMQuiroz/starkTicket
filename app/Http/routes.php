@@ -32,10 +32,10 @@ Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@indexExternal');
 Route::get('event/successBuy', 'TicketController@showSuccess');
 Route::get('event/{id}', ['as' => 'event.external.show' , 'uses' =>'EventController@showExternal']);
-
- Route::get('event/delete/{id}/comment', 'EventController@destroyComment');
-
 Route::post('event/{id}', 'EventController@showExternalPost');
+Route::get('event/delete/{id}/comment', 'EventController@destroyComment');
+
+
 
 Route::group(['middleware' => ['auth', 'client']], function () {
     Route::get('client/', ['uses'=>'ClientController@profile','as'=>'client.home']);

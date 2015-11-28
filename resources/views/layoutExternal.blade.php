@@ -44,10 +44,13 @@
 	<div class="container">
         <h1>@yield('title')</h1>
         <hr>
-        @if(Session::has('flash_message'))
-            <div class="alert alert-success">
+
+        @include('errors.list')
+
+        @if(Session::has('message'))
+            <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
+                {{ Session::get('message') }}
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                {{Session::get('flash_message')}}
             </div>
         @endif
 		@yield('content')
