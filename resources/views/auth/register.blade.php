@@ -1,18 +1,6 @@
-<!-- resources/views/auth/register.blade.php -->
-
 @extends('layoutExternal')
 
 @section('style')
-<style type="text/css">
-  input[type="date"]
-{
-    display:block;
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
-    min-height: 1.2em;
-}
-  
-</style>
 @stop
 
 @section('title')
@@ -20,7 +8,7 @@
 @stop
 
 @section('content')
-@include('errors.list')
+
 {!! Form::open(['url'=>'auth/register','method'=>'POST','id'=>'form']) !!}
 
     <div class="row">
@@ -110,7 +98,7 @@
             </form>
         </div>
     </div>
-    
+
     <style type="text/css">
       .preferences-div label{
           width: 125px;
@@ -119,7 +107,7 @@
           margin-left: 30px;
       }
       .preferences-chbox{
-          margin-right: 40px; 
+          margin-right: 40px;
       }
 
     </style>
