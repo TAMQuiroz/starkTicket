@@ -29,7 +29,7 @@ class AdminController extends Controller
     public function salesman()
     {
 
-        $vendedores = User::where('role_id',2)->paginate(5);
+        $vendedores = User::where('role_id',2)->paginate(10);
         $vendedores->setPath('salesman');
 
         return view('internal.admin.salesman',compact('vendedores'));
@@ -80,7 +80,7 @@ class AdminController extends Controller
 
     public function promoter()
     {
-        $promoters = User::where('role_id',3)->paginate(5);
+        $promoters = User::where('role_id',3)->paginate(10);
         $promoters->setPath('promoter');
         return view('internal.admin.promoter', compact('promoters'));
     }
@@ -130,7 +130,7 @@ class AdminController extends Controller
 
     public function admin()
     {
-        $users = User::where('role_id',4)->paginate(5);
+        $users = User::where('role_id',4)->paginate(10);
         $users->setPath('admin');
         return view('internal.admin.admin', compact('users'));
     }

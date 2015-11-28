@@ -26,8 +26,8 @@ class UpdateGiftRequest extends Request
         return [
             'name'          =>  'required|max:100',
             'description'   =>  'required|max:100',
-            'points'        =>  'required|integer|max:1000',
-            'stock'         =>  'required|integer|max:1000',
+            'points'        =>  'required|integer|max:5000',
+            'stock'         =>  'required|integer|max:5000',
             'image'         =>  'image'
         ];
     }
