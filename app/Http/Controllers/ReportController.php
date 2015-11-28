@@ -995,8 +995,8 @@ class ReportController extends Controller
                     $sheet->setCellValue('B4', "Apellidos del Vendedor");
                     $sheet->setCellValue('C4', "Hora de Entrada");
                     $sheet->setCellValue('D4', "Hora de Salida");
-                    $sheet->setCellValue('E4', "Status");
-                    $sheet->setCellValue('F4', "Subtotal");
+                    $sheet->setCellValue('E4', "Situación de Entrada");
+                    $sheet->setCellValue('F4', "Situación de Salida");
                     $sheet->setCellValue('G4', "Total");
                     
                     //$cells->setAlignment('center');
@@ -1025,7 +1025,7 @@ class ReportController extends Controller
                             'C' => '30',
                             'D' => '30',
                             'E' => '30',
-                            'F' => '15',
+                            'F' => '30',
                             'G' => '15'                                               
 
                             )
@@ -1081,8 +1081,8 @@ class ReportController extends Controller
                     $sheet->setCellValue('B4', "Apellidos del Vendedor");
                     $sheet->setCellValue('C4', "Hora de Entrada");
                     $sheet->setCellValue('D4', "Hora de Salida");
-                    $sheet->setCellValue('E4', "Status");
-                    $sheet->setCellValue('F4', "Subtotal");
+                    $sheet->setCellValue('E4', "Situación de Entrada");
+                    $sheet->setCellValue('F4', "Situación de Salida");
                     $sheet->setCellValue('G4', "Total");
                     
                     //$cells->setAlignment('center');
@@ -1111,7 +1111,7 @@ class ReportController extends Controller
                             'C' => '30',
                             'D' => '30',
                             'E' => '30',
-                            'F' => '15',
+                            'F' => '30',
                             'G' => '15'                                               
 
                             )
