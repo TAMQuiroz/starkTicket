@@ -31,7 +31,7 @@ class UpdateClientRequest extends Request
             //'email' => 'required|email|unique:users',
             'email'    => 'required|email',
             'di_type'  => 'required|integer|digits_between:0,2',
-            'di'       => 'required|integer|digits:8',
+            'di'       => 'required|integer|digits:8|unique:users,di,NULL,id,role_id,1',
         ];
     }
 
