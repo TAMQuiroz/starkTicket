@@ -42,6 +42,13 @@ class PagesController extends Controller
         $date_at = strtotime(date("Y-m-d"));
         $events = Event::where(["publication_date"=>$date_at,"cancelled"=>"0"])->get();
 
+        $auxEvent = [];
+        foreach ($events as $event) {
+             if (count($event->presentations)>0)
+                array_push($auxEvent,$event);
+         } 
+         $events = $auxEvent;
+
         $presentations = Presentation::where("cancelled","0")
                                     ->whereBetween("starts_at",[$date_at,$date_at+86400])
                                     ->get();
