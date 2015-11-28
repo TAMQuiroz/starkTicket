@@ -19,15 +19,18 @@ class AddFkToTicketsTable extends Migration
             
             $table->foreign('event_id')
                 ->references('id')
-                ->on('events');
+                ->on('events')
+                ->onDelete('cascade');
 
             $table->foreign('presentation_id')
                 ->references('id')
-                ->on('presentations');
+                ->on('presentations')
+                ->onDelete('cascade');
 
             $table->foreign('zone_id')
                 ->references('id')
-                ->on('zones');
+                ->on('zones')
+                ->onDelete('cascade');
 
             $table->foreign('salesman_id')
                 ->references('id')
