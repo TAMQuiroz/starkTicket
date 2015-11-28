@@ -466,6 +466,7 @@ public function store(StoreEventRequest $request)
             return ['error' => 'se debe especificar filas y columnas para este local numerado'];
         if($data['zone_columns']){ // esta entrando a pesar de no ser numerado el local :S :S
          $seats_ids = array();
+         /*
          for($i = 0; $i < count($data['zone_names']); $i++){
              for($j = $data['start_column'][$i]; $j<= $data['start_column'][$i] + $data['zone_columns'][$i]-1;$j++)
                 for($k= $data['start_row'][$i]; $k<=$data['start_row'][$i] + $data['zone_rows'][$i]-1;$k++){
@@ -484,6 +485,7 @@ public function store(StoreEventRequest $request)
                  $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
                  return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
          }
+         */
      } else {
          for($i= 0; $i < count($data['zone_names']);$i++)
              $total_capacity = $total_capacity + $data['zone_capacity'][$i];

@@ -198,8 +198,10 @@ function showSeatMap(index){
               }
             },
             click : function(){
-              if(this.node().hasClass('unavailable'))
+              if(this.node().hasClass('unavailable')){
+                this.status('unavailable');
                 return 'unavailable';
+              }
               if(this.node().hasClass('reserved')){
                 this.status('reserved');
                 return 'reserved';
@@ -207,6 +209,7 @@ function showSeatMap(index){
               if($('#multiple-mode-on').is(':checked')){
                   if(this.status()=='selected'){
                     console.log("clic en un selected");
+
                     if($('.selected').length>=1){
                       var selec1 = $('.selected')[0].id;
                       var selec2 = this.node().attr('id');
@@ -233,8 +236,16 @@ function showSeatMap(index){
                     return 'available';
                   }
                   if(this.status()=='available'){
+                    if($('.selected').length>=2){
+                      alert('primero pase a single y luego regrese a multi');
+                      this.status('available');
+                      this.node().removeClass('selected').addClass('available');
+                      return 'available';
+                    }
+
                     console.log('tiene available');
                     this.node().addClass('selected');
+
                     if($('.selected').length >1){
                       var selec1 = $('.selected')[0].id;
                       var selec2 = $('.selected')[1].id;
@@ -286,7 +297,7 @@ function showSeatMap(index){
               }
             },
             focus  : function() {
-              if(this.node().hasClass('reserved'))
+              if(this.node().hasClass('reserved')|| this.node().hasClass('unavailable'))
                 return this.style();
               if (!this.node().hasClass('unavailable')) {
                   return 'focused';
