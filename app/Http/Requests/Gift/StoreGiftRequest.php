@@ -24,7 +24,7 @@ class StoreGiftRequest extends Request
     public function rules()
     {
         return [
-            'name'          =>  'required|max:30',
+            'name'          =>  'required|max:100',
             'description'   =>  'required|max:100',
             'points'        =>  'required|integer|max:1000',
             'stock'         =>  'required|integer|max:1000',
