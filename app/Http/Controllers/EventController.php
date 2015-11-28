@@ -293,7 +293,7 @@ public function store(StoreEventRequest $request)
     'zone_rows'      => $request->input('zone_rows'),
     'start_column'   => $request->input('start_column'),
     'start_row'      => $request->input('start_row'),
-    'seats_ids'          => $request->input('seats_ids'),
+    'seats_ids'      => $request->input('seats_ids'),
     ];
     $data2 = [
             //'start_date'    => $request->input('start_date'),
@@ -469,6 +469,7 @@ public function store(StoreEventRequest $request)
             return ['error' => 'se debe especificar filas y columnas para este local numerado'];
         if($data['zone_columns']){ // esta entrando a pesar de no ser numerado el local :S :S
          $seats_ids = array();
+         /*
          for($i = 0; $i < count($data['zone_names']); $i++){
              for($j = $data['start_column'][$i]; $j<= $data['start_column'][$i] + $data['zone_columns'][$i]-1;$j++)
                 for($k= $data['start_row'][$i]; $k<=$data['start_row'][$i] + $data['zone_rows'][$i]-1;$k++){
@@ -487,6 +488,7 @@ public function store(StoreEventRequest $request)
                  $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
                  return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
          }
+         */
      } else {
          for($i= 0; $i < count($data['zone_names']);$i++)
              $total_capacity = $total_capacity + $data['zone_capacity'][$i];
@@ -588,7 +590,8 @@ public function update(UpdateEventRequest $request, $id)
             'zone_columns'   => $request->input('zone_columns'),
             'zone_rows'      => $request->input('zone_rows'),
             'start_column' => $request->input('start_column'),
-            'start_row'    => $request->input('start_row')
+            'start_row'    => $request->input('start_row'),
+            'seats_ids'      => $request->input('seats_ids'),
             ];
             $data2 = [
             //'start_date'    => $request->input('start_date'),
