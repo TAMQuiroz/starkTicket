@@ -82,6 +82,9 @@ class EventController extends Controller
         $organizers_list = Organizer::all()->lists('businessName','id');
 
         $locals_list = Local::all()->lists('name','id');
+        if(count($locals_list) == 0){
+            return back()->withErrors(['No se tienen locales para crear eventos']);
+        }
         $capacity_list = Local::all();
         $array = ['categories_list' =>$categories_list,
         'organizers_list'   =>$organizers_list,
