@@ -574,7 +574,6 @@ public function update(UpdateEventRequest $request, $id)
             ];
         if($now->getTimestamp() < strtotime($request->input('selling_date'))){
             //antes del sellingdate en general
-
             $this->deletePresentations($event->id);
             $this->deleteZones($event->id);
             $updated_event = $this->updateEvent($data, $event);
@@ -599,12 +598,12 @@ public function update(UpdateEventRequest $request, $id)
             //para presentaciones, solo se agregan o se cambian con fecha pasadas la fecha actual
             $presentations = Presentation::where('event_id', $id)->get();
             $i = 0;
-            foreach($presentations as $presentation){
+            foreach($presentations as $key=>$presentation){
                 if($now->getTimestamp() < $presentation->starts_at){
-                    $presentation->starts_at = strtotime($result_dates[$i]);
+                    $presentation->starts_at = strtotime($result_dates[$key]);
                     $presentation->save();
                 } else{
-                    if($presentation->starts_at != $result_dates[$i])
+                    if($presentation->starts_at != $result_dates[$key])
                         return redirect()->back()->withInput()->withErrors(['errors' => 'No se puede modificar una presentación con fecha pasada']);
                 }
             }
@@ -623,6 +622,7 @@ public function update(UpdateEventRequest $request, $id)
                 $i++;
             }
         }
+
         //si no estamos haciendo un cambio de local, solo se updatea el evento, zona y presentacion
         return redirect()->route('promoter.record');
         //return response()->json(['message' => 'Event modified']);
@@ -796,8 +796,10 @@ public function update(UpdateEventRequest $request, $id)
             }
         }
         $destacados = Highlight::lists('event_id');
-        $eventos = Event::with(['presentations' => function($query){
-            $query->where('starts_at', '<', time());
+        $eventos = Event::where('cancelled','0')
+        ->with(['presentations' => function($query){
+            $query->where('starts_at', '<', time())
+            ->where('cancelled','0');
         }])->whereNotIn('id', $destacados)->get();
         return view('internal.promoter.highlights.create', array('fecha_min_init' => Carbon::today()->addDay(), 'fecha_min' => Carbon::today(), 'events' => $eventos));
     }

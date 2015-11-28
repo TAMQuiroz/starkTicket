@@ -40,7 +40,8 @@ class Kernel extends ConsoleKernel
             $reservas = Ticket::whereNotNull('reserve')->get();
             foreach ($reservas as $reserva) {
                 $reserve_date = strtotime($reserva->created_at);
-                if($reserve_date + (3600*24) <= time()){
+                $reserve_hours = DB::table('business')->where('id',1)->first()->reserve_time;
+                if($reserve_date + (3600*$reserve_hours) <= time()){
                     if($reserva->event->place->rows!=null)
                         DB::table('slot_presentation')->where('sale_id', $reserva->id)
                         ->update(['status' => config('constants.seat_free')]);

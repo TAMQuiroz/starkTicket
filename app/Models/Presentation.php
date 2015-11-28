@@ -21,4 +21,11 @@ class Presentation extends Model
         return $this->belongsToMany('App\Models\Zone','zone_presentation')->withPivot('slots_availables');
     }
 
+    public function getStartsAt(){
+        return date('d/m/Y h:i:s a',$this->starts_at);
+    }
+
+    public function setStartsAt($unixTime){
+        $this->starts_at = strtotime($unixTime);
+    }
 }

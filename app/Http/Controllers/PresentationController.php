@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Presentation;
 use App\Models\CancelPresentation;
 use App\Models\Module;
+use App\Models\Event;
 use App\Models\ModulePresentationAuthorized;
 use Auth;
 use Session;
@@ -116,6 +117,12 @@ class PresentationController extends Controller
         $presentation->cancelled = "1";
         $presentation->save();
 
+        $event = Event::find($presentation->event_id);
+        if($event->presentations->isEmpty()){
+            $event->cancelled = true;
+            $event->save();
+        }
+
         $cancel = new CancelPresentation;
         $cancel->presentation_id = $presentation_id;
         $cancel->user_id = $user_id;
@@ -125,7 +132,7 @@ class PresentationController extends Controller
         $cancel->date_refund = $input['date_refund'];
         $cancel->save();
 
-        Session::flash('message', 'La presentación se a cancelado!');
+        Session::flash('message', 'La presentación se ha cancelado!');
         Session::flash('alert-class','alert-success');
 
         return redirect('/promoter/presentation/cancelled');
@@ -174,12 +181,12 @@ class PresentationController extends Controller
                     $moduleAuthorized->save();
                 }
             }
-            Session::flash('message', 'Modulos autorizados para devolución!');
+            Session::flash('message', 'Módulos autorizados para devolución!');
             Session::flash('alert-class','alert-success');
 
             return redirect('/promoter/presentation/cancelled');
         } else {
-            Session::flash('message', 'Elegir por lo menos un modulo');
+            Session::flash('message', 'Elegir por lo menos un módulo');
             Session::flash('alert-class','alert-success');
 
             return redirect('/promoter/presentation/cancelled/'.$id.'/modules');

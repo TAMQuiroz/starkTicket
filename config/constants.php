@@ -39,6 +39,7 @@ return [
 	//Tipo de local
 	'numbered'				=> 1,
 	'notNumbered'			=> 2,
+	'notEditable'			=> 0,
 
 	//Tipo de Asistencia Vendedor
 	'in'	=> 1,
