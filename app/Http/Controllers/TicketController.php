@@ -86,6 +86,8 @@ class TicketController extends Controller
         if (!is_object($moduleUser))
         {
             return back()->withErrors(['Usted no tiene modulo asignado, por lo tanto no puede vender']);
+        }else if(Auth::user()->role_id == config('constants.salesman') && Auth::user()->module && Auth::user()->module->openModule == 0){
+            return back()->withErrors(['Usted no ha abierto su caja, por lo tanto no puede vender']);
         }
 
         //Buscar y enviar info de evento con $id
