@@ -85,7 +85,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Lugar</label>
                 <div class="col-sm-10">
-                  {!! Form::select('local_id', $locals_list->toArray(), $event->local_id, ['class' => 'form-control','required', 'onclick' => 'changeCapacity()']) !!}
+                  {!! Form::select('local_id', $locals_list->toArray(), $event->local_id, ['class' => 'form-control','required', 'onclick' => 'changeCapacity()', 'onchange'=>'makeArray1()']) !!}
                 </div>
               </div>
               <div class="form-group">
