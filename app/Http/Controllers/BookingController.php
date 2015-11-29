@@ -187,6 +187,8 @@ class BookingController extends Controller
     public function showPayBooking(Request $request){
 
         $codigo = $request['reserve_code'];
+        if($codigo==''||$codigo == null)
+            return redirect()->back()->withErrors(['errors' => 'Buscar una reserva y seleccionarla']);
         $tickets = Ticket::where('reserve',$codigo)->get();
         $event = $tickets->first()->event;
         $zone = $tickets->first()->zone;
