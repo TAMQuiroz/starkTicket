@@ -187,6 +187,8 @@ class BookingController extends Controller
     public function showPayBooking(Request $request){
 
         $codigo = $request['reserve_code'];
+        if($codigo==''||$codigo == null)
+            return redirect()->back()->withErrors(['errors' => 'Buscar una reserva y seleccionarla']);
         $tickets = Ticket::where('reserve',$codigo)->get();
         $event = $tickets->first()->event;
         $zone = $tickets->first()->zone;
@@ -207,7 +209,7 @@ class BookingController extends Controller
             return redirect()->back()->withErrors(['error' => 'no hay reservas para el codigo especificado']);
         $nTickets= $ticket->quantity;
         $ticket->payment_date = new Carbon();
-        $ticket->cancelled = true;
+        $ticket->cancelled = false;
         $ticket->salesman_id = \Auth::user()->id;
         $ticket->picked_up = true;
         $ticket->updated_at = new Carbon();

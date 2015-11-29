@@ -438,8 +438,10 @@
                         }
 
                         new_capacity = new_capacity - capacity;
-                        //document.getElementById('capacity-display').value = new_capacity;
-                        //document.getElementById("input-capacity").max=new_capacity;
+                        if( document.getElementById('input-capacity').disabled==false){
+                          document.getElementById('capacity-display').value = new_capacity;
+                          document.getElementById("input-capacity").max=new_capacity;
+                        }
 
                     }
 
@@ -475,8 +477,10 @@
                         }
                         var act_val = parseInt(document.getElementById('capacity-display').value);
                         act_val += parseInt(document.getElementsByName('zone_capacity[]')[row2].value);
-                        document.getElementById('capacity-display').value = act_val;
-                        document.getElementById("input-capacity").max=act_val;
+                        if( document.getElementById('input-capacity').disabled==false){
+                          document.getElementById('capacity-display').value = act_val;
+                          document.getElementById("input-capacity").max=act_val;
+                        }
                         document.getElementById('table-zone') .deleteRow(row);
                 
                     }    
