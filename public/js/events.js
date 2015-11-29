@@ -12,6 +12,7 @@ $('document').ready(function () {
 });
 
 function makeArray1(){
+  $("[name^='seats_ids']").remove();
   var e = $('[name=local_id]')[0];
     var index= e.options[e.selectedIndex].value;
   local = index;
