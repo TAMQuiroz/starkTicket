@@ -97,7 +97,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Lugar</label>
                 <div class="col-sm-6">
-                  {!! Form::select('local_id', $locals_list->toArray(), null, ['class' => 'form-control','required', 'onclick' => 'changeCapacity()','maxlength' => 50]) !!}
+                  {!! Form::select('local_id', $locals_list->toArray(), null, ['class' => 'form-control','required', 'onclick' => 'changeCapacity()','maxlength' => 50, 'onchange'=>'makeArray1()']) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -234,9 +234,18 @@
                         </div>
                   </div>   
                 </div>   
+                <!---
                   <div  id="dist" class="col-md-9">
                     <label  id="labelDist">Distribución evento</label>
-                  </div>                                                
+                  </div>
+                  -->
+                 <div class="col-md-9"> 
+                  <div class="demo">
+                      <div id="parent-map" >
+                          <div id="seat-map"></div>
+                      </div>
+                 </div> 
+                 </div>                                               
                 <script>
 
                     function addZone(){
@@ -702,7 +711,7 @@ $('document').ready(function () {
             { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
             { event_available: "{{URL::route('ajax.getAvailable')}}"},
             { slots: "{{URL::route('ajax.getSlots')}}"},
-            { makeArray: "{{URL::route('ajax.getZoneSeatArray')}}"},
+            { makeArray: "{{URL::route('ajax.getSeatsArray')}}"},
             { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
             { promo: "{{URL::route('ajax.getPromo')}}"}
         ]
