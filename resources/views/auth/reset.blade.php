@@ -34,8 +34,6 @@
 				</div>
 			</div>
 
-			
-
 	        <div class="form-group col-sm-12">
 	        	 <br>
 		         <button class="btn btn-info" type="submit">
