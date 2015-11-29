@@ -29,8 +29,9 @@
         @stop
 
         @section('title')
-        Canjeo de premios
+        Canjeo de premios 
         @stop
+        @if( $active == 1  )    El canjeo de regalos se realiza en el modulo: {{$modulo}} @endif 
 
         @section('content')
 

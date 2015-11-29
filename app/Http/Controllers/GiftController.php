@@ -64,8 +64,9 @@ class GiftController extends Controller
        $giftsArr = Gift::all();
        $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
        $min = Gift::orderBy('id')->get()->lists('id')->first();
+      
 
-       return view('internal.admin.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ]  );
+       return view('internal.admin.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min  ]  );
    }
 
    public function createExchangeAdminPost(exchangeGift $request)
@@ -111,20 +112,20 @@ class GiftController extends Controller
     {
         $business = Business::all()->first();
         $active = $business->exchange_active;
-
+ $modulo = 'La marina y el marino';
 
         $giftsArr = Gift::all();
         $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
         $min = Gift::orderBy('id')->get()->lists('id')->first();
 
-        return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ,'active' =>  $active]  );
+        return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min ,'active' =>  $active, 'modulo'=>   $modulo]  );
     }
 
     public function createExchangePost(exchangeGift $request)
     {
         $business = Business::all()->first();
         $active = $business->exchange_active;
-
+ $modulo = 'La marina y el marino';
 
         if( $active== 0   ) {
 
@@ -164,7 +165,7 @@ class GiftController extends Controller
         $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
         $min = Gift::orderBy('id')->get()->lists('id')->first();
         Session::flash('messageSucc', ' Canjeo exitoso ');
-        return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min,'active' =>  $active ]  );
+        return view('internal.salesman.exchangeGift', ['giftsList' => $giftsList , 'giftArray' => $giftsArr , 'min'=>   $min,'active' =>  $active , 'modulo'=>   $modulo]  );
 
     }
 
