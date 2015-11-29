@@ -68,6 +68,7 @@
       <div class="form-group">
             <div class="col-sm-offset-10 col-sm-6">
                 <a class="btn btn-info" onclick="commitSeats()">Commit</a>
+                <a class="btn btn-info" onclick="resetSeats()">Reset</a>
             </div>
       </div>   
       <div class="form-group" id="distribution_id">

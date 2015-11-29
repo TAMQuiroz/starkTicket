@@ -47,6 +47,12 @@ function commitSeats(){
   $('.selected').removeClass('selected').addClass('unavailable');
 }
 
+function resetSeats(){
+  $('.reserved').removeClass('reserved').addClass('available');
+  $('.selected').removeClass('selected').addClass('available');
+  $('.unavailable').removeClass('unavailable').addClass('available');
+}
+
 function generarSeats(columnas, filas){
   var arreglo = new Array();
 
