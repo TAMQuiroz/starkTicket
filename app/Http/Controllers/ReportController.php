@@ -866,7 +866,17 @@ class ReportController extends Controller
     public function assistanceExcel(Request $request){
         if ($request['ty_report']==1){
             $salesmans = User::where('role_id',2)->get();
-            $date_at = $request['date_at'];
+             $date_at = $request['date_at'];
+            
+            $auxSalesman = [];
+            foreach ($salesmans as $salesman) {
+                if (date_format(date_create($salesman->created_at),"Y-m-d") <= date_format(date_create($date_at),"Y-m-d")){
+                    array_push($auxSalesman, $salesman);
+                }
+            }
+            $salesmans = $auxSalesman;
+
+           
             $assiInformation = [];
             foreach ($salesmans as $salesman) {
                 
@@ -938,6 +948,15 @@ class ReportController extends Controller
             $input = $request->all(); 
              $salesmans = User::where('role_id',2)->get();
             $date_at = $request['date_at'];
+
+            $auxSalesman = [];
+            foreach ($salesmans as $salesman) {
+                if (date_format(date_create($salesman->created_at),"Y-m-d") <= date_format(date_create($date_at),"Y-m-d")){
+                    array_push($auxSalesman, $salesman);
+                }
+            }
+            $salesmans = $auxSalesman;
+
             $assiInformation = [];
             foreach ($salesmans as $salesman) {
                 
