@@ -12,13 +12,7 @@
 
 	{!! Form::open(['url' => "/password/reset"]) !!}
 	<input type="hidden" name="token" value="{{ $token }}">
-	@if (count($errors) > 0)
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+
 	<div class="row"> 
 
 	    <div class="col-md-12">

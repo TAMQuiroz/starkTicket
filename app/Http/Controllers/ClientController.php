@@ -87,7 +87,7 @@ class ClientController extends Controller
         $user->role_id = Role::where('description','client')->get()->first()->id;
         $user->save();
 
-        Session::flash('message', 'Su cuenta se acreado. Puede iniciar sesión');
+        Session::flash('message', 'Su cuenta se ha creado. Puede iniciar sesión');
         Session::flash('alert-class','alert-success');
         return redirect('/');
     }
