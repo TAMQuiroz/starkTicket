@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Mail;
 use DateTime; use Date;
 use Session;
+use Auth;
 
 class BookingController extends Controller
 {
@@ -151,13 +152,11 @@ class BookingController extends Controller
             }
 
             array_push($tickets,$id);
-            //var_dump('llego');
-
 
             DB::commit();
 
         }catch (\Exception $e){
-            var_dump($e);
+            
             //dd('rollback');
             DB::rollback();
             return back()->withInput($request->except('seats'))->withErrors(['Por favor intentelo nuevamente']);
@@ -168,7 +167,7 @@ class BookingController extends Controller
         $array = ['event' => $event, 
                 'zone'    => $zone,
                 'cant'    => $nTickets,
-                'eventDate' => gmdate("d-m-Y H:i:s",$presentation->starts_at),
+                'eventDate' => date("d-m-Y h:i:s a",$presentation->starts_at),
                 'codigo'  => $codigo_reserva,
                 'seats'   => ''];
         if($event->place->rows != null){
@@ -216,6 +215,8 @@ class BookingController extends Controller
         $ticket->reserve = null;
         $id = $ticket->id;
         $ticket->save();
+        $tickets = array();
+        $user = Auth::user();
         if($request['promotion_id']!=""){
                 $promo = Promotions::find($request['promotion_id']);
                 if($promo->desc != null){
@@ -234,6 +235,26 @@ class BookingController extends Controller
                 }
                 DB::table('tickets')->where('id',$id)->update(['promo_id' => $promo->id]);
             }
+
+
+        $price = $ticket->total_price;
+            if($request['payMode'] == config('constants.credit')){
+                DB::table('tickets')->where('id',$id)->update(['credit_amount' => $price]);
+            }else if($request['payMode'] == config('constants.cash')){
+                DB::table('tickets')->where('id',$id)->update(['cash_amount' => $price]);
+                if($user->role_id == config('constants.salesman')){
+                    DB::table('modules')->where('id',$user->module_id)->increment('actual_cash', $price);
+                }
+            }else if($request['payMode'] == config('constants.mix')){
+                DB::table('tickets')->where('id',$id)->update(['cash_amount' => $request['paymentMix']]);
+                DB::table('tickets')->where('id',$id)->update(['credit_amount' => $price - $request['paymentMix']]);
+                if($user->role_id == config('constants.salesman')){
+                    DB::table('modules')->where('id',$user->module_id)->increment('actual_cash', $request['paymentMix']);
+                }
+            }
+            
+            array_push($tickets,$ticket->id);
+
         DB::table('users')->where('id', $ticket->owner_id)->increment('points', $nTickets);
         DB::table('slot_presentation')->where('sale_id',$ticket->id)->update(['status' => config('constants.seat_taken')]);
         session(['tickets'=>$id]);
