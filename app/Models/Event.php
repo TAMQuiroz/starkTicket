@@ -31,6 +31,10 @@ class Event extends Model
         return $this->hasMany('App\Models\Presentation')->where("cancelled","0");
     }
 
+    public function lastPresentation(){
+        return $this->hasMany('App\Models\Presentation')->where("cancelled","0")->orderBy('starts_at', 'desc')->first();
+    }
+
     public function highlights() {
         return $this->hasMany('App\Models\Highlight');
     }

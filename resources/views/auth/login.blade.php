@@ -39,7 +39,8 @@
             {!! Form::email('email', null, array('placeholder' => 'E-mail', 'required')) !!}
 
             {!! Form::password('password', array('placeholder' => 'Contraseña', 'required')) !!}
-            <a href="" data-toggle="modal" data-target="#myModal">Olvidaste tu contraseña?</a>
+            <!--<a href="" data-toggle="modal" data-target="#myModal">Olvidaste tu contraseña?</a>-->
+            <a href = "{{url('/password/email')}}" > Olvidaste tu contraseña? </a>
             <!-- Button trigger modal -->
             
             <button class="btn">Iniciar sesión</button>
