@@ -151,14 +151,12 @@ class BookingController extends Controller
                 }
             }
 
-            array_push($tickets,$ticket->id);
-            //var_dump('llego');
-
+            array_push($tickets,$id);
 
             DB::commit();
 
         }catch (\Exception $e){
-            var_dump($e);
+            
             //dd('rollback');
             DB::rollback();
             return back()->withInput($request->except('seats'))->withErrors(['Por favor intentelo nuevamente']);
@@ -217,6 +215,7 @@ class BookingController extends Controller
         $ticket->reserve = null;
         $id = $ticket->id;
         $ticket->save();
+        $tickets = array();
         $user = Auth::user();
         if($request['promotion_id']!=""){
                 $promo = Promotions::find($request['promotion_id']);
@@ -254,7 +253,7 @@ class BookingController extends Controller
                 }
             }
             
-            array_push($tickets,$id);
+            array_push($tickets,$ticket->id);
 
         DB::table('users')->where('id', $ticket->owner_id)->increment('points', $nTickets);
         DB::table('slot_presentation')->where('sale_id',$ticket->id)->update(['status' => config('constants.seat_taken')]);

@@ -33,11 +33,12 @@
           {!!Form::hidden('event_id',$event['id'])!!}
           <h5>Selecciona función</h5>
           <!--{!! Form::select('presentation_id', $presentations->toArray(), null, ['class' => 'form-control'])!!}-->
-          @if($event->place->rows == null)
-          {!! Form::select('presentation_id', $presentations->toArray(), null, ['class' => 'form-control', 'id'=>'pres_selection', 'onChange'=>'getAvailable()']) !!}
-          @else
-          {!! Form::select('presentation_id', $presentations->toArray(), null, ['class' => 'form-control', 'id'=>'pres_selection', 'onChange'=>'getAvailable(); getTakenSlots()']) !!}
-          @endif
+          <h4 class="boxy"> Funciones del evento </h4>
+            @if($event->place->rows == null)
+            {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=>'getAvailable()']) !!}
+            @else
+            {!! Form::select('presentation_id', $presentations, null, ['class' => 'form-control boxy', 'id'=>'pres_selection', 'onChange'=>'getAvailable(); getTakenSlots()']) !!}
+            @endif
           <h5>Selecciona Zona</h5>
           <!--{!! Form::select('zone_id',$zones->toArray(), null, ['class' => 'form-control']) !!}-->
           @if($event->place->rows == null)
@@ -47,6 +48,10 @@
           @endif
           <!--{!! Form::select('promotion', ['Ninguna', 'Visa Platinium'], null, ['class' => 'form-control']) !!}-->
           {!! Form::hidden('promotion_id', null, ['id'=>'promotion_id']) !!}
+      </div>
+      <div class="col-md-12">
+          <h5 >Entradas Disponibles</h5>
+          {!! Form::text('available', null, ['id'=>'available','class' => 'form-control', 'disabled']) !!}  
       </div>
       <!--<legend>Selección de Ubicación</legend>
       <h5>Zona:</h5>
