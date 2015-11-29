@@ -149,6 +149,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::post('promoter/presentation/cancelled/{cancelled_id}/modules', 'PresentationController@modulesStorage');
     Route::get('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancel');
     Route::post('promoter/presentation/{presentation_id}/cancel', 'PresentationController@cancelStorage');
+    Route::get('promoter/presentation/cancelled/{id}/edit', 'PresentationController@editCancelled');
     Route::post('promoter/presentation/cancelled/{id}/edit', 'PresentationController@cancelUpdate');
 
     Route::get('promoter/{category_id}/subcategories', 'EventController@subcategoriesToAjax');
@@ -199,7 +200,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::get('admin/exchange_gift', 'GiftController@createExchangeAdmin');
     Route::post('admin/exchange_gift', 'GiftController@createExchangeAdminPost');
-    
+
 
     Route::get('admin/gifts', ['uses'=>'GiftController@index','as'=>'admin.gifts']);
     Route::get('admin/gifts/new', 'GiftController@create');
