@@ -261,6 +261,10 @@ class ModuleController extends Controller
     {
         //
         $moduleassigment = ModuleAssigment::find($id);
+        $module = Module::find($moduleassigment->module_id);
+        if ($module->openModule == true){
+            return back()->withErrors(['Antes de desasociar, primero debes cerrar la caja']); 
+        }
 
         $salesman = User::find($moduleassigment->salesman_id);
         $tickets = DB::table('tickets')
