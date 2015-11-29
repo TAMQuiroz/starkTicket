@@ -60,29 +60,6 @@ class PresentationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -98,12 +75,9 @@ class PresentationController extends Controller
         $presentation = Presentation::findOrFail($id);
         if ($presentation->cancelled == 1)
         {
-            Session::flash('message', 'Editar presentación cancelado!');
+            Session::flash('message', 'La presentación fue cancelado!');
             Session::flash('alert-class','alert-info');
-
-            $cancelPresentation = CancelPresentation::where("presentation_id",$id)->first();
-
-            return view('internal.promoter.presentation.editCancel', ['presentation' => $presentation,'cancelPresentation'=>$cancelPresentation]);
+            return redirect('promoter/presentation/cancelled');
         }
         return view('internal.promoter.presentation.newCancel', ['presentation' => $presentation]);
     }
@@ -136,6 +110,12 @@ class PresentationController extends Controller
         Session::flash('alert-class','alert-success');
 
         return redirect('/promoter/presentation/cancelled');
+    }
+    public function editCancelled($id)
+    {
+        $cancelPresentation = CancelPresentation::findOrFail($id);
+        $date_refund = strtotime($cancelPresentation->date_refund);
+        return view('internal.promoter.presentation.cancelEdit', ['cancelPresentation'=>$cancelPresentation,"date_refund"=>$date_refund]);
     }
     public function cancelUpdate(StorePresentationRequest $request,$id)
     {

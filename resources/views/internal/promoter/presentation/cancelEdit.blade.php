@@ -4,26 +4,17 @@
 
 @stop
 
-@section('title') Cancelar Presentación
+@section('title') Editar cancelación de presentación
 @stop
 
 @section('content')
 <div class="row">
     <div class="col-sm-6">
-        <p><b>Detalles de la presentacion</b></p>
-        <h5>Fecha: {{date("d/m/Y h:i",$presentation->starts_at)}} </h5>
-        <p><b>Estado: </b> @if($presentation->cancelled) Cancelado @else No esta cancelado @endif</p>
-        <p><b>Detalles del evento</b></p>
-        <h5>Nombre: <a href="{{ url ('promoter/event/'.$presentation->event_id) }}">{{$presentation->event->name}}</a> </h5>
-        <h5>Local: {{$presentation->event->place->name}} </h5>
-
-    </div>
-    <div class="col-sm-6">
-        {!! Form::model($cancelPresentation, [ 'method' => 'POST','url'=>'promoter/presentation/cancelled/'.$cancelPresentation->id.'/edit','id'=>'forms','class'=>'form-horizontal']) !!}
+        {!! Form::model($cancelPresentation, [ 'method' => 'POST','id'=>'forms','class'=>'form-horizontal']) !!}
             <div class="form-group">
                 <label  class="col-sm-2 control-label">Devolución:</label>
                 <div class="col-sm-10">
-                    {!! Form::date('date_refund', $cancelPresentation->date_refund, ['class' => 'form-control','required']) !!}
+                    {!! Form::date('date_refund', date('Y-m-d',$date_refund), ['class' => 'form-control','required']) !!}
                 </div>
             </div>
             <div class="form-group">
@@ -55,6 +46,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <button  type="submit" class="btn btn-info" href="#" >Cancelar Evento</button>
+                  <a href="{{ url('promoter/presentation/cancelled') }}" class="btn btn-info">Cancelar</a>
                 </div>
             </div>
         </form>
