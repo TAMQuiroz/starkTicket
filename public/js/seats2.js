@@ -64,6 +64,7 @@ function makeArray(){
         success: function( response ){
             if(response != "")
             {
+            	console.log(map);
             	map = response;
                 $('#parent-map').empty();
                 $('#legend').empty();
