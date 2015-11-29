@@ -7,8 +7,7 @@
                 display: inline-block;
             }
             h5{
-                display: inline-block;
-                
+                display: inline-block;                
             }
             .carousel-inner > .item > img{
                 width: 652px;
@@ -28,9 +27,17 @@
         </style>
         @stop
 
+  @if( $modulo != 'No se ha asignado el modulo principal de canjeo de regalos'  )  
+
+   
+
         @section('title')
-        Canjeo de premios
+        Canjeo de premios 
         @stop
+
+        
+
+        @if( $active == 1  )    El canjeo de regalos se realiza en el modulo: {{$modulo}} @endif 
 
         @section('content')
 
@@ -163,6 +170,9 @@
     @endif 
 
     @stop
+
+      @else No se ha asignado el modulo principal de canjeo de regalos
+    @endif
 
     @section('javascript')
     {!!Html::script('js/main.js')!!}

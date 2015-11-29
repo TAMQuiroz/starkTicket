@@ -12,6 +12,7 @@ use App\Models\ModuleAssigment;
 use Carbon\Carbon;
 use App\Services\FileService;
 use DB;
+use App\Models\Business;
 use App\User;
 
 class ModuleController extends Controller
@@ -239,15 +240,22 @@ class ModuleController extends Controller
         //
         $moduleassigment = ModuleAssigment::where('module_id',$id)->where('status',1)->get();
 
-        if ($moduleassigment->count()==0){
+        if (
+            $moduleassigment->count()==0){
             $module = Module::find($id);
             $module->delete();
+
+            $business = Business::all()->first();
+            $business->exchange_active = NULL ;
+             $business->save();
 
         }else{
             return back()->withErrors(['Debe primero desasociar el vendedor del punto de venta']);
         }
 
         return redirect('admin/modules');
+
+
     }
     public function destroyAssigment($id)
     {
