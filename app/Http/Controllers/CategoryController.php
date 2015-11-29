@@ -123,7 +123,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id2);
         $events = Event::where("cancelled", 0)->where('publication_date','<',strtotime(Carbon::now()))->where('category_id',$id2)->whereHas('presentations', function($query){
             $query->where('starts_at','>', time());
-        })->paginate(1);
+        })->paginate(8);
 
         return view('external.subcategory',["events"=>$events,"category"=>$category]);
     }
