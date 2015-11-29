@@ -234,6 +234,26 @@ class BookingController extends Controller
                 }
                 DB::table('tickets')->where('id',$id)->update(['promo_id' => $promo->id]);
             }
+
+
+        $price = $ticket->total_price;
+            if($request['payMode'] == config('constants.credit')){
+                DB::table('tickets')->where('id',$id)->update(['credit_amount' => $price]);
+            }else if($request['payMode'] == config('constants.cash')){
+                DB::table('tickets')->where('id',$id)->update(['cash_amount' => $price]);
+                if($user->role_id == config('constants.salesman')){
+                    DB::table('modules')->where('id',$user->module_id)->increment('actual_cash', $price);
+                }
+            }else if($request['payMode'] == config('constants.mix')){
+                DB::table('tickets')->where('id',$id)->update(['cash_amount' => $request['paymentMix']]);
+                DB::table('tickets')->where('id',$id)->update(['credit_amount' => $price - $request['paymentMix']]);
+                if($user->role_id == config('constants.salesman')){
+                    DB::table('modules')->where('id',$user->module_id)->increment('actual_cash', $request['paymentMix']);
+                }
+            }
+            
+            array_push($tickets,$id);
+
         DB::table('users')->where('id', $ticket->owner_id)->increment('points', $nTickets);
         DB::table('slot_presentation')->where('sale_id',$ticket->id)->update(['status' => config('constants.seat_taken')]);
         session(['tickets'=>$id]);
