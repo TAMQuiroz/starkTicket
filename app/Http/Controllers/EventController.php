@@ -52,22 +52,20 @@ class EventController extends Controller
      */
     public function indexExternal(Request $request)
     {
-        var_dump($request['title']);
+        //var_dump($request['title']);
         $nombres = explode(" ",$request['title']);
-        $events = Event::where("cancelled","=","0")->where('publication_date','<',strtotime(Carbon::now()));
+        
+        $events = Event::where("cancelled", 0)->where('publication_date','<',strtotime(Carbon::now()))->whereHas('presentations', function($query){
+            $query->where('starts_at','>', time());
+        });
+        
         foreach ($nombres as $nombre) {
-
             if($nombre!='')
                 $events = $events->where('name','like','%'.$nombre.'%');
-            # code...
         }
-        $events = $events->get();
-        $auxEvent = [];
-        foreach ($events as $event) {
-             if (count($event->presentations)>0)
-                array_push($auxEvent,$event);
-         }
-         $events = $auxEvent;
+        $events = $events->paginate(8);
+        $events = $events->setPath('event');
+
 
         return view('external.events',compact('events'));
     }
@@ -293,7 +291,7 @@ public function store(StoreEventRequest $request)
     'zone_rows'      => $request->input('zone_rows'),
     'start_column'   => $request->input('start_column'),
     'start_row'      => $request->input('start_row'),
-    'seats_ids'          => $request->input('seats_ids'),
+    'seats_ids'      => $request->input('seats_ids'),
     ];
     $data2 = [
             //'start_date'    => $request->input('start_date'),
@@ -469,6 +467,7 @@ public function store(StoreEventRequest $request)
             return ['error' => 'se debe especificar filas y columnas para este local numerado'];
         if($data['zone_columns']){ // esta entrando a pesar de no ser numerado el local :S :S
          $seats_ids = array();
+         /*
          for($i = 0; $i < count($data['zone_names']); $i++){
              for($j = $data['start_column'][$i]; $j<= $data['start_column'][$i] + $data['zone_columns'][$i]-1;$j++)
                 for($k= $data['start_row'][$i]; $k<=$data['start_row'][$i] + $data['zone_rows'][$i]-1;$k++){
@@ -487,6 +486,7 @@ public function store(StoreEventRequest $request)
                  $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
                  return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
          }
+         */
      } else {
          for($i= 0; $i < count($data['zone_names']);$i++)
              $total_capacity = $total_capacity + $data['zone_capacity'][$i];
@@ -588,7 +588,8 @@ public function update(UpdateEventRequest $request, $id)
             'zone_columns'   => $request->input('zone_columns'),
             'zone_rows'      => $request->input('zone_rows'),
             'start_column' => $request->input('start_column'),
-            'start_row'    => $request->input('start_row')
+            'start_row'    => $request->input('start_row'),
+            'seats_ids'      => $request->input('seats_ids'),
             ];
             $data2 = [
             //'start_date'    => $request->input('start_date'),
