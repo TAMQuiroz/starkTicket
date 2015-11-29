@@ -300,12 +300,18 @@
                   <div class="col-sm-10">
                       {!! Form::date('input_start_date',\Carbon\Carbon::now()->addDay(2), array('class' => 'form-control', 'id' =>'input-function-date')) !!}
                   </div>
+                  <div class="col-sm-6" id="firefox" style="visibility: hidden">
+                      Formato fecha: aaaaa-mm-dd
+                  </div>                      
               </div>
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Hora de inicio</label>
                   <div class="col-sm-10">
                       {!! Form::time('input_start_time',null, array('class' => 'form-control', 'id' => 'input-function-time')) !!}
                   </div>
+                  <div class="col-sm-6" id="firefox2" style="visibility: hidden">
+                      Formato hora(24 h): hh:mm
+                  </div>                       
               </div>
 
               <div class="form-group">
@@ -458,6 +464,11 @@
 
 $('document').ready(function () {
   getSubs();
+  if(navigator.userAgent.indexOf("Firefox")>-1 ) {
+    console.log("its firefox");
+    document.getElementById('firefox').style.visibility='visible';
+    document.getElementById('firefox2').style.visibility='visible';
+  }
 })
 
   function getSubs(){
