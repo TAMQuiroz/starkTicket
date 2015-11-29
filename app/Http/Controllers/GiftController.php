@@ -14,7 +14,7 @@ use App\User;
 use App\Http\Requests\Booking\StoreBookingRequest;
 use Session;
 use App\Models\Business;
-
+use App\Models\Module;
 class GiftController extends Controller
 {   
 
@@ -112,8 +112,21 @@ class GiftController extends Controller
     {
         $business = Business::all()->first();
         $active = $business->exchange_active;
- $modulo = 'La marina y el marino';
+        $moduleId = $business->gift_module_id;
 
+         $moduloFind = Module::where('id',  $moduleId ) ; 
+         
+    
+     if( $moduleId !=NULL )
+{
+             $moduloFind = Module::find($moduleId);
+             $modulo = $moduloFind->name ; 
+
+}
+else {
+
+ $modulo = 'No se ha asignado el modulo principal de canjeo de regalos';
+}
         $giftsArr = Gift::all();
         $giftsList = Gift::orderBy('id')->get()->lists('name','id') ;
         $min = Gift::orderBy('id')->get()->lists('id')->first();
