@@ -26,10 +26,16 @@
             <div class="col-sm-6">
                 <label>Desde</label>
                 {!!Form::input('date','firstDate', null ,['class'=>'form-control','id'=>'fecha-ini'])!!}
+                  <div class="col-sm-6" id="firefox" style="visibility: hidden">
+                      Formato fecha: aaaaa-mm-dd
+                  </div>                    
             </div>
             <div class="col-sm-6">
                 <label>Hasta</label>
                 {!!Form::input('date','lastDate', null ,['class'=>'form-control','id'=>'fecha-fin'])!!}
+                  <div class="col-sm-6" id="firefox2" style="visibility: hidden">
+                      Formato fecha: aaaaa-mm-dd
+                  </div>                    
             </div>
         </div>
         <div class="col-sm-5">
@@ -38,10 +44,16 @@
             <div class="col-sm-6">
                 <label>Desde</label>
                 {!!Form::input('date','firstDateP', null ,['class'=>'form-control','id'=>'fecha-ini-des'])!!}
+                  <div class="col-sm-6" id="firefox3" style="visibility: hidden">
+                      Formato fecha: aaaaa-mm-dd
+                  </div>                 
             </div>
             <div class="col-sm-6">
                 <label>Hasta</label>
                 {!!Form::input('date','lastDateP', null ,['class'=>'form-control','id'=>'fecha-fin-des'])!!}
+                  <div class="col-sm-6" id="firefox4" style="visibility: hidden">
+                      Formato fecha: aaaaa-mm-dd
+                  </div>                 
             </div>
         </div>
         <div class="col-sm-2">
@@ -545,5 +557,18 @@ $("#botoncito").click(function () {
 
 });
 </script>
+
+<script>
+$('document').ready(function () {
+
+  if(navigator.userAgent.indexOf("Firefox")>-1 ) {
+    console.log("its firefox");
+    document.getElementById('firefox').style.visibility='visible';
+    document.getElementById('firefox2').style.visibility='visible';
+    document.getElementById('firefox3').style.visibility='visible';
+    document.getElementById('firefox4').style.visibility='visible';
+  }
+})
+</script>     
 
 @stop

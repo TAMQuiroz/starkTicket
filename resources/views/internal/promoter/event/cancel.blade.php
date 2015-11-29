@@ -27,6 +27,9 @@
                 <label  class="col-sm-2 control-label">Devolución:</label>
                 <div class="col-sm-10">
                     <input type="date" class="form-control" name="date_refund" required>
+                  <div class="col-sm-6" id="firefox" style="visibility: hidden">
+                      Formato fecha: aaaaa-mm-dd
+                  </div>                    
                     <span class="help">Fecha de devolución</span>
                 </div>
             </div>
@@ -82,4 +85,15 @@
 @stop
 
 @section('javascript')
+
+<script>
+$('document').ready(function () {
+
+  if(navigator.userAgent.indexOf("Firefox")>-1 ) {
+    console.log("its firefox");
+    document.getElementById('firefox').style.visibility='visible';
+  }
+})
+</script>   
+
 @stop
