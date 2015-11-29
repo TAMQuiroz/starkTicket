@@ -390,8 +390,6 @@ function addZone(){
       if(col>col_max) col_max = col;
       if(fil>fil_max) fil_max = fil;
     });
-    console.log(col_min);
-    console.log(fil_max);
     $('#input-column').val(''+(col_max-col_min+1));
     $('#input-row').val(''+(fil_max-fil_min+1));
     $('#input-rowIni').val(''+fil_min);
@@ -409,7 +407,6 @@ function addZone(){
     if(capacity<0) return;
     if( new_capacity-capacity<0) return;
     if(zone.length==0 || price.length==0) return;
-    console.log("alskdfjaf11111");
     if( document.getElementById('input-capacity').disabled==true){
       var column= "";
       var row= "";
@@ -419,12 +416,10 @@ function addZone(){
       row= document.getElementById('input-row').value ;
       rowini= document.getElementById('input-rowIni').value;
       colini= document.getElementById('input-colIni').value;
-      if(new_capacity-row*column<0) return;
-      if(column.length==0 || row.length==0 || rowini.length==0 || colini.length==0) return;
-
+      //if(new_capacity-row*column<0) return;
+      //if(column.length==0 || row.length==0 || rowini.length==0 || colini.length==0) return;
     }
     else if(capacity.length==0) return;
-
     var tableRef = document.getElementById('table-zone').getElementsByTagName('tbody')[0];
 
     // Insert a row in the table at the last row
@@ -483,7 +478,6 @@ function addZone(){
     y4.required = false;   
     y4.setAttribute("readonly","readonly");
 
-
     if( document.getElementById('input-capacity').disabled==true){ 
     //  Add values when is a numerated local but dont show it
         y1.required=true;
@@ -496,11 +490,6 @@ function addZone(){
       newCell8.appendChild(y3);
       newCell9.appendChild(y4);       
     }
-
-
-
-
-
     // Append values to cells
     var newText  = document.createTextNode(zone);
     var x = document.createElement("INPUT");
@@ -543,7 +532,6 @@ function addZone(){
         newDelete.attachEvent("click", function(){deleteZone(newDelete);});
       }
     }
-
     newCell.appendChild(x);
     newCell2.appendChild(newText2);
     newCell3.appendChild(textPrice);
@@ -575,11 +563,11 @@ function addZone(){
       document.getElementById('input-colIni').value = '';
       document.getElementById('input-rowIni').value = '';
     }
-
     new_capacity = new_capacity - capacity;
-    //document.getElementById('capacity-display').value = new_capacity;
-    //document.getElementById("input-capacity").max=new_capacity;
-
+    if( document.getElementById('input-capacity').disabled==false){
+      document.getElementById('capacity-display').value = new_capacity;
+      document.getElementById("input-capacity").max=new_capacity;
+    }
   }
 
 

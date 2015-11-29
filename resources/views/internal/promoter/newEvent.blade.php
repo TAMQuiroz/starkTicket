@@ -293,8 +293,8 @@
                           row= document.getElementById('input-row').value ;
                           rowini= document.getElementById('input-rowIni').value;
                           colini= document.getElementById('input-colIni').value;
-                          if(new_capacity-row*column<0) return;
-                          if(column.length==0 || row.length==0 || rowini.length==0 || colini.length==0) return;
+                          //if(new_capacity-row*column<0) return;
+                          //if(column.length==0 || row.length==0 || rowini.length==0 || colini.length==0) return;
 
                         }
                         else if(capacity.length==0) return;
