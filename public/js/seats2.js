@@ -53,6 +53,7 @@ function getTakenSlots(){
 
 function makeArray(){
 	zona = $('#zone_id').val();
+	console.log(zona);
 	$.ajax({
         url: config.routes[4].makeArray,
         type: 'get',
