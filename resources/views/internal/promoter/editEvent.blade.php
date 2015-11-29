@@ -60,22 +60,26 @@
 </script>
 
         <!-- Contenido-->
-        @foreach ($capacity_list as $capacity)
+        @foreach ($capacity_list as $key=>$capacity)
           {!! Form::hidden ('capacity_'.$capacity->id, $capacity->capacity) !!}
           {!! Form::hidden ('row_'.$capacity->id, $capacity->rows,  array('id' =>'row_'.$capacity->id)) !!}
           {!! Form::hidden ('column_'.$capacity->id, $capacity->columns, array('id' =>'column_'.$capacity->id)) !!}
           {!! Form::hidden('invisible', 'secret', array('id' => 'invisible_id')) !!}
+          
         @endforeach
 
-
-
+        @foreach($event->zones as $key=>$value)
+          {!! Form::hidden('zones_ids', $event->zones[$key]->id, array('id' => 'zones_ids_'.$key)) !!}
+          {!! Form::hidden('zones_prices2', $event->zones[$key]->price, array('id' => 'zones_prices2_'.$key)) !!}
+          {!! Form::hidden('zones_names2', $event->zones[$key]->name, array('id' => 'zones_names2_'.$key)) !!}
+        @endforeach
         <div class="row">
-          <div class="col-sm-8">
+          <div class="col-sm-12">
             {!!Form::open(array('url' => 'promoter/event/'.$event->id.'/edit','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
               <div class="form-group">
                 <label  class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
-                  {!! Form::text('name',$event->name, array('class' => 'form-control','required','maxlength' => 30)) !!}
+                  {!! Form::text('name',$event->name, array('class' => 'form-control','required','maxlength' => 100)) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -151,7 +155,13 @@
               <!-- ZONA -->
               <legend>Agregar zona:</legend>
 
-              <div class="col-md-6">
+              <div class="col-md-3">
+                  <div class="form-group">
+                    multiple
+                    {!! Form::radio('selection_mode', 'dos',true,['id'=>'multiple-mode-on'])!!} 
+                    single
+                    {!! Form::radio('selection_mode', 'uno',false,['id'=>'single-mode-on'])!!} 
+                  </div>
                   <div class="form-group">
                       <label  class="col-md-4 control-label">Nombre</label>
                       <div class="col-md-8">
@@ -205,197 +215,29 @@
                             <a class="btn btn-info" onclick="addZone()">Agregar</a>
                         </div>
                   </div>   
-                </div>   
-                  <div  id="dist" class="col-md-6">
-                    <label  id="labelDist">Distribución evento</label>
-                  </div>
+              </div>   
+              <div  id="dist" class="col-md-9">
+                <label  id="labelDist">Distribución evento</label>
+              </div>
                   
                 <script>
-
-                    function addZone(){
-
-
-                        var new_capacity = document.getElementById('capacity-display').value;
-
-                        var zone = document.getElementById('input-zone').value;
-                        
-                        var price = document.getElementById('input-price').value;
-
-                        var capacity = document.getElementById('input-capacity').value;
-
-                        if(price<0) return;
-                        if(capacity<0) return;
-                        if( new_capacity-capacity<0) return;
-                        if(zone.length==0 || price.length==0) return;
-                        if( document.getElementById('input-capacity').disabled==true){
-                          var column= "";
-                          var row= "";
-                          var rowini= "";
-                          var colini= "";
-                          column= document.getElementById('input-column').value;
-                          row= document.getElementById('input-row').value ;
-                          rowini= document.getElementById('input-rowIni').value;
-                          colini= document.getElementById('input-colIni').value;
-                          if(new_capacity-row*column<0) return;
-                          if(column.length==0 || row.length==0 || rowini.length==0 || colini.length==0) return;
-
-                        }
-                        else if(capacity.length==0) return;
-
-                        var tableRef = document.getElementById('table-zone').getElementsByTagName('tbody')[0];
-
-                        // Insert a row in the table at the last row
-                        var newRow   = tableRef.insertRow(tableRef.rows.length);
-
-                        // Insert a cell in the row at index 0
-                        var newCell  = newRow.insertCell(0);
-                        var newCell2 = newRow.insertCell(1);
-                        var newCell3 = newRow.insertCell(2);
-                       
-                        var newCell6 = newRow.insertCell(3);
-                        var newCell7 = newRow.insertCell(4);
-                        var newCell8 = newRow.insertCell(5);
-                        var newCell9 = newRow.insertCell(6);
-                        
-                        var newCell5 = newRow.insertCell(7);
-
-
-
-                        var y1 = document.createElement("INPUT");
-                        //y1.setAttribute("type", "hidden");
-                        y1.setAttribute("value", column);
-                        y1.setAttribute("name", "zone_columns[]");
-                        y1.style.border = 'none';
-                        y1.style.background = 'transparent';
-                        y1.style.width='40px';
-                        y1.required = false;
-                        y1.setAttribute("readonly","readonly");
-
-                        var y2 = document.createElement("INPUT");
-                        //y2.setAttribute("type", "hidden");
-                        y2.setAttribute("value", row);
-                        y2.setAttribute("name", "zone_rows[]");
-                        y2.style.border = 'none';
-                        y2.style.background = 'transparent';
-                        y2.style.width='40px';
-                        y2.required = false;
-                        y2.setAttribute("readonly","readonly");
-
-                        var y3 = document.createElement("INPUT");
-                        //y3.setAttribute("type", "hidden");
-                        y3.setAttribute("value", colini);
-                        y3.setAttribute("name", "start_column[]");
-                        y3.style.border = 'none';
-                        y3.style.background = 'transparent';
-                        y3.style.width='40px';
-                        y3.required = false;
-                        y3.setAttribute("readonly","readonly");
-
-                        var y4 = document.createElement("INPUT");
-                        //y4.setAttribute("type", "hidden");
-                        y4.setAttribute("value", rowini);
-                        y4.setAttribute("name", "start_row[]");
-                        y4.style.border = 'none';
-                        y4.style.background = 'transparent';
-                        y4.style.width='40px';
-                        y4.required = false;   
-                        y4.setAttribute("readonly","readonly");
-
-
-                        if( document.getElementById('input-capacity').disabled==true){ 
-                        //  Add values when is a numerated local but dont show it
-                            y1.required=true;
-                            y2.required=true;
-                            y3.required=true;
-                            y4.required=true;
-                            capacity=row*column;        
-                           newCell6.appendChild(y1);
-                          newCell7.appendChild(y2);
-                          newCell8.appendChild(y3);
-                          newCell9.appendChild(y4);       
-                        }
-
-
-
-
-
-                        // Append values to cells
-                        var newText  = document.createTextNode(zone);
-                        var x = document.createElement("INPUT");
-                        x.setAttribute("type", "text");
-                        x.setAttribute("value", zone);
-                        x.setAttribute("name", "zone_names[]");
-                        x.style.border = 'none';
-                        x.style.background = 'transparent';
-                        x.required = true;
-                        x.setAttribute("readonly","readonly");
-
-                        var newText2 = document.createElement("INPUT");
-                        newText2.setAttribute("type", "text");
-                        newText2.setAttribute("value", capacity);
-                        newText2.setAttribute("name", "zone_capacity[]");
-                        newText2.style.border = 'none';
-                        newText2.style.background = 'transparent';
-                        newText2.style.width='40px';
-                        newText2.required = true;
-                        newText2.setAttribute("readonly","readonly");
-
-                        var textPrice = document.createElement("INPUT");
-                        textPrice.setAttribute("type", "text");
-                        textPrice.setAttribute("value", price);
-                        textPrice.setAttribute("name", "price[]");
-                        textPrice.style.border = 'none';
-                        textPrice.style.background = 'transparent';
-                        textPrice.style.width='80px';
-                        textPrice.required = true;
-                        textPrice.setAttribute("readonly","readonly");
-                        // buttons
-
-                        var newDelete = document.createElement('button');
-                        newDelete.className = "btn";
-                        newDelete.className += " btn-info glyphicon glyphicon-remove";
-                        if (newDelete.addEventListener) {  // all browsers except IE before version 9
-                          newDelete.addEventListener("click", function(){deleteZone(newDelete);}, false);
-                        } else {
-                          if (newDelete.attachEvent) {   // IE before version 9
-                            newDelete.attachEvent("click", function(){deleteZone(newDelete);});
-                          }
-                        }
-
-                        newCell.appendChild(x);
-                        newCell2.appendChild(newText2);
-                        newCell3.appendChild(textPrice);
-                        newCell5.appendChild(newDelete);
-                        
-
-
-                        document.getElementById('input-zone').value = '';
-                        document.getElementById('input-capacity').value = '';
-                        document.getElementById('input-price').value = '';
-                        // document.getElementById('input-column').value = '';
-                        // document.getElementById('input-row').value = '';
-                        // document.getElementById('input-colIni').value = '';
-                        // document.getElementById('input-rowIni').value = '';
-
-                        if( document.getElementById('input-capacity').disabled==true){
-                          $('.reserved').removeClass('reserved').addClass('unavailable');
-                          $('.selected').removeClass('selected').addClass('unavailable');
-                          document.getElementById('input-column').value = '';
-                          document.getElementById('input-row').value = '';
-                          document.getElementById('input-colIni').value = '';
-                          document.getElementById('input-rowIni').value = '';
-                        }
-
-                        new_capacity = new_capacity - capacity;
-                        document.getElementById('capacity-display').value = new_capacity;
-                        document.getElementById("input-capacity").max=new_capacity;
-
-                    }
 
                     function deleteZone(btn){
                         var row=btn.parentNode.parentNode.rowIndex;
                         var row2 = row-1;
+                        var cant_filas_total = $('#table-zone').find('tr').length-2;
                         if( document.getElementById('input-capacity').disabled==true){
+                              console.log($("[name='seats_ids[0][]']").length);
+                              $("[name='seats_ids["+row2+"][]']").each(function(index,element){
+                                $(this).remove();
+                                //element.remove();
+                              });
+                              for(i = row2+1 ; i<= cant_filas_total; i++){
+                                $("[name='seats_ids["+i+"][]']").each(function(index,element){
+                                $(this).attr('name', 'seats_ids['+(i-1)+'][]');
+                                //element.remove();
+                              });
+                              }
                               var col_ini = parseInt($('[name="start_column[]"]')[row2].value);
                               var fil_ini = parseInt($('[name="start_row[]"]')[row2].value);
                               var cant_fil = parseInt($('[name="zone_rows[]"]')[row2].value);
@@ -403,8 +245,10 @@
                               for(i = col_ini; i<col_ini+cant_col;i++){
                                 for(j=fil_ini; j<fil_ini + cant_fil; j++){
                                   var id = ''+j+'_'+i;
-                                  $('#'+id).removeClass("unavailable");
-                                  $('#'+id).addClass('available');
+                                  if($('#'+id).length){
+                                    $('#'+id).removeClass("unavailable");
+                                    $('#'+id).addClass('available');
+                                  }
                                 }
                               }
                         }
@@ -413,6 +257,7 @@
                         document.getElementById('capacity-display').value = act_val;
                         document.getElementById("input-capacity").max=act_val;
                         document.getElementById('table-zone') .deleteRow(row);
+                
                 
                     }    
                 </script>
@@ -606,420 +451,8 @@
 
 @section('javascript')
   {!!Html::script('js/jquery.seat-charts.js')!!}
-  <script>
-    $(document).ready(function() {
-
-       holi();
-
-       function holi(){
-        var e = document.getElementsByName('local_id')[0];
-        var index= e.options[e.selectedIndex].value;
-        document.getElementById('capacity-display').value = document.getElementsByName('capacity_'+index)[0].value;        
-        var zones=document.getElementsByName("zone_names[]");
-        var numZones=zones.length;
-        console.log("numero de zonas " + numZones);
-        var capacity=document.getElementsByName("zone_capacity[]");
-
-      
-       for(var i=0;i<numZones;i++){
-         document.getElementById('capacity-display').value=document.getElementById('capacity-display').value-capacity[i].value;
-       }  
-
-       var tam= $('[id=invisible_id]').size();
-       console.log("tamano "+tam);
-       for(var i=1;i<=tam;i++)
-       $('#dist').append("<div id=seat-map-"+i+" class=seatCharts-container  tabindex =0> </div>");
-
-        var e = $('[name=local_id]')[0];
-
-        var index= e.options[e.selectedIndex].value;
-        console.log(index);
-        var algo = $('#row_' + index).val();
-        //console.log("algo "+algo);
-        var table = document.getElementById("table-zone");
-
-
-        if(algo !== undefined && algo >=1){
-
-          //si el local tiene asientos y filas numeradas Do this 
-          //console.log("index "+index);
-          var rows = $('#row_'+index).val();
-          var columns = $('#column_'+index).val();
-
-          // setear maximo filas maxima col
-          document.getElementById("input-column").max=columns;
-          document.getElementById("input-row").max=rows;
-          document.getElementById("input-colIni").max=columns;
-          document.getElementById("input-rowIni").max=rows;
-
-          console.log("columnas "+columns);
-
-          console.log("filas "+rows);
-
-          var arreglo = new Array();
-
-          for(i=0; i<rows;i++){
-            var texto = 'a';
-            for(j=1; j<columns; j++){
-              texto += 'a';
-            }
-            //console.log(texto);
-            arreglo.push(texto);
-          }
-          console.log(arreglo);
-          //console.log(arreglo);
-          var seatid="seat-map-"+index;
-          console.log(seatid);
-
-          var tam= $('[id=invisible_id]').size();
-          for(i=1;i<=tam;i++){
-            $('#seat-map-'+i).hide();
-          }          
-          
-          var sc = $('#seat-map-'+index).seatCharts({
-            map: arreglo,
-          naming : {
-            top : false,
-            getLabel : function (character, row, column) {
-              return column;
-            }
-          },
-          click : function(){
-                  if(this.status()=='available' && this.status()!='selected'){
-                      var num_cant = $('.seatCharts-cell.selected').length;
-                      var unavailable = false;
-                      if(num_cant<2){
-                        if(num_cant == 1){
-                          var id_selec1 = $('.seatCharts-cell.selected').first().attr('id');
-                          var id_selec2 = this.node().attr('id');
-                          var res = id_selec1.split("_");
-                          var fil_ini = parseInt(res[0]);
-                          var col_ini = parseInt(res[1]);
-                          var res = id_selec2.split("_");
-                          var fil_ini2 = parseInt(res[0]);
-                          var col_ini2 = parseInt(res[1]);
-                          if(col_ini > col_ini2)
-                            $('#input-colIni').val(''+col_ini2);
-                          else $('#input-colIni').val(''+col_ini);
-                          if(fil_ini > fil_ini2)
-                            $('#input-rowIni').val(''+fil_ini2);
-                          else $('#input-rowIni').val(''+fil_ini);
-                          $('#input-column').val(''+(Math.abs(col_ini - col_ini2)+1));
-                          $('#input-row').val(''+(Math.abs(fil_ini - fil_ini2)+1));
-                          var col_ini = parseInt($('#input-colIni').val());
-                          var fil_ini = parseInt($('#input-rowIni').val());
-                          var cant_fil = parseInt($('#input-row').val());
-                          var cant_col = parseInt($('#input-column').val());
-                          unavailable = false;
-                          for(i = col_ini; i<col_ini+cant_col;i++){
-                            for(j=fil_ini; j<fil_ini + cant_fil; j++){
-                              var id = ''+j+'_'+i;
-                              if(id!= id_selec2 && id!= id_selec1){
-                                  if($('#'+id).hasClass('unavailable')){
-                                    $('#input-colIni').val('');
-                                    $('#input-rowIni').val('');
-                                    $('#input-column').val('');
-                                    $('#input-row').val('');
-                                    $('.reserved').removeClass('reserved').addClass('available');
-                                    $('.selected').removeClass('selected').addClass('available');
-                                    alert('No se puede seleccionar estos asientos porque ya están ocupados por otra zona');
-                                    unavailable = true;
-                                    break;
-                                  }
-                                  $('#'+id).removeClass("available");
-                                  $('#'+id).addClass('reserved');
-                              }
-                            }
-                            if(unavailable) break;
-                          }
-                        }
-                        if(!unavailable){
-                          this.status('selected');
-                          return 'selected';
-                        } else {
-                          this.status('available');
-                          return 'available';
-                        }
-                      } else{
-                        alert('Ya hay dos asientos seleccionados');
-                        this.status('available');
-                        return 'available';
-                      }
-                    }
-                    if(this.status()=='selected'){
-                      $('#input-colIni').val('');
-                      $('#input-rowIni').val('');
-                      $('#input-column').val('');
-                      $('#input-row').val('');
-                      $('.seatCharts-cell.reserved').removeClass("reserved").addClass("available");
-                      this.status('available');
-                      return 'available';
-                    }
-          },
-          legend : { //Definition legend
-            node : $('#legend'),
-            items : [
-              [ 'a', 'available',   'Libre' ],
-              [ 'a', 'unavailable', 'Ocupado'],
-              [ 'a', 'reserved', 'Reservado']
-            ]
-          } });
-          $('#seat-map-'+index).show();
-
-          
-          $('#input-column').show();
-          $('#input-row').show();
-          $('#input-colIni').show();
-          $('#input-rowIni').show();
-          $('#label_col').show();
-          $('#label_fil').show();
-          $('#label_fini').show();
-          $('#label_cini').show();
-          $('#dist').show();
-          $('#label_capacity').hide();
-          $('#input-capacity').hide();
-
-          document.getElementById('input-capacity').disabled=true;
-
-
-          var columnsSeat=document.getElementsByName("zone_columns[]");
-          var rowsSeat=document.getElementsByName("zone_rows[]");
-          var startRowSeat=document.getElementsByName("start_row[]");
-          var startColumnSeat=document.getElementsByName("start_column[]");
-          for(var n=0;n<numZones;n++){
-                var col_ini = parseInt(startColumnSeat[n].value);
-                var fil_ini = parseInt(startRowSeat[n].value);
-                var cant_fil = parseInt(rowsSeat[n].value);
-                var cant_col = parseInt(columnsSeat[n].value);
-
-                console.log("col Ini: " + col_ini);
-                console.log("fil ini : " + fil_ini);
-                console.log("cant fil: " + cant_fil);
-                console.log("cant col: " + cant_col);
-                for(i = col_ini; i<col_ini+cant_col;i++){
-                  for(j=fil_ini; j<fil_ini + cant_fil; j++){
-                    var id = ''+j+'_'+i;
-                    $('#'+id).addClass('unavailable');
-                  }
-                }
-                console.log("iteracion "+n);
-          }
-
-
-        }else{
-
-
-          var ocultos=document.getElementsByClassName("hating");
-          console.log("ocultos: " + ocultos.length);
-          for(var i=0;i<ocultos.length;i++){
-            ocultos[i].name="none"+i;
-          }  
-
-          //si el local no tiene asientos numerados Do this 
-          //$('#seat-map').empty();
-
-          document.getElementById('input-capacity').disabled=false;
-          var tam= $('[id=invisible_id]').size();
-          for(i=1;i<=tam;i++){
-            $('#seat-map-'+i).hide();
-          }
-          //$('#seat-map').hide();
-          
-          $('#input-column').hide();
-          $('#input-row').hide();
-          $('#input-colIni').hide();
-          $('#input-rowIni').hide();
-          $('#label_col').hide();
-          $('#label_fil').hide();
-          $('#label_fini').hide();
-          $('#label_cini').hide();
-          $('#dist').hide();
-          $('#label_capacity').show();
-          $('#input-capacity').show();
-        }
-      }
-
-      $('[name=local_id]').click(function(){
-        var e = $('[name=local_id]')[0];
-
-        var index= e.options[e.selectedIndex].value;
-        console.log(index);
-        var algo = $('#row_' + index).val();
-        //console.log("algo "+algo);
-        var table = document.getElementById("table-zone");
-
-        for(var i = table.rows.length - 1; i > 0; i--)
-        {
-            table.deleteRow(i);
-        }
-
-        if(algo !== undefined && algo >=1){
-          //si el local tiene asientos y filas numeradas Do this 
-          //console.log("index "+index);
-          var rows = $('#row_'+index).val();
-          var columns = $('#column_'+index).val();
-
-          // setear maximo filas maxima col
-          document.getElementById("input-column").max=columns;
-          document.getElementById("input-row").max=rows;
-          document.getElementById("input-colIni").max=columns;
-          document.getElementById("input-rowIni").max=rows;
-
-          console.log("columnas "+columns);
-
-          console.log("filas "+rows);
-
-          var arreglo = new Array();
-
-          for(i=0; i<rows;i++){
-            var texto = 'a';
-            for(j=1; j<columns; j++){
-              texto += 'a';
-            }
-            //console.log(texto);
-            arreglo.push(texto);
-          }
-          console.log(arreglo);
-          //console.log(arreglo);
-          var seatid="seat-map-"+index;
-          console.log(seatid);
-
-          var tam= $('[id=invisible_id]').size();
-          for(i=1;i<=tam;i++){
-            $('#seat-map-'+i).hide();
-          }          
-          
-          var sc = $('#seat-map-'+index).seatCharts({
-            map: arreglo,
-          naming : {
-            top : false,
-            getLabel : function (character, row, column) {
-              return column;
-            }
-          },
-                    click : function(){
-                  if(this.status()=='available' && this.status()!='selected'){
-                      var num_cant = $('.seatCharts-cell.selected').length;
-                      var unavailable = false;
-                      if(num_cant<2){
-                        if(num_cant == 1){
-                          var id_selec1 = $('.seatCharts-cell.selected').first().attr('id');
-                          var id_selec2 = this.node().attr('id');
-                          var res = id_selec1.split("_");
-                          var fil_ini = parseInt(res[0]);
-                          var col_ini = parseInt(res[1]);
-                          var res = id_selec2.split("_");
-                          var fil_ini2 = parseInt(res[0]);
-                          var col_ini2 = parseInt(res[1]);
-                          if(col_ini > col_ini2)
-                            $('#input-colIni').val(''+col_ini2);
-                          else $('#input-colIni').val(''+col_ini);
-                          if(fil_ini > fil_ini2)
-                            $('#input-rowIni').val(''+fil_ini2);
-                          else $('#input-rowIni').val(''+fil_ini);
-                          $('#input-column').val(''+(Math.abs(col_ini - col_ini2)+1));
-                          $('#input-row').val(''+(Math.abs(fil_ini - fil_ini2)+1));
-                          var col_ini = parseInt($('#input-colIni').val());
-                          var fil_ini = parseInt($('#input-rowIni').val());
-                          var cant_fil = parseInt($('#input-row').val());
-                          var cant_col = parseInt($('#input-column').val());
-                          unavailable = false;
-                          for(i = col_ini; i<col_ini+cant_col;i++){
-                            for(j=fil_ini; j<fil_ini + cant_fil; j++){
-                              var id = ''+j+'_'+i;
-                              if(id!= id_selec2 && id!= id_selec1){
-                                  if($('#'+id).hasClass('unavailable')){
-                                    $('#input-colIni').val('');
-                                    $('#input-rowIni').val('');
-                                    $('#input-column').val('');
-                                    $('#input-row').val('');
-                                    $('.reserved').removeClass('reserved').addClass('available');
-                                    $('.selected').removeClass('selected').addClass('available');
-                                    alert('No se puede seleccionar estos asientos porque ya están ocupados por otra zona');
-                                    unavailable = true;
-                                    break;
-                                  }
-                                  $('#'+id).removeClass("available");
-                                  $('#'+id).addClass('reserved');
-                              }
-                            }
-                            if(unavailable) break;
-                          }
-                        }
-                        if(!unavailable){
-                          this.status('selected');
-                          return 'selected';
-                        } else {
-                          this.status('available');
-                          return 'available';
-                        }
-                      } else{
-                        alert('Ya hay dos asientos seleccionados');
-                        this.status('available');
-                        return 'available';
-                      }
-                    }
-                    if(this.status()=='selected'){
-                      $('#input-colIni').val('');
-                      $('#input-rowIni').val('');
-                      $('#input-column').val('');
-                      $('#input-row').val('');
-                      $('.seatCharts-cell.reserved').removeClass("reserved").addClass("available");
-                      this.status('available');
-                      return 'available';
-                    }
-
-          },
-          legend : { //Definition legend
-            node : $('#legend'),
-            items : [
-              [ 'a', 'available',   'Libre' ],
-              [ 'a', 'unavailable', 'Ocupado'],
-              [ 'a', 'reserved', 'Reservado']
-            ]
-          } });
-          $('#seat-map-'+index).show();
-
-          
-          $('#input-column').show();
-          $('#input-row').show();
-          $('#input-colIni').show();
-          $('#input-rowIni').show();
-          $('#label_col').show();
-          $('#label_fil').show();
-          $('#label_fini').show();
-          $('#label_cini').show();
-          $('#dist').show();
-          $('#label_capacity').hide();
-          $('#input-capacity').hide();
-
-          document.getElementById('input-capacity').disabled=true;
-        }else{
-          //si el local no tiene asientos numerados Do this 
-          //$('#seat-map').empty();
-
-          document.getElementById('input-capacity').disabled=false;
-          var tam= $('[id=invisible_id]').size();
-          for(i=1;i<=tam;i++){
-            $('#seat-map-'+i).hide();
-          }
-          //$('#seat-map').hide();
-          
-          $('#input-column').hide();
-          $('#input-row').hide();
-          $('#input-colIni').hide();
-          $('#input-rowIni').hide();
-          $('#label_col').hide();
-          $('#label_fil').hide();
-          $('#label_fini').hide();
-          $('#label_cini').hide();
-          $('#dist').hide();
-          $('#label_capacity').show();
-          $('#input-capacity').show();
-        }
-      });
-    });
-  </script>
+  {!!Html::script('js/jquery.seat-charts.js')!!}
+  {!!Html::script('js/editEvent.js')!!}
    <script>
 
 
@@ -1069,6 +502,18 @@ $('document').ready(function () {
 
 
   <script type="text/javascript">
+
+  var config = {
+        routes: [
+            { getSeatsArray: "{{ URL::route('ajax.getSeatsArray') }}" },
+            { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
+            { event_available: "{{URL::route('ajax.getAvailable')}}"},
+            { slots: "{{URL::route('ajax.getSlots')}}"},
+            { makeArray: "{{URL::route('ajax.getZoneSeatArray')}}"},
+            { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
+            { getZonesSeatsIds: "{{URL::route('ajax.getZoneSeatsIds')}}"}
+        ]
+    };
     $('#yes').click(function(){
       $('#submitModal').modal('hide');  
     });

@@ -52,22 +52,20 @@ class EventController extends Controller
      */
     public function indexExternal(Request $request)
     {
-        var_dump($request['title']);
+        //var_dump($request['title']);
         $nombres = explode(" ",$request['title']);
-        $events = Event::where("cancelled","=","0")->where('publication_date','<',strtotime(Carbon::now()));
+        
+        $events = Event::where("cancelled", 0)->where('publication_date','<',strtotime(Carbon::now()))->whereHas('presentations', function($query){
+            $query->where('starts_at','>', time());
+        });
+        
         foreach ($nombres as $nombre) {
-
             if($nombre!='')
                 $events = $events->where('name','like','%'.$nombre.'%');
-            # code...
         }
-        $events = $events->get();
-        $auxEvent = [];
-        foreach ($events as $event) {
-             if (count($event->presentations)>0)
-                array_push($auxEvent,$event);
-         } 
-         $events = $auxEvent;
+        $events = $events->paginate(8);
+        $events = $events->setPath('event');
+
 
         return view('external.events',compact('events'));
     }
@@ -82,6 +80,9 @@ class EventController extends Controller
         $organizers_list = Organizer::all()->lists('businessName','id');
 
         $locals_list = Local::all()->lists('name','id');
+        if(count($locals_list) == 0){
+            return back()->withErrors(['No se tienen locales para crear eventos']);
+        }
         $capacity_list = Local::all();
         $array = ['categories_list' =>$categories_list,
         'organizers_list'   =>$organizers_list,
@@ -128,21 +129,21 @@ class EventController extends Controller
 
     public function feedback(){
 
-       return view('internal.client.event_feedback' );
-   }
+     return view('internal.client.event_feedback' );
+ }
 
 
 
-   public function attendanceDetail()
-   {
+ public function attendanceDetail()
+ {
 
-       return view('internal.admin.attendanceDetail '  );
+     return view('internal.admin.attendanceDetail '  );
 
         //return $datePar ;
-   }
+ }
 
 
-   public function storeZone($data, $event){
+ public function storeZone($data, $event){
     $zone = new Zone();
     $zone->name         = $data['name'];
     $zone->price        = $data['price'];
@@ -179,16 +180,16 @@ public function storeRestOfEvent($zone_data, $data, $event){
         'start_row'    => $zone_data['start_row'][$key]
         ];
         $zone = $this->storeZone($zone_data2, $event);
+        $sitios_zona = $zone_data['seats_ids'][$key];
         if($zone_data['zone_columns'][$key] != '' || $zone_data['zone_columns'][$key] != null){
-            for($i=1; $i <= $zone->rows;$i++){
-                for($j=1; $j <= $zone->columns;$j++){
-                    $seat = new Slot();
-                    $seat->row = $i;
-                    $seat->column = $j;
-                    $seat->zone()->associate($zone);
-                    $seat->save();
-                    $seat->presentation()->attach($functions_ids);
-                }
+            foreach ($sitios_zona as $key => $value) {
+                $fil_cols = explode("_", $value);
+                $slot = new Slot();
+                $slot->row = $fil_cols[0];
+                $slot->column = $fil_cols[1];
+                $slot->zone_id = $zone->id;
+                $slot->save();
+                $slot->presentation()->attach($functions_ids);
             }
         }
         else{
@@ -257,6 +258,7 @@ public function store(StoreEventRequest $request)
     if(count($temp) < count($result_dates))
         return redirect()->back()->withInput()->withErrors(['errors' => 'No pueden haber dos funciones con la misma fecha/hora de inicio']);
             //return response()->json(['message' => 'No pueden haber dos funciones con la misma hora de inicio']);
+
     if($this->seCruzanFunciones($result_dates, $request->input('time_length')))
         return redirect()->back()->withInput()->withErrors(['errors' => 'Verificar presentaciones. Algunas horas y fechas se cruzan']);
     $result = $this->capacity_validation($request->only('zone_capacity','start_column', 'start_row', 'zone_columns', 'zone_rows', 'local_id', 'zone_capacity', 'zone_names')); //aca debo validar lo de la capacidad
@@ -264,40 +266,43 @@ public function store(StoreEventRequest $request)
         return redirect()->back()->withInput()->withErrors(['errors' => $result['error']]);
             //return response()->json(['message' => $result['error']]);
 
-        $data = [
-        'name'           => $request->input('name'),
-        'description'    => $request->input('description'),
-        'category_id'    => $request->input('category_id'),
-        'organizer_id'   => $request->input('organizer_id'),
-        'local_id'       => $request->input('local_id'),
-        'time_length'    => $request->input('time_length'),
-        'selling_date'   => $request->input('selling_date'),
-        'image'          => $request->file('image'),
-        'distribution_image'   => $request->file('distribution_image'),
-        'publication_date'     => $request->input('publication_date'),
-        'percentage_comission' => $request->input('percentage_comission',''),
-        'amount_comission'     => $request->input('amount_comission',''),
-        ];
-        $event = $this->storeEvent($data);
-        $zone_data = [
-        'zone_names'      => $request->input('zone_names'),
-        'zone_capacity'  => $request->input('zone_capacity'),
-        'price'     => $request->input('price'),
-        'zone_columns'   => $request->input('zone_columns'),
-        'zone_rows'      => $request->input('zone_rows'),
-        'start_column' => $request->input('start_column'),
-        'start_row'    => $request->input('start_row')
-        ];
-        $data2 = [
+    $data = [
+    'name'           => $request->input('name'),
+    'description'    => $request->input('description'),
+    'category_id'    => $request->input('category_id'),
+    'organizer_id'   => $request->input('organizer_id'),
+    'local_id'       => $request->input('local_id'),
+    'time_length'    => $request->input('time_length'),
+    'selling_date'   => $request->input('selling_date'),
+    'image'          => $request->file('image'),
+    'distribution_image'   => $request->file('distribution_image'),
+    'publication_date'     => $request->input('publication_date'),
+    'percentage_comission' => $request->input('percentage_comission',''),
+    'amount_comission'     => $request->input('amount_comission',''),
+    ];
+    $event = $this->storeEvent($data);
+    $seats_ids = $request->input('seats_ids');
+
+    $zone_data = [
+    'zone_names'     => $request->input('zone_names'),
+    'zone_capacity'  => $request->input('zone_capacity'),
+    'price'          => $request->input('price'),
+    'zone_columns'   => $request->input('zone_columns'),
+    'zone_rows'      => $request->input('zone_rows'),
+    'start_column'   => $request->input('start_column'),
+    'start_row'      => $request->input('start_row'),
+    'seats_ids'      => $request->input('seats_ids'),
+    ];
+    $data2 = [
             //'start_date'    => $request->input('start_date'),
             //'start_time'    => $request->input('start_time'),
-        'function_starts_at' => $result_dates
-        ];
-        $this->storeRestOfEvent($zone_data, $data2, $event);
-        return redirect()->route('promoter.record');
+    'function_starts_at' => $result_dates
+    ];
+    $this->storeRestOfEvent($zone_data, $data2, $event);
+    return redirect()->route('promoter.record');
         //return redirect()->route('events.edit', $event->id);
         //return response()->json(['message' => 'Event added']);
-    }
+}
     /**
      * Display the specified resource.
      *
@@ -320,8 +325,10 @@ public function store(StoreEventRequest $request)
         $user = \Auth::user();
         $event = Event::find($id);
         $Comments = Comment::where('event_id',$id  ) ->get();
+
         if(empty($event)||$event->cancelled)
             return redirect()->back();
+
        return view('external.event', ['event' => $event, 'user'=>$user ,  'Comments'=> $Comments]);
     }
 
@@ -330,24 +337,19 @@ public function store(StoreEventRequest $request)
 
         $user = \Auth::user();
         $event = Event::findOrFail($id);
-        $users = User::all();
         $input = $request->all();
 
-    //Agrego el nuevo comentario
-
-        $Comment    =   new Comment ;
-        $Comment->description  =   $input['comment'];
-        $Comment->time =   new Carbon() ;
-        $Comment->event_id = $id;
-
-        $idUser = Auth::user()->id;
-        $Comment->user_id = $idUser;
-
+        //Agrego el nuevo comentario
+        $Comment = new Comment ;
+        $Comment->description   =   $input['comment'];
+        $Comment->time          =   new Carbon();
+        $Comment->event_id      = $id;
+        $Comment->user_id       = Auth::user()->id;
         $Comment->save();
 
-        $Comments = Comment::where('event_id',$id  ) ->get();
+        Session::flash('message', 'Comentario publicado');
+        Session::flash('alert-class','alert-success');
         return redirect()->back();
-        //return view('external.event', ['event' => $event, 'user'=>$user , 'Comments'=> $Comments,'users' => $users  ] );
     }
 
     /**
@@ -464,30 +466,32 @@ public function store(StoreEventRequest $request)
         if($local->rows >=1 && !$data['zone_columns'])
             return ['error' => 'se debe especificar filas y columnas para este local numerado'];
         if($data['zone_columns']){ // esta entrando a pesar de no ser numerado el local :S :S
-           $seats_ids = array();
-           for($i = 0; $i < count($data['zone_names']); $i++){
-               for($j = $data['start_column'][$i]; $j<= $data['start_column'][$i] + $data['zone_columns'][$i]-1;$j++)
-                    for($k= $data['start_row'][$i]; $k<=$data['start_row'][$i] + $data['zone_rows'][$i]-1;$k++){
-                        $id = ''.$k.'_'.$j;
-                        if(in_array($id, $seats_ids)){
-                            return ['error' => 'Hay zonas con asientos cruzados. Por favor configurar bien las zonas'];
-                        }
-                        array_push($seats_ids, $id);
+         $seats_ids = array();
+         /*
+         for($i = 0; $i < count($data['zone_names']); $i++){
+             for($j = $data['start_column'][$i]; $j<= $data['start_column'][$i] + $data['zone_columns'][$i]-1;$j++)
+                for($k= $data['start_row'][$i]; $k<=$data['start_row'][$i] + $data['zone_rows'][$i]-1;$k++){
+                    $id = ''.$k.'_'.$j;
+                    if(in_array($id, $seats_ids)){
+                        return ['error' => 'Hay zonas con asientos cruzados. Por favor configurar bien las zonas'];
                     }
-           }
-           for ($i = 0; $i < count($data['zone_columns']); $i++) {
-               $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
-               $total_capacity = $total_capacity + $capacity;
-               if($data['start_row'][$i] > $local->rows || $data['start_column'][$i] > $local->columns||
-                   $data['start_row'][$i]+$data['zone_rows'][$i] -1> $local->rows ||
-                   $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
-                   return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
-           }
-       } else {
-           for($i= 0; $i < count($data['zone_names']);$i++)
-               $total_capacity = $total_capacity + $data['zone_capacity'][$i];
-       }
-       if($total_capacity > $local->capacity)
+                    array_push($seats_ids, $id);
+                }
+            }
+            for ($i = 0; $i < count($data['zone_columns']); $i++) {
+             $capacity = $data['zone_columns'][$i]*$data['zone_rows'][$i];
+             $total_capacity = $total_capacity + $capacity;
+             if($data['start_row'][$i] > $local->rows || $data['start_column'][$i] > $local->columns||
+                 $data['start_row'][$i]+$data['zone_rows'][$i] -1> $local->rows ||
+                 $data['start_column'][$i] +$data['zone_columns'][$i]-1 > $local->columns)
+                 return ['error' => 'se seleccionaron filas o columnas mayor a la capacidad del local'];
+         }
+         */
+     } else {
+         for($i= 0; $i < count($data['zone_names']);$i++)
+             $total_capacity = $total_capacity + $data['zone_capacity'][$i];
+     }
+     if($total_capacity > $local->capacity)
         return ['error' => 'la capacidad del evento excede a la del local'];
     $result = [
     'error' => '',
@@ -559,19 +563,19 @@ public function update(UpdateEventRequest $request, $id)
         }
         $data = [
 
-                'name'          => $request->input('name'),
-                'description'   => $request->input('description'),
-                'category_id'   => $request->input('category_id'),
-                'organizer_id'  => $request->input('organizer_id'),
-                'local_id'      => $request->input('local_id'),
-                'publication_date' => $request->input('publication_date'),
-                'selling_date'  => $request->input('selling_date'),
-                'time_length'   => $request->input('time_length'),
-                'image'         => $request->file('image'),
-                'distribution_image' => $request->file('distribution_image'),
-                'percentage_comission' => $request->input('percentage_comission',''),
-                'amount_comission'     => $request->input('amount_comission',''),
-            ];
+        'name'          => $request->input('name'),
+        'description'   => $request->input('description'),
+        'category_id'   => $request->input('category_id'),
+        'organizer_id'  => $request->input('organizer_id'),
+        'local_id'      => $request->input('local_id'),
+        'publication_date' => $request->input('publication_date'),
+        'selling_date'  => $request->input('selling_date'),
+        'time_length'   => $request->input('time_length'),
+        'image'         => $request->file('image'),
+        'distribution_image' => $request->file('distribution_image'),
+        'percentage_comission' => $request->input('percentage_comission',''),
+        'amount_comission'     => $request->input('amount_comission',''),
+        ];
         if($now->getTimestamp() < strtotime($request->input('selling_date'))){
             //antes del sellingdate en general
             $this->deletePresentations($event->id);
@@ -584,7 +588,8 @@ public function update(UpdateEventRequest $request, $id)
             'zone_columns'   => $request->input('zone_columns'),
             'zone_rows'      => $request->input('zone_rows'),
             'start_column' => $request->input('start_column'),
-            'start_row'    => $request->input('start_row')
+            'start_row'    => $request->input('start_row'),
+            'seats_ids'      => $request->input('seats_ids'),
             ];
             $data2 = [
             //'start_date'    => $request->input('start_date'),
@@ -694,8 +699,9 @@ public function update(UpdateEventRequest $request, $id)
             return redirect()->back()->withErrors(['error' => 'Seleccione un evento válido']);
         //verificar que el evento ya terminó completamente o está antes del publication date
         if($event->publication_date < time()){
-            if($event->presentations->last()->starts_at > time())
-                return redirect()->back()->withErrors(['error' => 'No se puede eliminar este evento ya que aun tiene presentaciones vigentes']);
+            if(!$event->presentations->isEmpty())
+                if($event->presentations->last()->starts_at > time())
+                    return redirect()->back()->withErrors(['error' => 'No se puede eliminar este evento ya que aun tiene presentaciones vigentes']);
         }
         $this->deletePresentations($id);
         $this->deleteZones($id);

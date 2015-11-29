@@ -24,13 +24,13 @@ class UpdateModuleRequest extends Request
     public function rules()
     {
         return [
-            'name'          =>  'required|max:30',
-            'address'       =>  'required|max:50',
-            'district'      =>  'required|max:30',
-            'province'      =>  'required|max:30',
-            'state'         =>  'required|max:30',
+            'name'          =>  'required|max:100',
+            'address'       =>  'required|max:100',
+            'district'      =>  'required|max:100',
+            'province'      =>  'required|max:100',
+            'state'         =>  'required|max:100',
             'phone'         =>  'required|digits_between:7,9|numeric',
-            'email'         =>  'required|max:50',
+            'email'         =>  'required|max:100',
             'starTime'      =>  'required',
             'endTime'       =>  'required',
             'image'         =>  'image'

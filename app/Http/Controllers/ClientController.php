@@ -86,8 +86,8 @@ class ClientController extends Controller
         $user->birthday = new Carbon($input['birthday']);
         $user->role_id = Role::where('description','client')->get()->first()->id;
         $user->save();
-        //ERROR DE MENSAJES EN INGLES, DEBEN SER EN ESPAÑOL CUANDO SON CUSTOM
-        Session::flash('message', 'Cliente Creado!');
+
+        Session::flash('message', 'Su cuenta se ha creado. Puede iniciar sesión');
         Session::flash('alert-class','alert-success');
         return redirect('/');
     }

@@ -27,7 +27,7 @@ class StorePromotionRequest extends Request
       return [
           
                
-            'promotionName'  =>  'required|min:5|max:50',
+            'promotionName'  =>  'required|min:5|max:100',
             'fechaInicio'    =>  'required|date|max:20',
             'fechaFin'       =>  'required|date|max:20|after:fechaInicio',
             'description'    =>  'required|min:10|max:400',

@@ -79,12 +79,12 @@
 
 	<legend>Selección de Ubicación</legend>
     <br>
-	<div class="seats">
+	<div class="col-md-12">
 		<div class="demo">
-			<div id="parent-map">
+			<div id="parent-map" class="col-md-8">
 	   			<div id="seat-map"></div>
 			</div>
-			<div class="booking-details">
+			<div class="booking-details col-md-4">
 				<h4 style="text-decoration:underline;text-align: center;">Resumen</h4>
 				<p>Evento: <span> {{$event->name}}</span></p>
 				<p>Asiento(s): </p>
@@ -148,7 +148,7 @@
 
 @section('javascript')
 	{!!Html::script('js/jquery.seat-charts.min.js')!!}
-	{!!Html::script('js/seats.js')!!}
+	{!!Html::script('js/seats2.js')!!}
 	{!!Html::script('js/main.js')!!}
     <script type="text/javascript">
     var config = {
@@ -157,7 +157,7 @@
             { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
             { event_available: "{{URL::route('ajax.getAvailable')}}"},
             { slots: "{{URL::route('ajax.getSlots')}}"},
-            { makeArray: "{{URL::route('ajax.getZone')}}"},
+            { makeArray: "{{URL::route('ajax.getZoneSeatArray')}}"},
             { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
             { promo: "{{URL::route('ajax.getPromo')}}"}
         ]

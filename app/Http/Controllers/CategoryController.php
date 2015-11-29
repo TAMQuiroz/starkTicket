@@ -11,6 +11,8 @@ use App\Models\Category;
 use App\Services\FileService;
 use App\Models\Event;
 
+use Carbon\Carbon;
+
 class CategoryController extends Controller
 {
     /**
@@ -24,7 +26,7 @@ class CategoryController extends Controller
     }
     public function index()
     {
-        $categories = Category::where('type',1)->paginate(5);
+        $categories = Category::where('type',1)->paginate(10);
         $subcat_list = [];
         foreach ($categories as $category) {
             $subcat_list[$category->name] = $this->getSubcategories($category->id);
@@ -119,7 +121,10 @@ class CategoryController extends Controller
     public function showSub($id, $id2)
     {
         $category = Category::findOrFail($id2);
-        $events = Event::where(['cancelled'=>'0','category_id'=>$id2])->paginate(10);
+        $events = Event::where("cancelled", 0)->where('publication_date','<',strtotime(Carbon::now()))->where('category_id',$id2)->whereHas('presentations', function($query){
+            $query->where('starts_at','>', time());
+        })->paginate(8);
+
         return view('external.subcategory',["events"=>$events,"category"=>$category]);
     }
 

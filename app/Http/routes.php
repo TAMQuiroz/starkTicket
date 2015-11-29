@@ -11,6 +11,19 @@
 |
 */
 // Authentication routes...
+
+
+
+
+// Password reset link request routes...
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+// Password reset routes...
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
@@ -32,10 +45,10 @@ Route::get('category/{id}/subcategory/{id2}', 'CategoryController@showSub');
 Route::get('event', 'EventController@indexExternal');
 Route::get('event/successBuy', 'TicketController@showSuccess');
 Route::get('event/{id}', ['as' => 'event.external.show' , 'uses' =>'EventController@showExternal']);
-
- Route::get('event/delete/{id}/comment', 'EventController@destroyComment');
-
 Route::post('event/{id}', 'EventController@showExternalPost');
+Route::get('event/delete/{id}/comment', 'EventController@destroyComment');
+
+
 
 Route::group(['middleware' => ['auth', 'client']], function () {
     Route::get('client/', ['uses'=>'ClientController@profile','as'=>'client.home']);
@@ -108,6 +121,7 @@ Route::get('getPromo', ['uses'=>'TicketController@getPromo','as'=>'ajax.getPromo
 Route::get('getReserves', ['uses'=>'BookingController@getReservesByDni','as'=>'ajax.getReserves']);
 Route::get('localSeats', ['uses'=>'LocalController@getLocalSeatArray','as'=>'ajax.getSeatsArray']);
 Route::get('zoneSeatArray', ['uses'=>'LocalController@getZoneSeatArray','as'=>'ajax.getZoneSeatArray']);
+Route::get('zoneSeatIds', ['uses'=>'LocalController@getZoneSeatsIds','as'=>'ajax.getZoneSeatsIds']);
 
 Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/', ['as'=>'promoter.home','uses'=>'PagesController@promoterHome']);
@@ -140,7 +154,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/{category_id}/subcategories', 'EventController@subcategoriesToAjax');
     Route::get('getLocal/{id}',['as'=>'ajax.getLocal','uses'=>'EventController@getLocal']);
 
-    Route::get('promoter/promotion', 'PromoController@index');
+    //Route::get('promoter/promotion', 'PromoController@index');
     Route::get('promoter/promotion', 'PromoController@promotion');
     Route::get('promoter/promotion/new', ['as'=>'promo.create','uses'=>'PromoController@create']);
     Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);

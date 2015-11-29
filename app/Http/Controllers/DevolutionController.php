@@ -13,6 +13,7 @@ use App\Models\Devolution;
 use App\Models\CancelPresentation;
 use App\Models\ModuleAssigment;
 use App\Models\Presentation;
+use App\Models\Module;
 
 class DevolutionController extends Controller
 {
@@ -23,7 +24,9 @@ class DevolutionController extends Controller
      */
     public function index()
     {
-        $devolutions = Devolution::all();
+
+        $user_id = Auth::user()->id;
+        $devolutions = Devolution::where('user_id',$user_id)->get();
         return view('internal.salesman.devolution.listar', ['devolutions' => $devolutions]);
     }
 
@@ -38,6 +41,7 @@ class DevolutionController extends Controller
         if ($ticket==null) {
 
             Session::flash('message', 'Este ticket no existe');
+            Session::flash('alert-class','alert-danger');
             return redirect('salesman/devolutions');
         }
         if ($ticket->cancelled)
@@ -131,6 +135,14 @@ class DevolutionController extends Controller
 
             return redirect('/salesman/devolutions');
         }
+        $module = Module::find(Auth::user()->module_id);
+        if($module->actual_cash < $ticket->total_price){
+            Session::flash('message', 'No tiene fondos en la caja para poder devolver');
+            Session::flash('alert-class','alert-danger');
+
+            return redirect('/salesman/devolutions');
+        }
+
         $ticket->cancelled = 1;
         $ticket->save();
 

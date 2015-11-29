@@ -11,6 +11,7 @@ use App\Models\Ticket;
 use App\Models\Slot;
 use App\Models\Event;
 use App\Models\Presentation;
+use App\Models\ExchangeRate;
 use App\Models\Zone;
 use App\Models\Business;
 use App\Http\Requests\Booking\StoreBookingRequest;
@@ -80,16 +81,38 @@ class BookingController extends Controller
 
                 if ($event->place->rows != null){
                     //Cambiar estado de asiento
-                    DB::table('slot_presentation')
+                    $seat = DB::table('slot_presentation')
                         ->where('slot_id', $seats[$i])
                         ->where('presentation_id', $request['presentation_id'])
-                        ->update(['status' => config('constants.seat_reserved')]);
+                        ->sharedLock();
+
+                    //Revisa de nuevo 
+
+                    $seat = DB::table('slot_presentation')->where('slot_id', $seats[$i])->where('presentation_id', $request['presentation_id'])->first();
+                    if($seat->status != config('constants.seat_reserved')){
+                        return back()->withInput($request->except('seats'))->withErrors(['El asiento '. $seat_id.' no esta libre']);
+                    }
+
+
+                    DB::table('slot_presentation')->where('slot_id', $seats[$i])->where('presentation_id', $request['presentation_id'])->update(['status' => config('constants.seat_reserved')]);
+                        
+
                 }else{
                     //Disminuir capacidad en la zona de esa presentacion
                     DB::table('zone_presentation')->where('zone_id', $request['zone_id'])
                                                   ->where('presentation_id',$request['presentation_id'])
-                                                  ->decrement('slots_availables');;
+                                                  ->sharedLock();
+
+                    $zoneXpres = DB::table('zone_presentation')->where('zone_id',$request['zone_id'])->where('presentation_id', $request['presentation_id'])->first();
+                    
+                    if($zoneXpres->slots_availables - $nTickets < 0)
+                        return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
+
+                    DB::table('zone_presentation')->where('zone_id', $request['zone_id'])
+                                                  ->where('presentation_id',$request['presentation_id'])
+                                                  ->decrement('slots_availables');
                 }
+
             }
 
             //Crear ticket
@@ -168,10 +191,12 @@ class BookingController extends Controller
         $event = $tickets->first()->event;
         $zone = $tickets->first()->zone;
         $presentation = $tickets->first()->presentation;
+        $exchangeRate = ExchangeRate::where('status',config('constants.active'))->first();
         return view('internal.salesman.payBookingShow',
             array('tickets' => $tickets->first(), 'event' => $event,
                 'zone' => $zone, 'presentation' => $presentation,
-                'reserve' => $codigo));
+                'reserve' => $codigo,
+                'exchangeRate' => $exchangeRate));
         
     }
 
