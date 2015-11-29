@@ -120,21 +120,22 @@ $(document).ready(function() {
     });
 
 $('document').ready(function(){
-  var cantZones = $('[name=zones_ids]').length;
-  var i=0;
-  for(i = 0;i<cantZones;i++){
-    var seat_ids = getZoneSeatsIds($('#zones_ids_'+i).val());
-    var j=0;
-    for(j=0; j<seat_ids.length;j++){
-      $('#'+seat_ids[j]).addClass('reserved');
-    }
+  if($('#input-capacity').attr('disabled')){
+      var cantZones = $('[name=zones_ids]').length;
+      var i=0;
+      for(i = 0;i<cantZones;i++){
+        var seat_ids = getZoneSeatsIds($('#zones_ids_'+i).val());
+        var j=0;
+        for(j=0; j<seat_ids.length;j++){
+          $('#'+seat_ids[j]).addClass('reserved');
+        }
 
-    $('#input-zone').val($('#zones_names2_'+i).val());
-    $('#input-price').val($('#zones_prices2_'+i).val());
-    addZone();
-    
+        $('#input-zone').val($('#zones_names2_'+i).val());
+        $('#input-price').val($('#zones_prices2_'+i).val());
+        addZone();
+        
+      }
   }
-  
 });
 
 $('[name=local_id]').on('click', function(){

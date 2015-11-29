@@ -11,6 +11,19 @@
 |
 */
 // Authentication routes...
+
+
+
+
+// Password reset link request routes...
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+// Password reset routes...
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
@@ -141,7 +154,7 @@ Route::group(['middleware' => ['auth', 'promoter']], function () {
     Route::get('promoter/{category_id}/subcategories', 'EventController@subcategoriesToAjax');
     Route::get('getLocal/{id}',['as'=>'ajax.getLocal','uses'=>'EventController@getLocal']);
 
-    Route::get('promoter/promotion', 'PromoController@index');
+    //Route::get('promoter/promotion', 'PromoController@index');
     Route::get('promoter/promotion', 'PromoController@promotion');
     Route::get('promoter/promotion/new', ['as'=>'promo.create','uses'=>'PromoController@create']);
     Route::post('promoter/promotion/new', ['as'=>'promo.store','uses'=>'PromoController@store']);

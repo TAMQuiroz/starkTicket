@@ -15,7 +15,7 @@ Promociones
 			<th>Nombre Promoción</th>
 			<th>Nombre del evento</th>
 
-			<th>Usuario creador</th>
+			
 			<th>Fecha de Finalizacion</th>
 
 			<th>Ver</th>
@@ -27,8 +27,8 @@ Promociones
 		@foreach($promotions as $promotion)
 		<tr>
 			<td>{{$promotion->name}}</td>
-			<td>{{$events[($promotion->event_id)-1]['name']}}</td>
-			<td>{{$users[($promotion->user_id)-1]['name']}}</td>
+			<td>{{$promotion->event->name}}</td>
+			
 			<td>{{$promotion->endday}}</td>
 			<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#info{{$promotion->id}}" data-whatever="@mdo"><i class="glyphicon glyphicon-plus"></i></button></td>
 			<div class="modal fade" id="info{{$promotion->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -42,14 +42,14 @@ Promociones
 							<form>
 								<div class="form-group">
 									<h3>{{$promotion->name}}</h3>
-									<p>Creada por el usuario =  {{$users[($promotion->user_id)-1]['name']}}    </p>
+									<p>Creada por el usuario =  {{$promotion->user->name}}    </p>
 									<p>FECHA INICIO {{$promotion->startday}}    </p>
 									<p>FECHA FIN {{$promotion->endday}} horas   </p>
 
 									@if($promotion->typePromotion == 1 )
 									<p> Promoción de descuento del  {{$promotion->desc}}%  </p>
 									<p> Válido para  </p>	<ul>
-									<li> {{$accessPromotions[($promotion->access_id)-1]['description'] }}
+									<li> {{$promotion->access->description }}
 									</li>
 								</ul>
 								@else
@@ -57,7 +57,7 @@ Promociones
 								<p>  Lleva  {{$promotion->carry}} y paga   {{$promotion->pay}} </p>
 								<p>   Valido únicamente para la zona     </p>
 								<ul>
-									<li>{{$zones[($promotion->zone_id)-1]['name'] }}   </li>
+									<li>{{$promotion->zone->name}}   </li>
 								</ul>
 								@endif
 

@@ -108,7 +108,7 @@ class PromoController extends Controller
     public function create()
     {
 
-        $events = Event::all();
+        $events = Event::where('promoter_id',Auth::user()->id)->get();
         $accessPromotion = accessPromotion::orderBy('id')->get()->lists('description','id') ;
 
         return view('internal.promoter.newPromotion',  ['events' => $events , 'accessPromotion'=> $accessPromotion   ]    );  
@@ -120,14 +120,9 @@ class PromoController extends Controller
     public function promotion()
     {
 
-      $promotions = Promotions::all();
-      $users = User::all(); 
-      $accessPromotion = accessPromotion::orderBy('id')->get();
-      $events  = Event::all();
-      $zones = Zone::all();
-
-
-      return view('internal.promoter.promotions',   ['promotions' => $promotions , 'users'=> $users  , 'accessPromotions'=>   $accessPromotion , 'zones'=>   $zones, 'events'=>   $events]    );
+      $promotions = Promotions::where('user_id',Auth::user()->id)->get();
+      
+      return view('internal.promoter.promotions',   ['promotions' => $promotions ]    );
   }
 
 

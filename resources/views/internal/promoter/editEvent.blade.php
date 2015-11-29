@@ -65,14 +65,14 @@
           {!! Form::hidden ('row_'.$capacity->id, $capacity->rows,  array('id' =>'row_'.$capacity->id)) !!}
           {!! Form::hidden ('column_'.$capacity->id, $capacity->columns, array('id' =>'column_'.$capacity->id)) !!}
           {!! Form::hidden('invisible', 'secret', array('id' => 'invisible_id')) !!}
-          {!! Form::hidden('zones_ids', $event->zones[$key]->id, array('id' => 'zones_ids_'.$key)) !!}
-          {!! Form::hidden('zones_prices2', $event->zones[$key]->price, array('id' => 'zones_prices2_'.$key)) !!}
-          {!! Form::hidden('zones_names2', $event->zones[$key]->name, array('id' => 'zones_names2_'.$key)) !!}
           
         @endforeach
 
-
-
+        @foreach($event->zones as $key=>$value)
+          {!! Form::hidden('zones_ids', $event->zones[$key]->id, array('id' => 'zones_ids_'.$key)) !!}
+          {!! Form::hidden('zones_prices2', $event->zones[$key]->price, array('id' => 'zones_prices2_'.$key)) !!}
+          {!! Form::hidden('zones_names2', $event->zones[$key]->name, array('id' => 'zones_names2_'.$key)) !!}
+        @endforeach
         <div class="row">
           <div class="col-sm-12">
             {!!Form::open(array('url' => 'promoter/event/'.$event->id.'/edit','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}

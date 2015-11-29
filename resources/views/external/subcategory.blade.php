@@ -34,6 +34,7 @@
     @else
         <div class="alert alert-danger">Eventos no encontrados</div>
     @endif
+    <div class="col-md-12">{!! $events->render() !!}</div>
 @stop
 
 @section('javascript')
