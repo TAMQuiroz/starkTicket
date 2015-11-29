@@ -12,6 +12,7 @@ use App\Services\FileService;
 use App\Models\Event;
 use App\Models\Distribution;
 use App\Models\Zone;
+use App\Models\Slot;
 use DB;
 use App\Models\Presentation;
 
@@ -225,7 +226,8 @@ class LocalController extends Controller
         for($j=1; $j<=$local->rows; $j++){
             $texto = '';
             for($i =1;$i<=$local->columns;$i++){
-                $res = $slots->where('column', $i)->where('row', $j);
+                $res = Slot::where('column', $i)->where('row', $j)
+                    ->where('zone_id', $request['zone_id'])->get();
                 if($res->isEmpty())
                     $texto = $texto.'_';
                 else $texto = $texto.'a';
