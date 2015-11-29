@@ -71,7 +71,10 @@
                 <label for="inputBirth" class="col-sm-2 control-label">Nacimiento</label>
                 <div class="col-sm-10">
                     {!!Form::input('date','birthday', explode(" ",$user->birthday)[0],['class'=>'form-control','id'=>'inputBirth','required'])!!}
-                </div>
+                  <div class="col-sm-6" id="firefox" style="visibility: hidden">
+                      Formato fecha: aaaaa-mm-dd
+                  </div>                      
+                </div>                
               </div>
               <div class="form-group">
                 <label for="inputRole" class="col-sm-2 control-label">Cargo</label>
@@ -149,6 +152,15 @@
     });
   </script>
 
+<script>
+$('document').ready(function () {
+
+  if(navigator.userAgent.indexOf("Firefox")>-1 ) {
+    console.log("its firefox");
+    document.getElementById('firefox').style.visibility='visible';
+  }
+})
+</script>   
 
 
 @stop

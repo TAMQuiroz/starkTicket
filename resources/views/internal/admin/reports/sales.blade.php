@@ -18,10 +18,16 @@
     <div class="col-sm-4">
         <label>Desde</label>
         {!!Form::input('date','firstDate', null ,['class'=>'form-control','id'=>'fecha-ini', 'required'])!!}
+                  <div class="col-sm-6" id="firefox" style="visibility: hidden">
+                      Formato fecha: aaaaa-mm-dd
+                  </div>           
     </div>
     <div class="col-sm-4">
         <label>Hasta</label>
         {!!Form::input('date','lastDate', null ,['class'=>'form-control','id'=>'fecha-fin','required'])!!}
+                  <div class="col-sm-6" id="firefox2" style="visibility: hidden">
+                      Formato fecha: aaaaa-mm-dd
+                  </div>           
     </div>
     <div class="col-sm-4"><br><button class="btn btn-info" type="button" id = 'botoncito' >Buscar</button></div>
 </div>
@@ -190,4 +196,16 @@ $("#botoncito").click(function () {
     }
 });
 </script>
+
+<script>
+$('document').ready(function () {
+
+  if(navigator.userAgent.indexOf("Firefox")>-1 ) {
+    console.log("its firefox");
+    document.getElementById('firefox').style.visibility='visible';
+    document.getElementById('firefox2').style.visibility='visible';
+  }
+})
+</script>  
+
 @stop

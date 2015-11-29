@@ -60,6 +60,9 @@
               <div class="col-sm-10">
                 <!--Asi puedes darle un formato de solo hora al string de fecha que viene de la base de datos, el formato debe ser HH:MM o asi-->
                 {!!Form::input('time','starTime', date_format(date_create($module->starTime),"H:i:s"),['class'=>'form-control','id'=>'starTime','required','onChange'=>'changeEndTime()'])!!}
+                  <div class="col-sm-6" id="firefox" style="visibility: hidden">
+                      Formato hora(24 h): hh:mm
+                  </div>                    
               </div>
             </div>
             <div class="form-group">
@@ -67,6 +70,9 @@
               <div class="col-sm-10">
                 <!--Asi puedes darle un formato de solo hora al string de fecha que viene de la base de datos, el formato debe ser HH:MM o asi-->
                 {!!Form::input('time','endTime', date_format(date_create($module->endTime),"H:i:s") ,['class'=>'form-control','id'=>'endTime','required'])!!}
+                  <div class="col-sm-6" id="firefox2" style="visibility: hidden">
+                      Formato hora(24 h): hh:mm
+                  </div>                    
               </div>
             </div>
             <div class="form-group">
@@ -112,4 +118,15 @@
   });
   
 </script>
+
+<script>
+$('document').ready(function () {
+
+  if(navigator.userAgent.indexOf("Firefox")>-1 ) {
+    console.log("its firefox");
+    document.getElementById('firefox').style.visibility='visible';
+    document.getElementById('firefox2').style.visibility='visible';
+  }
+})
+</script>        
 @stop
