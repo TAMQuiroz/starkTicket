@@ -216,9 +216,13 @@
                         </div>
                   </div>   
               </div>   
-              <div  id="dist" class="col-md-9">
-                <label  id="labelDist">Distribución evento</label>
-              </div>
+              <div class="col-md-9"> 
+                  <div class="demo">
+                      <div id="parent-map" >
+                          <div id="seat-map"></div>
+                      </div>
+                 </div> 
+                 </div> 
                   
                 <script>
 
@@ -520,7 +524,7 @@ $('document').ready(function () {
             { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
             { event_available: "{{URL::route('ajax.getAvailable')}}"},
             { slots: "{{URL::route('ajax.getSlots')}}"},
-            { makeArray: "{{URL::route('ajax.getZoneSeatArray')}}"},
+            { makeArray: "{{URL::route('ajax.getSeatsArray')}}"},
             { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
             { getZonesSeatsIds: "{{URL::route('ajax.getZoneSeatsIds')}}"}
         ]
