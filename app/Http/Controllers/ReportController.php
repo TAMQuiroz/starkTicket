@@ -402,7 +402,6 @@ class ReportController extends Controller
             foreach($eventsDate as $eventDate){
 
                     $event= Event::where('id','=', $eventDate->event_id)->where('cancelled','=',0)->get(); 
-                    dd($event);
                     $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
                     $onlineTickets = 0;  $presentialTicket = 0;
                     $subTotalOnline = 0; $subTotalPresential = 0;
