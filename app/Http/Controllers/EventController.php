@@ -184,12 +184,16 @@ public function storeRestOfEvent($zone_data, $data, $event){
         if($zone_data['zone_columns'][$key] != '' || $zone_data['zone_columns'][$key] != null){
             foreach ($sitios_zona as $key => $value) {
                 $fil_cols = explode("_", $value);
-                $slot = new Slot();
-                $slot->row = $fil_cols[0];
-                $slot->column = $fil_cols[1];
-                $slot->zone_id = $zone->id;
-                $slot->save();
-                $slot->presentation()->attach($functions_ids);
+                $asiento = Slot::where('row',$fil_cols[0])->where('column', $fil_cols[1])
+                    ->where('zone_id', $zone->id)->get();
+                if($asiento->isEmpty()){
+                    $slot = new Slot();
+                    $slot->row = $fil_cols[0];
+                    $slot->column = $fil_cols[1];
+                    $slot->zone_id = $zone->id;
+                    $slot->save();
+                    $slot->presentation()->attach($functions_ids);
+                }
             }
         }
         else{
