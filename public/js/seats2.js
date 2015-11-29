@@ -22,6 +22,7 @@ function getTakenSlots(){
     $.ajax({
         url: config.routes[5].takenSlots,
         type: 'get',
+        async: false,
         data: 
         { 
             function_id: funcion,
