@@ -131,6 +131,9 @@
 									{!! Form::number('', null, ['id'=>'creditCardNumber','class' => 'form-control', 'placeholder' => '1234 5678 9012 3456','min'=>1,'max'=>9999999999999999,'required']) !!}
 									<label>Fecha de expiración</label>
 									<input type="date" id="expirationDate" class="form-control" min="{{date("Y-m-j")}}" required>
+									<div class="col-sm-6" id="firefox" style="visibility: hidden">
+                      					Formato fecha: aaaaa-mm-dd
+                  					</div> 
 									<label for="exampleInputEmail2">Código de Seguridad</label>
 									{!!Form::number('',null,['id'=>'securityCode','class'=>'form-control','placeholder'=>'123','min'=>0,'max'=>999,'required'])!!}
 								</div>
@@ -166,4 +169,15 @@
         $('#submitModal').modal('hide');  
     });
     </script>
+
+<script>
+$('document').ready(function () {
+
+  if(navigator.userAgent.indexOf("Firefox")>-1 ) {
+    console.log("its firefox");
+    document.getElementById('firefox').style.visibility='visible';
+  }
+})
+</script>    
+
 @stop

@@ -39,7 +39,7 @@
                 <div class="form-group col-md-6">
                   <label for="input3" class="col-sm-2 control-label">N° Doc.</label>
                   <div class="col-sm-10">
-                    {!! Form::number('di', null, array('class' => 'form-control', 'id' => 'input3', 'required')) !!}
+                    {!! Form::number('di', null, array('class' => 'form-control', 'id' => 'input3', 'required','min'=> 0)) !!}
                   </div>
                 </div>
                 <br>
@@ -54,6 +54,9 @@
                   <div class="col-sm-10">
                     {!!Form::input('date','birthday', null ,['class'=>'form-control','id'=>'input5','required'])!!}
                   </div>
+                  <div class="col-sm-6" id="firefox" style="visibility: hidden">
+                      Formato fecha: aaaaa-mm-dd
+                  </div>                    
                 </div>
                 <br>
                 <div class="form-group col-md-6">
@@ -119,5 +122,15 @@
 @stop
 
 @section('javascript')
+
+<script>
+$('document').ready(function () {
+
+  if(navigator.userAgent.indexOf("Firefox")>-1 ) {
+    console.log("its firefox");
+    document.getElementById('firefox').style.visibility='visible';
+  }
+})
+</script>   
 
 @stop

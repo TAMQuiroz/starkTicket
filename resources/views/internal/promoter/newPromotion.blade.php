@@ -41,10 +41,15 @@
 		<div style="-webkit-columns: 100px 4;">
 			<h4>Fecha Inicio</h4>
 			{!! Form::date('fechaInicio',\Carbon\Carbon::now(), array('class' => 'form-control' , 'required')) !!}
+              <div class="col-sm-6" id="firefox" style="visibility: hidden">
+                  Formato fecha: aaaaa-mm-dd
+              </div><br>			
 
 	<h4>Hora Inicio</h4>
 			{!! Form::time('timeIni','', array('class' => 'form-control', 'required')) !!}
-
+              <div class="col-sm-6" id="firefox2" style="visibility: hidden">
+                  Formato hora(24 h): hh:mm
+              </div>  <br>
 			<h4>Fecha Fin</h4>
 			{!! Form::date('fechaFin',\Carbon\Carbon::now()->addDay(), array('class' => 'form-control', 'required')) !!}
 
@@ -181,6 +186,15 @@
   }
  </script>
 
+<script>
+$('document').ready(function () {
 
+  if(navigator.userAgent.indexOf("Firefox")>-1 ) {
+    console.log("its firefox");
+    document.getElementById('firefox').style.visibility='visible';
+    document.getElementById('firefox2').style.visibility='visible';
+  }
+})
+</script>  
 
 @stop

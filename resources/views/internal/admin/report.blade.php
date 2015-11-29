@@ -22,10 +22,16 @@
     <div class="col-sm-2">
         <label>Desde</label>
         <input type="date" class="form-control">
+          <div class="col-sm-6" id="firefox" style="visibility: hidden">
+              Formato fecha: aaaaa-mm-dd
+          </div>            
     </div>
     <div class="col-sm-2">
         <label>Hasta</label>
         <input type="date" class="form-control">
+          <div class="col-sm-6" id="firefox2" style="visibility: hidden">
+              Formato fecha: aaaaa-mm-dd
+          </div>             
     </div>
     <div class="col-sm-2">
         <label>Tipo</label>
@@ -81,5 +87,16 @@
 @stop
 
 @section('javascript')
+
+<script>
+$('document').ready(function () {
+
+  if(navigator.userAgent.indexOf("Firefox")>-1 ) {
+    console.log("its firefox");
+    document.getElementById('firefox').style.visibility='visible';
+    document.getElementById('firefox2').style.visibility='visible';
+  }
+})
+</script>  
 
 @stop

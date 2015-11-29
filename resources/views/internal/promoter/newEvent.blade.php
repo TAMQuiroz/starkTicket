@@ -85,7 +85,6 @@
         @endforeach
         {!! Form::hidden('counter', '0', array('id' => 'seat_counter')) !!}
 
-
         <div class="row">
           <div class="col-sm-12">
             {!!Form::open(array('route' => 'events.store','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
@@ -144,12 +143,18 @@
                 <label class="col-sm-2 control-label">Fecha de publicación del evento</label>
                 <div class="col-sm-6">
                     {!! Form::date('publication_date',\Carbon\Carbon::now(), array('class' => 'form-control','required', 'oninput' => 'incrementSellingDate()', 'min'=>\Carbon\Carbon::now()->toDateString())) !!}
+                  <div class="col-sm-6" id="firefox3" style="visibility: hidden">
+                      Formato fecha: aaaaa-mm-dd
+                  </div>                
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Fecha de inicio de ventas</label>
                 <div class="col-sm-6">
                     {!! Form::date('selling_date',\Carbon\Carbon::now()->addDay(), array('class' => 'form-control','required', 'oninput' => 'incrementPresentationDate()')) !!}
+                  <div class="col-sm-6" id="firefox4" style="visibility: hidden">
+                      Formato fecha: aaaaa-mm-dd
+                  </div>                
                 </div>
               </div>
               <div class="form-group">
@@ -506,13 +511,19 @@
                   <label  class="col-sm-2 control-label">Fecha</label>
                   <div class="col-sm-6">
                       {!! Form::date('input_start_date',\Carbon\Carbon::now()->addDay(2), array('class' => 'form-control', 'id' =>'input-function-date')) !!}
-                  </div>
+                      <div class="col-sm-6" id="firefox" style="visibility: hidden">
+                          Formato fecha: aaaaa-mm-dd
+                      </div>                   
+                  </div>                 
               </div>
               <div class="form-group">
                   <label  class="col-sm-2 control-label">Hora de inicio</label>
                   <div class="col-sm-6">
                       {!! Form::time('input_start_time',null, array('class' => 'form-control', 'id' => 'input-function-time')) !!}
-                  </div>
+                      <div class="col-sm-6" id="firefox2" style="visibility: hidden">
+                          Formato hora(24 h): hh:mm
+                      </div>                    
+                  </div>                     
               </div>
 
               <div class="form-group">
@@ -532,7 +543,8 @@
 
                         var start_date = document.getElementById('input-function-date').value;
                         var start_time = document.getElementById('input-function-time').value;
-
+                        console.log(start_date);
+                        console.log(start_time);
                         if(start_time.length==0 || start_time.length==0) return;
                         var tableRef = document.getElementById('functions-table').getElementsByTagName('tbody')[0];
 
@@ -551,6 +563,7 @@
                         x.setAttribute("name", "start_date[]");
                         x.style.border = 'none';
                         x.style.background = 'transparent';
+                        x.setAttribute("readonly","readonly");
                         x.required = true;
                         var newText2 = document.createElement("INPUT");
                         newText2.setAttribute("type", "time");
@@ -558,6 +571,7 @@
                         newText2.setAttribute("name", "start_time[]");
                         newText2.style.border = 'none';
                         newText2.style.background = 'transparent';
+                        newText2.setAttribute("readonly","readonly");
                         newText2.required = true;
                         // buttons
                         var newDelete = document.createElement('button');
@@ -637,6 +651,13 @@
 
 $('document').ready(function () {
   getSubs();
+  if(navigator.userAgent.indexOf("Firefox")>-1 ) {
+    console.log("its firefox");
+    document.getElementById('firefox').style.visibility='visible';
+    document.getElementById('firefox2').style.visibility='visible';
+  document.getElementById('firefox3').style.visibility='visible';
+  document.getElementById('firefox4').style.visibility='visible';    
+  }
 })
 
   function getSubs(){
