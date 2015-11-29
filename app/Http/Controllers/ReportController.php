@@ -402,7 +402,7 @@ class ReportController extends Controller
             foreach($eventsDate as $eventDate){
 
                     $event= Event::where('id','=', $eventDate->event_id)->where('cancelled','=',0)->get(); 
-                    dd($event);
+                    if ($event != null){
                     $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
                     $onlineTickets = 0;  $presentialTicket = 0;
                     $subTotalOnline = 0; $subTotalPresential = 0;
@@ -419,7 +419,7 @@ class ReportController extends Controller
                         }
                     }
                     array_push($eventInformation,array($event[0]->name, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
-            
+                    }
             }
 
 
@@ -866,7 +866,17 @@ class ReportController extends Controller
     public function assistanceExcel(Request $request){
         if ($request['ty_report']==1){
             $salesmans = User::where('role_id',2)->get();
-            $date_at = $request['date_at'];
+             $date_at = $request['date_at'];
+            
+            $auxSalesman = [];
+            foreach ($salesmans as $salesman) {
+                if (date_format(date_create($salesman->created_at),"Y-m-d") <= date_format(date_create($date_at),"Y-m-d")){
+                    array_push($auxSalesman, $salesman);
+                }
+            }
+            $salesmans = $auxSalesman;
+
+           
             $assiInformation = [];
             foreach ($salesmans as $salesman) {
                 
@@ -938,6 +948,15 @@ class ReportController extends Controller
             $input = $request->all(); 
              $salesmans = User::where('role_id',2)->get();
             $date_at = $request['date_at'];
+
+            $auxSalesman = [];
+            foreach ($salesmans as $salesman) {
+                if (date_format(date_create($salesman->created_at),"Y-m-d") <= date_format(date_create($date_at),"Y-m-d")){
+                    array_push($auxSalesman, $salesman);
+                }
+            }
+            $salesmans = $auxSalesman;
+
             $assiInformation = [];
             foreach ($salesmans as $salesman) {
                 
