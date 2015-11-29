@@ -151,7 +151,7 @@ class BookingController extends Controller
                 }
             }
 
-            array_push($tickets,$id);
+            array_push($tickets,$ticket->id);
             //var_dump('llego');
 
 
@@ -169,7 +169,7 @@ class BookingController extends Controller
         $array = ['event' => $event, 
                 'zone'    => $zone,
                 'cant'    => $nTickets,
-                'eventDate' => gmdate("d-m-Y H:i:s",$presentation->starts_at),
+                'eventDate' => date("d-m-Y h:i:s a",$presentation->starts_at),
                 'codigo'  => $codigo_reserva,
                 'seats'   => ''];
         if($event->place->rows != null){
