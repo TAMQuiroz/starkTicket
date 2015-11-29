@@ -170,8 +170,8 @@
               <legend>Agregar zona:</legend>
               <div class="col-md-3">
                   <div class="form-group">
-                multiple
-                {!! Form::radio('selection_mode', 'dos',true,['id'=>'multiple-mode-on'])!!} 
+                <!--multiple
+                {!! Form::radio('selection_mode', 'dos',true,['id'=>'multiple-mode-on'])!!} -->
                 single
                 {!! Form::radio('selection_mode', 'uno',false,['id'=>'single-mode-on'])!!} 
                 </div>

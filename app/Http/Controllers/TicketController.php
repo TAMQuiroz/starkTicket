@@ -153,8 +153,9 @@ class TicketController extends Controller
 
         }else{ //No es numerado
             $zoneXpres = DB::table('zone_presentation')->where('zone_id',$request['zone_id'])->where('presentation_id', $request['presentation_id'])->first();
-            if($zoneXpres->slots_availables - $nTickets < 0) //Deberia ser zona x presentacion
+            if($zoneXpres->slots_availables - $nTickets < 0) {
                 return back()->withInput($request->except('seats'))->withErrors(['La zona esta llena']);
+            }
         }
 
         try{
