@@ -50,18 +50,18 @@
     <table class="table table-bordered table-striped" id="example">
           <tr>
               <th>Nombres y Apellidos</th>
-            <!--  <th>Modulo</th> -->
+            
               <th>Hora de Ingreso</th>
               <th>Hora de Salida</th>
               <th>Situación Temprano</th>
               <th>Situación Salida</th>
-
+              <th>Punto de Venta</th>
           </tr>
           <tbody id="fbody">
           @foreach($assiInformation as $assi)
           <tr>
               <td>{{$assi[0]}} {{$assi[1]}}</td>
-             <!-- <td>{{$assi[2]}}</td> -->
+       
               @if (strcmp($assi[2], "-") != 0 )
                 <td>{{date_format(date_create($assi[2]),"H:i:s")}}</td>
               @else
@@ -74,6 +74,7 @@
               @endif   
               <td>{{$assi[4]}}</td>
               <td>{{$assi[5]}}</td>
+              <td>{{$assi[6]}}</td>
           </tr>
           @endforeach
         </tbody>
