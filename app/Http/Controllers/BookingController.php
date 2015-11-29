@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Mail;
 use DateTime; use Date;
 use Session;
+use Auth;
 
 class BookingController extends Controller
 {
