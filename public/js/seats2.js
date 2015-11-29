@@ -22,6 +22,7 @@ function getTakenSlots(){
     $.ajax({
         url: config.routes[5].takenSlots,
         type: 'get',
+        async: false,
         data: 
         { 
             function_id: funcion,
@@ -52,6 +53,7 @@ function getTakenSlots(){
 
 function makeArray(){
 	zona = $('#zone_id').val();
+	console.log(zona);
 	$.ajax({
         url: config.routes[4].makeArray,
         type: 'get',
@@ -63,7 +65,9 @@ function makeArray(){
         success: function( response ){
             if(response != "")
             {
+            	
             	map = response;
+            	console.log(map);
                 $('#parent-map').empty();
                 $('#legend').empty();
                 $('#selected-seats').empty();
