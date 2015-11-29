@@ -597,8 +597,12 @@ function showSeatMap(index){
             } });
           $('#seat-map-'+index).show();
 
-          function ponerUnavailable(col_ini, fil_ini, dif1, dif2){
-      var i, j;
+}
+function ponerUnavailable(col_ini, fil_ini, dif1, dif2){
+      var e = $('[name=local_id]')[0];
+    var index= e.options[e.selectedIndex].value;
+    var i, j;
+    var sc1 = $('#seat-map-'+index);
       for(i=col_ini;i<= col_ini+dif1;i++) 
         for(j=fil_ini;j<= fil_ini+dif2;j++){
           var id = ""+j+"_"+i;
@@ -610,7 +614,10 @@ function showSeatMap(index){
     }
 
     function ponerAvailable(col_ini, fil_ini, dif1, dif2, selec1, selec2){
-      var i,j;
+      var e = $('[name=local_id]')[0];
+      var index= e.options[e.selectedIndex].value;
+      var i, j;
+      var sc1 = $('#seat-map-'+index);
       for(i=col_ini;i<= col_ini+dif1;i++) 
         for(j=fil_ini;j<= fil_ini+dif2;j++){
           var id = ""+j+"_"+i;
@@ -620,7 +627,6 @@ function showSeatMap(index){
           }
         } 
     }
-}
 
 function getSeatsArray(idLocal){
   var map = new Array;
