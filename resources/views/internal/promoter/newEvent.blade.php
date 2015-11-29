@@ -98,7 +98,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Lugar</label>
                 <div class="col-sm-6">
-                  {!! Form::select('local_id', $locals_list->toArray(), null, ['class' => 'form-control','required', 'onclick' => 'changeCapacity()','maxlength' => 50]) !!}
+                  {!! Form::select('local_id', $locals_list->toArray(), null, ['class' => 'form-control','required', 'onclick' => 'changeCapacity()','maxlength' => 50, 'onchange'=>'makeArray1()']) !!}
                 </div>
               </div>
               <div class="form-group">
@@ -229,9 +229,18 @@
                         </div>
                   </div>   
                 </div>   
+                <!---
                   <div  id="dist" class="col-md-9">
                     <label  id="labelDist">Distribución evento</label>
-                  </div>                                                
+                  </div>
+                  -->
+                 <div class="col-md-9"> 
+                  <div class="demo">
+                      <div id="parent-map" >
+                          <div id="seat-map"></div>
+                      </div>
+                 </div> 
+                 </div>                                               
                 <script>
 
                     function addZone(){
@@ -420,17 +429,20 @@
                         // document.getElementById('input-colIni').value = '';
                         // document.getElementById('input-rowIni').value = '';
                         if( document.getElementById('input-capacity').disabled==true){
-                          var elementos = $('.reserved');
+                          var e = $('[name=local_id]')[0];
+                          var index= e.options[e.selectedIndex].value;
+                          var sc1 = $('#seat-map-'+index);
+                          var elementos = $('div#seat-map-'+index+' div.reserved');
                           var index_table = $('#table-zone').find('tr').length-2;
-                          $('.reserved').each(function(){
+                          $('div#seat-map-'+index+' div.reserved').each(function(){
                             $('#table-zone').append('<input type="hidden" name="seats_ids['+index_table+'][]" value="'+this.id+'" id="seats_id_'+index_table+'" >');
                           });
-                          $('.selected').each(function(){
+                          $('div#seat-map-'+index+' div.selected').each(function(){
                             $('#table-zone').append('<input type="hidden" name="seats_ids['+index_table+'][]" value="'+this.id+'" id="seats_id_'+index_table+'" >');
                           });
-                          if($('.reserved').hasClass('available')) $('.reserved').removeClass('available');
-                          $('.reserved').removeClass('reserved').addClass('unavailable');
-                          $('.selected').removeClass('selected').addClass('unavailable');
+                          if($('div#seat-map-'+index+' div.reserved').hasClass('available')) $('.reserved').removeClass('available');
+                          $('div#seat-map-'+index+' div.reserved').removeClass('reserved').addClass('unavailable');
+                          $('div#seat-map-'+index+' div.selected').removeClass('selected').addClass('unavailable');
                           document.getElementById('input-column').value = '';
                           document.getElementById('input-row').value = '';
                           document.getElementById('input-colIni').value = '';
@@ -681,7 +693,7 @@ $('document').ready(function () {
             { price_ajax: "{{ URL::route('ajax.getPrice') }}" },
             { event_available: "{{URL::route('ajax.getAvailable')}}"},
             { slots: "{{URL::route('ajax.getSlots')}}"},
-            { makeArray: "{{URL::route('ajax.getZoneSeatArray')}}"},
+            { makeArray: "{{URL::route('ajax.getSeatsArray')}}"},
             { takenSlots: "{{URL::route('ajax.getTakenSlots')}}"},
             { promo: "{{URL::route('ajax.getPromo')}}"}
         ]
