@@ -198,11 +198,11 @@ function showSeatMap(index){
               }
             },
             click : function(){
-              if(this.node().hasClass('unavailable')){
+              if(this.status()=='unavailable'){
                 this.status('unavailable');
                 return 'unavailable';
               }
-              if(this.node().hasClass('reserved')){
+              if(this.status()=='reserved'){
                 this.status('reserved');
                 return 'reserved';
               }
@@ -247,6 +247,7 @@ function showSeatMap(index){
                     }
 
                     console.log('tiene available');
+                    this.status('selected');
                     this.node().addClass('selected');
 
                     if($('.selected').length >1){
@@ -326,31 +327,37 @@ function showSeatMap(index){
             } });
           $('#seat-map-'+index).show();
 
-    function ponerUnavailable(col_ini, fil_ini, dif1, dif2){
-      var i, j;
-      for(i=col_ini;i<= col_ini+dif1;i++) 
-        for(j=fil_ini;j<= fil_ini+dif2;j++){
-          var id = ""+j+"_"+i;
-          if($('#'+id).length && !$('#'+id).hasClass('selected')){
-            sc.status(id, 'reserved');
-            //$('#'+id).removeClass('available').addClass('reserved');
-          }
-        }
-    }
-
-    function ponerAvailable(col_ini, fil_ini, dif1, dif2, selec1, selec2){
-      var i,j;
-      for(i=col_ini;i<= col_ini+dif1;i++) 
-        for(j=fil_ini;j<= fil_ini+dif2;j++){
-          var id = ""+j+"_"+i;
-          if($('#'+id).length && id!=selec1 && id!=selec2){
-            sc.status(id, 'available');
-            //$('#'+id).removeClass('reserved').addClass('available');
-          }
-        } 
-    }
 
 }
+  function ponerUnavailable(col_ini, fil_ini, dif1, dif2){
+    var e = $('[name=local_id]')[0];
+    var index= e.options[e.selectedIndex].value;
+    var i, j;
+    var sc1 = $('#seat-map-'+index);
+    for(i=col_ini;i<= col_ini+dif1;i++) 
+      for(j=fil_ini;j<= fil_ini+dif2;j++){
+        var id = ""+j+"_"+i;
+        if($('#'+id).length && !$('#'+id).hasClass('selected')){
+          sc1.seatCharts().status(id, 'reserved');
+          $('#'+id).removeClass('available').addClass('reserved');
+        }
+      }
+  }
+
+  function ponerAvailable(col_ini, fil_ini, dif1, dif2, selec1, selec2){
+    var e = $('[name=local_id]')[0];
+    var index= e.options[e.selectedIndex].value;
+    var i, j;
+    var sc1 = $('#seat-map-'+index);
+    for(i=col_ini;i<= col_ini+dif1;i++) 
+      for(j=fil_ini;j<= fil_ini+dif2;j++){
+        var id = ""+j+"_"+i;
+        if($('#'+id).length && id!=selec1 && id!=selec2){
+          sc1.seatCharts().status(id, 'available');
+          $('#'+id).removeClass('reserved').addClass('available');
+        }
+      } 
+  }
 
 
 function getSeatsArray(idLocal){
