@@ -434,20 +434,17 @@
                         // document.getElementById('input-colIni').value = '';
                         // document.getElementById('input-rowIni').value = '';
                         if( document.getElementById('input-capacity').disabled==true){
-                          var e = $('[name=local_id]')[0];
-                          var index= e.options[e.selectedIndex].value;
-                          var sc1 = $('#seat-map-'+index);
-                          var elementos = $('div#seat-map-'+index+' div.reserved');
+                          var elementos = $('.reserved');
                           var index_table = $('#table-zone').find('tr').length-2;
-                          $('div#seat-map-'+index+' div.reserved').each(function(){
+                          $('.reserved').each(function(){
                             $('#table-zone').append('<input type="hidden" name="seats_ids['+index_table+'][]" value="'+this.id+'" id="seats_id_'+index_table+'" >');
                           });
-                          $('div#seat-map-'+index+' div.selected').each(function(){
+                          $('.selected').each(function(){
                             $('#table-zone').append('<input type="hidden" name="seats_ids['+index_table+'][]" value="'+this.id+'" id="seats_id_'+index_table+'" >');
                           });
-                          if($('div#seat-map-'+index+' div.reserved').hasClass('available')) $('.reserved').removeClass('available');
-                          $('div#seat-map-'+index+' div.reserved').removeClass('reserved').addClass('unavailable');
-                          $('div#seat-map-'+index+' div.selected').removeClass('selected').addClass('unavailable');
+                          if($('.reserved').hasClass('available')) $('.reserved').removeClass('available');
+                          $('.reserved').removeClass('reserved').addClass('unavailable');
+                          $('.selected').removeClass('selected').addClass('unavailable');
                           document.getElementById('input-column').value = '';
                           document.getElementById('input-row').value = '';
                           document.getElementById('input-colIni').value = '';
