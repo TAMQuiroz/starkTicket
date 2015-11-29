@@ -209,7 +209,7 @@ class BookingController extends Controller
             return redirect()->back()->withErrors(['error' => 'no hay reservas para el codigo especificado']);
         $nTickets= $ticket->quantity;
         $ticket->payment_date = new Carbon();
-        $ticket->cancelled = true;
+        $ticket->cancelled = false;
         $ticket->salesman_id = \Auth::user()->id;
         $ticket->picked_up = true;
         $ticket->updated_at = new Carbon();
