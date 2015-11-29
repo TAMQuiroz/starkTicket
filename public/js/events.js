@@ -198,11 +198,11 @@ function showSeatMap(index){
               }
             },
             click : function(){
-              if(this.node().hasClass('unavailable')){
+              if(this.status()=='unavailable'){
                 this.status('unavailable');
                 return 'unavailable';
               }
-              if(this.node().hasClass('reserved')){
+              if(this.status()=='reserved'){
                 this.status('reserved');
                 return 'reserved';
               }

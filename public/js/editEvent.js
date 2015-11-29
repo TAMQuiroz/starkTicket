@@ -473,18 +473,18 @@ function showSeatMap(index){
               }
             },
             click : function(){
-              if(this.node().hasClass('unavailable')){
+              if(this.status()=='unavailable'){
                 this.status('unavailable');
                 return 'unavailable';
               }
-              if(this.node().hasClass('reserved')){
+              if(this.status()=='reserved'){
                 this.status('reserved');
                 return 'reserved';
               }
               if($('#multiple-mode-on').is(':checked')){
                   if(this.status()=='selected'){
                     console.log("clic en un selected");
-                    
+
                     if($('.selected').length>=1){
                       var selec1 = $('.selected')[0].id;
                       var selec2 = this.node().attr('id');
