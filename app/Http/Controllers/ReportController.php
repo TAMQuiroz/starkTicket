@@ -402,6 +402,7 @@ class ReportController extends Controller
             foreach($eventsDate as $eventDate){
 
                     $event= Event::where('id','=', $eventDate->event_id)->where('cancelled','=',0)->get(); 
+                    if ($event != null){
                     $tickets = Ticket::where('presentation_id','=', $eventDate->id)->get();
                     $onlineTickets = 0;  $presentialTicket = 0;
                     $subTotalOnline = 0; $subTotalPresential = 0;
@@ -418,7 +419,7 @@ class ReportController extends Controller
                         }
                     }
                     array_push($eventInformation,array($event[0]->name, date("d/m/Y",$eventDate->starts_at) , $onlineTickets, $subTotalPresential,$presentialTicket, $subTotalOnline, $subTotalPresential + $subTotalOnline));
-            
+                    }
             }
 
 
