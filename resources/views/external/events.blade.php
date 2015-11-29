@@ -50,6 +50,8 @@
          <div class="row">
          @endif
         @endforeach
+
+        <div class="col-md-12">{!! $events->render() !!}</div>
     </div>
 </div>
 @stop
