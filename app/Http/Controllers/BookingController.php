@@ -216,6 +216,7 @@ class BookingController extends Controller
         $ticket->reserve = null;
         $id = $ticket->id;
         $ticket->save();
+        $user = Auth::user();
         if($request['promotion_id']!=""){
                 $promo = Promotions::find($request['promotion_id']);
                 if($promo->desc != null){
