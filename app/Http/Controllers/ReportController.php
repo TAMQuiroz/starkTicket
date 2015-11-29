@@ -167,9 +167,10 @@ class ReportController extends Controller
             }  
         }
         
-    
 
     if ($input['type'] == 1){
+
+
         Excel::create('Reporte de asignacion starkticket', function ($excel) use($assigmentsInformation,$flagBetweenDates,$flagFilterAll,$flagFirstDate,$flagLastDate,$input){
           $excel->sheet('Reporte de Asignacion', function($sheet) use($assigmentsInformation,$flagBetweenDates,$flagFilterAll,$flagFirstDate,$flagLastDate,$input) {
 
@@ -201,6 +202,7 @@ class ReportController extends Controller
             
 
                 $cantidad = count($assigmentsInformation)+4;
+                //sacamos el total 
 
 
                 $sheet->setBorder('B4:F' . $cantidad ,'thin');
@@ -479,6 +481,8 @@ class ReportController extends Controller
             }  
         }
 
+
+
         if ($input['type'] == 1){
             Excel::create('Reporte de ventas starkticket', function ($excel) use($eventInformation,$flagBetweenDates,$input){
               $excel->sheet('Reporte de ventas', function($sheet) use($eventInformation,$flagBetweenDates,$input) {
@@ -508,7 +512,39 @@ class ReportController extends Controller
 
 
                 $cantidad = count($eventInformation)+4;
+                $cellTotal = $cantidad + 1;
+                // comentarios no informativos
+                $ticketsOnline = 0; //indica entradas vendidas online
+                $subTicketsOnline = 0; // indica el subtotal de tickets ONLINE (precio)
+                $ticketsModulo = 0;  // indica entradas vendidas modulo
+                $subTicketsModulo = 0; // indica el subtotal de tickets modulo (precio)
+                $totalPrice = 0; // indica el total de ventas
 
+                foreach($eventInformation as $eventInfo){
+                    $ticketsOnline = $ticketsOnline + $eventInfo[2];
+                    $subTicketsOnline = $subTicketsOnline + $eventInfo[3];
+                    $ticketsModulo = $ticketsModulo + $eventInfo[4];
+                    $subTicketsModulo = $subTicketsModulo + $eventInfo[5];
+                    $totalPrice = $totalPrice +$eventInfo[6];
+                }
+
+
+                $sheet->setBorder('B'.$cellTotal.':G'. $cellTotal ,'thin');
+                $sheet->cells('B'.$cellTotal.':F'. $cellTotal,function($cells){
+
+                    $cells->setFontWeight('bold');
+                    //$cells->setBackground('#008000');
+                    $cells->setFontColor('#000000');
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+
+                });
+                $sheet->setCellValue('B'. $cellTotal, "TOTAL");
+                $sheet->setCellValue('C'. $cellTotal, $ticketsOnline);
+                $sheet->setCellValue('D'. $cellTotal, $subTicketsOnline);
+                $sheet->setCellValue('E' . $cellTotal, $ticketsModulo);
+                $sheet->setCellValue('F'. $cellTotal, $subTicketsModulo);
+                $sheet->setCellValue('G' . $cellTotal, $totalPrice);
 
                 $sheet->setBorder('A4:G' . $cantidad ,'thin');
                 $sheet->setCellValue('A4', "Nombre del evento");
@@ -566,7 +602,7 @@ class ReportController extends Controller
             })->download('xlsx');
         }
         else{
-        Excel::create('Reporte de ventas starkticket', function ($excel) use($eventInformation,$flagBetweenDates,$input){
+             Excel::create('Reporte de ventas starkticket', function ($excel) use($eventInformation,$flagBetweenDates,$input){
               $excel->sheet('Reporte de ventas', function($sheet) use($eventInformation,$flagBetweenDates,$input) {
 
 
@@ -594,7 +630,39 @@ class ReportController extends Controller
 
 
                 $cantidad = count($eventInformation)+4;
+                $cellTotal = $cantidad + 1;
+                // comentarios no informativos
+                $ticketsOnline = 0; //indica entradas vendidas online
+                $subTicketsOnline = 0; // indica el subtotal de tickets ONLINE (precio)
+                $ticketsModulo = 0;  // indica entradas vendidas modulo
+                $subTicketsModulo = 0; // indica el subtotal de tickets modulo (precio)
+                $totalPrice = 0; // indica el total de ventas
 
+                foreach($eventInformation as $eventInfo){
+                    $ticketsOnline = $ticketsOnline + $eventInfo[2];
+                    $subTicketsOnline = $subTicketsOnline + $eventInfo[3];
+                    $ticketsModulo = $ticketsModulo + $eventInfo[4];
+                    $subTicketsModulo = $subTicketsModulo + $eventInfo[5];
+                    $totalPrice = $totalPrice +$eventInfo[6];
+                }
+
+
+                $sheet->setBorder('B'.$cellTotal.':G'. $cellTotal ,'thin');
+                $sheet->cells('B'.$cellTotal.':F'. $cellTotal,function($cells){
+
+                    $cells->setFontWeight('bold');
+                    //$cells->setBackground('#008000');
+                    $cells->setFontColor('#000000');
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+
+                });
+                $sheet->setCellValue('B'. $cellTotal, "TOTAL");
+                $sheet->setCellValue('C'. $cellTotal, $ticketsOnline);
+                $sheet->setCellValue('D'. $cellTotal, $subTicketsOnline);
+                $sheet->setCellValue('E' . $cellTotal, $ticketsModulo);
+                $sheet->setCellValue('F'. $cellTotal, $subTicketsModulo);
+                $sheet->setCellValue('G' . $cellTotal, $totalPrice);
 
                 $sheet->setBorder('A4:G' . $cantidad ,'thin');
                 $sheet->setCellValue('A4', "Nombre del evento");
@@ -649,8 +717,7 @@ class ReportController extends Controller
                 $sheet->fromArray($data, true, 'A5', true, false);
 
               });
-            })->export('pdf');
-
+            })->export('pdf');      
         }
 
     }
