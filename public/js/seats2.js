@@ -65,8 +65,9 @@ function makeArray(){
         success: function( response ){
             if(response != "")
             {
-            	console.log(map);
+            	
             	map = response;
+            	console.log(map);
                 $('#parent-map').empty();
                 $('#legend').empty();
                 $('#selected-seats').empty();
