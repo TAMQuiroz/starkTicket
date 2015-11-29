@@ -198,11 +198,11 @@ function showSeatMap(index){
               }
             },
             click : function(){
-              if(this.node().hasClass('unavailable')){
+              if(this.status()=='unavailable'){
                 this.status('unavailable');
                 return 'unavailable';
               }
-              if(this.node().hasClass('reserved')){
+              if(this.status()=='reserved'){
                 this.status('reserved');
                 return 'reserved';
               }
@@ -247,6 +247,7 @@ function showSeatMap(index){
                     }
 
                     console.log('tiene available');
+                    this.status('selected');
                     this.node().addClass('selected');
 
                     if($('.selected').length >1){
@@ -333,7 +334,7 @@ function showSeatMap(index){
           var id = ""+j+"_"+i;
           if($('#'+id).length && !$('#'+id).hasClass('selected')){
             sc.status(id, 'reserved');
-            //$('#'+id).removeClass('available').addClass('reserved');
+            $('#'+id).removeClass('available').addClass('reserved');
           }
         }
     }
@@ -345,7 +346,7 @@ function showSeatMap(index){
           var id = ""+j+"_"+i;
           if($('#'+id).length && id!=selec1 && id!=selec2){
             sc.status(id, 'available');
-            //$('#'+id).removeClass('reserved').addClass('available');
+            $('#'+id).removeClass('reserved').addClass('available');
           }
         } 
     }
