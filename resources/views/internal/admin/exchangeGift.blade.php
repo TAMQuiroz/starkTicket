@@ -102,7 +102,7 @@ Canjeo de premios
     <h4>Regalos</h4>
     {!! Form::select('gifts',  $giftsList->toArray()  , null, ['class' => 'form-control','id' => 'dd-list' ,'required'])!!}
     <h4>Cantidad de regalos</h4>
-    {!! Form::number('cantidad_de_regalos', null, ['class' => 'form-control']) !!}
+    {!! Form::number('cantidad_de_regalos', null, ['class' => 'form-control', 'min' => '0']) !!}
 </div>
 <div class="col-md-8" style="margin-top:20px">
     <a class="btn btn-info" type="button" id="exchange" href="" title="Create" data-toggle="modal" data-target="#saveModal" >Canjear puntos</a>
