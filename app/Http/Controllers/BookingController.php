@@ -28,7 +28,7 @@ class BookingController extends Controller
 	{
         $business = Business::all()->first();
 		$event = Event::find($id);
-		$presentations = $event->presentations;
+		$presentations = $event->presentations->where('cancelled',0)->where('starts_at','>',strtotime(Carbon::now()));
 		foreach ($presentations as $presentation) {
             if(!$presentation->cancelled)
 			     $presentation->starts_at = date("d-m-Y h:i a", $presentation->starts_at);
