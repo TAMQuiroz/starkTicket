@@ -408,9 +408,11 @@ function addZone(){
     var capacity = document.getElementById('input-capacity').value;
 
     if(price<0) return;
-    if(capacity<0) return;
-    if( new_capacity-capacity<0) return;
-    if(zone.length==0 || price.length==0) return;
+    if( document.getElementById('input-capacity').disabled==false){
+      if(capacity<0) return;
+      if( new_capacity-capacity<0) return;
+      if(zone.length==0 || price.length==0) return;
+    }
     if( document.getElementById('input-capacity').disabled==true){
       var column= "";
       var row= "";
