@@ -223,7 +223,7 @@
                       </div>
                   </div>
                   <div class="form-group">
-                      <label  class="col-md-4 control-label">Capacidad disponible</label>
+                      <label  class="col-md-4 control-label" id="capacity-display-label">Capacidad disponible</label>
                       <div class="col-md-8">
                           <input type="text" id="capacity-display" class="form-control" disabled>
                       </div>

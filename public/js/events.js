@@ -35,10 +35,14 @@ function makeArray1(){
                 $('#legend').empty();
                 $('#selected-seats').empty();
                 $('#parent-map').append('<div id="seat-map"><div class="front">Escenario</div></div>');
+                $('#capacity-display').hide();
+                $('#capacity-display-label').hide();
                 renderSeats();
             }
             else
             {
+              $('#capacity-display').show();
+              $('#capacity-display-label').show();
               $('#parent-map').empty();
                 $('#legend').empty();
                 $('#selected-seats').empty();
