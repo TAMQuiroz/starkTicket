@@ -67,7 +67,7 @@
       </div>
       <div class="form-group">
             <div class="col-sm-offset-10 col-sm-6">
-                <a class="btn btn-info" onclick="commitSeats()">Commit</a>
+                <a class="btn btn-info" onclick="commitSeats()">Confirmar asientos</a>
                 <a class="btn btn-info" onclick="resetSeats()">Reset</a>
             </div>
       </div>   
@@ -76,7 +76,9 @@
         {!!Form::radio('selection_mode', 'dos',true,['id'=>'multiple-mode-on', 'hidden'])!!} 
         single
         {!!Form::radio('selection_mode', 'uno',false,['id'=>'single-mode-on','hidden'])!!} 
-        <div id="seat-map" class="seatCharts-container"  tabindex ="0"> 
+        <div id="parent">
+          <div id="seat-map" class="seatCharts-container"  tabindex ="0"> 
+          </div>
         </div>
       </div>
       <div class="form-group">
@@ -116,7 +118,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                <button id="yes" type="submit" class="btn btn-info">Si</button>
+                <button id="yes" type="submit" class="btn btn-info" onClick="return checkCommit(this)">Si</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

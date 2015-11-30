@@ -51,7 +51,6 @@ class LocalController extends Controller
      */
     public function store(StoreLocalRequest $request)
     {
-        //
         $input = $request->all();
         
 
