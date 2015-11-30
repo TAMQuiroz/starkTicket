@@ -230,7 +230,8 @@ class BusinessController extends Controller
         }
 
         $about->save();
-
+        Session::flash('message', 'Se actualizaron los datos!');
+        Session::flash('alert-class','alert-success');
         return redirect()->back();
 
     }
@@ -275,6 +276,8 @@ class BusinessController extends Controller
 
         $system->save();
 
+        Session::flash('message', 'Se actualizaron los datos!');
+        Session::flash('alert-class','alert-success');
         return redirect()->back();
     }
 
