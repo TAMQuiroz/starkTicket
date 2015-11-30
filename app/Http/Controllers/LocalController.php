@@ -145,6 +145,7 @@ class LocalController extends Controller
         $local->district     =   $input['district'];
         $local->province     =   $input['province']; 
         $local->state        =   $input['state'];
+        /*
         if($input['local_type'] == config('constants.numbered')){
             $local->rows          =   $input['row'];
             $local->columns       =   $input['column'];
@@ -154,7 +155,7 @@ class LocalController extends Controller
             $local->columns       =   null;
             $local->capacity     =   $input['capacity'];
         }        
-        
+        */
         //Control de subida de imagen
         if($request->file('image')!=null)
             $local->image        =   $this->file_service->upload($request->file('image'),'local');
