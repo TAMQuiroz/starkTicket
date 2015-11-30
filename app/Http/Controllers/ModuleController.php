@@ -208,7 +208,7 @@ class ModuleController extends Controller
         if ($moduleAssiPass->count()==0){
             $salesman = User::find($request['salesman_id']);
             if ($salesman->module_id!=null){
-                 return back()->withErrors(['Este vendedor ya ha sido asignado']);    
+                 return back()->withErrors(['Este vendedor ya ha sido asignado a un punto de venta']);    
             }
             $salesman->module_id   = $request['module_id'];
             $salesman->save();
@@ -223,7 +223,7 @@ class ModuleController extends Controller
             $moduleassigment->save();
 
         }else{
-            return back()->withErrors(['Ese modulo de trabajo ya ha sido asignado']);
+            return back()->withErrors(['Ese punto de venta ya ha sido asignado a un vendedor']);
         }
      
          return redirect('admin/modules/assigment');
@@ -263,7 +263,7 @@ class ModuleController extends Controller
         $moduleassigment = ModuleAssigment::find($id);
         $module = Module::find($moduleassigment->module_id);
         if ($module->openModule == true){
-            return back()->withErrors(['Antes de desasociar, primero debes cerrar la caja']); 
+            return back()->withErrors(['Antes de desasociar al vendedor, primero este debe cerrar su caja']); 
         }
 
         $salesman = User::find($moduleassigment->salesman_id);
@@ -281,11 +281,11 @@ class ModuleController extends Controller
                     ->get();
 
         if ($tickets != null ){
-            return back()->withErrors(['Antes de desasociar, primero debes hacer el arqueo de caja']); 
+            return back()->withErrors(['Antes de desasociar, primero este debe hacer el arqueo de caja']); 
             
         }
         if ($devolutions != null){
-            return back()->withErrors(['Antes de desasociar, primero debes hacer el arqueo de caja']); 
+            return back()->withErrors(['Antes de desasociar, primero este debe hacer el arqueo de caja']); 
         }
 
 

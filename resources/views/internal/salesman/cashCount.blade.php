@@ -31,16 +31,16 @@
     <div class="col-sm-10">
       {!!Form::open(array('url' => 'salesman/cash_count','files'=>true,'id'=>'form','class'=>'form-horizontal'))!!}
       <div class="form-group">
-        <label for="inputEmail3" class="col-sm-3 control-label">Nuevo Monto Inicial</label>
+        <label for="inputEmail3" class="col-sm-3 control-label">Monto Inicial</label>
         <div class="col-sm-3">
           {!!Form::number('cash', $cashFirst ,['class'=>'form-control','id'=>'cash', 'min'=>0,'requiered'])!!}
           {!! Form::hidden('cash_val', null, ['cash'=>'cash_val'])!!}
           {!! Form::hidden('type', '1', ['id'=>'type'])!!}
         </div>
         <div class="col-sm-2">
-          <a  class="btn btn-info" href="" title="submit" data-toggle="modal" data-target="#submitModal" >Modificar Monto</a>
+          <a  class="btn btn-info" href="" title="submit" data-toggle="modal" data-target="#submitModal" >Abrir Caja</a>
         </div>
-        <label for="inputEmail3" class="col-sm-4 control-label">Monto Inicial Actual: {{$cashFirst}}</label>
+        <label for="inputEmail3" class="col-sm-4 control-label">Monto Inicial: {{$cashFirst}}</label>
 
       </div>
       <div class="modal fade"  id="submitModal">
@@ -89,7 +89,7 @@
         <th>Función</th>
         <th>Cantidad de Entradas</th>
         <th>Precio Individual Base</th>
-        <th>Sub total</th>
+        <th>Sub total de efectivo</th>
       </tr>
       <!--
       <tr>
@@ -185,7 +185,7 @@
         <th>Función</th>
         <th>Cantidad de Entradas</th>
         <th>Precio Individual Base</th>
-        <th>Sub total</th>
+        <th>Sub total de efectivo</th>
       </tr>
       @foreach($refunds as $refund)
       <tr>
