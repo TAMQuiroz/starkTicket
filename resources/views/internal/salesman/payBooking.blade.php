@@ -11,7 +11,7 @@
 @section('content')
 <ul class="alert alert-danger" id="erroresp" hidden> </ul>
 <fieldset>
-    <div class="col-md-6">
+    <div class="col-md-10">
         <h5>Ingrese DNI de designado</h5>
         <div class="input-group" style="width:290px">
             {!! Form::number('designee', null, array('class' => 'form-control', 'placeholder'=>'Código de designado','required','maxlength'=>8,'size'=>8, 'id'=>'dni_recojo')) !!} 
