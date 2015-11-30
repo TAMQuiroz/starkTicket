@@ -28,7 +28,7 @@
 @section('content')
     <form action="{{action('BookingController@store')}}" enctype="multipart/form-data">		
        <!-- Content -->
-      <div>
+      <div class="col-md-12">
           {!! Form::hidden('code', $event->id, ['class' => 'form-control', 'disabled','id'=>'event_id']) !!}
           {!!Form::hidden('event_id',$event['id'])!!}
           <h5>Selecciona función</h5>
@@ -126,7 +126,7 @@
           </div>
            
         </div>  
-
+      </div> 
 			
 @stop
 
