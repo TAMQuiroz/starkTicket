@@ -30,6 +30,10 @@ function changeNumbered(element){
 
 
 	}else{
+		$('#multiple-mode-on').hide();
+      	$('#single-mode-on').hide();
+		$('#parent').empty();
+		$('#parent').append('<div id="seat-map"></div>');
 		$('#capacity').prop('disabled',false);
 		$('#row').prop('disabled',true);
 		$('#column').prop('disabled',true);
@@ -37,3 +41,11 @@ function changeNumbered(element){
 		$('#column').val('');
 	}
 }
+
+function checkCommit(element){
+	if($('input[name="local_type"]:checked').val() == 1 && $('.unavailable').length <1) {
+		alert("Debe confirmar los asientos del local");
+		return false;	
+	}
+}
+

@@ -4,6 +4,8 @@ $('document').ready(function () {
     var filas = $('#row').val();
 
     if(filas.trim()){
+      $('#parent').empty();
+      $('#parent').append('<div id="seat-map"></div>');
       generarSeats($(this).val(),filas);
       $('#multiple-mode-on').show();
       $('#single-mode-on').show();
