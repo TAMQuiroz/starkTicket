@@ -798,7 +798,7 @@ class ReportController extends Controller
                             ->get();
 
                     if (count($assistances)==0){
-                        $aux = ModuleAssigment::where('dateAssigments', '<' ,$date_at)->where('salesman_id',  $salesman->id)->get()->last();
+                        $aux = ModuleAssigment::where('dateAssigments', '<' ,date_format(date_create(date("Y-m-d",strtotime($date_at) + 86400 )),"Y-m-d"))->where('salesman_id',  $salesman->id)->get()->last();
                             if (count($aux) == 0){
                                 array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió","No tiene Módulo"));
                             }else{
@@ -815,7 +815,7 @@ class ReportController extends Controller
                             }
                     }else {
                         foreach ($assistances as $assistance){
-                            $aux = ModuleAssigment::where('dateAssigments', '<' ,$date_at)->where('salesman_id',  $salesman->id)->get()->last();
+                            $aux = ModuleAssigment::where('dateAssigments', '<' ,date_format(date_create(date("Y-m-d",strtotime($date_at) + 86400 )),"Y-m-d"))->where('salesman_id',  $salesman->id)->get()->last();
                                 
                             if (count($aux) == 0 ){
                             
@@ -823,40 +823,45 @@ class ReportController extends Controller
                             }
                             else {
                                 $module = Module::find($aux->module_id);
-                                $openHour = date_format(date_create($module->starTime),"H:i:s");
+                                if ($aux->dateMoveAssigments == null || date_format(date_create($aux->dateMoveAssigments),"Y-m-d") >= $date_at){
+                                    $openHour = date_format(date_create($module->starTime),"H:i:s");
 
-                                    if ($openHour >= date_format(date_create($assistance->datetimestart),"H:i:s")){
-                                        if ($assistance->datetimeend == null){
-                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),"-","Llegó Puntual","Sigue Trabajando",$module->name));
-                                        }
-                                        else {
-
-                                        
-                                            $endHour = date_format(date_create($module->endTime),"H:i:s");
-                                            if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
-                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Puntual","Salio Puntual",$module->name));
+                                        if ($openHour >= date_format(date_create($assistance->datetimestart),"H:i:s")){
+                                            if ($assistance->datetimeend == null){
+                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),"-","Llegó Puntual","Sigue Trabajando",$module->name));
                                             }
                                             else {
-                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llego Puntual","Salió Temprano",$module->name));
+
+                                            
+                                                $endHour = date_format(date_create($module->endTime),"H:i:s");
+                                                if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
+                                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Puntual","Salio Puntual",$module->name));
+                                                }
+                                                else {
+                                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llego Puntual","Salió Temprano",$module->name));
+                                                }
                                             }
-                                        }
-                                                
-                                    }                  
-                                    else{
-                                        if ($assistance->datetimeend == null){
-                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),"-","Llegó Tarde","Sigue Trabajando",$module->name));
-                                        }
-                                        else {
-                                            $endHour = date_format(date_create($module->endTime),"H:i:s");
-                                            if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
-                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Puntual",$module->name));
+                                                    
+                                        }                  
+                                        else{
+                                            if ($assistance->datetimeend == null){
+                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),"-","Llegó Tarde","Sigue Trabajando",$module->name));
                                             }
                                             else {
-                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Temprano",$module->name));
+                                                $endHour = date_format(date_create($module->endTime),"H:i:s");
+                                                if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
+                                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Puntual",$module->name));
+                                                }
+                                                else {
+                                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Temprano",$module->name));
+                                                }
                                             }
-                                        }
-                                        
-                                    } 
+                                            
+                                        } 
+                                }
+                                else{
+                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"-","-","No tiene Módulo"));
+                                }
                             }
                             
                         }
@@ -901,7 +906,7 @@ class ReportController extends Controller
                                 ->get();
 
                         if (count($assistances)==0){
-                            $aux = ModuleAssigment::where('dateAssigments', '<' ,$date_at)->where('salesman_id',  $salesman->id)->get()->last();
+                            $aux = ModuleAssigment::where('dateAssigments', '<' ,date_format(date_create(date("Y-m-d",strtotime($date_at) + 86400 )),"Y-m-d"))->where('salesman_id',  $salesman->id)->get()->last();
                             if (count($aux) == 0){
                                 array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió","No tiene Módulo"));
                             }else{
@@ -918,46 +923,54 @@ class ReportController extends Controller
                             }
                         }else {
                             foreach ($assistances as $assistance){
-                                $aux = ModuleAssigment::where('dateAssigments', '<' ,$date_at)->where('salesman_id',  $salesman->id)->get()->last();
+                                $aux = ModuleAssigment::where('dateAssigments', '<' ,date_format(date_create(date("Y-m-d",strtotime($date_at) + 86400 )),"Y-m-d"))->where('salesman_id',  $salesman->id)->get()->last();
                                 
                                 if (count($aux) == 0 ){
                                     array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"-","-","No tiene Módulo"));
                                 }
                                 else {
                                     $module = Module::find($aux->module_id);
-                                    $openHour = date_format(date_create($module->starTime),"H:i:s");
 
-                                    
-                                    if ($openHour >= date_format(date_create($assistance->datetimestart),"H:i:s")){
-                                        if ($assistance->datetimeend== null){
-                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),"-","Llegó Puntual","Sigue Trabajando",$module->name));
-                                        }
-                                        else {
-                                            $endHour = date_format(date_create($module->endTime),"H:i:s");
-                                            if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
-                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Puntual","Salio Puntual",$module->name));
-                                            }
-                                            else {
-                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llego Puntual","Salió Temprano",$module->name));
-                                            }
-                                        }
-                                            
-                                    }                  
-                                    else{
-                                        if ($assistance->datetimeend == null){
-                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),"-","Llegó Tarde","Sigue Trabajando",$module->name));
-                                        }
-                                        else {
-                                            $endHour = date_format(date_create($module->endTime),"H:i:s");
-                                            if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
-                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Puntual",$module->name));
-                                            }
-                                            else {
-                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Temprano",$module->name));
-                                            }
-                                        }
+                                    if ($aux->dateMoveAssigments == null || date_format(date_create($aux->dateMoveAssigments),"Y-m-d") >= $date_at){
+
+
+                                        $openHour = date_format(date_create($module->starTime),"H:i:s");
+
                                         
-                                    } 
+                                        if ($openHour >= date_format(date_create($assistance->datetimestart),"H:i:s")){
+                                            if ($assistance->datetimeend== null){
+                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),"-","Llegó Puntual","Sigue Trabajando",$module->name));
+                                            }
+                                            else {
+                                                $endHour = date_format(date_create($module->endTime),"H:i:s");
+                                                if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
+                                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Puntual","Salio Puntual",$module->name));
+                                                }
+                                                else {
+                                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llego Puntual","Salió Temprano",$module->name));
+                                                }
+                                            }
+                                                
+                                        }                  
+                                        else{
+                                            if ($assistance->datetimeend == null){
+                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),"-","Llegó Tarde","Sigue Trabajando",$module->name));
+                                            }
+                                            else {
+                                                $endHour = date_format(date_create($module->endTime),"H:i:s");
+                                                if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
+                                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Puntual",$module->name));
+                                                }
+                                                else {
+                                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Temprano",$module->name));
+                                                }
+                                            }
+                                            
+                                        } 
+                                    }
+                                    else{
+                                        array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"-","-","No tiene Módulo"));
+                                    }
                                 }
                                 
                             }
@@ -994,7 +1007,7 @@ class ReportController extends Controller
                                 ->get();
 
                         if (count($assistances)==0){
-                            $aux = ModuleAssigment::where('dateAssigments', '<' ,$date_at)->where('salesman_id',  $salesman->id)->get()->last();
+                            $aux = ModuleAssigment::where('dateAssigments', '<' ,date_format(date_create(date("Y-m-d",strtotime($date_at) + 86400 )),"Y-m-d"))->where('salesman_id',  $salesman->id)->get()->last();
                             if (count($aux) == 0){
                                 array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió","No tiene Módulo"));
                             }else{
@@ -1011,7 +1024,7 @@ class ReportController extends Controller
                             }
                         }else {
                             foreach ($assistances as $assistance){
-                                $aux = ModuleAssigment::where('dateAssigments', '<' ,$date_at)->where('salesman_id',  $salesman->id)->get()->last();
+                                $aux = ModuleAssigment::where('dateAssigments', '<' ,date_format(date_create(date("Y-m-d",strtotime($date_at) + 86400 )),"Y-m-d"))->where('salesman_id',  $salesman->id)->get()->last();
                                 
                                 if (count($aux) == 0 ){
                                 
@@ -1019,37 +1032,42 @@ class ReportController extends Controller
                                 }
                                 else {
                                     $module = Module::find($aux->module_id);
-                                    $openHour = date_format(date_create($module->starTime),"H:i:s");
-                                    
-                                    if ($openHour >= date_format(date_create($assistance->datetimestart),"H:i:s")){
-                                        if ($assistance->datetimeend == null){
-                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),"-","Llegó Puntual","Sigue Trabajando",$module->name));
-                                        }
+                                    if ($aux->dateMoveAssigments == null || date_format(date_create($aux->dateMoveAssigments),"Y-m-d") >= $date_at){
+                                        $openHour = date_format(date_create($module->starTime),"H:i:s");
+                                        
+                                        if ($openHour >= date_format(date_create($assistance->datetimestart),"H:i:s")){
+                                            if ($assistance->datetimeend == null){
+                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),"-","Llegó Puntual","Sigue Trabajando",$module->name));
+                                            }
+                                            else{
+
+
+                                                $endHour = date_format(date_create($module->endTime),"H:i:s");
+                                                if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
+                                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Puntual","Salio Puntual",$module->name));
+                                                }
+                                                else {
+                                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llego Puntual","Salió Temprano",$module->name));
+                                                }
+                                            }
+                                        }                  
                                         else{
-
-
-                                            $endHour = date_format(date_create($module->endTime),"H:i:s");
-                                            if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
-                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Puntual","Salio Puntual",$module->name));
+                                            if ($assistance->datetimeend == null){
+                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),"-","Llegó Tarde","Sigue Trabajando",$module->name));
                                             }
                                             else {
-                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llego Puntual","Salió Temprano",$module->name));
+                                                 $endHour = date_format(date_create($module->endTime),"H:i:s");
+                                                if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
+                                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Puntual",$module->name));
+                                                }
+                                                else {
+                                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Temprano",$module->name));
+                                                }
                                             }
                                         }
-                                    }                  
+                                    }
                                     else{
-                                        if ($assistance->datetimeend == null){
-                                            array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),"-","Llegó Tarde","Sigue Trabajando",$module->name));
-                                        }
-                                        else {
-                                             $endHour = date_format(date_create($module->endTime),"H:i:s");
-                                            if ($endHour <= date_format(date_create($assistance->datetimeend),"H:i:s")){
-                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Puntual",$module->name));
-                                            }
-                                            else {
-                                                array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"Llegó Tarde","Salió Temprano",$module->name));
-                                            }
-                                        }
+                                        array_push($assiInformation, array($salesman->name,$salesman->lastname,date_format(date_create($assistance->datetimestart),"H:i:s"),date_format(date_create($assistance->datetimeend),"H:i:s"),"-","-","No tiene Módulo"));
                                     } 
                                 }
                                 
