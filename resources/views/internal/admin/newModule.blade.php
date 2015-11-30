@@ -58,12 +58,18 @@
         <label for="inputStartTime" class="col-sm-2 control-label">Hora de Apertura</label>
         <div class="col-sm-10">
           {!!Form::input('time','starTime', null ,['class'=>'form-control','id'=>'starTime','required','onChange'=>'changeEndTime()'])!!}
+          <div class="col-sm-6" id="firefox" style="visibility: hidden">
+              Formato hora(24 h): hh:mm
+          </div> 
         </div>
       </div>
       <div class="form-group">
         <label for="inputEndTime" class="col-sm-2 control-label">Hora de Cierre</label>
         <div class="col-sm-10">
           {!!Form::input('time','endTime', null ,['class'=>'form-control','id'=>'endTime','required'])!!}
+          <div class="col-sm-6" id="firefox2" style="visibility: hidden">
+              Formato hora(24 h): hh:mm
+            </div> 
         </div>
       </div>
       <div class="form-group">
@@ -110,4 +116,14 @@
   });
   
 </script>
+<script>
+$('document').ready(function () {
+
+  if(navigator.userAgent.indexOf("Firefox")>-1 ) {
+    console.log("its firefox");
+    document.getElementById('firefox').style.visibility='visible';
+    document.getElementById('firefox2').style.visibility='visible';
+  }
+})
+</script>  
 @stop

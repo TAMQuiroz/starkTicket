@@ -68,7 +68,7 @@
         </div><!-- /.modal -->
 
     </td>
-    <td><a type="button" class="btn btn-info" href="{{url('promoter/presentation/'.$cancelled->presentation_id.'/cancel')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
+    <td><a type="button" class="btn btn-info" href="{{url('promoter/presentation/cancelled/'.$cancelled->id.'/edit')}}"><i class="glyphicon glyphicon-pencil"></i></a></td>
   </tr>
   @endforeach
 

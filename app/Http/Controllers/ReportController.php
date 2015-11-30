@@ -798,7 +798,21 @@ class ReportController extends Controller
                             ->get();
 
                     if (count($assistances)==0){
-                        array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No asistió","No asistió","Modulo"));
+                        $aux = ModuleAssigment::where('dateAssigments', '<' ,$date_at)->where('salesman_id',  $salesman->id)->get()->last();
+                            if (count($aux) == 0){
+                                array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió","No tiene Módulo"));
+                            }else{
+                                $module = Module::find($aux->module_id);
+                                if ($aux->dateMoveAssigments == null){
+                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió",$module->name));
+                                }
+                                else{
+                                    if (date_format(date_create($aux->dateMoveAssigments),"Y-m-d") < $date_at)
+                                         array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió","No tiene Módulo"));
+                                     else
+                                        array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió",$module->name));
+                                }
+                            }
                     }else {
                         foreach ($assistances as $assistance){
                             $aux = ModuleAssigment::where('dateAssigments', '<' ,$date_at)->where('salesman_id',  $salesman->id)->get()->last();
@@ -887,8 +901,21 @@ class ReportController extends Controller
                                 ->get();
 
                         if (count($assistances)==0){
-
-                            array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió","Modulo"));
+                            $aux = ModuleAssigment::where('dateAssigments', '<' ,$date_at)->where('salesman_id',  $salesman->id)->get()->last();
+                            if (count($aux) == 0){
+                                array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió","No tiene Módulo"));
+                            }else{
+                                $module = Module::find($aux->module_id);
+                                if ($aux->dateMoveAssigments == null){
+                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió",$module->name));
+                                }
+                                else{
+                                    if (date_format(date_create($aux->dateMoveAssigments),"Y-m-d") < $date_at)
+                                         array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió","No tiene Módulo"));
+                                     else
+                                        array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió",$module->name));
+                                }
+                            }
                         }else {
                             foreach ($assistances as $assistance){
                                 $aux = ModuleAssigment::where('dateAssigments', '<' ,$date_at)->where('salesman_id',  $salesman->id)->get()->last();
@@ -967,7 +994,21 @@ class ReportController extends Controller
                                 ->get();
 
                         if (count($assistances)==0){
-                            array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió","Modulo"));
+                            $aux = ModuleAssigment::where('dateAssigments', '<' ,$date_at)->where('salesman_id',  $salesman->id)->get()->last();
+                            if (count($aux) == 0){
+                                array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió","No tiene Módulo"));
+                            }else{
+                                $module = Module::find($aux->module_id);
+                                if ($aux->dateMoveAssigments == null){
+                                    array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió",$module->name));
+                                }
+                                else{
+                                    if (date_format(date_create($aux->dateMoveAssigments),"Y-m-d") < $date_at)
+                                         array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió","No tiene Módulo"));
+                                     else
+                                        array_push($assiInformation, array($salesman->name,$salesman->lastname,"-","-","No Asistió","No Asistió",$module->name));
+                                }
+                            }
                         }else {
                             foreach ($assistances as $assistance){
                                 $aux = ModuleAssigment::where('dateAssigments', '<' ,$date_at)->where('salesman_id',  $salesman->id)->get()->last();
@@ -1024,8 +1065,8 @@ class ReportController extends Controller
             
 
             if ($input['type'] == 1){
-                Excel::create('Reporte de asistencia de vendedores starkticket', function ($excel) use($assiInformation,$input){
-                  $excel->sheet('Reporte de ventas', function($sheet) use($assiInformation,$input) {
+                Excel::create('Reporte de asistencia de vendedores starkticket', function ($excel) use($assiInformation,$date_at){
+                  $excel->sheet('Reporte de ventas', function($sheet) use($assiInformation,$date_at) {
 
 
                     $sheet->mergeCells('A1:G2');
@@ -1040,7 +1081,10 @@ class ReportController extends Controller
 
 
                     $sheet->mergeCells('A3:G3');
-                    $sheet->setCellValue('A3','Fecha del '.$input['date_at']);
+                    if (date_format(date_create($date_at),"d/m/Y") == date_format(date_create(new Carbon()),"d/m/Y"))
+                        $sheet->setCellValue('A3','Fecha del día '.date_format(date_create($date_at),"d/m/Y").' a las '.date_format(date_create(new Carbon()),"H:i") );
+                    else
+                         $sheet->setCellValue('A3','Fecha del día '.date_format(date_create($date_at),"d/m/Y"));
                     
                     $sheet->cells('A3:G3',function($cells){
 
@@ -1110,8 +1154,8 @@ class ReportController extends Controller
                 })->download('xlsx');
             }
             else{
-            Excel::create('Reporte de ventas starkticket', function ($excel) use($assiInformation,$input){
-                  $excel->sheet('Reporte de ventas', function($sheet) use($assiInformation,$input) {
+            Excel::create('Reporte de ventas starkticket', function ($excel) use($assiInformation,$date_at){
+                  $excel->sheet('Reporte de ventas', function($sheet) use($assiInformation,$date_at) {
 
 
                     $sheet->mergeCells('A1:G2');
@@ -1126,7 +1170,10 @@ class ReportController extends Controller
 
 
                     $sheet->mergeCells('A3:G3');
-                    $sheet->setCellValue('A3','Fecha del '.$input['date_at']);
+                    if (date_format(date_create($date_at),"d/m/Y") == date_format(date_create(new Carbon()),"d/m/Y"))
+                        $sheet->setCellValue('A3','Fecha del día '.date_format(date_create($date_at),"d/m/Y").' a las '.date_format(date_create(new Carbon()),"H:i") );
+                    else
+                         $sheet->setCellValue('A3','Fecha del día '.date_format(date_create($date_at),"d/m/Y"));
                     
                     $sheet->cells('A3:G3',function($cells){
 
@@ -1176,7 +1223,7 @@ class ReportController extends Controller
                             'D' => '30',
                             'E' => '30',
                             'F' => '30',
-                            'G' => '15'                                               
+                            'G' => '30'                                               
 
                             )
 
