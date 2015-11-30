@@ -63,44 +63,46 @@
     </div>  
     <div class="col-sm-12">
 
-    <hr>
+        <div class="col-sm-12">
+            <div id="error-msg1" style="visibility: hidden"> <p class="alert alert-danger" >Rango de fechas incorrecto</p></div>
+            <hr>
+        </div>
+        <table class="table table-bordered table-striped" id="example">
+            <tr>
+                <th>Punto de Venta</th>
+                <th>Nombres y Apellidos</th>
+                <th>Fecha de Asignación</th>
+                <th>Fecha de Desasociación</th>
 
-    <table class="table table-bordered table-striped" id="example">
-        <tr>
-            <th>Punto de Venta</th>
-            <th>Nombres y Apellidos</th>
-            <th>Fecha de Asignación</th>
-            <th>Fecha de Desasociación</th>
+            </tr>
+            <tbody id="fbody">
+            @foreach($assiInformation as $assig)
+            <tr>
+                <td>{{$assig[0]}}</td>
+                <td>{{$assig[1]}} {{$assig[2]}}</td>
+                <td>{{$assig[3]}}</td>
+                <td>{{$assig[4]}}</td>
 
-        </tr>
-        <tbody id="fbody">
-        @foreach($assiInformation as $assig)
-        <tr>
-            <td>{{$assig[0]}}</td>
-            <td>{{$assig[1]}} {{$assig[2]}}</td>
-            <td>{{$assig[3]}}</td>
-            <td>{{$assig[4]}}</td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+        
+        <br>
+        <h5>Seleccione el tipo de formato de su reporte</h5>  
+        <div class="col-sm-2">
+            {!!Form::select('type', [
+               '1' => 'Excel',
+               '2' => 'PDF'],
+               null,
+               ['class' => 'form-control']
+            )!!}
+        </div>
 
-        </tr>
-        @endforeach
-      </tbody>
-    </table>
-    
-    <br>
-    <h5>Seleccione el tipo de formato de su reporte</h5>  
-    <div class="col-sm-2">
-        {!!Form::select('type', [
-           '1' => 'Excel',
-           '2' => 'PDF'],
-           null,
-           ['class' => 'form-control']
-        )!!}
+        <div class="col-sm-2">
+            <button type="submit" class="btn btn-info">Descargar Archivo</button>
+        </div>
     </div>
-
-    <div class="col-sm-2">
-        <button type="submit" class="btn btn-info">Descargar Archivo</button>
-    </div>
-</div>
  {!!Form::close()!!}
 @stop
 
@@ -133,6 +135,7 @@ $("#botoncito").click(function () {
         if(dateS1=='' && dateS2=='' && dateS3 =='' && dateS4==''){
             rows.show();
            // alert('vacio D:');
+           document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1!='' && dateS2=='' && dateS3 == '' && dateS4 == ''){
             $rows = rows;
@@ -144,6 +147,7 @@ $("#botoncito").click(function () {
                     $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1=='' && dateS2!='' && dateS3 == '' && dateS4 == ''){
             $rows = rows;
@@ -155,17 +159,22 @@ $("#botoncito").click(function () {
                     $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1!='' && dateS2!='' && dateS3 == '' && dateS4 == ''){
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST= $this.find(':nth-child(3)').text();
-                var dtabl = new Date(dateST.split("/").reverse().join("-"));
-                if(dtabl >=d1 && dtabl<=d2){
-                    $this.show();
-                }
-            });
+            if(dateS2>=dateS1){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST= $this.find(':nth-child(3)').text();
+                    var dtabl = new Date(dateST.split("/").reverse().join("-"));
+                    if(dtabl >=d1 && dtabl<=d2){
+                        $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
 
         if(dateS1=='' && dateS2=='' && dateS3 != '' && dateS4 == ''){
@@ -179,6 +188,7 @@ $("#botoncito").click(function () {
                     $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1=='' && dateS2=='' && dateS3 == '' && dateS4 != ''){
             //rows.show();
@@ -193,15 +203,18 @@ $("#botoncito").click(function () {
             });
         }
         if(dateS1=='' && dateS2=='' && dateS3 != '' && dateS4 != ''){
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST= $this.find(':nth-child(4)').text();
-                var dtabl = new Date(dateST.split("/").reverse().join("-"));
-                if(dtabl>=d3 && dtabl<=d4){
-                    $this.show();
-                }
-            });
+            if(dateS4>=dateS3){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST= $this.find(':nth-child(4)').text();
+                    var dtabl = new Date(dateST.split("/").reverse().join("-"));
+                    if(dtabl>=d3 && dtabl<=d4){
+                        $this.show();
+                    }
+                });
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
         if(dateS1!='' && dateS2=='' && dateS3 != '' && dateS4 == ''){
             //rows.show();
@@ -216,6 +229,7 @@ $("#botoncito").click(function () {
                     $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1!='' && dateS2=='' && dateS3 == '' && dateS4 != ''){
             //rows.show();
@@ -230,20 +244,25 @@ $("#botoncito").click(function () {
                     $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1!='' && dateS2=='' && dateS3 != '' && dateS4 != ''){
             //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST1= $this.find(':nth-child(3)').text();
-                var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
-                var dateST2= $this.find(':nth-child(4)').text();
-                var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
-                if(dtabl1>=d1 && dtabl2 >= d3 && dtabl2<=d4){
-                    $this.show();
-                }
-            });
+            if(dateS4>=dateS3){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST1= $this.find(':nth-child(3)').text();
+                    var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
+                    var dateST2= $this.find(':nth-child(4)').text();
+                    var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
+                    if(dtabl1>=d1 && dtabl2 >= d3 && dtabl2<=d4){
+                        $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
         if(dateS1=='' && dateS2 !='' && dateS3 == '' && dateS4 != ''){
             //rows.show();
@@ -258,6 +277,7 @@ $("#botoncito").click(function () {
                     $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1=='' && dateS2!='' && dateS3 == '' && dateS4 != ''){
             //rows.show();
@@ -272,62 +292,79 @@ $("#botoncito").click(function () {
                     $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1=='' && dateS2!='' && dateS3 != '' && dateS4 != ''){
             //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST1= $this.find(':nth-child(3)').text();
-                var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
-                var dateST2= $this.find(':nth-child(4)').text();
-                var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
-                if(dtabl1<=d2 && dtabl2 >= d3 && dtabl2<=d4){
-                    $this.show();
-                }
-            });
+            if(dateS4>=dateS3){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST1= $this.find(':nth-child(3)').text();
+                    var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
+                    var dateST2= $this.find(':nth-child(4)').text();
+                    var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
+                    if(dtabl1<=d2 && dtabl2 >= d3 && dtabl2<=d4){
+                        $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
         if(dateS1!='' && dateS2!='' && dateS3 != '' && dateS4 == ''){
             //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST1= $this.find(':nth-child(3)').text();
-                var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
-                var dateST2= $this.find(':nth-child(4)').text();
-                var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
-                if(dtabl1 >= d1 && dtabl1<=d2 && dtabl2 >= d3 ){
-                    $this.show();
-                }
-            });
+            if(dateS2>=dateS1){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST1= $this.find(':nth-child(3)').text();
+                    var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
+                    var dateST2= $this.find(':nth-child(4)').text();
+                    var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
+                    if(dtabl1 >= d1 && dtabl1<=d2 && dtabl2 >= d3 ){
+                        $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else $("#error-msg").show();
         }
         if(dateS1!='' && dateS2!='' && dateS3 == '' && dateS4 != ''){
             //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST1= $this.find(':nth-child(3)').text();
-                var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
-                var dateST2= $this.find(':nth-child(4)').text();
-                var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
-                if(dtabl1 >= d1 && dtabl1<=d2 && dtabl2 <= d4 ){
-                    $this.show();
-                }
-            });
+            if(dateS2>=dateS1){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST1= $this.find(':nth-child(3)').text();
+                    var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
+                    var dateST2= $this.find(':nth-child(4)').text();
+                    var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
+                    if(dtabl1 >= d1 && dtabl1<=d2 && dtabl2 <= d4 ){
+                        $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
         if(dateS1!='' && dateS2!='' && dateS3 != '' && dateS4 != ''){
             //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST1= $this.find(':nth-child(3)').text();
-                var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
-                var dateST2= $this.find(':nth-child(4)').text();
-                var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
-                if(dtabl1 >= d1 && dtabl1<=d2 && dtabl2 >= d3  && dtabl2 <= d4 ){
-                    $this.show();
-                }
-            });
+            if(dateS2>=dateS1 && dateS4>=dateS3){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST1= $this.find(':nth-child(3)').text();
+                    var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
+                    var dateST2= $this.find(':nth-child(4)').text();
+                    var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
+                    if(dtabl1 >= d1 && dtabl1<=d2 && dtabl2 >= d3  && dtabl2 <= d4 ){
+                        $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
 
 
@@ -340,6 +377,7 @@ $("#botoncito").click(function () {
                 var $this = $(this);
                 $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         /*
         if((dateS1!='' && dateS2=='') || (dateS1=='' && dateS2!='')){
@@ -361,6 +399,7 @@ $("#botoncito").click(function () {
                     $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
 
         if(dateS1=='' && dateS2!='' && dateS3 == '' && dateS4 == ''){
@@ -373,18 +412,23 @@ $("#botoncito").click(function () {
                    $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1!='' && dateS2!='' && dateS3 == '' && dateS4 == ''){
             //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST= $this.find(':nth-child(3)').text();
-                var dtabl = new Date(dateST.split("/").reverse().join("-"));
-                if(dtabl>=d1 && dtabl<=d2){
-                    $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
-                }
-            });
+            if(dateS2>=dateS1){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST= $this.find(':nth-child(3)').text();
+                    var dtabl = new Date(dateST.split("/").reverse().join("-"));
+                    if(dtabl>=d1 && dtabl<=d2){
+                        $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
         if(dateS1=='' && dateS2=='' && dateS3 != '' && dateS4 == ''){
             /*
@@ -400,6 +444,7 @@ $("#botoncito").click(function () {
                     $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
 
         if(dateS1=='' && dateS2=='' && dateS3 == '' && dateS4 != ''){
@@ -412,18 +457,23 @@ $("#botoncito").click(function () {
                     $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1=='' && dateS2=='' && dateS3 != '' && dateS4 != ''){
             //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST= $this.find(':nth-child(4)').text();
-                var dtabl = new Date(dateST.split("/").reverse().join("-"));
-                if(dtabl>=d3 && dtabl<=d4){
-                    $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
-                }
-            });
+            if(dateS4>=dateS3){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST= $this.find(':nth-child(4)').text();
+                    var dtabl = new Date(dateST.split("/").reverse().join("-"));
+                    if(dtabl>=d3 && dtabl<=d4){
+                        $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
         if(dateS1!='' && dateS2=='' && dateS3 != '' && dateS4 == ''){
             //rows.show();
@@ -438,6 +488,7 @@ $("#botoncito").click(function () {
                     $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1!='' && dateS2=='' && dateS3 == '' && dateS4 != ''){
             //rows.show();
@@ -452,20 +503,25 @@ $("#botoncito").click(function () {
                     $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1!='' && dateS2=='' && dateS3 != '' && dateS4 != ''){
             //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST1= $this.find(':nth-child(3)').text();
-                var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
-                var dateST2= $this.find(':nth-child(4)').text();
-                var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
-                if(dtabl1>=d1 && dtabl2 >= d3 && dtabl2<=d4){
-                    $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
-                }
-            });
+            if(dateS4>=dateS3){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST1= $this.find(':nth-child(3)').text();
+                    var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
+                    var dateST2= $this.find(':nth-child(4)').text();
+                    var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
+                    if(dtabl1>=d1 && dtabl2 >= d3 && dtabl2<=d4){
+                        $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
         if(dateS1=='' && dateS2 !='' && dateS3 == '' && dateS4 != ''){
             //rows.show();
@@ -480,6 +536,7 @@ $("#botoncito").click(function () {
                     $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1=='' && dateS2!='' && dateS3 == '' && dateS4 != ''){
             //rows.show();
@@ -494,62 +551,79 @@ $("#botoncito").click(function () {
                    $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1=='' && dateS2!='' && dateS3 != '' && dateS4 != ''){
             //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST1= $this.find(':nth-child(3)').text();
-                var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
-                var dateST2= $this.find(':nth-child(4)').text();
-                var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
-                if(dtabl1<=d2 && dtabl2 >= d3 && dtabl2<=d4){
-                    $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
-                }
-            });
+            if(dateS4>=dateS3){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST1= $this.find(':nth-child(3)').text();
+                    var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
+                    var dateST2= $this.find(':nth-child(4)').text();
+                    var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
+                    if(dtabl1<=d2 && dtabl2 >= d3 && dtabl2<=d4){
+                        $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
         if(dateS1!='' && dateS2!='' && dateS3 != '' && dateS4 == ''){
             //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST1= $this.find(':nth-child(3)').text();
-                var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
-                var dateST2= $this.find(':nth-child(4)').text();
-                var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
-                if(dtabl1 >= d1 && dtabl1<=d2 && dtabl2 >= d3 ){
-                    $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
-                }
-            });
+            if(dateS2>=dateS1){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST1= $this.find(':nth-child(3)').text();
+                    var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
+                    var dateST2= $this.find(':nth-child(4)').text();
+                    var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
+                    if(dtabl1 >= d1 && dtabl1<=d2 && dtabl2 >= d3 ){
+                        $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
         if(dateS1!='' && dateS2!='' && dateS3 == '' && dateS4 != ''){
             //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST1= $this.find(':nth-child(3)').text();
-                var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
-                var dateST2= $this.find(':nth-child(4)').text();
-                var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
-                if(dtabl1 >= d1 && dtabl1<=d2 && dtabl2 <= d4 ){
-                    $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
-                }
-            });
+            if(dateS2>=dateS1){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST1= $this.find(':nth-child(3)').text();
+                    var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
+                    var dateST2= $this.find(':nth-child(4)').text();
+                    var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
+                    if(dtabl1 >= d1 && dtabl1<=d2 && dtabl2 <= d4 ){
+                        $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
         if(dateS1!='' && dateS2!='' && dateS3 != '' && dateS4 != ''){
             //rows.show();
-            $rows = rows;
-            $rows.each(function(){
-                var $this = $(this);
-                var dateST1= $this.find(':nth-child(3)').text();
-                var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
-                var dateST2= $this.find(':nth-child(4)').text();
-                var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
-                if(dtabl1 >= d1 && dtabl1<=d2 && dtabl2 >= d3  && dtabl2 <= d4 ){
-                    $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
-                }
-            });
+            if(dateS2>=dateS1 && dateS4>=dateS3){
+                $rows = rows;
+                $rows.each(function(){
+                    var $this = $(this);
+                    var dateST1= $this.find(':nth-child(3)').text();
+                    var dtabl1 = new Date(dateST1.split("/").reverse().join("-"));
+                    var dateST2= $this.find(':nth-child(4)').text();
+                    var dtabl2 = new Date(dateST2.split("/").reverse().join("-"));
+                    if(dtabl1 >= d1 && dtabl1<=d2 && dtabl2 >= d3  && dtabl2 <= d4 ){
+                        $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+                    }
+                });
+                document.getElementById("error-msg1").style.visibility= "hidden";
+            }
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
 
     }
