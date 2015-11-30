@@ -375,6 +375,7 @@ public function store(StoreEventRequest $request)
     public function showPromoterRecord()
     {
         $events = Event::where('promoter_id',Auth::user()->id)->paginate(5);
+        $events = $events->setPath('record');
         $event_data = [];
         foreach ($events as $event) {
             $ticket_sum = Ticket::where('event_id',$event->id)->sum('total_price');
