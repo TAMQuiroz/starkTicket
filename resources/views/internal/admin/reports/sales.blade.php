@@ -14,7 +14,7 @@
     <label>Ingrese nombre del evento</label>
     {!!Form::text('name', null ,['class'=>'form-control', 'id'=>'search','placeholder' => 'Nombre del evento'])!!}
 </div>
-<div class="col-sm-6">
+<div class="col-sm-9">
     <div class="col-sm-4">
         <label>Desde</label>
         {!!Form::input('date','firstDate', null ,['class'=>'form-control','id'=>'fecha-ini', 'required'])!!}
@@ -32,9 +32,10 @@
     <div class="col-sm-4"><br><button class="btn btn-info" type="button" id = 'botoncito' >Buscar</button></div>
 </div>
 <div class="col-sm-12">
-<hr>
-<p id="error-msg" class="alert alert-danger" style="display: none">Rango de fechas incorrecto</p><br>
-</div>
+    <div class="col-sm-12">
+        <div id="error-msg1" style="visibility: hidden"> <p class="alert alert-danger" >Rango de fechas incorrecto</p></div>
+        <hr>
+    </div>
 
     <table class="table table-bordered table-striped">
         <thead>
@@ -64,20 +65,21 @@
         </tbody>
     </table>
 
-<br>
+    <br>
 
-<h5>Seleccione el tipo de formato de su reporte</h5>  
-<div class="col-sm-2">
-        {!!Form::select('type', [
-           '1' => 'Excel',
-           '2' => 'PDF'],
-           null,
-           ['class' => 'form-control']
-        )!!}
-</div>
+    <h5>Seleccione el tipo de formato de su reporte</h5>  
+    <div class="col-sm-2">
+            {!!Form::select('type', [
+               '1' => 'Excel',
+               '2' => 'PDF'],
+               null,
+               ['class' => 'form-control']
+            )!!}
+    </div>
 
-<div class="col-sm-2">
-    <button type="submit" class="btn btn-info">Descargar Archivo</button>
+    <div class="col-sm-2">
+        <button type="submit" class="btn btn-info">Descargar Archivo</button>
+    </div>
 </div>
 {!!Form::close()!!}
 
@@ -105,6 +107,7 @@ $("#botoncito").click(function () {
         //alert('23/11/1993'.split("/").reverse().join("-"));
         if(dateS1=='' && dateS2==''){
             rows.show();
+            document.getElementById("error-msg1").style.visibility= "hidden";
             //alert('vacio D:');
         }
         if(dateS1!='' && dateS2==''){
@@ -117,6 +120,7 @@ $("#botoncito").click(function () {
                     $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1=='' && dateS2!=''){
             $rows = rows;
@@ -128,6 +132,7 @@ $("#botoncito").click(function () {
                     $this.show();
                 }
             });
+           document.getElementById("error-msg1").style.visibility= "hidden";
         }
 
         if(dateS1!='' && dateS2!=''){
@@ -142,8 +147,9 @@ $("#botoncito").click(function () {
                         $this.show();
                     }
                 });
+                document.getElementById("error-msg1").style.visibility= "hidden";
             }
-            else $("#error-msg").show();
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
     }
     else{
@@ -154,6 +160,7 @@ $("#botoncito").click(function () {
                 var $this = $(this);
                 $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1!='' && dateS2==''){
             $rows = rows;
@@ -165,6 +172,7 @@ $("#botoncito").click(function () {
                     $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
 
         if(dateS1=='' && dateS2!=''){
@@ -177,6 +185,7 @@ $("#botoncito").click(function () {
                     $this.show();
                 }
             });
+            document.getElementById("error-msg1").style.visibility= "hidden";
         }
         if(dateS1!='' && dateS2!=''){
             if(dateS2>=dateS1){
@@ -190,8 +199,9 @@ $("#botoncito").click(function () {
                         $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
                     }
                 });
+                document.getElementById("error-msg1").style.visibility= "hidden";
             }
-            else $("#error-msg").show();
+            else document.getElementById("error-msg1").style.visibility= "visible";
         }
     }
 });
