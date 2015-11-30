@@ -42,49 +42,8 @@
                 {!!Form::input('text','state', $local->state ,['class'=>'form-control','id'=>'state','required'])!!}
             </div>
         </div>     
-        @if(count($event)===0)  
-        <div class="form-group">
-            <label for="local_type" class="col-sm-2 control-label">Numerado</label>
-            <div class="col-sm-10">
-                @if($local->rows != null)
-                {!!Form::radio('local_type', config('constants.numbered'),true,['onChange'=>'changeNumbered(this)'])!!} 
-                @else
-                {!!Form::radio('local_type', config('constants.numbered'),null,['onChange'=>'changeNumbered(this)'])!!} 
-                @endif
-            </div>
-        </div>
-        <div class="form-group">
-          <label for="inputEmail3" class="col-sm-2 control-label">Filas</label>
-          <div class="col-sm-10">
-            {!!Form::input('number','row', $local->rows ,['class'=>'form-control','id'=>'row','required','min'=>0])!!}
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputEmail3" class="col-sm-2 control-label">Columnas</label>
-          <div class="col-sm-10">
-            {!!Form::input('number','column', $local->columns ,['class'=>'form-control','id'=>'column','required','min'=>0])!!}
-          </div>
-        </div>
-        <div class="form-group">
-            <label for="local_type" class="col-sm-2 control-label">No Numerado</label>
-            <div class="col-sm-10">
-                @if($local->rows == null)
-                    {!!Form::radio('local_type', config('constants.notNumbered'),true,['onChange'=>'changeNumbered(this)'])!!}
-                @else
-                    {!!Form::radio('local_type', config('constants.notNumbered'),null,['onChange'=>'changeNumbered(this)'])!!}
-                @endif
-                
-            </div>
-        </div>
-        <div class="form-group">
-          <label for="inputEmail3" class="col-sm-2 control-label">Capacidad</label>
-          <div class="col-sm-10">
-            {!!Form::input('number','capacity', $local->capacity ,['class'=>'form-control','id'=>'capacity','required','min'=>0])!!}
-          </div>
-        </div>
-        @else
+
             {!! Form::hidden('local_type', config('constants.notEditable'),['id'=>'local_type'])!!}
-        @endif
         <div class="form-group">
           <label for="inputEmail3" class="col-sm-2 control-label">Imagen</label>
           <div class="col-sm-10">
