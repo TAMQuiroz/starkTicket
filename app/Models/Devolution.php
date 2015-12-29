@@ -12,7 +12,7 @@ class Devolution extends Model
     protected $table = 'devolutions';
     protected $dates = ['deleted_at'];
 
-    public function administrator(){
+    public function promoter(){
         return $this->belongsTo('App\User','user_id');
     }
 
